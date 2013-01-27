@@ -1,0 +1,17 @@
+{% extends 'bbs/layout.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}leaflet/leaflet.css" />
+    <script type="text/javascript" src="{{ STATIC_URL }}leaflet/leaflet.js" >
+    </script>
+    <script type="text/javascript" src="{{ STATIC_URL }}map.js" >
+    </script>
+    <script type="text/javascript">
+    var projects = {{ projectsJson|safe }};
+    </script>
+
+{% endblock %}
+
+{% block content %}
+    <div id="map"></div>
+{% endblock %}
