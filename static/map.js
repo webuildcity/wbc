@@ -17,8 +17,8 @@ $(document).ready(function() {
 	var center = new L.LatLng(52.484766470498954, 13.363323211669922); //Fokus der Karte	
 	map.setView(center, min);	
 	
-	/*var fernsehturm = L.icon({
-    iconUrl: '/img/Fernsehturm_grau_26px3.png',    
+	var fernsehturm = L.icon({
+    iconUrl: '/static/img/Fernsehturm_grau_26px3.png',    
     iconSize:     [27, 125], // size of the icon   
     iconAnchor:   [8,111] // point of the icon which will correspond to marker's location       
 	});
@@ -27,18 +27,18 @@ $(document).ready(function() {
 	
 	
 	var funkturm = L.icon({
-    iconUrl: '/img/Funkturm_36px_neu.png',    
+    iconUrl: '/static/img/Funkturm_36px_neu.png',    
     iconSize:     [36, 110], // size of the icon   
     iconAnchor:   [16,108] // point of the icon which will correspond to marker's location       
 	});	
 	var funkturmMarker = L.marker([52.5050681,13.278211400000032],{icon: funkturm}).addTo(map);
 	
 	var greenIcon = L.icon({
-    iconUrl: '/img/marker_green.png',    
+    iconUrl: '/static/img/marker_green.png',    
     iconSize:     [21, 32], // size of the icon width,height    
     iconAnchor:   [14, 45], // point of the icon which will correspond to marker's location    
     popupAnchor:  [4, -20] // point from which the popup should open relative to the iconAnchor
-	});*/	
+	});	
 	
 	
 	var StrassenbauMarker = new Array();
