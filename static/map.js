@@ -38,29 +38,18 @@ $(document).ready(function() {
     iconSize:     [21, 32], // size of the icon width,height    
     iconAnchor:   [14, 45], // point of the icon which will correspond to marker's location    
     popupAnchor:  [4, -20] // point from which the popup should open relative to the iconAnchor
-	});	
-	
+	});	    
+    
 	
 	var StrassenbauMarker = new Array();
 	var StrassenbauLayer = L.layerGroup(StrassenbauMarker).addTo(map);
 
-	//hier wird die KML per Ajax eingelesen
-	/*$.get("strassenbau.kml", function(marks){
-		
-		  $(marks).find("Placemark").each(function(){
-			var $m = $(this);
-			var koordinaten = $m.find("coordinates").text();
-		  	var k = koordinaten.split(",");
-		  	var lon = parseFloat(k[0]);
-		  	var lat = parseFloat(k[1]);			
-		  	var icon = greenIcon;
-			
-			var name = $m.find("name").text();
-			
-			var marker = L.marker([lat,lon],{icon: icon});
-			marker.bindPopup('<b>'+ name + '</b>');	    
-		 	StrassenbauLayer.addLayer(marker);	
-		  });	 
-		  	  
-		  });*/
-	  });
+    $.each(projects, function(key,project){
+        var lon = project.fields.lon;
+        var lat = project.fields.lat;
+        var t = project.fields.titel;
+        var marker = L.marker([lat,lon],{icon: greenIcon}).addTo(map);
+        marker.bindPopup(t);       
+        
+    });
+});
