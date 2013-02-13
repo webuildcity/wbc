@@ -40,9 +40,24 @@ $(document).ready(function() {
     popupAnchor:  [4, -20] // point from which the popup should open relative to the iconAnchor
 	});	    
     
+    var redIcon = L.icon({
+    iconUrl: '/static/img/marker_red.png',    
+    iconSize:     [21, 32], // size of the icon width,height    
+    iconAnchor:   [14, 45], // point of the icon which will correspond to marker's location    
+    popupAnchor:  [4, -20] // point from which the popup should open relative to the iconAnchor
+	});
 	
-	var StrassenbauMarker = new Array();
-	var StrassenbauLayer = L.layerGroup(StrassenbauMarker).addTo(map);
+	
+    $.each(bbps, function(key,bbp){
+        var lon = bbp.fields.lon;
+        var lat = bbp.fields.lat;
+        var t = bbp.fields.vorhaben;
+        var marker = L.marker([lat,lon],{icon: redIcon}).addTo(map);
+        marker.bindPopup(t);       
+        
+    });
+    
+    
 
     $.each(projects, function(key,project){
         var lon = project.fields.lon;
