@@ -52,8 +52,11 @@ $(document).ready(function() {
         var lon = bbp.fields.lon;
         var lat = bbp.fields.lat;
         var t = bbp.fields.vorhaben;
+        var link = bbp.fields.link;
         var marker = L.marker([lat,lon],{icon: redIcon}).addTo(map);
-        marker.bindPopup(t);       
+        
+        popuptext = "<a href=" + '"' + link + '"' + 'target="blank">' + t + "</a>";
+        marker.bindPopup(popuptext);       
         
     });
     
