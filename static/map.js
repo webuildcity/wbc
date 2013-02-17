@@ -12,7 +12,9 @@ function initMap() {
 	myLayer = new L.TileLayer(myTiles, { minZoom:min, maxZoom: max, attribution: osmCopyright, zIndex:0, reuseTiles:true } ); //Nun wird mit diesen tiles eine ebene erstellt (hier gibt es nur eine Ebene, es sind aber auch mehrere Ebenen möglich)	
 	map.addLayer( myLayer ); //Füge die Ebene der Karte hinzu			
 	
-	var center = new L.LatLng(52.484766470498954, 13.363323211669922); //Fokus der Karte	
+    
+    //52.484766470498954, 13.363323211669922
+	var center = new L.LatLng(52.51, 13.37628); //Fokus der Karte	
 	map.setView(center, min);	
 	
 	var fernsehturm = L.icon({
