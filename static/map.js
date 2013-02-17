@@ -68,6 +68,48 @@ function initMap() {
     });
 }
 
+function moveOutSidebar(){
+    $('#sidebar-button').unbind('click');
+    $('#sidebar').animate(
+        {left: '-=300'},
+        'fast',
+        function(){});
+    $('#sidebar-button').animate(
+        {left: '-=300'},
+        'fast',
+        function(){
+            $('#sidebar-button').click(moveInSidebar);
+            $('i', '#sidebar-button').remove();
+            $('#sidebar-button').append('<i class="icon-chevron-right"></i>');
+        }
+    );
+}
+
+function moveInSidebar(){
+    $('#sidebar-button').unbind('click');
+    $('#sidebar').animate(
+        {left: '+=300'},
+        'fast',
+        function(){});
+    $('#sidebar-button').animate(
+        {left: '+=300'},
+        'fast',
+        function(){
+            $('#sidebar-button').click(moveOutSidebar);
+            $('i', '#sidebar-button').remove();
+            $('#sidebar-button').append('<i class="icon-chevron-left"></i>');
+        }
+    );
+}
+
+
 $(document).ready(function() {
-    setTimeout('initMap()',100);
+    setTimeout('initMap()',100);    
+    $('#sidebar-button').click(moveInSidebar);
+    
+    
+    
+    
+    
+    
 });
