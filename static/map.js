@@ -45,12 +45,13 @@ function initMap() {
         popupAnchor:  [4, -20] // point from which the popup should open relative to the iconAnchor
 	});
 	
-	
+	var html = '<ul class="nav nav-pills nav-stacked">';
     $.each(bbps, function(key,bbp){
         var lon = bbp.fields.lon;
         var lat = bbp.fields.lat;
         var t = bbp.fields.vorhaben;
         var link = bbp.fields.link;
+        html += '<li><a href="' + link + '" target="blank">' + t + '</a></li>';
         var marker = L.marker([lat,lon],{icon: redIcon}).addTo(map);
         
         popuptext = "<a href=" + '"' + link + '"' + 'target="blank">' + t + "</a>";
@@ -58,7 +59,7 @@ function initMap() {
         
     });
     
-    var html = '<ul class="nav nav-pills nav-stacked">';
+    
     $.each(projects, function(key,project){
         var lon = project.fields.lon;
         var lat = project.fields.lat;
