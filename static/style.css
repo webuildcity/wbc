@@ -39,6 +39,7 @@ html, body {
     width: 300px;
     background-color: white;    
     z-index: 101;
+    overflow: hidden;
 }
 .sidebar-shadow {
     box-shadow: 2px 2px 2px 1.9px rgba( 0, 0, 0, 0.45 );
@@ -61,9 +62,15 @@ html, body {
 }
 
 #sidebar-content{
-    padding-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+    /*height: 400px;*/
+    position: absolute;
+    top: 16px;
+    bottom: 16px;
+    left: 0px;
+    right: 0px;
+    padding-left: 16px;
+    padding-right: 16px;
+    overflow-y: scroll;
 }
 
 

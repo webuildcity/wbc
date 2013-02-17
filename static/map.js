@@ -58,15 +58,18 @@ function initMap() {
         
     });
     
+    var html = '<ul class="nav nav-pills nav-stacked">';
     $.each(projects, function(key,project){
         var lon = project.fields.lon;
         var lat = project.fields.lat;
         var t = project.fields.titel;
-        $('#sidebar-content').append('<p>' + t + '</p>');
+        html += '<li><a href="' + project.fields.link + '" target="blank">' + t + '</a></li>';
         var marker = L.marker([lat,lon],{icon: greenIcon}).addTo(map);
         marker.bindPopup(t);       
-        
     });
+    html += '</ul>';
+    $('#sidebar-content').append(html);
+    
 }
 
 function moveOutSidebar(){
