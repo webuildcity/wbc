@@ -12,7 +12,6 @@ html, body {
     margin: 0;
 }
 
-
 #content {
     position: absolute;
     top: 41px;
@@ -41,7 +40,11 @@ html, body {
     background-color: white;    
     z-index: 101;
 }
-
+.sidebar-shadow {
+    box-shadow: 2px 2px 2px 1.9px rgba( 0, 0, 0, 0.45 );
+    -webkit-box-shadow:2px 2px 2px 1.9px rgba( 0, 0, 0, 0.45 );
+    -moz-box-shadow: 2px 2px 2px 1.9px rgba( 0, 0, 0, 0.45 );
+}
 #sidebar-button {
     position: absolute;
     top: 0px;    
@@ -51,10 +54,10 @@ html, body {
     background-color: white;    
     z-index: 101;
 }
-
 #sidebar-button i {
-    position: relative;
-    margin: 0px 0px 2px 1px !important;
+    position: absolute;
+    left: 1px;
+    bottom: 1px;
 }
 
 
