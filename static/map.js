@@ -62,6 +62,7 @@ function initMap() {
         var lon = project.fields.lon;
         var lat = project.fields.lat;
         var t = project.fields.titel;
+        $('#sidebar-content').append('<p>' + t + '</p>');
         var marker = L.marker([lat,lon],{icon: greenIcon}).addTo(map);
         marker.bindPopup(t);       
         
