@@ -6,8 +6,8 @@ function initMap() {
 	var max = 16; //maximale Zoomstufe	
 	
 
-	
-	myTiles = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"; //hier wird angegeben von wo die Tiles für die Karte geladen werden sollen
+	myTiles = "http://tiles.jochenklar.de/bright/{z}/{x}/{y}.png"; 
+	//myTiles = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"; //hier wird angegeben von wo die Tiles für die Karte geladen werden sollen
 	osmCopyright = "Map data &copy; 2012 OpenStreetMap contributors"; //Copyrigth, das unten rechts erscheint	
 	myLayer = new L.TileLayer(myTiles, { minZoom:min, maxZoom: max, attribution: osmCopyright, zIndex:0, reuseTiles:true } ); //Nun wird mit diesen tiles eine ebene erstellt (hier gibt es nur eine Ebene, es sind aber auch mehrere Ebenen möglich)	
 	map.addLayer( myLayer ); //Füge die Ebene der Karte hinzu			
@@ -45,12 +45,13 @@ function initMap() {
         popupAnchor:  [4, -20] // point from which the popup should open relative to the iconAnchor
 	});
 	
-	
+	var html = '<ul class="nav nav-pills nav-stacked">';
     $.each(bbps, function(key,bbp){
         var lon = bbp.fields.lon;
         var lat = bbp.fields.lat;
         var t = bbp.fields.vorhaben;
         var link = bbp.fields.link;
+        html += '<li><a href="' + link + '" target="blank">' + t + '</a></li>';
         var marker = L.marker([lat,lon],{icon: redIcon}).addTo(map);
         
         popuptext = "<a href=" + '"' + link + '"' + 'target="blank">' + t + "</a>";
@@ -58,7 +59,7 @@ function initMap() {
         
     });
     
-    var html = '<ul class="nav nav-pills nav-stacked">';
+    
     $.each(projects, function(key,project){
         var lon = project.fields.lon;
         var lat = project.fields.lat;
