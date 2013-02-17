@@ -5,9 +5,9 @@ function initMap() {
 	var min = 11; //minimale Zoomstufe
 	var max = 16; //maximale Zoomstufe	
 	
-
-	
-	myTiles = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"; //hier wird angegeben von wo die Tiles für die Karte geladen werden sollen
+        var baseurl = '/bbs/static/'
+        var myTiles = "http://tiles.jochenklar.de/bright/{z}/{x}/{y}.png";
+	//myTiles = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"; //hier wird angegeben von wo die Tiles für die Karte geladen werden sollen
 	osmCopyright = "Map data &copy; 2012 OpenStreetMap contributors"; //Copyrigth, das unten rechts erscheint	
 	myLayer = new L.TileLayer(myTiles, { minZoom:min, maxZoom: max, attribution: osmCopyright, zIndex:0, reuseTiles:true } ); //Nun wird mit diesen tiles eine ebene erstellt (hier gibt es nur eine Ebene, es sind aber auch mehrere Ebenen möglich)	
 	map.addLayer( myLayer ); //Füge die Ebene der Karte hinzu			
@@ -16,7 +16,7 @@ function initMap() {
 	map.setView(center, min);	
 	
 	var fernsehturm = L.icon({
-        iconUrl: '/static/img/Fernsehturm_grau_26px3.png',    
+        iconUrl: baseurl + '/img/Fernsehturm_grau_26px3.png',    
         iconSize:     [27, 125], // size of the icon   
         iconAnchor:   [8,111] // point of the icon which will correspond to marker's location       
 	});
@@ -25,21 +25,21 @@ function initMap() {
 	
 	
 	var funkturm = L.icon({
-        iconUrl: '/static/img/Funkturm_36px_neu.png',    
+        iconUrl: baseurl + '/img/Funkturm_36px_neu.png',    
         iconSize:     [36, 110], // size of the icon   
         iconAnchor:   [16,108] // point of the icon which will correspond to marker's location       
 	});	
 	var funkturmMarker = L.marker([52.5050681,13.278211400000032],{icon: funkturm}).addTo(map);
 	
 	var greenIcon = L.icon({
-        iconUrl: '/static/img/marker_green.png',    
+        iconUrl: baseurl + '/img/marker_green.png',    
         iconSize:     [21, 32], // size of the icon width,height    
         iconAnchor:   [14, 45], // point of the icon which will correspond to marker's location    
         popupAnchor:  [4, -20] // point from which the popup should open relative to the iconAnchor
 	});	    
     
     var redIcon = L.icon({
-        iconUrl: '/static/img/marker_red.png',    
+        iconUrl: baseurl + '/img/marker_red.png',    
         iconSize:     [21, 32], // size of the icon width,height    
         iconAnchor:   [14, 45], // point of the icon which will correspond to marker's location    
         popupAnchor:  [4, -20] // point from which the popup should open relative to the iconAnchor
