@@ -6,7 +6,7 @@ function initMap() {
 	var max = 16; //maximale Zoomstufe	
 	
         var baseurl = '/bbs/static/'
-        var myTiles = "http://tiles.jochenklar.de/bright/{z}/{x}/{y}.png";
+        var myTiles = "http://tiles.jochenklar.de/mamanoke-bezirke/{z}/{x}/{y}.png";
 	//myTiles = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"; //hier wird angegeben von wo die Tiles für die Karte geladen werden sollen
 	osmCopyright = "Map data &copy; 2012 OpenStreetMap contributors"; //Copyrigth, das unten rechts erscheint	
 	myLayer = new L.TileLayer(myTiles, { minZoom:min, maxZoom: max, attribution: osmCopyright, zIndex:0, reuseTiles:true } ); //Nun wird mit diesen tiles eine ebene erstellt (hier gibt es nur eine Ebene, es sind aber auch mehrere Ebenen möglich)	
