@@ -3,11 +3,10 @@ function initMap() {
 	map = new L.Map("map");
 	
 	var min = 11; //minimale Zoomstufe
-	var max = 16; //maximale Zoomstufe	
+	var max = 15; //maximale Zoomstufe	
 	
         var baseurl = '/bbs/static/'
-        var myTiles = "http://tiles.jochenklar.de/mamanoke-bezirke/{z}/{x}/{y}.png";
-	//myTiles = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"; //hier wird angegeben von wo die Tiles für die Karte geladen werden sollen
+        var myTiles = "http://tiles.jochenklar.de/pinkoding-bbs/{z}/{x}/{y}.png";
 	osmCopyright = "Map data &copy; 2012 OpenStreetMap contributors"; //Copyrigth, das unten rechts erscheint	
 	myLayer = new L.TileLayer(myTiles, { minZoom:min, maxZoom: max, attribution: osmCopyright, zIndex:0, reuseTiles:true } ); //Nun wird mit diesen tiles eine ebene erstellt (hier gibt es nur eine Ebene, es sind aber auch mehrere Ebenen möglich)	
 	map.addLayer( myLayer ); //Füge die Ebene der Karte hinzu			
