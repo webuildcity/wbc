@@ -1,3 +1,5 @@
+var markers = new Array();
+
 function initMap() {
 	//Die Karte wird in der index-html in das Div mit der id "mymap" gezeichnet
 	map = new L.Map("map");
@@ -46,10 +48,17 @@ function initMap() {
         popupAnchor:  [4, -20] // point from which the popup should open relative to the iconAnchor
 	});
     
+    var markedIcon = L.icon({
+        iconUrl: baseurl + '/img/marker_yellow.png',    
+        iconSize:     [21, 32], // size of the icon width,height    
+        iconAnchor:   [14, 45], // point of the icon which will correspond to marker's location    
+        popupAnchor:  [4, -20] // point from which the popup should open relative to the iconAnchor
+	});
+    
     var i = 0;
-    var markers = new Array();
 	
-	var html = '<ul class="nav nav-pills nav-stacked">';
+	//var html = '<ul id="list" class="nav nav-pills nav-stacked">';
+    var html = '<ul id="list">';
     
     $.each(bbps, function(key,bbp){
         var lon = bbp.fields.lon;
@@ -57,8 +66,9 @@ function initMap() {
         var t = bbp.fields.vorhaben;
         var link = bbp.fields.link;
         var id = "listid" + i;
-        html += '<li id= "'+ id +'"><a href="' + link + '" target="blank">' + t + '</a></li>';        
-        var marker = L.marker([lat,lon],{icon: redIcon}).addTo(map);
+        html += '<li id= "'+ id +'">' + t + '</li>';
+        //html += '<li id= "'+ id +'"><a href="' + link + '" target="blank">' + t + '</a></li>';        
+        var marker = L.marker([lat,lon],{icon: greenIcon}).addTo(map);
         marker.listid = id; 
         markers[i] = marker;                       
         popuptext = "<a href=" + '"' + link + '"' + 'target="blank">' + t + "</a>";
@@ -80,7 +90,8 @@ function initMap() {
         var lat = project.fields.lat;
         var t = project.fields.titel;
         var id2 = "listid" + i;
-        html += '<li id= "'+ id2 +'" ><a href="' + project.fields.link + '" target="blank">' + t + '</a></li>';
+        html += '<li id= "'+ id2 +'" >' + t + '</li>';
+        //html += '<li id= "'+ id2 +'" ><a href="' + project.fields.link + '" target="blank">' + t + '</a></li>';
         var marker = L.marker([lat,lon],{icon: greenIcon}).addTo(map);
         marker.listid = id2;
         markers[i] = marker;
@@ -92,13 +103,27 @@ function initMap() {
             $('#' + this.listid).removeClass("marked");              
             
         }); 
-        marker.bindPopup(t); 
+        marker.bindPopup(t);
         i++;      
     });
-    console.log(markers);
     
     html += '</ul>';
-    $('#sidebar-content').append(html);
+    $('#sidebar-content').append(html);  
+         console.log(markers.length);
+    for(var j = 0; j<markers.length;j++){     
+        $('#listid' + j).mouseover(function() {
+            k = $(this).attr('id').split('listid')[1];
+            $(this).addClass("marked");
+            markers[k].setIcon(markedIcon);
+        });
+        $('#listid' + j).mouseout(function() {
+            k = $(this).attr('id').split('listid')[1];
+            $(this).removeClass("marked");
+            markers[k].setIcon(greenIcon);
+        });
+    }
+    
+    
     
 }
 
