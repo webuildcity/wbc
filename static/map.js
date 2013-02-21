@@ -62,12 +62,12 @@ function initMap() {
         marker.listid = id;                        
         popuptext = "<a href=" + '"' + link + '"' + 'target="blank">' + t + "</a>";
         marker.on('mouseover', function(evt) {
-            $('#' + this.listid).addClass("marked");                       
-            //$('#' + this.listid).css("backgroundColor", "yellow");
+            $('#' + this.listid).addClass("marked");                 
+            
         });
         marker.on('mouseout', function(evt) {
             $('#' + this.listid).removeClass("marked");              
-            //$('#' + this.listid).css("backgroundColor", "white");
+            
         });
         marker.bindPopup(popuptext);       
         i++;
@@ -78,9 +78,20 @@ function initMap() {
         var lon = project.fields.lon;
         var lat = project.fields.lat;
         var t = project.fields.titel;
-        html += '<li><a href="' + project.fields.link + '" target="blank">' + t + '</a></li>';
+        var id2 = "listid" + i;
+        html += '<li id= "'+ id2 +'" ><a href="' + project.fields.link + '" target="blank">' + t + '</a></li>';
         var marker = L.marker([lat,lon],{icon: greenIcon}).addTo(map);
-        marker.bindPopup(t);       
+        marker.listid = id2;
+        marker.on('mouseover', function(evt) {
+            $('#' + this.listid).addClass("marked");                 
+            
+        });
+        marker.on('mouseout', function(evt) {
+            $('#' + this.listid).removeClass("marked");              
+            
+        }); 
+        marker.bindPopup(t); 
+        i++;      
     });
     html += '</ul>';
     $('#sidebar-content').append(html);
