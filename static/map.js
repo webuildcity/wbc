@@ -47,6 +47,7 @@ function initMap() {
 	});
     
     var i = 0;
+    var markers = new Array();
 	
 	var html = '<ul class="nav nav-pills nav-stacked">';
     
@@ -56,10 +57,10 @@ function initMap() {
         var t = bbp.fields.vorhaben;
         var link = bbp.fields.link;
         var id = "listid" + i;
-        console.log(id);
         html += '<li id= "'+ id +'"><a href="' + link + '" target="blank">' + t + '</a></li>';        
         var marker = L.marker([lat,lon],{icon: redIcon}).addTo(map);
-        marker.listid = id;                        
+        marker.listid = id; 
+        markers[i] = marker;                       
         popuptext = "<a href=" + '"' + link + '"' + 'target="blank">' + t + "</a>";
         marker.on('mouseover', function(evt) {
             $('#' + this.listid).addClass("marked");                 
@@ -82,6 +83,7 @@ function initMap() {
         html += '<li id= "'+ id2 +'" ><a href="' + project.fields.link + '" target="blank">' + t + '</a></li>';
         var marker = L.marker([lat,lon],{icon: greenIcon}).addTo(map);
         marker.listid = id2;
+        markers[i] = marker;
         marker.on('mouseover', function(evt) {
             $('#' + this.listid).addClass("marked");                 
             
@@ -93,6 +95,8 @@ function initMap() {
         marker.bindPopup(t); 
         i++;      
     });
+    console.log(markers);
+    
     html += '</ul>';
     $('#sidebar-content').append(html);
     
