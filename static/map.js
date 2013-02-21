@@ -45,19 +45,32 @@ function initMap() {
         iconAnchor:   [14, 45], // point of the icon which will correspond to marker's location    
         popupAnchor:  [4, -20] // point from which the popup should open relative to the iconAnchor
 	});
+    
+    var i = 0;
 	
 	var html = '<ul class="nav nav-pills nav-stacked">';
+    
     $.each(bbps, function(key,bbp){
         var lon = bbp.fields.lon;
         var lat = bbp.fields.lat;
         var t = bbp.fields.vorhaben;
         var link = bbp.fields.link;
-        html += '<li><a href="' + link + '" target="blank">' + t + '</a></li>';
+        var id = "listid" + i;
+        console.log(id);
+        html += '<li id= "'+ id +'"><a href="' + link + '" target="blank">' + t + '</a></li>';        
         var marker = L.marker([lat,lon],{icon: redIcon}).addTo(map);
-        
+        marker.listid = id;                        
         popuptext = "<a href=" + '"' + link + '"' + 'target="blank">' + t + "</a>";
+        marker.on('mouseover', function(evt) {
+            $('#' + this.listid).addClass("marked");                       
+            //$('#' + this.listid).css("backgroundColor", "yellow");
+        });
+        marker.on('mouseout', function(evt) {
+            $('#' + this.listid).removeClass("marked");              
+            //$('#' + this.listid).css("backgroundColor", "white");
+        });
         marker.bindPopup(popuptext);       
-        
+        i++;
     });
     
     
