@@ -10,6 +10,7 @@
 html, body {
     padding: 0;
     margin: 0;
+    background-color: white;
 }
 
 #content {
@@ -24,7 +25,7 @@ html, body {
 
 #map {
     position: absolute;
-    top: 0px;
+    top: 23px;
     bottom: 0px;
     left: 0px;
     right: 0px;
@@ -76,6 +77,49 @@ html, body {
 .marked{
     background-color: #ddd;
 }
+
+#title {
+	margin-top: 50px;
+        text-align: right;	
+}
+
+#title a {
+    font-family: 'Arial Narrow', 'Open Sans', sans-serif;
+    font-size: 18px;    
+    text-decoration:none;
+}
+
+
+#menu {
+    
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	margin-top: 20px;
+	padding-top: 15px;
+	padding-bottom: 10px;
+	height: 20px;
+	
+}
+
+#menu a {
+	font-family: 'Arial Narrow', 'Open Sans', sans-serif;
+	font-size: 16px;	
+    
+}
+
+#sitenav {
+    float: right;
+    padding-right: 10px;
+   
+}
+
+#sitenav li {
+    display: inline;
+    list-style: none;
+    margin-left: 60px;
+    
+}
+
 
 
 

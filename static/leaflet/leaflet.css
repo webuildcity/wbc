@@ -342,7 +342,7 @@
 /* Visual appearance */
 
 .leaflet-container {
-	background: #ddd;
+	background: white;
 	}
 .leaflet-container a {
 	color: #0078A8;
