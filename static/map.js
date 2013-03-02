@@ -57,8 +57,8 @@ function initMap() {
     
     var i = 0;
 	
-	//var html = '<ul id="list" class="nav nav-pills nav-stacked">';
-    var html = '<ul id="list">';
+	var html = '<ul id="list" class="nav nav-pills nav-stacked">';
+    //var html = '<ul id="list">';
     
     $.each(bbps, function(key,bbp){
         var lon = bbp.fields.lon;
@@ -66,8 +66,8 @@ function initMap() {
         var t = bbp.fields.vorhaben;
         var link = bbp.fields.link;
         var id = "listid" + i;
-        html += '<li id= "'+ id +'">' + t + '</li>';
-        //html += '<li id= "'+ id +'"><a href="' + link + '" target="blank">' + t + '</a></li>';        
+        //html += '<li id= "'+ id +'">' + t + '</li>';
+        html += '<li id= "'+ id +'"><a href="' + link + '" target="blank">' + t + '</a></li>';        
         var marker = L.marker([lat,lon],{icon: greenIcon}).addTo(map);
         marker.listid = id; 
         markers[i] = marker;                       
@@ -90,8 +90,8 @@ function initMap() {
         var lat = project.fields.lat;
         var t = project.fields.titel;
         var id2 = "listid" + i;
-        html += '<li id= "'+ id2 +'" >' + t + '</li>';
-        //html += '<li id= "'+ id2 +'" ><a href="' + project.fields.link + '" target="blank">' + t + '</a></li>';
+        //html += '<li id= "'+ id2 +'" >' + t + '</li>';
+        html += '<li id= "'+ id2 +'" ><a href="' + project.fields.link + '" target="blank">' + t + '</a></li>';
         var marker = L.marker([lat,lon],{icon: greenIcon}).addTo(map);
         marker.listid = id2;
         markers[i] = marker;
