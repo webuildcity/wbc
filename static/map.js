@@ -18,8 +18,8 @@ function initMap() {
 	var center = new L.LatLng(52.51, 13.37628); //Fokus der Karte	
 	map.setView(center, min);		
 	
-	var greenIcon = L.icon({
-        iconUrl: baseurl + '/img/marker_green.png',    
+	var orangeIcon = L.icon({
+        iconUrl: baseurl + '/img/marker_orange.png',    
         iconSize:     [21, 32], // size of the icon width,height    
         iconAnchor:   [14, 45], // point of the icon which will correspond to marker's location    
         popupAnchor:  [4, -20] // point from which the popup should open relative to the iconAnchor
@@ -45,7 +45,7 @@ function initMap() {
         var link = "http://localhost:8000/bbs/" + bbp.pk ;
         var id = "listid" + bbp.pk ;        
         html += '<li id= "'+ id +'"><a href="' + link + '" target="blank">' + t + '</a></li>';        
-        var marker = L.marker([lat,lon],{icon: greenIcon}).addTo(map);
+        var marker = L.marker([lat,lon],{icon: orangeIcon}).addTo(map);
         marker.listid = id; 
         markers[i] = marker;                       
         popuptext = t + "<br><a href=" + '"' + link + '"' + 'target="blank">' + "Details" + "</a>";
@@ -74,7 +74,7 @@ function initMap() {
         $('#listid' + j).mouseout(function() {
             k = $(this).attr('id').split('listid')[1];
             $(this).removeClass("marked");
-            markers[k].setIcon(greenIcon);
+            markers[k].setIcon(orangeIcon);
         });
     }
     
