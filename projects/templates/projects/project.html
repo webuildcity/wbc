@@ -13,6 +13,34 @@
 {% endblock %}
 
 {% block content %}
+    <div class="container">
+    <br>
+    <div class="hero-unit">
+        <div id="map1"></div>        
+    </div>        
+            <div class="row">        
+                <div class="span8">
+                    <h3>Bezirk</h3>
+                    {{ project.bezirke }}
+                </div>
+                <div class="span4">
+                    <h3>Frist</h3>
+                    {{ project.begin }} bis {{ project.end }}
+                </div>
+            </div>
+            <div class="row">        
+            <div class="span8">
+            <h3>Vorhaben</h3>
+            {{ project.vorhaben }}
+                
+            </div>
+            <div class="span4">
+                <h3>Ort</h3>
+                {{ project.ort }}
+            </div>        
+    </div>
     
-    <div id="map1"></div>
+    
+    
+    
 {% endblock %}
