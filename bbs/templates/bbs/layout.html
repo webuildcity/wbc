@@ -13,12 +13,23 @@
 
     <body>    
         <div id="navcontainer">
-            <div class="container" id="menu">                
+            <div class="container">
+                <div class="row">
+                    <div class="span6"id="menu_left"></div>                          
+                    <div class="span2"></div>
+                    <div class="span2"></div>
+                    <div class="span2" id="menu_right">                
                     <ul id="sitenav">                        
                         <li><a href="<?php echo get_option('home').'/about'; ?>">ÜBER</a></li>
                         <li><a href="<?php echo get_option('home').'/contact'; ?>">KONTAKT</a></li>
                     </ul>
-                </div>            
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span4" id="info"></div>
+                    <div class="span2" id="info"></div>
+                </div>
+            </div>        
                     
         </div>    
                

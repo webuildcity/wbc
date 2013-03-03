@@ -79,9 +79,9 @@ html, body {
 
 #navcontainer {
     position: absolute;
-    background-color: rgba(178, 178, 178, 0.8);
+    background-color: transaprent;
     top: 20px;
-    height: 60px;    
+    height: 100px;    
     left: 0px;
     right: 0px;
     z-index: 10;
@@ -102,10 +102,19 @@ html, body {
     
 }
 
-#menu {
-   background-color: transaprent;
-   height: 50px; 
-    
+#menu_right {
+   margin: 2px;
+   background-color: rgba(255,255,255, 0.8);
+   height:40px;
+   border: 2px solid #999; 
+
+}
+
+#menu_left {
+   margin: 2px;
+   background-color: rgba(255,255,255, 0.8);
+   height:40px;
+   border: 2px solid #999; 
 
 }
 
