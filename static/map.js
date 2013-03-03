@@ -86,11 +86,11 @@ function moveOutSidebar(){
     $('#sidebar-button').unbind('click');
     $('#sidebar').removeClass('sidebar-shadow');
     $('#sidebar').animate(
-        {left: '-=300'},
+        {left: '-=310'},
         'fast',
         function(){});
     $('#sidebar-button').animate(
-        {left: '-=300'},
+        {left: '-=310'},
         'fast',
         function(){
             $('#sidebar-button').click(moveInSidebar);
@@ -105,11 +105,11 @@ function moveInSidebar(){
     $('#sidebar-button').unbind('click');
     $('#sidebar').addClass('sidebar-shadow');
     $('#sidebar').animate(
-        {left: '+=300'},
+        {left: '+=310'},
         'fast',
         function(){});
     $('#sidebar-button').animate(
-        {left: '+=300'},
+        {left: '+=310'},
         'fast',
         function(){
             $('#sidebar-button').click(moveOutSidebar);

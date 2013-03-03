@@ -21,7 +21,8 @@ html, body {
     bottom: 0px;
     left: -300px;
     width: 300px;
-    background-color: rgba(80, 80, 80, 0.7);    
+    background-color: rgba(0, 0, 0, 0.246094);
+    /*background-color: rgba(80, 80, 80, 0.7);*/  
     z-index: 101;
     overflow: hidden;
 }
@@ -33,7 +34,7 @@ html, body {
 #sidebar-button {
     position: absolute;
     top: 100px;    
-    left: 0px;
+    left: 10px;
     width: 16px;
     height: 16px;
     background-color: white;    
