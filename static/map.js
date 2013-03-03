@@ -19,8 +19,8 @@ function initMap() {
 	map.setView(center, min);		
 	
 	var orangeIcon = L.icon({
-        iconUrl: baseurl + '/img/marker_orange.png',    
-        iconSize:     [21, 32], // size of the icon width,height    
+        iconUrl: baseurl + '/img/schild_orange.png',    
+        iconSize:     [25, 35], // size of the icon width,height    
         iconAnchor:   [14, 45], // point of the icon which will correspond to marker's location    
         popupAnchor:  [4, -20] // point from which the popup should open relative to the iconAnchor
 	});	  
