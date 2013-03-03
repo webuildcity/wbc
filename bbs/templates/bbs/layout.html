@@ -11,20 +11,21 @@
         <link rel="stylesheet" href="{{ STATIC_URL }}style.css" />
     </head>
 
-    <body>
-        <div class='container' id="container">        
-        <div id="header">
-                   
-            <div id="menu">
-                <ul id="sitenav">
-                    <li><a href="http://localhost:8000/">PROJEKTE</a></li>
-                    <li><a href="http://localhost:8000/">BLOG</a></li>
-                    <li><a href="http://localhost:8000/">ÜBER</a></li>
-                    <li><a href="http://localhost:8000/">KONTAKT</a></li>
-                </ul>
-            </div>       
-        </div>
-
+    <body>    
+        <div id="navcontainer">
+            <div class="container" id="menu">                
+                    <ul id="sitenav">
+                        <li><a href="<?php echo get_option('home'),'/category/projekte/'; ?>">PROJEKTE</a></li>
+                        <li><a href="<?php echo get_option('home').'/category/blog/'; ?>">BLOG</a></li>
+                        <li><a href="<?php echo get_option('home').'/about'; ?>">ÜBER</a></li>
+                        <li><a href="<?php echo get_option('home').'/contact'; ?>">KONTAKT</a></li>
+                    </ul>
+                </div>            
+                    
+        </div>    
+               
+        
+        
         <div id="content">
             {% block content %}{% endblock %}
         </div>  

@@ -16,7 +16,7 @@ function initMap() {
     
     //52.484766470498954, 13.363323211669922
 	var center = new L.LatLng(52.51, 13.37628); //Fokus der Karte	
-	map.setView(center, min);		
+	map.setView(center, 11);		
 	
 	var orangeIcon = L.icon({
         iconUrl: baseurl + '/img/marker_orange.png',    

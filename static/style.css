@@ -1,36 +1,23 @@
-@font-face {
-    font-family: DroidSans;
-    src: url('font/DroidSans.ttf');
-}
-@font-face {
-    font-family: DroidSans;
-    src: url('font/DroidSans-Bold.ttf');
-    font-weight: bold;
-}
 html, body {
     padding: 0;
     margin: 0;
     background-color: white;
 }
 
-#content {
-    position: absolute;
-    top: 41px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    z-index: 10;
-    
-}
+
+/*----------------------------------- Startseite Map mit Sidebar --------------------------------------------*/
 
 #map {
     position: absolute;
-    top: 23px;
+    top: 0px;
     bottom: 0px;
     left: 0px;
     right: 0px;
-    z-index: 100;
+    z-index: 0;
 }
+
+
+
 
 #sidebar {    
     position: absolute;
@@ -78,34 +65,23 @@ html, body {
     background-color: #ddd;
 }
 
-#title {
-	margin-top: 50px;
-        text-align: right;	
+#map1{
+    margin-top: 50px;
 }
 
-#title a {
-    font-family: 'Arial Narrow', 'Open Sans', sans-serif;
-    font-size: 18px;    
-    text-decoration:none;
+/*-------------------------------------------------------Navigation----------------------------------------------------*/
+
+#navcontainer {
+    position: absolute;
+    background-color: transparent;
+    top: 20px;
+    height: 60px;    
+    left: 0px;
+    right: 0px;
+    z-index: 10;
 }
 
 
-#menu {
-    
-	border-top: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
-	margin-top: 20px;
-	padding-top: 15px;
-	padding-bottom: 10px;
-	height: 20px;
-	
-}
-
-#menu a {
-	font-family: 'Arial Narrow', 'Open Sans', sans-serif;
-	font-size: 16px;	
-    
-}
 
 #sitenav {
     float: right;
@@ -119,6 +95,15 @@ html, body {
     margin-left: 60px;
     
 }
+
+#menu {
+   background-color: rgba(0, 0, 0, 0.5);;
+   height: 50px; 
+    
+
+}
+
+
 
 
 
