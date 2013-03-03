@@ -21,7 +21,7 @@ html, body {
     bottom: 0px;
     left: -300px;
     width: 300px;
-    background-color: rgba(0, 0, 0, 0.7);    
+    background-color: rgba(80, 80, 80, 0.7);    
     z-index: 101;
     overflow: hidden;
 }
@@ -111,10 +111,7 @@ html, body {
 }
 
 #menu_left {
-   margin: 2px;
-   background-color: rgba(255,255,255, 0.8);
-   height:40px;
-   border: 2px solid #999; 
+    
 
 }
 
