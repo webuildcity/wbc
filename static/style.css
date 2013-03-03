@@ -76,19 +76,14 @@ html, body {
 }
 
 #map1{
-    position: absolute;
-    top: 0px;
-    height: 100px;
-    left: 0px;
-    right: 0px;
-    z-index: 0;
+
+    margin-top: 80px;
+    
+    
     
 }
 
-#content1{
-    position: absolute;
-    top: 300px;
-}
+
 
 /*-------------------------------------------------------Navigation----------------------------------------------------*/
 
@@ -114,16 +109,18 @@ html, body {
     
     display: inline;
     list-style: none;
-    margin-left: 40px;
-    font-family: titillium;      
+    margin-left: 20px;
+    font-family: titillium;
+    font-size: 16px;
+    color: #646464;       
 }
 
 #menu_right {   
-   background-color: rgba(0, 0, 0, 0.246094);
+   background-color: transparent;
    height:40px;   
    border-radius:7px;
    border-radius:7px; 
-   padding-top:20px;
+   padding-top:24px;
    
    
 
