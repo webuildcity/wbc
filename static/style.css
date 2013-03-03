@@ -1,6 +1,6 @@
 @font-face {
-    font-family: vollkorn;
-    src: url('vollkorn/Vollkorn-Regular.ttf');
+    font-family: titillium;
+    src: url('font/TitilliumText25L.otf');
 }
 @font-face {
     font-family: vollkorn;
@@ -111,18 +111,21 @@ html, body {
 }
 
 #sitenav li {
+    
     display: inline;
     list-style: none;
-    margin-left: 60px;
-    
+    margin-left: 40px;
+    font-family: titillium;      
 }
 
-#menu_right {
-   margin: 2px;
+#menu_right {   
    background-color: rgba(0, 0, 0, 0.246094);
    height:40px;   
    border-radius:7px;
    border-radius:7px; 
+   padding-top:20px;
+   
+   
 
 }
 
