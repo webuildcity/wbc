@@ -15,17 +15,13 @@ html, body {
     right: 0px;
     z-index: 0;
 }
-
-
-
-
 #sidebar {    
     position: absolute;
-    top: 0px;
+    top: 100px;
     bottom: 0px;
     left: -300px;
     width: 300px;
-    background-color: white;    
+    background-color: rgba(0, 0, 0, 0.7);    
     z-index: 101;
     overflow: hidden;
 }
@@ -36,7 +32,7 @@ html, body {
 }
 #sidebar-button {
     position: absolute;
-    top: 0px;    
+    top: 100px;    
     left: 0px;
     width: 16px;
     height: 16px;
