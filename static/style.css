@@ -1,26 +1,11 @@
-@font-face {
-    font-family: DroidSans;
-    src: url('font/DroidSans.ttf');
-}
-@font-face {
-    font-family: DroidSans;
-    src: url('font/DroidSans-Bold.ttf');
-    font-weight: bold;
-}
 html, body {
     padding: 0;
     margin: 0;
+    background-color: white;
 }
 
-#content {
-    position: absolute;
-    top: 41px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    z-index: 10;
-    
-}
+
+/*----------------------------------- Startseite Map mit Sidebar --------------------------------------------*/
 
 #map {
     position: absolute;
@@ -28,8 +13,11 @@ html, body {
     bottom: 0px;
     left: 0px;
     right: 0px;
-    z-index: 100;
+    z-index: 0;
 }
+
+
+
 
 #sidebar {    
     position: absolute;
@@ -76,6 +64,47 @@ html, body {
 .marked{
     background-color: #ddd;
 }
+
+#map1{
+    margin-top: 50px;
+}
+
+/*-------------------------------------------------------Navigation----------------------------------------------------*/
+
+#navcontainer {
+    position: absolute;
+    background-color: transparent;
+    top: 20px;
+    height: 60px;    
+    left: 0px;
+    right: 0px;
+    z-index: 10;
+}
+
+
+
+#sitenav {
+    float: right;
+    padding-right: 10px;
+   
+}
+
+#sitenav li {
+    display: inline;
+    list-style: none;
+    margin-left: 60px;
+    
+}
+
+#menu {
+   background-color: rgba(0, 0, 0, 0.5);;
+   height: 50px; 
+    
+
+}
+
+
+
 
 
 
