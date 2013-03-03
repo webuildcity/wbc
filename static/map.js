@@ -84,7 +84,7 @@ function initMap() {
 
 function moveOutSidebar(){
     $('#sidebar-button').unbind('click');
-    $('#sidebar').removeClass('sidebar-shadow');
+    //$('#sidebar').removeClass('sidebar-shadow');
     $('#sidebar').animate(
         {left: '-=310'},
         'fast',
@@ -96,14 +96,14 @@ function moveOutSidebar(){
             $('#sidebar-button').click(moveInSidebar);
             $('i', '#sidebar-button').remove();
             $('#sidebar-button').append('<i class="icon-chevron-right"></i>');
-	    $('#sidebar').removeClass('sidebar-shadow');
+	    //$('#sidebar').removeClass('sidebar-shadow');
         }
     );
 }
 
 function moveInSidebar(){
     $('#sidebar-button').unbind('click');
-    $('#sidebar').addClass('sidebar-shadow');
+    //$('#sidebar').addClass('sidebar-shadow');
     $('#sidebar').animate(
         {left: '+=310'},
         'fast',
