@@ -10,5 +10,6 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^bbs/(?P<id>\d+)/$', 'projects.views.show'),
+    url(r'^(?P<id>\d+)/$', 'projects.views.show'),
     
 )
