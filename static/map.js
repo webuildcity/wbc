@@ -42,7 +42,7 @@ function initMap() {
         var lon = bbp.fields.lon;
         var lat = bbp.fields.lat;
         var t = bbp.fields.bplan;
-        var link = "http://localhost:8000/bbs/" + bbp.pk ;
+        var link = "bbs/" + bbp.pk ;
         var id = "listid" + bbp.pk ;        
         html += '<li id= "'+ id +'"><a href="' + link + '" target="blank">' + t + '</a></li>';        
         var marker = L.marker([lat,lon],{icon: orangeIcon}).addTo(map);
