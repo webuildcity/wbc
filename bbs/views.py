@@ -8,4 +8,8 @@ def home(request):
     b = BBP.objects.all()
     projectsJson = serializers.serialize("json", p)
     bbpJson = serializers.serialize("json", b) 
-    return render(request,'bbs/map.html', {'projectsJson': projectsJson, 'bbpJson': bbpJson})
+    return render(request,'bbs/map.html',{
+            'baseUrl': request.path,
+            'projectsJson': projectsJson,
+            'bbpJson': bbpJson
+            })
