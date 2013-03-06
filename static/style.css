@@ -14,7 +14,6 @@ html, body {
     background-color: white;
 }
 
-
 /*----------------------------------- Startseite Map mit Sidebar --------------------------------------------*/
 
 #map {
@@ -59,7 +58,6 @@ html, body {
     left: 1px;
     bottom: 1px;
 }
-
 #sidebar-content{    
     position: absolute;
     top: 16px;
@@ -70,20 +68,12 @@ html, body {
     padding-right: 16px;
     overflow-y: scroll;
 }
-
 .marked{
     background-color: #ddd;
 }
-
 #map1{
-
     margin-top: 80px;
-    
-    
-    
 }
-
-
 
 /*-------------------------------------------------------Navigation----------------------------------------------------*/
 
@@ -96,17 +86,12 @@ html, body {
     right: 0px;
     z-index: 10;
 }
-
-
-
 #sitenav {
     float: right;
     padding-right: 10px;
    
 }
-
 #sitenav li {
-    
     display: inline;
     list-style: none;
     margin-left: 20px;
@@ -114,27 +99,13 @@ html, body {
     font-size: 16px;
     color: #646464;       
 }
-
 #menu_right {   
    background-color: transparent;
    height:40px;   
    border-radius:7px;
    border-radius:7px; 
    padding-top:24px;
-   
-   
-
 }
-
 #menu_left {
-    
 
 }
-
-
-
-
-
-
-
-

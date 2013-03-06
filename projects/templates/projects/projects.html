@@ -1,0 +1,29 @@
+{% extends 'bbs/layout.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top: 120px">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Bezirk</th>
+                <th>Frist</th>
+                <th>Vorhaben</th>
+                <th>Ort</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for project in projects %}
+            <tr>
+                <td>{{ project.bezirke }}</td>
+                <td>{{ project.begin }} bis {{ project.end }}</td>
+                <td>{{ project.vorhaben }}</td>
+                <td>{{ project.ort }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
