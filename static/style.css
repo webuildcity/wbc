@@ -14,6 +14,16 @@ html, body {
     background-color: white;
 }
 
+a, a:visited {
+    color: #de6a00 !important;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #e58833 !important;
+    text-decoration: none !important;
+}
+
 /*----------------------------------- Startseite Map mit Sidebar --------------------------------------------*/
 
 #map {
