@@ -43,6 +43,9 @@ a:hover {
 #sidebar-button i.icon-chevron-left {
     margin-left: 3px;
 }
+.leaflet-popup-content-wrapper {
+    border-radius:7px;
+}
 
 /* Startseite Sidebar */
 
@@ -62,24 +65,24 @@ a:hover {
     bottom: 5px;
     left: 5px;
     right: 5px;
-    padding: 16px;
+    padding: 5px;
     background-color: rgba(255, 255, 255, 0.75);
     z-index: 101;
     border-radius:7px;
 }
-
 #sidebar-content {
     position: relative;
-    /* 
-    padding: 16px;
-    background-color: rgba(255, 255, 255, 0.75);
-    border-radius:7px;
     /* overflow-y: scroll; */
 }
-.marked{
-    background-color: #ddd;
+#sidebar-content a.marked,
+#sidebar-content a:hover.marked {
+    color: white !important;
+    background-color: #de6a00;
 }
-#map1{
+
+/* Projektseiten */
+
+#localmap {
     margin-top: 80px;
 }
 

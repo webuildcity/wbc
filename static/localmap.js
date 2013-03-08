@@ -1,6 +1,6 @@
 function initMap() {
    	
-    map = new L.Map("map1");
+    map = new L.Map("localmap");
     
     var baseurl = '/bbs/static/';
     var min = 14; //minimale Zoomstufe
@@ -22,11 +22,8 @@ function initMap() {
 	});
     
     L.marker([lat,lon],{icon: greenIcon}).addTo(map);
-    	 
-    
 }
 
 $(document).ready(function() {
-    setTimeout('initMap()',100);    
-    
+    setTimeout('initMap()',100);     
 });
