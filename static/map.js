@@ -63,8 +63,7 @@ function initMap() {
     
     html += '</ul>';
     $('#sidebar-content').append(html); 
-     
-         
+        
     for(var j = 0; j<markers.length;j++){     
         $('#listid' + j).mouseover(function() {
             k = $(this).attr('id').split('listid')[1];
@@ -77,38 +76,39 @@ function initMap() {
             markers[k].setIcon(orangeIcon);
         });
     }
-    
-    
-    
+
+    html = '<div class="leaflet-control-zoom leaflet-control"><a class="leaflet-control-sidebar" href="#" title="Sidebar anzeigen" id="sidebar-button"><i class="icon-chevron-right"></i></a></div>';
+    $('.leaflet-top.leaflet-left').append(html);
+    $('#sidebar-button').click(moveInSidebar);
+    $('.leaflet-control-zoom-in').attr('title','Hinein zoomen');
+    $('.leaflet-control-zoom-out').attr('title','Heraus zoomen');
 }
 
 function moveOutSidebar(){
     $('#sidebar-button').unbind('click');
-    //$('#sidebar').removeClass('sidebar-shadow');
     $('#sidebar').animate(
         {left: '-=310'},
         'fast',
         function(){});
-    $('#sidebar-button').animate(
+    $('.leaflet-top.leaflet-left').animate(
         {left: '-=310'},
         'fast',
         function(){
             $('#sidebar-button').click(moveInSidebar);
             $('i', '#sidebar-button').remove();
             $('#sidebar-button').append('<i class="icon-chevron-right"></i>');
-	    //$('#sidebar').removeClass('sidebar-shadow');
         }
     );
+    return false;
 }
 
 function moveInSidebar(){
     $('#sidebar-button').unbind('click');
-    //$('#sidebar').addClass('sidebar-shadow');
     $('#sidebar').animate(
         {left: '+=310'},
         'fast',
         function(){});
-    $('#sidebar-button').animate(
+    $('.leaflet-top.leaflet-left').animate(
         {left: '+=310'},
         'fast',
         function(){
@@ -117,9 +117,9 @@ function moveInSidebar(){
             $('#sidebar-button').append('<i class="icon-chevron-left"></i>');
         }
     );
+    return false;
 }
 
 $(document).ready(function() {
-    setTimeout('initMap()',100);    
-    $('#sidebar-button').click(moveInSidebar);
+    setTimeout('initMap()',100);
 });

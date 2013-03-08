@@ -98,7 +98,7 @@
 	float: right;
 	}
 .leaflet-top .leaflet-control {
-	margin-top: 120px;
+	margin-top: 10px;
 	}
 .leaflet-bottom .leaflet-control {
 	margin-bottom: 10px;
@@ -342,7 +342,7 @@
 /* Visual appearance */
 
 .leaflet-container {
-	background: white;
+	background: #ddd;
 	}
 .leaflet-container a {
 	color: #0078A8;

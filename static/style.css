@@ -24,7 +24,7 @@ a:hover {
     text-decoration: none !important;
 }
 
-/*----------------------------------- Startseite Map mit Sidebar --------------------------------------------*/
+/* Startseite Map */
 
 #map {
     position: absolute;
@@ -34,49 +34,47 @@ a:hover {
     right: 0px;
     z-index: 0;
 }
+.leaflet-top.leaflet-left {
+    top: 100px;
+}
+#sidebar-button i.icon-chevron-right {
+    margin-left: 2px;
+}
+#sidebar-button i.icon-chevron-left {
+    margin-left: 3px;
+}
+
+/* Startseite Sidebar */
+
 #sidebar {    
     position: absolute;
-    top: 100px;
-    bottom: 0px;
+    top: 110px;
+    bottom: 10px;
     left: -300px;
     width: 300px;
-    background-color: rgba(0, 0, 0, 0.246094);
-    /*background-color: rgba(80, 80, 80, 0.7);*/  
+    background-color: rgba(0, 0, 0, 0.246094); 
     z-index: 101;
-    overflow: hidden;
-    border-radius:7px;
     border-radius:7px;
 }
-.sidebar-shadow {
-    box-shadow: 2px 2px 2px 1.9px rgba( 0, 0, 0, 0.45 );
-    -webkit-box-shadow:2px 2px 2px 1.9px rgba( 0, 0, 0, 0.45 );
-    -moz-box-shadow: 2px 2px 2px 1.9px rgba( 0, 0, 0, 0.45 );
-}
-#sidebar-button {
-    background-color: rgba(0, 0, 0, 0.246094) !important;
+#sidebar-inner {    
     position: absolute;
-    top: 100px;    
-    left: 10px;
-    width: 16px;
-    height: 16px;
-    background-color: white;    
+    top: 5px;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+    padding: 16px;
+    background-color: rgba(255, 255, 255, 0.75);
     z-index: 101;
-    
+    border-radius:7px;
 }
-#sidebar-button i {
-    position: absolute;
-    left: 1px;
-    bottom: 1px;
-}
-#sidebar-content{    
-    position: absolute;
-    top: 16px;
-    bottom: 16px;
-    left: 0px;
-    right: 0px;
-    padding-left: 16px;
-    padding-right: 16px;
-    overflow-y: scroll;
+
+#sidebar-content {
+    position: relative;
+    /* 
+    padding: 16px;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius:7px;
+    /* overflow-y: scroll; */
 }
 .marked{
     background-color: #ddd;
@@ -85,7 +83,7 @@ a:hover {
     margin-top: 80px;
 }
 
-/*-------------------------------------------------------Navigation----------------------------------------------------*/
+/* Navigation */
 
 #navcontainer {
     position: absolute;
@@ -115,7 +113,4 @@ a:hover {
    border-radius:7px;
    border-radius:7px; 
    padding-top:24px;
-}
-#menu_left {
-
 }
