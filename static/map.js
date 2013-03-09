@@ -31,7 +31,8 @@ function initMap() {
 
     // bbps zu karte hinzufügen
     $.each(bbps, function(key,bbp){
-        var text = bbp.fields.bplan;
+        var text = bbp.fields.address;
+        console.log(text);
         var link = site_url + "bbp/" + bbp.pk ;
 
         // marker für leaflet karte

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 
 class Project(models.Model): 
@@ -16,17 +17,28 @@ class Project(models.Model):
         return '[' + unicode(self.id) + '] ' + self.titel
         
 class BBP(models.Model): 
-    vorhaben    = models.CharField(max_length=256)
-    bplan       = models.CharField(max_length=256)
-    typ         = models.CharField(max_length=256)
-    bezirke     = models.CharField(max_length=256)
-    lon         = models.FloatField()
-    lat         = models.FloatField()
-    begin       = models.DateTimeField()
-    end         = models.DateTimeField()
-    ort         = models.CharField(max_length=256)
-    zeiten      = models.CharField(max_length=256)
-    link        = models.URLField()    
+    strassen        = models.CharField(max_length=256, blank=True, verbose_name="Örtliche Beschreibung")
+    address         = models.CharField(max_length=256, blank=False, verbose_name="Eine genaue Adresse des Vorhabens")
+    lon             = models.FloatField(blank=False)
+    lat             = models.FloatField(blank=False)
+    begin           = models.DateField(blank=False, verbose_name="Beginn der Auslegungszeit")
+    end             = models.DateField(blank=False, verbose_name="Ende der Auslegungszeit")
+    typ             = models.CharField(max_length=256, blank=False)
+    ort             = models.CharField(max_length=256, blank=True, verbose_name="Ort der Auslegung")
+    zeiten          = models.CharField(max_length=256, blank=True, verbose_name="Öffnungszeiten der Auslegungsstelle")
+    beschreibung    = models.CharField(max_length=256, blank=True, verbose_name="Beschreibung des Vorhabens")
+    plan_id         = models.CharField(max_length=256, blank=True, verbose_name="Bezeichner des Beplauungsplans")    
+    bezirk          = models.ManyToManyField('Bezirk')
+            
 
     def __unicode__(self):
-        return '[' + unicode(self.id) + '] ' + self.vorhaben
+        return '[' + unicode(self.id) + '] ' + self.address               
+        
+class Bezirk(models.Model): 
+    name          = models.CharField(max_length=256)
+    link          = models.URLField()
+    
+    def __unicode__(self):
+        return '[' + unicode(self.id) + '] ' + self.name
+        
+
