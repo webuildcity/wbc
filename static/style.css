@@ -2,11 +2,6 @@
     font-family: titillium;
     src: url('font/TitilliumText25L.otf');
 }
-@font-face {
-    font-family: vollkorn;
-    src: url('vollkorn/Vollkorn-Bold.ttf');
-    font-weight: bold;
-}
 
 html, body {
     padding: 0;

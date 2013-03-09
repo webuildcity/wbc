@@ -53,7 +53,7 @@ function initMap() {
 
         var popuptext = text;
         popuptext += '<br>';
-        popuptext += '<a href=' + link + '" target="blank">Details</a>';
+        popuptext += '<a href="' + link + '" target="blank">Details</a>';
         marker.bindPopup(popuptext);
 
         // add marker to global marker array
