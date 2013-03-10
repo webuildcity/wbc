@@ -30,7 +30,10 @@ function initMap() {
 
     // bbps zu karte hinzufügen
     $.each(bbps, function(key,bbp){
-        var text = bbp.fields.address;
+        var text = bbp.fields.address; 
+        var bezirk = bbp.fields.bezirk;
+        var typ = bbp.fields.typ;
+        var end = bbp.fields.end;
         var link = siteUrl + "bbp/" + bbp.pk ;
 
         // marker für leaflet karte
@@ -50,7 +53,9 @@ function initMap() {
             //markers[this.pk].setIcon(orangeIcon);
         });
 
-        var popuptext = text;
+        var popuptext = typ;
+        popuptext += '<br>';
+        popuptext += "Plan liegt aus bis: " + end;
         popuptext += '<br>';
         popuptext += '<a href="' + link + '" target="blank">Details</a>';
         marker.bindPopup(popuptext);
@@ -61,7 +66,7 @@ function initMap() {
         // listeneintrag für sidebar
         var li = $('<li/>',{
             'id': 'bbp-'+ bbp.pk,
-            'html': '<a href="' + link + '" target="blank">' + text + '</a>'
+            'html': '<a href="' + link + '" target="blank">Betrifft die Gegend um: ' + '<b>' +text + '</b> in ' + bezirke[bezirk-1].fields.name +'</a>'
         }).appendTo($('ul', '#sidebar-content'));
 
         // mouseover effekte für listeneintrag

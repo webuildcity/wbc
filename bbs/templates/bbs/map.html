@@ -9,8 +9,9 @@
     <script type="text/javascript">    
     var siteUrl = '{{ siteUrl|safe }}';
     var staticUrl = '{{ STATIC_URL }}';
-    var projects = {{ projectsJson|safe }};
-    var bbps = {{ bbpJson|safe }};    
+    //var projects = {{ projectsJson|safe }};
+    var bbps = {{ bbpJson|safe }}; 
+    var bezirke = {{ bezirkeJson|safe }};   
     </script>
 
 {% endblock %}
