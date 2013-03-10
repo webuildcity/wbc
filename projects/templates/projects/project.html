@@ -18,23 +18,36 @@
         <div id="localmap" style="height: 300px"></div>
             <div class="row">        
                 <div class="span8">
-                    <h3>Bezirk</h3>
-                    {{ project.bezirk.all.0.name }}
+                    <h3>Wo soll etwas gebaut werden?</h3>
+                    {{ project.strassen }}<br>
+                    in {{ project.bezirk.all.0.name }}
                 </div>
                 <div class="span4">
-                    <h3>Frist</h3>
+                    <h3>Zeitraum der Auslegung</h3>
                     {{ project.begin }} bis {{ project.end }}
                 </div>
             </div>
             <div class="row">        
                 <div class="span8">
-                    <h3>Vorhaben</h3>
-                    {{ project.address }}
+                    <h3>Was soll gebaut werden?</h3>
+                    {{ project.beschreibung }}
                 </div>
-            <div class="span4">
-                <h3>Ort</h3>
-                {{ project.ort }}
+                <div class="span4">
+                    <h3>Ort der Auslegung</h3>
+                    {{ project.ort }}
+                </div> 
             </div> 
-        </div>       
-    </div>
+            <div class="row">        
+                <div class="span8">
+                    <h3>Welchen gesetzlichen Rahmen betrifft das?</h3>
+                    {{ project.typ }}
+                </div>
+                <div class="span4">
+                    <h3>Link zum Bezirksamt</h3>
+                    <a href="{{ project.bezirk.all.0.link }}" target="_blank">{{ project.bezirk.all.0.link }}</a>
+                    
+                    
+                </div> 
+            </div>        
+        </div>
 {% endblock %}

@@ -14,7 +14,13 @@ html, body {
     margin: 0;
     background-color: white;
     font-family: dejavu;
+    font-size: 14px;
     
+}
+
+html h3 {
+    font-family: titillium;
+    font-size: 16px;
 }
 
 a, a:visited {
@@ -40,6 +46,14 @@ a:hover {
 .leaflet-top.leaflet-left {
     top: 100px;
 }
+
+.leaflet-popup-content {
+
+    font-family: dejavu;
+    font-size: 14px;
+    color: #333;
+
+} 
 #sidebar-button i.icon-chevron-right {
     margin-left: 2px;
 }
