@@ -19,7 +19,7 @@ function initMap() {
         iconUrl: staticUrl + '/img/schild_orange.png',    
         iconSize:     [23, 37], // size of the icon width,height    
         iconAnchor:   [11, 37], // point of the icon which will correspond to marker's location    
-        popupAnchor:  [0,-37] // point from which the popup should open relative to the iconAnchor
+        popupAnchor:  [-1,-38] // point from which the popup should open relative to the iconAnchor
 	});
     var markedIcon = L.icon({
         iconUrl: staticUrl + '/img/marker_yellow.png',    

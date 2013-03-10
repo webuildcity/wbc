@@ -53,6 +53,7 @@ a:hover {
     background-color: rgba(0, 0, 0, 0.246094); 
     z-index: 101;
     border-radius:7px;
+    overflow: hidden;
 }
 #sidebar-inner {    
     position: absolute;
@@ -60,14 +61,24 @@ a:hover {
     bottom: 5px;
     left: 5px;
     right: 5px;
-    padding: 5px;
+    
     background-color: rgba(255, 255, 255, 0.75);
     z-index: 101;
-    border-radius:7px;
+    border-radius:7px;   
+}
+#sidebar-scroll {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+
+    padding-right: 5px;
+
+    overflow-y: auto;
 }
 #sidebar-content {
     position: relative;
-    /* overflow-y: scroll; */
 }
 #sidebar-content a.marked,
 #sidebar-content a:hover.marked {
