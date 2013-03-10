@@ -1,4 +1,4 @@
-var _markers = new Array();
+var markers = new Array();
 
 function initMap() {
 	// Die Karte wird in der index-html in das Div mit der id "mymap" gezeichnet
@@ -6,10 +6,9 @@ function initMap() {
 	
 	var min = 10; //minimale Zoomstufe
 	var max = 15; //maximale Zoomstufe	
+	var myTiles = "http://tiles.jochenklar.de/pinkoding-bbs/{z}/{x}/{y}.png";
 	
-    var baseurl = '/bbs/static/';
-    var myTiles = "http://tiles.jochenklar.de/pinkoding-bbs/{z}/{x}/{y}.png";
-	osmCopyright = "Map data &copy; 2012 OpenStreetMap contributors"; //Copyrigth, das unten rechts erscheint	
+        osmCopyright = "Map data &copy; 2012 OpenStreetMap contributors"; //Copyrigth, das unten rechts erscheint	
 	myLayer = new L.TileLayer(myTiles, { minZoom:min, maxZoom: max, attribution: osmCopyright, zIndex:0, reuseTiles:true } ); //Nun wird mit diesen tiles eine ebene erstellt (hier gibt es nur eine Ebene, es sind aber auch mehrere Ebenen möglich)	
 	map.addLayer( myLayer ); //Füge die Ebene der Karte hinzu			
 	
@@ -17,13 +16,13 @@ function initMap() {
 	map.setView(center, 11);		
 	
 	var orangeIcon = L.icon({
-        iconUrl: baseurl + '/img/schild_orange.png',    
+        iconUrl: staticUrl + '/img/schild_orange.png',    
         iconSize:     [23, 37], // size of the icon width,height    
         iconAnchor:   [11, 37], // point of the icon which will correspond to marker's location    
         popupAnchor:  [0,-37] // point from which the popup should open relative to the iconAnchor
 	});
     var markedIcon = L.icon({
-        iconUrl: baseurl + '/img/marker_yellow.png',    
+        iconUrl: staticUrl + '/img/marker_yellow.png',    
         iconSize:     [21, 32], // size of the icon width,height    
         iconAnchor:   [10, 32], // point of the icon which will correspond to marker's location    
         popupAnchor:  [0,-32] // point from which the popup should open relative to the iconAnchor
@@ -32,8 +31,7 @@ function initMap() {
     // bbps zu karte hinzufügen
     $.each(bbps, function(key,bbp){
         var text = bbp.fields.address;
-        console.log(text);
-        var link = site_url + "bbp/" + bbp.pk ;
+        var link = siteUrl + "bbp/" + bbp.pk ;
 
         // marker für leaflet karte
         var marker = L.marker(
@@ -45,11 +43,11 @@ function initMap() {
 
         marker.on('mouseover', function(evt) {
             $('a', '#bbp-' + this.pk).addClass("marked");
-            //_markers[this.pk].setIcon(markedIcon);
+            //markers[this.pk].setIcon(markedIcon);
         });
         marker.on('mouseout', function(evt) {
             $('a', '#bbp-' + this.pk).removeClass("marked");
-            //_markers[this.pk].setIcon(orangeIcon);
+            //markers[this.pk].setIcon(orangeIcon);
         });
 
         var popuptext = text;
@@ -58,7 +56,7 @@ function initMap() {
         marker.bindPopup(popuptext);
 
         // add marker to global marker array
-        _markers[bbp.pk] = marker;
+        markers[bbp.pk] = marker;
 
         // listeneintrag für sidebar
         var li = $('<li/>',{
@@ -70,12 +68,12 @@ function initMap() {
         li.mouseover(function() {
             var pk = $(this).attr('id').split('bbp-')[1];
             $('a', this).addClass("marked");
-            _markers[pk].setIcon(markedIcon);
+            markers[pk].setIcon(markedIcon);
         });
         li.mouseout(function() {
             var pk = $(this).attr('id').split('bbp-')[1];
             $('a', this).removeClass("marked");
-            _markers[pk].setIcon(orangeIcon);
+            markers[pk].setIcon(orangeIcon);
         });
     });   
     

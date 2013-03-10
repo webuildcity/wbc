@@ -5,8 +5,9 @@
     <script type="text/javascript" src="{{ STATIC_URL }}leaflet/leaflet.js" >
     </script>    
     <script type="text/javascript">
-    var lon = {{ project.lon }};
-    var lat = {{ project.lat }};    
+    var staticUrl = '{{ STATIC_URL }}';
+    var lon = {{ project.lon|stringformat:"F" }};
+    var lat = {{ project.lat|stringformat:"F" }};    
     </script>
     <script type="text/javascript" src="{{ STATIC_URL }}localmap.js" ></script>
 {% endblock %}
