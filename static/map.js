@@ -32,7 +32,9 @@ function initMap() {
     $.each(bbps, function(key,bbp){
         var text = bbp.fields.address; 
         var bezirk = bbp.fields.bezirk;
-        var typ = bbp.fields.typ;
+        var typid = bbp.fields.typ;
+        console.log(typid)
+        var typ = typen[typid-1].fields.name;
         var end = bbp.fields.end;
         var link = siteUrl + "bbp/" + bbp.pk ;
 
@@ -55,7 +57,7 @@ function initMap() {
 
         var popuptext = typ;
         popuptext += '<br>';
-        popuptext += "Plan liegt aus bis: " + end;
+        popuptext += "Beteiligung möglich bis: " + end;
         popuptext += '<br>';
         popuptext += '<a href="' + link + '" target="blank">Details</a>';
         marker.bindPopup(popuptext);

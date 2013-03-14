@@ -23,13 +23,12 @@ class BBP(models.Model):
     lat             = models.FloatField(blank=False)
     begin           = models.DateField(blank=False, verbose_name="Beginn der Auslegungszeit")
     end             = models.DateField(blank=False, verbose_name="Ende der Auslegungszeit")
-    typ             = models.CharField(max_length=256, blank=False)
+    typ             = models.ForeignKey('Typ', unique = False)
     ort             = models.CharField(max_length=256, blank=True, verbose_name="Ort der Auslegung")
     zeiten          = models.CharField(max_length=256, blank=True, verbose_name="Öffnungszeiten der Auslegungsstelle")
     beschreibung    = models.CharField(max_length=256, blank=True, verbose_name="Beschreibung des Vorhabens")
     plan_id         = models.CharField(max_length=256, blank=True, verbose_name="Bezeichner des Beplauungsplans")    
-    bezirk          = models.ManyToManyField('Bezirk')
-            
+    bezirk          = models.ManyToManyField('Bezirk')            
 
     def __unicode__(self):
         return '[' + unicode(self.id) + '] ' + self.address               
@@ -37,6 +36,13 @@ class BBP(models.Model):
 class Bezirk(models.Model): 
     name          = models.CharField(max_length=256)
     link          = models.URLField()
+    
+    def __unicode__(self):
+        return '[' + unicode(self.id) + '] ' + self.name
+        
+class Typ(models.Model): 
+    name          = models.CharField(max_length=256)
+    description   = models.CharField(max_length=256)
     
     def __unicode__(self):
         return '[' + unicode(self.id) + '] ' + self.name
