@@ -8,6 +8,11 @@
     src: url('font/DejaVuSansCondensed.ttf');
     
 }
+@font-face {
+    font-family:dejavu;
+    src: url('font/DejaVuSansCondensed-Bold.ttf');
+    font-weight: bold;
+}
 
 html, body {
     padding: 0;
