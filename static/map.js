@@ -16,16 +16,15 @@ function initMap() {
 	map.setView(center, 11);		
 	
 	var orangeIcon = L.icon({
-        iconUrl: staticUrl + '/img/schild_orange.png',    
-        iconSize:     [23, 37], // size of the icon width,height    
-        iconAnchor:   [11, 37], // point of the icon which will correspond to marker's location    
-        popupAnchor:  [-1,-38] // point from which the popup should open relative to the iconAnchor
+        iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_organge_klein.png',    
+        iconSize:     [26, 45], // size of the icon width,height    
+        iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
+        popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
 	});
     var markedIcon = L.icon({
-        iconUrl: staticUrl + '/img/marker_yellow.png',    
-        iconSize:     [21, 32], // size of the icon width,height    
-        iconAnchor:   [10, 32], // point of the icon which will correspond to marker's location    
-        popupAnchor:  [0,-32] // point from which the popup should open relative to the iconAnchor
+        iconUrl: staticUrl + '/img/Baustellenschilder/groß/schild_organge_groß.png',    
+        iconSize:     [35, 65], // size of the icon width,height    
+        iconAnchor:   [17, 65], // point of the icon which will correspond to marker's location       
 	});
 
     // bbps zu karte hinzufügen
