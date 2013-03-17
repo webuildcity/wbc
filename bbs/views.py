@@ -6,16 +6,19 @@ import datetime
 def home(request):
     p = Project.objects.all()
     b = BBP.objects.filter(end__gte = datetime.date.today())
+    bOld = BBP.objects.filter(end__lt = datetime.date.today())
     bezirke = Bezirk.objects.all()
     typ = Typ.objects.all()   
     projectsJson = serializers.serialize("json", p)
     bbpJson = serializers.serialize("json", b) 
+    bbpOldJson = serializers.serialize("json", bOld) 
     bezirkeJson = serializers.serialize("json", bezirke) 
     typJson = serializers.serialize("json", typ)
     return render(request,'bbs/map.html',{
             'baseUrl': request.path,
             'projectsJson': projectsJson,
             'bbpJson': bbpJson,
+            'bbpOldJson': bbpOldJson,
             'bezirkeJson': bezirkeJson,
             'typJson' : typJson
             })
