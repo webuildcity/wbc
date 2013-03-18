@@ -20,5 +20,6 @@ def home(request):
             'bbpJson': bbpJson,
             'bbpOldJson': bbpOldJson,
             'bezirkeJson': bezirkeJson,
-            'typJson' : typJson
+            'typJson' : typJson,
+            'typ' : typ
             })

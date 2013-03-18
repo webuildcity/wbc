@@ -34,8 +34,12 @@
                     <div id="my-tab-content" class="tab-content">
                         <div class="tab-pane active" id="info">
                             <div id="info-content">
-                            <h3> Worum geht es hier? </h3>                            
-                            <p>red red red red red red</p>
+                            <b> Worum geht es hier? </b>                            
+                            <p> Bürger baut Stadt informiert über geplante Bauvorhaben in Berlin. Grundlage der Informationen ist das Amtsblatt von Berlin. </p>
+                            {% for t in typ %}
+                            <b>{{ t.name }}</b><br> 
+                            <p>{{ t.description }}</p>   
+                            {% endfor %}
                             </div>
                         </div>
                         <div class="tab-pane" id="liste">
