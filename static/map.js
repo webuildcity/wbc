@@ -47,16 +47,24 @@ function initMap() {
         marker.on('mouseover', function(evt) {
             $('a', '#bbp-' + this.pk).addClass("marked");
             //$('#typ'+ typid).css("background-color", "#de6a00");  
-            $('#typ'+ typid).addClass("listentry-marked");    
+            //$('#typ'+ typid).addClass("listentry-marked");    
             
             //markers[this.pk].setIcon(markedIcon);
         });
         marker.on('mouseout', function(evt) {
             $('a', '#bbp-' + this.pk).removeClass("marked");
-            $('#typ'+ typid).removeClass("listentry-marked");
+            //$('#typ'+ typid).removeClass("listentry-marked");
             //$('#typ'+ typid).css("background-color", "transparent"); 
             //markers[this.pk].setIcon(orangeIcon);
         });
+        
+        marker.on('click', function(evt) {            
+            $('#typ'+ typid).addClass("listentry-marked");
+            //$('#typ'+ typid).css("background-color", "transparent"); 
+            //markers[this.pk].setIcon(orangeIcon);
+        });
+        
+        
 
         var popuptext = typ;
         popuptext += '<br>';
@@ -64,6 +72,8 @@ function initMap() {
         popuptext += '<br>';
         popuptext += '<a href="' + link + '" target="blank">Details</a>';
         marker.bindPopup(popuptext);
+        
+        map.addEventListener('popupclose', function() { $('.listentry-marked').removeClass('listentry-marked');}, this);
 
         // add marker to global marker array
         markers[bbp.pk] = marker;
