@@ -8,6 +8,11 @@
     src: url('font/DejaVuSansCondensed.ttf');
     
 }
+@font-face {
+    font-family:dejavu;
+    src: url('font/DejaVuSansCondensed-Bold.ttf');
+    font-weight: bold;
+}
 
 html, body {
     padding: 0;
@@ -19,7 +24,7 @@ html, body {
 }
 
 html h3 {
-    font-family: titillium;
+    /*font-family: titillium;*/
     font-size: 16px;
 }
 
