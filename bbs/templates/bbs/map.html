@@ -19,15 +19,36 @@
 {% endblock %}
 
 {% block content %}
-    <div id="sidebar">
-        <div id="sidebar-inner">
+    <div id="sidebar">        
+        <div id="sidebar-inner">            
             <div id="sidebar-scroll">
-                <div id="sidebar-content">
-                    <ul class="nav nav-pills nav-stacked">
+                <div id="sidebar-container">
+                    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                        <li class="active">
+                            <a href="#info" data-toggle="tab">Info</a>
+                        </li>
+                        <li>
+                            <a href="#liste" data-toggle="tab">Liste</a>
+                        </li>                        
                     </ul>
+                    <div id="my-tab-content" class="tab-content">
+                        <div class="tab-pane active" id="info">
+                            <div>
+                            <h3>Red</h3>
+                            <p>red red red red red red</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="liste">
+                            <div id="sidebar-content">
+                                <ul class="nav nav-pills nav-stacked"></ul>
+                            </div>
+                        </div>                            
+                    </div>
+                    
                 </div>
             </div>
         </div>
     </div>
+    
     <div id="map"></div>
 {% endblock %}

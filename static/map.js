@@ -82,7 +82,7 @@ function initMap() {
         });
     }); 
     
-    var greyIcon = L.icon({
+    /*var greyIcon = L.icon({
         iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png',    
         iconSize:     [26, 45], // size of the icon width,height    
         iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
@@ -146,7 +146,7 @@ function initMap() {
             $('a', this).removeClass("marked");
             markers[pk].setIcon(greyIcon);
         });
-    });
+    });*/
     
     
       

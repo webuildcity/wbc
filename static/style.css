@@ -45,14 +45,13 @@ a:hover {
 }
 .leaflet-top.leaflet-left {
     top: 100px;
+    
 }
 
 .leaflet-popup-content {
-
     font-family: dejavu;
     font-size: 14px;
     color: #333;
-
 } 
 #sidebar-button i.icon-chevron-right {
     margin-left: 2px;
@@ -71,12 +70,14 @@ a:hover {
     top: 110px;
     bottom: 10px;
     left: -300px;
+    /*left: 10px;*/
     width: 300px;
     background-color: rgba(0, 0, 0, 0.246094); 
     z-index: 101;
     border-radius:7px;
     overflow: hidden;
 }
+
 #sidebar-inner {    
     position: absolute;
     top: 5px;
@@ -88,20 +89,25 @@ a:hover {
     z-index: 101;
     border-radius:7px;   
 }
+
 #sidebar-scroll {
     position: absolute;
     top: 5px;
     bottom: 5px;
     left: 5px;
     right: 5px;
-
     padding-right: 5px;
-
     overflow-y: auto;
 }
-#sidebar-content {
+
+#sidebar-container {
     position: relative;
 }
+
+#tabs{
+    
+}
+
 #sidebar-content a.marked,
 #sidebar-content a:hover.marked {
     color: white !important;
