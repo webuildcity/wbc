@@ -152,9 +152,10 @@ function initMap() {
       
     
     // button für sidebar zur leafletkarte hinzufügen
-    html = '<div class="leaflet-control-zoom leaflet-control"><a class="leaflet-control-sidebar" href="#" title="Sidebar anzeigen" id="sidebar-button"><i class="icon-chevron-left"></i></a></div>';
+    html = '<div class="leaflet-control-zoom leaflet-control"><a class="leaflet-control-sidebar" href="#" id="sidebar-button"><i class="icon-chevron-left"></i></a></div>';
     $('.leaflet-top.leaflet-left').prepend(html);
     $('#sidebar-button').click(moveOutSidebar);
+    $('#sidebar-button').attr('title','Sidebar ausblenden');
     $('.leaflet-control-zoom-in').attr('title','Hinein zoomen');
     $('.leaflet-control-zoom-out').attr('title','Heraus zoomen');
 }
@@ -172,7 +173,8 @@ function moveOutSidebar(){
             $('#sidebar-button').click(moveInSidebar);
             $('i', '#sidebar-button').remove();
             $('#sidebar-button').append('<i class="icon-chevron-right"></i>');
-        }
+	    $('#sidebar-button').attr('title','Sidebar einblenden');
+       }
     );
     return false;
 }
@@ -190,6 +192,7 @@ function moveInSidebar(){
             $('#sidebar-button').click(moveOutSidebar);
             $('i', '#sidebar-button').remove();
             $('#sidebar-button').append('<i class="icon-chevron-left"></i>');
+	    $('#sidebar-button').attr('title','Sidebar einblenden');
         }
     );
     return false;
