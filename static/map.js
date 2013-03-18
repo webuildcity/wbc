@@ -152,9 +152,9 @@ function initMap() {
       
     
     // button für sidebar zur leafletkarte hinzufügen
-    html = '<div class="leaflet-control-zoom leaflet-control"><a class="leaflet-control-sidebar" href="#" title="Sidebar anzeigen" id="sidebar-button"><i class="icon-chevron-right"></i></a></div>';
+    html = '<div class="leaflet-control-zoom leaflet-control"><a class="leaflet-control-sidebar" href="#" title="Sidebar anzeigen" id="sidebar-button"><i class="icon-chevron-left"></i></a></div>';
     $('.leaflet-top.leaflet-left').prepend(html);
-    $('#sidebar-button').click(moveInSidebar);
+    $('#sidebar-button').click(moveOutSidebar);
     $('.leaflet-control-zoom-in').attr('title','Hinein zoomen');
     $('.leaflet-control-zoom-out').attr('title','Heraus zoomen');
 }

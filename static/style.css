@@ -50,7 +50,7 @@ a:hover {
 }
 .leaflet-top.leaflet-left {
     top: 100px;
-    
+    left: 310px;
 }
 
 .leaflet-popup-content {
@@ -74,8 +74,8 @@ a:hover {
     position: absolute;
     top: 110px;
     bottom: 10px;
-    left: -300px;
-    /*left: 10px;*/
+    /*left: -300px;*/
+    left: 10px;
     width: 300px;
     background-color: rgba(0, 0, 0, 0.246094); 
     z-index: 101;
