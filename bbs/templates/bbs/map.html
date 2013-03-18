@@ -28,24 +28,28 @@
                             <a href="#info" data-toggle="tab">Info</a>
                         </li>
                         <li>
+                            <a href="#begriffe" data-toggle="tab">Begriffe</a>
+                        </li>
+                        <li>
                             <a href="#liste" data-toggle="tab">Liste</a>
                         </li>                        
                     </ul>
                     <div id="my-tab-content" class="tab-content">
                         <div class="tab-pane active" id="info">
                             <div id="info-content">
-                                <div class = "listentry"> 
-                                <b> Worum geht es hier? </b>                            
-                                <p> Bürger baut Stadt informiert über geplante Bauvorhaben in Berlin. Grundlage der Informationen ist das Amtsblatt von Berlin.</p>
-                                </div>
-                                {% for t in typ %}
+                                <div class = "listentry">                                                           
+                                <p> An vielen geplanten Bauprojekten können sich die Bürger beteiliegen. Leider wissen sie davon häufig nichts, denn die Informationen werden im Amtsblatt veröffentlicht, das nicht jeder kennt und abboniert hat. Wir fassen das daher hier auf dieser Seite für Sie zusammen. </p>
+                                </div>                                
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="begriffe">
+                            {% for t in typ %}
                                 <div id ="typ{{ t.pk }}" class = "listentry">
                                     <b>{{ t.name }}</b><br> 
                                     <p>{{ t.description }}</p>
                                 </div>   
                                 {% endfor %}
-                            </div>
-                        </div>
+                        </div>   
                         <div class="tab-pane" id="liste">
                             <div id="sidebar-content">                                
                                 <ul class="nav nav-pills nav-stacked"></ul>
