@@ -34,12 +34,16 @@
                     <div id="my-tab-content" class="tab-content">
                         <div class="tab-pane active" id="info">
                             <div id="info-content">
-                            <b> Worum geht es hier? </b>                            
-                            <p> Bürger baut Stadt informiert über geplante Bauvorhaben in Berlin. Grundlage der Informationen ist das Amtsblatt von Berlin.</p>
-                            {% for t in typ %}
-                            <b>{{ t.name }}</b><br> 
-                            <p>{{ t.description }}</p>   
-                            {% endfor %}
+                                <div class = "listentry"> 
+                                <b> Worum geht es hier? </b>                            
+                                <p> Bürger baut Stadt informiert über geplante Bauvorhaben in Berlin. Grundlage der Informationen ist das Amtsblatt von Berlin.</p>
+                                </div>
+                                {% for t in typ %}
+                                <div id ="typ{{ t.pk }}" class = "listentry">
+                                    <b>{{ t.name }}</b><br> 
+                                    <p>{{ t.description }}</p>
+                                </div>   
+                                {% endfor %}
                             </div>
                         </div>
                         <div class="tab-pane" id="liste">
