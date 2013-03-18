@@ -48,7 +48,7 @@ a:hover {
     right: 0px;
     z-index: 0;
 }
-.leaflet-top.leaflet-left {
+#map .leaflet-top.leaflet-left {
     top: 100px;
     left: 310px;
 }
