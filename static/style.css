@@ -109,15 +109,26 @@ a:hover {
     position: relative;
 }
 
-#tabs{
-    
-}
-
 #sidebar-content a.marked,
 #sidebar-content a:hover.marked {
     color: white !important;
     background-color: #de6a00;
 }
+
+#info-content {
+    margin-left: 12px;
+}
+
+.nav-tabs > .active > a,
+.nav-tabs > .active > a:hover {
+  color: #555555;
+  cursor: default;
+  background-color: transparent;
+  border: 1px solid #ddd;
+  border-bottom-color: #eee;
+}
+
+
 
 /* Projektseiten */
 
