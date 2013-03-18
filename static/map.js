@@ -58,11 +58,11 @@ function initMap() {
             //markers[this.pk].setIcon(orangeIcon);
         });
         
-        marker.on('click', function(evt) {            
+        /*marker.on('click', function(evt) {            
             $('#typ'+ typid).addClass("listentry-marked");
             //$('#typ'+ typid).css("background-color", "transparent"); 
             //markers[this.pk].setIcon(orangeIcon);
-        });
+        });*/
         
         
 
@@ -73,7 +73,7 @@ function initMap() {
         popuptext += '<a href="' + link + '" target="blank">Details</a>';
         marker.bindPopup(popuptext);
         
-        map.addEventListener('popupclose', function() { $('.listentry-marked').removeClass('listentry-marked');}, this);
+        //map.addEventListener('popupclose', function() { $('.listentry-marked').removeClass('listentry-marked');}, this);
 
         // add marker to global marker array
         markers[bbp.pk] = marker;
