@@ -8,7 +8,7 @@ function initMap() {
 	var max = 15; //maximale Zoomstufe	
 	var myTiles = "http://tiles.jochenklar.de/pinkoding-bbs/{z}/{x}/{y}.png";
 	
-        osmCopyright = "Map data &copy; 2012 OpenStreetMap contributors"; //Copyrigth, das unten rechts erscheint	
+    osmCopyright = "Map data &copy; 2012 OpenStreetMap contributors"; //Copyrigth, das unten rechts erscheint	
 	myLayer = new L.TileLayer(myTiles, { minZoom:min, maxZoom: max, attribution: osmCopyright, zIndex:0, reuseTiles:true } ); //Nun wird mit diesen tiles eine ebene erstellt (hier gibt es nur eine Ebene, es sind aber auch mehrere Ebenen möglich)	
 	map.addLayer( myLayer ); //Füge die Ebene der Karte hinzu			
 	
@@ -26,6 +26,9 @@ function initMap() {
         iconSize:     [35, 65], // size of the icon width,height    
         iconAnchor:   [17, 65], // point of the icon which will correspond to marker's location       
 	});
+    
+    var bbpMarker = new Array();
+	var bbpLayer = L.layerGroup(bbpMarker).addTo(map);
 
     // bbps zu karte hinzufügen
     $.each(bbps, function(key,bbp){
@@ -41,6 +44,8 @@ function initMap() {
             [bbp.fields.lat,bbp.fields.lon],
             {icon: orangeIcon}
         ).addTo(map);
+        
+        bbpLayer.addLayer(marker);
 
         marker.pk = bbp.pk;
 
@@ -109,6 +114,10 @@ function initMap() {
         iconAnchor:   [17, 65], // point of the icon which will correspond to marker's location       
 	});
     
+    var bbpOldMarker = new Array();
+	var bbpOldLayer = L.layerGroup(bbpOldMarker).addTo(map);
+    
+    
     $.each(bbpsOld, function(key,bbp){
         var text = bbp.fields.address; 
         var bezirk = bbp.fields.bezirk;
@@ -122,6 +131,8 @@ function initMap() {
             [bbp.fields.lat,bbp.fields.lon],
             {icon: greyIcon}
         ).addTo(map);
+        
+        bbpOldLayer.addLayer(marker)
 
         marker.pk = bbp.pk;
 
@@ -162,6 +173,10 @@ function initMap() {
             markers[pk].setIcon(greyIcon);
         });
     });
+    
+    var baseMaps = {"Hintergrund": myLayer};
+	var overlayMaps = {"Aktuell": bbpLayer, "Alt":bbpOldLayer};	
+	L.control.layers(baseMaps, overlayMaps, {collapsed: false}).addTo(map);
     
     
       
