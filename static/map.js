@@ -43,32 +43,19 @@ function initMap() {
         var marker = L.marker(
             [bbp.fields.lat,bbp.fields.lon],
             {icon: orangeIcon}
-        ).addTo(map);
+        );       
         
-        bbpLayer.addLayer(marker);
 
         marker.pk = bbp.pk;
 
         marker.on('mouseover', function(evt) {
             $('a', '#bbp-' + this.pk).addClass("marked");
-            //$('#typ'+ typid).css("background-color", "#de6a00");  
-            //$('#typ'+ typid).addClass("listentry-marked");    
             
-            //markers[this.pk].setIcon(markedIcon);
         });
         marker.on('mouseout', function(evt) {
             $('a', '#bbp-' + this.pk).removeClass("marked");
-            //$('#typ'+ typid).removeClass("listentry-marked");
-            //$('#typ'+ typid).css("background-color", "transparent"); 
-            //markers[this.pk].setIcon(orangeIcon);
-        });
-        
-        /*marker.on('click', function(evt) {            
-            $('#typ'+ typid).addClass("listentry-marked");
-            //$('#typ'+ typid).css("background-color", "transparent"); 
-            //markers[this.pk].setIcon(orangeIcon);
-        });*/
-        
+            
+        });       
         
 
         var popuptext = typ;
@@ -76,12 +63,13 @@ function initMap() {
         popuptext += "Beteiligung möglich bis: " + end;
         popuptext += '<br>';
         popuptext += '<a href="' + link + '" target="blank">Details</a>';
-        marker.bindPopup(popuptext);
-        
-        //map.addEventListener('popupclose', function() { $('.listentry-marked').removeClass('listentry-marked');}, this);
+        marker.bindPopup(popuptext);   
+       
 
         // add marker to global marker array
         markers[bbp.pk] = marker;
+        
+        bbpLayer.addLayer(marker);
 
         // listeneintrag für sidebar
         var li = $('<li/>',{
@@ -101,6 +89,8 @@ function initMap() {
             markers[pk].setIcon(orangeIcon);
         });
     }); 
+    
+    
     
     var greyIcon = L.icon({
         iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png',    
@@ -172,13 +162,11 @@ function initMap() {
             $('a', this).removeClass("marked");
             markers[pk].setIcon(greyIcon);
         });
-    });
+    }); 
     
     var baseMaps = {"Hintergrund": myLayer};
-	var overlayMaps = {"Aktuell": bbpLayer, "Alt":bbpOldLayer};	
-	L.control.layers(baseMaps, overlayMaps, {collapsed: false}).addTo(map);
-    
-    
+	var overlayMaps = {"Beteiligung ist aktuell möglich": bbpLayer, "Archiv": bbpOldLayer };	
+	L.control.layers(baseMaps, overlayMaps, {collapsed: false}).addTo(map);  
       
     
     // button für sidebar zur leafletkarte hinzufügen

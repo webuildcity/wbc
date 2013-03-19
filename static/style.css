@@ -53,6 +53,11 @@ a:hover {
     left: 310px;
 }
 
+#map .leaflet-top.leaflet-right {
+    top: 100px;
+    right: 10px;
+}
+
 .leaflet-popup-content {
     font-family: dejavu;
     font-size: 14px;
