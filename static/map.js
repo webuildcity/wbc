@@ -77,7 +77,7 @@ function initMap() {
         // listeneintrag für sidebar
         var li = $('<li/>',{
             'id': 'bbp-'+ bbp.pk,
-            'html': '<a href="' + link + '" target="blank">Betrifft die Gegend um: ' + '<b>' +text + '</b> in ' + bezirke[bezirk-1].fields.name +'</a>'
+            'html': '<a href="' + link + '" target="blank">Betrifft die Gegend um: ' + '<b><br>' +text + '</b> in ' + bezirke[bezirk-1].fields.name +'</a>'
         }).appendTo($('ul', '#sidebar-content'));
 
         // mouseover effekte für listeneintrag
@@ -151,7 +151,7 @@ function initMap() {
         // listeneintrag für sidebar
         var li = $('<li/>',{
             'id': 'bbp-'+ bbp.pk,
-            'html': '<a href="' + link + '" target="blank">Betrifft die Gegend um: ' + '<b>' +text + '</b> in ' + bezirke[bezirk-1].fields.name +'</a>'
+            'html': '<a href="' + link + '" target="blank">Betrifft die Gegend um: ' + '<b><br>' +text + '</b> in ' + bezirke[bezirk-1].fields.name +'</a>'
         }).appendTo($('ul', '#sidebar-content1'));
 
         // mouseover effekte für listeneintrag
