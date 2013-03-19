@@ -120,6 +120,12 @@ a:hover {
     background-color: #de6a00;
 }
 
+#sidebar-content1 a.marked,
+#sidebar-content1 a:hover.marked {
+    color: white !important;
+    background-color: #de6a00;
+}
+
 
 
 .nav-tabs > .active > a,

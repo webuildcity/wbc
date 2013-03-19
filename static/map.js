@@ -13,7 +13,10 @@ function initMap() {
 	map.addLayer( myLayer ); //Füge die Ebene der Karte hinzu			
 	
 	var center = new L.LatLng(52.51, 13.37628); //Fokus der Karte	
-	map.setView(center, 11);		
+	map.setView(center, 11);
+    
+    
+    //------------------------------------------------Erster Layer------------------------------------------------		
 	
 	var orangeIcon = L.icon({
         iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_organge_klein.png',    
@@ -26,7 +29,7 @@ function initMap() {
         iconSize:     [35, 65], // size of the icon width,height    
         iconAnchor:   [17, 65], // point of the icon which will correspond to marker's location       
 	});
-    
+        
     var bbpMarker = new Array();
 	var bbpLayer = L.layerGroup(bbpMarker).addTo(map);
 
@@ -90,7 +93,7 @@ function initMap() {
         });
     }); 
     
-    
+    //------------------------------------------------Zweiter Layer------------------------------------------------
     
     var greyIcon = L.icon({
         iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png',    
@@ -149,7 +152,7 @@ function initMap() {
         var li = $('<li/>',{
             'id': 'bbp-'+ bbp.pk,
             'html': '<a href="' + link + '" target="blank">Betrifft die Gegend um: ' + '<b>' +text + '</b> in ' + bezirke[bezirk-1].fields.name +'</a>'
-        }).appendTo($('ul', '#sidebar-content'));
+        }).appendTo($('ul', '#sidebar-content1'));
 
         // mouseover effekte für listeneintrag
         li.mouseover(function() {
@@ -170,16 +173,28 @@ function initMap() {
     
     
     $('input[name=aktuell]').click(function(){
-        if(this.checked) map.addLayer(bbpLayer); 
+        if(this.checked) {
+            map.addLayer(bbpLayer);
+            $('#sidebar-content ul').show();
+        } 
         
-        else map.removeLayer(bbpLayer); 
+        else { 
+        map.removeLayer(bbpLayer); 
+        $('#sidebar-content ul').hide();
+        }
         
     });
     
     $('input[name=old]').click(function(){
-        if(this.checked) map.addLayer(bbpOldLayer); 
+        if(this.checked) {
+            map.addLayer(bbpOldLayer);
+            $('#sidebar-content1 ul').show(); 
+        }
         
-        else map.removeLayer(bbpOldLayer); 
+        else {
+            map.removeLayer(bbpOldLayer); 
+            $('#sidebar-content1 ul').hide();
+        }
         
     });  
     
