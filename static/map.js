@@ -164,10 +164,24 @@ function initMap() {
         });
     }); 
     
-    var baseMaps = {"Hintergrund": myLayer};
+    /*var baseMaps = {"Hintergrund": myLayer};
 	var overlayMaps = {"Beteiligung ist aktuell möglich": bbpLayer, "Archiv": bbpOldLayer };	
-	L.control.layers(baseMaps, overlayMaps, {collapsed: false}).addTo(map);  
-      
+	L.control.layers(baseMaps, overlayMaps, {collapsed: false}).addTo(map);*/
+    
+    
+    $('input[name=aktuell]').click(function(){
+        if(this.checked) map.addLayer(bbpLayer); 
+        
+        else map.removeLayer(bbpLayer); 
+        
+    });
+    
+    $('input[name=old]').click(function(){
+        if(this.checked) map.addLayer(bbpOldLayer); 
+        
+        else map.removeLayer(bbpOldLayer); 
+        
+    });  
     
     // button für sidebar zur leafletkarte hinzufügen
     html = '<div class="leaflet-control-zoom leaflet-control"><a class="leaflet-control-sidebar" href="#" id="sidebar-button"><i class="icon-chevron-left"></i></a></div>';

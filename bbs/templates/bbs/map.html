@@ -31,7 +31,7 @@
                             <a href="#begriffe" data-toggle="tab">Begriffe</a>
                         </li>
                         <li>
-                            <a href="#liste" data-toggle="tab">Liste</a>
+                            <a href="#liste" data-toggle="tab">Filter</a>
                         </li>                        
                     </ul>
                     <div id="my-tab-content" class="tab-content">
@@ -61,8 +61,17 @@
                                 {% endfor %}
                         </div>   
                         <div class="tab-pane" id="liste">
-                            <div id="sidebar-content">
-                                                           
+                            <div class = "listentry">
+                            <label  class="checkbox">
+                                <input name ="aktuell" type="checkbox" value="" checked>
+                                Beteiligung ist aktuell möglich
+                            </label>
+                            <label  class="checkbox">
+                                <input name ="old" type="checkbox" value="" checked>
+                                Archiv
+                            </label>
+                            </div>
+                            <div id="sidebar-content">                                                           
                                 <ul class="nav nav-pills nav-stacked"></ul>
                             </div>
                         </div>                            
