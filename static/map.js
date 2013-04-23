@@ -65,7 +65,7 @@ function initMap() {
         popuptext += '<br>';
         popuptext += "Beteiligung möglich bis: " + end;
         popuptext += '<br>';
-        popuptext += '<a href="' + link + '>Details</a>';
+        popuptext += '<a href="' + link + '" >Details</a>';        
         marker.bindPopup(popuptext);   
        
 
@@ -142,7 +142,7 @@ function initMap() {
         popuptext += '<br>';
         popuptext += "Beteiligung möglich bis: " + end;
         popuptext += '<br>';
-        popuptext += '<a href="' + link + '" target="blank">Details</a>';
+        popuptext += '<a href="' + link + '" >Details</a>';
         marker.bindPopup(popuptext);
 
         // add marker to global marker array
