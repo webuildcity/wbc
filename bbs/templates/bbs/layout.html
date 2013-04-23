@@ -17,12 +17,20 @@
             <div class="container">
                 <div class="row">
                     <div class="span6"id="menu_left"><a href="/"><img src="{{ STATIC_URL }}img/schrift_5.png"></a></div>                          
-                    <div class="span2"></div>                    
-                    <div class="span4" id="menu_right">                
-                    <ul id="sitenav">                        
-                        <li><a href="http://blog.buergerbautstadt.de/">Blog</a></li>
-                        <li><a href="http://blog.buergerbautstadt.de/about/">Über</a></li>
-                        <li><a href="http://blog.buergerbautstadt.de/contact/">Kontakt</a></li>
+                    <div class="span1"></div>                    
+                    <div class="span5" id="menu_right">                
+                    <ul id="sitenav" >                        
+                        <li><a href="http://blog.buergerbautstadt.de/">Glossar</a></li>
+                        <li><a href="/projects">Suche</a></li>
+                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Über</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="http://blog.buergerbautstadt.de/about">Über das Projekt</a></li> 
+                                <li><a href="http://blog.buergerbautstadt.de/">Blog</a></li>                        
+                                <li><a href="http://blog.buergerbautstadt.de/contact/">Kontakt</a></li>                            
+                            </ul>                     
+                        
+                        </li>
+                                               
                     </ul>
                     </div>
                 </div>                
@@ -31,6 +39,10 @@
         
         <div id="content">
             {% block content %}{% endblock %}
-        </div>  
+        </div> 
+        
+                
+        </div>
+         
     </body>
 </html>

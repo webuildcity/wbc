@@ -35,7 +35,7 @@ class BBP(models.Model):
     
     def save(self, *args, **kwargs):
     
-        print args
+        
     
         """t = self.address + ' Berlin ' + self.bezirk.all()[0].name
         print t

@@ -4,7 +4,7 @@ function initMap() {
 	// Die Karte wird in der index-html in das Div mit der id "mymap" gezeichnet
 	map = new L.Map("map");
 	
-	var min = 10; //minimale Zoomstufe
+	var min = 11; //minimale Zoomstufe
 	var max = 15; //maximale Zoomstufe	
 	var myTiles = "http://tiles.jochenklar.de/pinkoding-bbs/{z}/{x}/{y}.png";
 	
@@ -75,7 +75,7 @@ function initMap() {
         bbpLayer.addLayer(marker);
 
         // listeneintrag für sidebar
-        var li = $('<li/>',{
+        /*var li = $('<li/>',{
             'id': 'bbp-'+ bbp.pk,
             'html': '<a href="' + link + '" target="blank">Betrifft die Gegend um: ' + '<b><br>' +text + '</b> in ' + bezirke[bezirk-1].fields.name +'</a>'
         }).appendTo($('ul', '#sidebar-content'));
@@ -90,7 +90,7 @@ function initMap() {
             var pk = $(this).attr('id').split('bbp-')[1];
             $('a', this).removeClass("marked");
             markers[pk].setIcon(orangeIcon);
-        });
+        });*/
     }); 
     
     //------------------------------------------------Zweiter Layer------------------------------------------------
@@ -101,6 +101,9 @@ function initMap() {
         iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
         popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
 	});
+    
+    
+    
     var markedGreyIcon = L.icon({
         iconUrl: staticUrl + '/img/Baustellenschilder/groß/schild_grau_groß.png',    
         iconSize:     [35, 65], // size of the icon width,height    
@@ -123,21 +126,12 @@ function initMap() {
         var marker = L.marker(
             [bbp.fields.lat,bbp.fields.lon],
             {icon: greyIcon}
-        ).addTo(map);
+        ).addTo(map);        
         
         bbpOldLayer.addLayer(marker)
 
         marker.pk = bbp.pk;
-
-        marker.on('mouseover', function(evt) {
-            $('a', '#bbp-' + this.pk).addClass("marked");
-            //markers[this.pk].setIcon(markedIcon);
-        });
-        marker.on('mouseout', function(evt) {
-            $('a', '#bbp-' + this.pk).removeClass("marked");
-            //markers[this.pk].setIcon(orangeIcon);
-        });
-
+        
         var popuptext = typ;
         popuptext += '<br>';
         popuptext += "Beteiligung möglich bis: " + end;
@@ -145,11 +139,41 @@ function initMap() {
         popuptext += '<a href="' + link + '" >Details</a>';
         marker.bindPopup(popuptext);
 
+        /*marker.on('mouseover', function(evt) {
+            //$('a', '#bbp-' + this.pk).addClass("marked");
+            //this.setIcon(markedIcon);
+            //var img = this.layer._icon;
+            
+            marker._icon.src = staticUrl + '/img/Baustellenschilder/groß/schild_grau_groß.png';
+            marker._icon.style.marginLeft = 17;
+            marker._icon.style.marginTop = 65;
+            marker._icon.style.height = 65;
+            marker._icon.style.width = 35;
+            
+        });
+        marker.on('mouseout', function(evt) {
+            //$('a', '#bbp-' + this.pk).removeClass("marked");
+            marker._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png';
+        });*/
+        
+        marker.on("mouseover", function(e) {
+            e.target._icon.src = staticUrl + '/img/Baustellenschilder/groß/schild_grau_groß.png';
+        }).on("mouseout", function(e) {
+            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png';
+        });
+
+
+        
+
+        
+        
+        
+
         // add marker to global marker array
         markers[bbp.pk] = marker;
 
         // listeneintrag für sidebar
-        var li = $('<li/>',{
+        /*var li = $('<li/>',{
             'id': 'bbp-'+ bbp.pk,
             'html': '<a href="' + link + '" target="blank">Betrifft die Gegend um: ' + '<b><br>' +text + '</b> in ' + bezirke[bezirk-1].fields.name +'</a>'
         }).appendTo($('ul', '#sidebar-content1'));
@@ -164,13 +188,10 @@ function initMap() {
             var pk = $(this).attr('id').split('bbp-')[1];
             $('a', this).removeClass("marked");
             markers[pk].setIcon(greyIcon);
-        });
+        });*/
     }); 
     
-    /*var baseMaps = {"Hintergrund": myLayer};
-	var overlayMaps = {"Beteiligung ist aktuell möglich": bbpLayer, "Archiv": bbpOldLayer };	
-	L.control.layers(baseMaps, overlayMaps, {collapsed: false}).addTo(map);*/
-    
+      
     
     $('input[name=aktuell]').click(function(){
         if(this.checked) {
