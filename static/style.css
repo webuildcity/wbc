@@ -170,8 +170,6 @@ a:hover {
 
 }
 
-
-
 .dropdown-menu li > a:hover, .dropdown-menu li > a:focus, .dropdown-submenu:hover > a {
     color: #e58833 !important;
     background-image: none;
