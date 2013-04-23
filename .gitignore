@@ -1,2 +1,3 @@
 bbs/settings.py
+data/database
 *.pyc
