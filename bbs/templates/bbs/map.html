@@ -22,55 +22,38 @@
     <div id="sidebar">        
         <div id="sidebar-inner">            
             <div id="sidebar-scroll">
-                <div id="sidebar-container">
-                    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-                        <li class="active">
-                            <a href="#info" data-toggle="tab">Info</a>
-                        </li>
-                        <li>
-                            <a href="#begriffe" data-toggle="tab">Begriffe</a>
-                        </li>
-                        <li>
-                            <a href="#liste" data-toggle="tab">Filter</a>
-                        </li>                        
-                    </ul>
-                    <div id="my-tab-content" class="tab-content">
-                        <div class="tab-pane active" id="info">
-                            <div id="info-content">
-                                <div class = "listentry"> 
-                                <b> Worum geht es hier?</b>                                                         
-                                <p> An vielen geplanten Bauprojekten können sich die Bürger beteiliegen. 
-                                Leider wissen sie davon häufig nichts, denn die Informationen werden im Amtsblatt veröffentlicht, das nicht jeder kennt und abboniert hat. Wir fassen das daher hier auf dieser Seite zusammen. 
-                                <br>
-                                <br>
-                                Die farbigen Marker auf der Karte zeigen an, zu welchen geplanten Bauvorhaben gerade Unterlagen ausliegen. Die grauen Marker gehören zu Bauvorhaben, bei denen die Beteiligungsfrist bereits abgelaufen ist.
-                                <br>
-                                <br>
-                                Unsere Informationen beziehen wir ausschließlich aus dem Amtsblatt, das nicht immer sehr ausführlich ist. Wer über mehr Informationen zu einem Bauvorhaben verfügt, bitte gerne melden!  
-                                
-                                </p>
-                                </div>                                
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="begriffe">
-                            {% for t in typ %}
-                                <div id ="typ{{ t.pk }}" class = "listentry">
-                                    <b>{{ t.name }}</b><br> 
-                                    <p>{{ t.description }}</p>
-                                </div>   
-                                {% endfor %}
-                        </div>   
-                        <div class="tab-pane" id="liste">
+                <div id="sidebar-container">                      
+                    <div id="liste">
                             <div class = "listentry">
-                            <label  class="checkbox">
-                                <input name ="aktuell" type="checkbox" value="" checked>
-                                Beteiligung ist aktuell möglich
-                            </label>
-                            <label  class="checkbox">
-                                <input name ="old" type="checkbox" value="" checked>
-                                Beteiligungsfrist ist bereits abgelaufen
-                            </label>
+                            <div class ="entry">
+                                <div class="icon">
+                                    <img src="{{ STATIC_URL }}img/Baustellenschilder/klein/schild_organge_klein.png" " alt="icon1">
+                                    
+                                </div>
+                                <div class="text">
+                                    Beteiligung aktuell möglich
+                                </div>
+                                <div>
+                                    <label  class="checkbox">                                        
+                                        <input name ="aktuell" type="checkbox" value="" checked>                                        
+                                    </label>
+                                </div>
                             </div>
+                            <div class ="entry">
+                                <div class="icon">
+                                    <img src="{{ STATIC_URL }}img/Baustellenschilder/klein/schild_grau_klein.png" " alt="icon1">
+                                </div>
+                                <div class="text">
+                                    Beteiligungsfrist bereits abgelaufen
+                                </div> 
+                                <div>                           
+                                    <label  class="checkbox">
+                                        <input name ="old" type="checkbox" value="" checked>
+                                        
+                                    </label>
+                                </div>
+                            </div>
+                            
                             <div id="sidebar-content">                                                           
                                 <ul class="nav nav-pills nav-stacked"></ul>
                             </div>

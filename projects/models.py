@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import urllib,urllib2
+import json
 from django.db import models
 
 class Project(models.Model): 
@@ -28,7 +30,35 @@ class BBP(models.Model):
     zeiten          = models.CharField(max_length=256, blank=True, verbose_name="Öffnungszeiten der Auslegungsstelle")
     beschreibung    = models.CharField(max_length=256, blank=True, verbose_name="Beschreibung des Vorhabens")
     plan_id         = models.CharField(max_length=256, blank=True, verbose_name="Bezeichner des Beplauungsplans")    
-    bezirk          = models.ManyToManyField('Bezirk')            
+    bezirk          = models.ManyToManyField('Bezirk')
+    
+    
+    def save(self, *args, **kwargs):
+    
+        
+    
+        """t = self.address + ' Berlin ' + self.bezirk.all()[0].name
+        print t
+    
+        l = [] 
+        for s in unicode(t).split(' '):
+            l.append(urllib.quote_plus(s.encode('utf8')))
+        address = '+'.join(l)
+
+        url = u'http://nominatim.openstreetmap.org/search?q=' + address + '&format=json&polygon=1&addressdetails=1'
+        print url
+        source = urllib2.urlopen(url).read()
+        j = json.loads(source)
+
+        self.lat = j[0]['lat']
+        self.lon = j[0]['lon']"""       
+        
+            
+        super(BBP, self).save(*args, **kwargs)
+    
+    
+    
+                
 
     def __unicode__(self):
         return '[' + unicode(self.id) + '] ' + self.address               
