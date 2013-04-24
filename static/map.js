@@ -23,12 +23,7 @@ function initMap() {
         iconSize:     [26, 45], // size of the icon width,height    
         iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
         popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
-	});
-    var markedIcon = L.icon({
-        iconUrl: staticUrl + '/img/Baustellenschilder/groß/schild_organge_groß.png',    
-        iconSize:     [35, 65], // size of the icon width,height    
-        iconAnchor:   [17, 65], // point of the icon which will correspond to marker's location       
-	});
+	});    
         
     var bbpMarker = new Array();
 	var bbpLayer = L.layerGroup(bbpMarker).addTo(map);
@@ -51,13 +46,10 @@ function initMap() {
 
         marker.pk = bbp.pk;
 
-        marker.on('mouseover', function(evt) {
-            $('a', '#bbp-' + this.pk).addClass("marked");
-            
-        });
-        marker.on('mouseout', function(evt) {
-            $('a', '#bbp-' + this.pk).removeClass("marked");
-            
+        marker.on("mouseover", function(e) {
+            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png';
+        }).on("mouseout", function(e) {
+            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_organge_klein.png';
         });       
         
 
@@ -79,25 +71,17 @@ function initMap() {
     //------------------------------------------------Zweiter Layer: frühzeitige Öffentlichkeitsbeteiligung------------------------------------------------
     
     var tuerkisIcon = L.icon({
-        iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_tuerkis_klein.png.png',    
+        iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_tuerkis_klein.png',    
         iconSize:     [26, 45], // size of the icon width,height    
         iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
         popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
-	});
-    
-    
-    
-    var markedtuerkisIcon = L.icon({
-        iconUrl: staticUrl + '/img/Baustellenschilder/groß/schild_tuerkis_groß.png',    
-        iconSize:     [35, 65], // size of the icon width,height    
-        iconAnchor:   [17, 65], // point of the icon which will correspond to marker's location       
-	});
+	});   
     
     var bbpFruehMarker = new Array();
-	var bbpFruehLayer = L.layerGroup(bbpOldMarker).addTo(map);
+	var bbpFruehLayer = L.layerGroup(bbpFruehLayer).addTo(map);
     
     
-    $.each(tuerkisIcon, function(key,bbp){
+    $.each(bbpFruehJson, function(key,bbp){
         var text = bbp.fields.address; 
         var bezirk = bbp.fields.bezirk;
         var typid = bbp.fields.typ;        
@@ -123,9 +107,9 @@ function initMap() {
         marker.bindPopup(popuptext);        
         
         marker.on("mouseover", function(e) {
-            e.target._icon.src = staticUrl + '/img/Baustellenschilder/groß/schild_grau_groß.png';
-        }).on("mouseout", function(e) {
             e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png';
+        }).on("mouseout", function(e) {
+            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_tuerkis_klein.png';
         });       
         
 
@@ -135,33 +119,95 @@ function initMap() {
         
     }); 
     
+    
+    //------------------------------------------------Dritter Layer: erneute Öffentlichkeitsbeteiligung------------------------------------------------
+    
+    var blauIcon = L.icon({
+        iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_blau_klein.png',    
+        iconSize:     [26, 45], // size of the icon width,height    
+        iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
+        popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
+	});   
+    
+    var bbpErneutMarker = new Array();
+	var bbpErneutLayer = L.layerGroup(bbpErneutLayer).addTo(map);
+    
+    
+    $.each(bbpErneutJson, function(key,bbp){
+        var text = bbp.fields.address; 
+        var bezirk = bbp.fields.bezirk;
+        var typid = bbp.fields.typ;        
+        var typ = typen[typid-1].fields.name;
+        var end = bbp.fields.end;
+        var link = siteUrl + "bbp/" + bbp.pk ;
+
+        // marker für leaflet karte
+        var marker = L.marker(
+            [bbp.fields.lat,bbp.fields.lon],
+            {icon: blauIcon}
+        ).addTo(map);        
+        
+        bbpErneutLayer.addLayer(marker)
+
+        marker.pk = bbp.pk;
+        
+        var popuptext = typ;
+        popuptext += '<br>';
+        popuptext += "Beteiligung möglich bis: " + end;
+        popuptext += '<br>';
+        popuptext += '<a href="' + link + '" >Details</a>';
+        marker.bindPopup(popuptext);        
+        
+        marker.on("mouseover", function(e) {
+            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png';
+        }).on("mouseout", function(e) {
+            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_blau_klein.png';
+        });       
+        
+
+        // add marker to global marker array
+        markers[bbp.pk] = marker;
+
+        
+    }); 
       
     
     $('input[name=aktuell]').click(function(){
         if(this.checked) {
-            map.addLayer(bbpLayer);
-            $('#sidebar-content ul').show();
+            map.addLayer(bbpLayer);            
         } 
         
         else { 
-        map.removeLayer(bbpLayer); 
-        $('#sidebar-content ul').hide();
+        map.removeLayer(bbpLayer);         
         }
         
     });
     
-    $('input[name=old]').click(function(){
+    $('input[name=frueh]').click(function(){
         if(this.checked) {
-            map.addLayer(bbpFruehLayer);
-            $('#sidebar-content1 ul').show(); 
+            map.addLayer(bbpFruehLayer);            
         }
         
         else {
             map.removeLayer(bbpFruehLayer); 
-            $('#sidebar-content1 ul').hide();
+            
         }
         
     });  
+    
+    $('input[name=erneut]').click(function(){
+        if(this.checked) {
+            map.addLayer(bbpErneutLayer);            
+        }
+        
+        else {
+            map.removeLayer(bbpErneutLayer); 
+            
+        }
+        
+    });  
+    
+    
     
     // button für sidebar zur leafletkarte hinzufügen
     html = '<div class="leaflet-control-zoom leaflet-control"><a class="leaflet-control-sidebar" href="#" id="sidebar-button"><i class="icon-chevron-left"></i></a></div>';
@@ -212,4 +258,4 @@ function moveInSidebar(){
 
 $(document).ready(function() {
     setTimeout('initMap()',100);
-});
+});ue
