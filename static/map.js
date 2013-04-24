@@ -57,7 +57,7 @@ function initMap() {
         popuptext += '<br>';
         popuptext += "Betrifft Gegend um: " + text;
         popuptext += '<br>';
-        popuptext += "im Bezirk: " + bezirke[bezirk-1].fields.name;
+        popuptext += "Verantwortlich: " + bezirke[bezirk-1].fields.name;
         popuptext += '<br>';
         popuptext += "Beteiligung möglich bis: " + end;
         popuptext += '<br>';
@@ -107,7 +107,7 @@ function initMap() {
         popuptext += '<br>';
         popuptext += "Betrifft Gegend um: " + text;
         popuptext += '<br>';
-        popuptext += "im Bezirk: " + bezirke[bezirk-1].fields.name;
+        popuptext += "Verantwortlich: " + bezirke[bezirk-1].fields.name;
         popuptext += '<br>';
         popuptext += "Beteiligung möglich bis: " + end;
         popuptext += '<br>';
@@ -163,7 +163,7 @@ function initMap() {
         popuptext += '<br>';
         popuptext += "Betrifft Gegend um: " + text;
         popuptext += '<br>';
-        popuptext += "im Bezirk: " + bezirke[bezirk-1].fields.name;
+        popuptext += "Verantwortlich: " + bezirke[bezirk-1].fields.name;
         popuptext += '<br>';
         popuptext += "Beteiligung möglich bis: " + end;
         popuptext += '<br>';
@@ -218,7 +218,7 @@ function initMap() {
         popuptext += '<br>';
         popuptext += "Betrifft Gegend um: " + text;
         popuptext += '<br>';
-        popuptext += "im Bezirk: " + bezirke[bezirk-1].fields.name;
+        popuptext += "Verantwortlich: " + bezirke[bezirk-1].fields.name;
         popuptext += '<br>';
         popuptext += "Beteiligung war möglich bis: " + end;
         popuptext += '<br>';
