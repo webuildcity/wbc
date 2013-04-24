@@ -11,16 +11,18 @@
                 <th>Bezirk</th>
                 <th>Frist</th>
                 <th>Vorhaben</th>
-                <th>Ort</th>
+                <th>Typ</th>
+                <th>Link</th>
             </tr>
         </thead>
         <tbody>
         {% for project in projects %}
             <tr>
-                <td>{{ project.bezirke }}</td>
+                <td>{{ project.bezirk.all.0.name }}</td>
                 <td>{{ project.begin }} bis {{ project.end }}</td>
-                <td>{{ project.vorhaben }}</td>
-                <td>{{ project.ort }}</td>
+                <td>{{ project.plan_id }}</td>
+                <td>{{ project.typ.name }}</td>
+                <td><a href="{{ project.bezirk.all.0.link }}">Link</a></td>
             </tr>
         {% endfor %}
         </tbody>
