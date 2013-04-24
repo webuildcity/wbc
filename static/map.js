@@ -16,7 +16,7 @@ function initMap() {
 	map.setView(center, 11);
     
     
-    //------------------------------------------------Erster Layer------------------------------------------------		
+    //------------------------------------------------Erster Layer: öffentliche Auslegung ------------------------------------------------		
 	
 	var orangeIcon = L.icon({
         iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_organge_klein.png',    
@@ -73,30 +73,13 @@ function initMap() {
         markers[bbp.pk] = marker;
         
         bbpLayer.addLayer(marker);
-
-        // listeneintrag für sidebar
-        /*var li = $('<li/>',{
-            'id': 'bbp-'+ bbp.pk,
-            'html': '<a href="' + link + '" target="blank">Betrifft die Gegend um: ' + '<b><br>' +text + '</b> in ' + bezirke[bezirk-1].fields.name +'</a>'
-        }).appendTo($('ul', '#sidebar-content'));
-
-        // mouseover effekte für listeneintrag
-        li.mouseover(function() {
-            var pk = $(this).attr('id').split('bbp-')[1];
-            $('a', this).addClass("marked");
-            markers[pk].setIcon(markedIcon);
-        });
-        li.mouseout(function() {
-            var pk = $(this).attr('id').split('bbp-')[1];
-            $('a', this).removeClass("marked");
-            markers[pk].setIcon(orangeIcon);
-        });*/
+        
     }); 
     
-    //------------------------------------------------Zweiter Layer------------------------------------------------
+    //------------------------------------------------Zweiter Layer: frühzeitige Öffentlichkeitsbeteiligung------------------------------------------------
     
-    var greyIcon = L.icon({
-        iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png',    
+    var tuerkisIcon = L.icon({
+        iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_tuerkis_klein.png.png',    
         iconSize:     [26, 45], // size of the icon width,height    
         iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
         popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
@@ -104,17 +87,17 @@ function initMap() {
     
     
     
-    var markedGreyIcon = L.icon({
-        iconUrl: staticUrl + '/img/Baustellenschilder/groß/schild_grau_groß.png',    
+    var markedtuerkisIcon = L.icon({
+        iconUrl: staticUrl + '/img/Baustellenschilder/groß/schild_tuerkis_groß.png',    
         iconSize:     [35, 65], // size of the icon width,height    
         iconAnchor:   [17, 65], // point of the icon which will correspond to marker's location       
 	});
     
-    var bbpOldMarker = new Array();
-	var bbpOldLayer = L.layerGroup(bbpOldMarker).addTo(map);
+    var bbpFruehMarker = new Array();
+	var bbpFruehLayer = L.layerGroup(bbpOldMarker).addTo(map);
     
     
-    $.each(bbpsOld, function(key,bbp){
+    $.each(tuerkisIcon, function(key,bbp){
         var text = bbp.fields.address; 
         var bezirk = bbp.fields.bezirk;
         var typid = bbp.fields.typ;        
@@ -125,10 +108,10 @@ function initMap() {
         // marker für leaflet karte
         var marker = L.marker(
             [bbp.fields.lat,bbp.fields.lon],
-            {icon: greyIcon}
+            {icon: tuerkisIcon}
         ).addTo(map);        
         
-        bbpOldLayer.addLayer(marker)
+        bbpFruehLayer.addLayer(marker)
 
         marker.pk = bbp.pk;
         
@@ -137,58 +120,19 @@ function initMap() {
         popuptext += "Beteiligung möglich bis: " + end;
         popuptext += '<br>';
         popuptext += '<a href="' + link + '" >Details</a>';
-        marker.bindPopup(popuptext);
-
-        /*marker.on('mouseover', function(evt) {
-            //$('a', '#bbp-' + this.pk).addClass("marked");
-            //this.setIcon(markedIcon);
-            //var img = this.layer._icon;
-            
-            marker._icon.src = staticUrl + '/img/Baustellenschilder/groß/schild_grau_groß.png';
-            marker._icon.style.marginLeft = 17;
-            marker._icon.style.marginTop = 65;
-            marker._icon.style.height = 65;
-            marker._icon.style.width = 35;
-            
-        });
-        marker.on('mouseout', function(evt) {
-            //$('a', '#bbp-' + this.pk).removeClass("marked");
-            marker._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png';
-        });*/
+        marker.bindPopup(popuptext);        
         
         marker.on("mouseover", function(e) {
             e.target._icon.src = staticUrl + '/img/Baustellenschilder/groß/schild_grau_groß.png';
         }).on("mouseout", function(e) {
             e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png';
-        });
-
-
-        
-
-        
-        
+        });       
         
 
         // add marker to global marker array
         markers[bbp.pk] = marker;
 
-        // listeneintrag für sidebar
-        /*var li = $('<li/>',{
-            'id': 'bbp-'+ bbp.pk,
-            'html': '<a href="' + link + '" target="blank">Betrifft die Gegend um: ' + '<b><br>' +text + '</b> in ' + bezirke[bezirk-1].fields.name +'</a>'
-        }).appendTo($('ul', '#sidebar-content1'));
-
-        // mouseover effekte für listeneintrag
-        li.mouseover(function() {
-            var pk = $(this).attr('id').split('bbp-')[1];
-            $('a', this).addClass("marked");
-            markers[pk].setIcon(markedGreyIcon);
-        });
-        li.mouseout(function() {
-            var pk = $(this).attr('id').split('bbp-')[1];
-            $('a', this).removeClass("marked");
-            markers[pk].setIcon(greyIcon);
-        });*/
+        
     }); 
     
       
@@ -208,12 +152,12 @@ function initMap() {
     
     $('input[name=old]').click(function(){
         if(this.checked) {
-            map.addLayer(bbpOldLayer);
+            map.addLayer(bbpFruehLayer);
             $('#sidebar-content1 ul').show(); 
         }
         
         else {
-            map.removeLayer(bbpOldLayer); 
+            map.removeLayer(bbpFruehLayer); 
             $('#sidebar-content1 ul').hide();
         }
         
