@@ -9,7 +9,7 @@
         <thead>
             <tr>
                 <th>Bezirk</th>
-                <th>Frist</th>
+                <th>Ort</th>
                 <th>Vorhaben</th>
                 <th>Typ</th>
                 <th>Link</th>
@@ -19,7 +19,7 @@
         {% for project in projects %}
             <tr>
                 <td>{{ project.bezirk.all.0.name }}</td>
-                <td>{{ project.begin }} bis {{ project.end }}</td>
+                <td>{{ project.strassen }}</td>
                 <td>{{ project.plan_id }}</td>
                 <td>{{ project.typ.name }}</td>
                 <td><a href="{{ project.bezirk.all.0.link }}">Link</a></td>
