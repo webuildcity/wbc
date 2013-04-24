@@ -47,7 +47,7 @@ function initMap() {
         marker.pk = bbp.pk;
 
         marker.on("mouseover", function(e) {
-            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png';
+            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_gruen_klein.png';
         }).on("mouseout", function(e) {
             e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_organge_klein.png';
         });       
@@ -107,7 +107,7 @@ function initMap() {
         marker.bindPopup(popuptext);        
         
         marker.on("mouseover", function(e) {
-            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png';
+            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_gruen_klein.png';
         }).on("mouseout", function(e) {
             e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_tuerkis_klein.png';
         });       
@@ -159,7 +159,7 @@ function initMap() {
         marker.bindPopup(popuptext);        
         
         marker.on("mouseover", function(e) {
-            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png';
+            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_gruen_klein.png';
         }).on("mouseout", function(e) {
             e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_blau_klein.png';
         });       
@@ -210,7 +210,7 @@ function initMap() {
         marker.bindPopup(popuptext);        
         
         marker.on("mouseover", function(e) {
-            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png';
+            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_gruen_klein.png';
         }).on("mouseout", function(e) {
             e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png';
         });       
