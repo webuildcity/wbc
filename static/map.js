@@ -170,6 +170,57 @@ function initMap() {
 
         
     }); 
+    
+    //------------------------------------------------Vierter Layer: abgelaufene Projekte ------------------------------------------------
+    
+    var greyIcon = L.icon({
+        iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png',    
+        iconSize:     [26, 45], // size of the icon width,height    
+        iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
+        popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
+	});   
+    
+    var bbpOldMarker = new Array();
+	var bbpOldLayer = L.layerGroup(bbpOldLayer);
+    
+    
+    $.each(bbpsOld, function(key,bbp){
+        var text = bbp.fields.address; 
+        var bezirk = bbp.fields.bezirk;
+        var typid = bbp.fields.typ;        
+        var typ = typen[typid-1].fields.name;
+        var end = bbp.fields.end;
+        var link = siteUrl + "bbp/" + bbp.pk ;
+
+        // marker für leaflet karte
+        var marker = L.marker(
+            [bbp.fields.lat,bbp.fields.lon],
+            {icon: greyIcon}
+        );        
+        
+        bbpOldLayer.addLayer(marker)
+
+        marker.pk = bbp.pk;
+        
+        var popuptext = typ;
+        popuptext += '<br>';
+        popuptext += "Beteiligung möglich bis: " + end;
+        popuptext += '<br>';
+        popuptext += '<a href="' + link + '" >Details</a>';
+        marker.bindPopup(popuptext);        
+        
+        marker.on("mouseover", function(e) {
+            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png';
+        }).on("mouseout", function(e) {
+            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png';
+        });       
+        
+
+        // add marker to global marker array
+        markers[bbp.pk] = marker;
+
+        
+    });
       
     
     $('input[name=aktuell]').click(function(){
@@ -206,6 +257,18 @@ function initMap() {
         }
         
     });  
+    
+    $('input[name=old]').click(function(){
+        if(this.checked) {
+            map.addLayer(bbpOldLayer);            
+        }
+        
+        else {
+            map.removeLayer(bbpOldLayer); 
+            
+        }
+        
+    });
     
     
     
@@ -258,4 +321,4 @@ function moveInSidebar(){
 
 $(document).ready(function() {
     setTimeout('initMap()',100);
-});ue
+});
