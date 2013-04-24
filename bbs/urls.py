@@ -12,6 +12,8 @@ urlpatterns = patterns('',
     # bbp
     url(r'^bbp/$', BBPView.as_view()),
     url(r'^bbp/(?P<pk>\d+)/$', BBPView.as_view()),
+    #typen
+    url(r'^glossar/$', 'bbs.views.glossar'),
     # admin foo
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)), 

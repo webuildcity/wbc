@@ -34,3 +34,13 @@ def home(request):
             'typJson' : typJson,
             'typ' : typ
             })
+            
+def glossar(request):
+    t = Typ.objects.all()     
+    typJson = serializers.serialize("json", t)  
+    typ = Typ.objects.all() 
+    
+    return render(request,'bbs/glossar.html',{            
+            'typJson' : typJson,
+            'typ' : typ
+            })
