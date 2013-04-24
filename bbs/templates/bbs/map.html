@@ -6,18 +6,16 @@
     </script>
     <script type="text/javascript" src="{{ STATIC_URL }}map.js" >
     </script>
-    <script type="text/javascript">    
+    <script type="text/javascript">  
+    var bezirke = {{ bezirkeJson|safe }}; 
+    var typen = {{ typJson|safe }};   
     var siteUrl = '{{ siteUrl|safe }}';
-    var staticUrl = '{{ STATIC_URL }}';
-    //var projects = {{ projectsJson|safe }};
-    var bbps = {{ bbpJson|safe }}; 
-    
+    var staticUrl = '{{ STATIC_URL }}';    
+    var bbps = {{ bbpJson|safe }};     
     var bbpFruehJson = {{ bbpFruehJson|safe }}; 
     var bbpErneutJson = {{ bbpErneutJson|safe }};    
     var bbpsOld = {{ bbpOldJson|safe }};   
-    
-    var bezirke = {{ bezirkeJson|safe }}; 
-    var typen = {{ typJson|safe }};  
+     
     </script>
 
 {% endblock %}

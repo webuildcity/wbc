@@ -55,6 +55,10 @@ function initMap() {
 
         var popuptext = typ;
         popuptext += '<br>';
+        popuptext += "Betrifft Gegend um: " + text;
+        popuptext += '<br>';
+        popuptext += "im Bezirk: " + bezirke[bezirk-1].fields.name;
+        popuptext += '<br>';
         popuptext += "Beteiligung möglich bis: " + end;
         popuptext += '<br>';
         popuptext += '<a href="' + link + '" >Details</a>';        
@@ -100,6 +104,10 @@ function initMap() {
         marker.pk = bbp.pk;
         
         var popuptext = typ;
+        popuptext += '<br>';
+        popuptext += "Betrifft Gegend um: " + text;
+        popuptext += '<br>';
+        popuptext += "im Bezirk: " + bezirke[bezirk-1].fields.name;
         popuptext += '<br>';
         popuptext += "Beteiligung möglich bis: " + end;
         popuptext += '<br>';
@@ -153,6 +161,10 @@ function initMap() {
         
         var popuptext = typ;
         popuptext += '<br>';
+        popuptext += "Betrifft Gegend um: " + text;
+        popuptext += '<br>';
+        popuptext += "im Bezirk: " + bezirke[bezirk-1].fields.name;
+        popuptext += '<br>';
         popuptext += "Beteiligung möglich bis: " + end;
         popuptext += '<br>';
         popuptext += '<a href="' + link + '" >Details</a>';
@@ -204,7 +216,11 @@ function initMap() {
         
         var popuptext = typ;
         popuptext += '<br>';
-        popuptext += "Beteiligung möglich bis: " + end;
+        popuptext += "Betrifft Gegend um: " + text;
+        popuptext += '<br>';
+        popuptext += "im Bezirk: " + bezirke[bezirk-1].fields.name;
+        popuptext += '<br>';
+        popuptext += "Beteiligung war möglich bis: " + end;
         popuptext += '<br>';
         popuptext += '<a href="' + link + '" >Details</a>';
         marker.bindPopup(popuptext);        
