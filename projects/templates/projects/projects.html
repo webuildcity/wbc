@@ -18,11 +18,11 @@
         <tbody>
         {% for project in projects %}
             <tr>
-                <td>{{ project.bezirk.all.0.name }}</td>
+                <td><a href="{{ project.bezirk.all.0.link }}" target="_blank">{{ project.bezirk.all.0.name }}</a></td>
                 <td>{{ project.strassen }}</td>
                 <td>{{ project.plan_id }}</td>
                 <td>{{ project.typ.name }}</td>
-                <td><a href="{{ project.bezirk.all.0.link }}">Link</a></td>
+                <td><a href="/bbp/{{ project.pk }}">Link</td>
             </tr>
         {% endfor %}
         </tbody>
