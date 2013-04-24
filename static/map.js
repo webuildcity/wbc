@@ -53,7 +53,7 @@ function initMap() {
         });       
         
 
-        var popuptext = typ;
+        var popuptext = '<a href="/glossar" >' + typ + '</a>';
         popuptext += '<br>';
         popuptext += "Betrifft Gegend um: " + text;
         popuptext += '<br>';
@@ -103,7 +103,7 @@ function initMap() {
 
         marker.pk = bbp.pk;
         
-        var popuptext = typ;
+        var popuptext = '<a href="/glossar" >' + typ + '</a>';
         popuptext += '<br>';
         popuptext += "Betrifft Gegend um: " + text;
         popuptext += '<br>';
@@ -159,7 +159,7 @@ function initMap() {
 
         marker.pk = bbp.pk;
         
-        var popuptext = typ;
+       var popuptext = '<a href="/glossar" >' + typ + '</a>';
         popuptext += '<br>';
         popuptext += "Betrifft Gegend um: " + text;
         popuptext += '<br>';
@@ -214,7 +214,7 @@ function initMap() {
 
         marker.pk = bbp.pk;
         
-        var popuptext = typ;
+        var popuptext = '<a href="/glossar" >' + typ + '</a>';
         popuptext += '<br>';
         popuptext += "Betrifft Gegend um: " + text;
         popuptext += '<br>';
