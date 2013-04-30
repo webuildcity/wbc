@@ -19,16 +19,16 @@ class Project(models.Model):
         return '[' + unicode(self.id) + '] ' + self.titel
         
 class BBP(models.Model): 
-    strassen        = models.CharField(max_length=256, blank=True, verbose_name="Örtliche Beschreibung")
+    strassen        = models.TextField(blank=True, verbose_name="Örtliche Beschreibung")
     address         = models.CharField(max_length=256, blank=False, verbose_name="Eine genaue Adresse des Vorhabens")
     lon             = models.FloatField(blank=False)
     lat             = models.FloatField(blank=False)
     begin           = models.DateField(blank=False, verbose_name="Beginn der Auslegungszeit")
     end             = models.DateField(blank=False, verbose_name="Ende der Auslegungszeit")
     typ             = models.ForeignKey('Typ', unique = False)
-    ort             = models.CharField(max_length=256, blank=True, verbose_name="Ort der Auslegung")
-    zeiten          = models.CharField(max_length=256, blank=True, verbose_name="Öffnungszeiten der Auslegungsstelle")
-    beschreibung    = models.CharField(max_length=256, blank=True, verbose_name="Beschreibung des Vorhabens")
+    ort             = models.TextField(blank=True, verbose_name="Ort der Auslegung")
+    zeiten          = models.TextField(blank=True, verbose_name="Öffnungszeiten der Auslegungsstelle")
+    beschreibung    = models.TextField(blank=True, verbose_name="Beschreibung des Vorhabens")
     plan_id         = models.CharField(max_length=256, blank=True, verbose_name="Bezeichner des Beplauungsplans")    
     bezirk          = models.ManyToManyField('Bezirk')  
     
@@ -46,7 +46,7 @@ class Bezirk(models.Model):
         
 class Typ(models.Model): 
     name          = models.CharField(max_length=256)
-    description   = models.CharField(max_length=256)
+    description   = models.TextField()
     
     def __unicode__(self):
         return '[' + unicode(self.id) + '] ' + self.name
