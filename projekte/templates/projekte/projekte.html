@@ -42,21 +42,23 @@
     <table cellpadding="0" cellspacing="0" border="0" class="table" id="projects-table">
         <thead>
             <tr>
-                <th>Verantwortlich</th>
-                <th>Ort</th>
-                <th>Vorhaben</th>
-                <th>Typ</th>
-                <th>Link</th>
+                <th>Bezeichner</th>
+                <th>Adresse</th>
+                <th>Bezirke</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-        {% for project in projects %}
+        {% for projekt in projekte %}
             <tr>
-                <td><a href="{{ project.bezirk.all.0.link }}" target="_blank">{{ project.bezirk.all.0.name }}</a></td>
-                <td>{{ project.strassen }}</td>
-                <td>{{ project.plan_id }}</td>
-                <td>{{ project.typ.name }}</td>
-                <td><a href="/bbp/{{ project.pk }}">Link</td>
+                <td>{{ projekt.bezeichner }}</td>
+                <td>{{ projekt.adresse }}</td>
+                <td>
+                    {% for bezirk in projekt.bezirke.all %}
+                        {{ bezirk.name }}<br />
+                    {% endfor %}
+                </td>
+                <td><a href="/projekte/{{ projekt.pk }}">Details</td>
             </tr>
         {% endfor %}
         </tbody>

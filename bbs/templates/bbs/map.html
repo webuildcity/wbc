@@ -6,106 +6,49 @@
     </script>
     <script type="text/javascript" src="{{ STATIC_URL }}map.js" >
     </script>
-    <script type="text/javascript">  
-    var bezirke = {{ bezirkeJson|safe }}; 
-    var typen = {{ typJson|safe }};   
+    <script type="text/javascript">
     var siteUrl = '{{ siteUrl|safe }}';
-    var staticUrl = '{{ STATIC_URL }}';    
-    var bbps = {{ bbpJson|safe }};     
-    var bbpFruehJson = {{ bbpFruehJson|safe }}; 
-    var bbpErneutJson = {{ bbpErneutJson|safe }};    
-    var bbpsOld = {{ bbpOldJson|safe }};   
-     
+    var staticUrl = '{{ STATIC_URL }}';
+    var points = {{points|safe}};
+    var verfahrensschritte = {{verfahrensschritte|safe}};
     </script>
 
 {% endblock %}
 
 {% block content %}
-    <div id="sidebar">        
-        <div id="sidebar-inner">            
-            <div id="sidebar-scroll">
-                <div id="sidebar-container">                      
-                    <div id="liste">
-                            <div class = "listentry">
-                            <b>Bebauungsplanverfahren</b>
-                            </div>
-                            <div class = "listentry">
-                            <div class ="entry">
-                                <div class="icon">
-                                    <img src="{{ STATIC_URL }}img/Baustellenschilder/klein/schild_tuerkis_klein.png" " alt="icon1">
-                                </div>
-                                <div class="text">
-                                    Frühzeitige Öffentlichkeitsbeteiligung<br>
-                                    <a href="/glossar">Was heißt das?</a>
-                                </div> 
-                                <div>                           
-                                    <label  class="checkbox">
-                                        <input name ="frueh" type="checkbox" value="" checked>
-                                        
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <div class ="entry">
-                                <div class="icon">
-                                    <img src="{{ STATIC_URL }}img/Baustellenschilder/klein/schild_organge_klein.png" " alt="icon1">                                    
-                                </div>
-                                <div class="text">
-                                    Öffentliche Auslegung<br>
-                                    <a href="/glossar">Was heißt das?</a>
-                                </div>
-                                <div>
-                                    <label  class="checkbox">                                        
-                                        <input name ="aktuell" type="checkbox" value="" checked>                                        
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <div class ="entry">
-                                <div class="icon">
-                                    <img src="{{ STATIC_URL }}img/Baustellenschilder/klein/schild_blau_klein.png" " alt="icon1">                                    
-                                </div>
-                                <div class="text">
-                                    Erneute öffentliche<br>Auslegung<br>
-                                    <a href="/glossar">Was heißt das?</a>
-                                </div>
-                                <div>
-                                    <label  class="checkbox">                                        
-                                        <input name ="erneut" type="checkbox" value="" checked>                                        
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <div class ="entry">
-                                <div class="icon">
-                                    <img src="{{ STATIC_URL }}img/Baustellenschilder/klein/schild_grau_klein.png" " alt="icon1">                                    
-                                </div>
-                                <div class="text">
-                                    Frist der Auslegung bereits abgelaufen<br>
-                                    
-                                </div>
-                                <div>
-                                    <label  class="checkbox">                                        
-                                        <input name ="old" type="checkbox" value="">                                        
-                                    </label>
-                                </div>
-                            </div>                        
-                            
-                            
-                            
-                            <div id="sidebar-content">                                                           
-                                <ul class="nav nav-pills nav-stacked"></ul>
-                            </div>
-                            <div id="sidebar-content1">                                                           
-                                <ul class="nav nav-pills nav-stacked"></ul>
-                            </div>
-                        </div>                            
+<div id="sidebar">        
+    <div id="sidebar-inner">            
+        <div id="sidebar-scroll">
+            <div id="sidebar-container">                      
+                <div id="liste">
+                    {% for v in verfahren %}
+                    <div class = "listentry">
+                        <h4>{{ v.name }}</h4>
                     </div>
-                    
+                    {% for vs in v.verfahrensschritte.all %}
+                    <div class = "listentry">
+                        <div class ="entry">
+                            <div class="icon">
+                                <img src="{{ STATIC_URL }}{{vs.icon}}">
+                            </div>
+                            <div class="text">
+                                {{vs.name}}<br>
+                                <a href="/info#{{vs.name}}">Was heißt das?</a>
+                            </div>
+                            <div class="check">                    
+                                <label class="checkbox">
+                                    <input name="vs-{{vs.pk}}" type="checkbox" value="" checked />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
-    
-    <div id="map"></div>
+</div>
+
+<div id="map"></div>
 {% endblock %}

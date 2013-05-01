@@ -1,293 +1,80 @@
-var markers = new Array();
+var layers = {};
 
 function initMap() {
-	// Die Karte wird in der index-html in das Div mit der id "mymap" gezeichnet
-	map = new L.Map("map");
-	
-	var min = 11; //minimale Zoomstufe
-	var max = 17; //maximale Zoomstufe	
+	var map = new L.Map("map");
+
+	var min = 11;
+	var max = 17;
 	var myTiles = "http://tiles.jochenklar.de/bbs/{z}/{x}/{y}.png";
-	
-    osmCopyright = "Map data &copy; 2012 OpenStreetMap contributors"; //Copyrigth, das unten rechts erscheint	
-	myLayer = new L.TileLayer(myTiles, { minZoom:min, maxZoom: max, attribution: osmCopyright, zIndex:0, reuseTiles:true } ); //Nun wird mit diesen tiles eine ebene erstellt (hier gibt es nur eine Ebene, es sind aber auch mehrere Ebenen möglich)	
-	map.addLayer( myLayer ); //Füge die Ebene der Karte hinzu			
-	
-	var center = new L.LatLng(52.51, 13.37628); //Fokus der Karte	
+    var osmCopyright = "Map data &copy; 2012 OpenStreetMap contributors";
+
+	var myLayer = new L.TileLayer(myTiles, {
+        minZoom:min,
+        maxZoom: max,
+        attribution: osmCopyright,
+        zIndex:0,
+        reuseTiles:true
+    });
+
+	map.addLayer( myLayer );
+	var center = new L.LatLng(52.51, 13.37628);
 	map.setView(center, 11);
     
-    
-    //------------------------------------------------Erster Layer: öffentliche Auslegung ------------------------------------------------		
-	
-	var orangeIcon = L.icon({
-        iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_organge_klein.png',    
-        iconSize:     [26, 45], // size of the icon width,height    
-        iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
-        popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
-	});    
+    $.each(verfahrensschritte, function(key, vs) {
+        var layer = {}
+
+        layer.iconUrl = staticUrl + vs.icon;
+
+        layer.icon = L.icon({
+            iconUrl: staticUrl + vs.icon,
+            iconSize:     [26, 45], // size of the icon width,height    
+            iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
+            popupAnchor:  [0, -46]  // point from which the popup should open relative to the iconAnchor
+        });
+
+        layer.layerGroup = L.layerGroup().addTo(map);
+
+        layers[vs.pk] = layer;
         
-    var bbpMarker = new Array();
-	var bbpLayer = L.layerGroup(bbpMarker).addTo(map);
+        $('input[name=vs-'+vs.pk+']').click(function(){
+            if(this.checked) {
+                map.addLayer(layers[vs.pk].layerGroup);            
+            } else { 
+                map.removeLayer(layers[vs.pk].layerGroup);         
+            }
+        });
+    });
 
     // bbps zu karte hinzufügen
-    $.each(bbps, function(key,bbp){
-        var text = bbp.fields.address; 
-        var bezirk = bbp.fields.bezirk;
-        var typid = bbp.fields.typ;        
-        var typ = typen[typid-1].fields.name;
-        var end = bbp.fields.end;
-        var link = siteUrl + "bbp/" + bbp.pk ;
-
-        // marker für leaflet karte
+    $.each(points, function(key, point){
         var marker = L.marker(
-            [bbp.fields.lat,bbp.fields.lon],
-            {icon: orangeIcon}
-        );       
-        
+            [point.lat,point.lon],
+            {icon: layers[point.vspk].icon}
+        ); 
 
-        marker.pk = bbp.pk;
+        marker.oldIcon = layers[point.vspk].iconUrl;
 
         marker.on("mouseover", function(e) {
             e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_gruen_klein.png';
         }).on("mouseout", function(e) {
-            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_organge_klein.png';
-        });       
-        
+            e.target._icon.src = this.oldIcon;
+        });
 
-        var popuptext = '<a href="/glossar" >' + typ + '</a>';
+        var popuptext = '<a href="/info" >' + 'foo' + '</a>';
         popuptext += '<br>';
-        popuptext += "Betrifft Gegend um: " + text;
+        popuptext += "Betrifft Gegend um: " + point.adresse;
         popuptext += '<br>';
-        popuptext += "Verantwortlich: " + bezirke[bezirk-1].fields.name;
+        popuptext += "Verantwortlich: " + point.behoerde;
         popuptext += '<br>';
-        popuptext += "Beteiligung möglich bis: " + end;
+        popuptext += "Beteiligung möglich bis: " + point.ende;
         popuptext += '<br>';
-        popuptext += '<a href="' + link + '" >Details</a>';        
-        marker.bindPopup(popuptext);   
-       
+        popuptext += '<a href="' + siteUrl + "projekte/" + point.projekt + '" >Details</a>';        
+        marker.bindPopup(popuptext);
+        marker.addTo(map);
 
-        // add marker to global marker array
-        markers[bbp.pk] = marker;
-        
-        bbpLayer.addLayer(marker);
-        
+        layers[point.vspk].layerGroup.addLayer(marker);
     }); 
-    
-    //------------------------------------------------Zweiter Layer: frühzeitige Öffentlichkeitsbeteiligung------------------------------------------------
-    
-    var tuerkisIcon = L.icon({
-        iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_tuerkis_klein.png',    
-        iconSize:     [26, 45], // size of the icon width,height    
-        iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
-        popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
-	});   
-    
-    var bbpFruehMarker = new Array();
-	var bbpFruehLayer = L.layerGroup(bbpFruehLayer).addTo(map);
-    
-    
-    $.each(bbpFruehJson, function(key,bbp){
-        var text = bbp.fields.address; 
-        var bezirk = bbp.fields.bezirk;
-        var typid = bbp.fields.typ;        
-        var typ = typen[typid-1].fields.name;
-        var end = bbp.fields.end;
-        var link = siteUrl + "bbp/" + bbp.pk ;
 
-        // marker für leaflet karte
-        var marker = L.marker(
-            [bbp.fields.lat,bbp.fields.lon],
-            {icon: tuerkisIcon}
-        ).addTo(map);        
-        
-        bbpFruehLayer.addLayer(marker)
-
-        marker.pk = bbp.pk;
-        
-        var popuptext = '<a href="/glossar" >' + typ + '</a>';
-        popuptext += '<br>';
-        popuptext += "Betrifft Gegend um: " + text;
-        popuptext += '<br>';
-        popuptext += "Verantwortlich: " + bezirke[bezirk-1].fields.name;
-        popuptext += '<br>';
-        popuptext += "Beteiligung möglich bis: " + end;
-        popuptext += '<br>';
-        popuptext += '<a href="' + link + '" >Details</a>';
-        marker.bindPopup(popuptext);        
-        
-        marker.on("mouseover", function(e) {
-            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_gruen_klein.png';
-        }).on("mouseout", function(e) {
-            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_tuerkis_klein.png';
-        });       
-        
-
-        // add marker to global marker array
-        markers[bbp.pk] = marker;
-
-        
-    }); 
-    
-    
-    //------------------------------------------------Dritter Layer: erneute Öffentlichkeitsbeteiligung------------------------------------------------
-    
-    var blauIcon = L.icon({
-        iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_blau_klein.png',    
-        iconSize:     [26, 45], // size of the icon width,height    
-        iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
-        popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
-	});   
-    
-    var bbpErneutMarker = new Array();
-	var bbpErneutLayer = L.layerGroup(bbpErneutLayer).addTo(map);
-    
-    
-    $.each(bbpErneutJson, function(key,bbp){
-        var text = bbp.fields.address; 
-        var bezirk = bbp.fields.bezirk;
-        var typid = bbp.fields.typ;        
-        var typ = typen[typid-1].fields.name;
-        var end = bbp.fields.end;
-        var link = siteUrl + "bbp/" + bbp.pk ;
-
-        // marker für leaflet karte
-        var marker = L.marker(
-            [bbp.fields.lat,bbp.fields.lon],
-            {icon: blauIcon}
-        ).addTo(map);        
-        
-        bbpErneutLayer.addLayer(marker)
-
-        marker.pk = bbp.pk;
-        
-       var popuptext = '<a href="/glossar" >' + typ + '</a>';
-        popuptext += '<br>';
-        popuptext += "Betrifft Gegend um: " + text;
-        popuptext += '<br>';
-        popuptext += "Verantwortlich: " + bezirke[bezirk-1].fields.name;
-        popuptext += '<br>';
-        popuptext += "Beteiligung möglich bis: " + end;
-        popuptext += '<br>';
-        popuptext += '<a href="' + link + '" >Details</a>';
-        marker.bindPopup(popuptext);        
-        
-        marker.on("mouseover", function(e) {
-            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_gruen_klein.png';
-        }).on("mouseout", function(e) {
-            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_blau_klein.png';
-        });       
-        
-
-        // add marker to global marker array
-        markers[bbp.pk] = marker;
-
-        
-    }); 
-    
-    //------------------------------------------------Vierter Layer: abgelaufene Projekte ------------------------------------------------
-    
-    var greyIcon = L.icon({
-        iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png',    
-        iconSize:     [26, 45], // size of the icon width,height    
-        iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
-        popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
-	});   
-    
-    var bbpOldMarker = new Array();
-	var bbpOldLayer = L.layerGroup(bbpOldLayer);
-    
-    
-    $.each(bbpsOld, function(key,bbp){
-        var text = bbp.fields.address; 
-        var bezirk = bbp.fields.bezirk;
-        var typid = bbp.fields.typ;        
-        var typ = typen[typid-1].fields.name;
-        var end = bbp.fields.end;
-        var link = siteUrl + "bbp/" + bbp.pk ;
-
-        // marker für leaflet karte
-        var marker = L.marker(
-            [bbp.fields.lat,bbp.fields.lon],
-            {icon: greyIcon}
-        );        
-        
-        bbpOldLayer.addLayer(marker)
-
-        marker.pk = bbp.pk;
-        
-        var popuptext = '<a href="/glossar" >' + typ + '</a>';
-        popuptext += '<br>';
-        popuptext += "Betrifft Gegend um: " + text;
-        popuptext += '<br>';
-        popuptext += "Verantwortlich: " + bezirke[bezirk-1].fields.name;
-        popuptext += '<br>';
-        popuptext += "Beteiligung war möglich bis: " + end;
-        popuptext += '<br>';
-        popuptext += '<a href="' + link + '" >Details</a>';
-        marker.bindPopup(popuptext);        
-        
-        marker.on("mouseover", function(e) {
-            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_gruen_klein.png';
-        }).on("mouseout", function(e) {
-            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_klein.png';
-        });       
-        
-
-        // add marker to global marker array
-        markers[bbp.pk] = marker;
-
-        
-    });
-      
-    
-    $('input[name=aktuell]').click(function(){
-        if(this.checked) {
-            map.addLayer(bbpLayer);            
-        } 
-        
-        else { 
-        map.removeLayer(bbpLayer);         
-        }
-        
-    });
-    
-    $('input[name=frueh]').click(function(){
-        if(this.checked) {
-            map.addLayer(bbpFruehLayer);            
-        }
-        
-        else {
-            map.removeLayer(bbpFruehLayer); 
-            
-        }
-        
-    });  
-    
-    $('input[name=erneut]').click(function(){
-        if(this.checked) {
-            map.addLayer(bbpErneutLayer);            
-        }
-        
-        else {
-            map.removeLayer(bbpErneutLayer); 
-            
-        }
-        
-    });  
-    
-    $('input[name=old]').click(function(){
-        if(this.checked) {
-            map.addLayer(bbpOldLayer);            
-        }
-        
-        else {
-            map.removeLayer(bbpOldLayer); 
-            
-        }
-        
-    });
-    
-    
-    
     // button für sidebar zur leafletkarte hinzufügen
     html = '<div class="leaflet-control-zoom leaflet-control"><a class="leaflet-control-sidebar" href="#" id="sidebar-button"><i class="icon-chevron-left"></i></a></div>';
     $('.leaflet-top.leaflet-left').prepend(html);
@@ -334,7 +121,6 @@ function moveInSidebar(){
     );
     return false;
 }
-
 
 $(document).ready(function() {
     setTimeout('initMap()',100);

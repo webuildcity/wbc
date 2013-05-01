@@ -6,9 +6,9 @@
     </script>    
     <script type="text/javascript">
     var staticUrl = '{{ STATIC_URL }}';
-    var lon = {{ project.lon|stringformat:"F" }};
-    var lat = {{ project.lat|stringformat:"F" }}; 
-    var typ = "{{ project.typ.name}}";   
+    var lon = {{ projekt.lon|stringformat:"F" }};
+    var lat = {{ projekt.lat|stringformat:"F" }}; 
+    var typ = "Öffentliche Auslegung";   
     </script>
     <script type="text/javascript" src="{{ STATIC_URL }}localmap.js" ></script>
 {% endblock %}
@@ -20,36 +20,42 @@
             <div class="row">        
                 <div class="span8">
                     <h3>Wo soll etwas gebaut werden?</h3>
-                    {{ project.strassen }}<br>
-                    in {{ project.bezirk.all.0.name }}
+                    {{ projekt.adresse }}<br>
+                    in <br />
+                    {% for bezirk in projekt.bezirke.all %}
+                        {{ bezirk.name }}<br />
+                    {% endfor %}
                 </div>
                 <div class="span4">
                     <h3>Zeitraum der Auslegung</h3>
-                    {{ project.begin }} bis {{ project.end }}
+                    {{ projekt.beginn }} bis {{ projekt.ende }}
                 </div>
             </div>
             <div class="row">        
                 <div class="span8">
                     <h3>Was soll gebaut werden?</h3>
-                    Betrifft: Bebauungsplan {{ project.plan_id }}<br>
-                    {{ project.beschreibung }}
+                    Betrifft: Bebauungsplan {{ projekt.bezeichner }}<br>
+                    {{ projekt.beschreibung }}
                 </div>
                 <div class="span4">
                     <h3>Ort der Auslegung</h3>
-                    {{ project.ort }}
+                    {{ projekt.auslegungsstell }}
                 </div> 
             </div> 
             <div class="row">        
                 <div class="span8">
                     <h3>Welchen gesetzlichen Rahmen betrifft das?</h3>
-                   {{ project.typ.name }}: <a href="/glossar">Was heißt das?</a> 
+                   {{ projekt.typ.name }}: <a href="/glossar">Was heißt das?</a> 
                 </div>
                 <div class="span4">
                     <h3>Link zur Verwaltung</h3>
-                    <a href="{{ project.bezirk.all.0.link }}" target="_blank">{{ project.bezirk.all.0.name }}</a>
-                    
-                    
+                    <a href="{{ projekt.bezirk.all.0.link }}" target="_blank">{{ projekt.bezirk.all.0.name }}</a>
                 </div> 
-            </div>        
+            </div>
+            {% for veroeffentlichung in projekt.veroeffentlichungen.all %}
+                        {{ veroeffentlichung.auslegungsstelle }}<br />
+                    {% endfor %}
+
+
         </div>
 {% endblock %}

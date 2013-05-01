@@ -36,10 +36,7 @@ function initMap() {
         iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location
         });     
     } 
-    
-    console.log(icon);      
-    
-        
+
     L.marker([lat,lon],{icon: icon}).addTo(map);
 }
 

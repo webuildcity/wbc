@@ -78,15 +78,15 @@ a:hover {
 #sidebar {    
     position: absolute;
     top: 110px; 
-    height:360px;    
-    /*bottom: 690px;*/
+    /*height:360px;*/
+    bottom: 10px;
     /*left: -300px;*/
     left: 10px;
     width: 300px;
     background-color: rgba(222, 106, 0, 0.7); 
     z-index: 101;
     border-radius:7px;
-    /*overflow: hidden;*/
+    overflow: hidden;
 }
 
 #sidebar-inner {    
@@ -119,7 +119,7 @@ a:hover {
     left: 5px;
     right: 5px;
     padding-right: 5px;
-    /*overflow-y: auto;*/
+    overflow-y: auto;
 }
 
 #sidebar-container {
@@ -129,11 +129,12 @@ a:hover {
 .icon{
   float:left;
   width: 35px;
+
 }
 
 .text{
     float:left;
-    width: 210px;
+    width: 190px;
 }
 
 .entry{
@@ -143,7 +144,7 @@ a:hover {
 .listentry{
     padding-top: 8px;
     padding-left: 12px;
-    padding-right: 12px;
+    padding-right: 8px;
     padding-bottom: 8px;
 }
 
@@ -151,8 +152,6 @@ a:hover {
     background-color: #de6a00;
     color: white;
     border-radius: 5px;
-
-
 }
 
 /* Projektseiten */
@@ -193,8 +192,6 @@ li {
     line-height: 3px;
 
 }
-
-
 
 #sitenav {
     float: right;
