@@ -5,17 +5,31 @@
         src="{{ STATIC_URL }}dataTables/js/jquery.dataTables.js" >
 </script>
 <script type="text/javascript" 
-        src="{{ STATIC_URL }}dataTables/js/jquery.dataTables.bootstrap.pagination.js" >
+        src="{{ STATIC_URL }}dataTables/js/jquery.dataTables.bootstrap.js" >
 </script>
 <script>
     $.extend( $.fn.dataTableExt.oStdClasses, {
-        "sSortAsc": "header headerSortDown",
-        "sSortDesc": "header headerSortUp",
-        "sSortable": "header"
+        "sWrapper": "dataTables_wrapper form-inline"
     } );
     $(document).ready(function() {
         $('#projects-table').dataTable({
-            "sPaginationType": "bootstrap"
+            "aLengthMenu": [[10, 25, -1], [10, 25, "Alle"]],
+            "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sLengthMenu": "Zeige _MENU_ Einträge pro Seite",
+                "sZeroRecords": "Sorry, nichts gefunden!",
+                "sInfo": "Eintrag _START_ bis _END_ von _TOTAL_ Einträgen",
+                "sInfoEmpty": "Keine Einträge",
+                "sInfoFiltered": "(insgesamt _MAX_ Einträgen)",
+                "sSearch": 'Suche:',
+                "oPaginate": {
+                    "sFirst": "Erste Seite",
+                    "sLast": "Letzte Seite",
+                    "sNext": "Vorherige Seite",
+                    "sPrevious": "Nächste Seite",
+                }
+            }
         });
     });
 </script>
@@ -25,7 +39,7 @@
 
 {% block content %}
 <div class="container" style="margin-top: 120px">
-    <table id="projects-table">
+    <table cellpadding="0" cellspacing="0" border="0" class="table" id="projects-table">
         <thead>
             <tr>
                 <th>Verantwortlich</th>
