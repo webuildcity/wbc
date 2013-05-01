@@ -7,7 +7,8 @@
     <script type="text/javascript">
     var staticUrl = '{{ STATIC_URL }}';
     var lon = {{ project.lon|stringformat:"F" }};
-    var lat = {{ project.lat|stringformat:"F" }};    
+    var lat = {{ project.lat|stringformat:"F" }}; 
+    var typ = "{{ project.typ.name}}";   
     </script>
     <script type="text/javascript" src="{{ STATIC_URL }}localmap.js" ></script>
 {% endblock %}

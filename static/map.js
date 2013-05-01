@@ -335,6 +335,7 @@ function moveInSidebar(){
     return false;
 }
 
+
 $(document).ready(function() {
     setTimeout('initMap()',100);
 });

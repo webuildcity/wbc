@@ -11,14 +11,34 @@ function initMap() {
     
     var center = new L.LatLng(lat, lon); 	
     map.setView(center, min);
-
-    var orangeIcon = L.icon({
+    
+    var icon;
+    
+    if(typ == "Öffentliche Auslegung"){
+        icon = L.icon({
         iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_organge_klein.png',
         iconSize:     [26, 45], // size of the icon width,height                                    
-        iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location          
-    });
+        iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location  
+        });
+    }
+    else if(typ == "Frühzeitige Öffentlichkeitsbeteiligung"){
+        icon = L.icon({
+        iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_tuerkis_klein.png',
+        iconSize:     [26, 45], // size of the icon width,height                                    
+        iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location 
+        });   
+    } 
+    
+    else{
+        icon = L.icon({
+        iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_blau_klein.png',
+        iconSize:     [26, 45], // size of the icon width,height                                    
+        iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location
+        });     
+    }       
+    
         
-    L.marker([lat,lon],{icon: orangeIcon}).addTo(map);
+    L.marker([lat,lon],{icon: icon}).addTo(map);
 }
 
 $(document).ready(function() {
