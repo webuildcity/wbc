@@ -46,9 +46,11 @@ class Bezirk(models.Model):
         
 class Typ(models.Model): 
     name          = models.CharField(max_length=256)
-    description   = models.TextField()
+    description   = models.TextField()    
     
     def __unicode__(self):
         return '[' + unicode(self.id) + '] ' + self.name
+        
+
         
 

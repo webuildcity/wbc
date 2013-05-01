@@ -1,11 +1,8 @@
 {% extends 'bbs/layout.html' %}
 
 {% block head %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}leaflet/leaflet.css" />
-    <script type="text/javascript" src="{{ STATIC_URL }}leaflet/leaflet.js" >
-    </script>
-    <script type="text/javascript" src="{{ STATIC_URL }}map.js" >
-    </script>
+    
+    
     
 
 {% endblock %}
@@ -21,13 +18,13 @@ Der gesamte mögliche Inhalt eines Bebauungsplanes ist in § 9 des Baugesetzbuch
 <br><br>
 Im Rahmen des Aufstellungsverfahrens von Bebauungsplanverfahren haben die Bürgerinnen und Bürger in zwei Stufen die Möglichkeit, sich zu beteiligen. Dies ist in der ersten Stufe die <b>Frühzeitige Öffentlichkeitsbeteiligung</b> und in der zweiten Stufe die <b>Öffentliche Auslegung</b>.
 <br><br>
-<div class="accordion" id="accordion2">
+<div class="accordion" id="accordion">
  {% for t in typ %}
         <div class="accordion-group">
           <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">{{ t.name }}</a>   
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ t.pk }}">{{ t.name }}</a>   
           </div>
-          <div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">
+          <div id="collapse-{{ t.pk }}" class="accordion-body collapse" style="height: 0px; ">
             <div class="accordion-inner">
               {{ t.description }}
             </div>
