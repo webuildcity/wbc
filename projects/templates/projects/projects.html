@@ -1,11 +1,31 @@
 {% extends 'bbs/layout.html' %}
 
 {% block head %}
+<script type="text/javascript" 
+        src="{{ STATIC_URL }}dataTables/js/jquery.dataTables.js" >
+</script>
+<script type="text/javascript" 
+        src="{{ STATIC_URL }}dataTables/js/jquery.dataTables.bootstrap.pagination.js" >
+</script>
+<script>
+    $.extend( $.fn.dataTableExt.oStdClasses, {
+        "sSortAsc": "header headerSortDown",
+        "sSortDesc": "header headerSortUp",
+        "sSortable": "header"
+    } );
+    $(document).ready(function() {
+        $('#projects-table').dataTable({
+            "sPaginationType": "bootstrap"
+        });
+    });
+</script>
+<link rel="stylesheet" href="{{ STATIC_URL }}dataTables/css/jquery.dataTables.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}dataTables/css/jquery.dataTables.bootstrap.css" />
 {% endblock %}
 
 {% block content %}
 <div class="container" style="margin-top: 120px">
-    <table class="table">
+    <table id="projects-table">
         <thead>
             <tr>
                 <th>Verantwortlich</th>

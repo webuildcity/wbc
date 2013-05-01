@@ -41,17 +41,28 @@ class RestView(View):
 
     def render(self, request, template, response):
         if self.accept == 'json':
-            jsonDict = {}
+            jsonObject = {}
             for key in response:
                 element = response[key]
 
                 if isinstance(element, models.query.QuerySet):
-                    jsonDict[key] = serializers.serialize("python", element)
+                    jsonObject[key] = []
+                    obj = serializers.serialize("python", element)
+                    for e in obj:
+                        d = e['fields']
+                        d['pk'] = e['pk']
+                        jsonObject[key].append(d)
                 elif isinstance(element, models.Model):
-                    jsonDict[key] = serializers.serialize("python", [element])[0]
+                    d = serializers.serialize("python", [element])[0]
+                    jsonObject[key] =  d['fields']
+                    jsonObject[key]['pk'] =  d['pk']
                 else:
-                    jsonDict[key] = element
+                    jsonObject[key] = element
 
-            return HttpResponse(json.dumps(jsonDict, cls=DjangoJSONEncoder), content_type="application/json")
+            return self.jsonResponse(jsonObject)
         else:
             return render(request, template, response)
+
+    def jsonResponse(self, jsonObject):
+        return HttpResponse(json.dumps(jsonObject, cls=DjangoJSONEncoder), content_type="application/json")
+        
