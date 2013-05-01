@@ -5,7 +5,7 @@ function initMap() {
 	map = new L.Map("map");
 	
 	var min = 11; //minimale Zoomstufe
-	var max = 15; //maximale Zoomstufe	
+	var max = 17; //maximale Zoomstufe	
 	var myTiles = "http://tiles.jochenklar.de/bbs/{z}/{x}/{y}.png";
 	
     osmCopyright = "Map data &copy; 2012 OpenStreetMap contributors"; //Copyrigth, das unten rechts erscheint	
