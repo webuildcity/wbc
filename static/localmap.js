@@ -4,7 +4,7 @@ function initMap() {
     var min = 14; //minimale Zoomstufe
     var max = 16; //maximale Zoomstufe	
     
-    var myTiles = "http://tiles.jochenklar.de/pinkoding-bbs/{z}/{x}/{y}.png";
+    var myTiles = "http://tiles.jochenklar.de/bbs/{z}/{x}/{y}.png";
     var	osmCopyright = ""; //Copyrigth, das unten rechts erscheint	
     var myLayer = new L.TileLayer(myTiles, { minZoom:min, maxZoom: max, attribution: osmCopyright, zIndex:0, reuseTiles:true } );  
     map.addLayer(myLayer);   
@@ -35,7 +35,9 @@ function initMap() {
         iconSize:     [26, 45], // size of the icon width,height                                    
         iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location
         });     
-    }       
+    } 
+    
+    console.log(icon);      
     
         
     L.marker([lat,lon],{icon: icon}).addTo(map);
