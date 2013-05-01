@@ -2,7 +2,7 @@ var layers = {};
 
 function initMap() {
 	var map = new L.Map("map");
-
+    console.log(verfahrensschritte);
 	var min = 11;
 	var max = 17;
 	var myTiles = "http://tiles.jochenklar.de/bbs/{z}/{x}/{y}.png";
@@ -44,7 +44,7 @@ function initMap() {
             }
         });
     });
-
+    console.log(points);
     // bbps zu karte hinzufügen
     $.each(points, function(key, point){
         var marker = L.marker(
@@ -60,7 +60,7 @@ function initMap() {
             e.target._icon.src = this.oldIcon;
         });
 
-        var popuptext = '<a href="/info" >' + 'foo' + '</a>';
+        var popuptext = '<a href="/info" >' + verfahrensschritte[point.vspk].name + '</a>';
         popuptext += '<br>';
         popuptext += "Betrifft Gegend um: " + point.adresse;
         popuptext += '<br>';
