@@ -1,6 +1,19 @@
 {% extends 'bbs/layout.html' %}
 
 {% block head %}
+<script type="text/javascript" src="{{ STATIC_URL }}jquery.min.js" ></script>
+<script type="text/javascript" src="{{ STATIC_URL }}bootstrap-collapse.js" ></script>
+<script type="text/javascript">
+
+    
+    
+    $(document).ready(function(){
+       var openVs = window.location.toString().split('#')[1];        
+        $('#collapse-' + openVs).collapse('show');
+
+    });
+</script>
+
 {% endblock %}
 
 {% block content %}
@@ -16,7 +29,7 @@
                 <div class="accordion-heading">
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-{{ v.pk }}" href="#collapse-{{ vs.pk }}">{{ vs.name }}</a>   
                 </div>
-                <div id="collapse-{{ vs.pk }}" class="accordion-body collapse" style="height: 0px; ">
+                <div id="collapse-{{ vs.pk }}" class="accordion-body collapse">
                     <div class="accordion-inner">
                     {{ vs.beschreibung }}
                     </div>

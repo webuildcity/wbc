@@ -62,7 +62,7 @@ function initMap() {
             e.target._icon.src = this.icon;
         });
 
-        var popuptext = '<a href="/info" >' + verfahrensschritte[point.vspk].name + '</a>';
+        var popuptext = '<a href="/info/#'+ point.vspk + '" >' + verfahrensschritte[point.vspk].name + '</a>';
         popuptext += '<br>';
         popuptext += "Betrifft Gegend um: " + point.adresse;
         popuptext += '<br>';

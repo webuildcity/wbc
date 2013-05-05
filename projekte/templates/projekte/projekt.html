@@ -40,7 +40,7 @@
         <tbody>
         {% for veroeffentlichung in projekt.veroeffentlichungen.all %}
             <tr>
-                <td><a href="/info">{{ veroeffentlichung.verfahrensschritt.name}} ({{ veroeffentlichung.verfahrensschritt.verfahren.name }})</a></td>                
+                <td><a href="/info/#{{ veroeffentlichung.verfahrensschritt.pk}}">{{ veroeffentlichung.verfahrensschritt.name}} ({{ veroeffentlichung.verfahrensschritt.verfahren.name }})</a></td>                
                 <td>{{ veroeffentlichung.beginn }}</td> 
                 <td>{{ veroeffentlichung.ende }}</td>
 		<td>
