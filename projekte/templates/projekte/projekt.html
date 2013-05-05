@@ -21,11 +21,8 @@
                 <div class="span8">
                     <h3>Betroffenes Gebiet</h3>
                     <b>Bezeichner:</b>  {{ projekt.bezeichner }}<br>
-                    <b>genaue örtliche Beschreibung: </b> {{ projekt.beschreibung }}<br>
-                    <b>im Bezirk/in den Bezirken:</b><br>
-                    {% for bezirk in projekt.bezirke.all %}
-                        {{ bezirk.name }}<br />                        
-                    {% endfor %}
+                    <b>genaue örtliche Beschreibung:</b> {{ projekt.beschreibung }}<br>
+                    <b>im Bezirk/in den Bezirken:</b> {{ projekt.bezirke.all|join:", "}}
                 </div>
                              
             </div>
@@ -35,8 +32,8 @@
                 <thead>
                     <tr>
                         <th>Verfahren</th>                        
-                        <th>Fristbeginn</th>
-                        <th>Fristende</th>
+                        <th style="width: 6em">Fristbeginn</th>
+                        <th style="width: 6em">Fristende</th>
                         <th>Details</th>
                    </tr>
             </thead>
@@ -45,8 +42,16 @@
             <tr>
                 <td><a href="/info">{{ veroeffentlichung.verfahrensschritt.name}} ({{ veroeffentlichung.verfahrensschritt.verfahren.name }})</a></td>                
                 <td>{{ veroeffentlichung.beginn }}</td> 
-                <td>{{ veroeffentlichung.ende }}</td>    
-                <td>Auslegungsstelle:<br>{{ veroeffentlichung.auslegungsstelle }}<br>Öffnungszeiten:<br>{{ veroeffentlichung.zeiten }}<br><br><a href="{{ veroeffentlichung.behoerde.link }}">Link zur verantwortlichen Behörde</a></td>
+                <td>{{ veroeffentlichung.ende }}</td>
+		<td>
+		  {% if veroeffentlichung.beschreibung %}
+		    <b>Beschreibung</b><br />{{ veroeffentlichung.beschreibung }}<br />
+		  {% endif %}
+                  <b>Auslegungsstelle</b><br />{{ veroeffentlichung.auslegungsstelle }}
+		  <br /><b>Öffnungszeiten</b><br />{{ veroeffentlichung.zeiten }}<br /><br />
+		  <a href="{{ veroeffentlichung.behoerde.link }}">
+		  Link zur verantwortlichen Behörde</a>
+		</td>
             </tr>
         {% endfor %}
         </tbody>

@@ -55,4 +55,4 @@ class Bezirk(models.Model):
     name          = models.CharField(max_length=256)
 
     def __unicode__(self):
-        return '[' + unicode(self.id) + '] ' + self.name
+        return self.name
