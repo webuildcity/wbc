@@ -1,17 +1,12 @@
 {% extends 'bbs/layout.html' %}
 
 {% block head %}
-<script type="text/javascript" src="{{ STATIC_URL }}jquery.min.js" ></script>
-<script type="text/javascript" src="{{ STATIC_URL }}bootstrap-collapse.js" ></script>
 <script type="text/javascript">
+$(document).ready(function(){
+  var openVs = window.location.toString().split('#')[1];        
+  $('#collapse-' + openVs).addClass('in');
+});
 
-    
-    
-    $(document).ready(function(){
-       var openVs = window.location.toString().split('#')[1];        
-        $('#collapse-' + openVs).collapse('show');
-
-    });
 </script>
 
 {% endblock %}
