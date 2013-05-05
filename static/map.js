@@ -24,6 +24,7 @@ function initMap() {
         var layer = {}
 
         layer.iconUrl = staticUrl + vs.icon;
+	layer.hoverIconUrl = staticUrl + vs.hoverIcon;
 
         layer.icon = L.icon({
             iconUrl: staticUrl + vs.icon,
@@ -52,15 +53,16 @@ function initMap() {
             {icon: layers[point.vspk].icon}
         ); 
 
-        marker.oldIcon = layers[point.vspk].iconUrl;
+        marker.icon = layers[point.vspk].iconUrl;
+	marker.hoverIcon = layers[point.vspk].hoverIconUrl;
 
         marker.on("mouseover", function(e) {
-            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_gruen_klein.png';
+            e.target._icon.src = this.hoverIcon';
         }).on("mouseout", function(e) {
-            e.target._icon.src = this.oldIcon;
+            e.target._icon.src = this.icon;
         });
 
-        var popuptext = '<a href="/info" >' + 'foo' + '</a>';
+        var popuptext = '<a href="/info" >' + point.vsname + '</a>';
         popuptext += '<br>';
         popuptext += "Betrifft Gegend um: " + point.adresse;
         popuptext += '<br>';

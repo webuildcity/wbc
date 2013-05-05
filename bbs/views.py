@@ -27,6 +27,7 @@ def home(request):
             'lat': v.projekt.lat,
             'lon': v.projekt.lon,
             'vspk': v.verfahrensschritt.pk,
+            'vsname': v.verfahrensschritt.name
         }
         points.append(point);
 

@@ -30,6 +30,7 @@ class Verfahrensschritt(models.Model):
     name         = models.CharField(max_length=256, verbose_name="Name")
     beschreibung = models.TextField(verbose_name="Beschreibung")
     icon         = models.CharField(max_length=256, verbose_name="Icon auf der Karte")
+    hoverIcon    = models.CharField(max_length=256, verbose_name="Icon auf der Karte bei Hovereffekt")
     reihenfolge  = models.IntegerField(verbose_name="Nummer in der Reihefolge")
     verfahren    = models.ForeignKey('Verfahren', related_name='verfahrensschritte')
 
