@@ -57,12 +57,12 @@ function initMap() {
 	marker.hoverIcon = layers[point.vspk].hoverIconUrl;
 
         marker.on("mouseover", function(e) {
-            e.target._icon.src = this.hoverIcon';
+            e.target._icon.src = this.hoverIcon;
         }).on("mouseout", function(e) {
             e.target._icon.src = this.icon;
         });
 
-        var popuptext = '<a href="/info" >' + point.vsname + '</a>';
+        var popuptext = '<a href="/info" >' + verfahrensschritte[point.vspk].name + '</a>';
         popuptext += '<br>';
         popuptext += "Betrifft Gegend um: " + point.adresse;
         popuptext += '<br>';

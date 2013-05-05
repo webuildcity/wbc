@@ -9,8 +9,16 @@
     <script type="text/javascript">
     var siteUrl = '{{ siteUrl|safe }}';
     var staticUrl = '{{ STATIC_URL }}';
-    var points = {{points|safe}};
-    var verfahrensschritte = {{verfahrensschritte|safe}};
+
+    var verfahrensschritte = {};
+    {% for v in verfahrensschritte %}
+    verfahrensschritte[{{v.pk}}] = {"pk": {{v.pk}}, "name": "{{v.name}}", "icon": "{{v.icon}}", "hoverIcon": "{{v.hoverIcon}}"};
+    {% endfor %}
+
+    var points = {}
+    {% for v in veroeffentlichungen %}
+    points[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "projekt": {{v.projekt.pk}}, "adresse": "{{v.projekt.adresse}}", "lat": {{v.projekt.lat|stringformat:"F"}}, "lon": {{v.projekt.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}} };
+    {% endfor %}
     </script>
 
 {% endblock %}
