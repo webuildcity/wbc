@@ -19,6 +19,11 @@
     {% for v in veroeffentlichungen %}
     points[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "projekt": {{v.projekt.pk}}, "adresse": "{{v.projekt.adresse}}", "lat": {{v.projekt.lat|stringformat:"F"}}, "lon": {{v.projekt.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}} };
     {% endfor %}
+    
+    var pointsOld = {}
+    {% for v in veroeffentlichungenAlt %}
+    pointsOld[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "projekt": {{v.projekt.pk}}, "adresse": "{{v.projekt.adresse}}", "lat": {{v.projekt.lat|stringformat:"F"}}, "lon": {{v.projekt.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}} };
+    {% endfor %}
     </script>
 
 {% endblock %}
@@ -51,6 +56,21 @@
                     </div>
                     {% endfor %}
                     {% endfor %}
+                    <div class = "listentry">
+                        <div class ="entry">
+                            <div class="icon">
+                                <img src="{{ STATIC_URL }}img/Baustellenschilder/klein/schild_grau_blass.png">
+                            </div>
+                            <div class="text">                                
+                                Frist beireits abgelaufen
+                            </div>
+                            <div class="check">                    
+                                <label class="checkbox">
+                                    <input name="old" type="checkbox" value=""/>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
