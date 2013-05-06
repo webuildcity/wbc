@@ -134,6 +134,10 @@ function initMap() {
     $('#sidebar-button').attr('title','Sidebar ausblenden');
     $('.leaflet-control-zoom-in').attr('title','Hinein zoomen');
     $('.leaflet-control-zoom-out').attr('title','Heraus zoomen');
+
+    // adjust height of sidebar
+    $('#sidebar').height($('#liste').height() + 20);
+
 }
 
 function moveOutSidebar(){
