@@ -143,11 +143,11 @@ function initMap() {
 function moveOutSidebar(){
     $('#sidebar-button').unbind('click');
     $('#sidebar').animate(
-        {left: '-=310'},
+        {left: '-=280'},
         'fast',
         function(){});
     $('.leaflet-top.leaflet-left').animate(
-        {left: '-=310'},
+        {left: '-=280'},
         'fast',
         function(){
             $('#sidebar-button').click(moveInSidebar);
@@ -162,11 +162,11 @@ function moveOutSidebar(){
 function moveInSidebar(){
     $('#sidebar-button').unbind('click');
     $('#sidebar').animate(
-        {left: '+=310'},
+        {left: '+=280'},
         'fast',
         function(){});
     $('.leaflet-top.leaflet-left').animate(
-        {left: '+=310'},
+        {left: '+=280'},
         'fast',
         function(){
             $('#sidebar-button').click(moveOutSidebar);

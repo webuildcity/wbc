@@ -35,41 +35,44 @@
             <div id="sidebar-container">                      
                 <div id="liste">
                     {% for v in verfahren %}
-                    <div class = "listentry">
+                    <div class="listentry">
                         <b>{{ v.name }}</b>
                     </div>
-                    {% for vs in v.verfahrensschritte.all %}
-                    <div class = "listentry">
-                        <div class ="entry">
-                            <div class="icon">
-                                <img src="{{ STATIC_URL }}{{vs.icon}}">
-                            </div>
-                            <div class="text">                                
-                                <a href="/info#{{vs.pk}}">{{vs.name}}</a>
-                            </div>
-                            <div class="check">                    
-                                <label class="checkbox">
-                                    <input name="vs-{{vs.pk}}" type="checkbox" value="" checked />
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    {% endfor %}
-                    <div class = "listentry">
-                        <div class ="entry">
-                            <div class="icon">
-                                <img src="{{ STATIC_URL }}img/Baustellenschilder/klein/schild_grau_blass.png">
-                            </div>
-                            <div class="text">                                
-                                Frist bereits abgelaufen
-                            </div>
-                            <div class="check">                    
-                                <label class="checkbox">
-                                    <input name="old" type="checkbox" value=""/>
-                                </label>
-                            </div>
-                        </div>
+                    <div class="listentry">
+                        <table>
+                        {% for vs in v.verfahrensschritte.all %}
+                            <tr>
+                                <td class="icon">
+                                    <img src="{{ STATIC_URL }}{{vs.icon}}">
+                                </td>
+                                <td class="text">                                
+                                    <a href="/info#{{vs.pk}}">{{vs.name}}</a>
+                                </td>
+                                <td class="check">                    
+                                    <label class="checkbox">
+                                        <input name="vs-{{vs.pk}}" type="checkbox" value="" checked />
+                                    </label>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </table>
+                        {% endfor %}
+                        <div class="listsep" ></div>
+                        <table>
+                            <tr>
+                                <td class="icon">
+                                    <img src="{{ STATIC_URL }}img/Baustellenschilder/klein/schild_grau_blass.png">
+                                </td>
+                                <td class="text">                           
+                                    Frist bereits abgelaufen
+                                </td>
+                                <td class="check">                   
+                                    <label class="checkbox">
+                                        <input name="old" type="checkbox" value=""/>
+                                    </label>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
