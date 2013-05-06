@@ -132,13 +132,19 @@ a:hover {
 
 }
 
+.icon img{
+  
+  width: 15px;
+
+}
+
 .text{
     float:left;
     width: 190px;
 }
 
 .entry{
-    height: 80px;
+    height: 40px;
 }
 
 .listentry{

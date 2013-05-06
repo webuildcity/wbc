@@ -36,7 +36,7 @@
                 <div id="liste">
                     {% for v in verfahren %}
                     <div class = "listentry">
-                        <h4>{{ v.name }}</h4>
+                        <b>{{ v.name }}</b>
                     </div>
                     {% for vs in v.verfahrensschritte.all %}
                     <div class = "listentry">
@@ -62,7 +62,7 @@
                                 <img src="{{ STATIC_URL }}img/Baustellenschilder/klein/schild_grau_blass.png">
                             </div>
                             <div class="text">                                
-                                Frist beireits abgelaufen
+                                Frist bereits abgelaufen
                             </div>
                             <div class="check">                    
                                 <label class="checkbox">
