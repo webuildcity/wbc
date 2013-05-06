@@ -24,7 +24,7 @@ function initMap() {
         var layer = {}
 
         layer.iconUrl = staticUrl + vs.icon;
-	layer.hoverIconUrl = staticUrl + vs.hoverIcon;
+        layer.hoverIconUrl = staticUrl + vs.hoverIcon;
 
         layer.icon = L.icon({
             iconUrl: staticUrl + vs.icon,
@@ -54,7 +54,7 @@ function initMap() {
         ); 
 
         marker.icon = layers[point.vspk].iconUrl;
-	marker.hoverIcon = layers[point.vspk].hoverIconUrl;
+        marker.hoverIcon = layers[point.vspk].hoverIconUrl;
 
         marker.on("mouseover", function(e) {
             e.target._icon.src = this.hoverIcon;
@@ -76,6 +76,56 @@ function initMap() {
 
         layers[point.vspk].layerGroup.addLayer(marker);
     }); 
+    
+    var greyIcon = L.icon({
+        iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_grau_blass.png',    
+        iconSize:     [26, 45], // size of the icon width,height    
+        iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
+        popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
+	});   
+    
+    var oldMarker = new Array();
+	var oldLayer = L.layerGroup(oldLayer);
+    
+    $.each(pointsOld, function(key,point){
+        
+        // marker für leaflet karte
+        var marker = L.marker(
+            [point.lat,point.lon],
+            {icon: greyIcon}
+        );        
+        
+        oldLayer.addLayer(marker)
+
+        marker.pk = point.pk;
+        
+        var popuptext = '<a href="/info/#'+ point.vspk + '" >' + verfahrensschritte[point.vspk].name + '</a>';
+        popuptext += '<br>';
+        popuptext += "Betrifft Gegend um: " + point.adresse;
+        popuptext += '<br>';
+        popuptext += "Verantwortlich: " + point.behoerde;
+        popuptext += '<br>';
+        popuptext += "Beteiligung möglich bis: " + point.ende;
+        popuptext += '<br>';
+        popuptext += '<a href="' + siteUrl + "projekte/" + point.projekt + '" >Details</a>'; 
+        marker.bindPopup(popuptext);        
+        
+        marker.on("mouseover", function(e) {
+            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau.png';
+        }).on("mouseout", function(e) {
+            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_blass.png';
+        }); 
+    
+     });   
+    
+    $('input[name=old]').click(function(){
+            if(this.checked) {
+                map.addLayer(oldLayer);            
+            } else { 
+                map.removeLayer(oldLayer);         
+            }
+        });
+    
 
     // button für sidebar zur leafletkarte hinzufügen
     html = '<div class="leaflet-control-zoom leaflet-control"><a class="leaflet-control-sidebar" href="#" id="sidebar-button"><i class="icon-chevron-left"></i></a></div>';
