@@ -1,3 +1,4 @@
 bbs/settings.py
 data/database
+collected/
 *.pyc

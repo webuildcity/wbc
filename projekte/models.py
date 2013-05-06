@@ -12,6 +12,9 @@ class Projekt(models.Model):
     def __unicode__(self):
         return '[' + unicode(self.pk) + '] ' + self.adresse
 
+    class Meta:
+        verbose_name_plural = "Projekte"
+
 class Veroeffentlichung(models.Model):
     beschreibung      = models.TextField(blank=True, verbose_name="Beschreibung")
     verfahrensschritt = models.ForeignKey('Verfahrensschritt', related_name='veroeffentlichungen')
@@ -25,6 +28,8 @@ class Veroeffentlichung(models.Model):
 
     def __unicode__(self):
         return '[' + unicode(self.pk) + '] ' + self.projekt.adresse + ', ' + self.verfahrensschritt.name
+    class Meta:
+        verbose_name_plural = "Veroeffentlichungen"
 
 class Verfahrensschritt(models.Model):
     name         = models.CharField(max_length=256, verbose_name="Name")
@@ -35,24 +40,36 @@ class Verfahrensschritt(models.Model):
     verfahren    = models.ForeignKey('Verfahren', related_name='verfahrensschritte')
 
     def __unicode__(self):
-        return '[' + unicode(self.pk) + '] ' + self.name
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Verfahrensschritte"
 
 class Verfahren(models.Model):
     name         = models.CharField(max_length=256, verbose_name="Name")
     beschreibung = models.TextField(verbose_name="Beschreibung")
 
     def __unicode__(self):
-        return '[' + unicode(self.pk) + '] ' + self.name
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Verfahren"
 
 class Behoerde(models.Model):
     name         = models.CharField(max_length=256, verbose_name="Name")
     link              = models.URLField(blank=True)
 
     def __unicode__(self):
-        return '[' + unicode(self.pk) + '] ' + self.name
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Behoerden"
 
 class Bezirk(models.Model): 
     name          = models.CharField(max_length=256)
 
     def __unicode__(self):
         return self.name
+    
+    class Meta:
+        verbose_name_plural = "Bezirke"
