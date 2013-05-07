@@ -136,16 +136,20 @@ function initMap() {
     $('#sidebar-button').attr('title','Sidebar ausblenden');
     $('.leaflet-control-zoom-in').attr('title','Hinein zoomen');
     $('.leaflet-control-zoom-out').attr('title','Heraus zoomen');
+
+    // adjust height of sidebar
+    $('#sidebar').height($('#liste').height() + 20);
+
 }
 
 function moveOutSidebar(){
     $('#sidebar-button').unbind('click');
     $('#sidebar').animate(
-        {left: '-=310'},
+        {left: '-=280'},
         'fast',
         function(){});
     $('.leaflet-top.leaflet-left').animate(
-        {left: '-=310'},
+        {left: '-=280'},
         'fast',
         function(){
             $('#sidebar-button').click(moveInSidebar);
@@ -160,11 +164,11 @@ function moveOutSidebar(){
 function moveInSidebar(){
     $('#sidebar-button').unbind('click');
     $('#sidebar').animate(
-        {left: '+=310'},
+        {left: '+=280'},
         'fast',
         function(){});
     $('.leaflet-top.leaflet-left').animate(
-        {left: '+=310'},
+        {left: '+=280'},
         'fast',
         function(){
             $('#sidebar-button').click(moveOutSidebar);
