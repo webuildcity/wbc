@@ -124,7 +124,7 @@ INSTALLED_APPS = (
     'suit',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'projects'
+    'projekte'
 )
 
 # A sample logging configuration. The only tangible logging
