@@ -140,6 +140,12 @@ function initMap() {
     // adjust height of sidebar
     $('#sidebar').height($('#liste').height() + 20);
 
+    var bottom = $(window).height() - $('#sidebar').height() - 120;
+    if (bottom < 10) {
+        $('#sidebar').height($('#sidebar').height() + bottom);
+    }
+
+    console.log($(window).height() - $('#sidebar').height() - 110);
 }
 
 function moveOutSidebar(){
