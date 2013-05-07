@@ -92,7 +92,7 @@ a:hover {
     bottom: 3px;
     left: 3px;
     right: 3px;    
-    background-color: rgba(255, 255, 255, 0.97);
+    background-color: white;
     z-index: 101;
     border-radius:7px;   
 }
@@ -107,11 +107,11 @@ a:hover {
 }
 
 .leaflet-control-zoom a{
-    background-color: rgba(255, 255, 255, 0.97);
+    background-color: white;
 }
 
 .leaflet-popup-content-wrapper, .leaflet-popup-tip{
-    background-color: rgb(255, 253, 251);
+    background-color: white;
 }
 
 #sidebar-scroll {
