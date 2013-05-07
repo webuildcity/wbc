@@ -5,6 +5,7 @@ function initMap() {
 
 	var min = 11;
 	var max = 17;
+    var errorTile = "http://tiles.jochenklar.de/bbs/11/1102/671.png";
 	var myTiles = "http://tiles.jochenklar.de/bbs/{z}/{x}/{y}.png";
     var osmCopyright = "Map data &copy; 2012 OpenStreetMap contributors";
 
@@ -13,6 +14,7 @@ function initMap() {
         maxZoom: max,
         attribution: osmCopyright,
         zIndex:0,
+        errorTileUrl: errorTile,
         reuseTiles:true
     });
 
@@ -138,6 +140,12 @@ function initMap() {
     // adjust height of sidebar
     $('#sidebar').height($('#liste').height() + 20);
 
+    var bottom = $(window).height() - $('#sidebar').height() - 120;
+    if (bottom < 10) {
+        $('#sidebar').height($('#sidebar').height() + bottom);
+    }
+
+    console.log($(window).height() - $('#sidebar').height() - 110);
 }
 
 function moveOutSidebar(){
