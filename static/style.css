@@ -2,7 +2,6 @@
     font-family: titillium;
     src: url('font/TitilliumText25L.otf');
 }
-
 @font-face {
     font-family:dejavu;
     src: url('font/DejaVuSansCondensed.ttf');
@@ -20,202 +19,52 @@ html, body {
     background-color: white;
     font-family: dejavu;
     font-size: 14px;
-    
 }
-
-html h3 {
-    /*font-family: titillium;*/
+h3 {
     font-size: 16px;
 }
-
 a, a:visited {
     color: #de6a00 !important;
-    text-decoration: none;
+    text-decoration: none !important;
 }
-
 a:hover {
     color: #e58833 !important;
     text-decoration: none !important;
 }
 
-/* Startseite Map */
-
-#map {
-    position: absolute;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    z-index: 0;
-}
-#map .leaflet-top.leaflet-left {
-    top: 100px;
-    left: 275px;
-}
-
-#map .leaflet-top.leaflet-right {
-    top: 100px;
-    right: 10px;
-}
-
-.leaflet-popup-content {
-    font-family: dejavu;
-    font-size: 14px;
-    color: #333;
-} 
-#sidebar-button i.icon-chevron-right {
-    margin-left: 2px;
-}
-#sidebar-button i.icon-chevron-left {
-    margin-left: 3px;
-}
-.leaflet-popup-content-wrapper {
-    border-radius:7px;
-}
-
-/* Startseite Sidebar */
-
-#sidebar {    
-    position: absolute;
-    top: 110px;
-    left: 10px;
-    width: 270px;
-    background-color: rgba(222, 106, 0, 0.7); 
-    z-index: 101;
-    border-radius:7px;
-    overflow: hidden;
-}
-
-#sidebar-inner {    
-    position: absolute;
-    top: 3px;
-    bottom: 3px;
-    left: 3px;
-    right: 3px;    
-    background-color: white;
-    z-index: 101;
-    border-radius:7px;   
-}
-
-.leaflet-control-zoom {
-    background: rgba(222, 106, 0, 0.7);
-    padding: 3px;
-}
-
-.leaflet-control-zoom-in {
-    margin-bottom: 3px;
-}
-
-.leaflet-control-zoom a{
-    background-color: white;
-}
-
-.leaflet-popup-content-wrapper, .leaflet-popup-tip{
-    background-color: white;
-}
-
-#sidebar-scroll {
-    position: absolute;
-    top: 5px;
-    bottom: 5px;
-    left: 5px;
-    right: 5px;
-    /* padding-right: 5px; */
-    overflow-y: auto;
-}
-
-#sidebar-container {
-    position: relative;
-}
-
-.listentry {
-    padding-top: 8px;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-bottom: 8px;
-}
-
-.listentry tr {
-    height: 40px;
-}
-
-.listsep {
-    border-top: 1px solid silver;
-    margin-top: 16px;
-    padding-top: 10px;
-}
-
-.icon{
-    width: 20px;
-    
-}
-.icon img{
-    width: 15px;
-}
-.text{
-    width: 180px;
-}
-.check{
-    padding-top: 7px;
-    width: 10px;
-}
-
-/* Projektseiten */
-
-#localmap {
-    margin-top: 80px;
-}
-
-/* Navigation */
-
-#navcontainer {
-    position: absolute;
-    background-color: transaprent;
-    top: 20px;
-    height: 100px;    
-    left: 0px;
-    right: 0px;
-    z-index: 10;
-}
-
-.dropdown-menu{
-    outline: none;
-    background-color: #eee;
-    border:4px solid rgba(0, 0, 0, 0.246094);
-    box-shadow:none !important;
-
-}
-
-.dropdown-menu li > a:hover, .dropdown-menu li > a:focus, .dropdown-submenu:hover > a {
-    color: #e58833 !important;
-    background-image: none;
-    background-color: transparent !important;
-    text-decoration: none !important;
-
-}
-
-li {
-    line-height: 3px;
-
-}
-
+/* Sitenav */
 #sitenav {
-    float: right;
-    padding-right: 10px;
-   
+    font-family: titillium;
+    font-size: 16px;
+    color: #646464;
 }
 #sitenav li {
     display: inline;
     list-style: none;
     margin-left: 20px;
-    font-family: titillium;
-    font-size: 16px;
-    color: #646464;       
 }
-#menu_right {   
-   background-color: transparent;
-   height:40px;   
-   border-radius:7px;
-   border-radius:7px; 
-   padding-top:24px;
+#sitenav li:first-child {
+    margin-left: 0px;
+}
+
+/* Leaflet Container */
+.leaflet-popup-content {
+    font-family: dejavu;
+    font-size: 14px;
+    color: #333;
+}
+.leaflet-popup-content-wrapper,
+.leaflet-control-zoom,
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+    border-radius: 0px !important;
+}
+.leaflet-control-zoom {
+    padding: 3px;
+}
+.leaflet-control-zoom a {
+    background-color: white;
+}
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    background-color: white;
 }

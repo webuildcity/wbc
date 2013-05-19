@@ -128,7 +128,7 @@ function initMap() {
             }
         });
     
-
+    /*
     // button für sidebar zur leafletkarte hinzufügen
     html = '<div class="leaflet-control-zoom leaflet-control"><a class="leaflet-control-sidebar" href="#" id="sidebar-button"><i class="icon-chevron-left"></i></a></div>';
     $('.leaflet-top.leaflet-left').prepend(html);
@@ -143,6 +143,12 @@ function initMap() {
     if (bottom < 0) {
         $('#sidebar').height($('#sidebar').height() + bottom);
     }
+    */
+
+    var zoom = $('.leaflet-control-zoom').remove();
+    zoom.appendTo($('#header-zoom'));
+
+    $('.leaflet-control-attribution').remove();
 }
 
 function moveOutSidebar(){

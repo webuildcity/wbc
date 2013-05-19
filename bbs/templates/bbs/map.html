@@ -1,6 +1,7 @@
 {% extends 'bbs/layout.html' %}
 
 {% block head %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}map.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}leaflet/leaflet.css" />
     <script type="text/javascript" src="{{ STATIC_URL }}leaflet/leaflet.js" >
     </script>
@@ -29,58 +30,36 @@
 {% endblock %}
 
 {% block content %}
-<div id="sidebar">        
-    <div id="sidebar-inner">            
-        <div id="sidebar-scroll">
-            <div id="sidebar-container">                      
-                <div id="liste">
-                    {% for v in verfahren %}
-                    <div class="listentry">
-                        <b>{{ v.name }}</b>
-                    </div>
-                    <div class="listentry">
-                        <table>
-                        {% for vs in v.verfahrensschritte.all %}
-                            <tr>
-                                <td class="icon">
-                                    <img src="{{ STATIC_URL }}{{vs.icon}}">
-                                </td>
-                                <td class="text">                                
-                                    <a href="/info#{{vs.pk}}">{{vs.name}}</a>
-                                </td>
-                                <td class="check">                    
-                                    <label class="checkbox">
-                                        <input name="vs-{{vs.pk}}" type="checkbox" value="" checked />
-                                    </label>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </table>
-                    </div>
-                    {% endfor %}
-                    <div class="listsep" ></div>
-                    <div class="listentry">
-                        <table>
-                            <tr>
-                                <td class="icon">
-                                    <img src="{{ STATIC_URL }}img/Baustellenschilder/klein/schild_grau_blass.png">
-                                </td>
-                                <td class="text">                           
-                                    Frist bereits abgelaufen
-                                </td>
-                                <td class="check">                   
-                                    <label class="checkbox">
-                                        <input name="old" type="checkbox" value=""/>
-                                    </label>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
+<div id="wrapper">
+    <div id="map"></div>
+
+    <div id="header">
+        <div class="container" >
+            <div id="header-left">
+                <a href="/"><img src="{{ STATIC_URL }}img/schrift_5.png"></a>
+            </div>                                            
+            <div id="header-right">                
+                <ul id="sitenav" >
+                    <li><a href="/info">Begriffe</a></li>
+                    <li><a href="/projekte">Liste</a></li>
+                    <li><a href="http://blog.buergerbautstadt.de/about">Über</a></li> 
+                    <li><a href="http://blog.buergerbautstadt.de/">Blog</a></li>                        
+                    <li><a href="http://blog.buergerbautstadt.de/contact/">Kontakt</a></li>              
+                </ul>
             </div>
+            <div id="header-zoom"></div>
         </div>
     </div>
 </div>
 
-<div id="map"></div>
+<div id="footer">
+    <div class="container">
+        <div id="footer-left">
+            Some cool information or even a facebook link
+        </div>                                            
+        <div id="footer-right">                
+                Powered by <a href="http://leaflet.cloudmade.com">Leaflet</a> — Map data © 2012 OpenStreetMap contributors
+        </div>
+    </div>
+</div>
 {% endblock %}
