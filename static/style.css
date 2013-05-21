@@ -48,6 +48,9 @@ a:hover {
 }
 
 /* Leaflet Container */
+.leaflet-popup-pane {
+    z-index: 1000;
+}
 .leaflet-popup-content {
     font-family: dejavu;
     font-size: 14px;
@@ -67,4 +70,8 @@ a:hover {
 }
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
     background-color: white;
+}
+.leaflet-popup-content p {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

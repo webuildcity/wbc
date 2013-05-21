@@ -1,0 +1,17 @@
+#facebook,
+#twitter,
+#gplus {
+    display: inline-block;
+    height: 20px;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+#facebook {
+    width: 100px;
+}
+#twitter {
+    width: 115px;
+}
+#gplus {
+    width: 70px;
+}

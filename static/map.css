@@ -36,11 +36,11 @@ body, html {
     left: 0px;
 }
 #footer-left {
-    bottom: 30px;
+    bottom: 10px;
     left: 0px;
 }
 #footer-right {
-    bottom: 30px;
+    bottom: 10px;
     right: 0px;
 }
 #map {
@@ -50,4 +50,14 @@ body, html {
     left: 0px;
     right: 0px;
     z-index: 0;
+}
+#footer-left {
+    
+}
+#footer-left .checkbox {
+    margin-bottom: 20px;
+}
+
+#footer-right {
+    font-size: x-small;
 }
