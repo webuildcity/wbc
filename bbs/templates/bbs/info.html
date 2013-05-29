@@ -1,37 +1,35 @@
-{% extends 'bbs/layout.html' %}
+{% extends 'bbs/page.html' %}
 
-{% block head %}
-<script type="text/javascript">
-$(document).ready(function(){
-  var openVs = window.location.toString().split('#')[1];        
-  $('#collapse-' + openVs).addClass('in');
-});
-
-</script>
-
+{% block pagehead %}
+    <script type="text/javascript">
+    $(document).ready(function(){
+      var openVs = window.location.toString().split('#')[1];        
+      $('#collapse-' + openVs).addClass('in');
+    });
+    </script>
 {% endblock %}
 
-{% block content %}
-<div class="container" style="margin-top: 120px">
-    {% for v in verfahren %}
-    <h3>{{v.name}}</h3>
-    <p>
-        {{v.beschreibung}}
-    </p>
-    <div class="accordion" id="accordion-{{ v.pk }}">
-        {% for vs in v.verfahrensschritte.all %}
-            <div class="accordion-group">
-                <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-{{ v.pk }}" href="#collapse-{{ vs.pk }}">{{ vs.name }}</a>   
-                </div>
-                <div id="collapse-{{ vs.pk }}" class="accordion-body collapse">
-                    <div class="accordion-inner">
-                    {{ vs.beschreibung }}
+{% block page %}
+    <div class="container">
+        {% for v in verfahren %}
+        <h3>{{v.name}}</h3>
+        <p>
+            {{v.beschreibung}}
+        </p>
+        <div class="accordion" id="accordion-{{ v.pk }}">
+            {% for vs in v.verfahrensschritte.all %}
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-{{ v.pk }}" href="#collapse-{{ vs.pk }}">{{ vs.name }}</a>   
                     </div>
-                </div>
-            </div>         
-        {% endfor %}
+                    <div id="collapse-{{ vs.pk }}" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                        {{ vs.beschreibung }}
+                        </div>
+                    </div>
+                </div>         
+            {% endfor %}
+        </div>
+    {% endfor %}
     </div>
-{% endfor %}
-</div>
 {% endblock %}

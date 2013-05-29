@@ -1,0 +1,15 @@
+/* Page Layout */
+#header{
+    margin-top: 20px;
+    height: 85px;
+}
+#header-left {
+    float: left;
+}
+#header-right {
+    padding-top: 24px;
+    float: right;
+}
+#localmap {
+    height: 200px;
+}

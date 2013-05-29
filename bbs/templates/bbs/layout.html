@@ -1,48 +1,28 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Bürger baut Stadt</title>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<meta property="og:title" content="Bürger baut Stadt" />
-<meta property="og:url" content="http://buergerbautstadt.de" />
-<meta property="og:image" content="http://buergerbautstadt.de/static/img/karte.png"/>
-<link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.png" type="image/x-icon" />
-<script type="text/javascript" src="{{ STATIC_URL }}jquery.min.js" ></script>
-        <script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap.js" ></script>
-        <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" />
-        {% block head %}{% endblock %}
-        <link rel="stylesheet" href="{{ STATIC_URL }}style.css" />
+<head>
+    <title>Bürger baut Stadt</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    </head>
+    <meta property="og:title" content="Bürger baut Stadt" />
+    <meta property="og:url" content="http://buergerbautstadt.de" />
+    <meta property="og:image" content="http://buergerbautstadt.de/static/img/karte.png"/>
 
-    <body>    
-        <div id="navcontainer">
-            <div class="container">
-                <div class="row">
-                    <div class="span6"id="menu_left"><a href="/"><img src="{{ STATIC_URL }}img/schrift_5.png"></a></div>                          
-                    <div class="span1"></div>                    
-                    <div class="span5" id="menu_right">                
-                    <ul id="sitenav" >                        
-                        <li><a href="/info">Begriffe</a></li>
-                        <li><a href="/projekte">Liste</a></li>
-                        <li><a href="http://blog.buergerbautstadt.de/about">Über</a></li> 
-                        <li><a href="http://blog.buergerbautstadt.de/">Blog</a></li>                        
-                        <li><a href="http://blog.buergerbautstadt.de/contact/">Kontakt</a></li> 
-                        
-                                               
-                    </ul>
-                    </div>
-                </div>                
-            </div>        
-        </div>    
-        
-        <div id="content">
-            {% block content %}{% endblock %}
-        </div> 
-        
-                
-        </div>
+    <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico" type="image/x-icon" />
+
+    <script type="text/javascript" src="{{ STATIC_URL }}jquery.min.js" ></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js" ></script>
+    <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" />
+
+    {% block head %}{% endblock %}
+
+    <link rel="stylesheet" href="{{ STATIC_URL }}style.css" />
+</head>
+
+<body>
+    {% block content %}
+    {% endblock %}
 
 	<!-- Piwik -->
 	<script type="text/javascript">
@@ -62,5 +42,5 @@
 	  })();
 	</script>
 	<!-- End Piwik Code -->
-    </body>
+</body>
 </html>

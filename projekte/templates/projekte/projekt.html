@@ -1,6 +1,6 @@
-{% extends 'bbs/layout.html' %}
+{% extends 'bbs/page.html' %}
 
-{% block head %}
+{% block pagehead %}
     <link rel="stylesheet" href="{{ STATIC_URL }}leaflet/leaflet.css" />
     <script type="text/javascript" src="{{ STATIC_URL }}leaflet/leaflet.js" >
     </script>    
@@ -13,53 +13,48 @@
     <script type="text/javascript" src="{{ STATIC_URL }}localmap.js" ></script>
 {% endblock %}
 
-{% block content %}
+{% block page %}
     <div class="container">
-    <br>
-        <div id="localmap" style="height: 200px"></div>
-            <div class="row">        
-                <div class="span8">
-                    <h3>Betroffenes Gebiet</h3>
-                    <b>Bezeichner:</b>  {{ projekt.bezeichner }}<br>
-                    <b>genaue örtliche Beschreibung:</b> {{ projekt.beschreibung }}<br>
-                    <b>im Bezirk/in den Bezirken:</b> {{ projekt.bezirke.all|join:", "}}
-                </div>
-                             
+        <div id="localmap"></div>
+
+        <div class="row">        
+            <div class="span8">
+                <h3>Betroffenes Gebiet</h3>
+                <b>Bezeichner:</b>  {{ projekt.bezeichner }}<br>
+                <b>genaue örtliche Beschreibung:</b> {{ projekt.beschreibung }}<br>
+                <b>im Bezirk/in den Bezirken:</b> {{ projekt.bezirke.all|join:", "}}
             </div>
-            <br>
-            <h3>Veröffentlichungen zu diesem Gebiet</h3>
-            <table cellpadding="0" cellspacing="0" border="0" class="table" id="projects-table">
-                <thead>
-                    <tr>
-                        <th>Verfahren</th>                        
-                        <th style="width: 6em">Fristbeginn</th>
-                        <th style="width: 6em">Fristende</th>
-                        <th>Details</th>
-                   </tr>
-            </thead>
-        <tbody>
-        {% for veroeffentlichung in projekt.veroeffentlichungen.all %}
-            <tr>
-                <td><a href="/info/#{{ veroeffentlichung.verfahrensschritt.pk}}">{{ veroeffentlichung.verfahrensschritt.name}} ({{ veroeffentlichung.verfahrensschritt.verfahren.name }})</a></td>                
-                <td>{{ veroeffentlichung.beginn }}</td> 
-                <td>{{ veroeffentlichung.ende }}</td>
-		<td>
-		  {% if veroeffentlichung.beschreibung %}
-		    <b>Beschreibung</b><br />{{ veroeffentlichung.beschreibung }}<br />
-		  {% endif %}
-                  <b>Auslegungsstelle</b><br />{{ veroeffentlichung.auslegungsstelle }}
-		  <br /><b>Öffnungszeiten</b><br />{{ veroeffentlichung.zeiten }}<br /><br />
-		  <a href="{{ veroeffentlichung.behoerde.link }}">
-		  Link zur verantwortlichen Behörde</a>
-		</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-            
-            
-            
-
-
         </div>
+
+        <h3>Veröffentlichungen zu diesem Gebiet</h3>
+        <table cellpadding="0" cellspacing="0" border="0" class="table">
+            <thead>
+                <tr>
+                    <th>Verfahren</th>                        
+                    <th style="width: 6em">Fristbeginn</th>
+                    <th style="width: 6em">Fristende</th>
+                    <th>Details</th>
+               </tr>
+            </thead>
+            <tbody>
+                {% for veroeffentlichung in projekt.veroeffentlichungen.all %}
+                <tr>
+                    <td><a href="/info/#{{ veroeffentlichung.verfahrensschritt.pk}}">{{ veroeffentlichung.verfahrensschritt.name}} ({{ veroeffentlichung.verfahrensschritt.verfahren.name }})</a></td>
+                    <td>{{ veroeffentlichung.beginn }}</td> 
+                    <td>{{ veroeffentlichung.ende }}</td>
+                    <td>
+                        {% if veroeffentlichung.beschreibung %}
+                        <b>Beschreibung</b><br />
+                        {{ veroeffentlichung.beschreibung }}<br />
+                        {% endif %}
+                        <b>Auslegungsstelle</b><br />{{ veroeffentlichung.auslegungsstelle }}<br />
+                        <b>Öffnungszeiten</b><br />{{ veroeffentlichung.zeiten }}<br />
+                        <br />
+                        <a href="{{ veroeffentlichung.behoerde.link }}">Link zur verantwortlichen Behörde</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
