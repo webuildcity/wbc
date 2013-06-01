@@ -2,6 +2,7 @@
 
 import os
 SITE_ROOT = os.path.abspath('/home/magda/Desktop/BuergerbautStadt/bbs')
+SITE_URL  = 'http://localhost:8000'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -161,3 +162,18 @@ from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
+
+# for emails
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_HOST = 'localhost'
+#EMAIL_PORT = '25'
+#EMAIL_HOST_USER = ''
+#EMAIL_HOST_PASSWORD = ''
+#EMAIL_USE_TLS = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_FROM = 'news@buergerbautstadt.de'
+
+TEMPLATED_EMAIL_TEMPLATE_DIR = ''
+TEMPLATED_EMAIL_FILE_EXTENSION = 'email'
