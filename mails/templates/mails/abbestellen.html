@@ -1,0 +1,30 @@
+{% extends 'bbs/page.html' %}
+
+{% block pagehead %}
+
+{% endblock %}
+
+{% block page %}
+<div class="container">
+    <h2>Newletter für deinen Bezirk abbestellen</h2>
+
+    {% if success %}
+    <p>
+        Um sicher zu gehen das das Abbestellen des Newletters nicht ohne dein Wissen passiert, haben wir noch eine letzte Mail an dich geschickt. In ihr findest du ein Link, mit dem du den Newletters entgültig abbestellen kannst.
+    </p>
+    {% else %}
+    <p>
+        Um den Newsletter abzubestellen trage bite deine Emailadresse ein.
+    </p>
+    <form action="/mails/abbestellen/" method="post" class="form-inline">
+        {% csrf_token %}
+        {{ form.email }}
+        <input type="submit" value="Abbestellen" class="btn"/>
+        <span class="text-error">
+            {{ form.email.errors.as_text }}
+            {{ form.non_field_errors.as_text }}
+        </span>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}
