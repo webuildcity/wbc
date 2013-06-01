@@ -19,6 +19,7 @@ class Validierung(models.Model):
         return self.email
 
     class Meta:
+        verbose_name        = "Validierung"
         verbose_name_plural = "Validierung"
 
 class Abonent(models.Model):
@@ -29,7 +30,8 @@ class Abonent(models.Model):
         return self.email
 
     class Meta:
-        verbose_name_plural = "Abonent"
+        verbose_name        = "Abonent"
+        verbose_name_plural = "Abonenten"
 
 class Mail():
     def abonieren(self, to, code):

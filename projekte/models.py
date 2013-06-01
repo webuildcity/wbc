@@ -16,6 +16,7 @@ class Projekt(models.Model):
         return self.adresse
 
     class Meta:
+        verbose_name        = "Projekt"
         verbose_name_plural = "Projekte"
 
 class Veroeffentlichung(models.Model):
@@ -33,6 +34,7 @@ class Veroeffentlichung(models.Model):
         return self.projekt.adresse + ', ' + self.verfahrensschritt.name
 
     class Meta:
+        verbose_name        = "Veroeffentlichung"
         verbose_name_plural = "Veroeffentlichungen"
 
 class Verfahrensschritt(models.Model):
@@ -47,6 +49,7 @@ class Verfahrensschritt(models.Model):
         return self.name
 
     class Meta:
+        verbose_name        = "Verfahrensschritt"
         verbose_name_plural = "Verfahrensschritte"
 
 class Verfahren(models.Model):
@@ -57,6 +60,7 @@ class Verfahren(models.Model):
         return self.name
 
     class Meta:
+        verbose_name        = "Verfahren"
         verbose_name_plural = "Verfahren"
 
 class Behoerde(models.Model):
@@ -67,6 +71,7 @@ class Behoerde(models.Model):
         return self.name
 
     class Meta:
+        verbose_name        = "Behoerde"
         verbose_name_plural = "Behoerden"
 
 class Bezirk(models.Model): 
@@ -76,4 +81,5 @@ class Bezirk(models.Model):
         return self.name
     
     class Meta:
+        verbose_name        = "Bezirk"
         verbose_name_plural = "Bezirke"
