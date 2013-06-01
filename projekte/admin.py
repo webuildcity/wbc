@@ -4,7 +4,9 @@ from projekte.models import Projekt, Veroeffentlichung, Verfahrensschritt, Verfa
 class ProjektAdmin(admin.ModelAdmin):
     list_display = ('id','bezeichner','adresse')
     list_display_links = ('id','bezeichner','adresse')
+    fields = [ 'adresse' , 'bezirke', 'lat', 'lon', 'beschreibung', 'bezeichner'] 
     ordering = ['id']
+    change_form_template = "projekte/admin/change_form.html"
 
 class VeroeffentlichungAdmin(admin.ModelAdmin):
     list_display = ('id','verfahrensschritt','projekt','ende')
