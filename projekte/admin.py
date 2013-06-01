@@ -7,6 +7,7 @@ class ProjektAdmin(admin.ModelAdmin):
     fields = [ 'adresse' , 'bezirke', 'lat', 'lon', 'beschreibung', 'bezeichner'] 
     ordering = ['id']
     change_form_template = "projekte/admin/change_form.html"
+    add_form_template = "projekte/admin/change_form.html"
 
 class VeroeffentlichungAdmin(admin.ModelAdmin):
     list_display = ('id','verfahrensschritt','projekt','ende')
