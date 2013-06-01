@@ -29,6 +29,7 @@ h2 {
 h3 {
     font-size: 16px;
 }
+
 a, a:visited {
     color: #de6a00 !important;
     text-decoration: none !important;
@@ -85,6 +86,10 @@ a:hover {
 #abonieren-form ul {
     margin-top: 5px;
 }
+#abonieren-form li {
+    display: block;
+}
+
 #abonieren-form li label,
 #abonieren-form li input {
     display: inline-block;
