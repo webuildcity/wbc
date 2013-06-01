@@ -16,7 +16,7 @@
     <p>
         Um den Newsletter abzubestellen trage bite deine Emailadresse ein.
     </p>
-    <form action="/mails/abbestellen/" method="post" class="form-inline">
+    <form action="/news/abbestellen/" method="post" class="form-inline">
         {% csrf_token %}
         {{ form.email }}
         <input type="submit" value="Abbestellen" class="btn"/>

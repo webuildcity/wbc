@@ -1,5 +1,5 @@
 from django.contrib import admin
-from mails.models import Abonent
+from news.models import Abonent
 
 class AbonentAdmin(admin.ModelAdmin):
     list_display = ('id','email')

@@ -6,17 +6,17 @@
 
 {% block page %}
 <div class="container">
-    <h2>Newletter für deinen Bezirk abonieren</h2>
+    <h2>Newsletter für deinen Bezirk abonieren</h2>
 
     {% if success %}
     <p>
         Danke das Du unseren Newsletter abonieren willst. In Kürze wirst du eine Mail mit einem Validierungslink erhalten. Wenn du auf diesen Link klickst, ist der Vorgang abgeschlossen und du wirst informiert, wenn in deinem Bezirk eine neue Veröffenlichung zu einem Bauvorhaben ausliegt.
     </p>
     <p>
-        Der Newletter kann unter <a href="http://buergerbautstadt.de/mails/abbestellen">http://buergerbautstadt.de/mails/abbestellen</a> wieder abbestellt werden.
+        Der Newletter kann unter <a href="{{abbestellen}}">{{abbestellen}}</a> wieder abbestellt werden.
     </p>
     {% else %}
-    <form action="/mails/abonieren/" method="post" id="abonieren-form" class="form-horizontal">
+    <form action="/news/abonieren/" method="post" id="abonieren-form" class="form-horizontal">
         {% csrf_token %}
         <div class="control-group">
             <label class="control-label">Bezirke</label>

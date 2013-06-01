@@ -3,7 +3,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 from projekte.views import ProjekteView,VeroeffentlichungenView
-from mails import views
+from news import views
 
 urlpatterns = patterns('',
     url(r'^$', 'bbs.views.home'),
@@ -16,9 +16,9 @@ urlpatterns = patterns('',
     # info
     url(r'^info/$', 'bbs.views.info'),
     # mails
-    url(r'^mails/abonieren/$', 'mails.views.abonieren'),
-    url(r'^mails/validieren/(?P<code>.*)$', 'mails.views.validieren'),
-    url(r'^mails/abbestellen/(?P<email>.*)$', 'mails.views.abbestellen'),
+    url(r'^news/abonieren/$', 'news.views.abonieren'),
+    url(r'^news/validieren/(?P<code>.*)$', 'news.views.validieren'),
+    url(r'^news/abbestellen/(?P<email>.*)$', 'news.views.abbestellen'),
     # admin foo
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls))
