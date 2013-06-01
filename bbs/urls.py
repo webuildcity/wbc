@@ -11,10 +11,10 @@ urlpatterns = patterns('',
     url(r'^projekte/(?P<pk>\d+)/$', ProjekteView.as_view()),
     # bbp
     url(r'^veroeffentlichungen/$', VeroeffentlichungenView.as_view()),
-    url(r'^veroeffentlichung/(?P<pk>\d+)/$', VeroeffentlichungenView.as_view()),
+    url(r'^veroeffentlichungen/(?P<pk>\d+)/$', VeroeffentlichungenView.as_view()),
     # info
     url(r'^info/$', 'bbs.views.info'),
     # admin foo
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    url(r'^admin/', include(admin.site.urls)), 
+    url(r'^admin/', include(admin.site.urls))
 )

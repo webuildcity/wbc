@@ -48,7 +48,7 @@ function initMap() {
         });
     });
 
-    // bbps zu karte hinzufügen
+    // projekte zu karte hinzufügen
     $.each(points, function(key, point){
         var marker = L.marker(
             [point.lat,point.lon],
@@ -64,15 +64,14 @@ function initMap() {
             e.target._icon.src = this.icon;
         });
 
-        var popuptext = '<a href="/info/#'+ point.vspk + '" >' + verfahrensschritte[point.vspk].name + '</a>';
-        popuptext += '<br>';
-        popuptext += "Betrifft Gegend um: " + point.adresse;
-        popuptext += '<br>';
-        popuptext += "Verantwortlich: " + point.behoerde;
-        popuptext += '<br>';
-        popuptext += "Beteiligung möglich bis: " + point.ende;
-        popuptext += '<br>';
-        popuptext += '<a href="' + siteUrl + "projekte/" + point.projekt + '" >Details</a>';        
+        var popuptext = '<p><b>' + verfahren[point.vpk].name + '</b>';
+        popuptext += '<p><i>' + verfahrensschritte[point.vspk].name + '</i>';
+        popuptext += ' <a href="/info/#'+ point.vspk + '" >(?)</a></p>';
+        popuptext += '<p>Betrifft Gegend um: ' + point.adresse + '</p>';
+        popuptext += '<p>Verantwortlich: ' + point.behoerde + '</p>';
+        popuptext += '<p>Beteiligung möglich bis: ' + point.ende + '</p>';
+        popuptext += '<p><a href="' + siteUrl + "projekte/" + point.projekt + '" >Details</a></p>';
+
         marker.bindPopup(popuptext);
         marker.addTo(map);
 
@@ -101,15 +100,14 @@ function initMap() {
 
         marker.pk = point.pk;
         
-        var popuptext = '<a href="/info/#'+ point.vspk + '" >' + verfahrensschritte[point.vspk].name + '</a>';
-        popuptext += '<br>';
-        popuptext += "Betrifft Gegend um: " + point.adresse;
-        popuptext += '<br>';
-        popuptext += "Verantwortlich: " + point.behoerde;
-        popuptext += '<br>';
-        popuptext += "Beteiligung möglich bis: " + point.ende;
-        popuptext += '<br>';
-        popuptext += '<a href="' + siteUrl + "projekte/" + point.projekt + '" >Details</a>'; 
+        var popuptext = '<p><b>' + verfahren[point.vpk].name + '</b>';
+        popuptext += '<p><i>' + verfahrensschritte[point.vspk].name + '</i>';
+        popuptext += ' <a href="/info/#'+ point.vspk + '" >(?)</a></p>';
+        popuptext += '<p>Betrifft Gegend um: ' + point.adresse + '</p>';
+        popuptext += '<p>Verantwortlich: ' + point.behoerde + '</p>';
+        popuptext += '<p>Beteiligung war möglich bis: ' + point.ende + '</p>';
+        popuptext += '<p><a href="' + siteUrl + "projekte/" + point.projekt + '" >Details</a></p>';
+        
         marker.bindPopup(popuptext);        
         
         marker.on("mouseover", function(e) {
@@ -121,31 +119,16 @@ function initMap() {
      });   
     
     $('input[name=old]').click(function(){
-            if(this.checked) {
-                map.addLayer(oldLayer);            
-            } else { 
-                map.removeLayer(oldLayer);         
-            }
-        });
+        if(this.checked) {
+            map.addLayer(oldLayer);            
+        } else { 
+            map.removeLayer(oldLayer);         
+        }
+    });
     
-
-    // button für sidebar zur leafletkarte hinzufügen
-    html = '<div class="leaflet-control-zoom leaflet-control"><a class="leaflet-control-sidebar" href="#" id="sidebar-button"><i class="icon-chevron-left"></i></a></div>';
-    $('.leaflet-top.leaflet-left').prepend(html);
-    $('#sidebar-button').click(moveOutSidebar);
-    $('#sidebar-button').attr('title','Sidebar ausblenden');
-    $('.leaflet-control-zoom-in').attr('title','Hinein zoomen');
-    $('.leaflet-control-zoom-out').attr('title','Heraus zoomen');
-
-    // adjust height of sidebar
-    $('#sidebar').height($('#liste').height() + 20);
-
-    var bottom = $(window).height() - $('#sidebar').height() - 120;
-    if (bottom < 10) {
-        $('#sidebar').height($('#sidebar').height() + bottom);
-    }
-
-    console.log($(window).height() - $('#sidebar').height() - 110);
+    var zoom = $('.leaflet-control-zoom').remove();
+    zoom.appendTo($('#header-zoom'));
+    $('.leaflet-control-attribution').remove();
 }
 
 function moveOutSidebar(){

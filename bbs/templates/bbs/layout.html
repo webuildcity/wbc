@@ -1,44 +1,46 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Bürger baut Stadt</title>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <script type="text/javascript" src="{{ STATIC_URL }}jquery.min.js" ></script>
-        <script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap.js" ></script>
-        <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" />
-        {% block head %}{% endblock %}
-        <link rel="stylesheet" href="{{ STATIC_URL }}style.css" />
+<head>
+    <title>Bürger baut Stadt</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    </head>
+    <meta property="og:title" content="Bürger baut Stadt" />
+    <meta property="og:url" content="http://buergerbautstadt.de" />
+    <meta property="og:image" content="http://buergerbautstadt.de/static/img/karte.png"/>
 
-    <body>    
-        <div id="navcontainer">
-            <div class="container">
-                <div class="row">
-                    <div class="span6"id="menu_left"><a href="/"><img src="{{ STATIC_URL }}img/schrift_5.png"></a></div>                          
-                    <div class="span1"></div>                    
-                    <div class="span5" id="menu_right">                
-                    <ul id="sitenav" >                        
-                        <li><a href="/info">Info</a></li>
-                        <li><a href="/projekte">Suche</a></li>
-                        <li><a href="http://blog.buergerbautstadt.de/about">Über</a></li> 
-                        <li><a href="http://blog.buergerbautstadt.de/">Blog</a></li>                        
-                        <li><a href="http://blog.buergerbautstadt.de/contact/">Kontakt</a></li> 
-                        
-                                               
-                    </ul>
-                    </div>
-                </div>                
-            </div>        
-        </div>    
-        
-        <div id="content">
-            {% block content %}{% endblock %}
-        </div> 
-        
-                
-        </div>
-         
-    </body>
+    <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico" type="image/x-icon" />
+
+    <script type="text/javascript" src="{{ STATIC_URL }}jquery.min.js" ></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js" ></script>
+    <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" />
+
+    {% block head %}{% endblock %}
+
+    <link rel="stylesheet" href="{{ STATIC_URL }}style.css" />
+</head>
+
+<body>
+    {% block content %}
+    {% endblock %}
+
+	<!-- Piwik -->
+	<script type="text/javascript">
+	  var _paq = _paq || [];
+	  _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+	  _paq.push(["setCookieDomain", "*.buergerbautstadt.de"]);
+	  _paq.push(["setDomains", ["*.buergerbautstadt.de","*.blog.buergerbautstadt.de"]]);
+	  _paq.push(["trackPageView"]);
+	  _paq.push(["enableLinkTracking"]);
+
+	  (function() {
+	    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://buergerbautstadt.de/piwik/";
+	    _paq.push(["setTrackerUrl", u+"piwik.php"]);
+	    _paq.push(["setSiteId", "4"]);
+	    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+	    g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+	  })();
+	</script>
+	<!-- End Piwik Code -->
+</body>
 </html>

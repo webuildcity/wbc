@@ -1,68 +1,68 @@
-{% extends 'bbs/layout.html' %}
+{% extends 'bbs/page.html' %}
 
-{% block head %}
-<script type="text/javascript" 
-        src="{{ STATIC_URL }}dataTables/js/jquery.dataTables.js" >
-</script>
-<script type="text/javascript" 
-        src="{{ STATIC_URL }}dataTables/js/jquery.dataTables.bootstrap.js" >
-</script>
-<script>
-    $.extend( $.fn.dataTableExt.oStdClasses, {
-        "sWrapper": "dataTables_wrapper form-inline"
-    } );
-    $(document).ready(function() {
-        $('#projects-table').dataTable({
-            'iDisplayLength': 20,
-            "aLengthMenu": [[20, 50, -1], [20, 50, "Alle"]],
-            "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
-            "sPaginationType": "bootstrap",
-            "oLanguage": {
-                "sLengthMenu": "Zeige _MENU_ Einträge pro Seite",
-                "sZeroRecords": "Sorry, nichts gefunden!",
-                "sInfo": "Eintrag _START_ bis _END_ von _TOTAL_ Einträgen",
-                "sInfoEmpty": "Keine Einträge",
-                "sInfoFiltered": "(insgesamt _MAX_ Einträgen)",
-                "sSearch": 'Suche:',
-                "oPaginate": {
-                    "sFirst": "Erste Seite",
-                    "sLast": "Letzte Seite",
-                    "sNext": "Vorherige Seite",
-                    "sPrevious": "Nächste Seite",
+{% block pagehead %}
+    <script type="text/javascript" 
+            src="{{ STATIC_URL }}dataTables/js/jquery.dataTables.js" >
+    </script>
+    <script type="text/javascript" 
+            src="{{ STATIC_URL }}dataTables/js/jquery.dataTables.bootstrap.js" >
+    </script>
+    <script>
+        $.extend( $.fn.dataTableExt.oStdClasses, {
+            "sWrapper": "dataTables_wrapper form-inline"
+        } );
+        $(document).ready(function() {
+            $('#data-table').dataTable({
+                'iDisplayLength': 20,
+                "aLengthMenu": [[20, 50, -1], [20, 50, "Alle"]],
+                "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+                "sPaginationType": "bootstrap",
+                "oLanguage": {
+                    "sLengthMenu": "Zeige _MENU_ Einträge pro Seite",
+                    "sZeroRecords": "Sorry, nichts gefunden!",
+                    "sInfo": "Eintrag _START_ bis _END_ von _TOTAL_ Einträgen",
+                    "sInfoEmpty": "Keine Einträge",
+                    "sInfoFiltered": "(insgesamt _MAX_ Einträgen)",
+                    "sSearch": 'Suche:',
+                    "oPaginate": {
+                        "sFirst": "Erste Seite",
+                        "sLast": "Letzte Seite",
+                        "sNext": "Vorherige Seite",
+                        "sPrevious": "Nächste Seite",
+                    }
                 }
-            }
+            });
         });
-    });
-</script>
-<link rel="stylesheet" href="{{ STATIC_URL }}dataTables/css/jquery.dataTables.css" />
-<link rel="stylesheet" href="{{ STATIC_URL }}dataTables/css/jquery.dataTables.bootstrap.css" />
+    </script>
+    <link rel="stylesheet" href="{{ STATIC_URL }}dataTables/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}dataTables/css/jquery.dataTables.bootstrap.css" />
 {% endblock %}
 
-{% block content %}
-<div class="container" style="margin-top: 120px">
-    <table cellpadding="0" cellspacing="0" border="0" class="table" id="projects-table">
-        <thead>
-            <tr>
-                <th>Bezeichner</th>
-                <th>Adresse</th>
-                <th>Bezirke</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for projekt in projekte %}
-            <tr>
-                <td>{{ projekt.bezeichner }}</td>
-                <td>{{ projekt.adresse }}</td>
-                <td>
-                    {% for bezirk in projekt.bezirke.all %}
-                        {{ bezirk.name }}<br />
-                    {% endfor %}
-                </td>
-                <td><a href="/projekte/{{ projekt.pk }}">Details</a></td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
+{% block page %}
+    <div class="container">
+        <table cellpadding="0" cellspacing="0" border="0" class="table" id="data-table">
+            <thead>
+                <tr>
+                    <th>Bezeichner</th>
+                    <th>Adresse</th>
+                    <th>Bezirke</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for projekt in projekte %}
+                <tr>
+                    <td>{{ projekt.bezeichner }}</td>
+                    <td>{{ projekt.adresse }}</td>
+                    <td>
+                        {% for bezirk in projekt.bezirke.all %}
+                            {{ bezirk.name }}<br />
+                        {% endfor %}
+                    </td>
+                    <td><a href="/projekte/{{ projekt.pk }}">Details</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
