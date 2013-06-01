@@ -5,7 +5,7 @@ from templated_email import send_templated_mail
 import random,string
 
 class Validierung(models.Model):
-    email   = models.EmailField()
+    email   = models.EmailField(unique=True)
     bezirke = models.CharField(max_length=256, blank=True, null=True)
     code    = models.SlugField(max_length=32)
     aktion  = models.CharField(max_length=16)
