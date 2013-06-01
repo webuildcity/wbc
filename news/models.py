@@ -22,7 +22,7 @@ class Validierung(models.Model):
         verbose_name_plural = "Validierung"
 
 class Abonent(models.Model):
-    email   = models.EmailField()
+    email   = models.EmailField(unique=True)
     bezirke = models.ManyToManyField('projekte.Bezirk', related_name='abonenten')
     
     def __unicode__(self):

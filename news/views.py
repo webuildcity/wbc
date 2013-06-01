@@ -18,9 +18,13 @@ def abonieren(request):
             email = form.cleaned_data.pop('email')
             bezirkeJson = json.dumps(form.cleaned_data)
             
-            v = Validierung(email=email,
-                            bezirke=bezirkeJson,
-                            aktion='abonieren')
+            try:
+                v = Validierung.objects.get(email=email)
+            except Validierung.DoesNotExist:
+                v = Validierung(email=email)
+
+            v.bezirke = bezirkeJson
+            v.aktion = 'abonieren'
             v.save()
 
             Mail().abonieren(email, v.code)
@@ -38,11 +42,16 @@ def abbestellen(request, email=None):
     if request.method == 'POST':
         form = AbbestellenForm(request.POST)
         if form.is_valid():
-            e = form.cleaned_data.pop('email')            
+            email = form.cleaned_data.pop('email')            
             try:
-                abonent = Abonent.objects.get(email=e)
+                abonent = Abonent.objects.get(email=email)
 
-                v = Validierung(email=e,bezirke=None,aktion='abbestellen')
+                try:
+                    v = Validierung.objects.get(email=email)
+                except Validierung.DoesNotExist:
+                    v = Validierung(email=email)
+
+                v.aktion='abbestellen'
                 v.save()
 
                 Mail().abbestellen(email, v.code)
@@ -61,22 +70,28 @@ def validieren(request, code):
         validierung = Validierung.objects.get(code=code)
         
         if validierung.aktion == 'abonieren':
-            abonent = Abonent(email=validierung.email)
-            abonent.save()
+            try:
+                abonent = Abonent.objects.get(email=validierung.email)
+                abonent.bezirke.clear()
+            except Abonent.DoesNotExist:
+                abonent = Abonent(email=validierung.email)
+                abonent.save()
 
             bezirke = json.loads(validierung.bezirke)
             for key in json.loads(validierung.bezirke):
                 if bezirke[key]:
                     abonent.bezirke.add(Bezirk.objects.get(pk=key))
-
             abonent.save()
 
             validierung.delete()
 
         elif validierung.aktion == 'abbestellen':
-            abonent = Abonent.objects.get(email=validierung.email)
-            abonent.delete()
-            
+            try:
+                abonent = Abonent.objects.get(email=validierung.email)
+                abonent.delete()
+            except Abonent.DoesNotExist:
+                pass # don't tell the user
+                
             validierung.delete()
 
         else:
