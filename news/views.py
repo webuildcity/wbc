@@ -18,7 +18,9 @@ def abonieren(request):
             email = form.cleaned_data.pop('email')
             bezirkeJson = json.dumps(form.cleaned_data)
             
-            v = Validierung(email=email,bezirke=bezirkeJson,aktion='abonieren')
+            v = Validierung(email=email,
+                            bezirke=bezirkeJson,
+                            aktion='abonieren')
             v.save()
 
             Mail().abonieren(email, v.code)
@@ -85,6 +87,7 @@ def validieren(request, code):
             'aktion': validierung.aktion,
             'abbestellen': settings.SITE_URL + '/news/abbestellen/'
         })
+        
     except Validierung.DoesNotExist:
         return render(request,'news/validieren.html', {})
         

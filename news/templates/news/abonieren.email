@@ -1,6 +1,5 @@
 {% block subject %}[Buerger baut Stadt] Newsletter abonieren{% endblock %}
-{% block plain %}
-Hallo,
+{% block plain %}Hallo,
 
 wenn du den Newsletter wirklich abonieren möchtest klicke bitte auf den folgenden Link
 

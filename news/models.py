@@ -41,7 +41,8 @@ class Mail():
             context = {
                 'abbestellen': settings.SITE_URL + '/news/abbestellen/' + to,
                 'link': settings.SITE_URL + '/news/validieren/' + code
-            })
+            }
+        )
 
     def abbestellen(self, to, code):
         send_templated_mail(
@@ -51,4 +52,5 @@ class Mail():
             recipient_list = [to],
             context = {
                 'link': settings.SITE_URL + '/news/validieren/' + code
-            })
+            }
+        )
