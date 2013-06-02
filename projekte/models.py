@@ -10,7 +10,7 @@ class Projekt(models.Model):
     bezeichner   = models.CharField(blank=True,
                                     max_length=64,
                                     help_text="ggf. Bezeichner des Beplauungsplans")
-    bezirke      = models.ManyToManyField('Bezirk')
+    bezirke      = models.ManyToManyField('Bezirk', related_name='projekte')
 
     def __unicode__(self):
         return self.adresse
