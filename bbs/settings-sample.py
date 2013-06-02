@@ -7,6 +7,8 @@ SITE_URL  = 'http://localhost:8000'
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+INTERNAL_IPS = ('127.0.0.1',)
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
