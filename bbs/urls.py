@@ -8,8 +8,8 @@ from news import views
 urlpatterns = patterns('',
     url(r'^$', 'bbs.views.home'),
     # projects
-    url(r'^projekte/$', ProjekteView.as_view()),
-    url(r'^projekte/(?P<pk>\d+)/$', ProjekteView.as_view()),
+    url(r'^orte/$', ProjekteView.as_view()),
+    url(r'^orte/(?P<pk>\d+)/$', ProjekteView.as_view()),
     # bbp
     url(r'^veroeffentlichungen/$', VeroeffentlichungenView.as_view()),
     url(r'^veroeffentlichungen/(?P<pk>\d+)/$', VeroeffentlichungenView.as_view()),

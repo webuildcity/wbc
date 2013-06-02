@@ -16,8 +16,8 @@ class Projekt(models.Model):
         return self.adresse
 
     class Meta:
-        verbose_name        = "Projekt"
-        verbose_name_plural = "Projekte"
+        verbose_name        = "Ort"
+        verbose_name_plural = "Orte"
 
 class Veroeffentlichung(models.Model):
     beschreibung      = models.TextField(blank=True, verbose_name="Beschreibung")
@@ -49,6 +49,7 @@ class Verfahrensschritt(models.Model):
         return self.name
 
     class Meta:
+        ordering            = ["verfahren","reihenfolge"]
         verbose_name        = "Verfahrensschritt"
         verbose_name_plural = "Verfahrensschritte"
 
