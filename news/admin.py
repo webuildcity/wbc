@@ -1,9 +1,9 @@
 from django.contrib import admin
-from news.models import Abonent
+from news.models import Abonnent
 
-class AbonentAdmin(admin.ModelAdmin):
+class AbonnentAdmin(admin.ModelAdmin):
     list_display = ('id','email')
     list_display_links = ('id','email')
     ordering = ['id']
 
-admin.site.register(Abonent, AbonentAdmin)
+admin.site.register(Abonnent, AbonnentAdmin)

@@ -22,21 +22,21 @@ class Validierung(models.Model):
         verbose_name        = "Validierung"
         verbose_name_plural = "Validierung"
 
-class Abonent(models.Model):
+class Abonnent(models.Model):
     email   = models.EmailField(unique=True)
-    bezirke = models.ManyToManyField('projekte.Bezirk', related_name='abonenten')
+    bezirke = models.ManyToManyField('projekte.Bezirk', related_name='abonnenten')
     
     def __unicode__(self):
         return self.email
 
     class Meta:
-        verbose_name        = "Abonent"
-        verbose_name_plural = "Abonenten"
+        verbose_name        = "Abonnent"
+        verbose_name_plural = "Abonnenten"
 
 class Mail():
-    def abonieren(self, to, code):
+    def abonnieren(self, to, code):
         send_templated_mail(
-            template_name = 'abonieren',
+            template_name = 'abonnieren',
             template_prefix = 'news/',
             from_email = settings.EMAIL_FROM,
             recipient_list = [to],

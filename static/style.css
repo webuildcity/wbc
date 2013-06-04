@@ -83,20 +83,20 @@ a:hover {
     margin-bottom: 5px;
 }
 
-#abonieren-form ul {
+#abonnieren-form ul {
     margin-top: 5px;
 }
-#abonieren-form li {
+#abonnieren-form li {
     display: block;
 }
 
-#abonieren-form li label,
-#abonieren-form li input {
+#abonnieren-form li label,
+#abonnieren-form li input {
     display: inline-block;
 }
-#abonieren-form li input {
+#abonnieren-form li input {
     margin-bottom: 5px;
 }
-#abonieren-form li label {
+#abonnieren-form li label {
     margin-left: 10px;
 }

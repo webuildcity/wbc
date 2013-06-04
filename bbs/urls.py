@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     # info
     url(r'^info/$', 'bbs.views.info'),
     # mails
-    url(r'^news/abonieren/$', 'news.views.abonieren'),
+    url(r'^news/abonnieren/$', 'news.views.abonnieren'),
     url(r'^news/validieren/(?P<code>.*)$', 'news.views.validieren'),
     url(r'^news/abbestellen/(?P<email>.*)$', 'news.views.abbestellen'),
     # admin foo
