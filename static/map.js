@@ -70,7 +70,7 @@ function initMap() {
         popuptext += '<p>Betrifft Gegend um: ' + point.adresse + '</p>';
         popuptext += '<p>Verantwortlich: ' + point.behoerde + '</p>';
         popuptext += '<p>Beteiligung möglich bis: ' + point.ende + '</p>';
-        popuptext += '<p><a href="' + siteUrl + "projekte/" + point.projekt + '" >Details</a></p>';
+        popuptext += '<p><a href="' + siteUrl + "orte/" + point.projekt + '" >Details</a></p>';
 
         marker.bindPopup(popuptext);
         marker.addTo(map);
@@ -106,7 +106,7 @@ function initMap() {
         popuptext += '<p>Betrifft Gegend um: ' + point.adresse + '</p>';
         popuptext += '<p>Verantwortlich: ' + point.behoerde + '</p>';
         popuptext += '<p>Beteiligung war möglich bis: ' + point.ende + '</p>';
-        popuptext += '<p><a href="' + siteUrl + "projekte/" + point.projekt + '" >Details</a></p>';
+        popuptext += '<p><a href="' + siteUrl + "orte/" + point.projekt + '" >Details</a></p>';
         
         marker.bindPopup(popuptext);        
         
