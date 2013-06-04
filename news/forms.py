@@ -1,11 +1,11 @@
 from django import forms
 
-class AbonierenForm(forms.Form):
+class AbonnierenForm(forms.Form):
     def __init__(self, *args, **kwargs):
         if (kwargs.has_key('bezirke')):
             bezirke = kwargs.pop('bezirke')
 
-        super(AbonierenForm, self).__init__(*args, **kwargs)
+        super(AbonnierenForm, self).__init__(*args, **kwargs)
 
         for bezirk in bezirke:
             field = forms.BooleanField(label=bezirk['name'],required=False);

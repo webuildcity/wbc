@@ -6,17 +6,17 @@
 
 {% block page %}
 <div class="container">
-    <h2>Newsletter für deinen Bezirk abonieren</h2>
+    <h2>Newsletter für deinen Bezirk abonnieren</h2>
 
     {% if success %}
     <p>
-        Danke das Du unseren Newsletter abonieren willst. In Kürze wirst du eine Mail mit einem Validierungslink erhalten. Wenn du auf diesen Link klickst, ist der Vorgang abgeschlossen und du wirst informiert, wenn in deinem Bezirk eine neue Veröffenlichung zu einem Bauvorhaben ausliegt.
+        Danke das Du unseren Newsletter abonnieren willst. In Kürze wirst du eine Mail mit einem Validierungslink erhalten. Wenn du auf diesen Link klickst, ist der Vorgang abgeschlossen und du wirst informiert, wenn in deinem Bezirk eine neue Veröffenlichung zu einem Bauvorhaben ausliegt.
     </p>
     <p>
         Der Newletter kann unter <a href="{{abbestellen}}">{{abbestellen}}</a> wieder abbestellt werden.
     </p>
     {% else %}
-    <form action="/news/abonieren/" method="post" id="abonieren-form" class="form-horizontal">
+    <form action="/news/abonnieren/" method="post" id="abonnieren-form" class="form-horizontal">
         {% csrf_token %}
         <div class="control-group">
             <label class="control-label">Bezirke</label>
@@ -44,13 +44,16 @@
         </div>
         <div class="control-group">
             <div class="controls">
-                <input type="submit" value="Abonieren" class="btn btn-primary"/>
+                <input type="submit" value="Abonnieren" class="btn btn-primary"/>
             </div>
         </div>
         <span class="text-error">
             {{ form.non_field_errors }}
         </span>
     </form>
+    <p>
+        Der Newletter kann unter <a href="{{abbestellen}}">{{abbestellen}}</a> wieder abbestellt werden.
+    </p>
     {% endif %}
 </div>
 {% endblock %}

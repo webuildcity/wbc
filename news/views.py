@@ -3,17 +3,17 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render,redirect
 
-from news.forms import AbonierenForm, AbbestellenForm
-from news.models import Validierung,Abonent,Mail
+from news.forms import AbonnierenForm, AbbestellenForm
+from news.models import Validierung,Abonnent,Mail
 from projekte.models import Bezirk
 
 import json
 
-def abonieren(request):
+def abonnieren(request):
     bezirke = Bezirk.objects.all().values()
 
     if request.method == 'POST':
-        form = AbonierenForm(request.POST, bezirke=bezirke)
+        form = AbonnierenForm(request.POST, bezirke=bezirke)
         if form.is_valid():
             email = form.cleaned_data.pop('email')
             bezirkeJson = json.dumps(form.cleaned_data)
@@ -24,19 +24,22 @@ def abonieren(request):
                 v = Validierung(email=email)
 
             v.bezirke = bezirkeJson
-            v.aktion = 'abonieren'
+            v.aktion = 'abonnieren'
             v.save()
 
-            Mail().abonieren(email, v.code)
+            Mail().abonnieren(email, v.code)
 
-            return render(request,'news/abonieren.html', {
+            return render(request,'news/abonnieren.html', {
                 'success': True,
                 'abbestellen': settings.SITE_URL + '/news/abbestellen/' + email
             })
     else:
-        form = AbonierenForm(bezirke=bezirke)
+        form = AbonnierenForm(bezirke=bezirke)
 
-    return render(request,'news/abonieren.html', {'form': form})
+    return render(request,'news/abonnieren.html', {
+        'form': form,
+        'abbestellen': settings.SITE_URL + '/news/abbestellen/'
+        })
 
 def abbestellen(request, email=None):
     if request.method == 'POST':
@@ -44,7 +47,7 @@ def abbestellen(request, email=None):
         if form.is_valid():
             email = form.cleaned_data.pop('email')            
             try:
-                abonent = Abonent.objects.get(email=email)
+                abonnent = Abonnent.objects.get(email=email)
 
                 try:
                     v = Validierung.objects.get(email=email)
@@ -56,7 +59,7 @@ def abbestellen(request, email=None):
 
                 Mail().abbestellen(email, v.code)
 
-            except Abonent.DoesNotExist:
+            except Abonnent.DoesNotExist:
                 pass # don't tell the user
 
             return render(request,'news/abbestellen.html', {'success': True})
@@ -69,27 +72,27 @@ def validieren(request, code):
     try:
         validierung = Validierung.objects.get(code=code)
         
-        if validierung.aktion == 'abonieren':
+        if validierung.aktion == 'abonnieren':
             try:
-                abonent = Abonent.objects.get(email=validierung.email)
-                abonent.bezirke.clear()
-            except Abonent.DoesNotExist:
-                abonent = Abonent(email=validierung.email)
-                abonent.save()
+                abonnent = Abonnent.objects.get(email=validierung.email)
+                abonnent.bezirke.clear()
+            except Abonnent.DoesNotExist:
+                abonnent = Abonnent(email=validierung.email)
+                abonnent.save()
 
             bezirke = json.loads(validierung.bezirke)
             for key in json.loads(validierung.bezirke):
                 if bezirke[key]:
-                    abonent.bezirke.add(Bezirk.objects.get(pk=key))
-            abonent.save()
+                    abonnent.bezirke.add(Bezirk.objects.get(pk=key))
+            abonnent.save()
 
             validierung.delete()
 
         elif validierung.aktion == 'abbestellen':
             try:
-                abonent = Abonent.objects.get(email=validierung.email)
-                abonent.delete()
-            except Abonent.DoesNotExist:
+                abonnent = Abonnent.objects.get(email=validierung.email)
+                abonnent.delete()
+            except Abonnent.DoesNotExist:
                 pass # don't tell the user
                 
             validierung.delete()
