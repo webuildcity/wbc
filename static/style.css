@@ -37,6 +37,7 @@ a:hover {
     font-family: titillium;
     font-size: 16px;
     color: #646464;
+    margin: 0;
 }
 #sitenav li {
     display: inline;
