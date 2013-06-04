@@ -1,0 +1,15 @@
+{% block subject %}[Buerger baut Stadt] Neue Veroeffentlichungen {% endblock %}
+{% block plain %}Hallo,
+
+zu Bauvorhaben in den von Dir angegebenen Bezirken gibt es neue Veröffentlichungen:
+
+{% for veroeffentlichung in veroeffentlichungen %}
+    Projekt:           {{veroeffentlichung.projekt}}
+    Link zum Projekt:  {{projekt}}{{veroeffentlichung.projekt.pk}}
+    Verfahrensschritt: {{veroeffentlichung.verfahrensschritt.name}}
+    Auslegung:         von {{ veroeffentlichung.beginn }} bis {{ veroeffentlichung.ende }}
+{% endfor %}
+
+Dies ist ein Newsletter von Buerger baut Stadt.
+Du kannst den Newsletter später unter {{abbestellen}} wieder abbestellen.
+{% endblock %}

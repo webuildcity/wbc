@@ -56,3 +56,16 @@ class Mail():
                 'link': settings.SITE_URL + '/news/validieren/' + code
             }
         )
+
+    def newsletter(self, to, veroeffentlichungen):
+        send_templated_mail(
+            template_name = 'newsletter',
+            template_prefix = 'news/',
+            from_email = settings.EMAIL_FROM,
+            recipient_list = [to],
+            context = {
+                'veroeffentlichungen': veroeffentlichungen,
+                'projekt': settings.SITE_URL + '/projekt/',
+                'abbestellen': settings.SITE_URL + '/news/abbestellen/' + to
+            }
+        )
