@@ -20,9 +20,16 @@ html, body {
     font-family: dejavu;
     font-size: 14px;
 }
+h2 {
+    font-weight: normal;
+    font-family: titillium;
+    font-size: 28px;
+    color: #de6a00;
+}
 h3 {
     font-size: 16px;
 }
+
 a, a:visited {
     color: #de6a00 !important;
     text-decoration: none !important;
@@ -75,4 +82,22 @@ a:hover {
 .leaflet-popup-content p {
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+#abonieren-form ul {
+    margin-top: 5px;
+}
+#abonieren-form li {
+    display: block;
+}
+
+#abonieren-form li label,
+#abonieren-form li input {
+    display: inline-block;
+}
+#abonieren-form li input {
+    margin-bottom: 5px;
+}
+#abonieren-form li label {
+    margin-left: 10px;
 }

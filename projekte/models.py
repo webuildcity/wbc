@@ -10,13 +10,14 @@ class Projekt(models.Model):
     bezeichner   = models.CharField(blank=True,
                                     max_length=64,
                                     help_text="ggf. Bezeichner des Beplauungsplans")
-    bezirke      = models.ManyToManyField('Bezirk')
+    bezirke      = models.ManyToManyField('Bezirk', related_name='projekte')
 
     def __unicode__(self):
         return self.adresse
 
     class Meta:
-        verbose_name_plural = "Projekte"
+        verbose_name        = "Ort"
+        verbose_name_plural = "Orte"
 
 class Veroeffentlichung(models.Model):
     beschreibung      = models.TextField(blank=True, verbose_name="Beschreibung")
@@ -33,6 +34,7 @@ class Veroeffentlichung(models.Model):
         return self.projekt.adresse + ', ' + self.verfahrensschritt.name
 
     class Meta:
+        verbose_name        = "Veroeffentlichung"
         verbose_name_plural = "Veroeffentlichungen"
 
 class Verfahrensschritt(models.Model):
@@ -47,6 +49,8 @@ class Verfahrensschritt(models.Model):
         return self.name
 
     class Meta:
+        ordering            = ["verfahren","reihenfolge"]
+        verbose_name        = "Verfahrensschritt"
         verbose_name_plural = "Verfahrensschritte"
 
 class Verfahren(models.Model):
@@ -57,6 +61,7 @@ class Verfahren(models.Model):
         return self.name
 
     class Meta:
+        verbose_name        = "Verfahren"
         verbose_name_plural = "Verfahren"
 
 class Behoerde(models.Model):
@@ -67,6 +72,7 @@ class Behoerde(models.Model):
         return self.name
 
     class Meta:
+        verbose_name        = "Behoerde"
         verbose_name_plural = "Behoerden"
 
 class Bezirk(models.Model): 
@@ -76,4 +82,5 @@ class Bezirk(models.Model):
         return self.name
     
     class Meta:
+        verbose_name        = "Bezirk"
         verbose_name_plural = "Bezirke"
