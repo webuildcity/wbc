@@ -127,7 +127,8 @@ INSTALLED_APPS = (
     'suit',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'projekte'
+    'projekte',
+    'news'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -174,8 +175,4 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
 #EMAIL_USE_TLS = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 EMAIL_FROM = 'news@buergerbautstadt.de'
-
-TEMPLATED_EMAIL_TEMPLATE_DIR = ''
-TEMPLATED_EMAIL_FILE_EXTENSION = 'email'

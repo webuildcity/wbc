@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from django.conf import settings
-from templated_email import send_templated_mail
+from django.template import loader, Context
+from django.utils.html import strip_tags
+from django.core.mail import EmailMultiAlternatives
 
 import random,string
 
@@ -35,37 +38,37 @@ class Abonnent(models.Model):
 
 class Mail():
     def abonnieren(self, to, code):
-        send_templated_mail(
-            template_name = 'abonnieren',
-            template_prefix = 'news/',
-            from_email = settings.EMAIL_FROM,
-            recipient_list = [to],
-            context = {
+        self.send(to, '[Bürger baut Stadt] Newsletter abonnieren',
+            'news/mail/abonnieren.html', {
                 'abbestellen': settings.SITE_URL + '/news/abbestellen/' + to,
                 'link': settings.SITE_URL + '/news/validieren/' + code
-            }
-        )
+            })
 
     def abbestellen(self, to, code):
-        send_templated_mail(
-            template_name = 'abbestellen',
-            template_prefix = 'news/',
-            from_email = settings.EMAIL_FROM,
-            recipient_list = [to],
-            context = {
+        self.send(to, '[Bürger baut Stadt] Newsletter abbestellen',
+            'news/mail/abbestellen.html', {
                 'link': settings.SITE_URL + '/news/validieren/' + code
-            }
-        )
+            })
 
     def newsletter(self, to, veroeffentlichungen):
-        send_templated_mail(
-            template_name = 'newsletter',
-            template_prefix = 'news/',
-            from_email = settings.EMAIL_FROM,
-            recipient_list = [to],
-            context = {
-                'veroeffentlichungen': veroeffentlichungen,
-                'projekt': settings.SITE_URL + '/projekt/',
-                'abbestellen': settings.SITE_URL + '/news/abbestellen/' + to
-            }
-        )
+        self.send(to, '[Bürger baut Stadt] Neue Veröffentlichungen',
+            'news/mail/newsletter.html', {
+            'veroeffentlichungen': veroeffentlichungen,
+            'projekt': settings.SITE_URL + '/projekt/',
+            'abbestellen': settings.SITE_URL + '/news/abbestellen/' + to
+        })
+        
+    def send(self, to, subject, template, context):
+        if type(to) != list:
+            to = [to,]
+
+        t = loader.get_template(template)
+        c = Context(context)
+
+        html_part = t.render(c)
+        text_part = strip_tags(html_part)
+
+        msg = EmailMultiAlternatives(subject,text_part,settings.EMAIL_FROM,to)
+        #msg.attach_alternative(html_part, "text/html")
+
+        return msg.send()
