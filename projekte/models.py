@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from lib.models import Model
 
-class Projekt(models.Model):
+class Projekt(Model):
     adresse      = models.CharField(max_length=256,
                                     help_text="Eine genaue Adresse des Vorhabens")
     beschreibung = models.TextField(blank=True, help_text="Örtliche Beschreibung")
@@ -19,7 +20,7 @@ class Projekt(models.Model):
         verbose_name        = "Ort"
         verbose_name_plural = "Orte"
 
-class Veroeffentlichung(models.Model):
+class Veroeffentlichung(Model):
     beschreibung      = models.TextField(blank=True, verbose_name="Beschreibung")
     verfahrensschritt = models.ForeignKey('Verfahrensschritt', related_name='veroeffentlichungen')
     projekt           = models.ForeignKey('Projekt', related_name='veroeffentlichungen')
@@ -37,7 +38,7 @@ class Veroeffentlichung(models.Model):
         verbose_name        = "Veroeffentlichung"
         verbose_name_plural = "Veroeffentlichungen"
 
-class Verfahrensschritt(models.Model):
+class Verfahrensschritt(Model):
     name         = models.CharField(max_length=256, verbose_name="Name")
     beschreibung = models.TextField(verbose_name="Beschreibung")
     icon         = models.CharField(max_length=256, verbose_name="Icon auf der Karte")
@@ -53,7 +54,7 @@ class Verfahrensschritt(models.Model):
         verbose_name        = "Verfahrensschritt"
         verbose_name_plural = "Verfahrensschritte"
 
-class Verfahren(models.Model):
+class Verfahren(Model):
     name         = models.CharField(max_length=256, verbose_name="Name")
     beschreibung = models.TextField()
 
@@ -64,7 +65,7 @@ class Verfahren(models.Model):
         verbose_name        = "Verfahren"
         verbose_name_plural = "Verfahren"
 
-class Behoerde(models.Model):
+class Behoerde(Model):
     name = models.CharField(max_length=256)
     link = models.URLField(blank=True)
 
@@ -75,7 +76,7 @@ class Behoerde(models.Model):
         verbose_name        = "Behoerde"
         verbose_name_plural = "Behoerden"
 
-class Bezirk(models.Model): 
+class Bezirk(Model): 
     name = models.CharField(max_length=256)
 
     def __unicode__(self):

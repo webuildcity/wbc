@@ -1,12 +1,12 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.core.serializers.json import DjangoJSONEncoder
+from django.views.decorators.csrf import csrf_exempt
 import json
 
-from bbs.lib import RestView
-from projekte.models import Projekt, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
+from lib.views import RestView
 
-#class ProjekteView():
+from projekte.models import Projekt, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
 
 def get_items(request):
     projekte = Projekt.objects.all()
@@ -17,10 +17,6 @@ def get_item(request, pk):
     projekt = Projekt.objects.get(pk=int(pk))
     response = {'projekt': projekt}
     return render(request,'projekte/projekt.html', response)
-
-#    # this function overides the corresponding function in RestView
-#    def jsonResponse(self, jsonObject):
-#        return HttpResponse(json.dumps(jsonObject, cls=DjangoJSONEncoder), content_type="application/json")
 
 class VeroeffentlichungenView(RestView):
 
@@ -33,7 +29,3 @@ class VeroeffentlichungenView(RestView):
         veroeffentlichung = Veroeffentlichung.objects.get(pk=int(pk))
         response = {'veroeffentlichung': veroeffentlichung}
         return self.render(request,'projekte/veroeffentlichung.html', response)
-
-    # this function overides the corresponding function in RestView
-    def jsonResponse(self, jsonObject):
-        return HttpResponse(json.dumps(jsonObject, cls=DjangoJSONEncoder), content_type="application/json")
