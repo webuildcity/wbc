@@ -4,10 +4,11 @@ from django.conf import settings
 from django.template import loader, Context
 from django.utils.html import strip_tags
 from django.core.mail import EmailMultiAlternatives
-
 import random,string
 
-class Validierung(models.Model):
+from lib.models import Model
+
+class Validierung(Model):
     email   = models.EmailField(unique=True)
     bezirke = models.CharField(max_length=256, blank=True, null=True)
     code    = models.SlugField(max_length=32)
@@ -25,7 +26,7 @@ class Validierung(models.Model):
         verbose_name        = "Validierung"
         verbose_name_plural = "Validierung"
 
-class Abonnent(models.Model):
+class Abonnent(Model):
     email   = models.EmailField(unique=True)
     bezirke = models.ManyToManyField('projekte.Bezirk', related_name='abonnenten')
     

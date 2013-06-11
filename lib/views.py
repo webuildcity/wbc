@@ -3,21 +3,19 @@ from django.shortcuts import render
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
-import json
-
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
+import json
 
 class RestView(View):
 
     def dispatch(self, request, *args, **kwargs):
         
         # set accept variable from http accept header
-        if 'application/xhtml+xml' in request.META['HTTP_ACCEPT'].split(','):
-            self.accept = 'html'
-        elif 'application/json' in request.META['HTTP_ACCEPT'].split(','):
+        if 'application/json' in request.META['HTTP_ACCEPT'].split(','):
             self.accept = 'json'
         else:
-            raise RuntimeError('An error has occured')
+            self.accept = 'html'        
 
         # call method determined by http proverb
         if 'pk' in kwargs:
@@ -66,3 +64,23 @@ class RestView(View):
     def jsonResponse(self, jsonObject):
         return HttpResponse(json.dumps(jsonObject, cls=DjangoJSONEncoder), content_type="application/json")
         
+    def post_item(request):
+        return HttpResponse(status=501)
+
+    def put_item(request):
+        return HttpResponse(status=501)
+
+    def delete_item(request):
+        return HttpResponse(status=501)
+
+    def get_items(request):
+        return HttpResponse(status=501)
+
+    def post_items(request):
+        return HttpResponse(status=501)
+
+    def put_items(request):
+        return HttpResponse(status=501)
+
+    def delete_items(request):
+        return HttpResponse(status=501)
