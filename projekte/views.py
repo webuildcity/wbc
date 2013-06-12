@@ -4,28 +4,63 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.csrf import csrf_exempt
 import json
 
-from lib.views import RestView
+import lib.views
 
 from projekte.models import Projekt, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
 
-def get_items(request):
-    projekte = Projekt.objects.all()
-    response = {'projekte': projekte}
-    return render(request,'projekte/projekte.html', response)
+def projektGeoJson(projekt):
+    response = {
+        'type': "Feature",
+        'geometry': {
+            'type': 'Point',
+            'coordinates': [projekt.lon,projekt.lat]
+        },
+        'properties': {
+            'bezeichner': projekt.bezeichner,
+            'adresse': projekt.adresse,
+            'beschreibung': projekt.beschreibung,
+            'bezirke': [],
+            'veroeffentlichungen': []
+        }
+    }
+    for bezirk in projekt.bezirke.all():
+        response['properties']['bezirke'].append(bezirk.name)
+    for veroeffentlichung in projekt.veroeffentlichungen.all():
+        response['properties']['veroeffentlichungen'].append({
+            'beschreibung': veroeffentlichung.beschreibung,
+            'verfahrensschritt': veroeffentlichung.verfahrensschritt.name,
+            'beginn': veroeffentlichung.beginn,
+            'ende': veroeffentlichung.ende,
+            'auslegungsstelle': veroeffentlichung.auslegungsstelle,
+            'behoerde': veroeffentlichung.behoerde.name,
+            'link': veroeffentlichung.link
+        })
+    return response
 
-def get_item(request, pk):
-    projekt = Projekt.objects.get(pk=int(pk))
-    response = {'projekt': projekt}
-    return render(request,'projekte/projekt.html', response)
+class ProjekteView(lib.views.View):
+    http_method_names = ['get']
 
-class VeroeffentlichungenView(RestView):
+    def get(self, request):
+        projekte = Projekt.objects.all()
 
-    def get_items(self, request):
-        veroeffentlichungen = Veroeffentlichung.objects.all()
-        response = {'veroeffentlichungen': veroeffentlichungen}
-        return self.render(request,'projekte/veroeffentlichungen.html', response)
+        if self.accept == 'json':
+            response = {'type': 'FeatureCollection','features': []}
+            for projekt in projekte:
+                response['features'].append(projektGeoJson(projekt))
+            return self.renderJson(request,response)
+        else:
+            response = {'projekte': projekte}
+            return render(request,'projekte/projekte.html', response)
 
-    def get_item(self, request, pk):
-        veroeffentlichung = Veroeffentlichung.objects.get(pk=int(pk))
-        response = {'veroeffentlichung': veroeffentlichung}
-        return self.render(request,'projekte/veroeffentlichung.html', response)
+class ProjektView(lib.views.View):
+    http_method_names = ['get']
+
+    def get(self, request, pk):
+        projekt = Projekt.objects.get(pk=int(pk))
+
+        if self.accept == 'json':
+            response = projektGeoJson(projekt)
+            return self.renderJson(request, response)
+        else:
+            response = {'projekt': projekt}
+            return render(request, 'projekte/projekt.html', response)
