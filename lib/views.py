@@ -10,8 +10,10 @@ import json
 class View(django.views.generic.View):
 
     def dispatch(self, request, *args, **kwargs):
-        # set accept variable from http accept header
-        if 'application/json' in request.META['HTTP_ACCEPT'].split(','):
+        # get the accept header 
+        accept = request.META['HTTP_ACCEPT'].split(',')
+
+        if request.GET.get('format') == 'json' or 'application/json' in accept:
             self.accept = 'json'
         else:
             self.accept = 'html'        
