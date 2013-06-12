@@ -16,7 +16,7 @@ class View(django.views.generic.View):
         if request.GET.get('format') == 'json' or 'application/json' in accept:
             self.accept = 'json'
         else:
-            self.accept = 'html'        
+            self.accept = 'html'
 
         return super(View,self).dispatch(request, *args, **kwargs)
 
@@ -41,4 +41,5 @@ class View(django.views.generic.View):
         return dictionary
         
     def renderJson(self, request, response):
-        return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder), content_type="application/json")
+        return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder),
+                            content_type="application/json")

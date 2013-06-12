@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.core.serializers.json import DjangoJSONEncoder
@@ -41,7 +42,14 @@ class ProjekteView(lib.views.View):
     http_method_names = ['get']
 
     def get(self, request):
-        projekte = Projekt.objects.all()
+        bezirk = request.GET.get('bezirk', None)
+
+        projekte = Projekt.objects
+
+        if bezirk:
+            projekte = projekte.filter(bezirke__name=bezirk)
+        else: 
+            projekte = Projekt.objects.all()
 
         if self.accept == 'json':
             response = {'type': 'FeatureCollection','features': []}
