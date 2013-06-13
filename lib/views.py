@@ -43,3 +43,5 @@ class View(django.views.generic.View):
     def renderJson(self, request, response):
         return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder),
                             content_type="application/json")
+    class Meta:
+        abstract = True

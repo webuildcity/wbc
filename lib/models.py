@@ -10,7 +10,7 @@ class Model(models.Model):
             self.created = datetime.now()
          
         self.updated = datetime.now()
-        super(Model,self).save(args,kwargs)
+        super(Model, self).save(*args, **kwargs)
 
     class Meta:
         abstract = True
