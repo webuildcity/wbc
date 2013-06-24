@@ -3,12 +3,14 @@ Hallo,
 zu Bauvorhaben in den von Dir angegebenen Bezirken gibt es neue Veröffentlichungen:
 
 {% for veroeffentlichung in veroeffentlichungen %}
-    Projekt:           {{veroeffentlichung.projekt}}
-    Bezirk:            {{veroeffentlichung.projekt.bezirke.all|join:", "}}
-    Link zum Projekt:  {{projekt}}{{veroeffentlichung.projekt.pk}}
-    Verfahrensschritt: {{veroeffentlichung.verfahrensschritt.name}}
-    Auslegung:         von {{ veroeffentlichung.beginn }} bis {{ veroeffentlichung.ende }}
+    Verfahren:          {{veroeffentlichung.verfahrensschritt.verfahren.name}}
+    Verfahrensschritt:  {{veroeffentlichung.verfahrensschritt.name}}
+    Betrifft Gegend um: {{veroeffentlichung.projekt}}
+    Bezirk:             {{veroeffentlichung.projekt.bezirke.all|join:", "}}
+    Link zum Projekt:   {{projekt}}{{veroeffentlichung.projekt.pk}}    
+    Auslegungszeitraum: von {{ veroeffentlichung.beginn }} bis {{ veroeffentlichung.ende }}
 {% endfor %}
 
-Dies ist ein Newsletter von Buerger baut Stadt.
-Du kannst den Newsletter später unter {{abbestellen}} wieder abbestellen.
+--
+Dies ist ein Newsletter von Bürger baut Stadt.
+Du kannst den Newsletter unter {{abbestellen}} wieder abbestellen.
