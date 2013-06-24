@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -f "manage.py" ]; then
+if [ ! -f "bbs/settings.py" ]; then
     echo "Error: not in the root directory of the django project."
 fi
 
