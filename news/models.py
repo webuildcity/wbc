@@ -55,7 +55,7 @@ class Mail():
         self.send(to, '[Bürger baut Stadt] Neue Veröffentlichungen',
             'news/mail/newsletter.html', {
             'veroeffentlichungen': veroeffentlichungen,
-            'projekt': settings.SITE_URL + '/projekt/',
+            'projekt': settings.SITE_URL + '/orte/',
             'abbestellen': settings.SITE_URL + '/news/abbestellen/' + to
         })
         
