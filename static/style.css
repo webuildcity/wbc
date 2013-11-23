@@ -86,9 +86,9 @@ a:hover {
     margin-bottom: 5px;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 500px) {
     .attribution {
-        font-size: small;
+        font-size: 7pt;
     }
 }
 .checkbox {

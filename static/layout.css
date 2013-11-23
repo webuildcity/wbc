@@ -4,15 +4,14 @@ html, body {
     height: 100%;
 }
 #header {
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 #header-left {
     float: left;
-    margin-top: 20px;
 }
 #header-right {
     float: right;
-    margin-top: 40px;
 }
 
 /* wrapper and footer for the map */
@@ -29,14 +28,22 @@ html, body {
 .absolute .container {
     position: relative;
 }
+.absolute#header,
+.absolute #header-left,
+.absolute #header-right {
+    margin: 0;
+}
 .absolute #header-left,
 .absolute #header-right,
+.absolute #buttons-left,
+.absolute #buttons-right,
 .absolute #footer-left,
 .absolute #footer-right {
     position: absolute;
     z-index: 10;
 }
 .absolute #header-right,
+.absolute #buttons-right,
 .absolute #footer-right {
     right: 15px;
 }
@@ -44,11 +51,26 @@ html, body {
 .absolute #footer-right {
     bottom: 10px;
 }
+.absolute #header-left{
+    top: 20px;
+}
+.absolute #header-right {
+    top: 40px;
+}
+.absolute #buttons-left,
+.absolute #buttons-right {
+    top: 110px;
+}
 
 @media (max-width: 992px) {
     .absolute #footer-right {
         right: auto;
         left: 15px;
+    }
+}
+@media (max-width: 500px) {
+    #brand img {
+        width: 280px;
     }
 }
 

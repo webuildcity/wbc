@@ -8,35 +8,39 @@
 {% block js %}
     <script type="text/javascript" src="{{ STATIC_URL }}leaflet/leaflet.js" ></script>
     <script type="text/javascript" src="{{ STATIC_URL }}social.js" ></script>
-    {# <script type="text/javascript" src="{{ STATIC_URL }}map.js" ></script> #}
+    <script type="text/javascript" src="{{ STATIC_URL }}map.js" ></script>
     <script type="text/javascript">
-        // var siteUrl = '{{ siteUrl|safe }}';
-        // var staticUrl = '{{ STATIC_URL }}';
+        var siteUrl = '{{ siteUrl|safe }}';
+        var staticUrl = '{{ STATIC_URL }}';
 
-        // var verfahren = {};
-        // {% for v in verfahren %}
-        // verfahren[{{v.pk}}] = {"pk": {{v.pk}}, "name": "{{v.name}}"};
-        // {% endfor %}
+        var verfahren = {};
+        {% for v in verfahren %}
+        verfahren[{{v.pk}}] = {"pk": {{v.pk}}, "name": "{{v.name}}"};
+        {% endfor %}
 
-        // var verfahrensschritte = {};
-        // {% for v in verfahrensschritte %}
-        // verfahrensschritte[{{v.pk}}] = {"pk": {{v.pk}}, "name": "{{v.name}}", "icon": "{{v.icon}}", "hoverIcon": "{{v.hoverIcon}}"};
-        // {% endfor %}
+        var verfahrensschritte = {};
+        {% for v in verfahrensschritte %}
+        verfahrensschritte[{{v.pk}}] = {"pk": {{v.pk}}, "name": "{{v.name}}", "icon": "{{v.icon}}", "hoverIcon": "{{v.hoverIcon}}"};
+        {% endfor %}
 
-        // var points = {}
-        // {% for v in veroeffentlichungen %}
-        // points[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "projekt": {{v.projekt.pk}}, "adresse": "{{v.projekt.adresse}}", "lat": {{v.projekt.lat|stringformat:"F"}}, "lon": {{v.projekt.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}}, "vpk": {{v.verfahrensschritt.verfahren.pk}} };
-        // {% endfor %}
+        var points = {}
+        {% for v in veroeffentlichungen %}
+        points[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "projekt": {{v.projekt.pk}}, "adresse": "{{v.projekt.adresse}}", "lat": {{v.projekt.lat|stringformat:"F"}}, "lon": {{v.projekt.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}}, "vpk": {{v.verfahrensschritt.verfahren.pk}} };
+        {% endfor %}
         
-        // var pointsOld = {}
-        // {% for v in veroeffentlichungenAlt %}
-        // pointsOld[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "projekt": {{v.projekt.pk}}, "adresse": "{{v.projekt.adresse}}", "lat": {{v.projekt.lat|stringformat:"F"}}, "lon": {{v.projekt.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}}, "vpk": {{v.verfahrensschritt.verfahren.pk}} };
-        // {% endfor %}
+        var pointsOld = {}
+        {% for v in veroeffentlichungenAlt %}
+        pointsOld[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "projekt": {{v.projekt.pk}}, "adresse": "{{v.projekt.adresse}}", "lat": {{v.projekt.lat|stringformat:"F"}}, "lon": {{v.projekt.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}}, "vpk": {{v.verfahrensschritt.verfahren.pk}} };
+        {% endfor %}
     </script>
 {% endblock %}
 
 {% block content %}
-<div id="wrapper">
+<div id="wrapper" class="absolute">
+    <div class="container" >
+        <div id="buttons-left"></div>
+        <div id="buttons-right"></div>
+    </div>
     <div id="map"></div>
 </div>
 
