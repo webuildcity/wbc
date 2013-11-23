@@ -11,18 +11,35 @@
 
     <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.png" type="image/x-icon" />
 
-    <script type="text/javascript" src="{{ STATIC_URL }}jquery.min.js" ></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js" ></script>
     <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" />
-
-    {% block head %}{% endblock %}
-
+    <link rel="stylesheet" href="{{ STATIC_URL }}layout.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}style.css" />
+    {% block css %}{% endblock %}
 </head>
 
 <body>
+    <div id="header" class="{{absolute|yesno:'absolute,'}}">
+        <div class="container" >
+            <div id="header-left">
+                <a href="/"><img src="{{ STATIC_URL }}img/schrift_5.png" alt="Bürger baut Stadt"></a>
+            </div>
+            <ul id="header-right" class="sitenav visible-md visible-lg">
+                <li><a href="/info">Begriffe</a></li>
+                <li><a href="/orte">Liste</a></li>
+                <li><a href="/news/abonnieren">Abo</a></li>
+                <li><a href="http://blog.buergerbautstadt.de/about">Über</a></li> 
+                <li><a href="http://blog.buergerbautstadt.de/">Blog</a></li>
+                <li><a href="http://blog.buergerbautstadt.de/contact/">Kontakt</a></li>
+            </ul>
+        </div>
+    </div>
+    
     {% block content %}
     {% endblock %}
+
+    <script type="text/javascript" src="{{ STATIC_URL }}jquery.min.js" ></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js" ></script>
+    {% block js %}{% endblock %}
 
     {% if not debug %}
 	<!-- Piwik -->

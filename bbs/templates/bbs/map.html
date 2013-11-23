@@ -1,67 +1,49 @@
 {% extends 'bbs/layout.html' %}
 
-{% block head %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}map.css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}social.css" />
+{% block css%}
     <link rel="stylesheet" href="{{ STATIC_URL }}leaflet/leaflet.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}social.css" />
+{% endblock %}
+
+{% block js %}
     <script type="text/javascript" src="{{ STATIC_URL }}leaflet/leaflet.js" ></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}map.js" ></script>
     <script type="text/javascript" src="{{ STATIC_URL }}social.js" ></script>
+    {# <script type="text/javascript" src="{{ STATIC_URL }}map.js" ></script> #}
     <script type="text/javascript">
-        var siteUrl = '{{ siteUrl|safe }}';
-        var staticUrl = '{{ STATIC_URL }}';
+        // var siteUrl = '{{ siteUrl|safe }}';
+        // var staticUrl = '{{ STATIC_URL }}';
 
-        var verfahren = {};
-        {% for v in verfahren %}
-        verfahren[{{v.pk}}] = {"pk": {{v.pk}}, "name": "{{v.name}}"};
-        {% endfor %}
+        // var verfahren = {};
+        // {% for v in verfahren %}
+        // verfahren[{{v.pk}}] = {"pk": {{v.pk}}, "name": "{{v.name}}"};
+        // {% endfor %}
 
-        var verfahrensschritte = {};
-        {% for v in verfahrensschritte %}
-        verfahrensschritte[{{v.pk}}] = {"pk": {{v.pk}}, "name": "{{v.name}}", "icon": "{{v.icon}}", "hoverIcon": "{{v.hoverIcon}}"};
-        {% endfor %}
+        // var verfahrensschritte = {};
+        // {% for v in verfahrensschritte %}
+        // verfahrensschritte[{{v.pk}}] = {"pk": {{v.pk}}, "name": "{{v.name}}", "icon": "{{v.icon}}", "hoverIcon": "{{v.hoverIcon}}"};
+        // {% endfor %}
 
-        var points = {}
-        {% for v in veroeffentlichungen %}
-        points[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "projekt": {{v.projekt.pk}}, "adresse": "{{v.projekt.adresse}}", "lat": {{v.projekt.lat|stringformat:"F"}}, "lon": {{v.projekt.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}}, "vpk": {{v.verfahrensschritt.verfahren.pk}} };
-        {% endfor %}
+        // var points = {}
+        // {% for v in veroeffentlichungen %}
+        // points[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "projekt": {{v.projekt.pk}}, "adresse": "{{v.projekt.adresse}}", "lat": {{v.projekt.lat|stringformat:"F"}}, "lon": {{v.projekt.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}}, "vpk": {{v.verfahrensschritt.verfahren.pk}} };
+        // {% endfor %}
         
-        var pointsOld = {}
-        {% for v in veroeffentlichungenAlt %}
-        pointsOld[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "projekt": {{v.projekt.pk}}, "adresse": "{{v.projekt.adresse}}", "lat": {{v.projekt.lat|stringformat:"F"}}, "lon": {{v.projekt.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}}, "vpk": {{v.verfahrensschritt.verfahren.pk}} };
-        {% endfor %}
+        // var pointsOld = {}
+        // {% for v in veroeffentlichungenAlt %}
+        // pointsOld[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "projekt": {{v.projekt.pk}}, "adresse": "{{v.projekt.adresse}}", "lat": {{v.projekt.lat|stringformat:"F"}}, "lon": {{v.projekt.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}}, "vpk": {{v.verfahrensschritt.verfahren.pk}} };
+        // {% endfor %}
     </script>
-
 {% endblock %}
 
 {% block content %}
 <div id="wrapper">
     <div id="map"></div>
-
-    <div id="header">
-        <div class="container" >
-            <div id="header-left">
-                <a href="/"><img src="{{ STATIC_URL }}img/schrift_5.png" alt="Bürger baut Stadt"></a>
-            </div>                                            
-            <div id="header-right">                
-                <ul id="sitenav" >
-                    <li><a href="/info">Begriffe</a></li>
-                    <li><a href="/orte">Liste</a></li>
-                    <li><a href="/news/abonnieren">Abo</a></li>
-                    <li><a href="http://blog.buergerbautstadt.de/about">Über</a></li> 
-                    <li><a href="http://blog.buergerbautstadt.de/">Blog</a></li>
-                    <li><a href="http://blog.buergerbautstadt.de/contact/">Kontakt</a></li>              
-                </ul>
-            </div>
-            <div id="header-zoom"></div>
-        </div>
-    </div>
 </div>
 
-<div id="footer">
+<div id="footer" class="absolute">
     <div class="container">
-        <div id="footer-left">
-            <label class="checkbox">
+        <div id="footer-left" class="visible-md visible-lg">
+            <label class="checkbox" class="checkbox">
                 <input type="checkbox" name="old"> Veröffentlichungen mit abgelaufener Frist anzeigen
             </label>
             <div id="social">
@@ -70,8 +52,9 @@
                 <div id="gplus"></div>
             </div>
         </div>                                            
-        <div id="footer-right">                
-            Powered by <a href="http://leaflet.cloudmade.com">Leaflet</a> — Map data © 2012 OpenStreetMap contributors
+        <div id="footer-right" class="attribution">                
+            Powered by <a href="http://leaflet.cloudmade.com">Leaflet</a>
+            Map data © 2012 OpenStreetMap contributors
         </div>
     </div>
 </div>

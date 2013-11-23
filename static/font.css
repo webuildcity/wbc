@@ -95,22 +95,22 @@ a:hover {
     font-weight: normal;
 }
 
-/* 'Abonieren' Form */
-.news form ul {
-    margin: 5px 0 0 0;
-    padding: 0;
+/* 'Abonieren' Form 
+
+#abonnieren-form ul {
+    margin-top: 5px;
 }
-.news form li {
-    line-height: 20px;
-    list-style: none;
+#abonnieren-form li {
+    display: block;
 }
-.news form li label,
-.news form li input {
+
+#abonnieren-form li label,
+#abonnieren-form li input {
     display: inline-block;
 }
-.news form li input {
+#abonnieren-form li input {
     margin-bottom: 5px;
 }
-.news form li label {
+#abonnieren-form li label {
     margin-left: 10px;
 }

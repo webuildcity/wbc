@@ -1,11 +1,7 @@
-{% extends 'bbs/page.html' %}
+{% extends 'bbs/layout.html' %}
 
-{% block pagehead %}
-
-{% endblock %}
-
-{% block page %}
-<div class="container">
+{% block content %}
+<div class="container news">
     <h2>Newsletter für deinen Bezirk abonnieren</h2>
     <p>Woche für Woche veröffentlicht das Land Berlin das Amtsblatt. Neben vielen anderen Informationen wird darin auch veröffentlicht, wenn im Rahmen eines Bebauungsplanverfahrens oder eines Planfeststellungsverfahrens Planungsunterlagen ausliegen, an denen sich Bürger beteiligen können. Leider müssen sie dazu regelmäßig das Amtsblatt lesen, was die meisten nicht tun. Für alle diejenigen, die das auch in Zukunft nicht tun wollen, aber trotzdem informiert werden wollen, gibt es unseren Abo-Service. Wir werten das Amtsblatt wöchentlich aus und senden Dir eine Email, wenn etwas Neues in einem Deiner ausgewählten Bezirken passiert.</p>
 
@@ -17,40 +13,41 @@
         Der Newletter kann unter <a href="{{abbestellen}}">{{abbestellen}}</a> wieder abbestellt werden.
     </p>
     {% else %}
-    <form action="/news/abonnieren/" method="post" id="abonnieren-form" class="form-horizontal">
+    <form action="/news/abonnieren/" method="post" role="form" class="form-horizontal">
         {% csrf_token %}
-        <div class="control-group">
-            <label class="control-label">Bezirke</label>
-            <div class="controls">
-                <ul id="bezirke-list" class="unstyled inline">
-                {% for field in form %}
-                {% if field.html_name != "email" %}
-                <li>
-                    {{ field }}
-                    {{ field.label_tag }}
-                </li>
-                {% endif %}
-                {% endfor %}
+        <div class="form-group">
+            <label class="control-label col-sm-2">Bezirke</label>
+            <div class="controls col-sm-10">
+                <ul>
+                    {% for field in form %}
+                    {% if field.html_name != "email" %}
+                    <li>
+                        {{ field }}
+                        {{ field.label_tag }}
+                    </li>
+                    {% endif %}
+                    {% endfor %}
                 </ul>
             </div>
         </div>
-        <div class="control-group">
-            <label class="control-label">{{ form.email.label }}</label>
-            <div class="controls">
+        <div class="form-group">
+            <label class="control-label col-sm-2">{{ form.email.label }}</label>
+            <div class="controls col-sm-10">
                 {{ form.email }}
-                <div class="text-error">
+                <div>
                 {{ form.email.errors }}
                 </div>
             </div>
         </div>
-        <div class="control-group">
-            <div class="controls">
-                <input type="submit" value="Abonnieren" class="btn btn-primary"/>
+        <div class="form-group">
+            <div class="control-label col-sm-2"></div>
+            <div class="controls col-sm-10">
+                <input class="btn btn-primary" type="submit" value="Newsletter abonnieren" />
             </div>
         </div>
-        <span class="text-error">
+        <div>
             {{ form.non_field_errors }}
-        </span>
+        </div>
     </form>
     <p>
         Der Newsletter kann unter <a href="{{abbestellen}}">{{abbestellen}}</a> wieder abbestellt werden.

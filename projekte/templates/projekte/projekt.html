@@ -1,9 +1,11 @@
-{% extends 'bbs/page.html' %}
+{% extends 'bbs/layout.html' %}
 
-{% block pagehead %}
+{% block css %}
     <link rel="stylesheet" href="{{ STATIC_URL }}leaflet/leaflet.css" />
-    <script type="text/javascript" src="{{ STATIC_URL }}leaflet/leaflet.js" >
-    </script>    
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}leaflet/leaflet.js" ></script>    
     <script type="text/javascript">
     var staticUrl = '{{ STATIC_URL }}';
     var lon = {{ projekt.lon|stringformat:"F" }};
@@ -13,7 +15,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}localmap.js" ></script>
 {% endblock %}
 
-{% block page %}
+{% block content %}
     <div class="container">
         <div id="localmap"></div>
 

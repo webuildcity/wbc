@@ -12,18 +12,9 @@ class AbonnierenForm(forms.Form):
             field = forms.BooleanField(label=bezirk['name'],required=False);
             self.fields[str(bezirk['id'])] = field
 
-        field = forms.EmailField(label='Email-Adresse')
-        field.widget.attrs.update({
-            'class': 'input-xlarge'
-        })
-        self.fields['email'] = field
+        self.fields['email'] = forms.EmailField(label='Email-Adresse',
+                                                widget=forms.TextInput(attrs={'class':'form-control'}))
 
 class AbbestellenForm(forms.Form):
-    email = forms.EmailField(label='Email-Adresse')
-    email.widget.attrs.update({
-        'class': 'input-xlarge'
-    })
-
-
-        
-
+    email = forms.EmailField(label='Email-Adresse',
+                             widget=forms.TextInput(attrs={'class':'form-control'}))

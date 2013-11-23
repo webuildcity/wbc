@@ -10,7 +10,13 @@ def home(request):
     veroeffentlichungen = Veroeffentlichung.objects.filter(ende__gte = datetime.date.today())
     veroeffentlichungenAlt = Veroeffentlichung.objects.filter(ende__lt = datetime.date.today())
 
-    return render(request,'bbs/map.html',{'verfahrensschritte': verfahrensschritte, 'verfahren': verfahren, 'veroeffentlichungen': veroeffentlichungen, 'veroeffentlichungenAlt': veroeffentlichungenAlt})
+    return render(request,'bbs/map.html',{
+        'verfahrensschritte': verfahrensschritte,
+        'verfahren': verfahren,
+        'veroeffentlichungen': veroeffentlichungen,
+        'veroeffentlichungenAlt': veroeffentlichungenAlt,
+        'absolute': True
+        })
 
 def info(request):
     verfahren = Verfahren.objects.all()

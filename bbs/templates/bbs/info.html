@@ -1,6 +1,6 @@
-{% extends 'bbs/page.html' %}
+{% extends 'bbs/layout.html' %}
 
-{% block pagehead %}
+{% block js %}
     <script type="text/javascript">
     $(document).ready(function(){
       var openVs = window.location.toString().split('#')[1];        
@@ -9,7 +9,7 @@
     </script>
 {% endblock %}
 
-{% block page %}
+{% block content %}
     <div class="container">
         {% for v in verfahren %}
         <h3>{{v.name}}</h3>

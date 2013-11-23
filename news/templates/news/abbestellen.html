@@ -1,11 +1,7 @@
-{% extends 'bbs/page.html' %}
+{% extends 'bbs/layout.html' %}
 
-{% block pagehead %}
-
-{% endblock %}
-
-{% block page %}
-<div class="container">
+{% block content %}
+<div class="container news">
     <h2>Newletter für deinen Bezirk abbestellen</h2>
 
     {% if success %}
@@ -16,14 +12,24 @@
     <p>
         Um den Newsletter abzubestellen trage bite deine Emailadresse ein.
     </p>
-    <form action="/news/abbestellen/" method="post" class="form-inline">
+    <form action="/news/abbestellen/" method="post" role="form" class="">
         {% csrf_token %}
-        {{ form.email }}
-        <input type="submit" value="Abbestellen" class="btn"/>
-        <span class="text-error">
-            {{ form.email.errors.as_text }}
-            {{ form.non_field_errors.as_text }}
-        </span>
+        <div class="form-group {{field.errors|yesno:"has-error,"}}">
+            <div class="controls">
+                {{ form.email }}
+                <div class="text-error">
+                    {{ form.email.errors }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="controls">
+                <input type="submit" value="Abbestellen" class="btn btn-primary"/>
+            </div>
+        </div>
+        <div>
+            {{ form.non_field_errors }}
+        </div>
     </form>
     {% endif %}
 </div>
