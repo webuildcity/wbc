@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% load sekizai_tags %}<!DOCTYPE html>
 <html>
 <head>
     <title>Bürger baut Stadt</title>
@@ -11,10 +11,9 @@
 
     <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.png" type="image/x-icon" />
 
-    <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}layout.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}lib/bootstrap/css/bootstrap.min.css" />
+    {% render_block "css" %}
     <link rel="stylesheet" href="{{ STATIC_URL }}style.css" />
-    {% block css %}{% endblock %}
 </head>
 
 <body>
@@ -41,9 +40,9 @@
     {% block content %}
     {% endblock %}
 
-    <script type="text/javascript" src="{{ STATIC_URL }}jquery.min.js" ></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js" ></script>
-    {% block js %}{% endblock %}
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery.min.js" ></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/bootstrap/js/bootstrap.min.js" ></script>
+    {% render_block "js" %}
 
     {% if not debug %}
 	<!-- Piwik -->

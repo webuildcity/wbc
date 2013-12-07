@@ -1,0 +1,12 @@
+#header {
+    height: 85px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#header-left {
+    float: left;
+}
+#header-right {
+    float: right;
+    margin-top: 20px;
+}

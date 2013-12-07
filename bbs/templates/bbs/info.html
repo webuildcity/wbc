@@ -1,16 +1,18 @@
-{% extends 'bbs/layout.html' %}
+{% extends 'bbs/page.html' %}
+{% load sekizai_tags %}
 
-{% block js %}
+{% block page %}
+{% addtoblock "js" %}
     <script type="text/javascript">
     $(document).ready(function(){
       var openVs = window.location.toString().split('#')[1];        
       $('#collapse-' + openVs).addClass('in');
     });
     </script>
-{% endblock %}
-
-{% block content %}
+{% endaddtoblock %}
     <div class="container">
+        <h2>Begriffe</h2>
+
         {% for v in verfahren %}
         <h3>{{v.name}}</h3>
         <p>

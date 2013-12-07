@@ -30,10 +30,15 @@ h3 {
     font-weight: bold;
     font-size: 16px;
 }
-
-a, a:hover, a:visited {
+a, a:visited {
+    color: #de6a00 !important;
     text-decoration: none !important;
 }
+a:hover {
+    color: #e58833 !important;
+    text-decoration: none !important;
+}
+
 .panel {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;

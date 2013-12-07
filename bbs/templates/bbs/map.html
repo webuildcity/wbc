@@ -1,13 +1,17 @@
 {% extends 'bbs/layout.html' %}
+{% load sekizai_tags %}
 
-{% block css%}
-    <link rel="stylesheet" href="{{ STATIC_URL }}leaflet/leaflet.css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}social.css" />
-{% endblock %}
+{% block content %}
 
-{% block js %}
-    <script type="text/javascript" src="{{ STATIC_URL }}leaflet/leaflet.js" ></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}social.js" ></script>
+{% addtoblock "css" %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}lib/leaflet/leaflet.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}lib/social/social.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}map.css" />
+{% endaddtoblock %}
+
+{% addtoblock "js" %}
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/leaflet/leaflet.js" ></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/social/social.js" ></script>
     <script type="text/javascript" src="{{ STATIC_URL }}map.js" ></script>
     <script type="text/javascript">
         var siteUrl = '{{ siteUrl|safe }}';
@@ -33,9 +37,8 @@
         pointsOld[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "projekt": {{v.projekt.pk}}, "adresse": "{{v.projekt.adresse}}", "lat": {{v.projekt.lat|stringformat:"F"}}, "lon": {{v.projekt.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}}, "vpk": {{v.verfahrensschritt.verfahren.pk}} };
         {% endfor %}
     </script>
-{% endblock %}
+{% endaddtoblock %}
 
-{% block content %}
 <div id="wrapper" class="absolute">
     <div class="container" >
         <div id="buttons-left"></div>

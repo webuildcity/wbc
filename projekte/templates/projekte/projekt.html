@@ -1,10 +1,13 @@
-{% extends 'bbs/layout.html' %}
+{% extends 'bbs/page.html' %}
+{% load sekizai_tags %}
 
-{% block css %}
+{% block page %}
+
+{% addtoblock "css" %}
     <link rel="stylesheet" href="{{ STATIC_URL }}leaflet/leaflet.css" />
-{% endblock %}
+{% endaddtoblock %}
 
-{% block js %}
+{% addtoblock "js" %}
     <script type="text/javascript" src="{{ STATIC_URL }}leaflet/leaflet.js" ></script>    
     <script type="text/javascript">
     var staticUrl = '{{ STATIC_URL }}';
@@ -13,9 +16,8 @@
     var typ = "Öffentliche Auslegung";   
     </script>
     <script type="text/javascript" src="{{ STATIC_URL }}localmap.js" ></script>
-{% endblock %}
+{% endaddtoblock %}
 
-{% block content %}
     <div class="container">
         <div id="localmap"></div>
 

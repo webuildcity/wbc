@@ -1,0 +1,81 @@
+body, html {
+    height: 100%;
+}
+/* make things absolute in the map */
+.container {
+    position: relative;
+}
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+#header,
+#header-left,
+#header-right,
+#header-buttons {
+    margin: 0;
+}
+#header-left,
+#header-right,
+#buttons-left,
+#buttons-right,
+#footer-left,
+#footer-right {
+    position: absolute;
+    z-index: 10;
+}
+#header-right,
+#buttons-right,
+#footer-right {
+    right: 15px;
+}
+#footer-left,
+#footer-right {
+    bottom: 10px;
+}
+#header-left{
+    top: 20px;
+}
+#header-right {
+    top: 40px;
+}
+#buttons-left,
+#buttons-right {
+    top: 110px;
+}
+#buttons-left div,
+#buttons-right div {
+    margin-top: 20px;
+}
+
+/* the canvas for the map */
+#map {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 0;
+}
+
+@media (max-width: 992px) {
+    .absolute #footer-right {
+        right: auto;
+        left: 15px;
+    }
+}
+@media (max-width: 500px) {
+    #brand img {
+        width: 280px;
+    }
+}
+
+@media (max-width: 500px) {
+    .attribution {
+        font-size: 7pt;
+    }
+}
+.checkbox {
+    font-weight: normal;
+}

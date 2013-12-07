@@ -72,7 +72,7 @@ function initMap() {
         popuptext += '<p>Beteiligung möglich bis: ' + point.ende + '</p>';
         popuptext += '<p><a href="' + siteUrl + "orte/" + point.projekt + '" >Details</a></p>';
 
-        marker.bindPopup(popuptext, {autoPanPaddingTopLeft: new L.Point(10,180), autoPanPaddingBottomRight: new L.Point(10,0)});
+        marker.bindPopup(popuptext, {autoPanPaddingTopLeft: new L.Point(10,100), autoPanPaddingBottomRight: new L.Point(10,0)});
         marker.addTo(map);
 
         layers[point.vspk].layerGroup.addLayer(marker);
@@ -108,7 +108,7 @@ function initMap() {
         popuptext += '<p>Beteiligung war möglich bis: ' + point.ende + '</p>';
         popuptext += '<p><a href="' + siteUrl + "orte/" + point.projekt + '" >Details</a></p>';
         
-        marker.bindPopup(popuptext, {autoPanPaddingTopLeft: new L.Point(10,180), autoPanPaddingBottomRight: new L.Point(10,0)});        
+        marker.bindPopup(popuptext, {autoPanPaddingTopLeft: new L.Point(10,100), autoPanPaddingBottomRight: new L.Point(10,0)});        
         
         marker.on("mouseover", function(e) {
             e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau.png';
@@ -133,7 +133,7 @@ function initMap() {
     var info = $('<div />', {
         'class': 'leaflet-control-zoom leaflet-bar leaflet-control pull-left',
         'html': '<a id="info-button" class="leaflet-control-zoom-out" href="#" title="Info">i</a>'
-    }).appendTo($('#buttons-right'));
+    }).appendTo($('#buttons-left'));
 
     $('#info-button').on('click', function () {
         alert('INFO!');
