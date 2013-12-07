@@ -1,15 +1,15 @@
 var layers = {};
 
-function initMap() {
-	var map = new L.Map("map");
+function initMap() {   
+    var map = new L.Map("map");
 
-	var min = 11;
-	var max = 17;
+    var min = 11;
+    var max = 17;
     var errorTile = "http://tiles.jochenklar.de/bbs/11/1102/671.png";
-	var myTiles = "http://tiles.jochenklar.de/bbs/{z}/{x}/{y}.png";
+    var myTiles = "http://tiles.jochenklar.de/bbs/{z}/{x}/{y}.png";
     var osmCopyright = "Map data &copy; 2012 OpenStreetMap contributors";
 
-	var myLayer = new L.TileLayer(myTiles, {
+    var myLayer = new L.TileLayer(myTiles, {
         minZoom:min,
         maxZoom: max,
         attribution: osmCopyright,
@@ -18,9 +18,9 @@ function initMap() {
         reuseTiles:true
     });
 
-	map.addLayer( myLayer );
-	var center = new L.LatLng(52.51, 13.37628);
-	map.setView(center, 11);
+    map.addLayer( myLayer );
+    var center = new L.LatLng(52.51, 13.37628);
+    map.setView(center, 11);
     
     $.each(verfahrensschritte, function(key, vs) {
         var layer = {}
@@ -83,10 +83,10 @@ function initMap() {
         iconSize:     [26, 45], // size of the icon width,height    
         iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
         popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
-	});   
+    });   
     
     var oldMarker = new Array();
-	var oldLayer = L.layerGroup(oldLayer);
+    var oldLayer = L.layerGroup(oldLayer);
     
     $.each(pointsOld, function(key,point){
         
@@ -136,48 +136,44 @@ function initMap() {
     }).appendTo($('#buttons-left'));
 
     $('#info-button').on('click', function () {
-        alert('INFO!');
-        return false;
-    })
+        displayInfo();
+    });
 }
 
-function moveOutSidebar(){
-    $('#sidebar-button').unbind('click');
-    $('#sidebar').animate(
-        {left: '-=280'},
-        'fast',
-        function(){});
-    $('.leaflet-top.leaflet-left').animate(
-        {left: '-=280'},
-        'fast',
-        function(){
-            $('#sidebar-button').click(moveInSidebar);
-            $('i', '#sidebar-button').remove();
-            $('#sidebar-button').append('<i class="icon-chevron-right"></i>');
-	    $('#sidebar-button').attr('title','Sidebar einblenden');
-       }
-    );
-    return false;
-}
+function displayInfo() {
+    var html = '<h2>Worum geht es hier?</h2><p>Bevor in Berlin gebaut werden kann, müssen dafür häufig erst die rechtlichen Grundlagen geschaffen werden. So kann es beispielsweise sein, dass bevor ein Haus gebaut werden darf, erst der entsprechende <strong>Bebauungsplan</strong> geändert werden muss. Bei großen infrastrukturellen Bauvorhaben wie beispielsweise dem Bau einer Autobahn, muss meist ein <strong>Planfeststellungsverfahren</strong> durchgeführt werden.</p><p>In beiden Fällen – dem Bebauungsplanverfahren also auch dem Planfeststellungsverfahren – ist die Beteiligung der Bürger vorgesehen. Das heißt, dass die Pläne über einen bestimmten Zeitraum (meist um die vier  Wochen) öffentlich ausgelegt werden müssen und Bürger sich – je nach Verfahren –  dazu äußern können, Einwendungen einreichen können oder Ideen einbringen können. Die Informationen, welche Pläne wann, wo und wie lange ausliegen, werden im Amtsblatt, in den Printausgaben regionaler Zeitungen oder – in Berlin – auf diversen Webseiten veröffentlicht. Problem dabei ist, dass sie so für Bürger meist schwer zu finden sind. Mithilfe unserer Webseite BürgerBautStadt wollen wir das ändern.</p><h2>Welche Daten werden auf der Karte angezeigt?</h2><p>Die Marker auf der Karte stehen für Orte, an denen ein Bauvorhaben geplant ist und zu dem gerade die Planungsunterlagen – da zum Beispiel der Bebauungsplan geändert werden muss – ausliegen. Sobald die die Beteiligungsfrist abgelaufen ist, verschwinden die Marker von der Karte. Die angezeigten Informationen stammen alle aus dem wöchentlich erscheinendem Amtsblatt von Berlin, das wir mit Unterstützung der Naturschutzverbände manuell auswerten. Eine Liste aller seit Projektbeginn im Februar 2013 eingetragenen Informationen ist hier zu finden. Neben der Karten -und Listenansicht ist es auch möglich, die Informationen zu abonnieren - das heißt Interessierte können ihre Email-Adresse für bestimmte Bezirke angeben und erhalten automatisch eine Email, wenn etwas neues ausliegt.</p>';
 
-function moveInSidebar(){
-    $('#sidebar-button').unbind('click');
-    $('#sidebar').animate(
-        {left: '+=280'},
-        'fast',
-        function(){});
-    $('.leaflet-top.leaflet-left').animate(
-        {left: '+=280'},
-        'fast',
-        function(){
-            $('#sidebar-button').click(moveOutSidebar);
-            $('i', '#sidebar-button').remove();
-            $('#sidebar-button').append('<i class="icon-chevron-left"></i>');
-	    $('#sidebar-button').attr('title','Sidebar einblenden');
+    var modal = $('<div />',{
+        'html': '<div class="bbs-modal-dialog"><div class="bbs-modal-dialog-close"><a class="leaflet-popup-close-button" href="#close">×</a></div><div class="bbs-modal-dialog-body">' + html + '</div></div>',
+        'class': 'bbs-modal'
+    }).appendTo('#wrapper');
+
+    // // get dialog div
+    var dialog = $('.bbs-modal-dialog');
+
+    // adjust height and width
+    dialog.height(500);
+    dialog.width(700);
+
+    // adjust left and top margin
+    var leftMargin = ($(window).width() - dialog.width()) / 2;
+    dialog.css('marginLeft', leftMargin);
+    var topMargin = ($(window).height() - dialog.height()) / 2 - 20;
+    dialog.css('marginTop', topMargin);
+
+    // enable esc and enter keys
+    $(document).keyup(function(e) {
+        if (e.keyCode == 27 || e.keyCode == 13) {
+            // esc pressed
+            $('.bbs-modal').remove();
+            return false;
         }
-    );
-    return false;
-}
+    });
+    $('.leaflet-popup-close-button',dialog).on('click', function () {
+        $('.bbs-modal').remove();
+        return false;
+    });
+};
 
 $(document).ready(function() {
     setTimeout('initMap()',100);

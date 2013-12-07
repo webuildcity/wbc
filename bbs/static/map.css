@@ -79,3 +79,37 @@ body, html {
 .checkbox {
     font-weight: normal;
 }
+
+.bbs-modal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10000;
+
+    /*background: rgba(0,0,0, 0.5);*/
+}
+
+.bbs-modal .bbs-modal-dialog {
+    position: relative;
+    background-color: white;
+    padding: 20px;
+
+    -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 14px 0px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 14px 0px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 14px 0px;
+}
+.bbs-modal .bbs-modal-dialog-body :first-child {
+    margin-top: 0;
+}
+.bbs-modal .bbs-modal-dialog-body :last-child {
+    margin-bottom: 0;
+}
+.bbs-modal .bbs-modal-dialog-close  {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-top: 0px;
+    padding-right: 4px;
+}
