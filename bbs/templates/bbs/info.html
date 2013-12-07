@@ -16,18 +16,19 @@
         <p>
             {{v.beschreibung}}
         </p>
-        <div class="accordion" id="accordion-{{ v.pk }}">
+        <div class="panel-group" id="accordion-{{ v.pk }}">
             {% for vs in v.verfahrensschritte.all %}
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-{{ v.pk }}" href="#collapse-{{ vs.pk }}">{{ vs.name }}</a>   
-                    </div>
-                    <div id="collapse-{{ vs.pk }}" class="accordion-body collapse">
-                        <div class="accordion-inner">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a data-toggle="collapse" data-parent="#accordion-{{ v.pk }}" href="#collapse-{{ vs.pk }}">{{ vs.name }}</a>   
+                </div>
+
+                <div id="collapse-{{ vs.pk }}" class="panel-collapse collapse">
+                    <div class="panel-body">
                         {{ vs.beschreibung }}
                         </div>
                     </div>
-                </div>         
+                </div>      
             {% endfor %}
         </div>
     {% endfor %}
