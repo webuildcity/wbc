@@ -1,3 +1,11 @@
+html {
+    background-image: url('img/hintergrund.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+body {
+    background-color: transparent;
+}
 #header {
     height: 85px;
     margin-top: 20px;

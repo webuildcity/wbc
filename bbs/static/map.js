@@ -1,5 +1,10 @@
 var layers = {};
 
+function init() {
+    initMap();
+    initInfo();
+}
+
 function initMap() {   
     var map = new L.Map("map");
 
@@ -66,7 +71,7 @@ function initMap() {
 
         var popuptext = '<p><b>' + verfahren[point.vpk].name + '</b>';
         popuptext += '<p><i>' + verfahrensschritte[point.vspk].name + '</i>';
-        popuptext += ' <a href="/info/#'+ point.vspk + '" >(?)</a></p>';
+        popuptext += ' <a href="/begriffe/#'+ point.vspk + '" >(?)</a></p>';
         popuptext += '<p>Betrifft Gegend um: ' + point.adresse + '</p>';
         popuptext += '<p>Verantwortlich: ' + point.behoerde + '</p>';
         popuptext += '<p>Beteiligung möglich bis: ' + point.ende + '</p>';
@@ -102,7 +107,7 @@ function initMap() {
         
         var popuptext = '<p><b>' + verfahren[point.vpk].name + '</b>';
         popuptext += '<p><i>' + verfahrensschritte[point.vspk].name + '</i>';
-        popuptext += ' <a href="/info/#'+ point.vspk + '" >(?)</a></p>';
+        popuptext += ' <a href="/begriffe/#'+ point.vspk + '" >(?)</a></p>';
         popuptext += '<p>Betrifft Gegend um: ' + point.adresse + '</p>';
         popuptext += '<p>Verantwortlich: ' + point.behoerde + '</p>';
         popuptext += '<p>Beteiligung war möglich bis: ' + point.ende + '</p>';
@@ -136,19 +141,12 @@ function initMap() {
     }).appendTo($('#buttons-left'));
 
     $('#info-button').on('click', function () {
-        displayInfo();
+        $('.bbs-modal').show();
     });
 }
 
-function displayInfo() {
-    var html = '<h2>Worum geht es hier?</h2><p>Bevor in Berlin gebaut werden kann, müssen dafür häufig erst die rechtlichen Grundlagen geschaffen werden. So kann es beispielsweise sein, dass bevor ein Haus gebaut werden darf, erst der entsprechende <strong>Bebauungsplan</strong> geändert werden muss. Bei großen infrastrukturellen Bauvorhaben wie beispielsweise dem Bau einer Autobahn, muss meist ein <strong>Planfeststellungsverfahren</strong> durchgeführt werden.</p><p>In beiden Fällen – dem Bebauungsplanverfahren also auch dem Planfeststellungsverfahren – ist die Beteiligung der Bürger vorgesehen. Das heißt, dass die Pläne über einen bestimmten Zeitraum (meist um die vier  Wochen) öffentlich ausgelegt werden müssen und Bürger sich – je nach Verfahren –  dazu äußern können, Einwendungen einreichen können oder Ideen einbringen können. Die Informationen, welche Pläne wann, wo und wie lange ausliegen, werden im Amtsblatt, in den Printausgaben regionaler Zeitungen oder – in Berlin – auf diversen Webseiten veröffentlicht. Problem dabei ist, dass sie so für Bürger meist schwer zu finden sind. Mithilfe unserer Webseite BürgerBautStadt wollen wir das ändern.</p><h2>Welche Daten werden auf der Karte angezeigt?</h2><p>Die Marker auf der Karte stehen für Orte, an denen ein Bauvorhaben geplant ist und zu dem gerade die Planungsunterlagen – da zum Beispiel der Bebauungsplan geändert werden muss – ausliegen. Sobald die die Beteiligungsfrist abgelaufen ist, verschwinden die Marker von der Karte. Die angezeigten Informationen stammen alle aus dem wöchentlich erscheinendem Amtsblatt von Berlin, das wir mit Unterstützung der Naturschutzverbände manuell auswerten. Eine Liste aller seit Projektbeginn im Februar 2013 eingetragenen Informationen ist hier zu finden. Neben der Karten -und Listenansicht ist es auch möglich, die Informationen zu abonnieren - das heißt Interessierte können ihre Email-Adresse für bestimmte Bezirke angeben und erhalten automatisch eine Email, wenn etwas neues ausliegt.</p>';
-
-    var modal = $('<div />',{
-        'html': '<div class="bbs-modal-dialog"><div class="bbs-modal-dialog-close"><a class="leaflet-popup-close-button" href="#close">×</a></div><div class="bbs-modal-dialog-body">' + html + '</div></div>',
-        'class': 'bbs-modal'
-    }).appendTo('#wrapper');
-
-    // // get dialog div
+function initInfo() {
+    // get dialog div
     var dialog = $('.bbs-modal-dialog');
 
     // adjust height and width
@@ -165,16 +163,24 @@ function displayInfo() {
     $(document).keyup(function(e) {
         if (e.keyCode == 27 || e.keyCode == 13) {
             // esc pressed
-            $('.bbs-modal').remove();
+            $('.bbs-modal').hide();
             return false;
         }
     });
     $('.leaflet-popup-close-button',dialog).on('click', function () {
-        $('.bbs-modal').remove();
+        $('.bbs-modal').hide();
+        return false;
+    });
+    $('.bbs-modal').on('click', function (e) {
+        if($(e.target).is('.bbs-modal') !== true){
+            e.preventDefault();
+            return;
+        }
+        $('.bbs-modal').hide();
         return false;
     });
 };
 
 $(document).ready(function() {
-    setTimeout('initMap()',100);
+    setTimeout('init()',100);
 });

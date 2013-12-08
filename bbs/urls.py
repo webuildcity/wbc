@@ -11,7 +11,7 @@ urlpatterns = patterns('',
     url(r'^orte/$', ProjekteView.as_view()),
     url(r'^orte/(?P<pk>\d+)/$', ProjektView.as_view()),
     # info
-    url(r'^info/$', 'bbs.views.info'),
+    url(r'^begriffe/$', 'bbs.views.begriffe'),
     # mails
     url(r'^news/abonnieren/$', 'news.views.abonnieren'),
     url(r'^news/validieren/(?P<code>.*)$', 'news.views.validieren'),

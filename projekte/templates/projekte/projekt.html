@@ -4,25 +4,25 @@
 {% block page %}
 
 {% addtoblock "css" %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}leaflet/leaflet.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}lib/leaflet/leaflet.css" />
 {% endaddtoblock %}
 
 {% addtoblock "js" %}
-    <script type="text/javascript" src="{{ STATIC_URL }}leaflet/leaflet.js" ></script>    
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/leaflet/leaflet.js" ></script>    
     <script type="text/javascript">
-    var staticUrl = '{{ STATIC_URL }}';
-    var lon = {{ projekt.lon|stringformat:"F" }};
-    var lat = {{ projekt.lat|stringformat:"F" }}; 
-    var typ = "Öffentliche Auslegung";   
+        var staticUrl = '{{ STATIC_URL }}';
+        var lon = {{ projekt.lon|stringformat:"F" }};
+        var lat = {{ projekt.lat|stringformat:"F" }}; 
+        var typ = "Öffentliche Auslegung";   
     </script>
     <script type="text/javascript" src="{{ STATIC_URL }}localmap.js" ></script>
 {% endaddtoblock %}
 
     <div class="container">
-        <div id="localmap"></div>
+        <div id="localmap" style="height: 200px; border: 2px solid rgba(0, 0, 0, 0.247059);"></div>
 
         <div class="row">        
-            <div class="span8">
+            <div class="col-sm-8">
                 <h3>Betroffenes Gebiet</h3>
                 <b>Bezeichner:</b>  {{ projekt.bezeichner }}<br>
                 <b>genaue örtliche Beschreibung:</b> {{ projekt.beschreibung }}<br>
@@ -43,7 +43,7 @@
             <tbody>
                 {% for veroeffentlichung in projekt.veroeffentlichungen.all %}
                 <tr>
-                    <td><a href="/info/#{{ veroeffentlichung.verfahrensschritt.pk}}">{{ veroeffentlichung.verfahrensschritt.name}} ({{ veroeffentlichung.verfahrensschritt.verfahren.name }})</a></td>
+                    <td><a href="/begriffe/#{{ veroeffentlichung.verfahrensschritt.pk}}">{{ veroeffentlichung.verfahrensschritt.name}} ({{ veroeffentlichung.verfahrensschritt.verfahren.name }})</a></td>
                     <td>{{ veroeffentlichung.beginn }}</td> 
                     <td>{{ veroeffentlichung.ende }}</td>
                     <td>

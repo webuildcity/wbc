@@ -18,6 +18,6 @@ def home(request):
         'absolute': True
         })
 
-def info(request):
+def begriffe(request):
     verfahren = Verfahren.objects.all()
-    return render(request,'bbs/info.html',{'verfahren': verfahren})        
+    return render(request,'bbs/begriffe.html',{'verfahren': verfahren})        

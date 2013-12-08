@@ -88,7 +88,9 @@ body, html {
     left: 0;
     z-index: 10000;
 
-    /*background: rgba(0,0,0, 0.5);*/
+    background-color: rgba(0,0,0,0.5);
+
+    display: none;
 }
 
 .bbs-modal .bbs-modal-dialog {

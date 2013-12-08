@@ -15,7 +15,6 @@
 html, body {
     padding: 0;
     margin: 0;
-    background-color: white;
     font-family: dejavu;
     font-size: 14px;
 }
@@ -23,20 +22,23 @@ h2 {
     font-weight: normal;
     font-family: titillium;
     font-size: 28px;
-    color: #de6a00;
 }
 h3 {
     font-family: dejavu;
     font-weight: bold;
     font-size: 16px;
 }
-a, a:visited {
-    color: #de6a00 !important;
-    text-decoration: none !important;
+a, 
+a:visited,
+.leaflet-container a,
+.leaflet-container a:visited {
+    color: #de6a00;
+    text-decoration: none;
 }
-a:hover {
-    color: #e58833 !important;
-    text-decoration: none !important;
+a:hover,
+.leaflet-container a:hover {
+    color: #e58833;
+    text-decoration: none;
 }
 
 .panel {

@@ -2,8 +2,45 @@
 {% load sekizai_tags %}
 
 {% block page %}
-{% addtoblock "js" %}
+{% addtoblock "css" %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}lib/dataTables/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}lib/dataTables/css/jquery.dataTables.bootstrap.css" />
+{% endaddtoblock %}
 
+{% addtoblock "js" %}
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/dataTables/js/jquery.dataTables.js" ></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/dataTables/js/jquery.dataTables.bootstrap.js" ></script>
+    <script>
+        $.extend( $.fn.dataTableExt.oStdClasses, {
+            "sWrapper": "dataTables_wrapper form-inline"
+        } );
+        $(document).ready(function() {
+            $('#data-table').dataTable({
+                'iDisplayLength': 10,
+                "aLengthMenu": [[10,20,50,-1], [10,20,50,"Alle"]],
+                "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
+                "sPaginationType": "bootstrap",
+                "oLanguage": {
+                    "sLengthMenu": "Zeige _MENU_ Einträge pro Seite",
+                    "sZeroRecords": "Sorry, nichts gefunden!",
+                    "sInfo": "Eintrag _START_ bis _END_ von _TOTAL_ Einträgen",
+                    "sInfoEmpty": "Keine Einträge",
+                    "sInfoFiltered": "(insgesamt _MAX_ Einträgen)",
+                    "sSearch": '',
+                    "oPaginate": {
+                        "sFirst": "Erste Seite",
+                        "sLast": "Letzte Seite",
+                        "sPrevious": "Vorherige Seite",
+                        "sNext": "Nächste Seite"
+                    }
+                },
+                "fnPreDrawCallback": function() {
+                    $('.dataTables_filter input').addClass('form-control input-sm').css('width', '200px').attr('placeholder','Suche');
+                    $('.dataTables_length select').addClass('form-control input-sm').css('width', '75px');
+                }
+            });
+        });
+    </script>
 {% endaddtoblock %}
 
     <div class="container">

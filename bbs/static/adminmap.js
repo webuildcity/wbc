@@ -6,12 +6,12 @@ function drawMap(){
 	
 	var html = '<div class = "control-group form-row map"><div>';
 	html += '<div class="control-label">Karte</div>';
-	html += '<div class="controls"><div id="admin_map"></div>';
+	html += '<div class="controls"><div id="adminmap"></div>';
 	html += '<span class="help-inline">Bewegen Sie den Marker mit der Maus um den Ort anzupassen</span></div></div></div>'
 
 	$('div.control-group.form-row.field-bezirke').after(html);
 
-	map = new L.Map("admin_map");
+	map = new L.Map("adminmap");
 
 	var min = 10;
 	var max = 17;
