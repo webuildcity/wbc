@@ -2,7 +2,6 @@ var layers = {};
 
 function init() {
     initMap();
-    initInfo();
 }
 
 function initMap() {   
@@ -135,29 +134,52 @@ function initMap() {
     zoom.appendTo($('#buttons-left'));
     $('.leaflet-control-attribution').remove();
 
-    var info = $('<div />', {
+    $('<div />', {
         'class': 'leaflet-control-zoom leaflet-bar leaflet-control pull-left',
-        'html': '<a id="info-button" class="leaflet-control-zoom-out" href="#" title="Info">i</a>'
+        'html': '<a class="info-button leaflet-control-zoom-out" href="#" title="Info">i</a>'
     }).appendTo($('#buttons-left'));
 
-    $('#info-button').on('click', function () {
-        $('.bbs-modal').show();
+    $('<button />', {
+        'type': 'button',
+        'class': 'info-button navbar-info navbar-toggle',
+        'html': 'Info'
+    }).appendTo($('.navbar-header'));
+
+    $('.info-button').on('click', function () {
+        showInfo();
     });
 }
 
-function initInfo() {
+function showInfo() {
     // get dialog div
     var dialog = $('.bbs-modal-dialog');
 
-    // adjust height and width
-    dialog.height(500);
-    dialog.width(700);
+    // adjust left and top position
+    var windowWidth = $(window).width();
+    var windowHeight = $(window).height();
 
-    // adjust left and top margin
-    var leftMargin = ($(window).width() - dialog.width()) / 2;
-    dialog.css('marginLeft', leftMargin);
-    var topMargin = ($(window).height() - dialog.height()) / 2 - 20;
-    dialog.css('marginTop', topMargin);
+    if (windowWidth < 768 || windowHeight < 600) {
+        dialog.height('auto');
+        dialog.width('auto')
+
+        dialog.css('top', 0);
+        dialog.css('left', 0);
+        dialog.css('bottom', 0);
+        dialog.css('right', 0);
+    } else {
+        dialog.height(530);
+        dialog.width(660)
+
+        var left = (windowWidth - dialog.width()) / 2;
+        dialog.css('left', left);
+        var top = (windowHeight - dialog.height()) / 2 - 20;
+        dialog.css('top', top);
+        dialog.css('bottom', 'auto');
+        dialog.css('right', 'auto');
+    }
+
+    // show the modal
+    $('.bbs-modal').show();
 
     // enable esc and enter keys
     $(document).keyup(function(e) {
