@@ -108,6 +108,15 @@ a:hover,
     font-weight: normal;
 }
 
+/* navbar */
+.navbar-brand {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.navbar-brand img {
+    height: 40px;
+}
+
 /* 'Abonieren' Form */
 .news form ul {
     margin: 5px 0 0 0;

@@ -42,11 +42,15 @@ body, html {
 }
 #buttons-left,
 #buttons-right {
-    top: 110px;
+    top: 100px;
 }
 #buttons-left div,
 #buttons-right div {
     margin-top: 20px;
+}
+
+.navbar {
+    z-index: 100;
 }
 
 /* the canvas for the map */
@@ -60,22 +64,40 @@ body, html {
 }
 
 @media (max-width: 992px) {
-    .absolute #footer-right {
+    #header-right {
+        right: auto;
+        left: 15px;
+        top: 105px;
+    }
+
+    #buttons-left,
+    #buttons-right {
+        top: 140px;
+    }
+
+    #footer-left {
+        bottom: 30px;
+    }
+
+    #footer-right {
         right: auto;
         left: 15px;
     }
 }
-@media (max-width: 500px) {
-    #brand img {
-        width: 280px;
-    }
-}
 
-@media (max-width: 500px) {
-    .attribution {
+@media (max-width: 768px) {
+    #buttons-left,
+    #buttons-right {
+        top: -25px;
+    }
+
+    #footer-left,
+    #footer-right {
+        line-height: 20px;
         font-size: 7pt;
     }
 }
+
 .checkbox {
     font-weight: normal;
 }

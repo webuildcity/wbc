@@ -6,15 +6,24 @@ html {
 body {
     background-color: transparent;
 }
+
 #header {
-    height: 85px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
-#header-left {
-    float: left;
-}
 #header-right {
-    float: right;
     margin-top: 20px;
+}
+
+@media (min-width: 992px) {
+    #header {
+        height: 85px;
+    }
+    #header-left {
+        float: left;
+    }
+    #header-right {
+        margin-top: 20px;
+        float: right;
+    }
 }
