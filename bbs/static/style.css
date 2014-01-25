@@ -139,3 +139,23 @@ a:hover,
 .news label {
     font-weight: normal;
 }
+
+/* wordpress stuff */
+.blog .post-footer {
+    color: #666;
+}
+.blog .post {
+    margin-bottom: 50px;
+}
+.blog .post-content {
+    margin-bottom: 50px;
+}
+.blog h1, .blog h2 {
+    color: #de6a00;
+}
+.blog .input-small {
+    width: 300px;
+}
+.blog .comment-form label {
+    font-weight: normal;
+}
