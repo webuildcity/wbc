@@ -28,9 +28,9 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/begriffe">Begriffe</a></li>
-                <li><a href="/orte">Liste</a></li>
-                <li><a href="/news/abonnieren">Abo</a></li>
+                <li><a href="http://buergerbautstadt.de/begriffe">Begriffe</a></li>
+                <li><a href="http://buergerbautstadt.de/orte">Liste</a></li>
+                <li><a href="http://buergerbautstadt.de/news/abonnieren">Abo</a></li>
                 <li><a href="http://blog.buergerbautstadt.de/about">Über</a></li> 
                 <li><a href="http://blog.buergerbautstadt.de/">Blog</a></li>
                 <li><a href="http://blog.buergerbautstadt.de/contact/">Kontakt</a></li>
@@ -48,9 +48,9 @@
                 </div>
             </div>
             <ul id="header-right" class="sitenav">
-                <li><a href="/begriffe">Begriffe</a></li>
-                <li><a href="/orte">Liste</a></li>
-                <li><a href="/news/abonnieren">Abo</a></li>
+                <li><a href="http://buergerbautstadt.de/begriffe">Begriffe</a></li>
+                <li><a href="http://buergerbautstadt.de/orte">Liste</a></li>
+                <li><a href="http://buergerbautstadt.de/news/abonnieren">Abo</a></li>
                 <li><a href="http://blog.buergerbautstadt.de/about">Über</a></li> 
                 <li><a href="http://blog.buergerbautstadt.de/">Blog</a></li>
                 <li><a href="http://blog.buergerbautstadt.de/contact/">Kontakt</a></li>
