@@ -1,7 +1,6 @@
 bbs/settings.py
 data/database
 .DS_Store
-collected/
+static/
 *.pyc
 *~
-
