@@ -159,3 +159,10 @@ a:hover,
 .blog .comment-form label {
     font-weight: normal;
 }
+.blog img { 
+    max-width: 100%;
+    height:auto;
+}            
+.blog iframe { 
+    max-width: 100%;
+}
