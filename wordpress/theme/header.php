@@ -22,7 +22,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="http://buergerbautstadt.de/">
                 <img src="http://buergerbautstadt.de/static/img/schrift_5.png" alt="Bürger baut Stadt">
             </a>
         </div>
@@ -42,7 +42,7 @@
         <div class="container" >
             <div id="header-left">
                 <div id="brand">
-                    <a href="/">
+                    <a href="http://buergerbautstadt.de/">
                         <img src="http://buergerbautstadt.de/static/img/schrift_5.png" alt="Bürger baut Stadt">
                     </a>
                 </div>
