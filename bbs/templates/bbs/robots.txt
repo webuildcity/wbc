@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /static/
+
+http://buergerbautstadt.de/sitemap.xml

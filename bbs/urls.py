@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.views.generic import TemplateView
 from django.contrib import admin
 admin.autodiscover()
 
@@ -18,7 +19,8 @@ urlpatterns = patterns('',
     url(r'^news/abbestellen/(?P<email>.*)$', 'news.views.abbestellen'),
     # admin foo
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    url(r'^admin/', include(admin.site.urls))
+    url(r'^admin/', include(admin.site.urls)),
     # robots.txt
-    (r'^robots\.txt$', direct_to_template,{'template': 'bbs/robots.txt', 'mimetype': 'text/plain'}),
+    (r'^robots\.txt$', TemplateView.as_view(template_name='bbs/robots.txt', content_type='text/plain')),
+    (r'^sitemap\.xml$', TemplateView.as_view(template_name='bbs/sitemap.xml', content_type='text/plain')),
 )
