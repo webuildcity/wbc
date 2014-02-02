@@ -13,6 +13,8 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+ALLOWED_HOSTS = [] # put the domain(s) in sthis list
+
 MANAGERS = ADMINS
 
 DATABASES = {
