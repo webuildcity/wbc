@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import Http404, render
 from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -44,10 +44,8 @@ class ProjekteView(lib.views.View):
     def get(self, request):
         bezirk = request.GET.get('bezirk', None)
 
-        projekte = Projekt.objects
-
         if bezirk:
-            projekte = projekte.filter(bezirke__name=bezirk)
+            projekte = Projekt.objects.filter(bezirke__name=bezirk)
         else: 
             projekte = Projekt.objects.all()
 
@@ -64,7 +62,10 @@ class ProjektView(lib.views.View):
     http_method_names = ['get']
 
     def get(self, request, pk):
-        projekt = Projekt.objects.get(pk=int(pk))
+        try:
+            projekt = Projekt.objects.get(pk=int(pk))
+        except Projekt.DoesNotExist:
+            raise Http404
 
         if self.accept == 'json':
             response = projektGeoJson(projekt)

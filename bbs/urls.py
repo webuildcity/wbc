@@ -19,4 +19,6 @@ urlpatterns = patterns('',
     # admin foo
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls))
+    # robots.txt
+    (r'^robots\.txt$', direct_to_template,{'template': 'bbs/robots.txt', 'mimetype': 'text/plain'}),
 )
