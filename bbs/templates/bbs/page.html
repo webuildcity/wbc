@@ -1,13 +1,6 @@
 {% extends 'bbs/layout.html' %}
-{% load sekizai_tags %}
+{% load staticfiles %}
 
-{% block content %}
-
-{% addtoblock "css" %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}page.css" />
-{% endaddtoblock %}
-
-{% block page %}
-{% endblock %}
-
+{% block css %}
+    <link rel="stylesheet" href="{% static 'page.css' %}" />
 {% endblock %}

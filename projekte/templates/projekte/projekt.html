@@ -1,23 +1,23 @@
-{% extends 'bbs/page.html' %}
-{% load sekizai_tags %}
+{% extends 'bbs/layout.html' %}
+{% load staticfiles %}
 
-{% block page %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'page.css' %}" />
+    <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
+{% endblock %}
 
-{% addtoblock "css" %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}lib/leaflet/leaflet.css" />
-{% endaddtoblock %}
-
-{% addtoblock "js" %}
-    <script type="text/javascript" src="{{ STATIC_URL }}lib/leaflet/leaflet.js" ></script>    
+{% block js %}
+    <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>    
     <script type="text/javascript">
-        var staticUrl = '{{ STATIC_URL }}';
+        var staticUrl = '{% static '' %}';
         var lon = {{ projekt.lon|stringformat:"F" }};
         var lat = {{ projekt.lat|stringformat:"F" }}; 
         var typ = "Öffentliche Auslegung";   
     </script>
-    <script type="text/javascript" src="{{ STATIC_URL }}localmap.js" ></script>
-{% endaddtoblock %}
+    <script type="text/javascript" src="{% static 'localmap.js' %}" ></script>
+{% endblock %}
 
+{% block content %}
     <div class="container">
         <div id="localmap" style="height: 200px; border: 2px solid rgba(0, 0, 0, 0.247059);"></div>
 

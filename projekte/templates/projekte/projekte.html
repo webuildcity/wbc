@@ -1,15 +1,15 @@
-{% extends 'bbs/page.html' %}
-{% load sekizai_tags %}
+{% extends 'bbs/layout.html' %}
+{% load staticfiles %}
 
-{% block page %}
-{% addtoblock "css" %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}lib/dataTables/css/jquery.dataTables.css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}lib/dataTables/css/jquery.dataTables.bootstrap.css" />
-{% endaddtoblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'page.css' %}" />
+    <link rel="stylesheet" href="{% static 'lib/dataTables/css/jquery.dataTables.css' %}" />
+    <link rel="stylesheet" href="{% static 'lib/dataTables/css/jquery.dataTables.bootstrap.css' %}" />
+{% endblock %}
 
-{% addtoblock "js" %}
-    <script type="text/javascript" src="{{ STATIC_URL }}lib/dataTables/js/jquery.dataTables.js" ></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}lib/dataTables/js/jquery.dataTables.bootstrap.js" ></script>
+{% block js %}
+    <script type="text/javascript" src="{% static 'lib/dataTables/js/jquery.dataTables.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/dataTables/js/jquery.dataTables.bootstrap.js' %}" ></script>
     <script>
         $.extend( $.fn.dataTableExt.oStdClasses, {
             "sWrapper": "dataTables_wrapper form-inline"
@@ -41,8 +41,9 @@
             });
         });
     </script>
-{% endaddtoblock %}
+{% endblock %}
 
+{% block content %}
     <div class="container">
         <p>Auf dieser Seite werden alle Informationen, die wir seit Beginn des Projektes im Februar 2013 eingetragen haben, in einer Liste angezeigt. Die Informationen stammen alle aus dem wöchentlich erscheinendem Amtsblatt von Berlin, das wir mit Unterstützung der Naturschutzverbände manuell auswerten. In den meisten Fällen handelt es sich um Informationen zu ausliegenden <a href="/info">Bebauungsplänen</a>. Eher selten werden Informationen zu <a href="/info">Planfestestellungsverfahren</a> veröffentlicht. In der Detailansicht eines Verfahrens sind alle Informationen, die seit Februar 2013 im Amtsblatt zu diesem Verfahren veröffentlich wurden, aufgelistet.</p>
         <br>

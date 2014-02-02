@@ -1,4 +1,4 @@
-{% load sekizai_tags %}<!DOCTYPE html>
+{% load staticfiles %}<!DOCTYPE html>
 <html>
 <head>
     <title>Bürger baut Stadt</title>
@@ -9,11 +9,11 @@
     <meta property="og:url" content="http://buergerbautstadt.de" />
     <meta property="og:image" content="http://buergerbautstadt.de/static/img/karte.png"/>
 
-    <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/x-icon" />
 
-    <link rel="stylesheet" href="{{ STATIC_URL }}lib/bootstrap/css/bootstrap.min.css" />
-    {% render_block "css" %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}style.css" />
+    <link rel="stylesheet" href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" />
+    {% block css %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
 </head>
 
 <body>
@@ -26,7 +26,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/">
-                <img src="{{ STATIC_URL }}img/schrift_5.png" alt="Bürger baut Stadt">
+                <img src="{% static 'img/schrift_5.png' %}" alt="Bürger baut Stadt">
             </a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -46,7 +46,7 @@
             <div id="header-left">
                 <div id="brand">
                     <a href="/">
-                        <img src="{{ STATIC_URL }}img/schrift_5.png" alt="Bürger baut Stadt">
+                        <img src="{% static 'img/schrift_5.png' %}" alt="Bürger baut Stadt">
                     </a>
                 </div>
             </div>
@@ -61,13 +61,12 @@
         </div>
     </div>
     
-    {% block content %}
-    {% endblock %}
+    {% block content %}{% endblock %}
 
-    <script type="text/javascript" src="{{ STATIC_URL }}lib/jquery.min.js" ></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}lib/bootstrap/js/bootstrap.min.js" ></script>
-    {% render_block "js" %}
-
+    <script type="text/javascript" src="{% static 'lib/jquery.min.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}" ></script>
+    {% block js %}{% endblock %}
+    
     {% if not debug %}
 	<!-- Piwik -->
 	<script type="text/javascript">

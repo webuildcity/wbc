@@ -1,15 +1,15 @@
 {% extends 'bbs/page.html' %}
-{% load sekizai_tags %}
 
-{% block page %}
-{% addtoblock "js" %}
+{% block js %}
     <script type="text/javascript">
     $(document).ready(function(){
       var openVs = window.location.toString().split('#')[1];        
       $('#collapse-' + openVs).addClass('in');
     });
     </script>
-{% endaddtoblock %}
+{% endblock %}
+
+{% block content %}
     <div class="container">
         <h2>Begriffe</h2>
 
