@@ -1,0 +1,11 @@
+postgres production
+===================
+
+createuser bbs -P
+createdb -O bbs bbs
+
+postgres development
+====================
+
+createuser bbs -d -P
+createdb -O bbs bbs
