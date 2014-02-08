@@ -2,12 +2,11 @@ var marker;
 var map;
 
 function drawMap(){
-
-	
-	var html = '<div class = "control-group form-row map"><div>';
-	html += '<div class="control-label">Karte</div>';
-	html += '<div class="controls"><div id="adminmap"></div>';
-	html += '<span class="help-inline">Bewegen Sie den Marker mit der Maus um den Ort anzupassen</span></div></div></div>'
+	var html = '<div class="form-row">';
+    html += '<label>Karte:</label>';
+	html += '<div id="adminmap"></div>';
+	html += '<p class="help">Bewegen Sie den Marker mit der Maus um den Ort anzupassen</p>';
+    html += '</div>';
 
 	$('.field-bezirke').after(html);
     console.log($('.field-bezirke'));

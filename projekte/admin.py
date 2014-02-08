@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django import forms
 from django.contrib import admin
 from projekte.models import Projekt, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
 
@@ -10,10 +11,19 @@ class ProjektAdmin(admin.ModelAdmin):
     change_form_template = "projekte/admin/change_form.html"
     add_form_template = "projekte/admin/change_form.html"
 
+class VeroeffentlichungAdminForm(forms.ModelForm):
+    class Meta:
+        model = Veroeffentlichung
+
+    def __init__(self, *args, **kwds):
+        super(VeroeffentlichungAdminForm, self).__init__(*args, **kwds)
+        self.fields['verfahrensschritt'].queryset = Verfahrensschritt.objects
+
 class VeroeffentlichungAdmin(admin.ModelAdmin):
     list_display = ('id','verfahrensschritt','projekt','ende')
     list_display_links = ('id','verfahrensschritt','projekt','ende')
     ordering = ['id']
+    form = VeroeffentlichungAdminForm
 
 class VerfahrensschrittAdmin(admin.ModelAdmin):
     list_display = ('id','name','reihenfolge','verfahren')

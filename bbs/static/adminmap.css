@@ -1,5 +1,7 @@
 #adminmap {
     height: 450px;
+    width: 610px;
+    border: 1px solid rgb(204, 204, 204);
 }
 /* Leaflet Container */
 .leaflet-popup-pane {
@@ -32,3 +34,5 @@
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+610px

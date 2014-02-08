@@ -47,10 +47,10 @@ class Verfahrensschritt(Model):
     verfahren    = models.ForeignKey('Verfahren', related_name='verfahrensschritte')
 
     def __unicode__(self):
-        return self.name
+        return str(self.verfahren) + ': ' + self.name
 
     class Meta:
-        ordering            = ["verfahren","reihenfolge"]
+        ordering            = ("verfahren","reihenfolge")
         verbose_name        = "Verfahrensschritt"
         verbose_name_plural = "Verfahrensschritte"
 
