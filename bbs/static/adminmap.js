@@ -9,8 +9,8 @@ function drawMap(){
 	html += '<div class="controls"><div id="adminmap"></div>';
 	html += '<span class="help-inline">Bewegen Sie den Marker mit der Maus um den Ort anzupassen</span></div></div></div>'
 
-	$('div.control-group.form-row.field-bezirke').after(html);
-
+	$('.field-bezirke').after(html);
+    console.log($('.field-bezirke'));
 	map = new L.Map("adminmap");
 
 	var min = 10;
