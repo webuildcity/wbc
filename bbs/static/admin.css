@@ -1,0 +1,64 @@
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    font-size: 28px;
+    color: #de6a00 !important;
+}
+
+a, 
+a:visited,
+a:focus {
+    color: #de6a00 !important;
+    text-decoration: none;
+}
+a:hover {
+    color: #e58833 !important;
+    text-decoration: none;
+}
+
+.object-tools a:link,
+.object-tools a:visited,
+.object-tools li {
+    background-color: white !important;
+    background-image: none !important;
+}
+
+#header {
+    background-color: rgb(238, 238, 238) !important;
+    color: #333;
+}
+div.breadcrumbs {
+    border: none;
+}
+.module h2,
+.module caption,
+.inline-group h2,
+#content-related .module h2 {
+    background-color: white;
+    background-image: none !important;
+
+    border-bottom: 1px solid rgb(204, 204, 204);
+}
+.button.default,
+input[type=submit].default,
+.submit-row input.default {
+    background-image: none !important;
+    background-color: #de6a00 !important;
+    border: 1px solid rgb(197, 94, 0);
+}
+
+div.breadcrumbs {
+    border-bottom: 1px solid rgb(238, 238, 238);
+}
+
+.aligned label {
+    width: 240px !important;
+}
+
+form .aligned p,
+form .aligned ul {
+    margin-left: 220px !important;
+}
+form .aligned p.help {
+    padding-left: 30px !important;
+}
