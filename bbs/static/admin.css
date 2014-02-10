@@ -48,6 +48,7 @@ input[type=submit].default,
 }
 
 div.breadcrumbs {
+    background-image: none !important;
     padding: 2px 10px !important;
     border-bottom: 1px solid rgb(238, 238, 238);
 }
