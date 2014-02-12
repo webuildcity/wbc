@@ -11,7 +11,10 @@ class View(django.views.generic.View):
 
     def dispatch(self, request, *args, **kwargs):
         # get the accept header 
-        accept = request.META['HTTP_ACCEPT'].split(',')
+        if 'HTTP_ACCEPT' in request.META:
+            accept = request.META['HTTP_ACCEPT'].split(',')
+        else:
+            accept = ''
 
         if request.GET.get('format') == 'json' or 'application/json' in accept:
             self.accept = 'json'

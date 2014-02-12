@@ -3,18 +3,17 @@ var map;
 
 function drawMap(){
 	var html = '<div class="form-row">';
-    html += '<label>Karte:</label>';
+        html += '<label>Karte:</label>';
 	html += '<div id="adminmap"></div>';
 	html += '<p class="help">Bewegen Sie den Marker mit der Maus um den Ort anzupassen</p>';
-    html += '</div>';
+        html += '</div>';
 
 	$('.field-bezirke').after(html);
-    console.log($('.field-bezirke'));
 	map = new L.Map("adminmap");
 
 	var min = 10;
 	var max = 17;
-    var errorTile = "http://tiles.jochenklar.de/bbs/11/1102/671.png";
+        var errorTile = "http://tiles.jochenklar.de/bbs/11/1102/671.png";
 	var myTiles = "http://tiles.jochenklar.de/bbs/{z}/{x}/{y}.png";
     var osmCopyright = "Map data &copy; 2012 OpenStreetMap contributors";
 
@@ -61,10 +60,10 @@ function drawMap(){
     $('#id_lon').val(result.lng);
 	});
 
-	var button = $('<div/>', {
+	var button = $('<p/>', {
 		html: '<input type="button" value="Adresse auf Karte markieren" class="btn"></input>'
 	})
-	.appendTo($('div.control-group.form-row.field-bezirke .controls'))
+	.appendTo($('.field-bezirke'))
 	.click(function(){
 		$('div').remove('.alert.alert-error');		
 		var adresse;

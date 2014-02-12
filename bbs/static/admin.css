@@ -63,3 +63,9 @@ form .aligned ul {
 form .aligned p.help {
     padding-left: 30px !important;
 }
+select[size], 
+select[multiple], 
+select[size][multiple] {  
+    height: 100px;
+    width: 228px;
+}
