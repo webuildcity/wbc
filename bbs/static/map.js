@@ -7,7 +7,7 @@ function init() {
 function initMap() {   
     var map = new L.Map("map");
 
-    var min = 11;
+    var min = 9;
     var max = 17;
     var errorTile = "http://tiles.jochenklar.de/bbs/11/1102/671.png";
     var myTiles = "http://tiles.jochenklar.de/bbs/{z}/{x}/{y}.png";
