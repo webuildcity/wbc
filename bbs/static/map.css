@@ -28,12 +28,12 @@ body, html {
 #header-left,
 #buttons-left,
 #footer-left {
-    left: 30px;
+    left: 15px;
 }
 #header-right,
 #buttons-right,
 #footer-right {
-    right: 30px;
+    right: 15px;
 }
 #footer-left,
 #footer-right {

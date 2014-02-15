@@ -14,11 +14,9 @@ body {
 }
 #header-left{
     float: left;
-    margin-left: 15px;
 }
 #header-right {
     margin-top: 20px;
-    margin-right: 15px;
     float: right;
 }
 
