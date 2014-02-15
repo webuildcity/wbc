@@ -3,6 +3,10 @@
     width: 610px;
     border: 1px solid rgb(204, 204, 204);
 }
+.map-error {
+    color: #a94442;
+}
+
 /* Leaflet Container */
 .leaflet-popup-pane {
     z-index: 1000;
@@ -35,4 +39,3 @@
     margin-bottom: 5px;
 }
 
-610px
