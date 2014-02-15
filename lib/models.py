@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import datetime
-from django.utils.timezone import utc
+from django.utils.timezone import now
 
 class Model(models.Model):
     created = models.DateTimeField(editable=False)
@@ -8,9 +8,9 @@ class Model(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.created = datetime.now().replace(tzinfo=utc)
+            self.created = now()
          
-        self.updated = datetime.now().replace(tzinfo=utc)
+        self.updated = now()
         super(Model, self).save(*args, **kwargs)
 
     class Meta:

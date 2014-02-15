@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys,os,datetime
-from django.utils.timezone import utc
+from django.utils.timezone import now
 
 # Directory prüfen und an PYTHONPATH anhängen
 if os.path.isfile('bbs/settings.py'):
@@ -15,11 +15,10 @@ from projects.models import Bezirk,Ort,Veroeffentlichung
 from news.models import Abonnent,Mail
 
 # gegenwärtige Zeit finden
-jetzt = datetime.datetime.utcnow().replace(tzinfo=utc)
-gestern = jetzt - datetime.timedelta(days=1)
+yesterday = now() - datetime.timedelta(days=1)
 
 # neue Veröffentlichungen finden
-veroeffentlichungen = Veroeffentlichung.objects.filter(created__range=[gestern, jetzt]).all()
+veroeffentlichungen = Veroeffentlichung.objects.filter(created__range=[yesterday, now()]).all()
 
 news = {}
 for abonnent in Abonnent.objects.all():
