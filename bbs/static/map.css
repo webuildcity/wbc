@@ -65,6 +65,9 @@ body, html {
     font-weight: bold;
     color: #de6a00;
 }
+.info-button.leaflet-control-zoom-out {
+    font-size: 12pt;
+}
 
 /* the canvas for the map */
 #map {

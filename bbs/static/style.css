@@ -32,12 +32,12 @@ a,
 a:visited,
 .leaflet-container a,
 .leaflet-container a:visited {
-    color: #de6a00;
+    color: #de6a00 !important;
     text-decoration: none;
 }
 a:hover,
 .leaflet-container a:hover {
-    color: #e58833;
+    color: #e58833 !important;
     text-decoration: none;
 }
 

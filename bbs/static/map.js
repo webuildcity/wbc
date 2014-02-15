@@ -4,25 +4,22 @@ function init() {
     initMap();
 }
 
-function initMap() {   
+function initMap() {
+    // add the map layer
     var map = new L.Map("map");
-
     var min = 9;
     var max = 17;
-    var errorTile = "http://tiles.jochenklar.de/bbs/11/1102/671.png";
-    var myTiles = "http://tiles.jochenklar.de/bbs/{z}/{x}/{y}.png";
-    var osmCopyright = "Map data &copy; 2012 OpenStreetMap contributors";
-
-    var myLayer = new L.TileLayer(myTiles, {
-        minZoom:min,
+    var myLayer = new L.TileLayer('http://tiles.jochenklar.de/bbs/{z}/{x}/{y}.png', {
+        minZoom: min,
         maxZoom: max,
-        attribution: osmCopyright,
-        zIndex:0,
-        errorTileUrl: errorTile,
-        reuseTiles:true
+        attribution: 'Map data &copy; 2012 OpenStreetMap contributors',
+        zIndex: 0,
+        errorTileUrl: 'http://tiles.jochenklar.de/bbs/error.png',
+        reuseTiles: true
     });
-
     map.addLayer( myLayer );
+
+    // center map
     var center = new L.LatLng(52.51, 13.37628);
     map.setView(center, 11);
     
@@ -52,7 +49,7 @@ function initMap() {
         });
     });
 
-    // projekte zu karte hinzufügen
+    // add points to map
     $.each(points, function(key, point){
         var marker = L.marker(
             [point.lat,point.lon],
@@ -93,7 +90,6 @@ function initMap() {
     var oldLayer = L.layerGroup(oldLayer);
     
     $.each(pointsOld, function(key,point){
-        
         // marker für leaflet karte
         var marker = L.marker(
             [point.lat,point.lon],
@@ -119,8 +115,7 @@ function initMap() {
         }).on("mouseout", function(e) {
             e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_blass.png';
         }); 
-    
-     });   
+    });   
     
     $('input[name=old]').click(function(){
         if(this.checked) {
@@ -136,7 +131,7 @@ function initMap() {
 
     $('<div />', {
         'class': 'leaflet-control-zoom leaflet-bar leaflet-control pull-left',
-        'html': '<a class="info-button leaflet-control-zoom-out" href="#" title="Info">i</a>'
+        'html': '<a class="info-button leaflet-control-zoom-out" href="#" title="Info">?</a>'
     }).appendTo($('#buttons-left'));
 
     $('<button />', {
