@@ -5,9 +5,9 @@ zu Bauvorhaben in den von Dir angegebenen Bezirken gibt es neue Veröffentlichun
 {% for veroeffentlichung in veroeffentlichungen %}
     Verfahren:          {{veroeffentlichung.verfahrensschritt.verfahren.name}}
     Verfahrensschritt:  {{veroeffentlichung.verfahrensschritt.name}}
-    Betrifft Gegend um: {{veroeffentlichung.projekt}}
-    Bezirk:             {{veroeffentlichung.projekt.bezirke.all|join:", "}}
-    Link zum Projekt:   {{projekt}}{{veroeffentlichung.projekt.pk}}    
+    Betrifft Gegend um: {{veroeffentlichung.ort}}
+    Bezirk:             {{veroeffentlichung.ort.bezirke.all|join:", "}}
+    Link zum Projekt:   {{ort}}{{veroeffentlichung.ort.pk}}    
     Auslegungszeitraum: von {{ veroeffentlichung.beginn }} bis {{ veroeffentlichung.ende }}
 {% endfor %}
 

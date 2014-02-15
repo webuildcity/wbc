@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.contrib import admin
-from projekte.models import Projekt, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
+from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
 
-class ProjektAdmin(admin.ModelAdmin):
+class OrtAdmin(admin.ModelAdmin):
     list_display = ('id','bezeichner','adresse')
     list_display_links = ('id','bezeichner','adresse')
     fields = [ 'adresse' , 'bezirke', 'lat', 'lon', 'beschreibung', 'bezeichner'] 
     ordering = ['id']
-    change_form_template = "projekte/admin/change_form.html"
-    add_form_template = "projekte/admin/change_form.html"
+    change_form_template = "projects/admin/change_form.html"
+    add_form_template = "projects/admin/change_form.html"
 
 class VeroeffentlichungAdminForm(forms.ModelForm):
     class Meta:
@@ -20,8 +20,8 @@ class VeroeffentlichungAdminForm(forms.ModelForm):
         self.fields['verfahrensschritt'].queryset = Verfahrensschritt.objects
 
 class VeroeffentlichungAdmin(admin.ModelAdmin):
-    list_display = ('id','verfahrensschritt','projekt','ende')
-    list_display_links = ('id','verfahrensschritt','projekt','ende')
+    list_display = ('id','verfahrensschritt','ort','ende')
+    list_display_links = ('id','verfahrensschritt','ort','ende')
     ordering = ['id']
     form = VeroeffentlichungAdminForm
 
@@ -45,7 +45,7 @@ class BezirkAdmin(admin.ModelAdmin):
     list_display_links = ('id','name')
     ordering = ['id']
 
-admin.site.register(Projekt, ProjektAdmin)
+admin.site.register(Ort, OrtAdmin)
 admin.site.register(Veroeffentlichung, VeroeffentlichungAdmin)
 admin.site.register(Verfahrensschritt, VerfahrensschrittAdmin)
 admin.site.register(Verfahren, VerfahrenAdmin)

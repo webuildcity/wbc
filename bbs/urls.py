@@ -3,14 +3,14 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 admin.autodiscover()
 
-from projekte.views import ProjekteView,ProjektView
+from projects.views import OrteView,OrtView
 from news import views
 
 urlpatterns = patterns('',
     url(r'^$', 'bbs.views.home'),
     # orte
-    url(r'^orte/$', ProjekteView.as_view()),
-    url(r'^orte/(?P<pk>\d+)/$', ProjektView.as_view()),
+    url(r'^orte/$', OrteView.as_view()),
+    url(r'^orte/(?P<pk>\d+)/$', OrtView.as_view()),
     # info
     url(r'^begriffe/$', 'bbs.views.begriffe'),
     # mails

@@ -28,12 +28,12 @@
 
         var points = {}
         {% for v in veroeffentlichungen %}
-        points[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "projekt": {{v.projekt.pk}}, "adresse": "{{v.projekt.adresse}}", "lat": {{v.projekt.lat|stringformat:"F"}}, "lon": {{v.projekt.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}}, "vpk": {{v.verfahrensschritt.verfahren.pk}} };
+        points[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "ort": {{v.ort.pk}}, "adresse": "{{v.ort.adresse}}", "lat": {{v.ort.lat|stringformat:"F"}}, "lon": {{v.ort.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}}, "vpk": {{v.verfahrensschritt.verfahren.pk}} };
         {% endfor %}
         
         var pointsOld = {}
         {% for v in veroeffentlichungenAlt %}
-        pointsOld[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "projekt": {{v.projekt.pk}}, "adresse": "{{v.projekt.adresse}}", "lat": {{v.projekt.lat|stringformat:"F"}}, "lon": {{v.projekt.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}}, "vpk": {{v.verfahrensschritt.verfahren.pk}} };
+        pointsOld[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "ort": {{v.ort.pk}}, "adresse": "{{v.ort.adresse}}", "lat": {{v.ort.lat|stringformat:"F"}}, "lon": {{v.ort.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}}, "vpk": {{v.verfahrensschritt.verfahren.pk}} };
         {% endfor %}
     </script>
 {% endblock %}

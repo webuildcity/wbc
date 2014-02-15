@@ -6,7 +6,7 @@ from django.shortcuts import render,redirect
 
 from news.forms import AbonnierenForm, AbbestellenForm
 from news.models import Validierung,Abonnent,Mail
-from projekte.models import Bezirk
+from projects.models import Bezirk
 
 import json
 

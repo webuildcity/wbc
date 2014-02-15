@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.test import TestCase
-from projekte.models import Projekt, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
+from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
 
-class ProjektTestCase(TestCase):
+class ProjectsTestCase(TestCase):
     def test_bezirke(self):
         a = Bezirk.objects.get(name='Mitte')
         b = Bezirk.objects.all()
@@ -23,16 +23,16 @@ class ProjektTestCase(TestCase):
         b = Verfahren.objects.all()
         self.assertIn(a,b)
 
-    def test_projekt(self):
+    def test_ort(self):
         # store ne project
-        a = Projekt(adresse='Unter den Linden 1',beschreibung='Brandenburger Tor',lat='-13',lon='52',bezeichner='ACB')
+        a = Ort(adresse='Unter den Linden 1',beschreibung='Brandenburger Tor',lat='-13',lon='52',bezeichner='ACB')
         a.save()
         b = Bezirk.objects.get(name='Mitte')
         a.bezirke.add(b)
         a.save()
 
         # retrieve project
-        c = Projekt.objects.get(bezeichner='ACB')
+        c = Ort.objects.get(bezeichner='ACB')
         self.assertIn(b,c.bezirke.all())
 
     def test_veroeffentlichung(self):

@@ -57,13 +57,13 @@
             </tr>
         </thead>
         <tbody>
-        {% for projekt in projekte %}
+        {% for ort in orte %}
             <tr>
-                <td><a href="/orte/{{ projekt.pk }}">{{ projekt.bezeichner }}</a></td>
-                <td><a href="/orte/{{ projekt.pk }}">{{ projekt.adresse }}</a></td>
+                <td><a href="/orte/{{ ort.pk }}">{{ ort.bezeichner }}</a></td>
+                <td><a href="/orte/{{ ort.pk }}">{{ ort.adresse }}</a></td>
                 <td>
-                    <a href="/orte/{{ projekt.pk }}">
-                        {% for bezirk in projekt.bezirke.all %}
+                    <a href="/orte/{{ ort.pk }}">
+                        {% for bezirk in ort.bezirke.all %}
                             {{ bezirk.name }}<br />
                         {% endfor %}
                     </a>

@@ -7,26 +7,26 @@ import json
 
 import lib.views
 
-from projekte.models import Projekt, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
+from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
 
-def projektGeoJson(projekt):
+def createGeoJson(ort):
     response = {
         'type': "Feature",
         'geometry': {
             'type': 'Point',
-            'coordinates': [projekt.lon,projekt.lat]
+            'coordinates': [ort.lon,ort.lat]
         },
         'properties': {
-            'bezeichner': projekt.bezeichner,
-            'adresse': projekt.adresse,
-            'beschreibung': projekt.beschreibung,
+            'bezeichner': ort.bezeichner,
+            'adresse': ort.adresse,
+            'beschreibung': ort.beschreibung,
             'bezirke': [],
             'veroeffentlichungen': []
         }
     }
-    for bezirk in projekt.bezirke.all():
+    for bezirk in ort.bezirke.all():
         response['properties']['bezirke'].append(bezirk.name)
-    for veroeffentlichung in projekt.veroeffentlichungen.all():
+    for veroeffentlichung in ort.veroeffentlichungen.all():
         response['properties']['veroeffentlichungen'].append({
             'beschreibung': veroeffentlichung.beschreibung,
             'verfahrensschritt': veroeffentlichung.verfahrensschritt.name,
@@ -38,38 +38,38 @@ def projektGeoJson(projekt):
         })
     return response
 
-class ProjekteView(lib.views.View):
+class OrteView(lib.views.View):
     http_method_names = ['get']
 
     def get(self, request):
         bezirk = request.GET.get('bezirk', None)
 
         if bezirk:
-            projekte = Projekt.objects.filter(bezirke__name=bezirk)
+            orte = Ort.objects.filter(bezirke__name=bezirk)
         else: 
-            projekte = Projekt.objects.all()
+            orte = Ort.objects.all()
 
         if self.accept == 'json':
             response = {'type': 'FeatureCollection','features': []}
-            for projekt in projekte:
-                response['features'].append(projektGeoJson(projekt))
+            for ort in orte:
+                response['features'].append(createGeoJson(ort))
             return self.renderJson(request,response)
         else:
-            response = {'projekte': projekte}
-            return render(request,'projekte/projekte.html', response)
+            response = {'orte': orte}
+            return render(request,'projects/orte.html', response)
 
-class ProjektView(lib.views.View):
+class OrtView(lib.views.View):
     http_method_names = ['get']
 
     def get(self, request, pk):
         try:
-            projekt = Projekt.objects.get(pk=int(pk))
-        except Projekt.DoesNotExist:
+            ort = Ort.objects.get(pk=int(pk))
+        except Ort.DoesNotExist:
             raise Http404
 
         if self.accept == 'json':
-            response = projektGeoJson(projekt)
+            response = createGeoJson(ort)
             return self.renderJson(request, response)
         else:
-            response = {'projekt': projekt}
-            return render(request, 'projekte/projekt.html', response)
+            response = {'ort': ort}
+            return render(request, 'projects/ort.html', response)

@@ -10,8 +10,8 @@
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>    
     <script type="text/javascript">
         var staticUrl = '{% static '' %}';
-        var lon = {{ projekt.lon|stringformat:"F" }};
-        var lat = {{ projekt.lat|stringformat:"F" }}; 
+        var lon = {{ ort.lon|stringformat:"F" }};
+        var lat = {{ ort.lat|stringformat:"F" }}; 
         var typ = "Öffentliche Auslegung";   
     </script>
     <script type="text/javascript" src="{% static 'localmap.js' %}" ></script>
@@ -24,9 +24,9 @@
         <div class="row">        
             <div class="col-sm-8">
                 <h3>Betroffenes Gebiet</h3>
-                <b>Bezeichner:</b>  {{ projekt.bezeichner }}<br>
-                <b>genaue örtliche Beschreibung:</b> {{ projekt.beschreibung }}<br>
-                <b>im Bezirk/in den Bezirken:</b> {{ projekt.bezirke.all|join:", "}}
+                <b>Bezeichner:</b>  {{ ort.bezeichner }}<br>
+                <b>genaue örtliche Beschreibung:</b> {{ ort.beschreibung }}<br>
+                <b>im Bezirk/in den Bezirken:</b> {{ ort.bezirke.all|join:", "}}
             </div>
         </div>
 
@@ -41,7 +41,7 @@
                </tr>
             </thead>
             <tbody>
-                {% for veroeffentlichung in projekt.veroeffentlichungen.all %}
+                {% for veroeffentlichung in ort.veroeffentlichungen.all %}
                 <tr>
                     <td><a href="/begriffe/#{{ veroeffentlichung.verfahrensschritt.pk}}">{{ veroeffentlichung.verfahrensschritt.name}} ({{ veroeffentlichung.verfahrensschritt.verfahren.name }})</a></td>
                     <td>{{ veroeffentlichung.beginn }}</td> 

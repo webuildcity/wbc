@@ -2,7 +2,7 @@
 from django.db import models
 from lib.models import Model
 
-class Projekt(Model):
+class Ort(Model):
     adresse      = models.CharField(max_length=256,
                                     help_text="Eine genaue Adresse des Vorhabens")
     beschreibung = models.TextField(blank=True, help_text="Örtliche Beschreibung")
@@ -11,7 +11,7 @@ class Projekt(Model):
     bezeichner   = models.CharField(blank=True,
                                     max_length=64,
                                     help_text="ggf. Bezeichner des Beplauungsplans")
-    bezirke      = models.ManyToManyField('Bezirk', related_name='projekte')
+    bezirke      = models.ManyToManyField('Bezirk', related_name='orte')
 
     def __unicode__(self):
         return self.adresse
@@ -23,7 +23,7 @@ class Projekt(Model):
 class Veroeffentlichung(Model):
     beschreibung      = models.TextField(blank=True, verbose_name="Beschreibung")
     verfahrensschritt = models.ForeignKey('Verfahrensschritt', related_name='veroeffentlichungen')
-    projekt           = models.ForeignKey('Projekt', related_name='veroeffentlichungen')
+    ort               = models.ForeignKey('Ort', related_name='veroeffentlichungen')
     beginn            = models.DateField(verbose_name="Beginn der Auslegungszeit")
     ende              = models.DateField(verbose_name="Ende der Auslegungszeit")
     auslegungsstelle  = models.TextField(blank=True)
@@ -32,11 +32,11 @@ class Veroeffentlichung(Model):
     link              = models.URLField(blank=True)
 
     def __unicode__(self):
-        return self.projekt.adresse + ', ' + self.verfahrensschritt.name
+        return self.ort.adresse + ', ' + self.verfahrensschritt.name
 
     class Meta:
-        verbose_name        = "Veroeffentlichung"
-        verbose_name_plural = "Veroeffentlichungen"
+        verbose_name        = "Veröffentlichung"
+        verbose_name_plural = "Veröffentlichungen"
 
 class Verfahrensschritt(Model):
     name         = models.CharField(max_length=256, verbose_name="Name")
@@ -73,8 +73,8 @@ class Behoerde(Model):
         return self.name
 
     class Meta:
-        verbose_name        = "Behoerde"
-        verbose_name_plural = "Behoerden"
+        verbose_name        = "Behörde"
+        verbose_name_plural = "Behörden"
 
 class Bezirk(Model): 
     name = models.CharField(max_length=256)

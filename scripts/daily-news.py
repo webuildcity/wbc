@@ -11,7 +11,7 @@ else:
 
 # Environment setzen und Models importieren
 os.environ['DJANGO_SETTINGS_MODULE'] = 'bbs.settings'
-from projekte.models import Bezirk,Projekt,Veroeffentlichung
+from projects.models import Bezirk,Ort,Veroeffentlichung
 from news.models import Abonnent,Mail
 
 # gegenwärtige Zeit finden
@@ -28,7 +28,7 @@ for abonnent in Abonnent.objects.all():
     n = []
     for bezirk in abonnent.bezirke.all():
         for veroeffentlichung in veroeffentlichungen:
-            if bezirk in veroeffentlichung.projekt.bezirke.all():
+            if bezirk in veroeffentlichung.ort.bezirke.all():
                 n.append(veroeffentlichung)
 
     # Doubletten ausfiltern

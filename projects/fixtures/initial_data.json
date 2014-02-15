@@ -10,7 +10,7 @@
             "updated": "2013-10-01T08:14:38Z", 
             "verfahren": 1
         }, 
-        "model": "projekte.verfahrensschritt", 
+        "model": "projects.verfahrensschritt", 
         "pk": 1
     }, 
     {
@@ -24,7 +24,7 @@
             "updated": "2013-06-11T20:00:00Z", 
             "verfahren": 1
         }, 
-        "model": "projekte.verfahrensschritt", 
+        "model": "projects.verfahrensschritt", 
         "pk": 2
     }, 
     {
@@ -38,7 +38,7 @@
             "updated": "2013-06-11T20:00:00Z", 
             "verfahren": 1
         }, 
-        "model": "projekte.verfahrensschritt", 
+        "model": "projects.verfahrensschritt", 
         "pk": 3
     }, 
     {
@@ -52,7 +52,7 @@
             "updated": "2013-06-11T20:00:00Z", 
             "verfahren": 6
         }, 
-        "model": "projekte.verfahrensschritt", 
+        "model": "projects.verfahrensschritt", 
         "pk": 8
     }, 
     {
@@ -66,7 +66,7 @@
             "updated": "2013-06-11T20:00:00Z", 
             "verfahren": 6
         }, 
-        "model": "projekte.verfahrensschritt", 
+        "model": "projects.verfahrensschritt", 
         "pk": 9
     }, 
     {
@@ -80,7 +80,7 @@
             "updated": "2013-06-11T20:00:00Z", 
             "verfahren": 6
         }, 
-        "model": "projekte.verfahrensschritt", 
+        "model": "projects.verfahrensschritt", 
         "pk": 10
     }, 
     {
@@ -94,7 +94,7 @@
             "updated": "2013-06-11T20:00:00Z", 
             "verfahren": 6
         }, 
-        "model": "projekte.verfahrensschritt", 
+        "model": "projects.verfahrensschritt", 
         "pk": 11
     }, 
     {
@@ -108,7 +108,7 @@
             "updated": "2013-10-01T08:14:44Z", 
             "verfahren": 1
         }, 
-        "model": "projekte.verfahrensschritt", 
+        "model": "projects.verfahrensschritt", 
         "pk": 12
     }, 
     {
@@ -118,7 +118,7 @@
             "name": "Bebauungsplanverfahren", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.verfahren", 
+        "model": "projects.verfahren", 
         "pk": 1
     }, 
     {
@@ -128,7 +128,7 @@
             "name": "Planfeststellungsverfahren", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.verfahren", 
+        "model": "projects.verfahren", 
         "pk": 6
     }, 
     {
@@ -138,7 +138,7 @@
             "name": "Bezirksamt Mitte", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.behoerde", 
+        "model": "projects.behoerde", 
         "pk": 1
     }, 
     {
@@ -148,7 +148,7 @@
             "name": "Bezirksamt Friedrichshain-Kreuzberg", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.behoerde", 
+        "model": "projects.behoerde", 
         "pk": 2
     }, 
     {
@@ -158,7 +158,7 @@
             "name": "Bezirksamt Pankow", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.behoerde", 
+        "model": "projects.behoerde", 
         "pk": 3
     }, 
     {
@@ -168,7 +168,7 @@
             "name": "Bezirksamt Charlottenburg-Wilmersdorf", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.behoerde", 
+        "model": "projects.behoerde", 
         "pk": 4
     }, 
     {
@@ -178,7 +178,7 @@
             "name": "Bezirksamt Spandau", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.behoerde", 
+        "model": "projects.behoerde", 
         "pk": 5
     }, 
     {
@@ -188,7 +188,7 @@
             "name": "Bezirksamt Steglitz-Zehlendorf", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.behoerde", 
+        "model": "projects.behoerde", 
         "pk": 6
     }, 
     {
@@ -198,7 +198,7 @@
             "name": "Bezirksamt Tempelhof-Sch\u00f6neberg", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.behoerde", 
+        "model": "projects.behoerde", 
         "pk": 7
     }, 
     {
@@ -208,7 +208,7 @@
             "name": "Bezirksamt Neuk\u00f6lln", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.behoerde", 
+        "model": "projects.behoerde", 
         "pk": 8
     }, 
     {
@@ -218,7 +218,7 @@
             "name": "Bezirksamt Treptow-K\u00f6penick", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.behoerde", 
+        "model": "projects.behoerde", 
         "pk": 9
     }, 
     {
@@ -228,7 +228,7 @@
             "name": "Bezirksamt Mahrzahn- Hellersdorf", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.behoerde", 
+        "model": "projects.behoerde", 
         "pk": 10
     }, 
     {
@@ -238,7 +238,7 @@
             "name": "Bezirksamt Lichtenberg", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.behoerde", 
+        "model": "projects.behoerde", 
         "pk": 11
     }, 
     {
@@ -248,7 +248,7 @@
             "name": "Bezirksamt Reinickendorf", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.behoerde", 
+        "model": "projects.behoerde", 
         "pk": 12
     }, 
     {
@@ -258,7 +258,7 @@
             "name": "Senatsverwaltung f\u00fcr Stadtentwicklung von Berlin", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.behoerde", 
+        "model": "projects.behoerde", 
         "pk": 13
     }, 
     {
@@ -268,7 +268,7 @@
             "name": "Senatsverwaltung f\u00fcr Stadtentwicklung von Berlin (PFV)", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.behoerde", 
+        "model": "projects.behoerde", 
         "pk": 14
     }, 
     {
@@ -277,7 +277,7 @@
             "name": "Mitte", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.bezirk", 
+        "model": "projects.bezirk", 
         "pk": 1
     }, 
     {
@@ -286,7 +286,7 @@
             "name": "Friedrichshain-Kreuzberg", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.bezirk", 
+        "model": "projects.bezirk", 
         "pk": 2
     }, 
     {
@@ -295,7 +295,7 @@
             "name": "Pankow", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.bezirk", 
+        "model": "projects.bezirk", 
         "pk": 3
     }, 
     {
@@ -304,7 +304,7 @@
             "name": "Charlottenburg-Wilmersdorf", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.bezirk", 
+        "model": "projects.bezirk", 
         "pk": 4
     }, 
     {
@@ -313,7 +313,7 @@
             "name": "Spandau", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.bezirk", 
+        "model": "projects.bezirk", 
         "pk": 5
     }, 
     {
@@ -322,7 +322,7 @@
             "name": "Steglitz-Zehlendorf", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.bezirk", 
+        "model": "projects.bezirk", 
         "pk": 6
     }, 
     {
@@ -331,7 +331,7 @@
             "name": "Tempelhof-Sch\u00f6neberg", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.bezirk", 
+        "model": "projects.bezirk", 
         "pk": 7
     }, 
     {
@@ -340,7 +340,7 @@
             "name": "Neuk\u00f6lln", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.bezirk", 
+        "model": "projects.bezirk", 
         "pk": 8
     }, 
     {
@@ -349,7 +349,7 @@
             "name": "Treptow-K\u00f6penick", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.bezirk", 
+        "model": "projects.bezirk", 
         "pk": 9
     }, 
     {
@@ -358,7 +358,7 @@
             "name": "Marzahn- Hellersdorf", 
             "updated": "2013-06-24T18:55:26Z"
         }, 
-        "model": "projekte.bezirk", 
+        "model": "projects.bezirk", 
         "pk": 10
     }, 
     {
@@ -367,7 +367,7 @@
             "name": "Lichtenberg", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.bezirk", 
+        "model": "projects.bezirk", 
         "pk": 11
     }, 
     {
@@ -376,7 +376,7 @@
             "name": "Reinickendorf", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
-        "model": "projekte.bezirk", 
+        "model": "projects.bezirk", 
         "pk": 12
     },
     {
@@ -392,7 +392,7 @@
             "lon": 13.3777213097, 
             "updated": "2014-02-08T11:01:48.452Z"
         }, 
-        "model": "projekte.projekt", 
+        "model": "projects.ort", 
         "pk": 1
     }, 
     {
@@ -404,12 +404,12 @@
             "created": "2014-02-08T11:00:49.571Z", 
             "ende": "2050-01-01", 
             "link": "http://buergerbautstadt.de/", 
-            "projekt": 1, 
+            "ort": 1, 
             "updated": "2014-02-08T11:00:49.571Z", 
             "verfahrensschritt": 1, 
             "zeiten": "Montag bis Mittwoch von 8 Uhr bis 16 Uhr, Donnerstag von 9 Uhr bis 18 Uhr und Freitag von 8 Uhr bis 14 Uhr"
         }, 
-        "model": "projekte.veroeffentlichung", 
+        "model": "projects.veroeffentlichung", 
         "pk": 1
     }
 ]
