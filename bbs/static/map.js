@@ -17,7 +17,7 @@ function initMap() {
         errorTileUrl: 'http://tiles.jochenklar.de/bbs/error.png',
         reuseTiles: true
     });
-    map.addLayer( myLayer );
+    map.addLayer(myLayer);
 
     // center map
     var center = new L.LatLng(52.51, 13.37628);
