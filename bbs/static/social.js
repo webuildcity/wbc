@@ -1,6 +1,5 @@
 function initSocial() {
-    $('body').prepend('<div id="fb-root">');
-    $('#facebook').append('<div class="fb-like" data-href="http://buergerbautstadt.de" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true" data-font="verdana"></div>');
+    $('#facebook').append('<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fbuergerbautstadt.de&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;" allowTransparency="true"></iframe>');
     $('#twitter').append('<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://buergerbautstadt.de" data-via="BueBauSta" data-lang="de">Twittern</a>');
     $('#gplus').append('<div id="gplus" class="g-plusone" data-size="medium"></div>');
 }

@@ -1,4 +1,4 @@
-{% extends 'bbs/layout.html' %}
+{% extends 'bbs/page.html' %}
 {% load staticfiles %}
 
 {% block css %}
@@ -15,7 +15,7 @@
             "sWrapper": "dataTables_wrapper form-inline"
         } );
         $(document).ready(function() {
-            $('#data-table').dataTable({
+            $('#table').dataTable({
                 'iDisplayLength': 10,
                 "aLengthMenu": [[10,20,50,-1], [10,20,50,"Alle"]],
                 "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
@@ -43,34 +43,33 @@
     </script>
 {% endblock %}
 
-{% block content %}
-    <div class="container">
-        <p>Auf dieser Seite werden alle Informationen, die wir seit Beginn des Projektes im Februar 2013 eingetragen haben, in einer Liste angezeigt. Die Informationen stammen alle aus dem wöchentlich erscheinendem Amtsblatt von Berlin, das wir mit Unterstützung der Naturschutzverbände manuell auswerten. In den meisten Fällen handelt es sich um Informationen zu ausliegenden <a href="/info">Bebauungsplänen</a>. Eher selten werden Informationen zu <a href="/info">Planfestestellungsverfahren</a> veröffentlicht. In der Detailansicht eines Verfahrens sind alle Informationen, die seit Februar 2013 im Amtsblatt zu diesem Verfahren veröffentlich wurden, aufgelistet.</p>
-        <br>
-        <br>
-        <table class="table" id="data-table">
-            <thead>
-                <tr>
-                    <th>Bezeichner</th>
-                    <th>Adresse</th>
-                    <th>Bezirke</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for projekt in projekte %}
-                <tr>
-                    <td>{{ projekt.bezeichner }}</td>
-                    <td>{{ projekt.adresse }}</td>
-                    <td>
+{% block page %}
+    <p>
+        Auf dieser Seite werden alle Informationen, die wir seit Beginn des Projektes im Februar 2013 eingetragen haben, in einer Liste angezeigt. Die Informationen stammen alle aus dem wöchentlich erscheinendem Amtsblatt von Berlin, das wir mit Unterstützung der Naturschutzverbände manuell auswerten. In den meisten Fällen handelt es sich um Informationen zu ausliegenden <a href="/info">Bebauungsplänen</a>. Eher selten werden Informationen zu <a href="/info">Planfestestellungsverfahren</a> veröffentlicht. In der Detailansicht eines Verfahrens sind alle Informationen, die seit Februar 2013 im Amtsblatt zu diesem Verfahren veröffentlich wurden, aufgelistet.
+    </p>
+
+    <table class="table" id="table">
+        <thead>
+            <tr>
+                <th>Bezeichner</th>
+                <th>Adresse</th>
+                <th>Bezirke</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for projekt in projekte %}
+            <tr>
+                <td><a href="/orte/{{ projekt.pk }}">{{ projekt.bezeichner }}</a></td>
+                <td><a href="/orte/{{ projekt.pk }}">{{ projekt.adresse }}</a></td>
+                <td>
+                    <a href="/orte/{{ projekt.pk }}">
                         {% for bezirk in projekt.bezirke.all %}
                             {{ bezirk.name }}<br />
                         {% endfor %}
-                    </td>
-                    <td><a href="/orte/{{ projekt.pk }}">Details</a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

@@ -9,15 +9,11 @@
     </script>
 {% endblock %}
 
-{% block content %}
-    <div class="container">
-        <h2>Begriffe</h2>
-
-        {% for v in verfahren %}
+{% block page %}
+    <h2>Begriffe</h2>
+    {% for v in verfahren %}
         <h3>{{v.name}}</h3>
-        <p>
-            {{v.beschreibung}}
-        </p>
+        <p>{{v.beschreibung}}</p>
         <div class="panel-group" id="accordion-{{ v.pk }}">
             {% for vs in v.verfahrensschritte.all %}
             <div class="panel panel-default">
@@ -34,5 +30,4 @@
             {% endfor %}
         </div>
     {% endfor %}
-    </div>
 {% endblock %}

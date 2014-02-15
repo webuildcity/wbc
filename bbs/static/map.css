@@ -25,10 +25,15 @@ body, html {
     position: absolute;
     z-index: 10;
 }
+#header-left,
+#buttons-left,
+#footer-left {
+    left: 30px;
+}
 #header-right,
 #buttons-right,
 #footer-right {
-    right: 15px;
+    right: 30px;
 }
 #footer-left,
 #footer-right {

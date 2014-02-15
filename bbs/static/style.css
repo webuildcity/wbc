@@ -22,22 +22,24 @@ h2 {
     font-weight: normal;
     font-family: titillium;
     font-size: 28px;
+    color: #646464;
 }
 h3 {
     font-family: dejavu;
     font-weight: bold;
     font-size: 16px;
+    color: #646464;
 }
 a, 
 a:visited,
 .leaflet-container a,
 .leaflet-container a:visited {
-    color: #de6a00 !important;
+    color: #de6a00;
     text-decoration: none;
 }
 a:hover,
 .leaflet-container a:hover {
-    color: #e58833 !important;
+    color: #e58833;
     text-decoration: none;
 }
 
@@ -108,6 +110,12 @@ a:hover,
     font-weight: normal;
 }
 
+/* datatable */
+
+#table_wrapper {
+    margin-top: 40px;
+}
+
 /* navbar */
 .navbar-brand {
     padding-top: 10px;
@@ -142,7 +150,7 @@ a:hover,
 
 /* wordpress stuff */
 .blog .post-footer {
-    color: #666;
+    color: #646464;
 }
 .blog .post {
     margin-bottom: 50px;
@@ -151,7 +159,7 @@ a:hover,
     margin-bottom: 50px;
 }
 .blog h1, .blog h2 {
-    color: #de6a00;
+    color: #646464;
 }
 .blog .input-small {
     width: 300px;
