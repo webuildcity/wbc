@@ -6,13 +6,14 @@ class AbonnierenForm(forms.Form):
         if (kwargs.has_key('bezirke')):
             bezirke = kwargs.pop('bezirke')
 
+        kwargs['label_suffix'] = ''
         super(AbonnierenForm, self).__init__(*args, **kwargs)
 
         for bezirk in bezirke:
             field = forms.BooleanField(label=bezirk['name'],required=False);
             self.fields[str(bezirk['id'])] = field
 
-        self.fields['email'] = forms.EmailField(label='Email-Adresse',
+        self.fields['email'] = forms.EmailField(label='Email',
                                                 widget=forms.TextInput(attrs={'class':'form-control'}))
 
 class AbbestellenForm(forms.Form):
