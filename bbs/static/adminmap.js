@@ -100,7 +100,7 @@ function drawMap(){
                         $('#id_lat').val(lat);
                         $('#id_lon').val(lon);
                     } else {
-                        $('.field-bezirke').append('<p class="map-error">Es wurde kein Eintrag gefunden: Bitte Korrigieren Sie die Rechtschreibung der Adresse oder geben Sie den Ort manuell ein.</p>');
+                        $('.field-bezirke').append('<p class="map-error">Es wurde kein Eintrag gefunden: Bitte Korrigieren Sie die Rechtschreibung der Adresse oder geben Sie die Geokoordinaten manuell ein.</p>');
                     }
                 },
                 error: function(jqXHR,textStatus,errorThrown) {
