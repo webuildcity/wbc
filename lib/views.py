@@ -5,6 +5,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.views.decorators.csrf import csrf_exempt
 import django.views.generic
+
 import json
 
 class View(django.views.generic.View):

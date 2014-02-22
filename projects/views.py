@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import Http404, render
 from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.csrf import csrf_exempt
-import json
+
+import json,time,datetime
 
 import lib.views
 
@@ -84,16 +85,23 @@ class AbstractVeroeffentlichungView(lib.views.View):
             'auslegungsstelle': veroeffentlichung.auslegungsstelle,
             'behoerde': veroeffentlichung.behoerde.name,
             'link': veroeffentlichung.link,
-            'ortId': veroeffentlichung.ort.id
+            'ort': veroeffentlichung.ort.adresse
         }
 
 class VeroeffentlichungenView(AbstractVeroeffentlichungView):
     def get(self, request):
         beginn = request.GET.get('beginn', None)
         ende = request.GET.get('ende', None)
-        bezirk = request.GET.get('bezirk', None)
 
-        veroeffentlichungen = Veroeffentlichung.objects.all()
+        veroeffentlichungen = Veroeffentlichung.objects
+        if beginn:
+            beginn = tuple([int(i) for i in beginn.split('-')])
+            print beginn
+            veroeffentlichungen = veroeffentlichungen.filter(beginn__gte=datetime.date(*beginn))
+        if ende: 
+            ende = tuple([int(i) for i in ende.split('-')])
+            veroeffentlichungen = veroeffentlichungen.filter(ende__lte=datetime.date(*ende))
+        veroeffentlichungen = veroeffentlichungen.all()
 
         if self.accept == 'json':
             response = []
