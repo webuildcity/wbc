@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 admin.autodiscover()
 
-from projects.views import OrteView,OrtView
+from projects.views import *
 from news import views
 
 urlpatterns = patterns('',
@@ -11,6 +11,9 @@ urlpatterns = patterns('',
     # orte
     url(r'^orte/$', OrteView.as_view()),
     url(r'^orte/(?P<pk>\d+)/$', OrtView.as_view()),
+    # veroeffentlichungen
+    url(r'^veroeffentlichungen/$', VeroeffentlichungenView.as_view()),
+    url(r'^veroeffentlichungen/(?P<pk>\d+)/$', VeroeffentlichungView.as_view()),
     # info
     url(r'^begriffe/$', 'bbs.views.begriffe'),
     # mails
