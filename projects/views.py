@@ -124,5 +124,5 @@ class VeroeffentlichungView(AbstractVeroeffentlichungView):
             return self.renderJson(request, self.response(veroeffentlichung))
         else:
             response = {'veroeffentlichung': veroeffentlichung}
-            return render(request, 'projects/ort.html', response)
+            return render(request, 'projects/veroeffentlichung.html', response)
 
