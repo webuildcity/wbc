@@ -4,7 +4,7 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'page.css' %}" />
     <link rel="stylesheet" href="{% static 'lib/dataTables/css/jquery.dataTables.css' %}" />
-    <link rel="stylesheet" href="{% static 'lib/dataTables/css/jquery.dataTables.bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'lib/dataTables/css/jquery.dataTables.bootstrap.css' %}"/>
 {% endblock %}
 
 {% block js %}
@@ -44,34 +44,29 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h2>Liste</h2>
-        <div class="row">
-            <div class="col-md-9"> 
-                <p>
-                    Auf dieser Seite werden alle Informationen, die wir seit Beginn des Projektes im Februar 2013 eingetragen haben, in einer Liste angezeigt. Die Informationen stammen alle aus dem wöchentlich erscheinendem Amtsblatt von Berlin, das wir mit Unterstützung der Naturschutzverbände manuell auswerten. In den meisten Fällen handelt es sich um Informationen zu ausliegenden <a href="/info">Bebauungsplänen</a>. Eher selten werden Informationen zu <a href="/info">Planfestestellungsverfahren</a> veröffentlicht. In der Detailansicht eines Verfahrens sind alle Informationen, die seit Februar 2013 im Amtsblatt zu diesem Verfahren veröffentlich wurden, aufgelistet.
-                </p>
-            </div>
-        </div>
-        <table class="table" id="table">
-            <thead>
-                <tr>
-                    <th>Bezeichner</th>
-                    <th>Adresse</th>
-                    <th>Bezirke</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for ort in orte %}
-                <tr>
-                    <td>{{ ort.bezeichner }}</td>
-                    <td>{{ ort.adresse }}</td>
-                    <td>{{ ort.bezirke.all|join:', ' }}</td>
-                    <td><a href="/orte/{{ ort.pk }}">Details</a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+<div class="container">
+    <h2>Liste von Veröffentlichungen</h2>
+    <table class="table" id="table">
+        <thead>
+            <tr>
+                <th>Ort</th>
+                <th>Verfahrensschritt</th>
+                <th>Beginn</th>
+                <th>Ende</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for veroeffentlichung in veroeffentlichungen %}
+            <tr>
+                <td><a href="/orte/{{ veroeffentlichung.ort.pk }}">{{ veroeffentlichung.ort }}</a></td>
+                <td><a href="/begriffe/#{{ veroeffentlichung.verfahrensschritt.pk }}">{{ veroeffentlichung.verfahrensschritt.name }}</a></td>
+                <td>{{ veroeffentlichung.beginn }}</td>
+                <td>{{ veroeffentlichung.ende }}</td>
+                <td><a href="/veroeffentlichungen/{{ veroeffentlichung.pk }}">Details</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
