@@ -85,7 +85,8 @@ class AbstractVeroeffentlichungView(lib.views.View):
             'auslegungsstelle': veroeffentlichung.auslegungsstelle,
             'behoerde': veroeffentlichung.behoerde.name,
             'link': veroeffentlichung.link,
-            'ort': veroeffentlichung.ort.adresse
+            'ort': veroeffentlichung.ort.adresse,
+            'bezirk': ', '.join([b.name for b in veroeffentlichung.ort.bezirke.all()])
         }
 
 class VeroeffentlichungenView(AbstractVeroeffentlichungView):
