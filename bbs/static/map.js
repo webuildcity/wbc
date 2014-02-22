@@ -9,7 +9,7 @@ function initMap() {
     var map = new L.Map("map");
     var min = 9;
     var max = 17;
-    var myLayer = new L.TileLayer('http://tiles.jochenklar.de/bbs/{z}/{x}/{y}.png', {
+    var myLayer = new L.TileLayer('http://tiles.jochenklar.de/tiles/bbs/berlin/{z}/{x}/{y}.png', {
         minZoom: min,
         maxZoom: max,
         attribution: 'Map data &copy; 2012 OpenStreetMap contributors',
