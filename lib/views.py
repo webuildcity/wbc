@@ -31,28 +31,36 @@ class View(django.views.generic.View):
         else:
             return self.get_objects(request)
 
-    def serialiseResponse(response):
-        dictionary = {}
-        for key in response:
-            element = response[key]
-            if isinstance(element, models.query.QuerySet):
-                dictionary[key] = []
-                obj = serializers.serialize("python", element)
-                for e in obj:
-                    d = e['fields']
-                    d['pk'] = e['pk']
-                    dictionary[key].append(d)
-            elif isinstance(element, models.Model):
-                d = serializers.serialize("python", [element])[0]
-                dictionary[key] =  d['fields']
-                dictionary[key]['pk'] =  d['pk']
-            else:
-                dictionary[key] = element
+    def render(self, request, template, context):
+        if self.accept == 'json':
+            jsonDict = self.constructJsonDict(context)
+            return HttpResponse(json.dumps(jsonDict,cls=DjangoJSONEncoder),content_type="application/json")
+        else:
+            return render(request,template,context)
 
-        return dictionary
-        
-    def renderJson(self, request, response):
-        return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder),
-                            content_type="application/json")
+    def constructJsonDict(self, context):
+        jsonDict = {}
+        for key in context:
+            element = context[key]
+
+            if isinstance(element, models.query.QuerySet):
+                # the element is a django query set and needs to be serialized
+                jsonDict[key] = []
+                for row in serializers.serialize("python", element):
+                    row['fields'].update({'pk': row['pk']})
+                    jsonDict[key].append(row['fields'])
+
+            elif isinstance(element, models.Model):
+                # the element is a django model and needs to be serialized
+                dictionary = serializers.serialize("python", [element])[0]
+                jsonDict[key] = dictionary['fields']
+                jsonDict[key]['pk'] = dictionary['pk']
+
+            else:
+                # the element is just a normal django dictionary
+                jsonDict[key] = element
+
+        return jsonDict
+
     class Meta:
         abstract = True

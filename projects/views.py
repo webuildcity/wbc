@@ -13,7 +13,7 @@ from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren
 class OrtView(lib.views.View):
     http_method_names = ['get']
 
-    def response(self, ort):
+    def constructOrtJsonDict(self, ort):
         response = {
             'type': "Feature",
             'geometry': {
@@ -40,6 +40,17 @@ class OrtView(lib.views.View):
                 'behoerde': veroeffentlichung.behoerde.name,
                 'link': veroeffentlichung.link
             })
+
+        return response
+
+    def constructJsonDict(self, context):
+        if 'orte' in context:
+            response = {'type': 'FeatureCollection','features': []}
+            for ort in context['orte']:
+                response['features'].append(self.constructOrtJsonDict(ort))
+        else:
+            response = self.constructOrtJsonDict(context['ort'])
+
         return response
 
     def get_objects(self, request):
@@ -50,14 +61,8 @@ class OrtView(lib.views.View):
         else: 
             orte = Ort.objects.all()
 
-        if self.accept == 'json':
-            response = {'type': 'FeatureCollection','features': []}
-            for ort in orte:
-                response['features'].append(self.response(ort))
-            return self.renderJson(request,response)
-        else:
-            response = {'orte': orte}
-            return render(request,'projects/orte.html', response)
+        context = {'orte': orte}
+        return self.render(request,'projects/orte.html', context)
 
     def get_object(self, request, pk):
         try:
@@ -65,16 +70,13 @@ class OrtView(lib.views.View):
         except Ort.DoesNotExist:
             raise Http404
 
-        if self.accept == 'json':
-            return self.renderJson(request, self.response(ort))
-        else:
-            response = {'ort': ort}
-            return render(request, 'projects/ort.html', response)
+        context = {'ort': ort}
+        return self.render(request, 'projects/ort.html', context)
 
 class VeroeffentlichungView(lib.views.View):
     http_method_names = ['get']
 
-    def response(self, veroeffentlichung):
+    def constructVeroeffentlichungJsonDict(self, veroeffentlichung):
         return {
             'beschreibung': veroeffentlichung.beschreibung,
             'verfahrensschritt': veroeffentlichung.verfahrensschritt.name,
@@ -86,6 +88,16 @@ class VeroeffentlichungView(lib.views.View):
             'ort': veroeffentlichung.ort.adresse,
             'bezirk': ', '.join([b.name for b in veroeffentlichung.ort.bezirke.all()])
         }
+
+    def constructJsonDict(self, context):
+        if 'veroeffentlichungen' in context:
+            response = []
+            for veroeffentlichung in context['veroeffentlichungen']:
+                response.append(self.constructVeroeffentlichungJsonDict(veroeffentlichung))
+        else:
+            response = self.constructVeroeffentlichungJsonDict(context['veroeffentlichung'])
+
+        return response
 
     def get_objects(self, request):
         beginn = request.GET.get('beginn', None)
@@ -101,14 +113,8 @@ class VeroeffentlichungView(lib.views.View):
             veroeffentlichungen = veroeffentlichungen.filter(ende__lte=datetime.date(*ende))
         veroeffentlichungen = veroeffentlichungen.all()
 
-        if self.accept == 'json':
-            response = []
-            for veroeffentlichung in veroeffentlichungen:
-                response.append(self.response(veroeffentlichung))
-            return self.renderJson(request,response)
-        else:
-            response = {'veroeffentlichungen': veroeffentlichungen}
-            return render(request,'projects/veroeffentlichungen.html', response)
+        context = {'veroeffentlichungen': veroeffentlichungen}
+        return self.render(request,'projects/veroeffentlichungen.html', context)
 
     def get_object(self, request, pk):
         try:
@@ -116,32 +122,34 @@ class VeroeffentlichungView(lib.views.View):
         except Veroeffentlichung.DoesNotExist:
             raise Http404
 
-        if self.accept == 'json':
-            return self.renderJson(request, self.response(veroeffentlichung))
-        else:
-            response = {'veroeffentlichung': veroeffentlichung}
-            return render(request, 'projects/veroeffentlichung.html', response)
+        context = {'veroeffentlichung': veroeffentlichung}
+        return self.render(request, 'projects/veroeffentlichung.html', context)
 
 class VerfahrenView(lib.views.View):
     http_method_names = ['get']
 
-    def response(self, verfahren):
+    def constructVerfahrenJsonDict(self, verfahren):
         return {
-            'pk': verfahren.beschreibung,
-            'name': verfahren.name
+            'pk': verfahren.pk,
+            'name': verfahren.name,
+            'beschreibung': verfahren.beschreibung
         }
+
+    def constructJsonDict(self, context):
+        if 'verfahrens' in context:
+            response = []
+            for verfahren in context['verfahrens']:
+                response.append(self.constructVerfahrenJsonDict(verfahren))
+        else:
+            response = self.constructVerfahrenJsonDict(context['verfahren'])
+
+        return response
 
     def get_objects(self, request):
         verfahrens = Verfahren.objects.all()
-
-        if self.accept == 'json':
-            response = []
-            for verfahren in verfahrens:
-                response.append(self.response(v))
-            return self.renderJson(request,response)
-        else:
-            response = {'verfahrens': verfahrens}
-            return render(request,'projects/verfahrens.html', response)
+        
+        context = {'verfahrens': verfahrens}
+        return self.render(request,'projects/verfahrens.html', context)
 
     def get_object(self, request, pk):
         try:
@@ -149,32 +157,33 @@ class VerfahrenView(lib.views.View):
         except Verfahren.DoesNotExist:
             raise Http404
 
-        if self.accept == 'json':
-            return self.renderJson(request, self.response(verfahren))
-        else:
-            response = {'verfahren': verfahren}
-            return render(request, 'projects/verfahren.html', response)
+        context = {'verfahren': verfahren}
+        return self.render(request, 'projects/verfahren.html', context)
 
 class VerfahrensschrittView(lib.views.View):
     http_method_names = ['get']
 
-    def response(self, verfahren):
+    def constructVerfahrensschrittJsonDict(self, verfahrensschritt):
         return {
-            'pk': verfahren.beschreibung,
-            'name': verfahren.name
+            'pk': verfahrensschritt.pk,
+            'name': verfahrensschritt.name,
+            'beschreibung': verfahrensschritt.beschreibung
         }
+
+    def constructJsonDict(self, context):
+        if 'verfahrensschritte' in context:
+            response = []
+            for verfahrensschritt in context['verfahrensschritte']:
+                response.append(self.constructVerfahrensschrittJsonDict(verfahrensschritt))
+        else:
+            response = self.constructVerfahrensschrittJsonDict(context['verfahrensschritt'])
+
+        return response
 
     def get_objects(self, request):
         verfahrensschritte = Verfahrensschritt.objects.all()
-
-        if self.accept == 'json':
-            response = []
-            for verfahrensschritt in verfahrensschritte:
-                response.append(self.response(verfahrensschritt))
-            return self.renderJson(request,response)
-        else:
-            response = {'verfahrensschritte': verfahrensschritte}
-            return render(request,'projects/verfahrensschritte.html', response)
+        context = {'verfahrensschritte': verfahrensschritte}
+        return self.render(request,'projects/verfahrensschritte.html', context)
 
     def get_object(self, request, pk):
         try:
@@ -182,10 +191,7 @@ class VerfahrensschrittView(lib.views.View):
         except Verfahren.DoesNotExist:
             raise Http404
 
-        if self.accept == 'json':
-            return self.renderJson(request, self.response(verfahrensschritt))
-        else:
-            response = {'verfahrensschritt': verfahrensschritt}
-            return render(request, 'projects/verfahrensschritt.html', response)
+        context = {'verfahrensschritt': verfahrensschritt}
+        return self.render(request, 'projects/verfahrensschritt.html', context)
     
 

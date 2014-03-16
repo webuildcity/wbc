@@ -3,6 +3,7 @@
 
 {% block page %}
 {% for verfahrensschritt in verfahrensschritte %}
-    <h4>{{verfahren.name}}</h4>
+    <h4>{{verfahrensschritt.name}}</h4>
+    <p>{{verfahrensschritt.beschreibung}}</p>
 {% endfor %}
 {% endblock %}
