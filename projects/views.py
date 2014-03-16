@@ -10,7 +10,7 @@ import lib.views
 
 from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
 
-class AbstractOrteView(lib.views.View):
+class OrtView(lib.views.View):
     http_method_names = ['get']
 
     def response(self, ort):
@@ -42,8 +42,7 @@ class AbstractOrteView(lib.views.View):
             })
         return response
 
-class OrteView(AbstractOrteView):
-    def get(self, request):
+    def get_objects(self, request):
         bezirk = request.GET.get('bezirk', None)
 
         if bezirk:
@@ -60,8 +59,7 @@ class OrteView(AbstractOrteView):
             response = {'orte': orte}
             return render(request,'projects/orte.html', response)
 
-class OrtView(AbstractOrteView):
-    def get(self, request, pk):
+    def get_object(self, request, pk):
         try:
             ort = Ort.objects.get(pk=int(pk))
         except Ort.DoesNotExist:
@@ -73,7 +71,7 @@ class OrtView(AbstractOrteView):
             response = {'ort': ort}
             return render(request, 'projects/ort.html', response)
 
-class AbstractVeroeffentlichungView(lib.views.View):
+class VeroeffentlichungView(lib.views.View):
     http_method_names = ['get']
 
     def response(self, veroeffentlichung):
@@ -89,8 +87,7 @@ class AbstractVeroeffentlichungView(lib.views.View):
             'bezirk': ', '.join([b.name for b in veroeffentlichung.ort.bezirke.all()])
         }
 
-class VeroeffentlichungenView(AbstractVeroeffentlichungView):
-    def get(self, request):
+    def get_objects(self, request):
         beginn = request.GET.get('beginn', None)
         ende = request.GET.get('ende', None)
 
@@ -113,8 +110,7 @@ class VeroeffentlichungenView(AbstractVeroeffentlichungView):
             response = {'veroeffentlichungen': veroeffentlichungen}
             return render(request,'projects/veroeffentlichungen.html', response)
 
-class VeroeffentlichungView(AbstractVeroeffentlichungView):
-    def get(self, request, pk):
+    def get_object(self, request, pk):
         try:
             veroeffentlichung = Veroeffentlichung.objects.get(pk=int(pk))
         except Veroeffentlichung.DoesNotExist:
@@ -125,4 +121,71 @@ class VeroeffentlichungView(AbstractVeroeffentlichungView):
         else:
             response = {'veroeffentlichung': veroeffentlichung}
             return render(request, 'projects/veroeffentlichung.html', response)
+
+class VerfahrenView(lib.views.View):
+    http_method_names = ['get']
+
+    def response(self, verfahren):
+        return {
+            'pk': verfahren.beschreibung,
+            'name': verfahren.name
+        }
+
+    def get_objects(self, request):
+        verfahrens = Verfahren.objects.all()
+
+        if self.accept == 'json':
+            response = []
+            for verfahren in verfahrens:
+                response.append(self.response(v))
+            return self.renderJson(request,response)
+        else:
+            response = {'verfahrens': verfahrens}
+            return render(request,'projects/verfahrens.html', response)
+
+    def get_object(self, request, pk):
+        try:
+            verfahren = Verfahren.objects.get(pk=int(pk))
+        except Verfahren.DoesNotExist:
+            raise Http404
+
+        if self.accept == 'json':
+            return self.renderJson(request, self.response(verfahren))
+        else:
+            response = {'verfahren': verfahren}
+            return render(request, 'projects/verfahren.html', response)
+
+class VerfahrensschrittView(lib.views.View):
+    http_method_names = ['get']
+
+    def response(self, verfahren):
+        return {
+            'pk': verfahren.beschreibung,
+            'name': verfahren.name
+        }
+
+    def get_objects(self, request):
+        verfahrensschritte = Verfahrensschritt.objects.all()
+
+        if self.accept == 'json':
+            response = []
+            for verfahrensschritt in verfahrensschritte:
+                response.append(self.response(verfahrensschritt))
+            return self.renderJson(request,response)
+        else:
+            response = {'verfahrensschritte': verfahrensschritte}
+            return render(request,'projects/verfahrensschritte.html', response)
+
+    def get_object(self, request, pk):
+        try:
+            verfahrensschritt = Verfahrensschritt.objects.get(pk=int(pk))
+        except Verfahren.DoesNotExist:
+            raise Http404
+
+        if self.accept == 'json':
+            return self.renderJson(request, self.response(verfahrensschritt))
+        else:
+            response = {'verfahrensschritt': verfahrensschritt}
+            return render(request, 'projects/verfahrensschritt.html', response)
+    
 

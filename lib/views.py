@@ -9,6 +9,7 @@ import django.views.generic
 import json
 
 class View(django.views.generic.View):
+    http_method_names = ['get']
 
     def dispatch(self, request, *args, **kwargs):
         # get the accept header 
@@ -23,6 +24,12 @@ class View(django.views.generic.View):
             self.accept = 'html'
 
         return super(View,self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, pk=None):
+        if pk:
+            return self.get_object(request,pk)
+        else:
+            return self.get_objects(request)
 
     def serialiseResponse(response):
         dictionary = {}
