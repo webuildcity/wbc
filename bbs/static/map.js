@@ -114,7 +114,7 @@ function initMap() {
         popuptext += '<p>Betrifft Gegend um: ' + ort.properties.adresse + '</p>';
         popuptext += '<p>Verantwortlich: ' + veroeffentlichung.behoerde + '</p>';
         popuptext += '<p>Beteiligung möglich bis: ' + veroeffentlichung.ende + '</p>';
-        popuptext += '<p><a href="/orte/"' + ort.properties.pk + '" >Details</a></p>';
+        popuptext += '<p><a href="/orte/' + ort.properties.pk + '" >Details</a></p>';
 
         marker.bindPopup(popuptext, {
             autoPanPaddingTopLeft: new L.Point(10,100),

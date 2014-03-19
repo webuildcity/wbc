@@ -21,6 +21,7 @@ class OrtView(lib.views.View):
                 'coordinates': [ort.lon,ort.lat]
             },
             'properties': {
+                'pk': ort.pk,
                 'bezeichner': ort.bezeichner,
                 'adresse': ort.adresse,
                 'beschreibung': ort.beschreibung,
