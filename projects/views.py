@@ -33,7 +33,11 @@ class OrtView(lib.views.View):
         for veroeffentlichung in ort.veroeffentlichungen.all():
             response['properties']['veroeffentlichungen'].append({
                 'beschreibung': veroeffentlichung.beschreibung,
-                'verfahrensschritt': veroeffentlichung.verfahrensschritt.name,
+                'verfahrensschritt': {
+                    'pk': veroeffentlichung.verfahrensschritt.pk,
+                    'name': veroeffentlichung.verfahrensschritt.name,
+                    'verfahren': veroeffentlichung.verfahrensschritt.verfahren.name
+                },
                 'beginn': veroeffentlichung.beginn,
                 'ende': veroeffentlichung.ende,
                 'auslegungsstelle': veroeffentlichung.auslegungsstelle,
@@ -55,11 +59,19 @@ class OrtView(lib.views.View):
 
     def get_objects(self, request):
         bezirk = request.GET.get('bezirk', None)
+        beginn = request.GET.get('beginn', None)
+        ende = request.GET.get('ende', None)
 
+        orte = Ort.objects
+        if beginn:
+            beginn = tuple([int(i) for i in beginn.split('-')])
+            orte = orte.filter(veroeffentlichungen__beginn__lte=datetime.date(*beginn))
+        if ende: 
+            ende = tuple([int(i) for i in ende.split('-')])
+            orte = orte.filter(veroeffentlichungen__ende__gte=datetime.date(*ende))
         if bezirk:
-            orte = Ort.objects.filter(bezirke__name=bezirk)
-        else: 
-            orte = Ort.objects.all()
+            orte = orte.filter(bezirke__name=bezirk)
+        orte = orte.all()
 
         context = {'orte': orte}
         return self.render(request,'projects/orte.html', context)
@@ -106,11 +118,10 @@ class VeroeffentlichungView(lib.views.View):
         veroeffentlichungen = Veroeffentlichung.objects
         if beginn:
             beginn = tuple([int(i) for i in beginn.split('-')])
-            print beginn
-            veroeffentlichungen = veroeffentlichungen.filter(beginn__gte=datetime.date(*beginn))
+            veroeffentlichungen = veroeffentlichungen.filter(beginn__lte=datetime.date(*beginn))
         if ende: 
             ende = tuple([int(i) for i in ende.split('-')])
-            veroeffentlichungen = veroeffentlichungen.filter(ende__lte=datetime.date(*ende))
+            veroeffentlichungen = veroeffentlichungen.filter(ende__gte=datetime.date(*ende))
         veroeffentlichungen = veroeffentlichungen.all()
 
         context = {'veroeffentlichungen': veroeffentlichungen}
@@ -167,7 +178,9 @@ class VerfahrensschrittView(lib.views.View):
         return {
             'pk': verfahrensschritt.pk,
             'name': verfahrensschritt.name,
-            'beschreibung': verfahrensschritt.beschreibung
+            'beschreibung': verfahrensschritt.beschreibung,
+             'icon': verfahrensschritt.icon,
+             'hoverIcon': verfahrensschritt.hoverIcon
         }
 
     def constructJsonDict(self, context):

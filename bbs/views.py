@@ -5,18 +5,7 @@ from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren
 import datetime
 
 def home(request):
-    verfahren = Verfahren.objects.all()
-    verfahrensschritte = Verfahrensschritt.objects.all()
-    veroeffentlichungen = Veroeffentlichung.objects.filter(ende__gte = datetime.date.today())
-    veroeffentlichungenAlt = Veroeffentlichung.objects.filter(ende__lt = datetime.date.today())
-
-    return render(request,'bbs/map.html',{
-        'verfahrensschritte': verfahrensschritte,
-        'verfahren': verfahren,
-        'veroeffentlichungen': veroeffentlichungen,
-        'veroeffentlichungenAlt': veroeffentlichungenAlt,
-        'absolute': True
-        })
+    return render(request,'bbs/map.html')
 
 def begriffe(request):
     verfahren = Verfahren.objects.all()

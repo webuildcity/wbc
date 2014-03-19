@@ -1,7 +1,35 @@
 var layers = {};
+var verfahrensschritte;
+var orte;
 
 function init() {
-    initMap();
+    $.ajax({
+        url: '/verfahrensschritte/',
+        type: 'GET',
+        dataType: 'json',
+        headers: {
+            'Accept': 'application/json'
+        },
+        error: self.ajaxError,
+        success: function (json) {
+            verfahrensschritte = json;
+
+            var now = new Date().toISOString().match(/(\d+-\d+-\d+)/)[0];
+            $.ajax({
+                url: '/orte/?ende=' + now,
+                type: 'GET',
+                dataType: 'json',
+                headers: {
+                    'Accept': 'application/json'
+                },
+                error: self.ajaxError,
+                success: function (json) {
+                    orte = json.features;
+                    initMap();
+                }
+            });
+        }
+    }); 
 }
 
 function initMap() {
@@ -23,14 +51,22 @@ function initMap() {
     var center = new L.LatLng(52.51, 13.37628);
     map.setView(center, 11);
     
+    // add a layer for the old publications
+    var greyIcon = L.icon({
+        iconUrl: '/static/img/Baustellenschilder/klein/schild_grau_blass.png',    
+        iconSize:     [26, 45], // size of the icon width,height    
+        iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
+        popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
+    });  
+
     $.each(verfahrensschritte, function(key, vs) {
         var layer = {}
 
-        layer.iconUrl = staticUrl + vs.icon;
-        layer.hoverIconUrl = staticUrl + vs.hoverIcon;
+        layer.iconUrl = '/static/' + vs.icon;
+        layer.hoverIconUrl = '/static/' + vs.hoverIcon;
 
         layer.icon = L.icon({
-            iconUrl: staticUrl + vs.icon,
+            iconUrl: '/static/' + vs.icon,
             iconSize:     [26, 45], // size of the icon width,height    
             iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
             popupAnchor:  [0, -46]  // point from which the popup should open relative to the iconAnchor
@@ -50,96 +86,65 @@ function initMap() {
     });
 
     // add points to map
-    $.each(points, function(key, point){
-        var marker = L.marker(
-            [point.lat,point.lon],
-            {icon: layers[point.vspk].icon}
-        ); 
+    $.each(orte, function(key, ort){
 
-        marker.icon = layers[point.vspk].iconUrl;
-        marker.hoverIcon = layers[point.vspk].hoverIconUrl;
+        // get the first veroeffentlichung
+        var veroeffentlichung = ort.properties.veroeffentlichungen[0]
 
+        // get the id of the verfahrensschritt
+        var vspk = veroeffentlichung.verfahrensschritt.pk;
+
+        // get coordinates
+        var lat = ort.geometry.coordinates[1];
+        var lon = ort.geometry.coordinates[0];
+
+        // create marker
+        var marker = L.marker([lat,lon], {icon: layers[vspk].icon}); 
+        marker.icon = layers[vspk].iconUrl;
+        marker.hoverIcon = layers[vspk].hoverIconUrl;
         marker.on("mouseover", function(e) {
             e.target._icon.src = this.hoverIcon;
         }).on("mouseout", function(e) {
             e.target._icon.src = this.icon;
         });
 
-        var popuptext = '<p><b>' + verfahren[point.vpk].name + '</b>';
-        popuptext += '<p><i>' + verfahrensschritte[point.vspk].name + '</i>';
-        popuptext += ' <a href="/begriffe/#'+ point.vspk + '" >(?)</a></p>';
-        popuptext += '<p>Betrifft Gegend um: ' + point.adresse + '</p>';
-        popuptext += '<p>Verantwortlich: ' + point.behoerde + '</p>';
-        popuptext += '<p>Beteiligung möglich bis: ' + point.ende + '</p>';
-        popuptext += '<p><a href="' + siteUrl + "orte/" + point.ort + '" >Details</a></p>';
+        var popuptext = '<p><b>' + veroeffentlichung.verfahrensschritt.verfahren + '</b>';
+        popuptext += '<p><i>' + veroeffentlichung.verfahrensschritt.name + '</i>';
+        popuptext += ' <a href="/begriffe/#'+ vspk + '" >(?)</a></p>';
+        popuptext += '<p>Betrifft Gegend um: ' + ort.properties.adresse + '</p>';
+        popuptext += '<p>Verantwortlich: ' + veroeffentlichung.behoerde + '</p>';
+        popuptext += '<p>Beteiligung möglich bis: ' + veroeffentlichung.ende + '</p>';
+        popuptext += '<p><a href="/orte/"' + ort.properties.pk + '" >Details</a></p>';
 
-        marker.bindPopup(popuptext, {autoPanPaddingTopLeft: new L.Point(10,100), autoPanPaddingBottomRight: new L.Point(10,0)});
+        marker.bindPopup(popuptext, {
+            autoPanPaddingTopLeft: new L.Point(10,100),
+            autoPanPaddingBottomRight: new L.Point(10,0)
+        });
         marker.addTo(map);
 
-        layers[point.vspk].layerGroup.addLayer(marker);
+        layers[vspk].layerGroup.addLayer(marker);
     }); 
-    
-    var greyIcon = L.icon({
-        iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_grau_blass.png',    
-        iconSize:     [26, 45], // size of the icon width,height    
-        iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
-        popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
-    });   
-    
-    var oldMarker = new Array();
-    var oldLayer = L.layerGroup(oldLayer);
-    
-    $.each(pointsOld, function(key,point){
-        // marker für leaflet karte
-        var marker = L.marker(
-            [point.lat,point.lon],
-            {icon: greyIcon}
-        );        
         
-        oldLayer.addLayer(marker)
-
-        marker.pk = point.pk;
-        
-        var popuptext = '<p><b>' + verfahren[point.vpk].name + '</b>';
-        popuptext += '<p><i>' + verfahrensschritte[point.vspk].name + '</i>';
-        popuptext += ' <a href="/begriffe/#'+ point.vspk + '" >(?)</a></p>';
-        popuptext += '<p>Betrifft Gegend um: ' + point.adresse + '</p>';
-        popuptext += '<p>Verantwortlich: ' + point.behoerde + '</p>';
-        popuptext += '<p>Beteiligung war möglich bis: ' + point.ende + '</p>';
-        popuptext += '<p><a href="' + siteUrl + "orte/" + point.ort + '" >Details</a></p>';
-        
-        marker.bindPopup(popuptext, {autoPanPaddingTopLeft: new L.Point(10,100), autoPanPaddingBottomRight: new L.Point(10,0)});        
-        
-        marker.on("mouseover", function(e) {
-            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau.png';
-        }).on("mouseout", function(e) {
-            e.target._icon.src = staticUrl + '/img/Baustellenschilder/klein/schild_grau_blass.png';
-        }); 
-    });   
-    
+    // bin the checkbox to load the old markers
     $('input[name=old]').click(function(){
-        if(this.checked) {
-            map.addLayer(oldLayer);            
-        } else { 
-            map.removeLayer(oldLayer);         
-        }
+        console.log('TODO');
     });
     
+    // remove and add the zoom buttons
     var zoom = $('.leaflet-control-zoom').remove();
     zoom.appendTo($('#buttons-left'));
     $('.leaflet-control-attribution').remove();
-
     $('<div />', {
         'class': 'leaflet-control-zoom leaflet-bar leaflet-control pull-left',
         'html': '<a class="info-button leaflet-control-zoom-out" href="#" title="Info">?</a>'
     }).appendTo($('#buttons-left'));
 
+    // add the info button
     $('<button />', {
         'type': 'button',
         'class': 'info-button navbar-info navbar-toggle',
         'html': 'Info'
     }).appendTo($('.navbar-header'));
-
     $('.info-button').on('click', function () {
         showInfo();
     });
@@ -197,7 +202,3 @@ function showInfo() {
         return false;
     });
 };
-
-$(document).ready(function() {
-    setTimeout('init()',100);
-});
