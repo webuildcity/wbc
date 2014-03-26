@@ -129,6 +129,7 @@ body, html {
     font-weight: normal;
 }
 
+.bbs-loading,
 .bbs-modal {
     position: absolute;
     top: 0;
@@ -137,11 +138,24 @@ body, html {
     left: 0;
     z-index: 10000;
 
-    background-color: rgba(0,0,0,0.5);
-
     display: none;
 }
+.bbs-loading {
+    background: transparent;
 
+    font-family: dejavu;
+    font-weight: bold;
+    font-size: 16px;
+    color: #646464;
+}
+.bbs-loading .bbs-loading-dialog {
+    padding: 20px;
+    text-align: center;
+}
+.bbs-modal {
+    background-color: rgba(0,0,0,0.5);
+}
+.bbs-loading .bbs-loading-dialog,
 .bbs-modal .bbs-modal-dialog {
     position: absolute;
     background-color: white;

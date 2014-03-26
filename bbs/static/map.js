@@ -76,6 +76,7 @@ function initMap(verfahrensschritte) {
             _old = true;
         }
 
+        showLoading();
         $.ajax({
             url: url,
             dataType: 'json',
@@ -86,6 +87,7 @@ function initMap(verfahrensschritte) {
             success: function (json) {
                 _orte = json.features;
                 initOrte()
+                $('.bbs-loading').hide();
             }
         });
     });
@@ -181,6 +183,26 @@ function initOrte() {
 
         _markerLayer.addLayer(marker);
     }); 
+}
+
+function showLoading () {
+    var loading = $('.bbs-loading-dialog');
+
+    // adjust left and top position
+    var windowWidth = $(window).width();
+    var windowHeight = $(window).height();
+
+    loading.height(20);
+    loading.width(360)
+
+    var left = (windowWidth - loading.width()) / 2;
+    loading.css('left', left);
+    var top = (windowHeight - loading.height()) / 2 - 20;
+    loading.css('top', top);
+    loading.css('bottom', 'auto');
+    loading.css('right', 'auto');
+
+    $('.bbs-loading').show();
 }
 
 function showInfo() {
