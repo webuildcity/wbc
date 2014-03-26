@@ -143,13 +143,13 @@ function initOrte() {
 
         var icon;
         if (_old) {
-            icon = _greyIcon.icon;
+            icon = _greyIcon;
         } else {
-            icon = _icons[vspk].icon
+            icon = _icons[vspk]
         }
 
         // create marker
-        var marker = L.marker([lat,lon], {icon: icon});
+        var marker = L.marker([lat,lon], {icon: icon.icon});
 
         // enable hover icon
         if (!_old) {
