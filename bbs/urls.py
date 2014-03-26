@@ -9,11 +9,17 @@ from news import views
 urlpatterns = patterns('',
     url(r'^$', 'bbs.views.home'),
     # orte
-    url(r'^orte/$', OrteView.as_view()),
+    url(r'^orte/$', OrtView.as_view()),
     url(r'^orte/(?P<pk>\d+)/$', OrtView.as_view()),
     # veroeffentlichungen
-    url(r'^veroeffentlichungen/$', VeroeffentlichungenView.as_view()),
+    url(r'^veroeffentlichungen/$', VeroeffentlichungView.as_view()),
     url(r'^veroeffentlichungen/(?P<pk>\d+)/$', VeroeffentlichungView.as_view()),
+    # verfahren
+    url(r'^verfahren/$', VerfahrenView.as_view()),
+    url(r'^verfahren/(?P<pk>\d+)/$', VerfahrenView.as_view()),
+    # verfahrensschritte
+    url(r'^verfahrensschritte/$', VerfahrensschrittView.as_view()),
+    url(r'^verfahrensschritte/(?P<pk>\d+)/$', VerfahrensschrittView.as_view()),
     # info
     url(r'^begriffe/$', 'bbs.views.begriffe'),
     # mails

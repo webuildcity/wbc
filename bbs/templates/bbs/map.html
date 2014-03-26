@@ -3,38 +3,19 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
-    <link rel="stylesheet" href="{% static 'social.css' %}" />
+    <!--<link rel="stylesheet" href="{% static 'social.css' %}" />-->
     <link rel="stylesheet" href="{% static 'map.css' %}" />
 {% endblock %}
 
 {% block js %}
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
-    <script type="text/javascript" src="{% static 'social.js' %}" ></script>
+    <!--<script type="text/javascript" src="{% static 'social.js' %}" ></script>-->
     <script type="text/javascript" src="{% static 'map.js' %}" ></script>
 
     <script type="text/javascript">
-        var siteUrl = '{{ siteUrl|safe }}';
-        var staticUrl = '{{ STATIC_URL }}';
-
-        var verfahren = {};
-        {% for v in verfahren %}
-        verfahren[{{v.pk}}] = {"pk": {{v.pk}}, "name": "{{v.name}}"};
-        {% endfor %}
-
-        var verfahrensschritte = {};
-        {% for v in verfahrensschritte %}
-        verfahrensschritte[{{v.pk}}] = {"pk": {{v.pk}}, "name": "{{v.name}}", "icon": "{{v.icon}}", "hoverIcon": "{{v.hoverIcon}}"};
-        {% endfor %}
-
-        var points = {}
-        {% for v in veroeffentlichungen %}
-        points[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "ort": {{v.ort.pk}}, "adresse": "{{v.ort.adresse}}", "lat": {{v.ort.lat|stringformat:"F"}}, "lon": {{v.ort.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}}, "vpk": {{v.verfahrensschritt.verfahren.pk}} };
-        {% endfor %}
-        
-        var pointsOld = {}
-        {% for v in veroeffentlichungenAlt %}
-        pointsOld[{{v.pk}}] = {"pk": {{v.pk}}, "ende": "{{v.ende}}", "behoerde": "{{v.behoerde.name}}", "ort": {{v.ort.pk}}, "adresse": "{{v.ort.adresse}}", "lat": {{v.ort.lat|stringformat:"F"}}, "lon": {{v.ort.lon|stringformat:"F"}}, "vspk": {{v.verfahrensschritt.pk}}, "vpk": {{v.verfahrensschritt.verfahren.pk}} };
-        {% endfor %}
+        $(document).ready(function() {
+            setTimeout('init()',100);
+        });
     </script>
 {% endblock %}
 

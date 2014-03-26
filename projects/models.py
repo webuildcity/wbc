@@ -35,6 +35,7 @@ class Veroeffentlichung(Model):
         return self.ort.adresse + ', ' + self.verfahrensschritt.name
 
     class Meta:
+        ordering            = ("-ende",)
         verbose_name        = "Veröffentlichung"
         verbose_name_plural = "Veröffentlichungen"
 
