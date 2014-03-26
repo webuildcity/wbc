@@ -72,11 +72,12 @@ function initMap(verfahrensschritte) {
             url = '/orte/?nach=' + now;
             _old = false;
         } else {
+            showLoading();
             url = '/orte/?vor=' + now;
             _old = true;
         }
 
-        showLoading();
+        
         $.ajax({
             url: url,
             dataType: 'json',
@@ -195,7 +196,7 @@ function showLoading () {
     loading.height(20);
     loading.width(240)
 
-    var left = (windowWidth - loading.width()) / 2;
+    var left = (windowWidth - loading.width()) / 2 - 20;
     loading.css('left', left);
     var top = (windowHeight - loading.height()) / 2 - 20;
     loading.css('top', top);
