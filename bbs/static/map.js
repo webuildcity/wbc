@@ -193,7 +193,7 @@ function showLoading () {
     var windowHeight = $(window).height();
 
     loading.height(20);
-    loading.width(360)
+    loading.width(240)
 
     var left = (windowWidth - loading.width()) / 2;
     loading.css('left', left);

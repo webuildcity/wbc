@@ -142,15 +142,15 @@ body, html {
 }
 .bbs-loading {
     background: transparent;
-
-    font-family: dejavu;
-    font-weight: bold;
-    font-size: 16px;
-    color: #646464;
 }
 .bbs-loading .bbs-loading-dialog {
     padding: 20px;
     text-align: center;
+
+    font-family: dejavu;
+    font-weight: bold;
+    font-size: 16px;
+    color: #de6a00;
 }
 .bbs-modal {
     background-color: rgba(0,0,0,0.5);
