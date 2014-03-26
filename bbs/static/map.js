@@ -1,43 +1,27 @@
-var layers = {};
-var verfahrensschritte;
-var orte;
+var _map;
+var _icons = [];
+var _greyIcon;
+var _markerLayer;
+var _old = false;
 
 function init() {
+    // get the verfahrensschritte by ajax and call initMap
     $.ajax({
         url: '/verfahrensschritte/',
-        type: 'GET',
         dataType: 'json',
-        headers: {
-            'Accept': 'application/json'
-        },
-        error: self.ajaxError,
+        headers: {'Accept': 'application/json'},
         success: function (json) {
-            verfahrensschritte = json;
-
-            var now = new Date().toISOString().match(/(\d+-\d+-\d+)/)[0];
-            $.ajax({
-                url: '/orte/?ende=' + now,
-                type: 'GET',
-                dataType: 'json',
-                headers: {
-                    'Accept': 'application/json'
-                },
-                error: self.ajaxError,
-                success: function (json) {
-                    orte = json.features;
-                    initMap();
-                }
-            });
+            initMap(json);
         }
     }); 
 }
 
-function initMap() {
+function initMap(verfahrensschritte) {
     // add the map layer
-    var map = new L.Map("map");
+    _map = new L.Map("map");
     var min = 9;
     var max = 17;
-    var myLayer = new L.TileLayer('http://tiles.jochenklar.de/tiles/bbs/berlin/{z}/{x}/{y}.png', {
+    var mapLayer = new L.TileLayer('http://tiles.jochenklar.de/tiles/bbs/berlin/{z}/{x}/{y}.png', {
         minZoom: min,
         maxZoom: max,
         attribution: 'Map data &copy; 2012 OpenStreetMap contributors',
@@ -45,89 +29,65 @@ function initMap() {
         errorTileUrl: 'http://tiles.jochenklar.de/bbs/error.png',
         reuseTiles: true
     });
-    map.addLayer(myLayer);
+    _map.addLayer(mapLayer);
 
     // center map
     var center = new L.LatLng(52.51, 13.37628);
-    map.setView(center, 11);
+    _map.setView(center, 11);
     
-    // add a layer for the old publications
-    var greyIcon = L.icon({
-        iconUrl: '/static/img/Baustellenschilder/klein/schild_grau_blass.png',    
-        iconSize:     [26, 45], // size of the icon width,height    
-        iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
-        popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
-    });  
+    // add a layer for the markers
+    _markerLayer = L.layerGroup().addTo(_map);
 
-    $.each(verfahrensschritte, function(key, vs) {
-        var layer = {}
-
-        layer.iconUrl = '/static/' + vs.icon;
-        layer.hoverIconUrl = '/static/' + vs.hoverIcon;
-
-        layer.icon = L.icon({
-            iconUrl: '/static/' + vs.icon,
-            iconSize:     [26, 45], // size of the icon width,height    
-            iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
-            popupAnchor:  [0, -46]  // point from which the popup should open relative to the iconAnchor
-        });
-
-        layer.layerGroup = L.layerGroup().addTo(map);
-
-        layers[vs.pk] = layer;
-        
-        $('input[name=vs-'+vs.pk+']').click(function(){
-            if(this.checked) {
-                map.addLayer(layers[vs.pk].layerGroup);            
-            } else { 
-                map.removeLayer(layers[vs.pk].layerGroup);         
-            }
-        });
+    // create icons for verfahrensschritte
+    $.each(verfahrensschritte, function(key, verfahrensschritt) {
+        _icons[verfahrensschritt.pk] = {
+            icon : L.icon({
+                iconUrl: verfahrensschritt.icon,
+                iconSize:     [26, 45], 
+                iconAnchor:   [13, 45],
+                popupAnchor:  [0, -46]
+            }),
+            iconUrl: verfahrensschritt.icon,
+            hoverIconUrl: verfahrensschritt.hoverIcon
+        }
     });
 
-    // add points to map
-    $.each(orte, function(key, ort){
+    // add a layer for the old publications
+    _greyIcon  = {
+        icon : L.icon({
+            iconUrl: '/static/img/Baustellenschilder/klein/schild_grau_blass.png',    
+            iconSize:     [26, 45],
+            iconAnchor:   [13, 45],
+            popupAnchor:  [0, -46]
+        })
+    }; 
 
-        // get the first veroeffentlichung
-        var veroeffentlichung = ort.properties.veroeffentlichungen[0]
-
-        // get the id of the verfahrensschritt
-        var vspk = veroeffentlichung.verfahrensschritt.pk;
-
-        // get coordinates
-        var lat = ort.geometry.coordinates[1];
-        var lon = ort.geometry.coordinates[0];
-
-        // create marker
-        var marker = L.marker([lat,lon], {icon: layers[vspk].icon}); 
-        marker.icon = layers[vspk].iconUrl;
-        marker.hoverIcon = layers[vspk].hoverIconUrl;
-        marker.on("mouseover", function(e) {
-            e.target._icon.src = this.hoverIcon;
-        }).on("mouseout", function(e) {
-            e.target._icon.src = this.icon;
-        });
-
-        var popuptext = '<p><b>' + veroeffentlichung.verfahrensschritt.verfahren + '</b>';
-        popuptext += '<p><i>' + veroeffentlichung.verfahrensschritt.name + '</i>';
-        popuptext += ' <a href="/begriffe/#'+ vspk + '" >(?)</a></p>';
-        popuptext += '<p>Betrifft Gegend um: ' + ort.properties.adresse + '</p>';
-        popuptext += '<p>Verantwortlich: ' + veroeffentlichung.behoerde + '</p>';
-        popuptext += '<p>Beteiligung möglich bis: ' + veroeffentlichung.ende + '</p>';
-        popuptext += '<p><a href="/orte/' + ort.properties.pk + '" >Details</a></p>';
-
-        marker.bindPopup(popuptext, {
-            autoPanPaddingTopLeft: new L.Point(10,100),
-            autoPanPaddingBottomRight: new L.Point(10,0)
-        });
-        marker.addTo(map);
-
-        layers[vspk].layerGroup.addLayer(marker);
-    }); 
-        
     // bin the checkbox to load the old markers
     $('input[name=old]').click(function(){
-        console.log('TODO');
+        _markerLayer.clearLayers();
+        var url;
+        var now = new Date().toISOString().match(/(\d+-\d+-\d+)/)[0];
+
+        if (_old) {
+            url = '/orte/?nach=' + now;
+            _old = false;
+        } else {
+            url = '/orte/?vor=' + now;
+            _old = true;
+        }
+
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            headers: {
+                'Accept': 'application/json'
+            },
+            error: self.ajaxError,
+            success: function (json) {
+                _orte = json.features;
+                initOrte()
+            }
+        });
     });
     
     // remove and add the zoom buttons
@@ -148,6 +108,76 @@ function initMap() {
     $('.info-button').on('click', function () {
         showInfo();
     });
+
+    // load and display the orte with ende in the future
+    var now = new Date().toISOString().match(/(\d+-\d+-\d+)/)[0];
+    $.ajax({
+        url: '/orte/?nach=' + now,
+        type: 'GET',
+        dataType: 'json',
+        headers: {
+            'Accept': 'application/json'
+        },
+        error: self.ajaxError,
+        success: function (json) {
+            _orte = json.features;
+            initOrte();
+        }
+    });
+}
+
+function initOrte() {
+    var markers = [];
+
+    // add points to map
+    $.each(_orte, function(key, ort){
+        // get the first veroeffentlichung
+        var veroeffentlichung = ort.properties.veroeffentlichungen[0]
+
+        // get the id of the verfahrensschritt
+        var vspk = veroeffentlichung.verfahrensschritt.pk;
+
+        // get coordinates
+        var lat = ort.geometry.coordinates[1];
+        var lon = ort.geometry.coordinates[0];
+
+        var icon;
+        if (_old) {
+            icon = _greyIcon.icon;
+        } else {
+            icon = _icons[vspk].icon
+        }
+
+        // create marker
+        var marker = L.marker([lat,lon], {icon: icon});
+
+        // enable hover icon
+        if (!_old) {
+            marker.iconUrl = icon.iconUrl
+            marker.hoverIconUrl = icon.hoverIconUrl
+
+            marker.on("mouseover", function(e) {
+                e.target._icon.src = this.hoverIconUrl;
+            }).on("mouseout", function(e) {
+                e.target._icon.src = this.iconUrl;
+            });
+        }
+
+        var popuptext = '<p><b>' + veroeffentlichung.verfahrensschritt.verfahren + '</b>';
+        popuptext += '<p><i>' + veroeffentlichung.verfahrensschritt.name + '</i>';
+        popuptext += ' <a href="/begriffe/#'+ vspk + '" >(?)</a></p>';
+        popuptext += '<p>Betrifft Gegend um: ' + ort.properties.adresse + '</p>';
+        popuptext += '<p>Verantwortlich: ' + veroeffentlichung.behoerde + '</p>';
+        popuptext += '<p>Beteiligung möglich bis: ' + veroeffentlichung.ende + '</p>';
+        popuptext += '<p><a href="/orte/' + ort.properties.pk + '" >Details</a></p>';
+
+        marker.bindPopup(popuptext, {
+            autoPanPaddingTopLeft: new L.Point(10,100),
+            autoPanPaddingBottomRight: new L.Point(10,0)
+        });
+
+        _markerLayer.addLayer(marker);
+    }); 
 }
 
 function showInfo() {
