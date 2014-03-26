@@ -163,12 +163,15 @@ function initOrte() {
             });
         }
 
+        var d = new Date(veroeffentlichung.ende);
+        var datestring = d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear();
+
         var popuptext = '<p><b>' + veroeffentlichung.verfahrensschritt.verfahren + '</b>';
         popuptext += '<p><i>' + veroeffentlichung.verfahrensschritt.name + '</i>';
         popuptext += ' <a href="/begriffe/#'+ vspk + '" >(?)</a></p>';
         popuptext += '<p>Betrifft Gegend um: ' + ort.properties.adresse + '</p>';
         popuptext += '<p>Verantwortlich: ' + veroeffentlichung.behoerde + '</p>';
-        popuptext += '<p>Beteiligung möglich bis: ' + veroeffentlichung.ende + '</p>';
+        popuptext += '<p>Beteiligung möglich bis: ' + datestring + '</p>';
         popuptext += '<p><a href="/orte/' + ort.properties.pk + '" >Details</a></p>';
 
         marker.bindPopup(popuptext, {
