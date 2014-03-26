@@ -143,13 +143,7 @@ body, html {
 .bbs-loading .bbs-loading-dialog,
 .bbs-modal .bbs-modal-dialog {
     position: absolute;
-    background-color: white;
-
-    -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 14px 0px;
-    -moz-box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 14px 0px;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 14px 0px;
 }
-
 .bbs-loading {
     background: transparent;
 }
@@ -165,6 +159,12 @@ body, html {
 
 .bbs-modal {
     background-color: rgba(0,0,0,0.5);
+}
+.bbs-modal .bbs-modal-dialog {
+    background-color: white;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 14px 0px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 14px 0px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 14px 0px;
 }
 .bbs-modal .bbs-modal-dialog-body {
     padding: 20px;
