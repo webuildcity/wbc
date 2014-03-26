@@ -21,7 +21,7 @@ function initMap(verfahrensschritte) {
     _map = new L.Map("map");
     var min = 9;
     var max = 17;
-    var myLayer = new L.TileLayer('http://tiles.buergerbautstadt.de/berlin/{z}/{x}/{y}.png', {
+    var mapLayer = new L.TileLayer('http://tiles.buergerbautstadt.de/berlin/{z}/{x}/{y}.png', {
         minZoom: min,
         maxZoom: max,
         attribution: 'Map data &copy; 2012 OpenStreetMap contributors',
