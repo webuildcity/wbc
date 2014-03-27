@@ -60,16 +60,16 @@ class OrtView(lib.views.View):
 
     def get_objects(self, request):
         bezirk = request.GET.get('bezirk', None)
-        beginn = request.GET.get('beginn', None)
-        ende = request.GET.get('ende', None)
+        vor = request.GET.get('vor', None)
+        nach = request.GET.get('nach', None)
 
         orte = Ort.objects
-        if beginn:
-            beginn = tuple([int(i) for i in beginn.split('-')])
-            orte = orte.filter(veroeffentlichungen__beginn__lte=datetime.date(*beginn))
-        if ende: 
-            ende = tuple([int(i) for i in ende.split('-')])
-            orte = orte.filter(veroeffentlichungen__ende__gte=datetime.date(*ende))
+        if vor:
+            vor = tuple([int(i) for i in vor.split('-')])
+            orte = orte.filter(veroeffentlichungen__ende__lte=datetime.date(*vor))
+        if nach: 
+            nach = tuple([int(i) for i in nach.split('-')])
+            orte = orte.filter(veroeffentlichungen__ende__gte=datetime.date(*nach))
         if bezirk:
             orte = orte.filter(bezirke__name=bezirk)
         orte = orte.all()
@@ -180,8 +180,8 @@ class VerfahrensschrittView(lib.views.View):
             'pk': verfahrensschritt.pk,
             'name': verfahrensschritt.name,
             'beschreibung': verfahrensschritt.beschreibung,
-             'icon': verfahrensschritt.icon,
-             'hoverIcon': verfahrensschritt.hoverIcon
+            'icon': '/static/' + verfahrensschritt.icon,
+            'hoverIcon': '/static/' + verfahrensschritt.hoverIcon
         }
 
     def constructJsonDict(self, context):

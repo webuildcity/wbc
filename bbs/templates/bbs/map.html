@@ -3,13 +3,13 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
-    <!--<link rel="stylesheet" href="{% static 'social.css' %}" />-->
+    <link rel="stylesheet" href="{% static 'social.css' %}" />
     <link rel="stylesheet" href="{% static 'map.css' %}" />
 {% endblock %}
 
 {% block js %}
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
-    <!--<script type="text/javascript" src="{% static 'social.js' %}" ></script>-->
+    <script type="text/javascript" src="{% static 'social.js' %}" ></script>
     <script type="text/javascript" src="{% static 'map.js' %}" ></script>
 
     <script type="text/javascript">
@@ -26,6 +26,11 @@
         <div id="buttons-right"></div>
     </div>
     <div id="map"></div>
+    <div class="bbs-loading">
+        <div class="bbs-loading-dialog">
+            Lade Veröffentlichungen ...
+        </div>
+    </div>
     <div class="bbs-modal">
         <div class="bbs-modal-dialog">
             <div class="bbs-modal-dialog-close">
