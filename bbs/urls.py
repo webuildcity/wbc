@@ -29,6 +29,10 @@ urlpatterns = patterns('',
     # admin foo
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    # user login
+    url(r'^login/', 'bbs.views.login_user', name='User_login'),
+    url(r'^logout/', 'bbs.views.logout_user', name='User_logout'),
+
     # robots.txt
     (r'^robots\.txt$', TemplateView.as_view(template_name='bbs/robots.txt', content_type='text/plain')),
     (r'^sitemap\.xml$', TemplateView.as_view(template_name='bbs/sitemap.xml', content_type='text/plain')),
