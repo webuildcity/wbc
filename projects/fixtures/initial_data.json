@@ -225,7 +225,7 @@
         "fields": {
             "created": "2013-06-11T20:00:00Z", 
             "link": "http://www.berlin.de/ba-marzahn-hellersdorf/verwaltung/bauen/beteiligungderoeffent.html", 
-            "name": "Bezirksamt Mahrzahn- Hellersdorf", 
+            "name": "Bezirksamt Mahrzahn-Hellersdorf", 
             "updated": "2013-06-11T20:00:00Z"
         }, 
         "model": "projects.behoerde", 

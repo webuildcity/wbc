@@ -12,6 +12,8 @@ class Ort(Model):
                                     max_length=64,
                                     help_text="ggf. Bezeichner des Beplauungsplans")
     bezirke      = models.ManyToManyField('Bezirk', related_name='orte')
+    polygon      = models.TextField(null=True)
+    polygontype         = models.TextField()
 
     def __unicode__(self):
         return self.adresse

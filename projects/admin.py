@@ -6,7 +6,7 @@ from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren
 class OrtAdmin(admin.ModelAdmin):
     list_display = ('id','bezeichner','adresse')
     list_display_links = ('id','bezeichner','adresse')
-    fields = [ 'adresse' , 'bezirke', 'lat', 'lon', 'beschreibung', 'bezeichner'] 
+    fields = [ 'adresse' , 'bezirke', 'lat', 'lon', 'beschreibung', 'bezeichner', 'polygon'] 
     ordering = ['id']
     change_form_template = "projects/admin/change_form.html"
     add_form_template = "projects/admin/change_form.html"
