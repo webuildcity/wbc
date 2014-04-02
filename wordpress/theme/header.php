@@ -33,7 +33,7 @@
                 <li><a href="http://buergerbautstadt.de/news/abonnieren">Abo</a></li>
                 <li><a href="http://blog.buergerbautstadt.de/about">Über</a></li> 
                 <li><a href="http://blog.buergerbautstadt.de/">Blog</a></li>
-                <li><a href="http://blog.buergerbautstadt.de/contact/">Kontakt</a></li>
+                <li><a href="http://blog.buergerbautstadt.de/impressum/">Impressum</a></li>
             </ul>
         </div>
     </nav>
@@ -53,7 +53,7 @@
                 <li><a href="http://buergerbautstadt.de/news/abonnieren">Abo</a></li>
                 <li><a href="http://blog.buergerbautstadt.de/about">Über</a></li> 
                 <li><a href="http://blog.buergerbautstadt.de/">Blog</a></li>
-                <li><a href="http://blog.buergerbautstadt.de/contact/">Kontakt</a></li>
+                <li><a href="http://blog.buergerbautstadt.de/impressum/">Impressum</a></li>
             </ul>
         </div>
     </div>
