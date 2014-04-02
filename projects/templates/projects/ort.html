@@ -13,7 +13,9 @@
         var lon = {{ ort.lon|stringformat:"F" }};
         var lat = {{ ort.lat|stringformat:"F" }}; 
         var typ = "Öffentliche Auslegung";
-        var area_polygon = {{ort.polygon}};  
+        {% if ort.polygon %}
+        var area_polygon = {{ort.polygon}}; 
+        {% endif %} 
     </script>
     <script type="text/javascript" src="{% static 'localmap.js' %}" ></script>
 {% endblock %}

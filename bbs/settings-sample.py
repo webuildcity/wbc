@@ -120,9 +120,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'south',
     'projects',
-    'news',
-    'south'
+    'news'
 )
 
 # A sample logging configuration. The only tangible logging
