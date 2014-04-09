@@ -8,49 +8,36 @@ import sys,os,datetime
 from django.utils.timezone import now
 
 # Directory prüfen und an PYTHONPATH anhängen
-sys.path.append('/Users/magda/Documents/code/bbs')
+if os.path.isfile('bbs/settings.py'):
+    sys.path.append(os.getcwd())
+else:
+    sys.exit('Error: not in the root directory of the django project.');
 
 # Environment setzen und Models importieren
 os.environ['DJANGO_SETTINGS_MODULE'] = 'bbs.settings'
 from projects.models import Bezirk,Ort,Veroeffentlichung
 
+try:
+    filename = sys.argv[1]
+except IndexError:
+    sys.exit('Error: give json file as command line argument.');
 
-#f = open('/Users/magda/Desktop/re_bplan.geojson', 'r')
-
-json_data=open('re_bplan.geojson')
-
-data = json.load(json_data)
+data = json.load(open(filename,'r'))
 
 plan_list = (data["features"])
 
 print len(plan_list)
 
-
-
 for plan in plan_list:
-
-        properties = plan['properties'] 
-        #print properties['spatial_alias'] 
-        #print properties['AFS_BEHOER']
-        #print properties['PLANNAME'] 
-        #print properties['BEREICH']
-        #print properties['BEZIRK']
-        
-               
-
-        #bezirk = Bezirk.objects.get(name=bezirk_from_geojeson)
-        
+        properties = plan['properties']         
         geometry = plan['geometry']
         if geometry['type'] == 'Polygon':
             coordinate_list = geometry['coordinates'][0]
         else:            
             coordinate_list = geometry['coordinates'][0][0]
 
-        
-
         adress = coordinate_list[0]        
         
-
         ort = Ort.objects.create(lat=adress[1], lon=adress[0])
 
         url = "http://nominatim.openstreetmap.org/reverse?format=json&lat=" + str(adress[1]) + "&lon=" + str(adress[0]) +"&zoom=18&addressdetails=1"
