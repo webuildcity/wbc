@@ -18,7 +18,7 @@ from projects.models import Bezirk,Ort,Veroeffentlichung, Verfahrensschritt, Beh
 
 #f = open('/Users/magda/Desktop/re_bplan.geojson', 'r')
 
-json_data=open('/Users/magda/Desktop/json/lichtenberg.json')
+json_data=open('/Users/magda/Desktop/json/tempelhof-schoeneberg.json')
 
 data = json.load(json_data)
 
