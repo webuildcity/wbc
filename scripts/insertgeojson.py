@@ -17,89 +17,68 @@ from projects.models import Bezirk,Ort,Veroeffentlichung
 
 #f = open('/Users/magda/Desktop/re_bplan.geojson', 'r')
 
-json_data=open('re_bplan.geojson')
+json_data=open('/Users/magda/Documents/code/Python/scriptBBS/re_bplan.geojson')
 
 data = json.load(json_data)
 
 plan_list = (data["features"])
 
-print len(plan_list)
-
-
-
 for plan in plan_list:
 
-        properties = plan['properties'] 
-        #print properties['spatial_alias'] 
-        #print properties['AFS_BEHOER']
-        #print properties['PLANNAME'] 
-        #print properties['BEREICH']
-        #print properties['BEZIRK']
+        properties  = plan['properties']   
+        geometry    = plan['geometry']
         
-               
-
-        #bezirk = Bezirk.objects.get(name=bezirk_from_geojeson)
-        
-        geometry = plan['geometry']
         if geometry['type'] == 'Polygon':
             coordinate_list = geometry['coordinates'][0]
         else:            
-            coordinate_list = geometry['coordinates'][0][0]
+            coordinate_list = geometry['coordinates'][0][0]        
 
+        #get lat lon
+        adress = coordinate_list[0]   
+        lat = str(adress[1])
+        lon = str(adress[0])
         
-
-        adress = coordinate_list[0]        
-        
-
-        ort = Ort.objects.create(lat=adress[1], lon=adress[0])
-
-        url = "http://nominatim.openstreetmap.org/reverse?format=json&lat=" + str(adress[1]) + "&lon=" + str(adress[0]) +"&zoom=18&addressdetails=1"
-
+        #get address from open street map
+        url = "http://nominatim.openstreetmap.org/reverse?format=json&lat=" + lat + "&lon=" + lon +"&zoom=18&addressdetails=1"
         response = urllib2.urlopen(url)        
         answer = response.read()
         data = json.loads(answer)
-
         response_adress = data['address']
 
-        if 'road' in response_adress:
-            print response_adress['road']
-            ort.adresse = response_adress['road']
-        if 'house_number' in response_adress:
-            print response_adress['house_number']
-        print '-----------------------'
-
+        ort_adresse = ""
+        if 'road' in response_adress:            
+            ort_adresse = response_adress['road']
+        
+        # clean polygon data
         for entry in coordinate_list:
             first = entry[0]
             second = entry[1]
             entry[0] = second
-            entry[1] = first
-            #print entry
+            entry[1] = first            
         
-        #print str(coordinate_list)
-        
+        #get id of plan
+        ort_bezeichner = ""
         if properties['PLANNAME']:
-            ort.bezeichner = properties['PLANNAME'].replace(" ", "") 
-        else:
-            ort.bezeichner = ""
+            ort_bezeichner = properties['PLANNAME'].replace(" ", "") 
+        
+        #get area description
+        ort_beschreibung = ""
         if properties['BEREICH']:
-            ort.beschreibung = properties['BEREICH']
-        else:
-            ort.beschreibung = ""
-        #ort.adresse
-        
-        ort.polygon = str(coordinate_list)
-        ort.polygontype = geometry['type']
-        bezirk_from_geojeson = properties['BEZIRK'] 
-        
-        print bezirk_from_geojeson
+            ort_beschreibung = properties['BEREICH']    
+  
+        #Create Ort Entry in Database
+        ort                     = Ort.objects.create(lat=lat, lon=lon)
+        ort.adresse             = ort_adresse
+        ort.bezeichner          = ort_bezeichner
+        ort.beschreibung        = ort_beschreibung
+        ort.polygon             = str(coordinate_list)
+        ort.polygontype         = geometry['type']
 
+        bezirk_from_geojeson    = properties['BEZIRK'] 
         bezirk = Bezirk.objects.get(name=bezirk_from_geojeson)
-        ort.bezirke.add(bezirk)
-        
-           
+        ort.bezirke.add(bezirk)   
         ort.save()
-
-         
+        print "added ort" + str(ort)         
     
 
 json_data.close()

@@ -15,7 +15,7 @@ function initMap() {
 
     // center map
     var center = new L.LatLng(lat, lon); 	
-    map.setView(center, max);
+    map.setView(center, 15);
     
     var icon = L.icon({
         iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_gruen_klein.png',
