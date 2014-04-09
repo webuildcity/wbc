@@ -27,9 +27,9 @@ function initMap() {
         weight: 3,
         color: '#de6a00',
         opacity: 1,
-        fill: false,
-        fillColor: '#646464',
-        fillOpacity: 0.5
+        fill: true,
+        fillColor: '#de6a00',
+        fillOpacity: 0.05
     }
 
     if (typeof(polygon) !== 'undefined') {
