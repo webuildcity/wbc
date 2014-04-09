@@ -76,6 +76,11 @@
                         </p>
                             {{ veroeffentlichung.zeiten }}
                         </p>
+                        {% if veroeffentlichung.link %}
+                        <p>
+                            <a href="{{ veroeffentlichung.link }}" target="_blank">Link zur Seite</a>
+                        </p>
+                        {% endif %}
                         <p>
                             <a href="{{ veroeffentlichung.behoerde.link }}">Link zur verantwortlichen Behörde</a>
                         </p>
