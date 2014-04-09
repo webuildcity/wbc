@@ -23,8 +23,12 @@ function initMap() {
         iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location  
     });
     
-    if (typeof(area_polygon) !== 'undefined') {
-        L.polygon(area_polygon).addTo(map);
+    if (typeof(polygon) !== 'undefined') {
+        if (polygontype === 'Polygon') {
+            L.polygon(polygon).addTo(map);
+        } else if (polygontype === 'MultiPolygon') {
+            L.multiPolygon(polygon).addTo(map);
+        }
     }
     L.marker([lat,lon],{icon: icon}).addTo(map);
 

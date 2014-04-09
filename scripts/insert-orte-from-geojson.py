@@ -32,14 +32,15 @@ for plan in plan_list:
         properties = plan['properties']
         geometry = plan['geometry']
 
-        if geometry['type'] == 'Polygon':
-            coordinate_list = geometry['coordinates'][0]
-        else:
-            coordinate_list = geometry['coordinates'][0][0]
+        coordinates = geometry['coordinates']
 
         # get lat lon
-        lat = str(coordinate_list[0][1])
-        lon = str(coordinate_list[0][0])
+        if geometry['type'] == 'Polygon':
+            lat = str(coordinates[0][0][1])
+            lon = str(coordinates[0][0][0])
+        else:
+            lat = str(coordinates[0][0][0][1])
+            lon = str(coordinates[0][0][0][0])
         
         # get address from open street map
         url = "http://nominatim.openstreetmap.org/reverse?format=json&lat=" + lat + "&lon=" + lon +"&zoom=18&addressdetails=1"
@@ -52,14 +53,18 @@ for plan in plan_list:
             ort_adresse = data['address']['road']
         else:
             ort_adresse = ''
-        
-        # clean polygon data
-        for entry in coordinate_list:
-            first = entry[0]
-            second = entry[1]
-            entry[0] = second
-            entry[1] = first
-        
+    
+        # switch lat and lon in (multi) polygon
+        if geometry['type'] == 'Polygon':
+            for foo in coordinates:
+                for entry in foo:
+                    entry[0],entry[1] = entry[1],entry[0]
+        else:
+            for foo in coordinates:
+                for bar in foo:
+                    for entry in bar:
+                        entry[0],entry[1] = entry[1],entry[0]
+
         # get id of plan
         if properties['PLANNAME']:
             ort_bezeichner = properties['PLANNAME'].replace(' ','')
@@ -77,36 +82,10 @@ for plan in plan_list:
         ort.adresse      = ort_adresse
         ort.bezeichner   = ort_bezeichner
         ort.beschreibung = ort_beschreibung
-        ort.polygon      = str(coordinate_list)
+        ort.polygon      = json.dumps(coordinates)
         ort.polygontype  = geometry['type']
 
         bezirk = Bezirk.objects.get(name=properties['BEZIRK'])
         ort.bezirke.add(bezirk)
         ort.save()
-        print 'added Ort:',str(ort)
-    
-json_data.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        print 'Ort hinzugefügt:',str(ort)
