@@ -23,11 +23,20 @@ function initMap() {
         iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location  
     });
     
+    var polygonOptions = {
+        weight: 3,
+        color: '#de6a00',
+        opacity: 1,
+        fill: true,
+        fillColor: '#de6a00',
+        fillOpacity: 0.05
+    }
+
     if (typeof(polygon) !== 'undefined') {
         if (polygontype === 'Polygon') {
-            L.polygon(polygon).addTo(map);
+            L.polygon(polygon).setStyle(polygonOptions).addTo(map);
         } else if (polygontype === 'MultiPolygon') {
-            L.multiPolygon(polygon).addTo(map);
+            L.multiPolygon(polygon).setStyle(polygonOptions).addTo(map);
         }
     }
     L.marker([lat,lon],{icon: icon}).addTo(map);

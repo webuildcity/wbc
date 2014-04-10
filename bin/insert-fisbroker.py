@@ -30,13 +30,28 @@ for plan in plan_list:
 
         coordinates = geometry['coordinates']
 
-        # get lat lon
+        # switch lat and lon in (multi) polygon and get center
+        latMin,latMax,lonMin,lonMax = 90,-90,180,-180
         if geometry['type'] == 'Polygon':
-            lat = str(coordinates[0][0][1])
-            lon = str(coordinates[0][0][0])
+            for foo in coordinates:
+                for entry in foo:
+                    entry[0],entry[1] = entry[1],entry[0]
+                    latMin = min(latMin,entry[0])
+                    latMax = max(latMax,entry[0])
+                    lonMin = min(lonMin,entry[1])
+                    lonMax = max(lonMax,entry[1])
         else:
-            lat = str(coordinates[0][0][0][1])
-            lon = str(coordinates[0][0][0][0])
+            for foo in coordinates:
+                for bar in foo:
+                    for entry in bar:
+                        entry[0],entry[1] = entry[1],entry[0]
+                        latMin = min(latMin,entry[0])
+                        latMax = max(latMax,entry[0])
+                        lonMin = min(lonMin,entry[1])
+                        lonMax = max(lonMax,entry[1])
+
+        lat = str((latMax + latMin) * 0.5)
+        lon = str((lonMax + lonMin) * 0.5)
         
         # get address from open street map
         url = "http://nominatim.openstreetmap.org/reverse?format=json&lat=" + lat + "&lon=" + lon +"&zoom=18&addressdetails=1"
@@ -50,17 +65,6 @@ for plan in plan_list:
         else:
             ort_adresse = ''
     
-        # switch lat and lon in (multi) polygon
-        if geometry['type'] == 'Polygon':
-            for foo in coordinates:
-                for entry in foo:
-                    entry[0],entry[1] = entry[1],entry[0]
-        else:
-            for foo in coordinates:
-                for bar in foo:
-                    for entry in bar:
-                        entry[0],entry[1] = entry[1],entry[0]
-
         # get id of plan
         if properties['PLANNAME']:
             ort_bezeichner = properties['PLANNAME'].replace(' ','')
