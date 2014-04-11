@@ -1,9 +1,0 @@
-{% extends 'bbs/page.html' %}
-{% load staticfiles %}
-
-{% block page %}
-{% for verfahrensschritt in verfahrensschritte %}
-    <h4>{{verfahrensschritt.name}}</h4>
-    <p>{{verfahrensschritt.beschreibung}}</p>
-{% endfor %}
-{% endblock %}

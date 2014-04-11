@@ -7,9 +7,8 @@ var _old = false;
 function init() {
     // get the verfahrensschritte by ajax and call initMap
     $.ajax({
-        url: '/verfahrensschritte/',
+        url: '/projects/verfahrensschritte/',
         dataType: 'json',
-        headers: {'Accept': 'application/json'},
         success: function (json) {
             initMap(json);
         }
@@ -69,11 +68,11 @@ function initMap(verfahrensschritte) {
         var now = new Date().toISOString().match(/(\d+-\d+-\d+)/)[0];
 
         if (_old) {
-            url = '/orte/?nach=' + now;
+            url = '/projects/orte/?nach=' + now;
             _old = false;
         } else {
             showLoading();
-            url = '/orte/?vor=' + now;
+            url = '/projects/orte/?vor=' + now;
             _old = true;
         }
 
@@ -81,10 +80,6 @@ function initMap(verfahrensschritte) {
         $.ajax({
             url: url,
             dataType: 'json',
-            headers: {
-                'Accept': 'application/json'
-            },
-            error: self.ajaxError,
             success: function (json) {
                 _orte = json.features;
                 initOrte()
@@ -116,12 +111,7 @@ function initMap(verfahrensschritte) {
     var now = new Date().toISOString().match(/(\d+-\d+-\d+)/)[0];
     $.ajax({
         url: '/orte/?nach=' + now,
-        type: 'GET',
         dataType: 'json',
-        headers: {
-            'Accept': 'application/json'
-        },
-        error: self.ajaxError,
         success: function (json) {
             _orte = json.features;
             initOrte();
