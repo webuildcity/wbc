@@ -14,11 +14,11 @@ from projects.models import Bezirk,Ort,Veroeffentlichung, Verfahrensschritt, Beh
 
 try:
     veroeffentlichungen_file = sys.argv[1]
-    orte_data = sys.argv[2]
+    orte_file = sys.argv[2]
 except IndexError:
     sys.exit('Usage: bin/insert-bbs.py VEROEFFENLICHUNGENFILE ORTEFILE')
 
-veroeffentlichungen_data = json.load(veroeffentlichungen_file)
+veroeffentlichung_data = json.load(open(veroeffentlichungen_file))
 orte_data = json.load(open(orte_file))
 
 orte_dict = {}

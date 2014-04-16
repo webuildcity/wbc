@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 import sys,os,datetime,urllib2,json
 from django.utils.timezone import now
+import dateutil.parser
+from dateutil.relativedelta import relativedelta
 
 # Directory prüfen und an PYTHONPATH anhängen
 if os.path.isfile('bbs/settings.py'):
@@ -15,35 +17,30 @@ from projects.models import Bezirk,Ort,Veroeffentlichung, Verfahrensschritt, Beh
 
 try:
     filename = sys.argv[1]
+    
 except IndexError:
     sys.exit('Usage: bin/insert-bvv.py FILE')
 
-<<<<<<< HEAD:scripts/insert-veroeffentlichungen-from-bvv-json.py
-#f = open('/Users/magda/Desktop/re_bplan.geojson', 'r')
-
-json_data=open('/Users/magda/Desktop/json/tempelhof-schoeneberg.json')
-
-data = json.load(json_data)
-
-pk = ""
-=======
 data = json.load(open(filename,'r'))
->>>>>>> 74c160b25aef39337e820dfd2bbc19fa84c6c6f6:bin/insert-bvv.py
 
 for d in data:
     pk = d["id"]
-    print pk
+    
+    behoerde = 'Bezirksamt Neukölln'
 
     try:    
         ort = Ort.objects.get(bezeichner=pk)
         verfahrensschritt = Verfahrensschritt.objects.get(name = 'in BVV behandelt')
-        behoerde = Behoerde.objects.get(pk=4)        
-
+        behoerde = Behoerde.objects.get(name=behoerde)   
+        d1 = d["date"]
+        d2 = dateutil.parser.parse(d1)
+        d2 = d2 - relativedelta(months=1)
+        
         Veroeffentlichung.objects.create(
             ort=ort, 
             verfahrensschritt=verfahrensschritt, 
-            beginn=now(), 
-            ende=now(), 
+            beginn=d2, 
+            ende=d2, 
             behoerde=behoerde,  
             zeiten = "",              
             auslegungsstelle = "", 
@@ -51,4 +48,5 @@ for d in data:
             link = d["link"]
         )   
     except Exception as e:
+        print pk
         print e
