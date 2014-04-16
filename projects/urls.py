@@ -4,6 +4,8 @@ from projects import views
 
 urlpatterns = patterns('projects.urls',
     url(r'^orte/$', views.orte),
+    url(r'^orte/cols$', views.orte_cols),
+    url(r'^orte/rows$', views.orte_rows),
     url(r'^orte/(?P<pk>\d+)/$', views.ort),
     url(r'^veroeffentlichungen/$', views.veroeffentlichungen),
     url(r'^veroeffentlichungen/(?P<pk>\d+)/$', views.veroeffentlichung),

@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     url(r'^begriffe/$', 'bbs.views.begriffe'),
     # modules
     url(r'^news/', include('news.urls')),
-    url(r'^projects/', include('projects.urls')),
+    url(r'^projekte/', include('projects.urls')),
     # url(r'^visualization/', include('visualization.urls')),
     # admin foo
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

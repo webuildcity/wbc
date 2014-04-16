@@ -3,42 +3,27 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'page.css' %}" />
-    <link rel="stylesheet" href="{% static 'lib/dataTables/css/jquery.dataTables.css' %}" />
-    <link rel="stylesheet" href="{% static 'lib/dataTables/css/jquery.dataTables.bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'lib/jkTable/jkTable.css' %}" />
 {% endblock %}
 
 {% block js %}
-    <script type="text/javascript" src="{% static 'lib/dataTables/js/jquery.dataTables.js' %}" ></script>
-    <script type="text/javascript" src="{% static 'lib/dataTables/js/jquery.dataTables.bootstrap.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/jkTable/jkTable.js' %}" ></script>
     <script>
-        $.extend( $.fn.dataTableExt.oStdClasses, {
-            "sWrapper": "dataTables_wrapper form-inline"
-        } );
-        $(document).ready(function() {
-            $('#table').dataTable({
-                'iDisplayLength': 10,
-                "aLengthMenu": [[10,20,50,-1], [10,20,50,"Alle"]],
-                "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-                "sPaginationType": "bootstrap",
-                "oLanguage": {
-                    "sLengthMenu": "Zeige _MENU_ Einträge pro Seite",
-                    "sZeroRecords": "Sorry, nichts gefunden!",
-                    "sInfo": "Eintrag _START_ bis _END_ von _TOTAL_ Einträgen",
-                    "sInfoEmpty": "Keine Einträge",
-                    "sInfoFiltered": "(insgesamt _MAX_ Einträgen)",
-                    "sSearch": '',
-                    "oPaginate": {
-                        "sFirst": "Erste Seite",
-                        "sLast": "Letzte Seite",
-                        "sPrevious": "", // "Vorherige Seite"
-                        "sNext": "" // "Nächste Seite"
-                    }
-                },
-                "fnPreDrawCallback": function() {
-                    $('.dataTables_filter input').addClass('form-control input-sm').css('width', '200px').attr('placeholder','Suche');
-                    $('.dataTables_length select').addClass('form-control input-sm').css('width', '75px');
-                }
-            });
+        $('#table').jk_table({
+            'rowsurl': '/projekte/orte/rows',
+            'colsurl': '/projekte/orte/cols',
+            'trans': {
+                'Search': 'Suche',
+                'First': 'Erste',
+                'Previous': 'Vorherige',
+                'Next': 'Nächste',
+                'Last': 'Letzte',
+                'Reset': 'Zurücksetzen',
+                'Page': 'Seite',
+                'of': 'von',
+                'Show': 'Zeige',
+                'Rows': 'Zeilen'
+            }
         });
     </script>
 {% endblock %}
@@ -53,25 +38,6 @@
                 </p>
             </div>
         </div>
-        <table class="table" id="table">
-            <thead>
-                <tr>
-                    <th>Bezeichner</th>
-                    <th>Adresse</th>
-                    <th>Bezirke</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for ort in orte %}
-                <tr>
-                    <td>{{ ort.bezeichner }}</td>
-                    <td>{{ ort.adresse }}</td>
-                    <td>{{ ort.bezirke.all|join:', ' }}</td>
-                    <td><a href="/orte/{{ ort.pk }}">Details</a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <div id="table"></div>
     </div>
 {% endblock %}

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse
 from django.shortcuts import Http404, render
+from django.db.models import Q
 from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.csrf import csrf_exempt
 
@@ -25,6 +26,82 @@ def orte(request):
     orte = orte.all()
 
     response = [ort_response(o) for o in orte]
+    return HttpResponse(json.dumps(response,cls=DjangoJSONEncoder),content_type="application/json")
+
+def orte_cols(request):
+    cols = []
+    for i,colname in enumerate(['bezeichner','adresse','bezirke',' ']):
+        col = {'id': i, 'name': colname, 'verboseName': colname[0].upper() + colname[1:]}
+        if colname == 'bezeichner':
+            col['width'] = '125px'
+        if colname != ' ':
+            col['sortable'] = 1
+        cols.append(col)
+
+    response = {'cols': cols}
+    return HttpResponse(json.dumps(response,cls=DjangoJSONEncoder),content_type="application/json")
+
+def orte_rows(request):
+    nrows = request.GET.get('nrows', None)
+    page = request.GET.get('page', 1)
+    sort = request.GET.get('sort', None)
+    search = request.GET.get('search', None)
+
+    dbrows = Ort.objects
+    if sort:
+        s = sort.split()
+
+        if s[1] == 'DESC':
+            sortstring = '-'
+        else:
+            sortstring = ''
+
+        sortstring += s[0]
+
+        dbrows = dbrows.order_by(sortstring)
+
+    if search:
+        dbrows = dbrows.filter(
+            Q(bezeichner__icontains=search) 
+            | Q(adresse__icontains=search)
+            | Q(bezirke__name__icontains=search)
+        )
+    else:
+        dbrows = dbrows.all()
+
+    total = dbrows.count()   
+
+    if nrows:
+        if page:
+            start = (int(page) - 1) * int(nrows)
+            end = int(page) * int(nrows)
+            dbrows = dbrows[start:end]
+        else:
+            dbrows = dbrows[:int(nrows)]
+        
+        pages = int(total / int(nrows)) + 1
+    else:
+        pages = 1
+
+    rows = []
+    for dbrow in dbrows:
+        rows.append({
+            'id': dbrow.pk,
+            'cell': [
+                dbrow.bezeichner,
+                dbrow.adresse,
+                ', '.join([bezirk.name for bezirk in dbrow.bezirke.all()]),
+                '<a href="/orte/' + str(dbrow.pk) + '" target="_blank">Details</a>'
+            ]
+        })
+
+    response = {
+        'rows': rows,
+        'nrows': len(rows),
+        'page': page,
+        'pages': pages,
+        'total': total
+    }
     return HttpResponse(json.dumps(response,cls=DjangoJSONEncoder),content_type="application/json")
 
 def ort(request, pk):
