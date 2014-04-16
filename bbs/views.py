@@ -13,6 +13,17 @@ import datetime
 def home(request):
     return render(request,'bbs/map.html')
 
+def orte(request):
+    orte = Ort.objects.all()
+    return render(request,'bbs/orte.html', {'orte': orte})
+
+def ort(request,pk):
+    try:
+        ort = Ort.objects.get(pk=int(pk))
+    except Ort.DoesNotExist:
+        raise Http404
+    return render(request, 'bbs/ort.html', {'ort': ort})
+
 def begriffe(request):
     verfahren = Verfahren.objects.all()
     return render(request,'bbs/begriffe.html',{'verfahren': verfahren})  

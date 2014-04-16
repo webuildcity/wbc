@@ -1,211 +1,207 @@
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse
 from django.shortcuts import Http404, render
+from django.db.models import Q
 from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.csrf import csrf_exempt
 
 import json,time,datetime
 
-import lib.views
-
 from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
 
-class OrtView(lib.views.View):
-    http_method_names = ['get']
+def orte(request):
+    bezirk = request.GET.get('bezirk', None)
+    vor = request.GET.get('vor', None)
+    nach = request.GET.get('nach', None)
 
-    def constructOrtJsonDict(self, ort):
-        response = {
-            'type': "Feature",
-            'geometry': {
-                'type': 'Point',
-                'coordinates': [ort.lon,ort.lat]
-            },
-            'properties': {
-                'pk': ort.pk,
-                'bezeichner': ort.bezeichner,
-                'adresse': ort.adresse,
-                'beschreibung': ort.beschreibung,
-                'bezirke': [],
-                'veroeffentlichungen': []
-            }
-        }
-        for bezirk in ort.bezirke.all():
-            response['properties']['bezirke'].append(bezirk.name)
-        for veroeffentlichung in ort.veroeffentlichungen.all():
-            response['properties']['veroeffentlichungen'].append({
-                'beschreibung': veroeffentlichung.beschreibung,
-                'verfahrensschritt': {
-                    'pk': veroeffentlichung.verfahrensschritt.pk,
-                    'name': veroeffentlichung.verfahrensschritt.name,
-                    'verfahren': veroeffentlichung.verfahrensschritt.verfahren.name
-                },
-                'beginn': veroeffentlichung.beginn,
-                'ende': veroeffentlichung.ende,
-                'auslegungsstelle': veroeffentlichung.auslegungsstelle,
-                'behoerde': veroeffentlichung.behoerde.name,
-                'link': veroeffentlichung.link
-            })
+    orte = Ort.objects
+    if vor:
+        vor = tuple([int(i) for i in vor.split('-')])
+        orte = orte.filter(veroeffentlichungen__ende__lte=datetime.date(*vor))
+    if nach: 
+        nach = tuple([int(i) for i in nach.split('-')])
+        orte = orte.filter(veroeffentlichungen__ende__gte=datetime.date(*nach))
+    if bezirk:
+        orte = orte.filter(bezirke__name=bezirk)
+    orte = orte.all()
 
-        return response
+    response = [ort_response(o) for o in orte]
+    return HttpResponse(json.dumps(response,cls=DjangoJSONEncoder),content_type="application/json")
 
-    def constructJsonDict(self, context):
-        if 'orte' in context:
-            response = {'type': 'FeatureCollection','features': []}
-            for ort in context['orte']:
-                response['features'].append(self.constructOrtJsonDict(ort))
+def orte_cols(request):
+    cols = []
+    for i,colname in enumerate(['bezeichner','adresse','bezirke',' ']):
+        col = {'id': i, 'name': colname, 'verboseName': colname[0].upper() + colname[1:]}
+        if colname == 'bezeichner':
+            col['width'] = '125px'
+        if colname != ' ':
+            col['sortable'] = 1
+        cols.append(col)
+
+    response = {'cols': cols}
+    return HttpResponse(json.dumps(response,cls=DjangoJSONEncoder),content_type="application/json")
+
+def orte_rows(request):
+    nrows = request.GET.get('nrows', None)
+    page = request.GET.get('page', 1)
+    sort = request.GET.get('sort', None)
+    search = request.GET.get('search', None)
+
+    dbrows = Ort.objects
+    if sort:
+        s = sort.split()
+
+        if s[1] == 'DESC':
+            sortstring = '-'
         else:
-            response = self.constructOrtJsonDict(context['ort'])
+            sortstring = ''
 
-        return response
+        sortstring += s[0]
 
-    def get_objects(self, request):
-        bezirk = request.GET.get('bezirk', None)
-        vor = request.GET.get('vor', None)
-        nach = request.GET.get('nach', None)
+        dbrows = dbrows.order_by(sortstring)
 
-        orte = Ort.objects
-        if vor:
-            vor = tuple([int(i) for i in vor.split('-')])
-            orte = orte.filter(veroeffentlichungen__ende__lte=datetime.date(*vor))
-        if nach: 
-            nach = tuple([int(i) for i in nach.split('-')])
-            orte = orte.filter(veroeffentlichungen__ende__gte=datetime.date(*nach))
-        if bezirk:
-            orte = orte.filter(bezirke__name=bezirk)
-        orte = orte.all()
+    if search:
+        dbrows = dbrows.filter(
+            Q(bezeichner__icontains=search) 
+            | Q(adresse__icontains=search)
+            | Q(bezirke__name__icontains=search)
+        )
+    else:
+        dbrows = dbrows.all()
 
-        context = {'orte': orte}
-        return self.render(request,'projects/orte.html', context)
+    total = dbrows.count()   
 
-    def get_object(self, request, pk):
-        try:
-            ort = Ort.objects.get(pk=int(pk))
-        except Ort.DoesNotExist:
-            raise Http404
+    if nrows:
+        if page:
+            start = (int(page) - 1) * int(nrows)
+            end = int(page) * int(nrows)
+            dbrows = dbrows[start:end]
+        else:
+            dbrows = dbrows[:int(nrows)]
+        
+        pages = int(total / int(nrows)) + 1
+    else:
+        pages = 1
 
-        context = {'ort': ort}
-        return self.render(request, 'projects/ort.html', context)
+    rows = []
+    for dbrow in dbrows:
+        rows.append({
+            'id': dbrow.pk,
+            'cell': [
+                dbrow.bezeichner,
+                dbrow.adresse,
+                ', '.join([bezirk.name for bezirk in dbrow.bezirke.all()]),
+                '<a href="/orte/' + str(dbrow.pk) + '" target="_blank">Details</a>'
+            ]
+        })
 
-class VeroeffentlichungView(lib.views.View):
-    http_method_names = ['get']
+    response = {
+        'rows': rows,
+        'nrows': len(rows),
+        'page': page,
+        'pages': pages,
+        'total': total
+    }
+    return HttpResponse(json.dumps(response,cls=DjangoJSONEncoder),content_type="application/json")
 
-    def constructVeroeffentlichungJsonDict(self, veroeffentlichung):
-        return {
+def ort(request, pk):
+    try:
+        ort = Ort.objects.get(pk=int(pk))
+    except Ort.DoesNotExist:
+        raise Http404
+
+    return HttpResponse(json.dumps(ort_response(ort),cls=DjangoJSONEncoder),content_type="application/json")
+
+def ort_response(ort):
+    response = {
+        'type': "Feature",
+        'geometry': {
+            'type': 'Point',
+            'coordinates': [ort.lon,ort.lat]
+        },
+        'properties': {
+            'pk': ort.pk,
+            'bezeichner': ort.bezeichner,
+            'adresse': ort.adresse,
+            'beschreibung': ort.beschreibung,
+            'bezirke': [],
+            'veroeffentlichungen': []
+        }
+    }
+    for bezirk in ort.bezirke.all():
+        response['properties']['bezirke'].append(bezirk.name)
+    for veroeffentlichung in ort.veroeffentlichungen.all():
+        response['properties']['veroeffentlichungen'].append({
             'beschreibung': veroeffentlichung.beschreibung,
-            'verfahrensschritt': veroeffentlichung.verfahrensschritt.name,
+            'verfahrensschritt': {
+                'pk': veroeffentlichung.verfahrensschritt.pk,
+                'name': veroeffentlichung.verfahrensschritt.name,
+                'verfahren': veroeffentlichung.verfahrensschritt.verfahren.name
+            },
             'beginn': veroeffentlichung.beginn,
             'ende': veroeffentlichung.ende,
             'auslegungsstelle': veroeffentlichung.auslegungsstelle,
             'behoerde': veroeffentlichung.behoerde.name,
-            'link': veroeffentlichung.link,
-            'ort': veroeffentlichung.ort.adresse,
-            'bezirk': ', '.join([b.name for b in veroeffentlichung.ort.bezirke.all()])
-        }
+            'link': veroeffentlichung.link
+        })
+    return response
 
-    def constructJsonDict(self, context):
-        if 'veroeffentlichungen' in context:
-            response = []
-            for veroeffentlichung in context['veroeffentlichungen']:
-                response.append(self.constructVeroeffentlichungJsonDict(veroeffentlichung))
-        else:
-            response = self.constructVeroeffentlichungJsonDict(context['veroeffentlichung'])
+def veroeffentlichungen(request):
+    beginn = request.GET.get('beginn', None)
+    ende = request.GET.get('ende', None)
 
-        return response
+    veroeffentlichungen = Veroeffentlichung.objects
+    if beginn:
+        beginn = tuple([int(i) for i in beginn.split('-')])
+        veroeffentlichungen = veroeffentlichungen.filter(beginn__lte=datetime.date(*beginn))
+    if ende: 
+        ende = tuple([int(i) for i in ende.split('-')])
+        veroeffentlichungen = veroeffentlichungen.filter(ende__gte=datetime.date(*ende))
+    veroeffentlichungen = veroeffentlichungen.all()
 
-    def get_objects(self, request):
-        beginn = request.GET.get('beginn', None)
-        ende = request.GET.get('ende', None)
+    response = [veroeffentlichung_response(veroeffentlichung) for veroeffentlichung in veroeffentlichungen]
+    return HttpResponse(json.dumps(response,cls=DjangoJSONEncoder),content_type="application/json")
 
-        veroeffentlichungen = Veroeffentlichung.objects
-        if beginn:
-            beginn = tuple([int(i) for i in beginn.split('-')])
-            veroeffentlichungen = veroeffentlichungen.filter(beginn__lte=datetime.date(*beginn))
-        if ende: 
-            ende = tuple([int(i) for i in ende.split('-')])
-            veroeffentlichungen = veroeffentlichungen.filter(ende__gte=datetime.date(*ende))
-        veroeffentlichungen = veroeffentlichungen.all()
+def veroeffentlichung(request, pk):
+    try:
+        veroeffentlichung = Veroeffentlichung.objects.get(pk=int(pk))
+    except Veroeffentlichung.DoesNotExist:
+        raise Http404
 
-        context = {'veroeffentlichungen': veroeffentlichungen}
-        return self.render(request,'projects/veroeffentlichungen.html', context)
+    return HttpResponse(json.dumps(veroeffentlichung_response(veroeffentlichung),cls=DjangoJSONEncoder),content_type="application/json")
 
-    def get_object(self, request, pk):
-        try:
-            veroeffentlichung = Veroeffentlichung.objects.get(pk=int(pk))
-        except Veroeffentlichung.DoesNotExist:
-            raise Http404
+def veroeffentlichung_response(veroeffentlichung):
+    return {
+        'beschreibung': veroeffentlichung.beschreibung,
+        'verfahrensschritt': veroeffentlichung.verfahrensschritt.name,
+        'beginn': veroeffentlichung.beginn,
+        'ende': veroeffentlichung.ende,
+        'auslegungsstelle': veroeffentlichung.auslegungsstelle,
+        'behoerde': veroeffentlichung.behoerde.name,
+        'link': veroeffentlichung.link,
+        'ort': veroeffentlichung.ort.adresse,
+        'bezirk': ', '.join([b.name for b in veroeffentlichung.ort.bezirke.all()])
+    }
 
-        context = {'veroeffentlichung': veroeffentlichung}
-        return self.render(request, 'projects/veroeffentlichung.html', context)
+def verfahrensschritte(request):
+    verfahrensschritte = Verfahrensschritt.objects.all()
 
-class VerfahrenView(lib.views.View):
-    http_method_names = ['get']
+    response = [verfahrensschritt_response(verfahrensschritt) for verfahrensschritt in verfahrensschritte]
+    return HttpResponse(json.dumps(response,cls=DjangoJSONEncoder),content_type="application/json")
 
-    def constructVerfahrenJsonDict(self, verfahren):
-        return {
-            'pk': verfahren.pk,
-            'name': verfahren.name,
-            'beschreibung': verfahren.beschreibung
-        }
+def verfahrensschritt(request, pk):
+    try:
+        verfahrensschritt = Verfahrensschritt.objects.get(pk=int(pk))
+    except Verfahren.DoesNotExist:
+        raise Http404
 
-    def constructJsonDict(self, context):
-        if 'verfahrens' in context:
-            response = []
-            for verfahren in context['verfahrens']:
-                response.append(self.constructVerfahrenJsonDict(verfahren))
-        else:
-            response = self.constructVerfahrenJsonDict(context['verfahren'])
+    return HttpResponse(json.dumps(verfahrensschritt_response(verfahrensschritt),cls=DjangoJSONEncoder),content_type="application/json")
 
-        return response
-
-    def get_objects(self, request):
-        verfahrens = Verfahren.objects.all()
-        
-        context = {'verfahrens': verfahrens}
-        return self.render(request,'projects/verfahrens.html', context)
-
-    def get_object(self, request, pk):
-        try:
-            verfahren = Verfahren.objects.get(pk=int(pk))
-        except Verfahren.DoesNotExist:
-            raise Http404
-
-        context = {'verfahren': verfahren}
-        return self.render(request, 'projects/verfahren.html', context)
-
-class VerfahrensschrittView(lib.views.View):
-    http_method_names = ['get']
-
-    def constructVerfahrensschrittJsonDict(self, verfahrensschritt):
-        return {
-            'pk': verfahrensschritt.pk,
-            'name': verfahrensschritt.name,
-            'beschreibung': verfahrensschritt.beschreibung,
-            'icon': '/static/' + verfahrensschritt.icon,
-            'hoverIcon': '/static/' + verfahrensschritt.hoverIcon
-        }
-
-    def constructJsonDict(self, context):
-        if 'verfahrensschritte' in context:
-            response = []
-            for verfahrensschritt in context['verfahrensschritte']:
-                response.append(self.constructVerfahrensschrittJsonDict(verfahrensschritt))
-        else:
-            response = self.constructVerfahrensschrittJsonDict(context['verfahrensschritt'])
-
-        return response
-
-    def get_objects(self, request):
-        verfahrensschritte = Verfahrensschritt.objects.all()
-        context = {'verfahrensschritte': verfahrensschritte}
-        return self.render(request,'projects/verfahrensschritte.html', context)
-
-    def get_object(self, request, pk):
-        try:
-            verfahrensschritt = Verfahrensschritt.objects.get(pk=int(pk))
-        except Verfahren.DoesNotExist:
-            raise Http404
-
-        context = {'verfahrensschritt': verfahrensschritt}
-        return self.render(request, 'projects/verfahrensschritt.html', context)
-    
-
+def verfahrensschritt_response(verfahrensschritt):
+    return {
+        'pk': verfahrensschritt.pk,
+        'name': verfahrensschritt.name,
+        'beschreibung': verfahrensschritt.beschreibung,
+        'icon': '/static/' + verfahrensschritt.icon,
+        'hoverIcon': '/static/' + verfahrensschritt.hoverIcon
+    }

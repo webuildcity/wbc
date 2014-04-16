@@ -1,0 +1,43 @@
+{% extends 'bbs/layout.html' %}
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'page.css' %}" />
+    <link rel="stylesheet" href="{% static 'lib/jkTable/jkTable.css' %}" />
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static 'lib/jkTable/jkTable.js' %}" ></script>
+    <script>
+        $('#table').jk_table({
+            'rowsurl': '/projekte/orte/rows',
+            'colsurl': '/projekte/orte/cols',
+            'trans': {
+                'Search': 'Suche',
+                'First': 'Erste',
+                'Previous': 'Vorherige',
+                'Next': 'Nächste',
+                'Last': 'Letzte',
+                'Reset': 'Zurücksetzen',
+                'Page': 'Seite',
+                'of': 'von',
+                'Show': 'Zeige',
+                'Rows': 'Zeilen'
+            }
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Liste</h2>
+        <div class="row">
+            <div class="col-md-9"> 
+                <p>
+                    Auf dieser Seite werden alle Informationen, die wir seit Beginn des Projektes im Februar 2013 eingetragen haben, in einer Liste angezeigt. Die Informationen stammen alle aus dem wöchentlich erscheinendem Amtsblatt von Berlin, das wir mit Unterstützung der Naturschutzverbände manuell auswerten. In den meisten Fällen handelt es sich um Informationen zu ausliegenden <a href="/info">Bebauungsplänen</a>. Eher selten werden Informationen zu <a href="/info">Planfestestellungsverfahren</a> veröffentlicht. In der Detailansicht eines Verfahrens sind alle Informationen, die seit Februar 2013 im Amtsblatt zu diesem Verfahren veröffentlich wurden, aufgelistet.
+                </p>
+            </div>
+        </div>
+        <div id="table"></div>
+    </div>
+{% endblock %}
