@@ -214,14 +214,14 @@ jk.table.Table.prototype.reset = function () {
 jk.table.Table.prototype.pager = function () {
     var self = this;
 
-    var searchHtml = '<div class="input-group"  style="width: 150px;">';
+    var searchHtml = '<div class="input-group" style="width: 250px;">';
     searchHtml += '<input id="' + self.id + '-pager-search-input" placeholder="' + self.opt.trans.Search + '" type="text" class="form-control" />';
-    searchHtml += '<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>';
+    searchHtml += '<a href="#" class="input-group-addon"><span class="glyphicon glyphicon-search"></span></a>';
     searchHtml += '</div>';
 
     var search = $('<form/>',{
         'id': self.id + '-pager-search',
-        'class': 'jk-table-pager-search-form input-append pull-left',
+        'class': 'jk-table-pager-search-form input-append',
         'html': searchHtml
     }).submit(function () {
         var id = $(this).attr('id').match(/(.+)-pager-search/)[1];
@@ -231,8 +231,9 @@ jk.table.Table.prototype.pager = function () {
         return false;
     }).appendTo($('.jk-table-pager', self.container));
 
-    $('#' + self.id + '-pager-search').click(function () {
+    $('#' + self.id + '-pager-search a').click(function () {
         $(this).parent().submit();
+        return false;
     });
 
     html = '<li><a id="' + self.id + '-pager-first" href="#">' + self.opt.trans.First + '</a></li>';
@@ -242,13 +243,13 @@ jk.table.Table.prototype.pager = function () {
 
     $('<ul />', {
         'id': self.id + '-pager-pagination',
-        'class': 'pagination pull-left',
+        'class': 'pagination',
         'html': html
     }).appendTo($('.jk-table-pager', self.container));
     
     $('<ul />', {
         'id': self.id + '-pager-reset',
-        'class': 'pagination pull-left',
+        'class': 'pagination',
         'html': '<li><a href="#">' + self.opt.trans.Reset + '</a></li>'
     }).appendTo($('.jk-table-pager', self.container));
 
@@ -304,7 +305,7 @@ jk.table.Table.prototype.pager = function () {
     });
 
     $('<div/>',{
-        'class': 'jk-table-pager-paging pull-left',
+        'class': 'jk-table-pager-paging',
         'id': self.id + '-pager-paging'
     }).appendTo($('.jk-table-pager', self.container));
 
@@ -417,7 +418,7 @@ jk.table.Table.prototype.cols = function () {
                         
                 // manipulate arrow and change sort options
                 if (classes.indexOf('sorted') == -1) {
-                    $('span.sorted', self.container).removeClass('sorted').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+                    $('.sorted', self.container).removeClass('sorted').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
                     element.addClass('sorted');
                     element.addClass('glyphicon-chevron-down');
                     self.params.sort = colName + ' ASC';

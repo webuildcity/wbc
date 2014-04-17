@@ -109,7 +109,7 @@ function initMap(verfahrensschritte) {
     // load and display the orte with ende in the future
     var now = new Date().toISOString().match(/(\d+-\d+-\d+)/)[0];
     $.ajax({
-        url: '/orte/?nach=' + now,
+        url: '/projekte/orte/?nach=' + now,
         dataType: 'json',
         success: function (json) {
             _orte = json.features;
