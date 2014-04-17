@@ -214,9 +214,9 @@ jk.table.Table.prototype.reset = function () {
 jk.table.Table.prototype.pager = function () {
     var self = this;
 
-    var searchHtml = '<div class="input-group"  style="width: 150px;">';
+    var searchHtml = '<div class="input-group" style="width: 250px;">';
     searchHtml += '<input id="' + self.id + '-pager-search-input" placeholder="' + self.opt.trans.Search + '" type="text" class="form-control" />';
-    searchHtml += '<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>';
+    searchHtml += '<a href="#" class="input-group-addon"><span class="glyphicon glyphicon-search"></span></a>';
     searchHtml += '</div>';
 
     var search = $('<form/>',{
@@ -233,6 +233,7 @@ jk.table.Table.prototype.pager = function () {
 
     $('#' + self.id + '-pager-search').click(function () {
         $(this).parent().submit();
+        return false;
     });
 
     html = '<li><a id="' + self.id + '-pager-first" href="#">' + self.opt.trans.First + '</a></li>';
@@ -417,7 +418,7 @@ jk.table.Table.prototype.cols = function () {
                         
                 // manipulate arrow and change sort options
                 if (classes.indexOf('sorted') == -1) {
-                    $('span.sorted', self.container).removeClass('sorted').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+                    $('.sorted', self.container).removeClass('sorted').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
                     element.addClass('sorted');
                     element.addClass('glyphicon-chevron-down');
                     self.params.sort = colName + ' ASC';

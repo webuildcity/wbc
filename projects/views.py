@@ -25,7 +25,10 @@ def orte(request):
         orte = orte.filter(bezirke__name=bezirk)
     orte = orte.all()
 
-    response = [ort_response(o) for o in orte]
+    response = {
+        'type': 'FeatureCollection',
+        'features': [ort_response(o) for o in orte]
+    }
     return HttpResponse(json.dumps(response,cls=DjangoJSONEncoder),content_type="application/json")
 
 def orte_cols(request):
