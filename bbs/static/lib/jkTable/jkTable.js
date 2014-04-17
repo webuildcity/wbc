@@ -221,7 +221,7 @@ jk.table.Table.prototype.pager = function () {
 
     var search = $('<form/>',{
         'id': self.id + '-pager-search',
-        'class': 'jk-table-pager-search-form input-append',
+        'class': 'jk-table-pager-search-form input-append pull-left',
         'html': searchHtml
     }).submit(function () {
         var id = $(this).attr('id').match(/(.+)-pager-search/)[1];
@@ -231,7 +231,7 @@ jk.table.Table.prototype.pager = function () {
         return false;
     }).appendTo($('.jk-table-pager', self.container));
 
-    $('#' + self.id + '-pager-search a').click(function () {
+    $('#' + self.id + '-pager-search').click(function () {
         $(this).parent().submit();
         return false;
     });
@@ -243,13 +243,13 @@ jk.table.Table.prototype.pager = function () {
 
     $('<ul />', {
         'id': self.id + '-pager-pagination',
-        'class': 'pagination',
+        'class': 'pagination pull-left',
         'html': html
     }).appendTo($('.jk-table-pager', self.container));
     
     $('<ul />', {
         'id': self.id + '-pager-reset',
-        'class': 'pagination',
+        'class': 'pagination pull-left',
         'html': '<li><a href="#">' + self.opt.trans.Reset + '</a></li>'
     }).appendTo($('.jk-table-pager', self.container));
 
@@ -305,7 +305,7 @@ jk.table.Table.prototype.pager = function () {
     });
 
     $('<div/>',{
-        'class': 'jk-table-pager-paging',
+        'class': 'jk-table-pager-paging pull-left',
         'id': self.id + '-pager-paging'
     }).appendTo($('.jk-table-pager', self.container));
 
