@@ -26,7 +26,7 @@ data = json.load(open(filename,'r'))
 for d in data:
     pk = d["id"]
     
-    behoerde = 'Bezirksamt Neukölln'
+    behoerde = 'Bezirksamt Treptow-Köpenick'
 
     try:    
         ort = Ort.objects.get(bezeichner=pk)
