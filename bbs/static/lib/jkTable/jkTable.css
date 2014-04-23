@@ -49,26 +49,41 @@
     table-layout: fixed !important;
     margin-bottom: 0 !important;
 }
-.jk-table-pager {
-    height: 40px;
-    /*margin-bottom: 10px;*/
+.jk-table-pager .search-form,
+.jk-table-pager .pagination,
+.jk-table-pager .pager-paging,
+.jk-table-pager .pager-nrows {
+    padding: 0;
+    margin: 0 10px 0 0;
+    display: inline-block;
 }
-.jk-table-pager-nrows {
-    margin: 0;
-    width: 10em;
-    font-size: 11px;
-}
-.jk-table-pager .pagination {
-    margin: 0 0 0 10px;
+.jk-table-pager .search-form .input-group {
+    width: 200px;
 }
 .jk-table-pager .pagination li a {
     height: 34px;
     line-height: 20px;
     padding: 6px 12px;
 }
-.jk-table-pager-paging {
-    margin: 7px 0 7px 20px;
+.jk-table-pager .pager-paging {
+    padding: 7px 12px;
+}
+.jk-table-pager .pager-paging div {
+    float: left;
     line-height: 20px;
+    height: 20px;
+}
+.jk-table-pager .pager-nrows {
+    width: 150px;
+}
+.jk-table-pager .pager-nrows select {
+    float: left;
+}
+@media (min-width: 992px) {
+    .jk-table-pager .pager-nrows {
+        float: right;
+        margin-right: 0;
+    }
 }
 .jk-table .jk-table-col-selected,
 .jk-table .jk-table-row-selected {
@@ -92,17 +107,4 @@
 .jk-table th .handle-left:hover,
 .jk-table th .handle-right:hover{
     cursor: move;
-}
-.jk-table-pager-search-form {
-    margin: 0;
-}
-.jk-table-pager-search-form button {
-    height: 30px;
-}
-.jk-table-pager-paging,
-.jk-table-pager-paging p {
-    display: inline;
-}
-.jk-table-pager-paging p {
-
 }
