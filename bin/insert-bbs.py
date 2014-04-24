@@ -13,13 +13,21 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'bbs.settings'
 from projects.models import Bezirk,Ort,Veroeffentlichung, Verfahrensschritt, Behoerde
 
 try:
-    veroeffentlichungen_file = sys.argv[1]
-    orte_file = sys.argv[2]
+    dump_file = sys.argv[1]
 except IndexError:
-    sys.exit('Usage: bin/insert-bbs.py VEROEFFENLICHUNGENFILE ORTEFILE')
+    sys.exit('Usage: bin/insert-bbs.py DUMPFILE')
 
-veroeffentlichung_data = json.load(open(veroeffentlichungen_file))
-orte_data = json.load(open(orte_file))
+dump_data = json.load(open(dump_file))
+
+veroeffentlichung_data = []
+for e in dump_data:
+    if e['model'] == 'projects.veroeffentlichung':
+        veroeffentlichung_data.append(e)
+
+orte_data = []
+for e in dump_data:
+    if e['model'] == 'projects.ort':
+        orte_data.append(e)
 
 orte_dict = {}
 for ort in orte_data:
@@ -48,6 +56,21 @@ for v in veroeffentlichung_data:
 
     try:
         ort = Ort.objects.get(bezeichner=ort_bezeichner)        
-        v = Veroeffentlichung.objects.create(ort=ort, verfahrensschritt=verfahrensschritt, beginn=beginn_data, ende=ende_data, behoerde=behoerde, updated = updated_data, zeiten = zeiten_data, created = created_data, auslegungsstelle = auslegungsstelle_data, beschreibung = beschreibung_data, link = link_data)       
+        '''
+        v = Veroeffentlichung.objects.create(
+            ort=ort,
+            verfahrensschritt=verfahrensschritt, 
+            beginn=beginn_data,
+            ende=ende_data,
+            behoerde=behoerde,
+            updated = updated_data,
+            zeiten = zeiten_data,
+            created = created_data,
+            auslegungsstelle = auslegungsstelle_data,
+            beschreibung = beschreibung_data,
+            link = link_data
+        )
+        '''
     except:
         print 'Error: could not find: ' + str(orte_dict[fields['ort']].replace(" ",""))
+        print verfahrensschritt

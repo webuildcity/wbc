@@ -4,7 +4,7 @@ from django.core import serializers
 from django.http import HttpResponseRedirect
 from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
 from bbs.forms import LoginForm
-from django.shortcuts import render_to_response,redirect,render
+from django.shortcuts import Http404,render_to_response,redirect,render
 from django.contrib.auth import authenticate, login, logout
 
 from django.template import RequestContext

@@ -28,6 +28,19 @@ for plan in plan_list:
         properties = plan['properties']
         geometry = plan['geometry']
 
+        # get id of plan
+        if properties['PLANNAME']:
+            ort_bezeichner = properties['PLANNAME'].replace(' ','')
+        else:
+            ort_bezeichner = ''
+
+        # see if it is already there
+        try:
+            Ort.objects.get(bezeichner=ort_bezeichner)
+            continue
+        except Ort.DoesNotExist:
+            pass
+
         coordinates = geometry['coordinates']
 
         # switch lat and lon in (multi) polygon and get center
@@ -65,12 +78,6 @@ for plan in plan_list:
         else:
             ort_adresse = ''
     
-        # get id of plan
-        if properties['PLANNAME']:
-            ort_bezeichner = properties['PLANNAME'].replace(' ','')
-        else:
-            ort_bezeichner = ''
-        
         # get area description
         if properties['BEREICH']:
             ort_beschreibung = properties['BEREICH']
@@ -84,8 +91,11 @@ for plan in plan_list:
         ort.beschreibung = ort_beschreibung
         ort.polygon      = json.dumps(coordinates)
         ort.polygontype  = geometry['type']
-
-        bezirk = Bezirk.objects.get(name=properties['BEZIRK'])
-        ort.bezirke.add(bezirk)
-        ort.save()
-        print 'Ort hinzugefügt:',str(ort)
+        
+        try:
+            bezirk = Bezirk.objects.get(name=properties['BEZIRK'])
+            ort.bezirke.add(bezirk)
+            ort.save()
+            print 'Ort hinzugefuegt:',str(ort)
+        except Bezirk.DoesNotExist:
+            print 'skipping',ort_bezeichner,'wrong bezirk',properties['BEZIRK']
