@@ -31,3 +31,19 @@ for plan in plan_list:
     properties = plan['properties']
     print properties['AFS_BESCHL']
     print properties['AFS_BEHOER']
+    ort_bezeichner = properties['PLANNAME'].replace(' ','')
+    ort = Ort.objects.get(bezeichner=ort_bezeichner)
+    verfahrensschritt = Verfahrensschritt.objects.get(name = 'in BVV behandelt')
+    
+
+    Veroeffentlichung.objects.create(
+            ort=ort, 
+            verfahrensschritt=verfahrensschritt, 
+            beginn=d2, 
+            ende=d2, 
+            behoerde=behoerde,  
+            zeiten = "",              
+            auslegungsstelle = "", 
+            beschreibung = d["description"], 
+            link = d["link"]
+        )
