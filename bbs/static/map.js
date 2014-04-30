@@ -63,28 +63,7 @@ function initMap(verfahrensschritte) {
 
     // bin the checkbox to load the old markers
     $('input[name=old]').click(function(){
-        _markerLayer.clearLayers();
-        var url;
-        var now = new Date().toISOString().match(/(\d+-\d+-\d+)/)[0];
-
-        if (_old) {
-            url = '/projekte/orte/?nach=' + now;
-            _old = false;
-        } else {
-            showLoading();
-            url = '/projekte/orte/?vor=' + now;
-            _old = true;
-        }
-
-        $.ajax({
-            url: url,
-            dataType: 'json',
-            success: function (json) {
-                _orte = json.features;
-                initOrte()
-                $('.bbs-loading').hide();
-            }
-        });
+        loadOrte();
     });
     
     // remove and add the zoom buttons
@@ -107,13 +86,30 @@ function initMap(verfahrensschritte) {
     });
 
     // load and display the orte with ende in the future
+    loadOrte();
+}
+
+function loadOrte() {
+    _markerLayer.clearLayers();
+    var url;
     var now = new Date().toISOString().match(/(\d+-\d+-\d+)/)[0];
+
+    if ($('input[name=old]').is(':checked')) {
+        showLoading();
+        url = '/projekte/orte/?vor=' + now;
+        _old = true;
+    } else {
+        url = '/projekte/orte/?nach=' + now;
+        _old = false;
+    }
+
     $.ajax({
-        url: '/projekte/orte/?nach=' + now,
+        url: url,
         dataType: 'json',
         success: function (json) {
             _orte = json.features;
-            initOrte();
+            initOrte()
+            $('.bbs-loading').hide();
         }
     });
 }

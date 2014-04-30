@@ -1,0 +1,142 @@
+[
+    {
+        "fields": {
+            "created": "2013-06-11T20:00:00Z", 
+            "link": "http://www.berlin.de/ba-mitte/org/stadtplanung/bauleitplanung.html", 
+            "name": "Bezirksamt Mitte", 
+            "updated": "2013-06-11T20:00:00Z"
+        }, 
+        "model": "projects.behoerde", 
+        "pk": 1
+    }, 
+    {
+        "fields": {
+            "created": "2013-06-11T20:00:00Z", 
+            "link": "http://www.berlin.de/ba-friedrichshain-kreuzberg/verwaltung/org/stadtplanung/beteiligung.html", 
+            "name": "Bezirksamt Friedrichshain-Kreuzberg", 
+            "updated": "2013-06-11T20:00:00Z"
+        }, 
+        "model": "projects.behoerde", 
+        "pk": 2
+    }, 
+    {
+        "fields": {
+            "created": "2013-06-11T20:00:00Z", 
+            "link": "http://www.berlin.de/ba-pankow/verwaltung/stadt/bekannt.html", 
+            "name": "Bezirksamt Pankow", 
+            "updated": "2013-06-11T20:00:00Z"
+        }, 
+        "model": "projects.behoerde", 
+        "pk": 3
+    }, 
+    {
+        "fields": {
+            "created": "2013-06-11T20:00:00Z", 
+            "link": "http://www.berlin.de/ba-charlottenburg-wilmersdorf/org/stadtplanung/bebauungsplan/index.html", 
+            "name": "Bezirksamt Charlottenburg-Wilmersdorf", 
+            "updated": "2013-06-11T20:00:00Z"
+        }, 
+        "model": "projects.behoerde", 
+        "pk": 4
+    }, 
+    {
+        "fields": {
+            "created": "2013-06-11T20:00:00Z", 
+            "link": "http://www.berlin.de/ba-spandau/verwaltung/abt/bpu/stadtplanung/bauleitplanung.html", 
+            "name": "Bezirksamt Spandau", 
+            "updated": "2013-06-11T20:00:00Z"
+        }, 
+        "model": "projects.behoerde", 
+        "pk": 5
+    }, 
+    {
+        "fields": {
+            "created": "2013-06-11T20:00:00Z", 
+            "link": "http://www.berlin.de/ba-steglitz-zehlendorf/verwaltung/stadtplanung/beteiligungsverfahren.php", 
+            "name": "Bezirksamt Steglitz-Zehlendorf", 
+            "updated": "2013-06-11T20:00:00Z"
+        }, 
+        "model": "projects.behoerde", 
+        "pk": 6
+    }, 
+    {
+        "fields": {
+            "created": "2013-06-11T20:00:00Z", 
+            "link": "http://www.berlin.de/ba-tempelhof-schoeneberg/organisationseinheit/planen/bebauungsplaene.html", 
+            "name": "Bezirksamt Tempelhof-Sch\u00f6neberg", 
+            "updated": "2013-06-11T20:00:00Z"
+        }, 
+        "model": "projects.behoerde", 
+        "pk": 7
+    }, 
+    {
+        "fields": {
+            "created": "2013-06-11T20:00:00Z", 
+            "link": "http://www.berlin.de/ba-neukoelln/verwaltung/bebauungsplaene/bplan.html", 
+            "name": "Bezirksamt Neuk\u00f6lln", 
+            "updated": "2013-06-11T20:00:00Z"
+        }, 
+        "model": "projects.behoerde", 
+        "pk": 8
+    }, 
+    {
+        "fields": {
+            "created": "2013-06-11T20:00:00Z", 
+            "link": "http://www.berlin.de/ba-treptow-koepenick/organisationseinheiten/stadtentwicklung/aktuelleinformationenausdemstadtentwicklungsamt.php", 
+            "name": "Bezirksamt Treptow-K\u00f6penick", 
+            "updated": "2013-06-11T20:00:00Z"
+        }, 
+        "model": "projects.behoerde", 
+        "pk": 9
+    }, 
+    {
+        "fields": {
+            "created": "2013-06-11T20:00:00Z", 
+            "link": "http://www.berlin.de/ba-marzahn-hellersdorf/verwaltung/bauen/beteiligungderoeffent.html", 
+            "name": "Bezirksamt Mahrzahn-Hellersdorf", 
+            "updated": "2013-06-11T20:00:00Z"
+        }, 
+        "model": "projects.behoerde", 
+        "pk": 10
+    }, 
+    {
+        "fields": {
+            "created": "2013-06-11T20:00:00Z", 
+            "link": "http://www.berlin.de/ba-lichtenberg/buergerservice/bauen/bauen022.html", 
+            "name": "Bezirksamt Lichtenberg", 
+            "updated": "2013-06-11T20:00:00Z"
+        }, 
+        "model": "projects.behoerde", 
+        "pk": 11
+    }, 
+    {
+        "fields": {
+            "created": "2013-06-11T20:00:00Z", 
+            "link": "http://www.berlin.de/ba-reinickendorf/org/stadtplanung/index.html", 
+            "name": "Bezirksamt Reinickendorf", 
+            "updated": "2013-06-11T20:00:00Z"
+        }, 
+        "model": "projects.behoerde", 
+        "pk": 12
+    }, 
+    {
+        "fields": {
+            "created": "2013-06-11T20:00:00Z", 
+            "link": "http://www.stadtentwicklung.berlin.de/planen/b-planverfahren/de/plaene.shtml", 
+            "name": "Senatsverwaltung f\u00fcr Stadtentwicklung von Berlin", 
+            "updated": "2013-06-11T20:00:00Z"
+        }, 
+        "model": "projects.behoerde", 
+        "pk": 13
+    }, 
+    {
+        "fields": {
+            "created": "2013-06-11T20:00:00Z", 
+            "link": "http://www.stadtentwicklung.berlin.de/verkehr/politik_planung/planfeststellungen/", 
+            "name": "Senatsverwaltung f\u00fcr Stadtentwicklung von Berlin (PFV)", 
+            "updated": "2013-06-11T20:00:00Z"
+        }, 
+        "model": "projects.behoerde", 
+        "pk": 14
+    }
+]

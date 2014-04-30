@@ -28,6 +28,19 @@ for plan in plan_list:
         properties = plan['properties']
         geometry = plan['geometry']
 
+        # get id of plan
+        if properties['PLANNAME']:
+            ort_bezeichner = properties['PLANNAME'].replace(' ','')
+        else:
+            ort_bezeichner = ''
+
+        # see if it is already there
+        try:
+            ort = Ort.objects.get(bezeichner=ort_bezeichner)
+            new = False
+        except Ort.DoesNotExist:
+            new = True
+
         coordinates = geometry['coordinates']
 
         # switch lat and lon in (multi) polygon and get center
@@ -54,38 +67,41 @@ for plan in plan_list:
         lon = str((lonMax + lonMin) * 0.5)
         
         # get address from open street map
-        url = "http://nominatim.openstreetmap.org/reverse?format=json&lat=" + lat + "&lon=" + lon +"&zoom=18&addressdetails=1"
+        if new:
+            url = "http://nominatim.openstreetmap.org/reverse?format=json&lat=" + lat + "&lon=" + lon +"&zoom=18&addressdetails=1"
 
-        response = urllib2.urlopen(url)
-        answer = response.read()
-        data = json.loads(answer)
+            response = urllib2.urlopen(url)
+            answer = response.read()
+            data = json.loads(answer)
 
-        if 'road' in data['address']:            
-            ort_adresse = data['address']['road']
-        else:
-            ort_adresse = ''
+            if 'road' in data['address']:            
+                ort_adresse = data['address']['road']
+            else:
+                ort_adresse = ''
     
-        # get id of plan
-        if properties['PLANNAME']:
-            ort_bezeichner = properties['PLANNAME'].replace(' ','')
-        else:
-            ort_bezeichner = ''
-        
-        # get area description
-        if properties['BEREICH']:
-            ort_beschreibung = properties['BEREICH']
-        else:
-            ort_beschreibung = ''
+            # get area description
+            if properties['BEREICH']:
+                ort_beschreibung = properties['BEREICH']
+            else:
+                ort_beschreibung = ''
   
-        # create Ort Entry in Database
-        ort              = Ort.objects.create(lat=lat, lon=lon)
-        ort.adresse      = ort_adresse
-        ort.bezeichner   = ort_bezeichner
-        ort.beschreibung = ort_beschreibung
+            # create Ort Entry in Database
+            ort = Ort.objects.create(lat=lat,lon=lon)
+
+            ort.adresse      = ort_adresse
+            ort.bezeichner   = ort_bezeichner
+            ort.beschreibung = ort_beschreibung
+        else:
+            ort.lat          = lat
+            ort.lon          = lon
+        
         ort.polygon      = json.dumps(coordinates)
         ort.polygontype  = geometry['type']
-
-        bezirk = Bezirk.objects.get(name=properties['BEZIRK'])
-        ort.bezirke.add(bezirk)
-        ort.save()
-        print 'Ort hinzugefügt:',str(ort)
+        
+        try:
+            bezirk = Bezirk.objects.get(name=properties['BEZIRK'])
+            ort.bezirke.add(bezirk)
+            ort.save()
+            print 'Ort hinzugefuegt:',str(ort_bezeichner),str(ort)
+        except Bezirk.DoesNotExist:
+            print 'skipping',ort_bezeichner,'wrong bezirk',properties['BEZIRK']

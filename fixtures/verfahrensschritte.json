@@ -1,0 +1,114 @@
+[
+    {
+        "fields": {
+            "beschreibung": "In der ersten Stufe der \u00d6ffentlichkeitsbeteiligung werden die B\u00fcrgerinnen und B\u00fcrger fr\u00fchzeitig \u00fcber die Planungsabsichten informiert. Dazu werden die Unterlagen \u00f6ffentlich ausgelegt oder es wird zu einem gemeinsamen Vorstellungs- und Er\u00f6rterungstermin  eingeladen. B\u00fcrger haben dann die M\u00f6glichkeit, sich zu den Bebauungsplanentw\u00fcrfen zu \u00e4u\u00dfern. Dies ist in vielen F\u00e4llen \u00fcber die Internetseite der verantwortlichen Verwaltung m\u00f6glich. Auch die einzusehenden Unterlagen sind meist auch \u00fcber das Internet abrufbar. Alternativ liegen die Unterlagen in der entsprechenden Verwaltung aus.\r\n\r\nUnter Ber\u00fccksichtigung der Ergebnisse der fr\u00fchzeitigen \u00d6ffentlichkeitsbeteiligung erstellt der zust\u00e4ndige Fachbereich  einen Entwurf f\u00fcr das weitere Verfahren. In einzelnen F\u00e4llen kann auf die fr\u00fchzeitige \u00d6ffentlichkeitsbeteiligung verzichtet werden.", 
+            "created": "2013-06-11T20:00:00Z", 
+            "hoverIcon": "/img/Baustellenschilder/klein/schild_orange.png", 
+            "icon": "/img/Baustellenschilder/klein/schild_orange_blass.png", 
+            "name": "Fr\u00fchzeitige \u00d6ffentlichkeitsbeteiligung", 
+            "reihenfolge": 0, 
+            "updated": "2013-10-01T08:14:38Z", 
+            "verfahren": 1
+        }, 
+        "model": "projects.verfahrensschritt", 
+        "pk": 1
+    }, 
+    {
+        "fields": {
+            "beschreibung": "In der zweiten Stufe der \u00d6ffentlichkeitsbeteiligung wird der Planentwurf einschlie\u00dflich der Begr\u00fcndung f\u00fcr die Dauer eines Monats \u00f6ffentlich ausgelegt. W\u00e4hrend der \u00f6ffentlichen Auslegung kann jeder B\u00fcrger Anregungen und \u00c4nderungsw\u00fcnsche zu den Pl\u00e4nen vorbringen. Auch dies ist in vielen F\u00e4llen \u00fcber das Internet m\u00f6glich. Die Verwaltung wertet die Anregungen aus und legt sie dem entsprechenden Entscheidungsgremium - das ist je nach Verantwortlichkeit die Bezirksverordnetenversammlung (BVV) oder das Berliner Abgeordnetenhaus - zur Entscheidung vor. Den Einsendern wird das Ergebnis der Entscheidung schriftlich mitgeteilt.", 
+            "created": "2013-06-11T20:00:00Z", 
+            "hoverIcon": "/img/Baustellenschilder/klein/schild_rot.png", 
+            "icon": "/img/Baustellenschilder/klein/schild_rot_blass.png", 
+            "name": "\u00d6ffentliche Auslegung", 
+            "reihenfolge": 2, 
+            "updated": "2013-06-11T20:00:00Z", 
+            "verfahren": 1
+        }, 
+        "model": "projects.verfahrensschritt", 
+        "pk": 2
+    }, 
+    {
+        "fields": {
+            "beschreibung": "Wird der Planentwurf nach der Auslegung ge\u00e4ndert oder erg\u00e4nzt, wird er erneut ausgelegt. W\u00e4hrend der \u00f6ffentlichen Auslegung kann jeder Anregungen und \u00c4nderungsw\u00fcnsche zu den Pl\u00e4nen vorbringen. Dabei kann bestimmt werden, dass Stellungnahmen nur zu den ge\u00e4nderten oder erg\u00e4nzten Teilen abgegeben werden k\u00f6nnen. Die Dauer der Auslegung und die Frist zur Stellungnahme kann verk\u00fcrzt werden. ", 
+            "created": "2013-06-11T20:00:00Z", 
+            "hoverIcon": "/img/Baustellenschilder/klein/schild_rost.png", 
+            "icon": "/img/Baustellenschilder/klein/schild_rost_blass.png", 
+            "name": "Erneute \u00f6ffentliche Auslegung", 
+            "reihenfolge": 3, 
+            "updated": "2013-06-11T20:00:00Z", 
+            "verfahren": 1
+        }, 
+        "model": "projects.verfahrensschritt", 
+        "pk": 3
+    }, 
+    {
+        "fields": {
+            "beschreibung": "Die Planungsunterlagen werde einen Monat lang zur Einsicht ausgelegt. Auf diese Auslegung wird durch \u00f6ffentliche Bekanntmachung, zumeist im  Amtsblatt oder in der \u00f6rtlichen Tageszeitung hingewiesen. Jeder, dessen Belange durch die Ma\u00dfnahme ber\u00fchrt werden, kann w\u00e4hrend oder auch noch innerhalb von zwei Wochen nach Ende der Auslegung Einwendungen erheben. Nach Ablauf dieser Frist sind Einwendungen ausgeschlossen.", 
+            "created": "2013-06-11T20:00:00Z", 
+            "hoverIcon": "/img/Baustellenschilder/klein/schild_blau.png", 
+            "icon": "/img/Baustellenschilder/klein/schild_blau_blass.png", 
+            "name": "\u00d6ffentliche Auslegung", 
+            "reihenfolge": 1, 
+            "updated": "2013-06-11T20:00:00Z", 
+            "verfahren": 6
+        }, 
+        "model": "projects.verfahrensschritt", 
+        "pk": 8
+    }, 
+    {
+        "fields": {
+            "beschreibung": "Jeder, dessen Belange durch die Ma\u00dfnahme ber\u00fchrt werden, kann w\u00e4hrend oder auch noch innerhalb von zwei Wochen nach Ende der Auslegung Einwendungen erheben. Nach Ablauf dieser Frist sind Einwendungen ausgeschlossen.", 
+            "created": "2013-06-11T20:00:00Z", 
+            "hoverIcon": "/img/Baustellenschilder/klein/schild_dunkelblau.png", 
+            "icon": "/img/Baustellenschilder/klein/schild_dunkelblau_blass.png", 
+            "name": "Einwendungsfrist l\u00e4uft", 
+            "reihenfolge": 2, 
+            "updated": "2013-06-11T20:00:00Z", 
+            "verfahren": 6
+        }, 
+        "model": "projects.verfahrensschritt", 
+        "pk": 9
+    }, 
+    {
+        "fields": {
+            "beschreibung": "Wenn alle Einwendungen vorliegen, \u00fcbersendet sie die Anh\u00f6rungsbeh\u00f6rde an den Antragsteller zur Gegen\u00e4u\u00dferung. Liegen der Anh\u00f6rungsbeh\u00f6rde die Gegen\u00e4u\u00dferungen vor, setzt sie den so genannten \"Er\u00f6rterungstermin\" an. Auch dieser Termin wird \u00f6ffentlich bekannt gemacht. ", 
+            "created": "2013-06-11T20:00:00Z", 
+            "hoverIcon": "/img/Baustellenschilder/klein/schild_tuerkis.png", 
+            "icon": "/img/Baustellenschilder/klein/schild_tuerkis_blass.png", 
+            "name": "Er\u00f6rterungstermin", 
+            "reihenfolge": 3, 
+            "updated": "2013-06-11T20:00:00Z", 
+            "verfahren": 6
+        }, 
+        "model": "projects.verfahrensschritt", 
+        "pk": 10
+    }, 
+    {
+        "fields": {
+            "beschreibung": "Das Planfeststellungsverfahren endet mit dem von der Planfeststellungsbeh\u00f6rde zu erlassenden Planfeststellungsbeschluss. Die Planfeststellungsbeh\u00f6rde entscheidet nach Abw\u00e4gung aller vorgebrachten Stellungnahmen und Einwendungen \u00fcber die Einwendungen, \u00fcber die im Rahmen der Er\u00f6rterung keine Einigung erzielt werden konnte. Der Planfeststellungsbeschluss ist schriftlich zu begr\u00fcnden. Der Begr\u00fcndung muss zu entnehmen sein, welche Gr\u00fcnde f\u00fcr die Entscheidung ma\u00dfgeblich waren. Mit dem Planfeststellungsbeschluss sind die erforderlichen Auflagen zu verbinden, die dem Vorhabentr\u00e4ger zum Wohle der Allgemeinheit und zur Vermeidung nachteiliger Wirkungen auferlegt werden. Der Planfeststellungsbeschluss ist dem Vorhabentr\u00e4ger, den bekannten Betroffenen und denjenigen, \u00fcber deren Einwendungen entschieden wurde, zuzustellen. Der Beschluss ist mit einer Rechtsbehelfsbelehrung und einer Ausfertigung des festgestellten Plans f\u00fcr die Dauer von zwei Wochen zur Einsicht auszulegen. Ort und Zeit der Auslegung werden orts\u00fcblich bekannt gegeben. Mit dem Ende der Auslegungsfrist gilt der Beschluss gegen\u00fcber den \u00fcbrigen Betroffenen als zugestellt. Sind au\u00dfer an den Vorhabentr\u00e4ger mehr als 50 Zustellungen des Planfeststellungsbeschlusses vorzunehmen, kann die Zustellung durch \u00f6ffentliche Bekanntmachung ersetzt werden. Gegen den Planfeststellungsbeschluss kann innerhalb der in der Rechtsbehelfsbelehrung angegebenen Frist (1 Monat) Klage beim zust\u00e4ndigen Verwaltungsgericht eingereicht werden.", 
+            "created": "2013-06-11T20:00:00Z", 
+            "hoverIcon": "/img/Baustellenschilder/klein/schild_gruen_klein.png", 
+            "icon": "/img/Baustellenschilder/klein/schild_gruen_klein.png", 
+            "name": "Auslegung des Planfeststellungsbeschlusses", 
+            "reihenfolge": 4, 
+            "updated": "2013-06-11T20:00:00Z", 
+            "verfahren": 6
+        }, 
+        "model": "projects.verfahrensschritt", 
+        "pk": 11
+    }, 
+    {
+        "fields": {
+            "beschreibung": "Im Rahmen der fr\u00fchzeitigen \u00d6ffentlichkeitsbeteiligung findet h\u00e4ufig ein gemeinsamer Vorstellungs- und Er\u00f6rterungstermin statt. Die Diskussion wird protokolliert und es besteht im Anschluss noch einige Wochen Zeit, Bedenken und Vorschl\u00e4ge vorzubringen.", 
+            "created": "2013-10-01T08:14:44Z", 
+            "hoverIcon": "/img/Baustellenschilder/klein/schild_orange.png", 
+            "icon": "/img/Baustellenschilder/klein/schild_orange_blass.png", 
+            "name": "Er\u00f6rterungstermin", 
+            "reihenfolge": 1, 
+            "updated": "2013-10-01T08:14:44Z", 
+            "verfahren": 1
+        }, 
+        "model": "projects.verfahrensschritt", 
+        "pk": 12
+    }
+]

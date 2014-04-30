@@ -1,0 +1,22 @@
+[
+    {
+        "fields": {
+            "beschreibung": "Ein Bebauungsplan regelt die m\u00f6glichen Nutzungen von allen Grundst\u00fccken, die im Geltungsbereich des Bebauungsplans liegen. Festgesetzt wird zum Beispiel, ob oder inwieweit auf einem Grundst\u00fcck gebaut werden darf. Es kann auch bestimmt werden, dass \u00fcberhaupt keine Bebauung m\u00f6glich ist, sondern, dass zum Beispiel eine Gr\u00fcnfl\u00e4che oder eine Stra\u00dfe vorgesehen ist. \r\n\r\nIm Rahmen der Aufstellung von Bebauungspl\u00e4nen haben die B\u00fcrgerinnen und B\u00fcrger in zwei Stufen die M\u00f6glichkeit, sich zu beteiligen. Dies ist in der ersten Stufe die Fr\u00fchzeitige \u00d6ffentlichkeitsbeteiligung und in der zweiten Stufe die \u00d6ffentliche Auslegung.", 
+            "created": "2013-06-11T20:00:00Z", 
+            "name": "Bebauungsplanverfahren", 
+            "updated": "2013-06-11T20:00:00Z"
+        }, 
+        "model": "projects.verfahren", 
+        "pk": 1
+    }, 
+    {
+        "fields": {
+            "beschreibung": "Ein Planfeststellungsverfahren ist das Genehmigungsverfahren f\u00fcr gr\u00f6\u00dfere Infrastrukturvorhaben wie den Bau einer Autobahn oder eines Flugplatzes. Ein Unterschied  zu gew\u00f6hnlichen Verwaltungsverfahren besteht in der umfassenden Beteiligung von B\u00fcrgern, deren Belange durch das Vorhaben betroffen sind. Rechtzeitig erhobene Einwendungen werden meist in einem m\u00fcndlichen Termin gemeinsam er\u00f6rtert. Ein Planfeststellungsverfahren gliedert sich in die folgenden Phasen.  ", 
+            "created": "2013-06-11T20:00:00Z", 
+            "name": "Planfeststellungsverfahren", 
+            "updated": "2013-06-11T20:00:00Z"
+        }, 
+        "model": "projects.verfahren", 
+        "pk": 6
+    }
+]
