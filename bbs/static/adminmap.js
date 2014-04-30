@@ -14,12 +14,12 @@ function drawMap(){
     map = new L.Map("adminmap");
     var min = 9;
     var max = 17
-    var myLayer = new L.TileLayer('http://tiles.buergerbautstadt.de/berlin/{z}/{x}/{y}.png', {
+    var myLayer = new L.TileLayer('http://tiles3.buergerbautstadt.de/berlin/{z}/{x}/{y}.png', {
         minZoom: min,
         maxZoom: max,
         attribution: 'Map data &copy; 2012 OpenStreetMap contributors',
         zIndex:0,
-        errorTileUrl: 'http://tiles.buergerbautstadt.de/error.png',
+        errorTileUrl: 'http://tiles3.buergerbautstadt.de/error.png',
         reuseTiles:true
     });
     map.addLayer(myLayer);
