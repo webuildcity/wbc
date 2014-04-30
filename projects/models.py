@@ -16,9 +16,13 @@ class Ort(Model):
     polygontype         = models.TextField()
 
     def __unicode__(self):
-        return self.adresse
+        if self.bezeichner:
+            return self.bezeichner + ' ' + self.adresse
+        else:
+            return self.adresse
 
     class Meta:
+        ordering            = ("bezeichner",)
         verbose_name        = "Ort"
         verbose_name_plural = "Orte"
 
