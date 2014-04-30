@@ -39,8 +39,8 @@ for plan in plan_list:
             ort = Ort.objects.get(bezeichner=ort_bezeichner)
             new = False
         except Ort.DoesNotExist:
+            ort = Ort.objects.create();
             new = True
-            continue
 
         coordinates = geometry['coordinates']
 
@@ -87,10 +87,9 @@ for plan in plan_list:
                 ort_beschreibung = ''
   
         # create Ort Entry in Database
-        #ort              = Ort.objects.create(lat=lat, lon=lon)
-        #ort.adresse      = ort_adresse
-        #ort.bezeichner   = ort_bezeichner
-        #ort.beschreibung = ort_beschreibung
+            ort.adresse      = ort_adresse
+            ort.bezeichner   = ort_bezeichner
+            ort.beschreibung = ort_beschreibung
  
         ort.lat          = lat
         ort.lon          = lon
