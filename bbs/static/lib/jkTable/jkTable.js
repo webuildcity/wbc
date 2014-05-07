@@ -231,8 +231,8 @@ jk.table.Table.prototype.pager = function () {
         return false;
     }).appendTo($('.jk-table-pager', self.container));
 
-    $('#' + self.id + '-pager-search').click(function () {
-        $(this).parent().submit();
+    $('#' + self.id + '-pager-search a').click(function () {
+        $(this).parent().parent().submit();
         return false;
     });
 
