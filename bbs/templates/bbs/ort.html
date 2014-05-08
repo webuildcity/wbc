@@ -25,6 +25,7 @@
     <div class="container">
         <div id="localmap" style="height: 400px; border: 2px solid rgba(0, 0, 0, 0.247059);"></div>
 
+
         <div class="row">        
             <div class="col-sm-8">
                 <h3>Betroffenes Gebiet</h3>
@@ -40,14 +41,15 @@
             </div>
         </div>
 
-        {% if ort.veroeffentlichungen%}
+        {% if ort.veroeffentlichungen.all %}
+        
         <h3>Veröffentlichungen zu diesem Gebiet</h3>
         <table class="table">
             <thead>
                 <tr>
-                    <th>Verfahren</th>                        
-                    <th style="width: 6em">Fristbeginn</th>
-                    <th style="width: 6em">Fristende</th>
+                    <th>Was? </th>                        
+                    <th style="width: 16em">Wann?</th>
+                    
                     <th>Details</th>
                </tr>
             </thead>
@@ -55,8 +57,12 @@
                 {% for veroeffentlichung in ort.veroeffentlichungen.all %}
                 <tr>
                     <td><a href="/begriffe/#{{ veroeffentlichung.verfahrensschritt.pk}}">{{ veroeffentlichung.verfahrensschritt.name}} ({{ veroeffentlichung.verfahrensschritt.verfahren.name }})</a></td>
+                    {% if veroeffentlichung.beginn == veroeffentlichung.ende %}
                     <td>{{ veroeffentlichung.beginn }}</td> 
-                    <td>{{ veroeffentlichung.ende }}</td>
+                    {% else %}
+                    <td>{{ veroeffentlichung.beginn }} bis <br>{{ veroeffentlichung.ende }} </td> 
+                    {% endif %}
+                    
                     <td>
                         {% if veroeffentlichung.beschreibung %}
                         <p>
@@ -66,17 +72,21 @@
                             {{ veroeffentlichung.beschreibung }}
                         </p>
                         {% endif %}
+                        {% if veroeffentlichung.auslegungsstelle %}
                         <p>
                             <b>Auslegungsstelle</b>
                         </p>
                         <p>
                             {{ veroeffentlichung.auslegungsstelle }}
                         </p>
+                        {% endif %}
+                        {% if veroeffentlichung.zeiten %}
                         <p>
                             <b>Öffnungszeiten</b>
                         </p>
                             {{ veroeffentlichung.zeiten }}
                         </p>
+                        {% endif %}
                         {% if veroeffentlichung.link %}
                         <p>
                             <a href="{{ veroeffentlichung.link }}" target="_blank">Link zur Seite</a>
