@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import authenticate, login, logout
+from projects.models import Veroeffentlichung, Ort
 
 
 class LoginForm(forms.Form):
@@ -19,3 +20,17 @@ class LoginForm(forms.Form):
         password = self.cleaned_data.get('password')
         user = authenticate(username=username, password=password)
         return user
+
+class VeroeffentlichungForm(forms.ModelForm):
+
+    class Meta:
+        model = Veroeffentlichung
+
+
+class OrtForm(forms.ModelForm):
+
+    class Meta:
+        model = Ort
+        exclude = ('polygon','polygontype')
+        
+        

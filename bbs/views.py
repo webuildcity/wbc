@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.core import serializers
 from django.http import HttpResponseRedirect
 from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
-from bbs.forms import LoginForm
+from bbs.forms import LoginForm, VeroeffentlichungForm, OrtForm
 from django.shortcuts import Http404,render_to_response,redirect,render
 from django.contrib.auth import authenticate, login, logout
 
@@ -43,4 +43,12 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return render_to_response('bbs/logout.html', context_instance=RequestContext(request))     
+    return render_to_response('bbs/logout.html', context_instance=RequestContext(request))    
+
+def new_publication(request):
+
+    vform = VeroeffentlichungForm()
+    oform = OrtForm() 
+    return render(request,'bbs/new.html',{'vform': vform, 'oform': oform}) 
+    
+

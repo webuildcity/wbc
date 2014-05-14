@@ -1,0 +1,71 @@
+{% extends 'bbs/page.html' %}
+{% load widget_tweaks %}
+{% load staticfiles %}
+
+
+
+
+
+
+
+
+
+
+{% block page %}
+
+<script type="text/javascript" >
+
+$( document ).ready(function() {
+  alert('hallo');
+});
+
+</script>
+<h2>Neue Veröffentlichung anlegen</h2>
+
+
+
+
+
+<div class="ui-widget">
+  <label for="tags">Tags: </label>
+  <input id="tags">
+</div>
+
+
+
+
+<div id="ortform">
+<form method="post" class="form-horizontal panel panel-default" role="form">
+    <div class="panel-body">
+        {% for field in oform %}               
+        <div class="form-group{% if field.errors %} has-error{% endif %}">
+            <label class="col-lg-2 control-label">{{ field.label }}</label>
+            <div class="col-lg-7">
+                {% render_field field class='form-control' %}
+                <span class="help-block">
+                    {% if field.errors %}{{ field.errors.as_text }}{% endif %}
+                    {{ field.help_text }}            
+                </span>
+            </div>       
+        </div>        
+        {% endfor %}
+
+        {% csrf_token %}
+        <div class="form-group">
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button type="submit" class="btn btn-primary">Eingaben speichern</button>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+
+
+
+
+
+
+{% endblock %}
+

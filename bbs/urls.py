@@ -20,6 +20,8 @@ urlpatterns = patterns('',
     # user login
     url(r'^login/', 'bbs.views.login_user', name='User_login'),
     url(r'^logout/', 'bbs.views.logout_user', name='User_logout'),
+    url(r'^new/', 'bbs.views.new_publication', name='new'),
+
     # robots.txt and sitemap.xml
     (r'^robots\.txt$', TemplateView.as_view(template_name='bbs/robots.txt', content_type='text/plain')),
     (r'^sitemap\.xml$', TemplateView.as_view(template_name='bbs/sitemap.xml', content_type='text/plain')),
