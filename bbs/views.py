@@ -6,6 +6,7 @@ from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren
 from bbs.forms import LoginForm, VeroeffentlichungForm, OrtForm
 from django.shortcuts import Http404,render_to_response,redirect,render
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.formtools.wizard.views import SessionWizardView
 
 from django.template import RequestContext
 import datetime
@@ -45,10 +46,19 @@ def logout_user(request):
     logout(request)
     return render_to_response('bbs/logout.html', context_instance=RequestContext(request))    
 
-def new_publication(request):
+class NewWizard(SessionWizardView):
+    TEMPLATES = {"0": "bbs/new1.html",
+             "1": "bbs/new1.html",
+             "2": "bbs/new1.html",
+             }
 
-    vform = VeroeffentlichungForm()
-    oform = OrtForm() 
-    return render(request,'bbs/new.html',{'vform': vform, 'oform': oform}) 
+
+    #def get_template_names(self):
+     #   return [TEMPLATES[self.steps.current]]
+
+    #def done(self, form_list, **kwargs):
+        #do_something_with_the_form_data(form_list)
+        #return HttpResponseRedirect('/page-to-redirect-to-when-done/')
+        
     
 

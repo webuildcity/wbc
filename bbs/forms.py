@@ -32,5 +32,23 @@ class OrtForm(forms.ModelForm):
     class Meta:
         model = Ort
         exclude = ('polygon','polygontype')
+
+
+class New1(forms.Form):
+    bezeichner = forms.CharField(max_length=100)
+
+    
+
+class New2(forms.ModelForm):
+    class Meta:
+        model = Ort
+
+    
+
+class New3(forms.ModelForm):
+
+    class Meta:
+        model = Veroeffentlichung
+        exclude = ('polygon','polygontype')
         
         

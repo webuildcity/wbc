@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
+from bbs.views import NewWizard
 from django.contrib import admin
+from bbs.forms import New1, New2, New3
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -20,7 +22,7 @@ urlpatterns = patterns('',
     # user login
     url(r'^login/', 'bbs.views.login_user', name='User_login'),
     url(r'^logout/', 'bbs.views.logout_user', name='User_logout'),
-    url(r'^new/', 'bbs.views.new_publication', name='new'),
+    url(r'^new/', NewWizard.as_view([New1, New2, New3])),
 
     # robots.txt and sitemap.xml
     (r'^robots\.txt$', TemplateView.as_view(template_name='bbs/robots.txt', content_type='text/plain')),

@@ -3,63 +3,135 @@
 {% load staticfiles %}
 
 
+{% block css %}
+{{block.super }}
+<link rel="stylesheet" href="{% static 'lib/typeahead/css/typeahead.js-bootstrap.css' %}" />   
+{% endblock %}
 
 
-
-
-
-
-
-
-{% block page %}
-
+{% block js %}
+<script type="text/javascript" src="{% static 'lib/typeahead/js/typeahead.js' %}" ></script>
 <script type="text/javascript" >
-
 $( document ).ready(function() {
-  alert('hallo');
+
+    $('#ortform').hide();
+    
+
+    var substringMatcher = function(strs) {
+    return function findMatches(q, cb) {
+    var matches, substringRegex;    
+    matches = [];
+    substrRegex = new RegExp(q, 'i');
+    $.each(strs, function(i, str) {
+      if (substrRegex.test(str)) {
+        // the typeahead jQuery plugin expects suggestions to a
+        // JavaScript object, refer to typeahead docs for more info
+        matches.push({ value: str });
+      }
+    });
+
+    cb(matches);
+    };
+    };
+
+    var states = [{% for ort in orte %} '{{ort.bezeichner}}', {% endfor %}
+    ];
+
+    $('#the-basics .typeahead').typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 2
+    },
+    {
+    name: 'states',
+    displayKey: 'value',
+    source: substringMatcher(states)
+    });
+
+    
+
 });
 
+function showForm() {
+    $('#veroeffentlichung').show();
+    alert($('#the-basics').text());
+    
+}
 </script>
+{% endblock %}
+
+{% block page %}
 <h2>Neue Veröffentlichung anlegen</h2>
+<h3>1. Ort festlegen</h3>
 
 
+<form method="post" class="form" role="form">{% csrf_token %}
+    <div class="form-group">
+        <div id="the-basics">
+          <input class="typeahead form-control" name="bezeichner" type="text" placeholder="Bezeichner eines Bebbauungsplan">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" type="submit">Übernehmen</button>    
+</form>
 
+<div id="ortform" style="display: none;">
+    <form method="post" class="form-horizontal panel panel-default" role="form">
+        <div class="panel-body">
+            {% for field in oform %}               
+            <div class="form-group{% if field.errors %} has-error{% endif %}">
+                <label class="col-lg-2 control-label">{{ field.label }}</label>
+                <div class="col-lg-7">
+                    {% render_field field class='form-control' %}
+                    <span class="help-block">
+                        {% if field.errors %}{{ field.errors.as_text }}{% endif %}
+                        {{ field.help_text }}            
+                    </span>
+                </div>       
+            </div>        
+            {% endfor %}
 
-
-<div class="ui-widget">
-  <label for="tags">Tags: </label>
-  <input id="tags">
-</div>
-
-
-
-
-<div id="ortform">
-<form method="post" class="form-horizontal panel panel-default" role="form">
-    <div class="panel-body">
-        {% for field in oform %}               
-        <div class="form-group{% if field.errors %} has-error{% endif %}">
-            <label class="col-lg-2 control-label">{{ field.label }}</label>
-            <div class="col-lg-7">
-                {% render_field field class='form-control' %}
-                <span class="help-block">
-                    {% if field.errors %}{{ field.errors.as_text }}{% endif %}
-                    {{ field.help_text }}            
-                </span>
-            </div>       
-        </div>        
-        {% endfor %}
-
-        {% csrf_token %}
-        <div class="form-group">
+            {% csrf_token %}
             <div class="form-group">
-                <div class="col-lg-10 col-lg-offset-2">
-                    <button type="submit" class="btn btn-primary">Eingaben speichern</button>                    
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button type="submit" class="btn btn-primary">Eingaben speichern</button>                    
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>
+
+
+<div id="veroeffentlichung" style="display: none;">
+<h3>2. Veröffentlichung hinzufügen</h3>
+<div id="verform">
+    <form method="post" class="form-horizontal panel panel-default" role="form">
+        <div class="panel-body">
+            {% for field in vform %}               
+            <div class="form-group{% if field.errors %} has-error{% endif %}">
+                <label class="col-lg-2 control-label">{{ field.label }}</label>
+                <div class="col-lg-7">
+                    {% render_field field class='form-control' %}
+                    <span class="help-block">
+                        {% if field.errors %}{{ field.errors.as_text }}{% endif %}
+                        {{ field.help_text }}            
+                    </span>
+                </div>       
+            </div>        
+            {% endfor %}
+
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button type="submit" class="btn btn-primary">Eingaben speichern</button>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 </div>
 
 
