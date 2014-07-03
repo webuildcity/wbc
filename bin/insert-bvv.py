@@ -26,7 +26,7 @@ data = json.load(open(filename,'r'))
 for d in data:
     pk = d["id"]
     
-    behoerde = 'Bezirksamt Treptow-Köpenick'
+    behoerde = 'Bezirksamt Charlottenburg-Wilmersdorf'
 
     try:    
         ort = Ort.objects.get(bezeichner=pk)
@@ -36,7 +36,7 @@ for d in data:
         d2 = dateutil.parser.parse(d1)
         d2 = d2 - relativedelta(months=1)
         
-        Veroeffentlichung.objects.create(
+        v = Veroeffentlichung(
             ort=ort, 
             verfahrensschritt=verfahrensschritt, 
             beginn=d2, 
@@ -47,6 +47,8 @@ for d in data:
             beschreibung = d["description"], 
             link = d["link"]
         )   
+        v.save()
+        print 'success'
     except Exception as e:
         print pk
         print e

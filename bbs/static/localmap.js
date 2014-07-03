@@ -6,7 +6,7 @@ function initMap() {
     var myLayer = new L.TileLayer('http://tiles3.buergerbautstadt.de/berlin/{z}/{x}/{y}.png', {
         minZoom: min,
         maxZoom: max,
-        attribution: 'Map data &copy; 2012 OpenStreetMap contributors',
+        attribution: 'Map data &copy; 2012 OpenStreetMap contributors and <a href="http://fbinter.stadt-berlin.de/fb/berlin/service.jsp?id=re_bplan@senstadt&type=WFS&themeType=spatial" target="_blank">Geoportal Berlin/Geltungsbereiche der Bebauungspläne</a>',
         zIndex: 0,
         errorTileUrl: 'http://tiles3.buergerbautstadt.de/error.png',
         reuseTiles: true

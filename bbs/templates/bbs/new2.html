@@ -1,0 +1,89 @@
+{% extends "bbs/page.html" %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block head %}
+{{ wizard.form.media }}
+{% endblock %}
+
+{% block css %}
+{{block.super }}
+<link rel="stylesheet" href="{% static 'lib/typeahead/css/typeahead.js-bootstrap.css' %}" />   
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{% static 'lib/typeahead/js/typeahead.js' %}" ></script>
+<script type="text/javascript" >
+$( document ).ready(function() {    
+    var substringMatcher = function(strs) {
+    return function findMatches(q, cb) {
+    var matches, substringRegex;    
+    matches = [];
+    substrRegex = new RegExp(q, 'i');
+    $.each(strs, function(i, str) {
+      if (substrRegex.test(str)) {
+        // the typeahead jQuery plugin expects suggestions to a
+        // JavaScript object, refer to typeahead docs for more info
+        matches.push({ value: str });
+      }
+    });
+
+    cb(matches);
+    };
+    };
+
+    var states = [{% for ort in form.orte %} '{{ort.bezeichner}}', {% endfor %}
+    ];
+
+    $('#the-basics .typeahead').typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 4
+    },
+    {
+    name: 'states',
+    displayKey: 'value',
+    source: substringMatcher(states)
+    });
+
+    $('#loading-example-btn').click(function () {       
+        var text = $('#id_bezeichner').val();
+        window.location.href = '/orte/' + text + '/add/' ;
+  });
+});
+    
+
+</script>
+{% endblock%}
+
+{% block page %}
+<form action="" method="post" class="form" role="form">{% csrf_token %}
+{% for field in form %}
+ <div class="form-group{% if field.errors %} has-error{% endif %}">
+        <label>
+        {{ field.label }}
+        </label>
+        <div id="the-basics">
+        {% if field.field.required %}
+        {% render_field field class="form-control"  %}
+        {% else %}
+        {% render_field field class="form-control " %}
+        {% endif %}
+        {% if field.errors %}
+            <div class="help-block error">
+                <p class="text-danger">{{ field.errors.as_text}}</p>
+            </div>
+        {% endif %}
+            <div class="help-block info">
+                {{ field.help_text }}
+                {{ helptext }}
+                {% block helptext %}{% endblock %}
+            </div>
+        </div>
+    </div>   
+
+{% endfor %}
+<input type="submit" value="Submit" />
+</form>
+{% endblock%}

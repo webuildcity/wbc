@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth import authenticate, login, logout
 from projects.models import Veroeffentlichung, Ort
 
@@ -21,34 +22,16 @@ class LoginForm(forms.Form):
         user = authenticate(username=username, password=password)
         return user
 
-class VeroeffentlichungForm(forms.ModelForm):
+class New1(forms.Form):    
+    orte = Ort.objects.all()
+    bezeichner = forms.CharField(max_length=100, required=False)
+
+class addPublication(ModelForm):
 
     class Meta:
         model = Veroeffentlichung
 
-
-class OrtForm(forms.ModelForm):
-
-    class Meta:
-        model = Ort
-        exclude = ('polygon','polygontype')
-
-
-class New1(forms.Form):
-    bezeichner = forms.CharField(max_length=100)
-
     
 
-class New2(forms.ModelForm):
-    class Meta:
-        model = Ort
 
-    
-
-class New3(forms.ModelForm):
-
-    class Meta:
-        model = Veroeffentlichung
-        exclude = ('polygon','polygontype')
-        
         
