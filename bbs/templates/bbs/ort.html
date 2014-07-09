@@ -7,7 +7,8 @@
 {% endblock %}
 
 {% block js %}
-    <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>    
+    <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/OSMBuildings-Leaflet.js' %}"  ></script>    
     <script type="text/javascript">
         var staticUrl = '{% static '' %}';
         var lon = {{ ort.lon|stringformat:"F" }};

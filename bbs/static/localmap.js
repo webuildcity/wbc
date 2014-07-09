@@ -13,6 +13,8 @@ function initMap() {
     });
     map.addLayer(myLayer);
 
+    var osmb = new OSMBuildings(map).loadData();
+
     // center map
     var center = new L.LatLng(lat, lon); 	
     map.setView(center, 15);
