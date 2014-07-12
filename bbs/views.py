@@ -13,7 +13,6 @@ from django.http import HttpResponse
 import json
 from django.contrib.auth.decorators import login_required
 
-
 def home(request):
     return render(request,'bbs/map.html')
 
@@ -49,27 +48,12 @@ def logout_user(request):
     logout(request)
     return render_to_response('bbs/logout.html', context_instance=RequestContext(request))
 
-@login_required
+@login_required(login_url='/login/')
 def create_publication(request):
     form = New1()
     return render(request, 'bbs/new1.html', {'form':form})
 
-@login_required
-def getOrt(request):
-    if request.method == 'GET': 
-        data = {}
-        bezeichner = request.GET.get('bezeichner')
-        try:
-            ort = Ort.objects.get(bezeichner=bezeichner)
-            data['pk'] = ort.pk
-            data['success'] = True
-        except:
-            data['pk'] = -1
-            data['success'] = False
-
-    return HttpResponse(json.dumps(data), content_type="application/json")
-
-@login_required
+@login_required(login_url='/login/')
 def addPublicationToLocation(request,pk):
     if request.method == 'POST': 
         form = addPublication(request.POST)
