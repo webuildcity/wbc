@@ -120,6 +120,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'widget_tweaks',
     'south',
     'projects',
     'news'
@@ -170,3 +171,5 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_FROM = 'news@buergerbautstadt.de'
+
+LOGIN_URL = '/login'

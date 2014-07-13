@@ -10,8 +10,9 @@ urlpatterns = patterns('',
     # orte
     url(r'^orte/$', 'bbs.views.orte'),
     url(r'^orte/(?P<pk>\d+)/$', 'bbs.views.ort'),
+    #url(r'^orte/neu/$', 'bbs.views.ort'),
     # veroeffentlichungen
-    url(r'^veroeffentlichungen/neu/$', 'bbs.views.create_publication'),
+    url(r'^veroeffentlichungen/neu/$', 'bbs.views.create_veroeffentlichung'),
     # begriffe
     url(r'^begriffe/$', 'bbs.views.begriffe'),
     # modules

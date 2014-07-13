@@ -6,7 +6,7 @@ from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren
 from bbs.forms import LoginForm
 from django.shortcuts import Http404,render_to_response,redirect,render
 from django.contrib.auth import authenticate, login, logout
-from bbs.forms import New1, addPublication
+from bbs.forms import FindOrt,CreateVeroeffentlichung
 from django.template import RequestContext
 import datetime
 from django.http import HttpResponse
@@ -48,40 +48,24 @@ def logout_user(request):
     logout(request)
     return render_to_response('bbs/logout.html', context_instance=RequestContext(request))
 
-@login_required(login_url='/login/')
-def create_publication(request):
-    form = New1()
-    return render(request, 'bbs/new1.html', {'form':form})
+@login_required
+def create_veroeffentlichung(request):
+    orte_id = request.GET.get('orte_id', None)
 
-@login_required(login_url='/login/')
-def addPublicationToLocation(request,pk):
-    if request.method == 'POST': 
-        form = addPublication(request.POST)
-        ort = Ort.objects.get(pk = pk) # A form bound to the POST data
-        if form.is_valid():            
-            form.save()
-            return HttpResponseRedirect('/orte/' + str(ort.pk))    
-        else:
-            return render(request, 'bbs/new2.html', {'form':form}) 
+    if orte_id == None:
+        form = FindOrt()
+        return render(request, 'bbs/create_veroeffentlichungen_step1.html', {'form':form})
+
     else:
-        ort = Ort.objects.get(pk = pk)
-        form = addPublication(initial={'ort': ort})
-        return render(request, 'bbs/new2.html', {'form':form}) 
+        ort = Ort.objects.get(pk=orte_id)
 
-        
-
-
-
-
-
-
-
-    
-
-   
-
-
-    
-        
-    
-
+        if request.method == 'POST': 
+            form = CreateVeroeffentlichung(request.POST)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect('/orte/' + str(ort.pk))
+            else:
+                return render(request, 'bbs/create_veroeffentlichung_step2.html', {'form':form})
+        else:
+            form = CreateVeroeffentlichung(initial={'ort': ort})
+            return render(request,'bbs/create_veroeffentlichung_step2.html',{'form':form})
