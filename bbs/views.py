@@ -54,7 +54,7 @@ def create_veroeffentlichung(request):
 
     if orte_id == None:
         form = FindOrt()
-        return render(request, 'bbs/create_veroeffentlichungen_step1.html', {'form':form})
+        return render(request, 'bbs/create_veroeffentlichung_step1.html', {'form':form})
 
     else:
         ort = Ort.objects.get(pk=orte_id)
