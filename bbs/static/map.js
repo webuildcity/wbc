@@ -12,7 +12,7 @@ function init() {
         success: function (json) {
             initMap(json);
         }
-    }); 
+    });
 }
 
 function initMap(verfahrensschritte) {
@@ -42,24 +42,24 @@ function initMap(verfahrensschritte) {
         _icons[verfahrensschritt.pk] = {
             icon : L.icon({
                 iconUrl: verfahrensschritt.icon,
-                iconSize:     [26, 45], 
+                iconSize:     [26, 45],
                 iconAnchor:   [13, 45],
                 popupAnchor:  [0, -46]
             }),
             iconUrl: verfahrensschritt.icon,
             hoverIconUrl: verfahrensschritt.hoverIcon
-        }
+        };
     });
 
     // add a layer for the old publications
     _greyIcon  = {
         icon : L.icon({
-            iconUrl: '/static/img/Baustellenschilder/klein/schild_grau_blass.png',    
+            iconUrl: '/static/img/Baustellenschilder/klein/schild_grau_blass.png',
             iconSize:     [26, 45],
             iconAnchor:   [13, 45],
             popupAnchor:  [0, -46]
         })
-    }; 
+    };
 
     // bin the checkbox to load the old markers
     $('input[name=old]').click(function(){
@@ -108,7 +108,7 @@ function loadOrte() {
         dataType: 'json',
         success: function (json) {
             _orte = json.features;
-            initOrte()
+            initOrte();
             $('.bbs-loading').hide();
         }
     });
@@ -120,7 +120,7 @@ function initOrte() {
     // add points to map
     $.each(_orte, function(key, ort){
         // get the first veroeffentlichung
-        var veroeffentlichung = ort.properties.veroeffentlichungen[0]
+        var veroeffentlichung = ort.properties.veroeffentlichungen[0];
 
         // get the id of the verfahrensschritt
         var vspk = veroeffentlichung.verfahrensschritt.pk;
@@ -133,7 +133,7 @@ function initOrte() {
         if (_old) {
             icon = _greyIcon;
         } else {
-            icon = _icons[vspk]
+            icon = _icons[vspk];
         }
 
         // create marker
@@ -141,8 +141,8 @@ function initOrte() {
 
         // enable hover icon
         if (!_old) {
-            marker.iconUrl = icon.iconUrl
-            marker.hoverIconUrl = icon.hoverIconUrl
+            marker.iconUrl = icon.iconUrl;
+            marker.hoverIconUrl = icon.hoverIconUrl;
 
             marker.on("mouseover", function(e) {
                 e.target._icon.src = this.hoverIconUrl;
@@ -151,7 +151,9 @@ function initOrte() {
             });
         }
 
+        var d_beginn = new Date(veroeffentlichung.beginn);
         var d = new Date(veroeffentlichung.ende);
+
         var datestring = d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear();
 
         var popuptext = '<p><b>' + veroeffentlichung.verfahrensschritt.verfahren + '</b>';
@@ -159,7 +161,14 @@ function initOrte() {
         popuptext += ' <a href="/begriffe/#'+ vspk + '" >(?)</a></p>';
         popuptext += '<p>Betrifft Gegend um: ' + ort.properties.adresse + '</p>';
         popuptext += '<p>Verantwortlich: ' + veroeffentlichung.behoerde + '</p>';
-        popuptext += '<p>Beteiligung möglich bis: ' + datestring + '</p>';
+        if(veroeffentlichung.beginn == veroeffentlichung.ende) {
+            popuptext += '<p>Zeitpunkt: ' + datestring + '</p>';
+        }
+        else{
+            popuptext += '<p>Beteiligung möglich bis: ' + datestring + '</p>';
+        }
+        
+
         popuptext += '<p><a href="/orte/' + ort.properties.pk + '" >Details</a></p>';
 
         marker.bindPopup(popuptext, {
@@ -168,7 +177,7 @@ function initOrte() {
         });
 
         _markerLayer.addLayer(marker);
-    }); 
+    });
 }
 
 function showLoading () {
@@ -179,7 +188,7 @@ function showLoading () {
     var windowHeight = $(window).height();
 
     loading.height(20);
-    loading.width(240)
+    loading.width(240);
 
     var left = (windowWidth - loading.width()) / 2 - 20;
     loading.css('left', left);
@@ -201,7 +210,7 @@ function showInfo() {
 
     if (windowWidth < 768 || windowHeight < 600) {
         dialog.height('auto');
-        dialog.width('auto')
+        dialog.width('auto');
 
         dialog.css('top', 0);
         dialog.css('left', 0);
@@ -209,7 +218,7 @@ function showInfo() {
         dialog.css('right', 0);
     } else {
         dialog.height(530);
-        dialog.width(660)
+        dialog.width(660);
 
         var left = (windowWidth - dialog.width()) / 2;
         dialog.css('left', left);
@@ -232,6 +241,11 @@ function showInfo() {
     });
     $('.leaflet-popup-close-button',dialog).on('click', function () {
         $('.bbs-modal').hide();
+        var frame = $('iframe#vimeo-iframe');
+        var vidsrc = frame.attr('src');
+        frame.attr('src','');
+        frame.attr('src', vidsrc);
+        
         return false;
     });
     $('.bbs-modal').on('click', function (e) {
@@ -242,4 +256,4 @@ function showInfo() {
         $('.bbs-modal').hide();
         return false;
     });
-};
+}

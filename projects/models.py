@@ -13,7 +13,7 @@ class Ort(Model):
                                     help_text="ggf. Bezeichner des Beplauungsplans")
     bezirke      = models.ManyToManyField('Bezirk', related_name='orte')
     polygon      = models.TextField(null=True, blank=True)
-    polygontype         = models.TextField()
+    polygontype  = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
         if self.bezeichner:

@@ -185,3 +185,22 @@ body, html {
     font-weight: bold;
     font-size: 2em;
 }
+
+.responsive-video {
+    position: relative;
+    padding-bottom: 55%;
+    padding-top: 15px;
+    height: 0;
+    overflow: hidden;
+}
+
+.responsive-video iframe{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+

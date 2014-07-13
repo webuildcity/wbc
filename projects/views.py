@@ -13,6 +13,7 @@ def orte(request):
     bezirk = request.GET.get('bezirk', None)
     vor = request.GET.get('vor', None)
     nach = request.GET.get('nach', None)
+    bezeichner = request.GET.get('bezeichner', None)
 
     orte = Ort.objects
     if vor:
@@ -23,12 +24,19 @@ def orte(request):
         orte = orte.filter(veroeffentlichungen__ende__gte=datetime.date(*nach))
     if bezirk:
         orte = orte.filter(bezirke__name=bezirk)
+    if bezeichner:
+        orte = orte.filter(bezeichner=bezeichner)
+
     orte = orte.all()
 
-    response = {
-        'type': 'FeatureCollection',
-        'features': [ort_response(o) for o in orte]
-    }
+    if orte:
+        response = {
+            'type': 'FeatureCollection',
+            'features': [ort_response(o) for o in orte]
+        }
+    else:
+        response = {}
+        
     return HttpResponse(json.dumps(response,cls=DjangoJSONEncoder),content_type="application/json")
 
 def orte_cols(request):
