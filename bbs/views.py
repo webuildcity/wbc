@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings
 from django.shortcuts import render
 from django.core import serializers
 from django.http import HttpResponseRedirect,HttpResponse
@@ -77,8 +78,8 @@ class VeroeffentlichungenFeedMimeType(Rss201rev2Feed):
 class VeroeffentlichungenFeed(Feed):
     title = "Bürger baut Stadt (Veröffentlichungen)"
     description = "Veröffentlichungen zu Bauvorhaben in Berlin"
-    link = "http://buergerbautstadt.de"
-    feed_url = "http://buergerbautstadt.de/veroeffentlichungen/feed/"
+    link = settings.SITE_URL
+    feed_url = settings.SITE_URL + "/veroeffentlichungen/feed/"
     feed_type = VeroeffentlichungenFeedMimeType
 
     def items(self):
@@ -97,4 +98,4 @@ class VeroeffentlichungenFeed(Feed):
         return item.created
 
     def item_link(self, item):
-        return 'http://buergerbautstadt.de/orte/' + str(item.ort.pk)
+        return settings.SITE_URL + '/orte/' + str(item.ort.pk)
