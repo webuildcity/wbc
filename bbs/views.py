@@ -97,4 +97,4 @@ class VeroeffentlichungenFeed(Feed):
         return item.created
 
     def item_link(self, item):
-        return 'http://localhost:8000/orte/' + str(item.ort.pk)
+        return 'http://buergerbautstadt.de/orte/' + str(item.ort.pk)
