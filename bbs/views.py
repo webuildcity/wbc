@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings
 from django.shortcuts import render
 from django.core import serializers
-from django.http import HttpResponseRedirect
-from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
-from bbs.forms import LoginForm
+from django.http import HttpResponseRedirect,HttpResponse
 from django.shortcuts import Http404,render_to_response,redirect,render
 from django.contrib.auth import authenticate, login, logout
-from bbs.forms import FindOrt,CreateVeroeffentlichung, CreateOrt
-from django.template import RequestContext
-import datetime
-from django.http import HttpResponse
-import json
 from django.contrib.auth.decorators import login_required
+from django.contrib.syndication.views import Feed
+from django.utils.feedgenerator import Rss201rev2Feed
+from django.template import RequestContext
+
+from forms import LoginForm,FindOrt,CreateVeroeffentlichung
+from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
+
+import datetime,json
 
 def home(request):
     return render(request,'bbs/map.html')
@@ -70,21 +72,30 @@ def create_veroeffentlichung(request):
             form = CreateVeroeffentlichung(initial={'ort': ort})
             return render(request,'bbs/create_veroeffentlichung_step2.html',{'form':form})
 
-@login_required
-def create_ort(request):    
+class VeroeffentlichungenFeedMimeType(Rss201rev2Feed):
+    mime_type = 'application/xml'
 
-    if request.method == 'GET': 
-        form = CreateOrt()
-        return render(request,'bbs/create_ort.html',{'form':form})
+class VeroeffentlichungenFeed(Feed):
+    title = "Bürger baut Stadt (Veröffentlichungen)"
+    description = "Veröffentlichungen zu Bauvorhaben in Berlin"
+    link = settings.SITE_URL
+    feed_url = settings.SITE_URL + "/veroeffentlichungen/feed/"
+    feed_type = VeroeffentlichungenFeedMimeType
 
-    else: 
-        form = CreateOrt(request.POST)
-        if form.is_valid():
-            ort = form.save()
-            return HttpResponseRedirect('/orte/' + str(ort.pk))
-        else: 
-            return render(request,'bbs/create_ort.html',{'form':form})
+    def items(self):
+        return Veroeffentlichung.objects.order_by('-created')[:10]
 
+    def item_title(self, item):
+        return item.verfahrensschritt.verfahren.name + ': ' +  item.verfahrensschritt.name + ' (' + item.ort.bezeichner + ', ' + item.ort.bezirke.all()[0].name + ')'
 
+    def item_description(self, item):
+        return item.beschreibung
 
+    def item_guid(self, item):
+        return str(item.pk)
 
+    def item_pubdate(self, item):
+        return item.created
+
+    def item_link(self, item):
+        return settings.SITE_URL + '/orte/' + str(item.ort.pk)
