@@ -26,6 +26,17 @@
     <div class="container">
         <div id="localmap" style="height: 400px; border: 2px solid rgba(0, 0, 0, 0.247059);"></div>
 
+        {% if user.is_authenticated %}
+        <div class="row" style="margin-top: 10px;"> 
+            <div class="col-sm-12">
+            <a href="/veroeffentlichungen/neu/?orte_id={{ort.pk}}" class="pull-right btn btn-primary" style="color: white !important;">Neue Veröffentlichung hinzufügen </a>
+            </div>
+        </div>
+
+
+        {% endif %}
+
+
 
         <div class="row">        
             <div class="col-sm-8">
