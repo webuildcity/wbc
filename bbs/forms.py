@@ -27,7 +27,11 @@ class FindOrt(forms.Form):
     bezeichner = forms.CharField(max_length=100, required=False)
 
 class CreateVeroeffentlichung(ModelForm):
-
     class Meta:
         model = Veroeffentlichung
+
+class CreateOrt(ModelForm):
+    class Meta:
+        model = Ort
+        exclude = ('polygontype',)
     

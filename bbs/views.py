@@ -6,7 +6,7 @@ from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren
 from bbs.forms import LoginForm
 from django.shortcuts import Http404,render_to_response,redirect,render
 from django.contrib.auth import authenticate, login, logout
-from bbs.forms import FindOrt,CreateVeroeffentlichung
+from bbs.forms import FindOrt,CreateVeroeffentlichung, CreateOrt
 from django.template import RequestContext
 import datetime
 from django.http import HttpResponse
@@ -69,3 +69,22 @@ def create_veroeffentlichung(request):
         else:
             form = CreateVeroeffentlichung(initial={'ort': ort})
             return render(request,'bbs/create_veroeffentlichung_step2.html',{'form':form})
+
+@login_required
+def create_ort(request):    
+
+    if request.method == 'GET': 
+        form = CreateOrt()
+        return render(request,'bbs/create_ort.html',{'form':form})
+
+    else: 
+        form = CreateOrt(request.POST)
+        if form.is_valid():
+            ort = form.save()
+            return HttpResponseRedirect('/orte/' + str(ort.pk))
+        else: 
+            return render(request,'bbs/create_ort.html',{'form':form})
+
+
+
+

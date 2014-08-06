@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     #url(r'^orte/neu/$', 'bbs.views.ort'),
     # veroeffentlichungen
     url(r'^veroeffentlichungen/neu/$', 'bbs.views.create_veroeffentlichung'),
+    url(r'^orte/neu/$', 'bbs.views.create_ort'),
     # begriffe
     url(r'^begriffe/$', 'bbs.views.begriffe'),
     # modules
