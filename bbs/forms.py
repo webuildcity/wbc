@@ -22,16 +22,16 @@ class LoginForm(forms.Form):
         user = authenticate(username=username, password=password)
         return user
 
-class New1(forms.Form):    
+class FindOrt(forms.Form):    
     orte = Ort.objects.all()
     bezeichner = forms.CharField(max_length=100, required=False)
 
-class addPublication(ModelForm):
-
+class CreateVeroeffentlichung(ModelForm):
     class Meta:
         model = Veroeffentlichung
 
+class CreateOrt(ModelForm):
+    class Meta:
+        model = Ort
+        exclude = ('polygontype',)
     
-
-
-        

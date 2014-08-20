@@ -38,6 +38,7 @@ for plan in plan_list:
         try:
             ort = Ort.objects.get(bezeichner=ort_bezeichner)
             new = False
+            continue
         except Ort.DoesNotExist:
             new = True
 

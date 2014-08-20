@@ -2,16 +2,19 @@ from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
 from django.contrib import admin
 
-admin.autodiscover()
+from views import VeroeffentlichungenFeed
 
+admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'bbs.views.home'),
     # orte
     url(r'^orte/$', 'bbs.views.orte'),
     url(r'^orte/(?P<pk>\d+)/$', 'bbs.views.ort'),
+    #url(r'^orte/neu/$', 'bbs.views.ort'),
     # veroeffentlichungen
-    url(r'^veroeffentlichungen/neu/$', 'bbs.views.create_publication'),
+    url(r'^veroeffentlichungen/neu/$', 'bbs.views.create_veroeffentlichung'),
+    url(r'^veroeffentlichungen/feed/$', VeroeffentlichungenFeed()),
     # begriffe
     url(r'^begriffe/$', 'bbs.views.begriffe'),
     # modules

@@ -5,9 +5,10 @@
         <div id="comments">
             <?php foreach ($comments as $comment) : ?>
                 <div class="comment" id="comment-<?php comment_ID() ?>">
-                    <small class="commentmetadata"><?php comment_author_link() ?> <strong>|</strong> am <?php comment_date('j. F Y') ?> um <?php comment_time('H:i') ?> Uhr</small>
-
+                    <small class="commentmetadata" style="color:grey;"><?php comment_author_link() ?> <strong>|</strong> am <?php comment_date('j. F Y') ?> um <?php comment_time('H:i') ?> Uhr</small>
+                    <div style="margin-bottom: 30px;">
                     <?php comment_text() ?>
+                    </div>
 
                     <?php if ($comment->comment_approved == '0') : ?>
                         <strong>Achtung: Dein Kommentar muss erst noch freigegeben werden.</strong><br />
