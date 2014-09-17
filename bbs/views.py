@@ -82,8 +82,18 @@ class VeroeffentlichungenFeed(Feed):
     feed_url = settings.SITE_URL + "/veroeffentlichungen/feed/"
     feed_type = VeroeffentlichungenFeedMimeType
 
-    def items(self):
-        return Veroeffentlichung.objects.order_by('-created')[:10]
+    def get_object(self, request):
+        if 'bezirk' in request.GET:
+            bezirk = request.GET['bezirk']
+            try:
+                Bezirk.objects.get(name=bezirk)
+            except Bezirk.DoesNotExist:
+                raise Http404
+            return Veroeffentlichung.objects.filter(ort__bezirke__name=bezirk)
+        return Veroeffentlichung.objects
+
+    def items(self, objs):
+        return objs.order_by('-created')[:10]
 
     def item_title(self, item):
         return item.verfahrensschritt.verfahren.name + ': ' +  item.verfahrensschritt.name + ' (' + item.ort.bezeichner + ', ' + item.ort.bezirke.all()[0].name + ')'
