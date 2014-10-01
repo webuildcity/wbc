@@ -3,6 +3,7 @@ var _icons = [];
 var _greyIcon;
 var _markerLayer;
 var _old = false;
+// _tiles_url, _tiles_opt and _view need to be set in template
 
 function init() {
     // get the verfahrensschritte by ajax and call initMap
@@ -16,23 +17,10 @@ function init() {
 }
 
 function initMap(verfahrensschritte) {
-    // add the map layer
+    // add the map layer and center map
     _map = new L.Map("map");
-    var min = 9;
-    var max = 17;
-    var mapLayer = new L.TileLayer('http://tiles.codefor.de/static/bbs/berlin/{z}/{x}/{y}.png', {
-        minZoom: min,
-        maxZoom: max,
-        attribution: 'Map data &copy; 2012 OpenStreetMap contributors',
-        zIndex: 0,
-        errorTileUrl: 'http://tiles.codefor.de/static/bbs/error.png',
-        reuseTiles: true
-    });
-    _map.addLayer(mapLayer);
-
-    // center map
-    var center = new L.LatLng(52.51, 13.37628);
-    _map.setView(center, 11);
+    _map.addLayer(new L.TileLayer(_tiles_url + '/{z}/{x}/{y}.png',_tiles_opt));
+    _map.setView(new L.LatLng(_view.lat,_view.lon),_view.zoom);
     
     // add a layer for the markers
     _markerLayer = L.layerGroup().addTo(_map);

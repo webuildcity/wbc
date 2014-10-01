@@ -173,3 +173,19 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_FROM = 'news@buergerbautstadt.de'
 
 LOGIN_URL = '/login'
+
+TILES_URL = 'http://tiles.codefor.de/static/bbs/berlin/'
+TILES_OPT = {
+    'errorTileUrl': 'http://tiles.codefor.de/static/bbs/error.png',
+    'attribution': 'Map data &copy; 2012 OpenStreetMap contributors',
+    'maxZoom': 17,
+    'minZoom': 9,
+    'zIndex': 0,
+    'reuseTiles': True
+}
+
+VIEW = {
+    'lat': 52.51,
+    'lon': 13.37628,
+    'zoom': 11
+}

@@ -16,7 +16,11 @@ from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren
 import datetime,json
 
 def home(request):
-    return render(request,'bbs/map.html')
+    return render(request,'bbs/map.html', {
+        'tilesUrl': settings.TILES_URL,
+        'tilesOpt': json.dumps(settings.TILES_OPT),
+        'view': json.dumps(settings.VIEW)
+    })
 
 def orte(request):
     orte = Ort.objects.all()
