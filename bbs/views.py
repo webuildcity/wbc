@@ -31,7 +31,11 @@ def ort(request,pk):
         ort = Ort.objects.get(pk=int(pk))
     except Ort.DoesNotExist:
         raise Http404
-    return render(request, 'bbs/ort.html', {'ort': ort})
+    return render(request, 'bbs/ort.html', {
+        'ort': ort,
+        'tilesUrl': settings.TILES_URL,
+        'tilesOpt': json.dumps(settings.TILES_OPT)
+    })
 
 def begriffe(request):
     verfahren = Verfahren.objects.all()

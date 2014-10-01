@@ -10,13 +10,13 @@
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/OSMBuildings-Leaflet.js' %}"  ></script>    
     <script type="text/javascript">
-        var staticUrl = '{% static '' %}';
-        var lon = {{ ort.lon|stringformat:"F" }};
-        var lat = {{ ort.lat|stringformat:"F" }}; 
-        var typ = "Öffentliche Auslegung";
+        var _tiles_url = "{{tilesUrl}}";
+        var _tiles_opt = {{tilesOpt|safe}};
+        var _lon = {{ ort.lon|stringformat:"F" }};
+        var _lat = {{ ort.lat|stringformat:"F" }};
         {% if ort.polygon %}
-        var polygon = {{ort.polygon}}; 
-        var polygontype = '{{ort.polygontype}}'
+        var _polygon = {{ort.polygon}};
+        var _polygontype = '{{ort.polygontype}}'
         {% endif %} 
     </script>
     <script type="text/javascript" src="{% static 'localmap.js' %}" ></script>
