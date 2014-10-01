@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     #url(r'^orte/neu/$', 'bbs.views.ort'),
     # veroeffentlichungen
     url(r'^veroeffentlichungen/neu/$', 'bbs.views.create_veroeffentlichung'),
-    url(r'^veroeffentlichungen/feed/$', VeroeffentlichungenFeed()),
+    url(r'^veroeffentlichungen/feed/$', VeroeffentlichungenFeed(), name="feedsurl"),
     # begriffe
     url(r'^begriffe/$', 'bbs.views.begriffe'),
     # modules

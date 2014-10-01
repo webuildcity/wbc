@@ -39,7 +39,8 @@ def abonnieren(request):
 
     return render(request,'news/abonnieren.html', {
         'form': form,
-        'abbestellen': settings.SITE_URL + '/news/abbestellen/'
+        'abbestellen': settings.SITE_URL + '/news/abbestellen/',
+        'bezirke': bezirke
         })
 
 def abbestellen(request, email=None):
