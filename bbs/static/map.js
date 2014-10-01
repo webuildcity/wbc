@@ -20,7 +20,7 @@ function initMap(verfahrensschritte) {
     // add the map layer and center map
     _map = new L.Map("map");
     _map.addLayer(new L.TileLayer(_tiles_url + '/{z}/{x}/{y}.png',_tiles_opt));
-    _map.setView(new L.LatLng(_view.lat,_view.lon),_view.zoom);
+    _map.setView(new L.LatLng(_default_view.lat,_default_view.lon),_default_view.zoom);
     
     // add a layer for the markers
     _markerLayer = L.layerGroup().addTo(_map);

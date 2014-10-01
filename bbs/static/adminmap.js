@@ -12,45 +12,34 @@ function drawMap(){
 
     // add the map layer
     map = new L.Map("adminmap");
-    var min = 9;
-    var max = 17
-    var myLayer = new L.TileLayer('http://tiles.codefor.de/static/bbs/berlin/{z}/{x}/{y}.png', {
-        minZoom: min,
-        maxZoom: max,
-        attribution: 'Map data &copy; 2012 OpenStreetMap contributors',
-        zIndex:0,
-        errorTileUrl: 'http://tiles.codefor.de/static/bbs/error.png',
-        reuseTiles:true
-    });
-    map.addLayer(myLayer);
+    map.addLayer(new L.TileLayer(_tiles_url + '/{z}/{x}/{y}.png',_tiles_opt));
 
     // get lat and lon from the form fields
-    var lan, lon;
-    if($('#id_lat').val() != '') {
-        lan = $('#id_lat').val();
+    var lat, lon;
+    if($('#id_lat').val() !== '') {
+        lat = $('#id_lat').val();
     } else {
-        lan = 52.51;
+        lat = _default_view.lat;
     }
-    if($('#id_lon').val() != '') {
+    if($('#id_lon').val() !== '') {
         lon = $('#id_lon').val();
     } else {
-        lon = 13.37628;
+        lon = _default_view.lon;
     }
     
     // center map
-    var center = new L.LatLng(lan, lon);
-    map.setView(center, 10);
+    map.setView(new L.LatLng(lat,lon),_default_view.zoom);
 
     // crate an icon for the marker
     var greyIcon = L.icon({
-        iconUrl: staticUrl + '/img/Baustellenschilder/klein/schild_grau.png',    
+        iconUrl: '/static/img/Baustellenschilder/klein/schild_grau.png',
         iconSize:     [26, 45], // size of the icon width,height    
         iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
         popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
-    }); 
+    });
 
     // add a marker to the map
-    marker = L.marker([lan,lon],{icon: greyIcon, draggable:true}).addTo(map); 
+    marker = L.marker([lat,lon],{icon: greyIcon, draggable: true}).addTo(map);
 
     // make the marker draggable
     marker.on('dragend', function(event) {
@@ -70,7 +59,7 @@ function drawMap(){
 
         // get the address from the form field
         var adresse = $('#id_adresse').val();
-        if (adresse.length == 0) {
+        if (adresse.length === 0) {
             $('.field-bezirke').append('<p class="map-error">Bitte geben Sie eine Adresse ein.</p>');
         }
 
@@ -79,22 +68,22 @@ function drawMap(){
         $("#id_bezirke option:selected").each(function () {
             bezirke.push($(this).text());
         });
-        if (bezirke.length == 0) {
+        if (bezirke.length === 0) {
             $('.field-bezirke').append('<p class="map-error">Bitte geben Sie einen Bezirk an.</p>');
         }
 
         // query nominatim.openstreetmap.org for the coordinates
-        if (adresse.length != 0 && bezirke.length != 0) {
+        if (adresse.length !== 0 && bezirke.length !== 0) {
             var url = 'http://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + adresse + ' ' + bezirke.join(' ') + ' ' + 'Berlin';
-            $.ajax({    
-                dataType: "json",  
+            $.ajax({   
+                dataType: "json",
                 url: url,
                 success: function(data) {
-                    if(data.length != 0){
+                    if(data.length !== 0){
                         var lon = data[0].lon;
                         var lat = data[0].lat;
                         var location = new L.LatLng(lat, lon);
-                        marker.setLatLng(location); 
+                        marker.setLatLng(location);
                         map.panTo(location);
                         map.setZoom(16);
                         $('#id_lat').val(lat);

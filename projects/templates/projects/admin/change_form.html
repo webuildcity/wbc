@@ -2,14 +2,20 @@
 {% load staticfiles %}
 
 {% block extrahead %}
-  {{ block.super }}
-  <script type="text/javascript" src="{% static 'lib/jquery.min.js' %}" ></script>
-  
-  <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
-  <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'lib/jquery.min.js' %}" ></script>
 
-  <script type="text/javascript" src="{% static 'adminmap.js' %}" ></script>
-  <link rel="stylesheet" href="{% static 'adminmap.css' %}" />
+    <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
+    <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
 
-  <script type="text/javascript"> var staticUrl = '{% static '' %}'</script>
+    <script type="text/javascript">
+        var _tiles_url = "{{tilesUrl}}";
+        var _tiles_opt = {{tilesOpt|safe}};
+        var _default_view = {{defaultView|safe}};
+    </script>
+
+    <script type="text/javascript" src="{% static 'adminmap.js' %}" ></script>
+    <link rel="stylesheet" href="{% static 'adminmap.css' %}" />
+
+    <script type="text/javascript"> var staticUrl = '{% static '' %}'</script>
 {% endblock %}

@@ -159,6 +159,7 @@ LOGGING = {
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
+    'bbs.context_processors.settings'
 )
 
 # for emails
@@ -184,7 +185,7 @@ TILES_OPT = {
     'reuseTiles': True
 }
 
-VIEW = {
+DEFAULT_VIEW = {
     'lat': 52.51,
     'lon': 13.37628,
     'zoom': 11

@@ -16,11 +16,7 @@ from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren
 import datetime,json
 
 def home(request):
-    return render(request,'bbs/map.html', {
-        'tilesUrl': settings.TILES_URL,
-        'tilesOpt': json.dumps(settings.TILES_OPT),
-        'view': json.dumps(settings.VIEW)
-    })
+    return render(request,'bbs/map.html')
 
 def orte(request):
     orte = Ort.objects.all()
@@ -31,11 +27,7 @@ def ort(request,pk):
         ort = Ort.objects.get(pk=int(pk))
     except Ort.DoesNotExist:
         raise Http404
-    return render(request, 'bbs/ort.html', {
-        'ort': ort,
-        'tilesUrl': settings.TILES_URL,
-        'tilesOpt': json.dumps(settings.TILES_OPT)
-    })
+    return render(request, 'bbs/ort.html', {'ort': ort})
 
 def begriffe(request):
     verfahren = Verfahren.objects.all()
