@@ -18,6 +18,9 @@ html, body {
     font-family: dejavu;
     font-size: 14px;
 }
+body {
+    margin-bottom: 80px;
+}
 h2 {
     font-weight: normal;
     font-family: titillium;
@@ -150,6 +153,16 @@ a:hover,
 .news label {
     font-weight: normal;
 }
+.news .feed-list {
+    margin-left: -10px;
+}
+.news .feed-list li {
+    margin-bottom: 5px;
+}
+.news .feed-list li a span {
+    padding-left: 10px;
+}
+
 
 /* wordpress stuff */
 .blog .post-footer {
