@@ -1,4 +1,8 @@
+import urllib
+import hashlib
+
 from django.db import models
+from lib.models import Model
 
 from projects.models import Verfahren
 # Create your models here.
@@ -10,7 +14,12 @@ class Kommentar(models.Model):
     author_email = models.CharField(max_length=256)
     author_url   = models.CharField(max_length=256)
 
-    created_at = models.DateTimeField()
-
     enabled = models.BooleanField()
     content = models.TextField()
+
+    @property
+    def gravatar(self):
+        gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.author_email.lower()).hexdigest() + "?"
+        gravatar_url += urllib.urlencode({'s':str(32)})
+
+        return gravatar_url
