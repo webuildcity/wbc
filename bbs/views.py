@@ -12,6 +12,7 @@ from django.template import RequestContext
 
 from forms import LoginForm,FindOrt,CreateVeroeffentlichung
 from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
+from comments.models import Kommentar
 
 import datetime,json
 
@@ -24,10 +25,12 @@ def orte(request):
 
 def ort(request,pk):
     try:
-        ort = Ort.objects.get(pk=int(pk))
+        ort = Ort.objects.get(pk = int(pk))
     except Ort.DoesNotExist:
         raise Http404
-    return render(request, 'bbs/ort.html', {'ort': ort})
+    kommentare = Kommentar.objects.filter(ort_id = int(pk))
+    
+    return render(request, 'bbs/ort.html', {'ort': ort, 'kommentare': kommentare})
 
 def begriffe(request):
     verfahren = Verfahren.objects.all()

@@ -4,11 +4,11 @@ import hashlib
 from django.db import models
 from lib.models import Model
 
-from projects.models import Verfahren
+from projects.models import Ort
 # Create your models here.
 
 class Kommentar(models.Model):
-    verfahren_id = models.ForeignKey(Verfahren)
+    ort = models.ForeignKey(Ort)
     
     author_name  = models.CharField(max_length=100)
     author_email = models.CharField(max_length=256)
