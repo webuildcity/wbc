@@ -51,6 +51,24 @@
 
         {% include "bbs/ort_veroeffentlichungen.html" %}
 
-        
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#veroeffentlichungen" role="tab" data-toggle="tab">
+                    Veröffentlichungen zu diesem Gebiet
+                </a>
+            </li>
+            <li>
+                <a href="#kommentare" role="tab" data-toggle="tab">Kommentare</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active">
+                {% include "bbs/ort_veroeffentlichungen.html" %}
+            </div>
+            <div class="tab-pane">
+                {% include "bbs/kommentare_liste.html" %}
+            </div>
+        </div>
     </div>
 {% endblock %}
