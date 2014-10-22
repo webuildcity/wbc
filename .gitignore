@@ -4,3 +4,4 @@ data/database
 /static/
 *.pyc
 *~
+*.db

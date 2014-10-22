@@ -5,7 +5,6 @@ from django.db import models
 from lib.models import Model
 
 from projects.models import Ort
-# Create your models here.
 
 class Kommentar(models.Model):
     ort = models.ForeignKey(Ort)
