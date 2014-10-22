@@ -49,8 +49,6 @@
             </div>
         </div>
 
-        {% include "bbs/ort_veroeffentlichungen.html" %}
-
         <ul class="nav nav-tabs">
             <li class="active">
                 <a href="#veroeffentlichungen" role="tab" data-toggle="tab">
@@ -58,9 +56,18 @@
                 </a>
             </li>
             <li>
-                <a href="#kommentare" role="tab" data-toggle="tab">Kommentare</a>
+                <a href="#kommentare" role="tab" data-toggle="tab">Kommentare <span class="badge">{{ kommentare.count }}</span></a>
+
+            </li>
+
+            <li class="pull-right">
+                <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#kommentarFormular">
+                    Kommentar hinzufügen
+                </button>
             </li>
         </ul>
+
+        {% include "bbs/kommentare_formular.html" %}
 
         <div class="tab-content">
             <div class="tab-pane active">
