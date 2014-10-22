@@ -1,7 +1,32 @@
 <div id="comments">
-{% if kommentare %}
-    
-{% else %}
-    <div>Bisher keine Kommentare</div>
-{% endif %}
+    {% if kommentare %}
+        <ul class="media-list">
+            {% for kommentar in kommentare.all %}
+                <li>
+                    <div class="media">
+                        <div class="pull-left">
+                            <img class="media-object" src="{{ kommentar.gravatar }}" />
+                            <span>
+                                {% if kommentar.author_url %}
+                                    <a href="{{ kommentar.author_url }}">
+                                      {{ kommentar.name }}
+                                    </a>
+                                {% else %}
+                                    {{ kommentar.name }}
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{ kommentar.created }}</h4>
+                            <div>
+                                {{ kommentar.content }}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div>Bisher keine Kommentare</div>
+    {% endif %}
 </div>
