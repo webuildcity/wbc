@@ -6,7 +6,7 @@ from lib.models import Model
 
 from projects.models import Ort
 
-class Kommentar(models.Model):
+class Kommentar(Model):
     ort = models.ForeignKey(Ort)
     
     author_name  = models.CharField(max_length=100)
