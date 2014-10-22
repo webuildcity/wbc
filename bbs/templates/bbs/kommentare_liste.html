@@ -3,23 +3,25 @@
         <ul class="media-list">
             {% for kommentar in kommentare.all %}
                 <li>
-                    <div class="media">
-                        <div class="pull-left">
-                            <img class="media-object" src="{{ kommentar.gravatar }}" />
-                            <span>
-                                {% if kommentar.author_url %}
-                                    <a href="{{ kommentar.author_url }}">
-                                      {{ kommentar.name }}
-                                    </a>
-                                {% else %}
-                                    {{ kommentar.name }}
-                                {% endif %}
-                            </span>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading">{{ kommentar.created }}</h4>
-                            <div>
-                                {{ kommentar.content }}
+                    <div class="row sm-12">
+                        <div class="media">
+                            <div class="pull-left">
+                                <img class="media-object" src="{{ kommentar.gravatar }}" />
+                                <span>
+                                    {% if kommentar.author_url %}
+                                        <a href="{{ kommentar.author_url }}">
+                                            {{ kommentar.author_name }}
+                                        </a>
+                                    {% else %}
+                                        {{ kommentar.author_name }}
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">{{ kommentar.created }}</h4>
+                                <div>
+                                    {{ kommentar.content }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -27,6 +29,8 @@
             {% endfor %}
         </ul>
     {% else %}
-        <div>Bisher keine Kommentare</div>
+        <div class="text-center" style="min-height: 4em; padding-top: 2em;">
+            <strong>Bisher keine Kommentare.</strong>
+        </div>
     {% endif %}
 </div>

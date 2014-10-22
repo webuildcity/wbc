@@ -24,15 +24,19 @@ def orte(request):
     return render(request,'bbs/orte.html', {'orte': orte})
 
 def ort(request,pk):
-    ort = get_object_or_404(Ort, id = int(pk))
-    kommentare = Kommentar.objects.filter(ort_id = int(pk))
+    if request.method == 'POST':
+        kommentar_neu = Kommentar(ort_id       = int(pk), 
+                                  author_name  = request.POST["name"],
+                                  author_email = request.POST["email"],
+                                  author_url   = request.POST["url"],
+                                  content      = request.POST["text"],
+                                  enabled      = True)
+        kommentar_neu.save()
     
-    return render(request, 'bbs/ort.html', {'ort': ort, 'kommentare': kommentare})
-
-def ort_kommentieren(request, pk):
     ort = get_object_or_404(Ort, id = int(pk))
+    kommentare = Kommentar.objects.filter(ort_id = int(pk), enabled = True)
 
-    return redirect('orte/'+pk)
+    return render(request, 'bbs/ort.html', {'ort': ort, 'kommentare': kommentare})
 
 def begriffe(request):
     verfahren = Verfahren.objects.all()
