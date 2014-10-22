@@ -3,7 +3,7 @@ from django.conf import settings
 from django.shortcuts import render
 from django.core import serializers
 from django.http import HttpResponseRedirect,HttpResponse
-from django.shortcuts import Http404,render_to_response,redirect,render
+from django.shortcuts import Http404,render_to_response,redirect,render,get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
@@ -24,13 +24,15 @@ def orte(request):
     return render(request,'bbs/orte.html', {'orte': orte})
 
 def ort(request,pk):
-    try:
-        ort = Ort.objects.get(pk = int(pk))
-    except Ort.DoesNotExist:
-        raise Http404
+    ort = get_object_or_404(Ort, id = int(pk))
     kommentare = Kommentar.objects.filter(ort_id = int(pk))
     
     return render(request, 'bbs/ort.html', {'ort': ort, 'kommentare': kommentare})
+
+def ort_kommentieren(request, pk):
+    ort = get_object_or_404(Ort, id = int(pk))
+
+    return redirect('orte/'+pk)
 
 def begriffe(request):
     verfahren = Verfahren.objects.all()
