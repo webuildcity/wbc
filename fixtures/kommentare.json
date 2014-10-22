@@ -1,0 +1,30 @@
+[
+    {
+        "fields": {
+            "ort": 1, 
+            "author_name": "Tanja Testuser", 
+            "author_email": "tanja@testuser.de",
+            "author_url": "http://tanja.testuser.de",
+            "created": "2013-06-11T20:00:00Z",
+            "updated": "2013-06-11T20:00:00Z",
+            "enabled": true,
+            "content":"Ein toller Kommentar!"
+        }, 
+        "model": "comments.Kommentar", 
+        "pk": 1
+    }, 
+    {
+        "fields": {
+            "ort": 1, 
+            "author_name": "Tarek Testuser", 
+            "author_email": "tarek@testuser.de",
+            "author_url": "http://tarek.testuser.de",
+            "created": "2013-06-11T20:00:00Z",
+            "updated": "2013-06-11T20:00:00Z",
+            "enabled": true,
+            "content":"Und noch ein toller Kommentar!"
+         }, 
+        "model": "comments.Kommentar", 
+        "pk": 2
+    }
+]

@@ -1,0 +1,19 @@
+[
+    {
+        "fields": {
+            "updated": "2014-10-22T19:10:39.728Z",
+            "zeiten": "Montag bis Mittwoch von 7.30 bis 15 Uhr, Donnerstag von 7.30 bis 18Uhr, Freitag von 7.30 bis 13.30 Uhr sowie nach telefonischer Vereinbarung auch außerhalb dieser Sprechzeiten ",
+            "verfahrensschritt": 8,
+            "created": "2014-10-22T19:10:39.728Z",
+            "behoerde": 7,
+            "ort": 1,
+            "auslegungsstelle": "Bezirksamt Tempelhof-Schöneberg von Berlin, Beispiel-Abteilung  –Fachbereich Stadtplanung–, Zimmer 1234, Rathaus Schöneberg, Beispielstraße 1, 10820 Berlin",
+            "beschreibung": "Ziel: Einrichtung einer Schule",
+            "ende": "2014-11-12",
+            "link": "http://www.berlin.de/ba-tempelhof-schoeneberg/organisationseinheit/planen/bebauungsplaene.html",
+            "beginn": "2014-10-13"
+        },
+        "pk": 1,
+        "model": "projects.veroeffentlichung"
+    }
+]
