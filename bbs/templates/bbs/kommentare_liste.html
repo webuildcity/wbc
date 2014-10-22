@@ -18,7 +18,9 @@
                                 </span>
                             </div>
                             <div class="media-body">
-                                <h4 class="media-heading">{{ kommentar.created }}</h4>
+                                {% load humanize %}
+                                <span class="media-heading">{{ kommentar.created|naturaltime }}</span>
+                                <hr />
                                 <div>
                                     {{ kommentar.content }}
                                 </div>
