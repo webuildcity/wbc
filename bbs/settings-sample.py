@@ -123,7 +123,9 @@ INSTALLED_APPS = (
     'widget_tweaks',
     'south',
     'projects',
-    'news'
+    'news',
+    'comments',
+    'bbs'
 )
 
 # A sample logging configuration. The only tangible logging
