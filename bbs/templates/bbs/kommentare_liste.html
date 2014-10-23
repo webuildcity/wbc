@@ -1,35 +1,8 @@
 <div id="comments">
     {% if kommentare %}
-        <ul class="media-list">
-            {% for kommentar in kommentare.all %}
-                <li>
-                    <div class="row sm-12">
-                        <div class="media">
-                            <div class="pull-left">
-                                <img class="media-object" src="{{ kommentar.gravatar }}" />
-                                <span>
-                                    {% if kommentar.author_url %}
-                                        <a href="{{ kommentar.author_url }}">
-                                            {{ kommentar.author_name }}
-                                        </a>
-                                    {% else %}
-                                        {{ kommentar.author_name }}
-                                    {% endif %}
-                                </span>
-                            </div>
-                            <div class="media-body">
-                                {% load humanize %}
-                                <span class="media-heading">{{ kommentar.created|naturaltime }}</span>
-                                <hr />
-                                <div>
-                                    {{ kommentar.content }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
+        {% for kommentar in kommentare.all %}
+            {% include "bbs/kommentare_kommentar.html"%}
+        {% endfor %}
     {% else %}
         <div class="text-center" style="min-height: 4em; padding-top: 2em;">
             <strong>Bisher keine Kommentare.</strong>
