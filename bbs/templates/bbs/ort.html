@@ -50,12 +50,12 @@
         </div>
 
         <ul class="nav nav-tabs" role="tablist">
-            <li class="active">
+            <li class="">
                 <a href="#veroeffentlichungen" role="tab" data-toggle="tab">
                     Veröffentlichungen zu diesem Gebiet
                 </a>
             </li>
-            <li>
+            <li class="active">
                 <a href="#kommentare" role="tab" data-toggle="tab">
                     Kommentare <span class="badge">{{ kommentare.count }}</span>
                 </a>
@@ -70,10 +70,10 @@
         {% include "bbs/kommentare_formular.html" %}
 
         <div class="tab-content">
-            <div class="tab-pane active" id="veroeffentlichungen">
+            <div class="tab-pane" id="veroeffentlichungen">
                 {% include "bbs/ort_veroeffentlichungen.html" %}
             </div>
-            <div class="tab-pane" id="kommentare">
+            <div class="tab-pane  active" id="kommentare">
                 {% include "bbs/kommentare_liste.html" %}
             </div>
         </div>

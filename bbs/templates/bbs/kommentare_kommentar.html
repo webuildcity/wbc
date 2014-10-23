@@ -1,31 +1,28 @@
 {% load humanize %}
 {% load bbs_extras %}
 <div class="row">
-        <div class="col-sm-12 col-md-3">
-            <div class="row">
-                <div class="pull-left">
-                    <img class="img-circle" src="{{ kommentar.gravatar }}" />
-                </div>
-                <div>
-                    <ul class="list-unstyled">
-                        <li>{{ kommentar.author_name }}</li>
-                        {% if kommentar.author_url %}
-                            <li>
-                                <a href="{{ kommentar.author_url }}">
-                                    {{ kommentar.author_url }}
-                                </a>
-                            </li>
-                        {% endif %}
-                        <li>Kommentierte {{ kommentar.created | naturaltime }}</li>
-                    </ul>
-                </div>
+    <div class="col-xs-12 col-md-2">
+        <div class="row text-center" style="margin: .6em .6em;">
+            <img class="img-responsive img-circle"
+                 style="margin: 0 auto;" src="{{ kommentar.gravatar }}" />
+            <div class="text-muted">
+                {% if kommentar.author_url %}
+                    <a href="{{ kommentar.author_url }}">
+                        {{ kommentar.author_name }}
+                    </a>
+                {% else %}
+                    {{ kommentar.author_name }} 
+                {% endif %}
+                kommentierte 
+                <span title="{{ kommentar.created }}">{{ kommentar.created | naturaltime }}</span>
             </div>
         </div>
-        <div class="col-sm-12 col-md-9">
-            <div>
-                {% autoescape off %}
-                {{ kommentar.content | markdown }}
-                {% endautoescape %}
+    </div>
+    <div class="col-xs-12 col-md-10">
+        <div class="row" style="margin: .6em">
+            <div class="col-xs-12">
+                {% autoescape off %}{{ kommentar.content | markdown }}{% endautoescape %}
             </div>
         </div>
+    </div>
 </div>

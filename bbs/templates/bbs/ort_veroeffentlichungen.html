@@ -1,58 +1,64 @@
-{% if ort.veroeffentlichungen.all %}
-<table class="table">
-    <thead>
-        <tr>
-            <th>Was? </th>                        
-            <th style="width: 16em">Wann?</th>
-            
-            <th>Details</th>
-       </tr>
-    </thead>
-    <tbody>
-        {% for veroeffentlichung in ort.veroeffentlichungen.all %}
-        <tr>
-            <td><a href="/begriffe/#{{ veroeffentlichung.verfahrensschritt.pk}}">{{ veroeffentlichung.verfahrensschritt.name}} ({{ veroeffentlichung.verfahrensschritt.verfahren.name }})</a></td>
-            {% if veroeffentlichung.beginn == veroeffentlichung.ende %}
-            <td>{{ veroeffentlichung.beginn }}</td> 
-            {% else %}
-            <td>{{ veroeffentlichung.beginn }} bis <br>{{ veroeffentlichung.ende }} </td> 
-            {% endif %}
-            
-            <td>
-                {% if veroeffentlichung.beschreibung %}
-                <p>
-                    <b>Beschreibung</b>
-                </p>
-                <p>
-                    {{ veroeffentlichung.beschreibung }}
-                </p>
-                {% endif %}
-                {% if veroeffentlichung.auslegungsstelle %}
-                <p>
-                    <b>Auslegungsstelle</b>
-                </p>
-                <p>
-                    {{ veroeffentlichung.auslegungsstelle }}
-                </p>
-                {% endif %}
-                {% if veroeffentlichung.zeiten %}
-                <p>
-                    <b>Öffnungszeiten</b>
-                </p>
-                    {{ veroeffentlichung.zeiten }}
-                </p>
-                {% endif %}
-                {% if veroeffentlichung.link %}
-                <p>
-                    <a href="{{ veroeffentlichung.link }}" target="_blank">Link zur Seite</a>
-                </p>
-                {% endif %}
-                <p>
-                    <a href="{{ veroeffentlichung.behoerde.link }}">Link zur verantwortlichen Behörde</a>
-                </p>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endif %}
+<div class="row">
+    {% if ort.veroeffentlichungen.all %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Was? </th>                        
+                    <th style="width: 16em">Wann?</th>
+                    
+                    <th>Details</th>
+               </tr>
+            </thead>
+            <tbody>
+                {% for veroeffentlichung in ort.veroeffentlichungen.all %}
+                <tr>
+                    <td><a href="/begriffe/#{{ veroeffentlichung.verfahrensschritt.pk}}">{{ veroeffentlichung.verfahrensschritt.name}} ({{ veroeffentlichung.verfahrensschritt.verfahren.name }})</a></td>
+                    {% if veroeffentlichung.beginn == veroeffentlichung.ende %}
+                    <td>{{ veroeffentlichung.beginn }}</td> 
+                    {% else %}
+                    <td>{{ veroeffentlichung.beginn }} bis <br>{{ veroeffentlichung.ende }} </td> 
+                    {% endif %}
+                    
+                    <td>
+                        {% if veroeffentlichung.beschreibung %}
+                        <p>
+                            <b>Beschreibung</b>
+                        </p>
+                        <p>
+                            {{ veroeffentlichung.beschreibung }}
+                        </p>
+                        {% endif %}
+                        {% if veroeffentlichung.auslegungsstelle %}
+                        <p>
+                            <b>Auslegungsstelle</b>
+                        </p>
+                        <p>
+                            {{ veroeffentlichung.auslegungsstelle }}
+                        </p>
+                        {% endif %}
+                        {% if veroeffentlichung.zeiten %}
+                        <p>
+                            <b>Öffnungszeiten</b>
+                        </p>
+                            {{ veroeffentlichung.zeiten }}
+                        </p>
+                        {% endif %}
+                        {% if veroeffentlichung.link %}
+                        <p>
+                            <a href="{{ veroeffentlichung.link }}" target="_blank">Link zur Seite</a>
+                        </p>
+                        {% endif %}
+                        <p>
+                            <a href="{{ veroeffentlichung.behoerde.link }}">Link zur verantwortlichen Behörde</a>
+                        </p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="text-center">
+            <strong>Bisher keine Veröffentlichungen.</strong>
+        </div>
+    {% endif %}
+</div>

@@ -28,3 +28,13 @@ body {
         margin-top: 5px;
     }
 }
+
+.bg-list > div:nth-child(even)
+{
+    background-color: rgba(1, 1, 1, 0.03);
+}
+
+ul.nav-tabs > .active > a, ul.nav-tabs > .active > a:hover
+{
+    background-color: rgba(1, 1, 1, 0.03);
+}
