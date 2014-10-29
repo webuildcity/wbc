@@ -27,10 +27,19 @@
         <div id="localmap" style="height: 400px; border: 2px solid rgba(0, 0, 0, 0.247059);"></div>
 
         {% if user.is_authenticated %}
-        <div class="row" style="margin-top: 10px;"> 
+        <div class="row" style="margin-top: 10px;">
             <div class="col-sm-12">
-                <a href="/veroeffentlichungen/neu/?orte_id={{ort.pk}}" class="pull-right btn btn-primary" style="color: white !important;">Neue Veröffentlichung hinzufügen </a>
-            </div>
+                <div class="row">
+                    <a href="/admin/projects/ort/{{ ort.pk }}/" class="btn btn-primary pull-right"
+                       style="color: white !important; ">
+                        Ort bearbeiten
+                    </a>
+                    <a href="/veroeffentlichungen/neu/?orte_id={{ort.pk}}" 
+                       class="pull-right btn btn-primary" style="color: white !important; margin-right: 1.2em;">
+                       Neue Veröffentlichung hinzufügen
+                    </a>
+                </div>
+            </div> 
         </div>
         {% endif %}
 
@@ -50,18 +59,18 @@
         </div>
 
         <ul class="nav nav-tabs" role="tablist">
-            <li class="">
+            <li class="active">
                 <a href="#veroeffentlichungen" role="tab" data-toggle="tab">
                     Veröffentlichungen zu diesem Gebiet
                 </a>
             </li>
-            <li class="active">
+            <li>
                 <a href="#kommentare" role="tab" data-toggle="tab">
                     Kommentare <span class="badge">{{ kommentare.count }}</span>
                 </a>
             </li>
             <li class="pull-right">
-                <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#kommentarFormular">
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#kommentarFormular">
                     Kommentar hinzufügen
                 </button>
             </li>
@@ -70,10 +79,10 @@
         {% include "bbs/kommentare_formular.html" %}
 
         <div class="tab-content">
-            <div class="tab-pane" id="veroeffentlichungen">
+            <div class="tab-pane active" id="veroeffentlichungen">
                 {% include "bbs/ort_veroeffentlichungen.html" %}
             </div>
-            <div class="tab-pane  active" id="kommentare">
+            <div class="tab-pane" id="kommentare">
                 {% include "bbs/kommentare_liste.html" %}
             </div>
         </div>
