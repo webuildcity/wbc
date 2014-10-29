@@ -9,67 +9,77 @@
 
 {% block js %}
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
-    <script type="text/javascript" src="{% static 'social.js' %}" ></script>
+    <!-- <script type="text/javascript" src="{% static 'social.js' %}" ></script> -->
     <script type="text/javascript" src="{% static 'map.js' %}" ></script>
     <script type="text/javascript">
-        var _tiles_url = "{{tilesUrl}}";
-        var _tiles_opt = {{tilesOpt|safe}};
         var _default_view = {{defaultView|safe}};
-        $(document).ready(function() {
-            setTimeout('init()',100);
-        });
+
+        var _map = new L.Map("map");
+        _map.addLayer(new L.TileLayer('{{tilesUrl}}/{z}/{x}/{y}.png',{{tilesOpt|safe}}));
+        _map.setView(new L.LatLng(_default_view.lat,_default_view.lon),_default_view.zoom);
+
+        $('.leaflet-control-attribution').remove();
+        $('.leaflet-control-zoom').remove().appendTo($('#buttons-left'));
     </script>
 {% endblock %}
 
 {% block content %}
-<div id="wrapper" class="absolute">
-    <div class="container" >
-        <div id="buttons-left"></div>
-        <div id="buttons-right"></div>
-    </div>
-    <div id="map"></div>
-    <div class="bbs-loading">
-        <div class="bbs-loading-dialog">
-            Lade Veröffentlichungen ...
-        </div>
-    </div>
-    <div class="bbs-modal">
-        <div class="bbs-modal-dialog">
-            <div class="bbs-modal-dialog-close">
-                <a class="leaflet-popup-close-button" href="#close">×</a>
-            </div>
-            <div class="bbs-modal-dialog-body">
-                <h2>Worum geht es hier?</h2>
-                <div class="responsive-video">
-                    <iframe id="vimeo-iframe" src="//player.vimeo.com/video/65678345" width="620" height="348" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
-                </div>
-                <p>
-                    Bevor in Berlin gebaut werden kann, müssen dafür häufig erst die rechtlichen Grundlagen geschaffen werden. So kann es beispielsweise sein, dass bevor ein Haus gebaut werden darf, erst der entsprechende <strong>Bebauungsplan</strong> geändert werden muss. Im Rahmen eines solchen Bebauungsplanverfahren ist die Beteiligung der Bürger vorgesehen. Das heißt, dass die Pläne vier Wochen öffentlich ausgelegt werden müssen und die Bürger sich daran beteiligen können. 
-                </p>               
-                <p>
-                    Die Marker auf der Karte stehen für Orte, an denen ein Bauvorhaben geplant ist und zu dem gerade die Planungsunterlagen  ausliegen und Beteiligung möglich ist. Sobald die die Beteiligungsfrist abgelaufen ist, verschwinden die Marker von der Karte. Die angezeigten Informationen stammen alle aus dem wöchentlich erscheinendem Amtsblatt von Berlin, das wir mit Unterstützung der Naturschutzverbände manuell auswerten. 
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
+<div ng-app="map" ng-controller="mapController">
 
-<div id="footer" class="absolute">
-    <div class="container">
-        <div id="footer-left">
-            <label class="checkbox" class="checkbox">
-                <input type="checkbox" name="old"> Veröffentlichungen mit abgelaufener Frist anzeigen
-            </label>
-            <div id="social" class="visible-md visible-lg">
-                <div id="facebook"></div>
-                <div id="twitter"></div>
-                <div id="gplus"></div>
+    <div id="wrapper" class="absolute" ng-click="closeInfo()">
+        <div class="container" >
+            <div id="buttons-left"></div>
+            <div id="buttons-right"></div>
+        </div>
+        <div id="map"></div>
+    </div>
+
+    <div id="footer" class="absolute">
+        <div class="container">
+            <div id="footer-left">
+                <div id="social" class="visible-md visible-lg">
+                    <div id="facebook"></div>
+                    <div id="twitter"></div>
+                    <div id="gplus"></div>
+                </div>
             </div>
-        </div>                                            
-        <div id="footer-right" class="attribution">                
-            Powered by <a href="http://leaflet.cloudmade.com">Leaflet</a>
-            Map data © 2012 OpenStreetMap contributors
+
+            <div id="footer-center">
+                <div class="infohelp" ng-class="{'show': help}">Worum geht es hier?</div>
+                <div class="infotab glyphicon" ng-click="openInfo()"
+                    ng-mouseenter="help = true"
+                    ng-mouseleave="help = false">
+                    <div class="glyphicon" ng-class="{
+                        'glyphicon-chevron-up': !info,
+                        'glyphicon-chevron-down': info
+                    }"></div>
+                </div>
+            </div>
+
+            <div id="footer-right">
+                <div class="attribution">
+                    <div>Powered by <a href="http://leaflet.cloudmade.com">Leaflet</a></div>
+                    <div>Map data © 2012 OpenStreetMap contributors</div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <div class="infobox" ng-class="{'up': info}">
+        <div class="infobox-close">
+            <a href="" class="pull-right" ng-click="closeInfo()">&times;</a>
+        </div>
+        <div class="container">
+            <h2>Worum geht es hier?</h2>
+            <iframe id="vimeo-iframe" src="//player.vimeo.com/video/65678345" width="530" height="348" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
+            <p>
+                Bevor in Berlin gebaut werden kann, müssen dafür häufig erst die rechtlichen Grundlagen geschaffen werden. So kann es beispielsweise sein, dass bevor ein Haus gebaut werden darf, erst der entsprechende <strong>Bebauungsplan</strong> geändert werden muss. Im Rahmen eines solchen Bebauungsplanverfahren ist die Beteiligung der Bürger vorgesehen. Das heißt, dass die Pläne vier Wochen öffentlich ausgelegt werden müssen und die Bürger sich daran beteiligen können. 
+            </p>
+            <p>
+                Die Marker auf der Karte stehen für Orte, an denen ein Bauvorhaben geplant ist und zu dem gerade die Planungsunterlagen  ausliegen und Beteiligung möglich ist. Sobald die die Beteiligungsfrist abgelaufen ist, verschwinden die Marker von der Karte. Die angezeigten Informationen stammen alle aus dem wöchentlich erscheinendem Amtsblatt von Berlin, das wir mit Unterstützung der Naturschutzverbände manuell auswerten. 
+            </p>
+        </div>
+    </div>
+
 </div>
 {% endblock %}

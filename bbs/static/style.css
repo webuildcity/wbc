@@ -18,9 +18,6 @@ html, body {
     font-family: dejavu;
     font-size: 14px;
 }
-body {
-    margin-bottom: 80px;
-}
 h2 {
     font-weight: normal;
     font-family: titillium;
@@ -103,11 +100,9 @@ a:hover,
     margin-top: 5px;
     margin-bottom: 5px;
 }
-
-@media (max-width: 500px) {
-    .attribution {
-        font-size: 7pt;
-    }
+.attribution {
+    font-size: 7pt;
+    text-align: right;
 }
 .checkbox {
     font-weight: normal;

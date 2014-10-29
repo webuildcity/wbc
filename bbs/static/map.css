@@ -1,7 +1,10 @@
 body, html {
     height: 100%;
+    overflow: hidden;
 }
+
 /* make things absolute in the map */
+
 .container {
     position: relative;
 }
@@ -21,7 +24,8 @@ body, html {
 #buttons-left,
 #buttons-right,
 #footer-left,
-#footer-right {
+#footer-right,
+#footer-center {
     position: absolute;
     z-index: 10;
 }
@@ -35,8 +39,12 @@ body, html {
 #footer-right {
     right: 15px;
 }
+#footer-center {
+    left: 50%;
+}
 #footer-left,
-#footer-right {
+#footer-right,
+#footer-center {
     bottom: 10px;
 }
 #header-left{
@@ -55,6 +63,7 @@ body, html {
 }
 
 /* navbar */
+
 .navbar {
     z-index: 100;
 }
@@ -63,6 +72,7 @@ body, html {
 
     height: 34px;
     width: 42px;
+
     padding: 11px 0 9px 0;
     line-height: 12px;
 
@@ -70,11 +80,101 @@ body, html {
     font-weight: bold;
     color: #de6a00;
 }
-.info-button.leaflet-control-zoom-out {
-    font-size: 12pt;
+
+/* info box */
+
+#footer-center {
+    z-index: 3000;
+}
+.infotab {
+    height: 50px;
+    width: 50px;
+
+    margin-left: -25px;
+    padding: 10px;
+
+    border: 2px solid #de6a00;
+    border-radius: 50%;
+
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+    color: #de6a00;
+}
+.infotab div {
+    width: 25px;
+    height: 25px;
+}
+.infotab div.glyphicon-chevron-down {
+    margin: 2px 0 0 -1px;
+}
+.infotab div.glyphicon-chevron-up {
+    margin: 0px 0 0 2px;
+}
+.infohelp {
+    display: block;
+    width: 160px;
+    margin-left: -80px;
+    margin-bottom: 10px;
+    text-align: center;
+
+    color: #de6a00;
+    font-family: titillium;
+    font-size: 16px;
+
+    -webkit-transition: all linear 0.6s;
+    transition: all linear 0.6s;
+
+    opacity: 0;
+}
+.infohelp.show {
+    opacity: 1;
+}
+
+
+/* infobox */
+
+.infobox {
+    background-color: white;
+
+    position: absolute;
+    z-index: 4000;
+    left: 0;
+    right: 0;
+
+    bottom: -480px;
+    height: 480px;
+
+    padding-top: 10px;
+
+    border-top: 2px solid #de6a00;
+
+    -webkit-transition: all linear 0.4s;
+    transition: all linear 0.4s;
+}
+.infobox.up {
+    bottom: 0 !important;
+}
+.infobox h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.infobox iframe {
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+.infobox-close {
+    height: 20px;
+    padding-right: 10px;
+}
+.infobox-close a {
+    font-size: 30px;
+    font-weight: bold;
 }
 
 /* the canvas for the map */
+
 #map {
     position: absolute;
     top: 0px;
@@ -125,82 +225,22 @@ body, html {
     }
 }
 
-.checkbox {
-    font-weight: normal;
-}
-
-.bbs-loading,
-.bbs-modal {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 10000;
-
-    display: none;
-}
-.bbs-loading .bbs-loading-dialog,
-.bbs-modal .bbs-modal-dialog {
-    position: absolute;
-}
-.bbs-loading {
-    background: transparent;
-}
-.bbs-loading .bbs-loading-dialog {
-    padding: 20px;
-    text-align: center;
-
-    font-family: dejavu;
-    font-weight: bold;
-    font-size: 16px;
-    color: #de6a00;
-}
-
-.bbs-modal {
-    background-color: rgba(0,0,0,0.5);
-}
-.bbs-modal .bbs-modal-dialog {
-    background-color: white;
-    -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 14px 0px;
-    -moz-box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 14px 0px;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 14px 0px;
-}
-.bbs-modal .bbs-modal-dialog-body {
-    padding: 20px;
-    background-color: white;
-}
-.bbs-modal .bbs-modal-dialog-body :first-child {
-    margin-top: 0;
-}
-.bbs-modal .bbs-modal-dialog-body :last-child {
-    margin-bottom: 0;
-}
-.bbs-modal .bbs-modal-dialog-close  {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding-top: 0px;
-    padding-right: 8px;
-    font-weight: bold;
-    font-size: 2em;
-}
-
-.responsive-video {
+/*.responsive-video {
     position: relative;
     padding-bottom: 55%;
     padding-top: 15px;
     height: 0;
     overflow: hidden;
+    float: left;
 }
 
-.responsive-video iframe{
+.responsive-video iframe {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-}
+    width: 50%;
+    height: 50%;
+}*/
 
 
 
