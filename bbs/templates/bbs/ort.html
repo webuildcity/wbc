@@ -29,17 +29,15 @@
         {% if user.is_authenticated %}
         <div class="row" style="margin-top: 10px;">
             <div class="col-sm-12">
-                <div class="row">
-                    <a href="/admin/projects/ort/{{ ort.pk }}/" class="btn btn-primary pull-right"
-                       style="color: white !important; ">
-                        Ort bearbeiten
-                    </a>
-                    <a href="/veroeffentlichungen/neu/?orte_id={{ort.pk}}" 
-                       class="pull-right btn btn-primary" style="color: white !important; margin-right: 1.2em;">
-                       Neue Veröffentlichung hinzufügen
-                    </a>
-                </div>
-            </div> 
+                <a href="/admin/projects/ort/{{ ort.pk }}/" class="btn btn-primary pull-right"
+                   style="color: white !important; margin-left: 1.2em; ">
+                    Ort bearbeiten
+                </a>
+                <a href="/veroeffentlichungen/neu/?orte_id={{ort.pk}}" 
+                   class="pull-right btn btn-primary" style="color: white !important;;">
+                   Neue Veröffentlichung hinzufügen
+                </a>
+            </div>
         </div>
         {% endif %}
 
@@ -47,13 +45,13 @@
             <div class="col-sm-8">
                 <h3>Betroffenes Gebiet</h3>
                 <p>
-                    <b>Bezeichner:</b>  {{ ort.bezeichner }}
+                    <strong>Bezeichner:</strong>  {{ ort.bezeichner }}
                 </p>
                 <p>
-                    <b>genaue örtliche Beschreibung:</b> {{ ort.beschreibung }}
+                    <strong>genaue örtliche Beschreibung:</strong> {{ ort.beschreibung }}
                 </p>
                 <p>
-                    <b>im Bezirk/in den Bezirken:</b> {{ ort.bezirke.all|join:", "}}
+                    <strong>im Bezirk/in den Bezirken:</strong> {{ ort.bezirke.all|join:", "}}
                 </p>
             </div>
         </div>
@@ -66,7 +64,10 @@
             </li>
             <li>
                 <a href="#kommentare" role="tab" data-toggle="tab">
-                    Kommentare <span class="badge">{{ kommentare.count }}</span>
+                    Kommentare
+                    {% if kommentare.count > 0 %}
+                        <span class="badge">{{ kommentare.count }}</span>
+                    {% endif %}
                 </a>
             </li>
             <li class="pull-right">
@@ -85,6 +86,6 @@
             <div class="tab-pane" id="kommentare">
                 {% include "bbs/kommentare_liste.html" %}
             </div>
-        </div>
+        </div>  
     </div>
 {% endblock %}

@@ -36,5 +36,6 @@ body {
 
 ul.nav-tabs > .active > a, ul.nav-tabs > .active > a:hover
 {
-    background-color: rgba(1, 1, 1, 0.03);
+    background-color: transparent !important;
+    border-bottom: 0px solid transparent !important;
 }

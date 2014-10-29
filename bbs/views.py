@@ -26,14 +26,16 @@ def orte(request):
 
 def ort(request,pk):
     if request.method == 'POST' and len(request.POST["email"]) == 0:
+        c = request.POST["text"]
+
         kommentar_neu = Kommentar(ort_id       = int(pk), 
                                   author_name  = request.POST["name"],
                                   author_email = request.POST["email1"],
                                   author_url   = request.POST["url"],
-                                  content      = request.POST["text"],
-                                  enabled      = False)
+                                  content      = c,
+                                  enabled      = True)
         kommentar_neu.save()
-        return redirect('orte/' + pk)
+        return redirect('/orte/' + pk)
     
     ort = get_object_or_404(Ort, id = int(pk))
     kommentare = Kommentar.objects.filter(ort_id = int(pk), enabled = True)
