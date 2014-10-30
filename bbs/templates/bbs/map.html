@@ -12,14 +12,14 @@
     <!-- <script type="text/javascript" src="{% static 'social.js' %}" ></script> -->
     <script type="text/javascript" src="{% static 'map.js' %}" ></script>
     <script type="text/javascript">
-        var _default_view = {{defaultView|safe}};
+        // var _default_view = {{defaultView|safe}};
 
-        var _map = new L.Map("map");
-        _map.addLayer(new L.TileLayer('{{tilesUrl}}/{z}/{x}/{y}.png',{{tilesOpt|safe}}));
-        _map.setView(new L.LatLng(_default_view.lat,_default_view.lon),_default_view.zoom);
+        // var _map = new L.Map("map");
+        // _map.addLayer(new L.TileLayer('{{tilesUrl}}/{z}/{x}/{y}.png',{{tilesOpt|safe}}));
+        // _map.setView(new L.LatLng(_default_view.lat,_default_view.lon),_default_view.zoom);
 
-        $('.leaflet-control-attribution').remove();
-        $('.leaflet-control-zoom').remove().appendTo($('#buttons-left'));
+        // $('.leaflet-control-attribution').remove();
+        // $('.leaflet-control-zoom').remove().appendTo($('#buttons-left'));
     </script>
 {% endblock %}
 
@@ -66,8 +66,8 @@
     </div>
 
     <div class="infobox" ng-class="{'up': info}">
-        <div class="infobox-close">
-            <a href="" class="pull-right" ng-click="closeInfo()">&times;</a>
+        <div class="infobox-close" ng-click="closeInfo()">
+            <a href="" class="pull-right">&times;</a>
         </div>
         <div class="container">
             <h2>Worum geht es hier?</h2>

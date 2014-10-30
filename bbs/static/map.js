@@ -15,13 +15,11 @@ app.controller('mapController',['$scope',function($scope) {
     };
 
     $scope.closeInfo = function(event) {
-
         if (angular.isUndefined(event)){
             $scope.info = false;
         } else {
             $scope.info = !$scope.info;
         }
-
     };
 
 }]);

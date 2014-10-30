@@ -105,11 +105,11 @@ body, html {
     width: 25px;
     height: 25px;
 }
-.infotab div.glyphicon-chevron-down {
+.infotab .glyphicon-chevron-down {
     margin: 2px 0 0 -1px;
 }
-.infotab div.glyphicon-chevron-up {
-    margin: 0px 0 0 2px;
+.infotab .glyphicon-chevron-up {
+    margin: 0 0 0 2px;
 }
 .infohelp {
     display: block;
@@ -123,6 +123,8 @@ body, html {
     font-size: 16px;
 
     -webkit-transition: all linear 0.6s;
+    -moz-transition: all linear 0.6s;
+    -o-transition: all linear 0.6s;
     transition: all linear 0.6s;
 
     opacity: 0;
@@ -130,7 +132,6 @@ body, html {
 .infohelp.show {
     opacity: 1;
 }
-
 
 /* infobox */
 
@@ -142,18 +143,21 @@ body, html {
     left: 0;
     right: 0;
 
-    bottom: -480px;
-    height: 480px;
+    top: 100%;
+    height: 100%;
 
     padding-top: 10px;
 
-    border-top: 2px solid #de6a00;
+    overflow: auto;
+    background-image: url('img/hintergrund.png');
 
     -webkit-transition: all linear 0.4s;
+    -moz-transition: all linear 0.4s;
+    -o-transition: all linear 0.4s;
     transition: all linear 0.4s;
 }
 .infobox.up {
-    bottom: 0 !important;
+    top: 0;
 }
 .infobox h2 {
     margin-top: 0;
@@ -177,10 +181,10 @@ body, html {
 
 #map {
     position: absolute;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     z-index: 0;
 }
 
@@ -200,6 +204,10 @@ body, html {
 
     #footer-left {
         bottom: 0px;
+    }
+
+    #vimeo-iframe {
+        width: 100%;
     }
 }
 
@@ -224,23 +232,3 @@ body, html {
         left: 15px;
     }
 }
-
-/*.responsive-video {
-    position: relative;
-    padding-bottom: 55%;
-    padding-top: 15px;
-    height: 0;
-    overflow: hidden;
-    float: left;
-}
-
-.responsive-video iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 50%;
-    height: 50%;
-}*/
-
-
-
