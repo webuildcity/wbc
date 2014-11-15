@@ -11,17 +11,18 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.formtools',
+    'django.contrib.humanize',
     # wagtail
-    'wagtail.wagtailcore',
-    'wagtail.wagtailadmin',
-    'wagtail.wagtaildocs',
-    'wagtail.wagtailsnippets',
-    'wagtail.wagtailusers',
-    'wagtail.wagtailimages',
-    'wagtail.wagtailembeds',
-    'wagtail.wagtailsearch',
-    'wagtail.wagtailredirects',
-    'wagtail.wagtailforms',
+    # 'wagtail.wagtailcore',
+    # 'wagtail.wagtailadmin',
+    # 'wagtail.wagtaildocs',
+    # 'wagtail.wagtailsnippets',
+    # 'wagtail.wagtailusers',
+    # 'wagtail.wagtailimages',
+    # 'wagtail.wagtailembeds',
+    # 'wagtail.wagtailsearch',
+    # 'wagtail.wagtailredirects',
+    # 'wagtail.wagtailforms',
     # other dependencies
     'rest_framework',
     'widget_tweaks',
@@ -32,8 +33,8 @@ INSTALLED_APPS = (
     # bbs apps
     'projects',
     'news',
-    'blog',
-    'comments'
+    # 'blog',
+    # 'comments'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -43,32 +44,24 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'wagtail.wagtailcore.middleware.SiteMiddleware',
-    'wagtail.wagtailredirects.middleware.RedirectMiddleware'
+    # 'wagtail.wagtailcore.middleware.SiteMiddleware',
+    # 'wagtail.wagtailredirects.middleware.RedirectMiddleware'
 )
 
 ROOT_URLCONF = 'bbs.urls'
-
 WSGI_APPLICATION = 'bbs.wsgi.application'
-
 SITE_ID = 1
 
 LANGUAGE_CODE = 'de-de'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 MEDIA_URL = '/media/'
-
 MEDIA_ROOT = os.path.join(SITE_ROOT,'media/')
 
 STATIC_URL = '/static/'
-
 STATIC_ROOT = os.path.join(SITE_ROOT,'static/')
 
 STATICFILES_DIRS = (
@@ -94,10 +87,9 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
 
 LOGIN_URL = '/login'
 
-WAGTAIL_SITE_NAME = 'Bürger baut Stadt'
+# WAGTAIL_SITE_NAME = 'Bürger baut Stadt'
 
-COMPRESS_ENABLED = True
-
-COMPRESS_PRECOMPILERS = ( 
-    ('text/x-scss', 'django_libsass.SassCompiler'), 
-)
+# COMPRESS_ENABLED = True
+# COMPRESS_PRECOMPILERS = ( 
+#     ('text/x-scss', 'django_libsass.SassCompiler'), 
+# )
