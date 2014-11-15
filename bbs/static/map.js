@@ -35,7 +35,7 @@ app.factory('MapService',['$http',function($http) {
         // create icon for old projects
         icons.old = {
             icon: L.icon({
-                iconUrl: '/static/img/Baustellenschilder/klein/schild_grau_blass.png',
+                iconUrl: '/static/img/icons/grau.png',
                 iconSize:     [26, 45],
                 iconAnchor:   [13, 45],
                 popupAnchor:  [0, -46]
