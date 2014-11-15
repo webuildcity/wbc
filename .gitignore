@@ -1,7 +1,10 @@
-bbs/settings.py
-data/database
-.DS_Store
-/static/
-*.pyc
+bbs/local.py
+
 *~
-*.db
+*.pyc
+.DS_Store
+
+static/*
+!static/.gitkeep
+
+data/database
