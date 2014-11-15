@@ -9,7 +9,7 @@ function initMap() {
     var osmb = new OSMBuildings(map).loadData();
     
     var icon = L.icon({
-        iconUrl: '/static/img/Baustellenschilder/klein/schild_gruen_klein.png',
+        iconUrl: '/static/img/icons/gruen.png',
         iconSize:   [26, 45], // size of the icon width,height
         iconAnchor: [13, 45], // point of the icon which will correspond to marker's location  
     });
@@ -35,5 +35,5 @@ function initMap() {
 }
 
 $(document).ready(function() {
-    setTimeout('initMap()',100);     
+    setTimeout('initMap()',100);
 });
