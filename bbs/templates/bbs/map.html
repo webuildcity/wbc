@@ -3,7 +3,6 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
-    <link rel="stylesheet" href="{% static 'social.css' %}" />
     <link rel="stylesheet" href="{% static 'map.css' %}" />
 {% endblock %}
 
@@ -33,11 +32,11 @@
 
     <div id="footer" ng-class="{'up': info}">
         <div class="container">
-            <div id="footer-left">
-
+            <div id="footer-left" class="visible-xs">
+                <a class="visible-xs" ng-click="toogleInfo()">Worum geht es hier?</a>
             </div>
 
-            <div id="footer-center">
+            <div id="footer-center" class="hidden-xs">
                 <div class="infohelp" ng-class="{'show': help}">Worum geht es hier?</div>
 
                 <div class="infotab glyphicon" ng-click="toogleInfo()"
@@ -63,7 +62,9 @@
                 </div>
                 <div class="container">
                     <h2>Worum geht es hier?</h2>
-                    <iframe id="vimeo-iframe" src="//player.vimeo.com/video/65678345" width="530" height="348" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
+                    <div class="responsive-video">
+                        <iframe id="vimeo-iframe" src="//player.vimeo.com/video/65678345" width="530" height="348" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
+                    </div>
                     <p>
                         Bevor in Berlin gebaut werden kann, müssen dafür häufig erst die rechtlichen Grundlagen geschaffen werden. So kann es beispielsweise sein, dass bevor ein Haus gebaut werden darf, erst der entsprechende <strong>Bebauungsplan</strong> geändert werden muss. Im Rahmen eines solchen Bebauungsplanverfahren ist die Beteiligung der Bürger vorgesehen. Das heißt, dass die Pläne vier Wochen öffentlich ausgelegt werden müssen und die Bürger sich daran beteiligen können. 
                     </p>

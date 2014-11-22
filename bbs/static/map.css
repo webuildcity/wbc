@@ -185,6 +185,9 @@ body, html {
     height: 100%;
     width: 100%;
 }
+.infobox .container {
+    margin-top: 10px;
+}
 .infobox h2 {
     margin-top: 0;
     margin-bottom: 10px;
@@ -231,30 +234,45 @@ body, html {
     #footer-left {
         bottom: 0px;
     }
-
-    #vimeo-iframe {
-        width: 100%;
-    }
 }
 
 @media (max-width: 768px) {
     #buttons-left,
     #buttons-right {
-        display: none;
+        top: 0;
     }
 
-    #footer-left,
-    #footer-right {
+    #footer {
+        bottom: -100%;
+        height: 100%;
+    }
+
+    #footer-left {
+        bottom: 15px;
+    }
+
+    #footer-right .attribution div {
         line-height: 20px;
         font-size: 7pt;
     }
 
-    #footer-left {
-        bottom: 30px;
+    .infobox {
+        border-top: none;
     }
 
-    #footer-right {
-        right: auto;
-        left: 15px;
+    .responsive-video {
+        position: relative;
+        padding-bottom: 55%;
+        height: 0;
+        overflow: hidden;
+        margin-bottom: 10px;
+    }
+
+    .responsive-video iframe{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 }

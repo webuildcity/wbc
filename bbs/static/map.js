@@ -115,21 +115,32 @@ app.factory('MapService',['$http',function($http) {
     };
 }]);
 
-app.controller('MapController',['$scope','MapService',function($scope,MapService) {
+app.controller('MapController',['$scope','$timeout','MapService',function($scope,$timeout,MapService) {
 
     $scope.info = false;
     $scope.help = false;
 
     $scope.toogleInfo = function() {
-        $scope.info = !$scope.info;
+        if ($scope.info) {
+            $scope.closeInfo();
+        } else {
+            $scope.openInfo();
+        }
     };
 
-    $scope.closeInfo = function(event) {
-        if (angular.isUndefined(event)){
-            $scope.info = false;
-        } else {
-            $scope.info = !$scope.info;
-        }
+    $scope.openInfo = function() {
+        $scope.info = true;
+    };
+
+    $scope.closeInfo = function() {
+        $scope.info = false;
+
+        $timeout(function() {
+            var frame = $('iframe#vimeo-iframe');
+            var vidsrc = frame.attr('src');
+            frame.attr('src','');
+            frame.attr('src', vidsrc);
+        }, 350); // timeout needs to be more than the transition time
     };
 
     $scope.zoomIn = function(event) {
