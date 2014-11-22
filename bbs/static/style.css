@@ -42,6 +42,12 @@ a:hover,
     color: #e58833;
     text-decoration: none;
 }
+.fa {
+    color: #de6a00;
+}
+.fa:hover{
+    color: #e58833;
+}
 
 .panel {
     -webkit-box-shadow: none;
@@ -101,7 +107,7 @@ a:hover,
     margin-bottom: 5px;
 }
 .attribution {
-    font-size: 7pt;
+    font-size: small;
     text-align: right;
 }
 .checkbox {

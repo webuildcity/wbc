@@ -1,3 +1,5 @@
+import os
+
 DEBUG = True
 
 TEMPLATE_DEBUG = True
@@ -25,14 +27,17 @@ DATABASES = {
     #     'PORT': '',
     # }
 
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': '' # path to database file
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': '/tmp/bbs.sqlite' # path to database file
+    }
 }
 
-# SITE_ROOT = os.path.dirname(os.path.dirname(__file__))
-# SITE_URL = 'http://localhost:8000'
+SITE_ROOT = os.path.dirname(os.path.dirname(__file__))
+SITE_URL = 'http://localhost:8000'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_FROM = 'news@buergerbautstadt.de'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'localhost'
@@ -41,21 +46,18 @@ DATABASES = {
 # EMAIL_HOST_PASSWORD = ''
 # EMAIL_USE_TLS = True
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_FROM = 'news@buergerbautstadt.de'
+TILES_URL = 'http://tiles.codefor.de/static/bbs/berlin/'
+TILES_OPT = {
+    'errorTileUrl': 'http://tiles.codefor.de/static/bbs/error.png',
+    'attribution': 'Map data &copy; 2012 OpenStreetMap contributors',
+    'maxZoom': 17,
+    'minZoom': 9,
+    'zIndex': 0,
+    'reuseTiles': True
+}
 
-# TILES_URL = 'http://tiles.codefor.de/static/bbs/berlin/'
-# TILES_OPT = {
-#     'errorTileUrl': 'http://tiles.codefor.de/static/bbs/error.png',
-#     'attribution': 'Map data &copy; 2012 OpenStreetMap contributors',
-#     'maxZoom': 17,
-#     'minZoom': 9,
-#     'zIndex': 0,
-#     'reuseTiles': True
-# }
-
-# DEFAULT_VIEW = {
-#     'lat': 52.51,
-#     'lon': 13.37628,
-#     'zoom': 11
-# }
+DEFAULT_VIEW = {
+    'lat': 52.51,
+    'lon': 13.37628,
+    'zoom': 11
+}

@@ -12,6 +12,7 @@
     <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/x-icon" />
 
     <link rel="stylesheet" href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" />
     {% block css %}{% endblock %}
     <link rel="stylesheet" href="{% static 'style.css' %}" />
 </head>
@@ -41,7 +42,7 @@
         </div>
     </nav>
 
-    <div id="header" class="{{absolute|yesno:'absolute,'}} hidden-xs">
+    <div id="header" hidden-xs>
         <div class="container" >
             <div id="header-left">
                 <div id="brand">
@@ -50,14 +51,22 @@
                     </a>
                 </div>
             </div>
-            <ul id="header-right" class="sitenav">
-                <li><a href="/begriffe">Begriffe</a></li>
-                <li><a href="/orte">Liste</a></li>
-                <li><a href="/news/abonnieren">Abo</a></li>
-                <li><a href="http://blog.buergerbautstadt.de/about">Über</a></li> 
-                <li><a href="http://blog.buergerbautstadt.de/">Blog</a></li>
-                <li><a href="http://blog.buergerbautstadt.de/impressum/">Impressum</a></li>
-            </ul>
+
+            <div id="header-right">
+                <ul class="sitenav">
+                    <li><a href="/begriffe">Begriffe</a></li>
+                    <li><a href="/orte">Liste</a></li>
+                    <li><a href="/news/abonnieren">Newsletter</a></li>
+                    <li><a href="http://blog.buergerbautstadt.de/">Blog</a></li>
+                    <li><a href="http://blog.buergerbautstadt.de/impressum/">Impressum</a></li>
+                    <li>
+                        <a href=""><i class="fa fa-twitter-square"></i></a>
+                        <a href=""><i class="fa fa-facebook-square"></i></a>
+                        <a href=""><i class="fa fa-google-plus-square"></i></a>
+                        <a href=""><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     

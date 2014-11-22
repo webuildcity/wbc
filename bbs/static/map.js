@@ -7,15 +7,15 @@ app.config(['$httpProvider', function($httpProvider) {
 
 app.factory('MapService',['$http',function($http) {
 
-    var map = new L.Map("map");
+    var map = new L.Map("map", {
+        'zoomControl': false,
+        'attributionControl': false
+    });
     map.addLayer(new L.TileLayer(_tiles_url + '/{z}/{x}/{y}.png',_tiles_opt));
     map.setView(new L.LatLng(_default_view.lat,_default_view.lon),_default_view.zoom);
 
     var markerLayer = L.layerGroup().addTo(map);
     var icons = {};
-
-    angular.element('.leaflet-control-attribution').remove();
-    angular.element('.leaflet-control-zoom').remove().appendTo(angular.element('#buttons-left'));
 
     $http.get('/projekte/verfahrensschritte/').success(function(verfahrensschritte) {
         // create icons for verfahrensschritte
@@ -110,7 +110,9 @@ app.factory('MapService',['$http',function($http) {
         });
     });
 
-    return {};
+    return {
+        map: map
+    };
 }]);
 
 app.controller('MapController',['$scope','MapService',function($scope,MapService) {
@@ -118,8 +120,8 @@ app.controller('MapController',['$scope','MapService',function($scope,MapService
     $scope.info = false;
     $scope.help = false;
 
-    $scope.openInfo = function() {
-        $scope.info = true;
+    $scope.toogleInfo = function() {
+        $scope.info = !$scope.info;
     };
 
     $scope.closeInfo = function(event) {
@@ -128,5 +130,13 @@ app.controller('MapController',['$scope','MapService',function($scope,MapService
         } else {
             $scope.info = !$scope.info;
         }
+    };
+
+    $scope.zoomIn = function(event) {
+        MapService.map.zoomIn();
+    };
+
+    $scope.zoomOut = function(event) {
+        MapService.map.zoomOut();
     };
 }]);

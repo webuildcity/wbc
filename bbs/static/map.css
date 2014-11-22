@@ -10,8 +10,17 @@ body, html {
 }
 #footer {
     position: absolute;
-    bottom: 0;
+    bottom: -60%;
+    height: 60%;
     width: 100%;
+
+    -webkit-transition: all linear 0.3s;
+    -moz-transition: all linear 0.3s;
+    -o-transition: all linear 0.3s;
+    transition: all linear 0.3s;
+}
+#footer.up {
+    bottom: 0;
 }
 #header,
 #header-left,
@@ -43,9 +52,14 @@ body, html {
     left: 50%;
 }
 #footer-left,
-#footer-right,
-#footer-center {
+#footer-right {
     bottom: 10px;
+}
+#footer-center {
+    bottom: -40px;
+}
+#footer-center.up {
+    top: 34%;
 }
 #header-left{
     top: 20px;
@@ -55,7 +69,7 @@ body, html {
 }
 #buttons-left,
 #buttons-right {
-    top: 100px;
+    top: 140px;
 }
 #buttons-left div,
 #buttons-right div {
@@ -81,20 +95,38 @@ body, html {
     color: #de6a00;
 }
 
-/* info box */
+/* zoom buttons */
 
-#footer-center {
-    z-index: 3000;
+#zoom-in,
+#zoom-out {
+    line-height: 30px;
+    cursor: pointer;
+    display: block;
+    /*color: #de6a00;*/
+    color: #646464;
 }
+#zoom-in:hover,
+#zoom-out:hover {
+    color: #e58833;
+}
+
+/* infotab */
+
 .infotab {
-    height: 50px;
-    width: 50px;
+    cursor: pointer;
 
-    margin-left: -25px;
-    padding: 10px;
+    height: 80px;
+    width: 80px;
 
-    border: 2px solid #de6a00;
-    border-radius: 50%;
+    margin-left: -40px;
+    padding: 10px 10px 10px 10px;
+
+    border-top: 2px solid #de6a00;
+    border-right: 2px solid #de6a00;
+    border-left: 2px solid #de6a00;
+
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
 
     font-size: 20px;
     line-height: 20px;
@@ -102,8 +134,8 @@ body, html {
     color: #de6a00;
 }
 .infotab div {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 .infotab .glyphicon-chevron-down {
     margin: 2px 0 0 -1px;
@@ -111,6 +143,13 @@ body, html {
 .infotab .glyphicon-chevron-up {
     margin: 0 0 0 2px;
 }
+
+.up .infotab {
+    background-color: white;
+}
+
+/* infohelp */
+
 .infohelp {
     display: block;
     width: 160px;
@@ -136,28 +175,15 @@ body, html {
 /* infobox */
 
 .infobox {
-    background-color: white;
-
     position: absolute;
     z-index: 4000;
-    left: 0;
-    right: 0;
 
-    top: 100%;
-    height: 100%;
-
-    padding-top: 10px;
-
+    background-color: white;
+    border-top: 2px solid #de6a00;
     overflow: auto;
-    background-image: url('img/hintergrund.png');
 
-    -webkit-transition: all linear 0.4s;
-    -moz-transition: all linear 0.4s;
-    -o-transition: all linear 0.4s;
-    transition: all linear 0.4s;
-}
-.infobox.up {
-    top: 0;
+    height: 100%;
+    width: 100%;
 }
 .infobox h2 {
     margin-top: 0;

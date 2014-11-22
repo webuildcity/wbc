@@ -9,7 +9,6 @@
 
 {% block js %}
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
-    <!-- <script type="text/javascript" src="{% static 'social.js' %}" ></script> -->
     <script type="text/javascript">
         var _default_view = {{defaultView|safe}};
         var _tiles_opt = {{tilesOpt|safe}};
@@ -21,27 +20,27 @@
 {% block content %}
 <div ng-app="map" ng-controller="MapController">
 
-    <div id="wrapper" class="absolute" ng-click="closeInfo()">
+    <div id="wrapper" ng-click="closeInfo()">
         <div class="container" >
-            <div id="buttons-left"></div>
+            <div id="buttons-left">
+                <i id="zoom-in" class="fa fa-2x fa-plus-square-o" ng-click="zoomIn()"></i>
+                <i id="zoom-out" class="fa fa-2x fa-minus-square-o" ng-click="zoomOut()"></i>
+            </div>
             <div id="buttons-right"></div>
         </div>
         <div id="map"></div>
     </div>
 
-    <div id="footer" class="absolute">
+    <div id="footer" ng-class="{'up': info}">
         <div class="container">
             <div id="footer-left">
-                <div id="social" class="visible-md visible-lg">
-                    <div id="facebook"></div>
-                    <div id="twitter"></div>
-                    <div id="gplus"></div>
-                </div>
+
             </div>
 
             <div id="footer-center">
                 <div class="infohelp" ng-class="{'show': help}">Worum geht es hier?</div>
-                <div class="infotab glyphicon" ng-click="openInfo()"
+
+                <div class="infotab glyphicon" ng-click="toogleInfo()"
                     ng-mouseenter="help = true"
                     ng-mouseleave="help = false">
                     <div class="glyphicon" ng-class="{
@@ -58,23 +57,21 @@
                 </div>
             </div>
         </div>
+        <div class="infobox">
+                <div class="infobox-close" ng-click="closeInfo()">
+                    <a href="" class="pull-right">&times;</a>
+                </div>
+                <div class="container">
+                    <h2>Worum geht es hier?</h2>
+                    <iframe id="vimeo-iframe" src="//player.vimeo.com/video/65678345" width="530" height="348" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
+                    <p>
+                        Bevor in Berlin gebaut werden kann, müssen dafür häufig erst die rechtlichen Grundlagen geschaffen werden. So kann es beispielsweise sein, dass bevor ein Haus gebaut werden darf, erst der entsprechende <strong>Bebauungsplan</strong> geändert werden muss. Im Rahmen eines solchen Bebauungsplanverfahren ist die Beteiligung der Bürger vorgesehen. Das heißt, dass die Pläne vier Wochen öffentlich ausgelegt werden müssen und die Bürger sich daran beteiligen können. 
+                    </p>
+                    <p>
+                        Die Marker auf der Karte stehen für Orte, an denen ein Bauvorhaben geplant ist und zu dem gerade die Planungsunterlagen  ausliegen und Beteiligung möglich ist. Sobald die die Beteiligungsfrist abgelaufen ist, verschwinden die Marker von der Karte. Die angezeigten Informationen stammen alle aus dem wöchentlich erscheinendem Amtsblatt von Berlin, das wir mit Unterstützung der Naturschutzverbände manuell auswerten. 
+                    </p>
+                </div>
+            </div>
     </div>
-
-    <div class="infobox" ng-class="{'up': info}">
-        <div class="infobox-close" ng-click="closeInfo()">
-            <a href="" class="pull-right">&times;</a>
-        </div>
-        <div class="container">
-            <h2>Worum geht es hier?</h2>
-            <iframe id="vimeo-iframe" src="//player.vimeo.com/video/65678345" width="530" height="348" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> 
-            <p>
-                Bevor in Berlin gebaut werden kann, müssen dafür häufig erst die rechtlichen Grundlagen geschaffen werden. So kann es beispielsweise sein, dass bevor ein Haus gebaut werden darf, erst der entsprechende <strong>Bebauungsplan</strong> geändert werden muss. Im Rahmen eines solchen Bebauungsplanverfahren ist die Beteiligung der Bürger vorgesehen. Das heißt, dass die Pläne vier Wochen öffentlich ausgelegt werden müssen und die Bürger sich daran beteiligen können. 
-            </p>
-            <p>
-                Die Marker auf der Karte stehen für Orte, an denen ein Bauvorhaben geplant ist und zu dem gerade die Planungsunterlagen  ausliegen und Beteiligung möglich ist. Sobald die die Beteiligungsfrist abgelaufen ist, verschwinden die Marker von der Karte. Die angezeigten Informationen stammen alle aus dem wöchentlich erscheinendem Amtsblatt von Berlin, das wir mit Unterstützung der Naturschutzverbände manuell auswerten. 
-            </p>
-        </div>
-    </div>
-
 </div>
 {% endblock %}
