@@ -12,29 +12,15 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.formtools',
     'django.contrib.humanize',
-    # wagtail
-    # 'wagtail.wagtailcore',
-    # 'wagtail.wagtailadmin',
-    # 'wagtail.wagtaildocs',
-    # 'wagtail.wagtailsnippets',
-    # 'wagtail.wagtailusers',
-    # 'wagtail.wagtailimages',
-    # 'wagtail.wagtailembeds',
-    # 'wagtail.wagtailsearch',
-    # 'wagtail.wagtailredirects',
-    # 'wagtail.wagtailforms',
     # other dependencies
     'rest_framework',
     'widget_tweaks',
     'south',
-    'compressor',
-    'taggit',
-    'modelcluster',
+    'markdown',
     # bbs apps
     'projects',
     'news',
-    # 'blog',
-    # 'comments'
+    'comments'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -43,9 +29,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'wagtail.wagtailcore.middleware.SiteMiddleware',
-    # 'wagtail.wagtailredirects.middleware.RedirectMiddleware'
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 )
 
 ROOT_URLCONF = 'bbs.urls'
@@ -86,10 +70,3 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
 )
 
 LOGIN_URL = '/login'
-
-# WAGTAIL_SITE_NAME = 'Bürger baut Stadt'
-
-# COMPRESS_ENABLED = True
-# COMPRESS_PRECOMPILERS = ( 
-#     ('text/x-scss', 'django_libsass.SassCompiler'), 
-# )
