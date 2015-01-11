@@ -56,36 +56,19 @@
             </div>
         </div>
 
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="active">
-                <a href="#veroeffentlichungen" role="tab" data-toggle="tab">
-                    Veröffentlichungen zu diesem Gebiet
-                </a>
-            </li>
-            <li>
-                <a href="#kommentare" role="tab" data-toggle="tab">
-                    Kommentare
-                    {% if kommentare.count > 0 %}
-                        <span class="badge">{{ kommentare.count }}</span>
-                    {% endif %}
-                </a>
-            </li>
-            <li class="pull-right">
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#kommentarFormular">
-                    Kommentar hinzufügen
-                </button>
-            </li>
-        </ul>
+        <h3>Veröffentlichungen zu diesem Gebiet</h3>
+
+        {% include "bbs/ort_veroeffentlichungen.html" %}
+
+        <a href="" class="pull-right" data-toggle="modal" data-target="#kommentarFormular">
+            Eigenen Kommentar hinzufügen
+        </a>
+        
+        <h3>Kommentare</h3>
+
+        {% include "bbs/kommentare_liste.html" %}
 
         {% include "bbs/kommentare_formular.html" %}
 
-        <div class="tab-content">
-            <div class="tab-pane active" id="veroeffentlichungen">
-                {% include "bbs/ort_veroeffentlichungen.html" %}
-            </div>
-            <div class="tab-pane" id="kommentare">
-                {% include "bbs/kommentare_liste.html" %}
-            </div>
-        </div>  
     </div>
 {% endblock %}

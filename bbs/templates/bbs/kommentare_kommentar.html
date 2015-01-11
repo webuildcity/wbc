@@ -1,28 +1,25 @@
 {% load humanize %}
 {% load bbs_extras %}
-<div class="row">
-    <div class="col-xs-12 col-md-2">
-        <div class="row text-center" style="margin: .6em .6em;">
-            <img class="img-responsive img-circle"
-                 style="margin: 0 auto;" src="{{ kommentar.gravatar }}" />
-            <div class="text-muted">
-                {% if kommentar.author_url %}
-                    <a href="{{ kommentar.author_url }}">
-                        {{ kommentar.author_name }}
-                    </a>
-                {% else %}
-                    {{ kommentar.author_name }} 
-                {% endif %}
-                kommentierte vor
-                <span title="{{ kommentar.created }}">{{ kommentar.created | timesince }}</span>
-            </div>
+
+<div class="kommentar row">
+    <div class="kommentar-author col-sm-3">
+        <div class="kommentar-author-img">
+            <img class="img-circle" src="{{ kommentar.gravatar }}" />
+        </div>
+        <div class="kommentar-author-name">
+            {% if kommentar.author_url %}
+            <a href="{{ kommentar.author_url }}">
+                {{ kommentar.author_name }}
+            </a>
+            {% else %}
+                {{ kommentar.author_name }} 
+            {% endif %}
+        </div>
+        <div class="kommentar-author-time">
+            vor <span title="{{ kommentar.created }}">{{ kommentar.created | timesince }}</span>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
-        <div class="row" style="margin: .6em">
-            <div class="col-xs-9">
-                {% autoescape off %}{{ kommentar.content | markdown }}{% endautoescape %}
-            </div>
-        </div>
+    <div class="kommentar-inhalt col-sm-9">
+        {% autoescape off %}{{ kommentar.content | markdown }}{% endautoescape %}
     </div>
 </div>

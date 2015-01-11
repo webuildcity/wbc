@@ -29,6 +29,14 @@ h3 {
     font-weight: bold;
     font-size: 16px;
     color: #646464;
+    line-height: 20px;
+}
+h4 {
+    font-family: dejavu;
+    font-weight: bold;
+    font-size: 14px;
+    color: #646464;
+    line-height: 20px;
 }
 a, 
 a:visited,
@@ -191,3 +199,38 @@ a:hover,
 .blog iframe { 
     max-width: 100%;
 }
+
+/* ort */
+
+.veroeffentlichungen {
+    margin-bottom: 40px;
+}
+
+/* comments */
+.kommentare {
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+.kommentar {
+    min-height: 80px;
+}
+.kommentar-author {
+    /*width: 200px;*/
+    /*float: left;*/
+}
+.kommentar-author-img {
+    float: left;
+}
+.kommentar-author-name {
+    margin-top: 6px;
+    margin-left: 40px;
+}
+.kommentar-author-time {
+    color: #ccc;
+    margin-top: 5px;
+    margin-left: 40px;
+}
+.kommentar-inhalt {
+    /*margin-left: 200px;*/
+}
+

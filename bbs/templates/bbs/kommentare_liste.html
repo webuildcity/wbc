@@ -1,10 +1,8 @@
-<div id="comments">
+<div class="kommentare">
     {% if kommentare %}
-        <div class="bg-list">
-            {% for kommentar in kommentare.all %}
-                {% include "bbs/kommentare_kommentar.html"%}
-            {% endfor %}
-        </div>
+        {% for kommentar in kommentare.all %}
+            {% include "bbs/kommentare_kommentar.html"%}
+        {% endfor %}
     {% else %}
         <div class="text-center" style="min-height: 4em; padding-top: 2em;">
             <strong>Bisher keine Kommentare.</strong>
