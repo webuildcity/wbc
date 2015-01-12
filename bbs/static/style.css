@@ -203,7 +203,19 @@ a:hover,
 /* ort */
 
 .veroeffentlichungen {
-    margin-bottom: 40px;
+    margin-bottom: 60px;
+}
+.veroeffentlichungen div {
+    margin-bottom: 10px;
+}
+@media (max-width: 768px) {
+    .veroeffentlichung-title {
+        font-family: dejavu;
+        font-weight: bold;
+        font-size: 14px;
+        color: #646464;
+        line-height: 20px;
+    }
 }
 
 /* comments */
@@ -212,11 +224,10 @@ a:hover,
     margin-bottom: 60px;
 }
 .kommentar {
-    min-height: 80px;
+    margin-bottom: 20px;
 }
 .kommentar-author {
-    /*width: 200px;*/
-    /*float: left;*/
+    margin-bottom: 10px;
 }
 .kommentar-author-img {
     float: left;
@@ -232,7 +243,3 @@ a:hover,
     line-height: 12px;
     font-size: 10px;
 }
-.kommentar-inhalt {
-    /*margin-left: 200px;*/
-}
-
