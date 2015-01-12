@@ -222,13 +222,15 @@ a:hover,
     float: left;
 }
 .kommentar-author-name {
-    margin-top: 6px;
-    margin-left: 40px;
+    /*margin-top: 6px;*/
+    margin-left: 42px;
 }
 .kommentar-author-time {
     color: #ccc;
-    margin-top: 5px;
-    margin-left: 40px;
+    margin-top: 2px;
+    margin-left: 42px;
+    line-height: 12px;
+    font-size: 10px;
 }
 .kommentar-inhalt {
     /*margin-left: 200px;*/
