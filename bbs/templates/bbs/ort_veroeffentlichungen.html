@@ -6,6 +6,11 @@
     <h4 class="col-sm-6 hidden-xs">Details</h4>
 
     {% for veroeffentlichung in ort.veroeffentlichungen.all %}
+
+    {% if forloop.counter != 1 %}
+    <hr style="visible-xs" />
+    {% endif %}
+
     <div class="col-sm-3">
         <a href="/begriffe/#{{ veroeffentlichung.verfahrensschritt.pk}}" class="veroeffentlichung-title">
             {{ veroeffentlichung.verfahrensschritt.name}} ({{ veroeffentlichung.verfahrensschritt.verfahren.name }})
