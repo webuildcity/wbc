@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{% static 'style.css' %}" />
 </head>
 
-<body>
+<body ng-app="bbs">
     <nav class="navbar navbar-default visible-xs" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
@@ -59,17 +59,17 @@
                     <li><a href="/news/abonnieren">Newsletter</a></li>
                     <li><a href="http://blog.buergerbautstadt.de/">Blog</a></li>
                     <li><a href="http://blog.buergerbautstadt.de/impressum/">Impressum</a></li>
-                    <li>
-                        <a href="https://twitter.com/share">
+                    <li ng-controller="SocialController">
+                        <a href="https://twitter.com/share" ng-click="twitter($event)">
                             <i class="fa fa-twitter-square"></i>
                         </a>
-                        <a href="https://www.facebook.com/dialog/share?app_id=310881089105382&display=popup&redirect_uri=http%3A%2F%2Fbuergerbautstadt.de&href=http%3A%2F%2Fbuergerbautstadt.de">
+                        <a href="https://www.facebook.com/dialog/share?app_id=310881089105382&display=popup&redirect_uri=http%3A%2F%2Fbuergerbautstadt.de&href=http%3A%2F%2Fbuergerbautstadt.de" ng-click="facebook($event)">
                             <i class="fa fa-facebook-square"></i>
                         </a>
-                        <a href="https://plus.google.com/share?url=href=http%3A%2F%2Fbuergerbautstadt.de">
+                        <a href="https://plus.google.com/share?url=href=http%3A%2F%2Fbuergerbautstadt.de" ng-click="gplus($event)">
                             <i class="fa fa-google-plus-square"></i>
                         </a>
-                        <a href="/news/abonnieren">
+                        <a href="/news/abonieren" ng-click="feeds($event)">
                             <i class="fa fa-rss-square"></i>
                         </a>
                     </li>
@@ -83,6 +83,8 @@
     <script type="text/javascript" src="{% static 'lib/jquery.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/angular/angular.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'app.js' %}" ></script>
+
     {% block js %}{% endblock %}
     
     {% if not debug %}

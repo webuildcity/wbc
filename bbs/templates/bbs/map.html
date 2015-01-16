@@ -13,11 +13,10 @@
         var _tiles_opt = {{tilesOpt|safe}};
         var _tiles_url = '{{tilesUrl}}';
     </script>
-    <script type="text/javascript" src="{% static 'map.js' %}" ></script>
 {% endblock %}
 
 {% block content %}
-<div ng-app="map" ng-controller="MapController">
+<div ng-controller="MapController">
 
     <div id="wrapper" ng-click="closeInfo()">
         <div class="container" >

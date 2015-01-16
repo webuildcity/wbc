@@ -1,8 +1,31 @@
-var app = angular.module('map',[]);
+var app = angular.module('bbs',[]);
 
 app.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+}]);
+
+app.factory('SocialService',['$http',function($http) {
+
+}]);
+
+app.controller('SocialController',['$scope',function($scope) {
+    $scope.twitter = function (event) {
+        console.log('twitter');
+        event.preventDefault();
+    };
+    $scope.facebook = function (event) {
+        console.log('facebook');
+        event.preventDefault();
+    };
+    $scope.gplus = function (event) {
+        console.log('gplus');
+        event.preventDefault();
+    };
+    $scope.feeds = function (event) {
+        console.log('feeds');
+        event.preventDefault();
+    };
 }]);
 
 app.factory('MapService',['$http',function($http) {
