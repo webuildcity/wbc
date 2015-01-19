@@ -1,0 +1,29 @@
+{% extends 'bbs/page.html' %}
+{% load staticfiles %}
+
+{% block page %}
+<div class="news">
+    <h2 name="feeds">News Feeds</h2>
+    <div class="control-label col-sm-2">
+        <div class="pull-right" style="margin-right: 10px;">Bezirke</div>
+    </div>
+    <div class="col-sm-10">
+        <ul class="list-unstyled feed-list">
+            <li>
+                <a href="{% url "feedsurl" %}">
+                    <img src="{% static 'img/rss-feed-icon.png' %}">
+                    <span>Alle Bezirke</span>
+                </a>
+            </li>
+            {% for bezirk in bezirke %}
+            <li>
+                <a href="{% url "feedsurl" %}?bezirk={{ bezirk.name }}">
+                    <img src="{% static 'img/rss-feed-icon.png' %}">
+                    <span>{{ bezirk.name }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

@@ -44,7 +44,11 @@ def ort(request,pk):
 
 def begriffe(request):
     verfahren = Verfahren.objects.all()
-    return render(request,'bbs/begriffe.html',{'verfahren': verfahren})  
+    return render(request,'bbs/begriffe.html',{'verfahren': verfahren})
+
+def feeds(request):
+    bezirke = Bezirk.objects.all()
+    return render(request,'bbs/feeds.html',{'bezirke': bezirke})
 
 def login_user(request):
     form = LoginForm(request.POST or None)

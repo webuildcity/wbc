@@ -17,6 +17,8 @@ urlpatterns = patterns('',
     url(r'^veroeffentlichungen/feed/$', VeroeffentlichungenFeed(), name="feedsurl"),
     # begriffe
     url(r'^begriffe/$', 'bbs.views.begriffe'),
+    # feeds
+    url(r'^feeds/$', 'bbs.views.feeds'),
     # modules
     url(r'^news/', include('news.urls')),
     url(r'^projekte/', include('projects.urls')),
