@@ -23,9 +23,9 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div id="localmap" style="height: 400px; border: 2px solid rgba(0, 0, 0, 0.247059);"></div>
+    <div id="localmap"></div>
 
+    <div class="container">
         {% if user.is_authenticated %}
         <div class="row" style="margin-top: 10px;">
             <div class="col-sm-12">
@@ -41,7 +41,7 @@
         </div>
         {% endif %}
 
-        <div class="row">        
+        <div class="row ort">
             <div class="col-sm-8">
                 <h3>Betroffenes Gebiet</h3>
                 <p>
@@ -59,16 +59,19 @@
         <h3>Veröffentlichungen zu diesem Gebiet</h3>
 
         {% include "bbs/ort_veroeffentlichungen.html" %}
+    </div>
 
-        <a href="" class="pull-right" data-toggle="modal" data-target="#kommentarFormular">
-            Eigenen Kommentar hinzufügen
-        </a>
-        
-        <h3>Kommentare</h3>
+    <div class="kommentare-wrapper">
+        <div class="container">
+            <a class="kommentar-erstellen" href="" data-toggle="modal" data-target="#kommentarFormular">
+                Eigenen Kommentar hinzufügen
+            </a>
 
-        {% include "bbs/kommentare_liste.html" %}
+            <h3>Kommentare</h3>
 
-        {% include "bbs/kommentare_formular.html" %}
+            {% include "bbs/kommentare_liste.html" %}
 
+            {% include "bbs/kommentare_formular.html" %}
+        </div>
     </div>
 {% endblock %}

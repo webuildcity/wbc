@@ -202,8 +202,16 @@ a:hover,
 
 /* ort */
 
+#localmap {
+    height: 400px;
+}
+
+.ort {
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
 .veroeffentlichungen {
-    margin-bottom: 60px;
+    margin-bottom: 20px;
 }
 .veroeffentlichungen div {
     margin-bottom: 10px;
@@ -219,6 +227,10 @@ a:hover,
 }
 
 /* comments */
+.kommentare-wrapper {
+    background: rgba(0, 0, 0, 0.1);
+    padding-top: 10px;
+}
 .kommentare {
     margin-top: 20px;
     margin-bottom: 60px;
@@ -237,9 +249,14 @@ a:hover,
     margin-left: 42px;
 }
 .kommentar-author-time {
-    color: #ccc;
     margin-top: 2px;
     margin-left: 42px;
     line-height: 12px;
     font-size: 10px;
+}
+.kommentar-erstellen {
+    display: block;
+    float: right;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
