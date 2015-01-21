@@ -6,6 +6,9 @@ html {
 body {
     background-color: transparent;
 }
+.page {
+    margin-bottom: 80px;
+}
 #header {
     margin-top: 20px;
     margin-bottom: 20px;
