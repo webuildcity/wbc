@@ -1,3 +1,4 @@
+# coding=utf8
 import os
 
 DEBUG = True
@@ -46,6 +47,8 @@ EMAIL_FROM = 'news@buergerbautstadt.de'
 # EMAIL_HOST_PASSWORD = ''
 # EMAIL_USE_TLS = True
 
+# FACEBOOK_APIKEY = '310881089105382'
+
 TILES_URL = 'http://tiles.codefor.de/static/bbs/berlin/'
 TILES_OPT = {
     'errorTileUrl': 'http://tiles.codefor.de/static/bbs/error.png',
@@ -61,3 +64,16 @@ DEFAULT_VIEW = {
     'lon': 13.37628,
     'zoom': 11
 }
+
+NAVIGATION = [
+    {'text': 'Begriffe', 'href': '/begriffe'},
+    {'text': 'Liste', 'href': '/orte'},
+    {'text': 'Abo', 'href': '/news/abonnieren'}
+]
+
+INFO_TEXT = '''
+    <h2>Worum geht es hier?</h2>
+    <p>
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet.
+    </p>
+'''
