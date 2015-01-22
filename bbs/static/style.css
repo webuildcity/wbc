@@ -50,6 +50,9 @@ a:hover,
     color: #e58833;
     text-decoration: none;
 }
+.btn {
+    color: white !important;
+}
 .fa {
     color: #de6a00;
 }
@@ -201,6 +204,10 @@ a:hover,
 }
 
 /* ort */
+
+.ort-buttons {
+    margin-top: 20px;
+}
 
 #localmap {
     height: 400px;
