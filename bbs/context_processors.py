@@ -7,9 +7,14 @@ def settings(request):
 
     twitter = '<a href="https://twitter.com/share" target="blank"><i class="fa fa-twitter-square"></i></a>';
 
-    if (django_settings.FACEBOOK_APIKEY):
+    try:
+        facebookapikey = django_settings.FACEBOOK_APIKEY
+    except AttributeError:
+        facebookapikey = None
+
+    if facebookapikey:
         facebook_params = urlencode({
-            'app_id': django_settings.FACEBOOK_APIKEY,
+            'app_id': facebookapikey,
             'display': 'page',
             'redirect_uri': django_settings.SITE_URL,
             'href': django_settings.SITE_URL
