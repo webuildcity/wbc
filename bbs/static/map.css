@@ -1,6 +1,6 @@
 body, html {
     height: 100%;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 /* make things absolute in the map */
@@ -10,17 +10,12 @@ body, html {
 }
 #footer {
     position: absolute;
-    bottom: -60%;
-    height: 60%;
     width: 100%;
-
-    -webkit-transition: all linear 0.3s;
+    bottom: 0;
+/*    -webkit-transition: all linear 0.3s;
     -moz-transition: all linear 0.3s;
     -o-transition: all linear 0.3s;
-    transition: all linear 0.3s;
-}
-#footer.up {
-    bottom: 0;
+    transition: all linear 0.3s;*/
 }
 #header,
 #header-left,
@@ -56,10 +51,7 @@ body, html {
     bottom: 10px;
 }
 #footer-center {
-    bottom: -40px;
-}
-#footer-center.up {
-    top: 34%;
+    bottom: 20px;
 }
 #header-left{
     top: 20px;
@@ -95,6 +87,17 @@ body, html {
     color: #de6a00;
 }
 
+/* the canvas for the map */
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+}
+
 /* zoom buttons */
 
 #zoom-in,
@@ -110,111 +113,63 @@ body, html {
     color: #e58833;
 }
 
-/* infotab */
+/* info */
 
-.infotab {
+#info {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    min-height: 100%;
+    margin-bottom: 100px;
+}
+.info-wrapper {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.info-link {
     cursor: pointer;
 
-    height: 80px;
-    width: 80px;
-
-    margin-left: -40px;
-    padding: 10px 10px 10px 10px;
-
-    border-top: 2px solid #de6a00;
-    border-right: 2px solid #de6a00;
-    border-left: 2px solid #de6a00;
-
-    border-top-left-radius: 50%;
-    border-top-right-radius: 50%;
-
-    font-size: 20px;
-    line-height: 20px;
-    text-align: center;
-    color: #de6a00;
-}
-.infotab div {
-    width: 20px;
-    height: 20px;
-}
-.infotab .glyphicon-chevron-down {
-    margin: 2px 0 0 -1px;
-}
-.infotab .glyphicon-chevron-up {
-    margin: 0 0 0 2px;
-}
-
-.up .infotab {
-    background-color: white;
-}
-
-/* infohelp */
-
-.infohelp {
     display: block;
-    width: 160px;
-    margin-left: -80px;
-    margin-bottom: 10px;
-    text-align: center;
+    width: 240px;
+    margin-left: -120px;
+    font-size: 14px;
+}
+.info-link-text {
+    display-inline: block;
+    padding-left: 10px;
+    padding-right: 10px;
 
     color: #de6a00;
     font-family: titillium;
-    font-size: 16px;
-
-    -webkit-transition: all linear 0.6s;
-    -moz-transition: all linear 0.6s;
-    -o-transition: all linear 0.6s;
-    transition: all linear 0.6s;
-
-    opacity: 0;
-}
-.infohelp.show {
-    opacity: 1;
+    font-size: 20px;
 }
 
-/* infobox */
+/* misc */
 
-.infobox {
-    position: absolute;
-    z-index: 4000;
-
-    background-color: white;
-    border-top: 2px solid #de6a00;
-    overflow: auto;
-
-    height: 100%;
-    width: 100%;
-}
-.infobox .container {
-    margin-top: 10px;
-}
-.infobox h2 {
-    margin-top: 0;
-    margin-bottom: 10px;
-}
-.infobox iframe {
-    float: left;
-    margin-right: 20px;
+.responsive-video {
+    position: relative;
+    padding-bottom: 55%;
+    height: 0;
+    overflow: hidden;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
-.infobox-close {
-    height: 20px;
-    padding-right: 10px;
-}
-.infobox-close a {
-    font-size: 30px;
-    font-weight: bold;
-}
 
-/* the canvas for the map */
-
-#map {
+.responsive-video iframe{
     position: absolute;
     top: 0;
-    bottom: 0;
     left: 0;
-    right: 0;
-    z-index: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.sep60 {
+    height: 60px;
+}
+
+.link {
+    color: #de6a00;
+    font-family: titillium;
 }
 
 @media (max-width: 992px) {
@@ -260,19 +215,5 @@ body, html {
         border-top: none;
     }
 
-    .responsive-video {
-        position: relative;
-        padding-bottom: 55%;
-        height: 0;
-        overflow: hidden;
-        margin-bottom: 10px;
-    }
 
-    .responsive-video iframe{
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
 }

@@ -1,4 +1,4 @@
-var app = angular.module('bbs',[]);
+var app = angular.module('bbs',['duScroll']);
 
 app.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
@@ -9,7 +9,8 @@ app.factory('MapService',['$http',function($http) {
 
     var map = new L.Map("map", {
         'zoomControl': false,
-        'attributionControl': false
+        'attributionControl': false,
+        'scrollWheelZoom': false
     });
     map.addLayer(new L.TileLayer(_tiles_url + '/{z}/{x}/{y}.png',_tiles_opt));
     map.setView(new L.LatLng(_default_view.lat,_default_view.lon),_default_view.zoom);
@@ -118,39 +119,46 @@ app.factory('MapService',['$http',function($http) {
     };
 }]);
 
-app.controller('MapController',['$scope','$timeout','MapService',function($scope,$timeout,MapService) {
+app.controller('MapController',['$scope','$document','$timeout','$location','$anchorScroll','MapService',function($scope,$document,$timeout,$location,$anchorScroll,MapService) {
 
-    $scope.info = false;
-    $scope.help = false;
+    $scope.scroll = false;
 
-    $scope.toogleInfo = function() {
-        if ($scope.info) {
-            $scope.closeInfo();
-        } else {
-            $scope.openInfo();
+    MapService.map.on('focus', function() {
+        $scope.showMap();
+    });
+
+    $scope.showInfo = function() {
+        // scroll to info div
+        $document.scrollToElement(angular.element('#info'),0, 1000);
+
+        // enable scrolling
+        angular.element('body').css('overflow','auto');
+
+        $scope.scroll = false;
+    };
+
+    $scope.showMap = function() {
+        if ($scope.scroll === false) {
+            $scope.scroll = true;
+
+            // scroll to top
+            $document.scrollToElement(angular.element('#map'),0, 1000);
+
+            // enable mouse scroll on map
+            MapService.map.scrollWheelZoom.enable();
+
+            // hide scrollbar
+            angular.element('body').css('overflow','hidden');
         }
     };
 
-    $scope.openInfo = function() {
-        $scope.info = true;
-    };
-
-    $scope.closeInfo = function() {
-        $scope.info = false;
-
-        $timeout(function() {
-            var frame = $('iframe#vimeo-iframe');
-            var vidsrc = frame.attr('src');
-            frame.attr('src','');
-            frame.attr('src', vidsrc);
-        }, 350); // timeout needs to be more than the transition time
-    };
-
     $scope.zoomIn = function(event) {
+        $scope.showMap();
         MapService.map.zoomIn();
     };
 
     $scope.zoomOut = function(event) {
+        $scope.showMap();
         MapService.map.zoomOut();
     };
 }]);

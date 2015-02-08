@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block js %}
+    <script type="text/javascript" src="{% static 'lib/angular/angular-scroll.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
     <script type="text/javascript" src="{% static 'map.js' %}" ></script>
     <script type="text/javascript">
@@ -19,36 +20,27 @@
 {% block content %}
 <div ng-app="bbs" ng-controller="MapController">
 
-    <div id="wrapper" ng-click="closeInfo()">
-        <div class="container" >
-            <div id="buttons-left">
-                <i id="zoom-in" class="fa fa-2x fa-plus-square-o" ng-click="zoomIn()"></i>
-                <i id="zoom-out" class="fa fa-2x fa-minus-square-o" ng-click="zoomOut()"></i>
-            </div>
-            <div id="buttons-right"></div>
+    <div class="container" >
+        <div id="buttons-left">
+            <i id="zoom-in" class="fa fa-2x fa-plus-square-o" ng-click="zoomIn()"></i>
+            <i id="zoom-out" class="fa fa-2x fa-minus-square-o" ng-click="zoomOut()"></i>
         </div>
-        <div id="map"></div>
+        <div id="buttons-right"></div>
     </div>
 
-    <div id="footer" ng-class="{'up': info}">
+    <div id="map"></div>
+
+    <div id="footer">
         <div class="container">
-            <div id="footer-left" class="visible-xs">
-                <a class="visible-xs" ng-click="toogleInfo()">Worum geht es hier?</a>
+            <div id="footer-left">
             </div>
-
             <div id="footer-center" class="hidden-xs">
-                <div class="infohelp" ng-class="{'show': help}">Worum geht es hier?</div>
-
-                <div class="infotab glyphicon" ng-click="toogleInfo()"
-                    ng-mouseenter="help = true"
-                    ng-mouseleave="help = false">
-                    <div class="glyphicon" ng-class="{
-                        'glyphicon-chevron-up': !info,
-                        'glyphicon-chevron-down': info
-                    }"></div>
-                </div>
+                <a class="info-link" ng-click="showInfo()">
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                    <span class="info-link-text">Worum geht es hier?</span>
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                </a>
             </div>
-
             <div id="footer-right">
                 <div class="attribution">
                     <div>Powered by <a href="http://leaflet.cloudmade.com">Leaflet</a></div>
@@ -56,14 +48,12 @@
                 </div>
             </div>
         </div>
-        <div class="infobox">
-                <div class="infobox-close" ng-click="closeInfo()">
-                    <a href="" class="pull-right">&times;</a>
-                </div>
-                <div class="container">
-                    {{infotext|safe}}
-                </div>
-            </div>
+
     </div>
+
+    <div id="info">
+        {{infotext|safe}}
+    </div>
+
 </div>
 {% endblock %}
