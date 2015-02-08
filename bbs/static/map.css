@@ -1,6 +1,9 @@
 body, html {
     height: 100%;
-    /*overflow: hidden;*/
+}
+.locked {
+    position: relative;
+    overflow: hidden;
 }
 
 /* make things absolute in the map */
@@ -46,10 +49,10 @@ body, html {
 #footer-center {
     left: 50%;
 }
-#footer-left,
 #footer-right {
     bottom: 10px;
 }
+#footer-left,
 #footer-center {
     bottom: 20px;
 }
@@ -120,22 +123,31 @@ body, html {
     top: 100%;
     width: 100%;
     min-height: 100%;
-    margin-bottom: 100px;
+    padding-top: 50px;
+    margin-bottom: 80px;
+}
+#info .col-md-3 {
+    margin-bottom: 80px
 }
 .info-wrapper {
     background: rgba(0, 0, 0, 0.1);
 }
-
 .info-link {
     cursor: pointer;
-
     display: block;
+}
+.info-link-left {
+    display: none;
+}
+.info-link-center {
     width: 240px;
     margin-left: -120px;
+}
+.info-link-glyphicon {
     font-size: 14px;
 }
 .info-link-text {
-    display-inline: block;
+    display: inline-block;
     padding-left: 10px;
     padding-right: 10px;
 
@@ -180,14 +192,17 @@ body, html {
         top: 25px;
     }
 
-    #footer-left,
     #footer-right {
         line-height: 20px;
         font-size: 9pt;
     }
 
-    #footer-left {
-        bottom: 0px;
+    .info-link-left {
+        display: block;
+    }
+
+    .info-link-center {
+        display: none;
     }
 }
 
@@ -197,23 +212,8 @@ body, html {
         top: 0;
     }
 
-    #footer {
-        bottom: -100%;
-        height: 100%;
-    }
-
-    #footer-left {
-        bottom: 15px;
-    }
-
     #footer-right .attribution div {
         line-height: 20px;
         font-size: 7pt;
     }
-
-    .infobox {
-        border-top: none;
-    }
-
-
 }

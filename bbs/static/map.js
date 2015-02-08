@@ -119,36 +119,34 @@ app.factory('MapService',['$http',function($http) {
     };
 }]);
 
-app.controller('MapController',['$scope','$document','$timeout','$location','$anchorScroll','MapService',function($scope,$document,$timeout,$location,$anchorScroll,MapService) {
+app.controller('MapController',['$scope','$document','$window','$timeout','$location','$anchorScroll','MapService',function($scope,$document,$window,$timeout,$location,$anchorScroll,MapService) {
 
-    $scope.scroll = false;
-
-    MapService.map.on('focus', function() {
-        $scope.showMap();
-    });
+    $scope.scroll = true;
 
     $scope.showInfo = function() {
+        // enable scrolling
+        angular.element('html').removeClass('locked');
+        angular.element('body').removeClass('locked');
+
         // scroll to info div
         $document.scrollToElement(angular.element('#info'),0, 1000);
 
-        // enable scrolling
-        angular.element('body').css('overflow','auto');
-
-        $scope.scroll = false;
+        $scope.scroll = true;
     };
 
     $scope.showMap = function() {
-        if ($scope.scroll === false) {
-            $scope.scroll = true;
+        if ($scope.scroll === true) {
+            $scope.scroll = false;
 
             // scroll to top
-            $document.scrollToElement(angular.element('#map'),0, 1000);
+            $document.scrollToElement(angular.element('#map'),0, 1000).then(function(){
+                // enable mouse scroll on map
+                MapService.map.scrollWheelZoom.enable();
 
-            // enable mouse scroll on map
-            MapService.map.scrollWheelZoom.enable();
-
-            // hide scrollbar
-            angular.element('body').css('overflow','hidden');
+                // hide scrollbar
+                angular.element('html').addClass('locked');
+                angular.element('body').addClass('locked');
+            });
         }
     };
 
@@ -161,4 +159,15 @@ app.controller('MapController',['$scope','$document','$timeout','$location','$an
         $scope.showMap();
         MapService.map.zoomOut();
     };
+
+    if ($window.innerWidth < 768) {
+        $scope.scroll = false;
+        angular.element('html').addClass('locked');
+        angular.element('body').addClass('locked');
+    }
+
+    MapService.map.on('focus', function() {
+        $scope.showMap();
+    });
+
 }]);
