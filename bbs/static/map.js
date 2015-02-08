@@ -146,6 +146,12 @@ app.controller('MapController',['$scope','$document','$window','$timeout','$loca
                 // hide scrollbar
                 angular.element('html').addClass('locked');
                 angular.element('body').addClass('locked');
+
+                // stop video in iframe
+                var frame = $('iframe#vimeo-iframe');
+                var vidsrc = frame.attr('src');
+                frame.attr('src','');
+                frame.attr('src', vidsrc);
             });
         }
     };
