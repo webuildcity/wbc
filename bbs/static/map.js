@@ -1,247 +1,153 @@
-var _map;
-var _icons = [];
-var _greyIcon;
-var _markerLayer;
-var _old = false;
-// _tiles_url, _tiles_opt and _view need to be set in template
+var app = angular.module('bbs',[]);
 
-function init() {
-    // get the verfahrensschritte by ajax and call initMap
-    $.ajax({
-        url: '/projekte/verfahrensschritte/',
-        dataType: 'json',
-        success: function (json) {
-            initMap(json);
-        }
+app.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+}]);
+
+app.factory('MapService',['$http',function($http) {
+
+    var map = new L.Map("map", {
+        'zoomControl': false,
+        'attributionControl': false
     });
-}
+    map.addLayer(new L.TileLayer(_tiles_url + '/{z}/{x}/{y}.png',_tiles_opt));
+    map.setView(new L.LatLng(_default_view.lat,_default_view.lon),_default_view.zoom);
 
-function initMap(verfahrensschritte) {
-    // add the map layer and center map
-    _map = new L.Map("map");
-    _map.addLayer(new L.TileLayer(_tiles_url + '/{z}/{x}/{y}.png',_tiles_opt));
-    _map.setView(new L.LatLng(_default_view.lat,_default_view.lon),_default_view.zoom);
-    
-    // add a layer for the markers
-    _markerLayer = L.layerGroup().addTo(_map);
+    var markerLayer = L.layerGroup().addTo(map);
+    var icons = {};
 
-    // create icons for verfahrensschritte
-    $.each(verfahrensschritte, function(key, verfahrensschritt) {
-        _icons[verfahrensschritt.pk] = {
-            icon : L.icon({
+    $http.get('/projekte/verfahrensschritte/').success(function(verfahrensschritte) {
+        // create icons for verfahrensschritte
+        angular.forEach(verfahrensschritte, function(verfahrensschritt, key) {
+            icons[verfahrensschritt.pk] = {
+                icon: L.icon({
+                    iconUrl: verfahrensschritt.icon,
+                    iconSize:     [26, 45],
+                    iconAnchor:   [13, 45],
+                    popupAnchor:  [0, -46]
+                }),
                 iconUrl: verfahrensschritt.icon,
+                hoverIconUrl: verfahrensschritt.hoverIcon
+            };
+        });
+
+        // create icon for old projects
+        icons.old = {
+            icon: L.icon({
+                iconUrl: '/static/img/icons/grau.png',
                 iconSize:     [26, 45],
                 iconAnchor:   [13, 45],
                 popupAnchor:  [0, -46]
-            }),
-            iconUrl: verfahrensschritt.icon,
-            hoverIconUrl: verfahrensschritt.hoverIcon
+            })
         };
+
+        // get date 3 month ago
+        var now = new Date();
+        var date = new Date();
+        date.setMonth(now.getMonth() - 3);
+        var nach = date.toISOString().match(/(\d+-\d+-\d+)/)[0];
+
+        $http.get('/projekte/orte/',{'params': {'nach': nach}}).success(function(geojson) {
+
+            // add points to map
+            angular.forEach(geojson.features, function(ort, key) {
+                // get the first veroeffentlichung
+                var veroeffentlichung = ort.properties.veroeffentlichungen[0];
+
+                // get the pk of the verfahrensschritt
+                var vspk = veroeffentlichung.verfahrensschritt.pk;
+
+                // get coordinates
+                var lat = ort.geometry.coordinates[1];
+                var lon = ort.geometry.coordinates[0];
+
+                // get beginn and ende
+                var beginn = new Date(veroeffentlichung.beginn);
+                var ende = new Date(veroeffentlichung.ende);
+
+                // see if the veroeffentlichung is in the past create marker
+                var marker;
+                if (ende < now) {
+                    marker = L.marker([lat,lon], {icon: icons.old.icon});
+                } else {
+                    marker = L.marker([lat,lon], {icon: icons[vspk].icon});
+
+                    // enable hover icon
+                    marker.iconUrl = icons[vspk].iconUrl;
+                    marker.hoverIconUrl = icons[vspk].hoverIconUrl;
+
+                    marker.on("mouseover", function(e) {
+                        e.target._icon.src = this.hoverIconUrl;
+                    }).on("mouseout", function(e) {
+                        e.target._icon.src = this.iconUrl;
+                    });
+                }
+
+                // prepare popup
+                var d = ende.getDate() + '.' + (ende.getMonth() + 1) + '.' + ende.getFullYear();
+                var popuptext = '<p><b>' + veroeffentlichung.verfahrensschritt.verfahren + '</b>';
+                popuptext += '<p><i>' + veroeffentlichung.verfahrensschritt.name + '</i>';
+                popuptext += ' <a href="/begriffe/#'+ vspk + '" >(?)</a></p>';
+                popuptext += '<p>Betrifft Gegend um: ' + ort.properties.adresse + '</p>';
+                popuptext += '<p>Verantwortlich: ' + veroeffentlichung.behoerde + '</p>';
+                if (beginn == ende) {
+                    popuptext += '<p>Zeitpunkt: ' + d + '</p>';
+                } else {
+                    popuptext += '<p>Beteiligung möglich bis: ' + d + '</p>';
+                }
+                popuptext += '<p><a href="/orte/' + ort.properties.pk + '" >Details</a></p>';
+
+                // popup to marker
+                marker.bindPopup(popuptext, {
+                    autoPanPaddingTopLeft: new L.Point(10,100),
+                    autoPanPaddingBottomRight: new L.Point(10,0)
+                });
+
+                // add marker to layer
+                markerLayer.addLayer(marker);
+            });
+        });
     });
 
-    // add a layer for the old publications
-    _greyIcon  = {
-        icon : L.icon({
-            iconUrl: '/static/img/Baustellenschilder/klein/schild_grau_blass.png',
-            iconSize:     [26, 45],
-            iconAnchor:   [13, 45],
-            popupAnchor:  [0, -46]
-        })
+    return {
+        map: map
+    };
+}]);
+
+app.controller('MapController',['$scope','$timeout','MapService',function($scope,$timeout,MapService) {
+
+    $scope.info = false;
+    $scope.help = false;
+
+    $scope.toogleInfo = function() {
+        if ($scope.info) {
+            $scope.closeInfo();
+        } else {
+            $scope.openInfo();
+        }
     };
 
-    // bin the checkbox to load the old markers
-    $('input[name=old]').click(function(){
-        loadOrte();
-    });
-    
-    // remove and add the zoom buttons
-    var zoom = $('.leaflet-control-zoom').remove();
-    zoom.appendTo($('#buttons-left'));
-    $('.leaflet-control-attribution').remove();
-    $('<div />', {
-        'class': 'leaflet-control-zoom leaflet-bar leaflet-control pull-left',
-        'html': '<a class="info-button leaflet-control-zoom-out" href="#" title="Info">?</a>'
-    }).appendTo($('#buttons-left'));
+    $scope.openInfo = function() {
+        $scope.info = true;
+    };
 
-    // add the info button
-    $('<button />', {
-        'type': 'button',
-        'class': 'info-button navbar-info navbar-toggle',
-        'html': 'Info'
-    }).appendTo($('.navbar-header'));
-    $('.info-button').on('click', function () {
-        showInfo();
-    });
+    $scope.closeInfo = function() {
+        $scope.info = false;
 
-    // load and display the orte with ende in the future
-    loadOrte();
-}
+        $timeout(function() {
+            var frame = $('iframe#vimeo-iframe');
+            var vidsrc = frame.attr('src');
+            frame.attr('src','');
+            frame.attr('src', vidsrc);
+        }, 350); // timeout needs to be more than the transition time
+    };
 
-function loadOrte() {
-    _markerLayer.clearLayers();
-    var url;
-    var now = new Date().toISOString().match(/(\d+-\d+-\d+)/)[0];
+    $scope.zoomIn = function(event) {
+        MapService.map.zoomIn();
+    };
 
-    if ($('input[name=old]').is(':checked')) {
-        showLoading();
-        url = '/projekte/orte/?vor=' + now;
-        _old = true;
-    } else {
-        url = '/projekte/orte/?nach=' + now;
-        _old = false;
-    }
-
-    $.ajax({
-        url: url,
-        dataType: 'json',
-        success: function (json) {
-            _orte = json.features;
-            initOrte();
-            $('.bbs-loading').hide();
-        }
-    });
-}
-
-function initOrte() {
-    var markers = [];
-
-    // add points to map
-    $.each(_orte, function(key, ort){
-        // get the first veroeffentlichung
-        var veroeffentlichung = ort.properties.veroeffentlichungen[0];
-
-        // get the id of the verfahrensschritt
-        var vspk = veroeffentlichung.verfahrensschritt.pk;
-
-        // get coordinates
-        var lat = ort.geometry.coordinates[1];
-        var lon = ort.geometry.coordinates[0];
-
-        var icon;
-        if (_old) {
-            icon = _greyIcon;
-        } else {
-            icon = _icons[vspk];
-        }
-
-        // create marker
-        var marker = L.marker([lat,lon], {icon: icon.icon});
-
-        // enable hover icon
-        if (!_old) {
-            marker.iconUrl = icon.iconUrl;
-            marker.hoverIconUrl = icon.hoverIconUrl;
-
-            marker.on("mouseover", function(e) {
-                e.target._icon.src = this.hoverIconUrl;
-            }).on("mouseout", function(e) {
-                e.target._icon.src = this.iconUrl;
-            });
-        }
-
-        var d_beginn = new Date(veroeffentlichung.beginn);
-        var d = new Date(veroeffentlichung.ende);
-
-        var datestring = d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear();
-
-        var popuptext = '<p><b>' + veroeffentlichung.verfahrensschritt.verfahren + '</b>';
-        popuptext += '<p><i>' + veroeffentlichung.verfahrensschritt.name + '</i>';
-        popuptext += ' <a href="/begriffe/#'+ vspk + '" >(?)</a></p>';
-        popuptext += '<p>Betrifft Gegend um: ' + ort.properties.adresse + '</p>';
-        popuptext += '<p>Verantwortlich: ' + veroeffentlichung.behoerde + '</p>';
-        if(veroeffentlichung.beginn == veroeffentlichung.ende) {
-            popuptext += '<p>Zeitpunkt: ' + datestring + '</p>';
-        }
-        else{
-            popuptext += '<p>Beteiligung möglich bis: ' + datestring + '</p>';
-        }
-        
-
-        popuptext += '<p><a href="/orte/' + ort.properties.pk + '" >Details</a></p>';
-
-        marker.bindPopup(popuptext, {
-            autoPanPaddingTopLeft: new L.Point(10,100),
-            autoPanPaddingBottomRight: new L.Point(10,0)
-        });
-
-        _markerLayer.addLayer(marker);
-    });
-}
-
-function showLoading () {
-    var loading = $('.bbs-loading-dialog');
-
-    // adjust left and top position
-    var windowWidth = $(window).width();
-    var windowHeight = $(window).height();
-
-    loading.height(20);
-    loading.width(240);
-
-    var left = (windowWidth - loading.width()) / 2 - 20;
-    loading.css('left', left);
-    var top = (windowHeight - loading.height()) / 2 - 20;
-    loading.css('top', top);
-    loading.css('bottom', 'auto');
-    loading.css('right', 'auto');
-
-    $('.bbs-loading').show();
-}
-
-function showInfo() {
-    // get dialog div
-    var dialog = $('.bbs-modal-dialog');
-
-    // adjust left and top position
-    var windowWidth = $(window).width();
-    var windowHeight = $(window).height();
-
-    if (windowWidth < 768 || windowHeight < 600) {
-        dialog.height('auto');
-        dialog.width('auto');
-
-        dialog.css('top', 0);
-        dialog.css('left', 0);
-        dialog.css('bottom', 0);
-        dialog.css('right', 0);
-    } else {
-        dialog.height(530);
-        dialog.width(660);
-
-        var left = (windowWidth - dialog.width()) / 2;
-        dialog.css('left', left);
-        var top = (windowHeight - dialog.height()) / 2 - 20;
-        dialog.css('top', top);
-        dialog.css('bottom', 'auto');
-        dialog.css('right', 'auto');
-    }
-
-    // show the modal
-    $('.bbs-modal').show();
-
-    // enable esc and enter keys
-    $(document).keyup(function(e) {
-        if (e.keyCode == 27 || e.keyCode == 13) {
-            // esc pressed
-            $('.bbs-modal').hide();
-            return false;
-        }
-    });
-    $('.leaflet-popup-close-button',dialog).on('click', function () {
-        $('.bbs-modal').hide();
-        var frame = $('iframe#vimeo-iframe');
-        var vidsrc = frame.attr('src');
-        frame.attr('src','');
-        frame.attr('src', vidsrc);
-        
-        return false;
-    });
-    $('.bbs-modal').on('click', function (e) {
-        if($(e.target).is('.bbs-modal') !== true){
-            e.preventDefault();
-            return;
-        }
-        $('.bbs-modal').hide();
-        return false;
-    });
-}
+    $scope.zoomOut = function(event) {
+        MapService.map.zoomOut();
+    };
+}]);

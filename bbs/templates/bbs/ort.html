@@ -23,91 +23,53 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div id="localmap" style="height: 400px; border: 2px solid rgba(0, 0, 0, 0.247059);"></div>
+    <div id="localmap"></div>
 
+    <div class="container">
         {% if user.is_authenticated %}
-        <div class="row" style="margin-top: 10px;"> 
+        <div class="row ort-buttons">
             <div class="col-sm-12">
-                <a href="/veroeffentlichungen/neu/?orte_id={{ort.pk}}" class="pull-right btn btn-primary" style="color: white !important;">Neue Veröffentlichung hinzufügen </a>
+                <a href="/admin/projects/ort/{{ ort.pk }}/" class="btn btn-primary">
+                    Ort bearbeiten
+                </a>
+                <a href="/veroeffentlichungen/neu/?orte_id={{ort.pk}}" class="btn btn-primary">
+                   Neue Veröffentlichung hinzufügen
+                </a>
             </div>
         </div>
         {% endif %}
 
-        <div class="row">        
+        <div class="row ort">
             <div class="col-sm-8">
                 <h3>Betroffenes Gebiet</h3>
                 <p>
-                    <b>Bezeichner:</b>  {{ ort.bezeichner }}
+                    <strong>Bezeichner:</strong> {{ ort.bezeichner }}
                 </p>
                 <p>
-                    <b>genaue örtliche Beschreibung:</b> {{ ort.beschreibung }}
+                    <strong>genaue örtliche Beschreibung:</strong> {{ ort.beschreibung }}
                 </p>
                 <p>
-                    <b>im Bezirk/in den Bezirken:</b> {{ ort.bezirke.all|join:", "}}
+                    <strong>im Bezirk/in den Bezirken:</strong> {{ ort.bezirke.all|join:", "}}
                 </p>
             </div>
         </div>
 
-        {% if ort.veroeffentlichungen.all %}
-        
         <h3>Veröffentlichungen zu diesem Gebiet</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Was? </th>                        
-                    <th style="width: 16em">Wann?</th>
-                    
-                    <th>Details</th>
-               </tr>
-            </thead>
-            <tbody>
-                {% for veroeffentlichung in ort.veroeffentlichungen.all %}
-                <tr>
-                    <td><a href="/begriffe/#{{ veroeffentlichung.verfahrensschritt.pk}}">{{ veroeffentlichung.verfahrensschritt.name}} ({{ veroeffentlichung.verfahrensschritt.verfahren.name }})</a></td>
-                    {% if veroeffentlichung.beginn == veroeffentlichung.ende %}
-                    <td>{{ veroeffentlichung.beginn }}</td> 
-                    {% else %}
-                    <td>{{ veroeffentlichung.beginn }} bis <br>{{ veroeffentlichung.ende }} </td> 
-                    {% endif %}
-                    
-                    <td>
-                        {% if veroeffentlichung.beschreibung %}
-                        <p>
-                            <b>Beschreibung</b>
-                        </p>
-                        <p>
-                            {{ veroeffentlichung.beschreibung }}
-                        </p>
-                        {% endif %}
-                        {% if veroeffentlichung.auslegungsstelle %}
-                        <p>
-                            <b>Auslegungsstelle</b>
-                        </p>
-                        <p>
-                            {{ veroeffentlichung.auslegungsstelle }}
-                        </p>
-                        {% endif %}
-                        {% if veroeffentlichung.zeiten %}
-                        <p>
-                            <b>Öffnungszeiten</b>
-                        </p>
-                            {{ veroeffentlichung.zeiten }}
-                        </p>
-                        {% endif %}
-                        {% if veroeffentlichung.link %}
-                        <p>
-                            <a href="{{ veroeffentlichung.link }}" target="_blank">Link zur Seite</a>
-                        </p>
-                        {% endif %}
-                        <p>
-                            <a href="{{ veroeffentlichung.behoerde.link }}">Link zur verantwortlichen Behörde</a>
-                        </p>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% endif %}
+
+        {% include "bbs/ort_veroeffentlichungen.html" %}
+    </div>
+
+    <div class="kommentare-wrapper">
+        <div class="container">
+            <a class="kommentar-erstellen" href="" data-toggle="modal" data-target="#kommentarFormular">
+                Eigenen Kommentar hinzufügen
+            </a>
+
+            <h3>Kommentare</h3>
+
+            {% include "bbs/kommentare_liste.html" %}
+
+            {% include "bbs/kommentare_formular.html" %}
+        </div>
     </div>
 {% endblock %}

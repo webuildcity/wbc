@@ -18,9 +18,6 @@ html, body {
     font-family: dejavu;
     font-size: 14px;
 }
-body {
-    margin-bottom: 80px;
-}
 h2 {
     font-weight: normal;
     font-family: titillium;
@@ -32,6 +29,14 @@ h3 {
     font-weight: bold;
     font-size: 16px;
     color: #646464;
+    line-height: 20px;
+}
+h4 {
+    font-family: dejavu;
+    font-weight: bold;
+    font-size: 14px;
+    color: #646464;
+    line-height: 20px;
 }
 a, 
 a:visited,
@@ -44,6 +49,15 @@ a:hover,
 .leaflet-container a:hover {
     color: #e58833;
     text-decoration: none;
+}
+.btn {
+    color: white !important;
+}
+.fa {
+    color: #de6a00;
+}
+.fa:hover{
+    color: #e58833;
 }
 
 .panel {
@@ -103,11 +117,9 @@ a:hover,
     margin-top: 5px;
     margin-bottom: 5px;
 }
-
-@media (max-width: 500px) {
-    .attribution {
-        font-size: 7pt;
-    }
+.attribution {
+    font-size: small;
+    text-align: right;
 }
 .checkbox {
     font-weight: normal;
@@ -189,4 +201,69 @@ a:hover,
 }            
 .blog iframe { 
     max-width: 100%;
+}
+
+/* ort */
+
+.ort-buttons {
+    margin-top: 20px;
+}
+
+#localmap {
+    height: 400px;
+}
+
+.ort {
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+.veroeffentlichungen {
+    margin-bottom: 20px;
+}
+.veroeffentlichungen div {
+    margin-bottom: 10px;
+}
+@media (max-width: 768px) {
+    .veroeffentlichung-title {
+        font-family: dejavu;
+        font-weight: bold;
+        font-size: 14px;
+        color: #646464;
+        line-height: 20px;
+    }
+}
+
+/* comments */
+.kommentare-wrapper {
+    background: rgba(0, 0, 0, 0.1);
+    padding-top: 10px;
+}
+.kommentare {
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+.kommentar {
+    margin-bottom: 20px;
+}
+.kommentar-author {
+    margin-bottom: 10px;
+}
+.kommentar-author-img {
+    float: left;
+}
+.kommentar-author-name {
+    /*margin-top: 6px;*/
+    margin-left: 42px;
+}
+.kommentar-author-time {
+    margin-top: 2px;
+    margin-left: 42px;
+    line-height: 12px;
+    font-size: 10px;
+}
+.kommentar-erstellen {
+    display: block;
+    float: right;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }

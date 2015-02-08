@@ -1,0 +1,70 @@
+<div class="row veroeffentlichungen">
+    {% if ort.veroeffentlichungen.all %}
+            
+    <h4 class="col-sm-3 hidden-xs">Was?</h4>
+    <h4 class="col-sm-3 hidden-xs">Wann?</h4>
+    <h4 class="col-sm-6 hidden-xs">Details</h4>
+
+    {% for veroeffentlichung in ort.veroeffentlichungen.all %}
+
+    {% if forloop.counter != 1 %}
+    <hr style="visible-xs" />
+    {% endif %}
+
+    <div class="col-sm-3">
+        <a href="/begriffe/#{{ veroeffentlichung.verfahrensschritt.pk}}" class="veroeffentlichung-title">
+            {{ veroeffentlichung.verfahrensschritt.name}} ({{ veroeffentlichung.verfahrensschritt.verfahren.name }})
+        </a>
+    </div>     
+    <div class="col-sm-3">
+        {% if veroeffentlichung.beginn == veroeffentlichung.ende %}
+        {{ veroeffentlichung.beginn }} 
+        {% else %}
+        {{ veroeffentlichung.beginn }} bis {{ veroeffentlichung.ende }}
+        {% endif %}
+    </div>
+    <div class="col-sm-6">
+        {% if veroeffentlichung.beschreibung %}
+        <p>
+            <b>Beschreibung</b>
+        </p>
+        <p>
+            {{ veroeffentlichung.beschreibung }}
+        </p>
+        {% endif %}
+        {% if veroeffentlichung.auslegungsstelle %}
+        <p>
+            <b>Auslegungsstelle</b>
+        </p>
+        <p>
+            {{ veroeffentlichung.auslegungsstelle }}
+        </p>
+        {% endif %}
+        {% if veroeffentlichung.zeiten %}
+        <p>
+            <b>Öffnungszeiten</b>
+        </p>
+            {{ veroeffentlichung.zeiten }}
+        </p>
+        {% endif %}
+        {% if veroeffentlichung.link %}
+        <p>
+            <a href="{{ veroeffentlichung.link }}" target="_blank">Link zur Seite</a>
+        </p>
+        {% endif %}
+        <p>
+            <a href="{{ veroeffentlichung.behoerde.link }}">Link zur verantwortlichen Behörde</a>
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+    {% else %}
+
+    <div class="text-center">
+        <strong>Bisher keine Veröffentlichungen.</strong>
+    </div>
+
+    {% endif %}
+</div>

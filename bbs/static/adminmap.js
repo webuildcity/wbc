@@ -32,7 +32,7 @@ function drawMap(){
 
     // crate an icon for the marker
     var greyIcon = L.icon({
-        iconUrl: '/static/img/Baustellenschilder/klein/schild_grau.png',
+        iconUrl: '/static/img/icons/gruen.png',
         iconSize:     [26, 45], // size of the icon width,height    
         iconAnchor:   [13, 45], // point of the icon which will correspond to marker's location    
         popupAnchor:  [0, -46] // point from which the popup should open relative to the iconAnchor
@@ -75,7 +75,7 @@ function drawMap(){
         // query nominatim.openstreetmap.org for the coordinates
         if (adresse.length !== 0 && bezirke.length !== 0) {
             var url = 'http://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + adresse + ' ' + bezirke.join(' ') + ' ' + 'Berlin';
-            $.ajax({   
+            $.ajax({
                 dataType: "json",
                 url: url,
                 success: function(data) {

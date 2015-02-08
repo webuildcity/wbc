@@ -1,0 +1,16 @@
+[
+    {
+        "fields": {
+            "adresse": "Tempelhofer Ufer 23",
+            "beschreibung": "Tempelhofer Ufer 23-24",
+            "lat": 52.497388,
+            "lon": 13.38995,
+            "bezeichner": "13-38",
+            "bezirke": [7],
+            "created": "2013-06-11T20:00:00Z",
+            "updated": "2013-06-11T20:00:00Z"
+        }, 
+        "model": "projects.ort", 
+        "pk": 1
+    }
+]

@@ -3,15 +3,17 @@ from django.conf import settings
 from django.shortcuts import render
 from django.core import serializers
 from django.http import HttpResponseRedirect,HttpResponse
-from django.shortcuts import Http404,render_to_response,redirect,render
+from django.shortcuts import Http404,render_to_response,redirect,render,get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.template import RequestContext
 
+
 from forms import LoginForm,FindOrt,CreateVeroeffentlichung
 from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
+from comments.models import Kommentar
 
 import datetime,json
 
@@ -23,15 +25,30 @@ def orte(request):
     return render(request,'bbs/orte.html', {'orte': orte})
 
 def ort(request,pk):
-    try:
-        ort = Ort.objects.get(pk=int(pk))
-    except Ort.DoesNotExist:
-        raise Http404
-    return render(request, 'bbs/ort.html', {'ort': ort})
+    if request.method == 'POST' and len(request.POST["email"]) == 0:
+        c = request.POST["text"]
+
+        kommentar_neu = Kommentar(ort_id       = int(pk), 
+                                  author_name  = request.POST["name"],
+                                  author_email = request.POST["email1"],
+                                  author_url   = request.POST["url"],
+                                  content      = c,
+                                  enabled      = True)
+        kommentar_neu.save()
+        return redirect('/orte/' + pk)
+    
+    ort = get_object_or_404(Ort, id = int(pk))
+    kommentare = Kommentar.objects.filter(ort_id = int(pk), enabled = True)
+
+    return render(request, 'bbs/ort.html', {'ort': ort, 'kommentare': kommentare})
 
 def begriffe(request):
     verfahren = Verfahren.objects.all()
-    return render(request,'bbs/begriffe.html',{'verfahren': verfahren})  
+    return render(request,'bbs/begriffe.html',{'verfahren': verfahren})
+
+def feeds(request):
+    bezirke = Bezirk.objects.all()
+    return render(request,'bbs/feeds.html',{'bezirke': bezirke})
 
 def login_user(request):
     form = LoginForm(request.POST or None)

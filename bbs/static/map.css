@@ -1,14 +1,26 @@
 body, html {
     height: 100%;
+    overflow: hidden;
 }
+
 /* make things absolute in the map */
+
 .container {
     position: relative;
 }
 #footer {
     position: absolute;
-    bottom: 0;
+    bottom: -60%;
+    height: 60%;
     width: 100%;
+
+    -webkit-transition: all linear 0.3s;
+    -moz-transition: all linear 0.3s;
+    -o-transition: all linear 0.3s;
+    transition: all linear 0.3s;
+}
+#footer.up {
+    bottom: 0;
 }
 #header,
 #header-left,
@@ -21,7 +33,8 @@ body, html {
 #buttons-left,
 #buttons-right,
 #footer-left,
-#footer-right {
+#footer-right,
+#footer-center {
     position: absolute;
     z-index: 10;
 }
@@ -35,9 +48,18 @@ body, html {
 #footer-right {
     right: 15px;
 }
+#footer-center {
+    left: 50%;
+}
 #footer-left,
 #footer-right {
     bottom: 10px;
+}
+#footer-center {
+    bottom: -40px;
+}
+#footer-center.up {
+    top: 34%;
 }
 #header-left{
     top: 20px;
@@ -47,7 +69,7 @@ body, html {
 }
 #buttons-left,
 #buttons-right {
-    top: 100px;
+    top: 140px;
 }
 #buttons-left div,
 #buttons-right div {
@@ -55,6 +77,7 @@ body, html {
 }
 
 /* navbar */
+
 .navbar {
     z-index: 100;
 }
@@ -63,6 +86,7 @@ body, html {
 
     height: 34px;
     width: 42px;
+
     padding: 11px 0 9px 0;
     line-height: 12px;
 
@@ -70,17 +94,126 @@ body, html {
     font-weight: bold;
     color: #de6a00;
 }
-.info-button.leaflet-control-zoom-out {
-    font-size: 12pt;
+
+/* zoom buttons */
+
+#zoom-in,
+#zoom-out {
+    line-height: 30px;
+    cursor: pointer;
+    display: block;
+    /*color: #de6a00;*/
+    color: #646464;
+}
+#zoom-in:hover,
+#zoom-out:hover {
+    color: #e58833;
+}
+
+/* infotab */
+
+.infotab {
+    cursor: pointer;
+
+    height: 80px;
+    width: 80px;
+
+    margin-left: -40px;
+    padding: 10px 10px 10px 10px;
+
+    border-top: 2px solid #de6a00;
+    border-right: 2px solid #de6a00;
+    border-left: 2px solid #de6a00;
+
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+    color: #de6a00;
+}
+.infotab div {
+    width: 20px;
+    height: 20px;
+}
+.infotab .glyphicon-chevron-down {
+    margin: 2px 0 0 -1px;
+}
+.infotab .glyphicon-chevron-up {
+    margin: 0 0 0 2px;
+}
+
+.up .infotab {
+    background-color: white;
+}
+
+/* infohelp */
+
+.infohelp {
+    display: block;
+    width: 160px;
+    margin-left: -80px;
+    margin-bottom: 10px;
+    text-align: center;
+
+    color: #de6a00;
+    font-family: titillium;
+    font-size: 16px;
+
+    -webkit-transition: all linear 0.6s;
+    -moz-transition: all linear 0.6s;
+    -o-transition: all linear 0.6s;
+    transition: all linear 0.6s;
+
+    opacity: 0;
+}
+.infohelp.show {
+    opacity: 1;
+}
+
+/* infobox */
+
+.infobox {
+    position: absolute;
+    z-index: 4000;
+
+    background-color: white;
+    border-top: 2px solid #de6a00;
+    overflow: auto;
+
+    height: 100%;
+    width: 100%;
+}
+.infobox .container {
+    margin-top: 10px;
+}
+.infobox h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.infobox iframe {
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+.infobox-close {
+    height: 20px;
+    padding-right: 10px;
+}
+.infobox-close a {
+    font-size: 30px;
+    font-weight: bold;
 }
 
 /* the canvas for the map */
+
 #map {
     position: absolute;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     z-index: 0;
 }
 
@@ -106,101 +239,40 @@ body, html {
 @media (max-width: 768px) {
     #buttons-left,
     #buttons-right {
-        display: none;
+        top: 0;
     }
 
-    #footer-left,
-    #footer-right {
+    #footer {
+        bottom: -100%;
+        height: 100%;
+    }
+
+    #footer-left {
+        bottom: 15px;
+    }
+
+    #footer-right .attribution div {
         line-height: 20px;
         font-size: 7pt;
     }
 
-    #footer-left {
-        bottom: 30px;
+    .infobox {
+        border-top: none;
     }
 
-    #footer-right {
-        right: auto;
-        left: 15px;
+    .responsive-video {
+        position: relative;
+        padding-bottom: 55%;
+        height: 0;
+        overflow: hidden;
+        margin-bottom: 10px;
+    }
+
+    .responsive-video iframe{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 }
-
-.checkbox {
-    font-weight: normal;
-}
-
-.bbs-loading,
-.bbs-modal {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 10000;
-
-    display: none;
-}
-.bbs-loading .bbs-loading-dialog,
-.bbs-modal .bbs-modal-dialog {
-    position: absolute;
-}
-.bbs-loading {
-    background: transparent;
-}
-.bbs-loading .bbs-loading-dialog {
-    padding: 20px;
-    text-align: center;
-
-    font-family: dejavu;
-    font-weight: bold;
-    font-size: 16px;
-    color: #de6a00;
-}
-
-.bbs-modal {
-    background-color: rgba(0,0,0,0.5);
-}
-.bbs-modal .bbs-modal-dialog {
-    background-color: white;
-    -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 14px 0px;
-    -moz-box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 14px 0px;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 14px 0px;
-}
-.bbs-modal .bbs-modal-dialog-body {
-    padding: 20px;
-    background-color: white;
-}
-.bbs-modal .bbs-modal-dialog-body :first-child {
-    margin-top: 0;
-}
-.bbs-modal .bbs-modal-dialog-body :last-child {
-    margin-bottom: 0;
-}
-.bbs-modal .bbs-modal-dialog-close  {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding-top: 0px;
-    padding-right: 8px;
-    font-weight: bold;
-    font-size: 2em;
-}
-
-.responsive-video {
-    position: relative;
-    padding-bottom: 55%;
-    padding-top: 15px;
-    height: 0;
-    overflow: hidden;
-}
-
-.responsive-video iframe{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-
-
