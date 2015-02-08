@@ -54,6 +54,16 @@ TILES_OPT = {
     'errorTileUrl': 'http://tiles.codefor.de/static/bbs/error.png',
     'attribution': 'Map data &copy; 2012 OpenStreetMap contributors',
     'maxZoom': 17,
+    'minZoom': 10,
+    'zIndex': 0,
+    'reuseTiles': True
+}
+TILES_URL_LOCAL = 'http://tiles.codefor.de/static/bbs/berlin/'
+TILES_OPT_LOCAL = {
+    'errorTileUrl': 'http://tiles.codefor.de/static/bbs/error.png',
+    'attribution': 'Map data &copy; 2012 OpenStreetMap contributors',
+    'attribution_local': 'Map data &copy; 2012 OpenStreetMap contributors, Geoportal Berlin',
+    'maxZoom': 17,
     'minZoom': 9,
     'zIndex': 0,
     'reuseTiles': True

@@ -32,6 +32,8 @@ def settings(request):
     return {
         'tilesUrl': django_settings.TILES_URL,
         'tilesOpt': json.dumps(django_settings.TILES_OPT),
+        'tilesUrlLocal': django_settings.TILES_URL_LOCAL,
+        'tilesOptLocal': json.dumps(django_settings.TILES_OPT_LOCAL),
         'defaultView': json.dumps(django_settings.DEFAULT_VIEW),
         'navigation': navigation,
         'infotext': django_settings.INFO_TEXT,

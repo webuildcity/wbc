@@ -1,17 +1,17 @@
 function initMap() {
     // add the map layer and center map
     map = new L.Map("localmap",{scrollWheelZoom: false});
-    map.addLayer(new L.TileLayer(_tiles_url + '/{z}/{x}/{y}.png',_tiles_opt));
+    map.addLayer(new L.TileLayer(_tiles_url_local + '/{z}/{x}/{y}.png',_tiles_opt_local));
     map.setView(new L.LatLng(_lat, _lon), 15);
 
     var osmb = new OSMBuildings(map).loadData();
-    
+
     var icon = L.icon({
         iconUrl: '/static/img/icons/gruen.png',
         iconSize:   [26, 45], // size of the icon width,height
-        iconAnchor: [13, 45], // point of the icon which will correspond to marker's location  
+        iconAnchor: [13, 45], // point of the icon which will correspond to marker's location
     });
-    
+
     if (typeof(_polygon) !== 'undefined') {
         var polygonOptions = {
             weight: 3,

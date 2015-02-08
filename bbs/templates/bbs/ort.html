@@ -1,5 +1,5 @@
 {% extends 'bbs/layout.html' %}
-{% load staticfiles %} 
+{% load staticfiles %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'page.css' %}" />
@@ -8,16 +8,16 @@
 
 {% block js %}
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
-    <script type="text/javascript" src="{% static 'lib/OSMBuildings-Leaflet.js' %}"  ></script>    
+    <script type="text/javascript" src="{% static 'lib/OSMBuildings-Leaflet.js' %}"  ></script>
     <script type="text/javascript">
-        var _tiles_url = "{{tilesUrl}}";
-        var _tiles_opt = {{tilesOpt|safe}};
+        var _tiles_url_local = "{{tilesUrlLocal}}";
+        var _tiles_opt_local = {{tilesOptLocal|safe}};
         var _lon = {{ ort.lon|stringformat:"F" }};
         var _lat = {{ ort.lat|stringformat:"F" }};
         {% if ort.polygon %}
         var _polygon = {{ort.polygon}};
         var _polygontype = '{{ort.polygontype}}'
-        {% endif %} 
+        {% endif %}
     </script>
     <script type="text/javascript" src="{% static 'localmap.js' %}" ></script>
 {% endblock %}

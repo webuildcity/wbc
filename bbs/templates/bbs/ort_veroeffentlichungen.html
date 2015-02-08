@@ -1,6 +1,6 @@
 <div class="row veroeffentlichungen">
     {% if ort.veroeffentlichungen.all %}
-            
+
     <h4 class="col-sm-3 hidden-xs">Was?</h4>
     <h4 class="col-sm-3 hidden-xs">Wann?</h4>
     <h4 class="col-sm-6 hidden-xs">Details</h4>
@@ -15,10 +15,10 @@
         <a href="/begriffe/#{{ veroeffentlichung.verfahrensschritt.pk}}" class="veroeffentlichung-title">
             {{ veroeffentlichung.verfahrensschritt.name}} ({{ veroeffentlichung.verfahrensschritt.verfahren.name }})
         </a>
-    </div>     
+    </div>
     <div class="col-sm-3">
         {% if veroeffentlichung.beginn == veroeffentlichung.ende %}
-        {{ veroeffentlichung.beginn }} 
+        {{ veroeffentlichung.beginn }}
         {% else %}
         {{ veroeffentlichung.beginn }} bis {{ veroeffentlichung.ende }}
         {% endif %}
