@@ -49,12 +49,12 @@ body, html {
 #footer-center {
     left: 50%;
 }
+#footer-left,
 #footer-right {
     bottom: 10px;
 }
-#footer-left,
 #footer-center {
-    bottom: 20px;
+    bottom: 30px;
 }
 #header-left{
     top: 20px;
@@ -135,19 +135,18 @@ body, html {
 .info-link {
     cursor: pointer;
     display: block;
-}
-.info-link-left {
-    display: none;
-}
-.info-link-center {
+
     width: 240px;
     margin-left: -120px;
+
+    text-align: center;
 }
 .info-link-glyphicon {
     font-size: 14px;
 }
 .info-link-text {
     display: inline-block;
+
     padding-left: 10px;
     padding-right: 10px;
 
@@ -191,19 +190,6 @@ body, html {
     #header-left{
         top: 25px;
     }
-
-    #footer-right {
-        line-height: 20px;
-        font-size: 9pt;
-    }
-
-    .info-link-left {
-        display: block;
-    }
-
-    .info-link-center {
-        display: none;
-    }
 }
 
 @media (max-width: 768px) {
@@ -212,8 +198,7 @@ body, html {
         top: 0;
     }
 
-    #footer-right .attribution div {
-        line-height: 20px;
-        font-size: 7pt;
+    .info-link .glyphicon {
+        display: none;
     }
 }

@@ -9,7 +9,7 @@ app.factory('MapService',['$http',function($http) {
 
     var map = new L.Map("map", {
         'zoomControl': false,
-        'attributionControl': false,
+        // 'attributionControl': false,
         'scrollWheelZoom': false
     });
     map.addLayer(new L.TileLayer(_tiles_url + '/{z}/{x}/{y}.png',_tiles_opt));
