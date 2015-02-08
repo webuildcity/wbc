@@ -71,7 +71,10 @@ app.factory('MapService',['$http',function($http) {
                 if (ende < now) {
                     marker = L.marker([lat,lon], {icon: icons.old.icon});
                 } else {
-                    marker = L.marker([lat,lon], {icon: icons[vspk].icon});
+                    marker = L.marker([lat,lon], {
+                        icon: icons[vspk].icon,
+                        zIndexOffset: 100
+                    });
 
                     // enable hover icon
                     marker.iconUrl = icons[vspk].iconUrl;
