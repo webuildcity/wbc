@@ -124,6 +124,9 @@ app.controller('MapController',['$scope','$document','$window','$timeout','$loca
     $scope.scroll = true;
 
     $scope.showInfo = function() {
+        // enable mouse scroll on map
+        MapService.map.scrollWheelZoom.disable();
+
         // enable scrolling
         angular.element('html').removeClass('locked');
         angular.element('body').removeClass('locked');
