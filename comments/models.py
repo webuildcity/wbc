@@ -11,7 +11,7 @@ class Kommentar(Model):
     
     author_name  = models.CharField(max_length=100)
     author_email = models.CharField(max_length=256)
-    author_url   = models.CharField(max_length=256)
+    author_url   = models.CharField(max_length=256,blank=True)
 
     enabled = models.BooleanField()
     content = models.TextField()
