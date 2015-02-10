@@ -17,7 +17,7 @@ class Ort(Model):
 
     def __unicode__(self):
         if self.bezeichner:
-            return self.bezeichner + ' ' + self.adresse
+            return self.bezeichner + ', ' + self.adresse
         else:
             return self.adresse
 
@@ -38,7 +38,7 @@ class Veroeffentlichung(Model):
     link              = models.URLField(blank=True)
 
     def __unicode__(self):
-        return self.ort.adresse + ', ' + self.verfahrensschritt.name
+        return unicode(self.ort) + ', ' + self.verfahrensschritt.name
 
     class Meta:
         ordering            = ("-ende",)
@@ -54,7 +54,7 @@ class Verfahrensschritt(Model):
     verfahren    = models.ForeignKey('Verfahren', related_name='verfahrensschritte')
 
     def __unicode__(self):
-        return str(self.verfahren) + ': ' + self.name
+        return unicode(self.verfahren) + ', ' + self.name
 
     class Meta:
         ordering            = ("verfahren","reihenfolge")

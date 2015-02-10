@@ -22,3 +22,11 @@ class Kommentar(Model):
         gravatar_url += urllib.urlencode({'s':str(32)})
 
         return gravatar_url
+
+    def __unicode__(self):
+        return unicode(self.ort) + ', ' + self.author_name
+
+    class Meta:
+        ordering            = ("created",)
+        verbose_name        = "Kommentar"
+        verbose_name_plural = "Kommentare"
