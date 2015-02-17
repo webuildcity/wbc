@@ -14,6 +14,7 @@ from django.template import RequestContext
 from forms import LoginForm,FindOrt,CreateVeroeffentlichung
 from projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
 from comments.models import Kommentar
+from comments.forms import  KommentarForm
 
 import datetime,json
 
@@ -25,21 +26,17 @@ def orte(request):
     return render(request,'bbs/orte.html', {'orte': orte})
 
 def ort(request,pk):
-    if request.method == 'POST' and len(request.POST["email"]) == 0:
-        c = request.POST["text"]
-
-        kommentar_neu = Kommentar(ort_id       = int(pk), 
-                                  author_name  = request.POST["name"],
-                                  author_email = request.POST["email1"],
-                                  author_url   = request.POST["url"],
-                                  content      = c,
-                                  enabled      = True)
-        kommentar_neu.save()
-        return redirect('/orte/' + pk)
-    
     ort = get_object_or_404(Ort, id = int(pk))
-    kommentare = Kommentar.objects.filter(ort_id = int(pk), enabled = True)
+    if request.method == 'POST':
+        if len(request.POST["author_email1"]) == 0:
+            kommentar_neu = KommentarForm(request.POST)
+            if kommentar_neu.is_valid():
+                post = kommentar_neu.save(commit=False)
+                post.enabled = True;
+                post.ort = ort
+                post.save()
 
+    kommentare = Kommentar.objects.filter(ort_id = int(pk), enabled = True)
     return render(request, 'bbs/ort.html', {'ort': ort, 'kommentare': kommentare})
 
 def begriffe(request):

@@ -16,24 +16,24 @@
                 <div class="modal-body">
                         <div class="form-group">
                             <label for="name">Name:</label>
-                            <input type="text" class="form-control" id="name" name="name" />
+                            <input type="text" class="form-control" id="author_name" name="author_name" required/>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="email">E-Mail-Adresse:</label>
-                            <input type="email" class="form-control" id="email" name="email1" 
-                                   placeholder="email@example.com" />
-                            <input type="email" class="hidden" name="email" />
+                            <input type="email" class="form-control" id="author_email" name="author_email"
+                                   placeholder="email@example.com" required/>
+                            <input type="email" class="hidden" name="author_email1" />
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="url">Webseite:</label>
-                            <input type="url" class="form-control" id="url" name="url"
+                            <input type="url" class="form-control" id="author_url" name="author_url"
                                placeholder="http://example.com" />
                         </div>
 
                         <label for="text">Kommentar:</label>
-                        <textarea class="form-control" rows="5" id="text" name="text"></textarea>
+                        <textarea class="form-control" rows="5" id="content" name="content" required></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Abbrechen</button>
