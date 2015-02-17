@@ -31,10 +31,10 @@ def ort(request,pk):
         if len(request.POST["author_email1"]) == 0:
             kommentar_neu = KommentarForm(request.POST)
             if kommentar_neu.is_valid():
-                post = kommentar_neu.save(commit=False)
-                post.enabled = True;
-                post.ort = ort
-                post.save()
+                kommentar = kommentar_neu.save(commit=False)
+                kommentar.enabled = True;
+                kommentar.ort = ort
+                kommentar.save()
 
     kommentare = Kommentar.objects.filter(ort_id = int(pk), enabled = True)
     return render(request, 'bbs/ort.html', {'ort': ort, 'kommentare': kommentare})
