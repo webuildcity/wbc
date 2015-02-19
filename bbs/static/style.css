@@ -50,7 +50,7 @@ a:hover,
     color: #e58833;
     text-decoration: none;
 }
-.btn {
+.btn.btn-primary {
     color: white !important;
 }
 .fa {
