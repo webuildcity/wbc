@@ -13,4 +13,3 @@ register = template.Library()
 def markdown(value):
     value = force_unicode(value)
     return mdn(value)
-    
