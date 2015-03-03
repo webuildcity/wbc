@@ -4,10 +4,10 @@ from django.utils.timezone import now
 from django.core.management.base import BaseCommand, CommandError
 
 from projects.models import Bezirk,Ort,Veroeffentlichung
-#from news.models import Abonnent,Mail
+from news.models import Abonnent,Mail
 
 class Command(BaseCommand):
-    help = 'Schickt die newsletter mail für all seid gestern eingetragenen Veröffentlichungen.'
+    help = u'Schickt die newsletter mail für all seid gestern eingetragenen Veröffentlichungen.'
 
     def handle(self, *args, **options):
         # gegenwärtige Zeit finden
