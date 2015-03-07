@@ -29,7 +29,7 @@
         {% if user.is_authenticated %}
         <div class="row ort-buttons">
             <div class="col-sm-12">
-                <a href="/admin/projects/ort/{{ ort.pk }}/" class="btn btn-primary">
+                <a target="_blank" href="/admin/projects/ort/{{ ort.pk }}/" class="btn btn-primary">
                     Ort bearbeiten
                 </a>
                 <a href="/veroeffentlichungen/neu/?orte_id={{ort.pk}}" class="btn btn-primary">

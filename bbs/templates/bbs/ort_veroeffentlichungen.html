@@ -7,6 +7,14 @@
 
     {% for veroeffentlichung in ort.veroeffentlichungen.all %}
 
+    {% if user.is_authenticated %}
+    <div class="row">
+        <div class="col-sm-12">
+            <a  target="_blank" class="btn btn-primary pull-right" href="/admin/projects/veroeffentlichung/{{veroeffentlichung.pk}}">Veröffentlichung bearbeiten</a>
+        </div>
+    </div>
+    {% endif %}
+
     {% if forloop.counter != 1 %}
     <hr style="visible-xs" />
     {% endif %}
