@@ -1,0 +1,25 @@
+{% load humanize %}
+{% load wbc_extras %}
+
+<div class="kommentar row">
+    <div class="kommentar-author col-sm-3">
+        <div class="kommentar-author-img">
+            <img class="img-circle" src="{{ kommentar.gravatar }}" />
+        </div>
+        <div class="kommentar-author-name">
+            {% if kommentar.author_url %}
+            <a href="{{ kommentar.author_url }}">
+                {{ kommentar.author_name }}
+            </a>
+            {% else %}
+                {{ kommentar.author_name }} 
+            {% endif %}
+        </div>
+        <div class="kommentar-author-time">
+            vor <span title="{{ kommentar.created }}">{{ kommentar.created | timesince }}</span>
+        </div>
+    </div>
+    <div class="kommentar-inhalt col-sm-9">
+        {% autoescape off %}{{ kommentar.content | markdown }}{% endautoescape %}
+    </div>
+</div>

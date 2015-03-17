@@ -1,5 +1,0 @@
-./manage.py sqlclear projects | ms -D bbs
-./manage.py sqlclear projects | mysql -uroot -p -D bbs
-./manage.py syncdb
-./manage.py loaddata data/dump.json
-./manage.py dumpdata projects > data/dump.json

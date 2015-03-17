@@ -1,0 +1,33 @@
+{% extends 'core/page.html' %}
+
+{% block js %}
+    <script type="text/javascript">
+    $(document).ready(function(){
+      var openVs = window.location.toString().split('#')[1];
+      $('#collapse-' + openVs).addClass('in');
+    });
+    </script>
+{% endblock %}
+
+{% block page %}
+    <h2>Begriffe</h2>
+    {% for v in verfahren %}
+        <h3>{{v.name}}</h3>
+        <p>{{v.beschreibung}}</p>
+        <div class="panel-group" id="accordion-{{ v.pk }}">
+            {% for vs in v.verfahrensschritte.all %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a data-toggle="collapse" data-parent="#accordion-{{ v.pk }}" href="#collapse-{{ vs.pk }}">{{ vs.name }}</a>
+                </div>
+
+                <div id="collapse-{{ vs.pk }}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        {{ vs.beschreibung }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endblock %}

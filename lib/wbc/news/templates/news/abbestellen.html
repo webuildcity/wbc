@@ -1,0 +1,36 @@
+{% extends 'core/page.html' %}
+
+{% block page %}
+<div class="news">
+    <h2>Newletter für deinen Bezirk abbestellen</h2>
+
+    {% if success %}
+    <p>
+        Um sicher zu gehen das das Abbestellen des Newletters nicht ohne Dein Wissen passiert, haben wir noch eine letzte Mail an Dich geschickt. In ihr findest du ein Link, mit dem du den Newletter entgültig abbestellen kannst.
+    </p>
+    {% else %}
+    <p>
+        Um den Newsletter abzubestellen trage bite deine Emailadresse ein.
+    </p>
+    <form action="/news/abbestellen/" method="post" role="form" class="">
+        {% csrf_token %}
+        <div class="form-group {{field.errors|yesno:"has-error,"}}">
+            <div class="controls">
+                {{ form.email }}
+                <div class="text-error">
+                    {{ form.email.errors }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="controls">
+                <input type="submit" value="Abbestellen" class="btn btn-primary"/>
+            </div>
+        </div>
+        <div>
+            {{ form.non_field_errors }}
+        </div>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}
