@@ -9,12 +9,8 @@
 {% block js %}
     <script type="text/javascript" src="{% static 'lib/angular/angular-scroll.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'options.js' %}" ></script>
     <script type="text/javascript" src="{% static 'map.js' %}" ></script>
-    <script type="text/javascript">
-        var _default_view = {{defaultView|safe}};
-        var _tiles_opt = {{tilesOpt|safe}};
-        var _tiles_url = '{{tilesUrl}}';
-    </script>
 {% endblock %}
 
 {% block content %}

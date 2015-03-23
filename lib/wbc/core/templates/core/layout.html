@@ -32,7 +32,7 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav">
-                {% include "core/layout_navigation.html"%}
+                {% include "core/layout_navigation.html" %}
             </ul>
         </div>
     </nav>
@@ -49,15 +49,8 @@
 
             <div id="header-right">
                 <ul class="sitenav">
-                    {% include "core/layout_navigation.html"%}
-                    <li>
-                        {{twitter|safe}}
-                        {{facebook|safe}}
-                        {{gplus|safe}}
-                        <a href="/feeds/">
-                            <i class="fa fa-rss-square"></i>
-                        </a>
-                    </li>
+                    {% include "core/layout_navigation.html" %}
+                    {% include "core/layout_social.html" %}
                 </ul>
             </div>
         </div>
