@@ -36,7 +36,6 @@ def settings(request):
         'tilesOpt': json.dumps(django_settings.TILES_OPT),
         'defaultView': json.dumps(django_settings.DEFAULT_VIEW),
         'navigation': navigation,
-        'infotext': django_settings.INFO_TEXT,
         'twitter': twitter,
         'facebook': facebook,
         'gplus': gplus
