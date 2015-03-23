@@ -5,8 +5,6 @@ from django.conf import settings as django_settings
 from django.utils.http import urlencode
 
 def settings(request):
-    navigation = ''.join(['<li><a href="%s">%s</a></li>' % (item['href'],item['text']) for item in django_settings.NAVIGATION])
-
     twitter = '<a href="https://twitter.com/share" target="blank"><i class="fa fa-twitter-square"></i></a>';
 
     try:
@@ -35,7 +33,6 @@ def settings(request):
         'tilesUrl': django_settings.TILES_URL,
         'tilesOpt': json.dumps(django_settings.TILES_OPT),
         'defaultView': json.dumps(django_settings.DEFAULT_VIEW),
-        'navigation': navigation,
         'twitter': twitter,
         'facebook': facebook,
         'gplus': gplus

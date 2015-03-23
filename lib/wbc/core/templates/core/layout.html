@@ -32,7 +32,7 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav">
-
+                {% include "core/layout_navigation.html"%}
             </ul>
         </div>
     </nav>
@@ -49,7 +49,7 @@
 
             <div id="header-right">
                 <ul class="sitenav">
-                    {{navigation|safe}}
+                    {% include "core/layout_navigation.html"%}
                     <li>
                         {{twitter|safe}}
                         {{facebook|safe}}
