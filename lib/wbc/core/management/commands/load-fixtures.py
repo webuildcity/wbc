@@ -6,13 +6,15 @@ from django.core.management.base import BaseCommand
 from django.core.management import call_command
 
 fixtures = [
-    'Behoerden',
-    'Bezirke',
-    'Verfahren',
-    'Verfahrensschritte',
-    'Orte',
-    'Veroeffentlichungen',
-    'Kommentare'
+    'region/muncipalities.json',
+    'region/districts.json',
+    'region/offices.json'
+
+    # 'Verfahren',
+    # 'Verfahrensschritte',
+    # 'Orte',
+    # 'Veroeffentlichungen',
+    # 'Kommentare'
 ]
 
 class Command(BaseCommand):
@@ -23,4 +25,4 @@ class Command(BaseCommand):
 
         for fixture in fixtures:
             self.stdout.write('Installing ' + fixture)
-            call_command("loaddata", os.path.join(fixture_dir,fixture.lower() + '.json'))
+            call_command("loaddata", os.path.join(fixture_dir,fixture))
