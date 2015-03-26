@@ -14,9 +14,11 @@ fixtures = [
     'process/places.json',
     'process/processtypes.json',
     'process/processsteps.json',
-    'process/publication.json',
+    'process/publications.json',
     # comments
-    'comments/comments.json'
+    'comments/comments.json',
+    # news
+    'news/subscriber.json'
 ]
 
 class Command(BaseCommand):
