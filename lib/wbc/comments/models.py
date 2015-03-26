@@ -4,16 +4,16 @@ import urllib,hashlib
 from django.db import models
 
 from wbc.core.models import Model
-from wbc.projects.models import Ort
+from wbc.process.models import Place
 
-class Kommentar(Model):
-    ort = models.ForeignKey(Ort)
-    author_name  = models.CharField(max_length=100)
-    author_email = models.CharField(max_length=256)
-    author_url   = models.CharField(max_length=256,blank=True)
+class Comment(Model):
+    place        = models.ForeignKey(Place, verbose_name="Ort")
+    author_name  = models.CharField(max_length=100, verbose_name="Autorin/Author")
+    author_email = models.CharField(max_length=256, verbose_name="Email")
+    author_url   = models.CharField(max_length=256, blank=True, verbose_name="Url")
 
-    enabled = models.BooleanField()
-    content = models.TextField()
+    enabled      = models.BooleanField(verbose_name="Freigeschaltet")
+    content      = models.TextField(verbose_name="Inhalt")
 
     @property
     def gravatar(self):
@@ -23,7 +23,7 @@ class Kommentar(Model):
         return gravatar_url
 
     def __unicode__(self):
-        return unicode(self.ort) + ', ' + self.author_name
+        return unicode(self.place) + ', ' + self.author_name
 
     class Meta:
         ordering            = ("created",)

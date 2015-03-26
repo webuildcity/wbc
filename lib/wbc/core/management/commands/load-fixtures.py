@@ -6,15 +6,17 @@ from django.core.management.base import BaseCommand
 from django.core.management import call_command
 
 fixtures = [
+    # region
     'region/muncipalities.json',
     'region/districts.json',
-    'region/departments.json'
-
-    # 'Verfahren',
-    # 'Verfahrensschritte',
-    # 'Orte',
-    # 'Veroeffentlichungen',
-    # 'Kommentare'
+    'region/departments.json',
+    # process
+    'process/places.json',
+    'process/processtypes.json',
+    'process/processsteps.json',
+    'process/publication.json',
+    # comments
+    'comments/comments.json'
 ]
 
 class Command(BaseCommand):

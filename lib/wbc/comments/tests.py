@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
-from django.test import TestCase
+from django.test import TestCase, Client
 
-# Create your tests here.
+from models import *
+
+class CommentsTestCase(TestCase):
+    def setUp(self):
+        pass
+
+    def test_comment(self):
+        pass

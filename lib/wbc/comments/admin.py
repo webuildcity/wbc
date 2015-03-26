@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from wbc.comments.models import Kommentar
+from models import Comment
 
-class KommentarAdmin(admin.ModelAdmin):
-    list_display = ('enabled','author_name','author_email','ort','created')
-    list_display_links = ('enabled','author_name','author_email','ort','created')
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('enabled','author_name','author_email','place','created')
+    list_display_links = ('enabled','author_name','author_email','place','created')
     ordering = ['-created']
 
-admin.site.register(Kommentar, KommentarAdmin)
+admin.site.register(Comment, CommentAdmin)

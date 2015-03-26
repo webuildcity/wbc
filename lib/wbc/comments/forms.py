@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm
 
-from wbc.comments.models import Kommentar
+from models import Comment
 
-class KommentarForm(ModelForm):
+class CommentForm(ModelForm):
 
     class Meta:
-        model = Kommentar
-        fields = ('author_name', 'author_email', 'author_url', 'content')
+        model = Comment
+        fields = ('author_name','author_email','author_url','content')
