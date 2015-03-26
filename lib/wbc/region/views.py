@@ -1,12 +1,21 @@
 # -*- coding: utf-8 -*-
-import json,time,datetime
+from rest_framework import viewsets
 
-from django.http import HttpResponse
-from django.shortcuts import Http404, render
-from django.db.models import Q
-from django.core.serializers.json import DjangoJSONEncoder
-from django.views.decorators.csrf import csrf_exempt
+from models import *
+from serializers import *
 
-from wbc.projects.models import Ort, Veroeffentlichung, Verfahrensschritt, Verfahren, Behoerde, Bezirk
+class MuncipalityViewSet(viewsets.ModelViewSet):
+    serializer_class = MuncipalitySerializer
+    queryset = Muncipality.objects.all()
 
+class DistrictViewSet(viewsets.ModelViewSet):
+    serializer_class = DistrictSerializer
+    queryset = District.objects.all()
 
+class QuarterViewSet(viewsets.ModelViewSet):
+    serializer_class = QuarterSerializer
+    queryset = Quarter.objects.all()
+
+class OfficeViewSet(viewsets.ModelViewSet):
+    serializer_class = OfficeSerializer
+    queryset = Office.objects.all()

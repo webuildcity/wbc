@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import patterns, include, url
+from rest_framework import routers
+from views import *
 
-from wbc.projects import views
+router = routers.DefaultRouter()
+router.register(r'muncipalities', MuncipalityViewSet, base_name='muncipality')
+router.register(r'districts', DistrictViewSet, base_name='district')
+router.register(r'quarters', QuarterViewSet, base_name='quarter')
+router.register(r'offices', OfficeViewSet, base_name='office')
 
-urlpatterns = patterns('projects.urls',
-    url(r'^orte/$', views.orte),
-    url(r'^orte/cols$', views.orte_cols),
-    url(r'^orte/rows$', views.orte_rows),
-    url(r'^orte/(?P<pk>\d+)/$', views.ort),
-    url(r'^veroeffentlichungen/$', views.veroeffentlichungen),
-    url(r'^veroeffentlichungen/(?P<pk>\d+)/$', views.veroeffentlichung),
-    url(r'^verfahrensschritte/$', views.verfahrensschritte),
-    url(r'^verfahrensschritte/(?P<pk>\d+)/$', views.verfahrensschritt)
+urlpatterns = patterns('',
+    url(r'^', include(router.urls)),
 )
