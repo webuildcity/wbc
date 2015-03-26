@@ -7,7 +7,7 @@ router = routers.DefaultRouter()
 router.register(r'muncipalities', MuncipalityViewSet, base_name='muncipality')
 router.register(r'districts', DistrictViewSet, base_name='district')
 router.register(r'quarters', QuarterViewSet, base_name='quarter')
-router.register(r'offices', OfficeViewSet, base_name='office')
+router.register(r'departments', DepartmentViewSet, base_name='department')
 
 urlpatterns = patterns('',
     url(r'^', include(router.urls)),

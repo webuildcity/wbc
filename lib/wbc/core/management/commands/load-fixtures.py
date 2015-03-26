@@ -8,7 +8,7 @@ from django.core.management import call_command
 fixtures = [
     'region/muncipalities.json',
     'region/districts.json',
-    'region/offices.json'
+    'region/departments.json'
 
     # 'Verfahren',
     # 'Verfahrensschritte',

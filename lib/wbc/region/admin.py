@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from wbc.region.models import *
+from models import *
 
 class MuncipalityAdmin(admin.ModelAdmin):
     list_display = ('id','name')
@@ -18,7 +18,7 @@ class QuarterAdmin(admin.ModelAdmin):
     list_display_links = ('id','name')
     ordering = ['id']
 
-class OfficeAdmin(admin.ModelAdmin):
+class DepartmentAdmin(admin.ModelAdmin):
     list_display = ('id','name')
     list_display_links = ('id','name')
     ordering = ['id']
@@ -26,4 +26,4 @@ class OfficeAdmin(admin.ModelAdmin):
 admin.site.register(Muncipality, MuncipalityAdmin)
 admin.site.register(District, DistrictAdmin)
 admin.site.register(Quarter, QuarterAdmin)
-admin.site.register(Office, OfficeAdmin)
+admin.site.register(Department, DepartmentAdmin)

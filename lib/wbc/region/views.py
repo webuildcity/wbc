@@ -16,6 +16,6 @@ class QuarterViewSet(viewsets.ModelViewSet):
     serializer_class = QuarterSerializer
     queryset = Quarter.objects.all()
 
-class OfficeViewSet(viewsets.ModelViewSet):
-    serializer_class = OfficeSerializer
-    queryset = Office.objects.all()
+class DepartmentViewSet(viewsets.ModelViewSet):
+    serializer_class = DepartmentSerializer
+    queryset = Department.objects.all()

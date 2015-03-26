@@ -1,0 +1,33 @@
+{% extends 'core/page.html' %}
+
+{% block js %}
+    <script type="text/javascript">
+    $(document).ready(function(){
+      var openVs = window.location.toString().split('#')[1];
+      $('#collapse-' + openVs).addClass('in');
+    });
+    </script>
+{% endblock %}
+
+{% block page %}
+    <h2>Begriffe</h2>
+    {% for process_type in process_types %}
+        <h3>{{process_type.name}}</h3>
+        <p>{{process_type.description}}</p>
+        <div class="panel-group" id="accordion-{{ v.pk }}">
+            {% for process_step in process_type.process_steps.all %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a data-toggle="collapse" data-parent="#accordion-{{ process_type.pk }}" href="#collapse-{{ process_step.pk }}">{{ process_step.name }}</a>
+                </div>
+
+                <div id="collapse-{{ process_step.pk }}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        {{ process_step.description }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -15,6 +15,6 @@ class QuarterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Quarter
 
-class OfficeSerializer(serializers.ModelSerializer):
+class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Office
+        model = Department

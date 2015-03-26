@@ -36,11 +36,11 @@ class Quarter(Entity):
         verbose_name        = 'Ortsteil'
         verbose_name_plural = 'Ortsteile'
 
-class Office(Model):
+class Department(Model):
     name        = models.CharField(max_length=256)
     description = models.TextField(blank=True)
     link        = models.URLField(blank=True)
-    entity      = models.ForeignKey(Entity, related_name='offices')
+    entity      = models.ForeignKey(Entity, related_name='departments')
 
     def __unicode__(self):
         return self.name

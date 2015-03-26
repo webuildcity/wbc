@@ -16,5 +16,5 @@ class RegionTestCase(TestCase):
     def test_quarter(self):
         pass
 
-    def test_office(self):
+    def test_department(self):
         pass
