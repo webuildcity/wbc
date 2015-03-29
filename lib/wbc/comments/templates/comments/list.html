@@ -1,7 +1,7 @@
-<div class="kommentare">
-    {% if kommentare %}
-        {% for kommentar in kommentare.all %}
-            {% include "core/kommentare_kommentar.html"%}
+<div class="comments">
+    {% if comments %}
+        {% for comment in comments.all %}
+            {% include "comments/comment.html"%}
         {% endfor %}
     {% else %}
         <div class="text-center" style="min-height: 4em; padding-top: 2em;">

@@ -5,7 +5,6 @@
 @font-face {
     font-family: dejavu;
     src: url('font/DejaVuSansCondensed.ttf');
-    
 }
 @font-face {
     font-family: dejavu;
@@ -38,7 +37,7 @@ h4 {
     color: #646464;
     line-height: 20px;
 }
-a, 
+a,
 a:visited,
 .leaflet-container a,
 .leaflet-container a:visited {
@@ -80,10 +79,9 @@ a:hover,
 .sitenav li {
     display: inline;
     list-style: none;
-    margin: 0 20px 0 0;
 }
 .sitenav li:last-child {
-    margin-right: 0px;
+    margin-right: 0;
 }
 
 /* Leaflet Container */
@@ -99,7 +97,7 @@ a:hover,
 .leaflet-control-zoom,
 .leaflet-control-zoom-in,
 .leaflet-control-zoom-out {
-    border-radius: 0px !important;
+    border-radius: 0 !important;
 }
 .leaflet-control-zoom {
     padding: 2px;
@@ -107,7 +105,7 @@ a:hover,
     background: rgba(0, 0, 0, 0.25);
 }
 .leaflet-control-zoom-in:focus,
-.leaflet-control-zoom-out:focus { 
+.leaflet-control-zoom-out:focus {
     outline: none;
 }
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
@@ -195,17 +193,17 @@ a:hover,
 .blog .comment-form label {
     font-weight: normal;
 }
-.blog img { 
+.blog img {
     max-width: 100%;
     height:auto;
-}            
-.blog iframe { 
+}
+.blog iframe {
     max-width: 100%;
 }
 
 /* ort */
 
-.ort-buttons {
+.place-buttons {
     margin-top: 20px;
 }
 
@@ -213,18 +211,18 @@ a:hover,
     height: 400px;
 }
 
-.ort {
+.place {
     margin-top: 20px;
     margin-bottom: 40px;
 }
-.veroeffentlichungen {
+.publications {
     margin-bottom: 20px;
 }
-.veroeffentlichungen div {
+.publications div {
     margin-bottom: 10px;
 }
 @media (max-width: 768px) {
-    .veroeffentlichung-title {
+    .publications-title {
         font-family: dejavu;
         font-weight: bold;
         font-size: 14px;
@@ -234,34 +232,34 @@ a:hover,
 }
 
 /* comments */
-.kommentare-wrapper {
+.comments-wrapper {
     background: rgba(0, 0, 0, 0.1);
     padding-top: 10px;
 }
-.kommentare {
+.comments {
     margin-top: 20px;
     margin-bottom: 60px;
 }
-.kommentar {
+.comment {
     margin-bottom: 20px;
 }
-.kommentar-author {
+.comment-author {
     margin-bottom: 10px;
 }
-.kommentar-author-img {
+.comment-author-img {
     float: left;
 }
-.kommentar-author-name {
+.comment-author-name {
     /*margin-top: 6px;*/
     margin-left: 42px;
 }
-.kommentar-author-time {
+.comment-author-time {
     margin-top: 2px;
     margin-left: 42px;
     line-height: 12px;
     font-size: 10px;
 }
-.kommentar-erstellen {
+.comment-erstellen {
     display: block;
     float: right;
     margin-top: 20px;

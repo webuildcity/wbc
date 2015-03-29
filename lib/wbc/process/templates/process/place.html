@@ -10,11 +10,11 @@
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/OSMBuildings-Leaflet.js' %}"  ></script>
     <script type="text/javascript">
-        var _lon = {{ ort.lon|stringformat:"F" }};
-        var _lat = {{ ort.lat|stringformat:"F" }};
-        {% if ort.polygon %}
-        var _polygon = {{ort.polygon}};
-        var _polygontype = '{{ort.polygontype}}'
+        var _lon = {{ place.lon|stringformat:"F" }};
+        var _lat = {{ place.lat|stringformat:"F" }};
+        {% if place.polygon %}
+        var _polygon = {{place.polygon}};
+        var _polygontype = '{{place.polygontype}}'
         {% endif %}
     </script>
     <script type="text/javascript" src="{% static 'options.js' %}" ></script>
@@ -26,49 +26,49 @@
 
     <div class="container">
         {% if user.is_authenticated %}
-        <div class="row ort-buttons">
+        <div class="row place-buttons">
             <div class="col-sm-12">
-                <a target="_blank" href="/admin/projects/ort/{{ ort.pk }}/" class="btn btn-primary">
+                <a target="_blank" href="/admin/process/place/{{ place.pk }}/" class="btn btn-primary">
                     Ort bearbeiten
                 </a>
-                <a href="/veroeffentlichungen/neu/?orte_id={{ort.pk}}" class="btn btn-primary">
-                   Neue Veröffentlichung hinzufügen
+                <a href="/publications/new/?place_id={{place.pk}}" class="btn btn-primary">
+                    Neue Veröffentlichung hinzufügen
                 </a>
             </div>
         </div>
         {% endif %}
 
-        <div class="row ort">
+        <div class="row place">
             <div class="col-sm-8">
                 <h3>Betroffenes Gebiet</h3>
                 <p>
-                    <strong>Bezeichner:</strong> {{ ort.bezeichner }}
+                    <strong>Bezeichner:</strong> {{ place.bezeichner }}
                 </p>
                 <p>
-                    <strong>genaue örtliche Beschreibung:</strong> {{ ort.beschreibung }}
+                    <strong>genaue örtliche Beschreibung:</strong> {{ place.beschreibung }}
                 </p>
                 <p>
-                    <strong>im Bezirk/in den Bezirken:</strong> {{ ort.bezirke.all|join:", "}}
+                    <strong>im Bezirk/in den Bezirken:</strong> {{ place.entities.all|join:", "}}
                 </p>
             </div>
         </div>
 
         <h3>Veröffentlichungen zu diesem Gebiet</h3>
 
-        {% include "core/ort_veroeffentlichungen.html" %}
+        {% include "process/place_publications.html" %}
     </div>
 
-    <div class="kommentare-wrapper">
+    <div class="comments-wrapper">
         <div class="container">
-            <a class="kommentar-erstellen" href="" data-toggle="modal" data-target="#kommentarFormular">
+            <a class="comments-create" href="" data-toggle="modal" data-target="#comment-form">
                 Eigenen Kommentar hinzufügen
             </a>
 
             <h3>Kommentare</h3>
 
-            {% include "core/kommentare_liste.html" %}
+            {% include "comments/list.html" %}
 
-            {% include "core/kommentare_formular.html" %}
+            {% include "comments/form.html" %}
         </div>
     </div>
 {% endblock %}

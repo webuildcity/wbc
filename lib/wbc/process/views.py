@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
+from django.core.urlresolvers import reverse
 from rest_framework import viewsets
 
+from wbc.comments.models import Comment
+from wbc.comments.forms import CommentForm
 from models import *
 from serializers import *
 
@@ -25,19 +28,23 @@ def process(request):
     process_types = ProcessType.objects.all()
     return render(request,'process/process.html',{'process_types': process_types})
 
-# def ort(request,pk):
-#     ort = get_object_or_404(Ort, id = int(pk))
-#     if request.method == 'POST':
-#         if len(request.POST["author_email1"]) == 0:
-#             kommentar_neu = KommentarForm(request.POST)
-#             if kommentar_neu.is_valid():
-#                 kommentar = kommentar_neu.save(commit=False)
-#                 kommentar.enabled = True;
-#                 kommentar.ort = ort
-#                 kommentar.save()
+def place(request, pk):
+    p = get_object_or_404(Place, id = int(pk))
 
-#     kommentare = Kommentar.objects.filter(ort_id = int(pk), enabled = True)
-#     return render(request, 'core/ort.html', {'ort': ort, 'kommentare': kommentare})
+    if request.method == 'POST':
+        if len(request.POST["author_email1"]) == 0:
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.enabled = True;
+                comment.place = p
+                comment.save()
+
+    return render(request,'process/place.html',{
+        'place': p,
+        'comments': Comment.objects.filter(place_id = int(pk), enabled = True),
+        'process_link': reverse('wbc.process.views.process')
+    })
 
 # def feeds(request):
 #     bezirke = Bezirk.objects.all()

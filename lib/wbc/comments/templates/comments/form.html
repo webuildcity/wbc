@@ -1,5 +1,5 @@
-<div id="kommentarFormular" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="kommentarFormularHeader" aria-hidden="true">
+<div id="comment-form" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="comment-form-header" aria-hidden="true">
     <div class="modal-dialog">
         <form role="form" method="post">
             {% csrf_token %}
@@ -11,7 +11,7 @@
                         <span class="sr-only">Abbrechen</span>
                     </button>
 
-                    <h4 id="kommentarFormularHeader">Kommentar hinzufügen</h4>
+                    <h4 id="comment-form-header">Kommentar hinzufügen</h4>
                 </div>
                 <div class="modal-body">
                         <div class="form-group">
