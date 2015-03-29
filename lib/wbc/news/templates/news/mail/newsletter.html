@@ -1,8 +1,10 @@
+Neue Veröffentlichungen
+---
 Hallo,
 
 zu Bauvorhaben in den von Dir angegebenen Bezirken gibt es neue Veröffentlichungen:
 
-{% for veroeffentlichung in veroeffentlichungen %}
+{% for publication in publications %}
     Verfahren:          {{veroeffentlichung.verfahrensschritt.verfahren.name}}
     Verfahrensschritt:  {{veroeffentlichung.verfahrensschritt.name}}
     Betrifft:           {{veroeffentlichung.ort.bezeichner}}
@@ -13,7 +15,3 @@ zu Bauvorhaben in den von Dir angegebenen Bezirken gibt es neue Veröffentlichun
     Auslegungszeitraum: von {{ veroeffentlichung.beginn }} bis {{ veroeffentlichung.ende }}
     {% endif %}
 {% endfor %}
-
---
-Dies ist ein Newsletter von Bürger baut Stadt.
-Du kannst den Newsletter unter {{abbestellen}} wieder abbestellen.

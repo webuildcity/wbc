@@ -10,12 +10,11 @@
         Danke das Du unseren Newsletter abonnieren willst. In Kürze wirst du eine Mail mit einem Validierungslink erhalten. Wenn du auf diesen Link klickst, ist der Vorgang abgeschlossen und du wirst informiert, wenn in deinem Bezirk eine neue Veröffenlichung zu einem Bauvorhaben ausliegt.
     </p>
     <p>
-        Der Newletter kann unter <a href="{{abbestellen}}">{{abbestellen}}</a> wieder abbestellt werden.
+        Der Newletter kann unter <a href="{{unsubscribe_link}}">{{unsubscribe_link}}</a> wieder abbestellt werden.
     </p>
     {% else %}
-    <p>
-        Woche für Woche veröffentlicht das Land Berlin das Amtsblatt. Neben vielen anderen Informationen wird darin auch veröffentlicht, wenn im Rahmen eines Bebauungsplanverfahrens oder eines Planfeststellungsverfahrens Planungsunterlagen ausliegen, an denen sich Bürger beteiligen können. Leider müssen sie dazu regelmäßig das Amtsblatt lesen, was die meisten nicht tun. Für alle diejenigen, die das auch in Zukunft nicht tun wollen, aber trotzdem informiert werden wollen, gibt es unseren Abo-Service. Wir werten das Amtsblatt wöchentlich aus und senden Dir eine Email, wenn etwas Neues in einem Deiner ausgewählten Bezirken passiert.
-    </p>
+
+    {% include "news/subscribe_info.html" %}
 
     <form action="/news/abonnieren/" method="post" role="form" class="form-horizontal">
         {% csrf_token %}
@@ -54,7 +53,7 @@
         </div>
     </form>
     <p>
-        Der Newsletter kann unter <a href="{{abbestellen}}">{{abbestellen}}</a> wieder abbestellt werden.
+        Der Newsletter kann unter <a href="{{unsubscribe_link}}">{{unsubscribe_link}}</a> wieder abbestellt werden.
     </p>
     {% endif %}
 </div>

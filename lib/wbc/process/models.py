@@ -8,7 +8,7 @@ class Place(Model):
     identifier  = models.CharField(blank=True, max_length=64, verbose_name="Bezeichner", help_text="ggf. Bezeichner des Beplauungsplans")
     address     = models.CharField(max_length=256, verbose_name="Adresse", help_text="Eine genaue Adresse des Vorhabens")
     description = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Örtliche Beschreibung")
-    entity      = models.ManyToManyField(Entity, verbose_name="Einheit", related_name='places')
+    entities    = models.ManyToManyField(Entity, verbose_name="Einheit", related_name='places')
     lat         = models.FloatField(verbose_name="Breitengrad")
     lon         = models.FloatField(verbose_name="Längengrad")
     polygon     = models.TextField(null=True, blank=True)

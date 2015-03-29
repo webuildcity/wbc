@@ -1,111 +1,125 @@
 # -*- coding: utf-8 -*-
-import json
+from json import loads, dumps
 
 from django.conf import settings
-from django.shortcuts import get_object_or_404
-from django.shortcuts import render,redirect
+from django.shortcuts import render
+from django.core.urlresolvers import reverse
 
-from wbc.news.forms import AbonnierenForm, AbbestellenForm
-from wbc.news.models import Validierung,Abonnent,Mail
-from wbc.projects.models import Bezirk
+from wbc.region.models import District
 
-def abonnieren(request):
-    bezirke = Bezirk.objects.all().values()
+from forms import SubscribeForm, UnsubscribeForm
+from models import Validation,Subscriber
+from lib import send_mail
+
+def subscribe(request):
+    entities = District.objects.all().values()
+
+    unsubscribe_link = reverse('wbc.news.views.unsubscribe',args=['.']).strip('.')
+    validate_link = reverse('wbc.news.views.validate',args=['.']).strip('.')
 
     if request.method == 'POST':
-        form = AbonnierenForm(request.POST, bezirke=bezirke)
+        form = SubscribeForm(request.POST, entities=entities)
         if form.is_valid():
             email = form.cleaned_data.pop('email')
-            bezirkeJson = json.dumps(form.cleaned_data)
+            entitiesJson = dumps(form.cleaned_data)
 
             try:
-                v = Validierung.objects.get(email=email)
-            except Validierung.DoesNotExist:
-                v = Validierung(email=email)
+                v = Validation.objects.get(email=email)
+            except Validation.DoesNotExist:
+                v = Validation(email=email)
 
-            v.bezirke = bezirkeJson
-            v.aktion = 'abonnieren'
+            v.entities = entitiesJson
+            v.action = 'subscribe'
             v.save()
 
-            Mail().abonnieren(email, v.code)
+            send_mail(email, 'news/mail/subscribe.html', {
+                'unsubscribe_link': settings.SITE_URL + unsubscribe_link + email,
+                'validate_link': settings.SITE_URL + validate_link + v.code
+            })
 
-            return render(request,'news/abonnieren.html', {
+            return render(request,'news/subscribe.html', {
                 'success': True,
-                'abbestellen': settings.SITE_URL + '/news/abbestellen/' + email
+                'unsubscribe_link': settings.SITE_URL + unsubscribe_link + email
             })
     else:
-        form = AbonnierenForm(bezirke=bezirke)
+        form = SubscribeForm(entities=entities)
 
-    return render(request,'news/abonnieren.html', {
+    return render(request,'news/subscribe.html', {
         'form': form,
-        'abbestellen': settings.SITE_URL + '/news/abbestellen/',
-        'bezirke': bezirke
-        })
+        'unsubscribe_link': settings.SITE_URL + unsubscribe_link,
+        'entities': entities
+    })
 
-def abbestellen(request, email=None):
+def unsubscribe(request, email=None):
     if request.method == 'POST':
-        form = AbbestellenForm(request.POST)
+        form = UnsubscribeForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data.pop('email')
             try:
-                abonnent = Abonnent.objects.get(email=email)
+                subscriber = Subscriber.objects.get(email=email)
 
                 try:
-                    v = Validierung.objects.get(email=email)
-                except Validierung.DoesNotExist:
-                    v = Validierung(email=email)
+                    v = Validation.objects.get(email=email)
+                except Validation.DoesNotExist:
+                    v = Validation(email=email)
 
-                v.aktion='abbestellen'
+                v.action='unsubscribe'
                 v.save()
 
-                Mail().abbestellen(email, v.code)
+                validate_link = reverse('wbc.news.views.validate',args=['.']).strip('.')
 
-            except Abonnent.DoesNotExist:
+                send_mail(email, 'news/mail/unsubscribe.html', {
+                    'validate_link': settings.SITE_URL + validate_link + v.code
+                })
+
+            except Subscriber.DoesNotExist:
                 pass # don't tell the user
 
-            return render(request,'news/abbestellen.html', {'success': True})
+            return render(request,'news/unsubscribe.html', {'success': True})
     else:
-        form = AbbestellenForm(initial={'email': email})
+        form = UnsubscribeForm(initial={'email': email})
 
-    return render(request,'news/abbestellen.html', {'form': form})
+    return render(request,'news/unsubscribe.html', {'form': form})
 
-def validieren(request, code):
+def validate(request, code):
     try:
-        validierung = Validierung.objects.get(code=code)
+        validation = Validation.objects.get(code=code)
 
-        if validierung.aktion == 'abonnieren':
+        if validation.action == 'subscribe':
             try:
-                abonnent = Abonnent.objects.get(email=validierung.email)
-                abonnent.bezirke.clear()
-            except Abonnent.DoesNotExist:
-                abonnent = Abonnent(email=validierung.email)
-                abonnent.save()
+                subscriber = Subscriber.objects.get(email=validation.email)
+                subscriber.entities.clear()
+            except Subscriber.DoesNotExist:
+                subscriber = Subscriber(email=validation.email)
+                subscriber.save()
 
-            bezirke = json.loads(validierung.bezirke)
-            for key in json.loads(validierung.bezirke):
-                if bezirke[key]:
-                    abonnent.bezirke.add(Bezirk.objects.get(pk=key))
-            abonnent.save()
+            entities = loads(validation.entities)
+            for key in entities:
+                if entities[key]:
+                    subscriber.entities.add(District.objects.get(pk=key))
+            subscriber.save()
 
-            validierung.delete()
+            validation.delete()
 
-        elif validierung.aktion == 'abbestellen':
+        elif validation.action == 'unsubscribe':
             try:
-                abonnent = Abonnent.objects.get(email=validierung.email)
-                abonnent.delete()
-            except Abonnent.DoesNotExist:
+                subscriber = Subscriber.objects.get(email=validation.email)
+                subscriber.delete()
+            except Subscriber.DoesNotExist:
                 pass # don't tell the user
 
-            validierung.delete()
+            validation.delete()
 
         else:
-            raise Exception('Unbekannte Aktion in `mails_validieren`')
+            raise Exception("Unknown action '%s' for validation" % validation.action)
 
-        return render(request,'news/validieren.html', {
+        unsubscribe_link = reverse('wbc.news.views.unsubscribe',args=['.']).strip('.')
+
+        return render(request,'news/validate.html', {
             'success': True,
-            'aktion': validierung.aktion,
-            'abbestellen': settings.SITE_URL + '/news/abbestellen/'
+            'action': validation.action,
+            'unsubscribe_link': settings.SITE_URL + unsubscribe_link
         })
 
-    except Validierung.DoesNotExist:
-        return render(request,'news/validieren.html', {})
+    except Validation.DoesNotExist:
+        return render(request,'news/validate.html', {})

@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-class AbonnierenForm(forms.Form):
+class SubscribeForm(forms.Form):
     def __init__(self, *args, **kwargs):
-        if (kwargs.has_key('bezirke')):
-            bezirke = kwargs.pop('bezirke')
+        if (kwargs.has_key('entities')):
+            entities = kwargs.pop('entities')
 
         kwargs['label_suffix'] = ''
-        super(AbonnierenForm, self).__init__(*args, **kwargs)
+        super(SubscribeForm, self).__init__(*args, **kwargs)
 
-        for bezirk in bezirke:
-            field = forms.BooleanField(label=bezirk['name'],required=False);
-            self.fields[str(bezirk['id'])] = field
+        for entity in entities:
+            field = forms.BooleanField(label=entity['name'],required=False);
+            self.fields[str(entity['id'])] = field
 
         self.fields['email'] = forms.EmailField(label='Email',
                                                 widget=forms.TextInput(attrs={'class':'form-control'}))
 
-class AbbestellenForm(forms.Form):
+class UnsubscribeForm(forms.Form):
     email = forms.EmailField(label='Email-Adresse',
                              widget=forms.TextInput(attrs={'class':'form-control'}))
