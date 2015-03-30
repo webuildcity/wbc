@@ -7,7 +7,7 @@ from models import *
 class PlaceAdmin(admin.ModelAdmin):
     list_display = ('id','identifier','address')
     list_display_links = ('id','identifier','address')
-    fields = ['address','entities','lat','lon','description','identifier']
+    fields = ['address','entities','lat','lon','description','identifier','polygon']
     ordering = ['id']
     change_form_template = "process/admin/change_form.html"
     add_form_template = "process/admin/change_form.html"
