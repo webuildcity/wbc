@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render,get_object_or_404
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect, HttpResponse
 from rest_framework import viewsets
 
 from wbc.comments.models import Comment
 from wbc.comments.forms import CommentForm
 from models import *
 from serializers import *
+from forms import *
 
 class PlaceViewSet(viewsets.ModelViewSet):
     serializer_class = PlaceSerializer
@@ -43,34 +46,39 @@ def place(request, pk):
     return render(request,'process/place.html',{
         'place': p,
         'comments': Comment.objects.filter(place_id = int(pk), enabled = True),
-        'process_link': reverse('wbc.process.views.process')
+        'process_link': reverse('wbc.process.views.process'),
+        'new_publication_link': reverse('wbc.process.views.create_publication')
     })
+
+@login_required
+def create_publication(request):
+    place_id = request.GET.get('place_id', None)
+    place_url = reverse('wbc.process.views.place',args=['1'])[:-2]
+
+    if place_id == None:
+        form = FindPlace()
+        return render(request, 'process/create_publication_step_1.html', {
+            'form': form,
+            'new_publication_link': reverse('wbc.process.views.create_publication')
+        })
+
+    else:
+        place = Place.objects.get(pk=place_id)
+
+        if request.method == 'POST':
+            form = CreatePublication(request.POST)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect(place_url + str(place.pk))
+            else:
+                return render(request, 'process/create_publication_step_2.html', {'form': form})
+        else:
+            form = CreatePublication(initial={'place': place})
+            return render(request,'process/create_publication_step_2.html',{'form': form})
 
 # def feeds(request):
 #     bezirke = Bezirk.objects.all()
 #     return render(request,'core/feeds.html',{'bezirke': bezirke})
-
-# @login_required
-# def create_veroeffentlichung(request):
-#     orte_id = request.GET.get('orte_id', None)
-
-#     if orte_id == None:
-#         form = FindOrt()
-#         return render(request, 'core/create_veroeffentlichung_step1.html', {'form':form})
-
-#     else:
-#         ort = Ort.objects.get(pk=orte_id)
-
-#         if request.method == 'POST':
-#             form = CreateVeroeffentlichung(request.POST)
-#             if form.is_valid():
-#                 form.save()
-#                 return HttpResponseRedirect('/orte/' + str(ort.pk))
-#             else:
-#                 return render(request, 'core/create_veroeffentlichung_step2.html', {'form':form})
-#         else:
-#             form = CreateVeroeffentlichung(initial={'ort': ort})
-#             return render(request,'core/create_veroeffentlichung_step2.html',{'form':form})
 
 # class VeroeffentlichungenFeedMimeType(Rss201rev2Feed):
 #     mime_type = 'application/xml'
