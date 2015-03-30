@@ -79,6 +79,7 @@ a:hover,
 .sitenav li {
     display: inline;
     list-style: none;
+    margin-right: 20px;
 }
 .sitenav li:last-child {
     margin-right: 0;
