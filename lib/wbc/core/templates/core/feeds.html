@@ -10,16 +10,16 @@
     <div class="col-sm-10">
         <ul class="list-unstyled feed-list">
             <li>
-                <a href="{% url "feedsurl" %}">
+                <a href="{{publication_feed_url}}">
                     <img src="{% static 'img/rss-feed-icon.png' %}">
                     <span>Alle Bezirke</span>
                 </a>
             </li>
-            {% for bezirk in bezirke %}
+            {% for entity in entities %}
             <li>
-                <a href="{% url "feedsurl" %}?bezirk={{ bezirk.name }}">
+                <a href="{{publication_feed_url}}?bezirk={{ entity.name }}">
                     <img src="{% static 'img/rss-feed-icon.png' %}">
-                    <span>{{ bezirk.name }}</span>
+                    <span>{{ entity.name }}</span>
                 </a>
             </li>
             {% endfor %}

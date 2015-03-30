@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings
 from django.shortcuts import render,get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib.syndication.views import Feed
+from django.utils.feedgenerator import Rss201rev2Feed
 from django.http import HttpResponseRedirect, HttpResponse
 from rest_framework import viewsets
 
+from wbc.region.models import District
 from wbc.comments.models import Comment
 from wbc.comments.forms import CommentForm
 from models import *
@@ -76,44 +80,40 @@ def create_publication(request):
             form = CreatePublication(initial={'place': place})
             return render(request,'process/create_publication_step_2.html',{'form': form})
 
-# def feeds(request):
-#     bezirke = Bezirk.objects.all()
-#     return render(request,'core/feeds.html',{'bezirke': bezirke})
+class PublicationFeedMimeType(Rss201rev2Feed):
+    mime_type = 'application/xml'
 
-# class VeroeffentlichungenFeedMimeType(Rss201rev2Feed):
-#     mime_type = 'application/xml'
+class PublicationFeed(Feed):
+    title = settings.FEED_TITLE
+    description = settings.FEED_DESCRIPTION
+    link = settings.SITE_URL
+    feed_url = '/feeds/'
+    feed_type = PublicationFeedMimeType
 
-# class VeroeffentlichungenFeed(Feed):
-#     title = "Bürger baut Stadt (Veröffentlichungen)"
-#     description = "Veröffentlichungen zu Bauvorhaben in Berlin"
-#     link = settings.SITE_URL
-#     feed_url = settings.SITE_URL + "/veroeffentlichungen/feed/"
-#     feed_type = VeroeffentlichungenFeedMimeType
+    def get_object(self, request):
+        if 'bezirk' in request.GET:
+            district = request.GET['bezirk']
+            try:
+                District.objects.get(name=district)
+            except District.DoesNotExist:
+                raise Http404
+            return Publication.objects.filter(place__entities__name=district)
+        return Publication.objects
 
-#     def get_object(self, request):
-#         if 'bezirk' in request.GET:
-#             bezirk = request.GET['bezirk']
-#             try:
-#                 Bezirk.objects.get(name=bezirk)
-#             except Bezirk.DoesNotExist:
-#                 raise Http404
-#             return Veroeffentlichung.objects.filter(ort__bezirke__name=bezirk)
-#         return Veroeffentlichung.objects
+    def items(self, objs):
+        return objs.order_by('-created')[:10]
 
-#     def items(self, objs):
-#         return objs.order_by('-created')[:10]
+    def item_title(self, item):
+        return item.process_step.process_type.name + ': ' +  item.process_step.name + ' (' + item.place.identifier + ', ' + item.place.entities.all()[0].name + ')'
 
-#     def item_title(self, item):
-#         return item.verfahrensschritt.verfahren.name + ': ' +  item.verfahrensschritt.name + ' (' + item.ort.bezeichner + ', ' + item.ort.bezirke.all()[0].name + ')'
+    def item_description(self, item):
+        return item.description
 
-#     def item_description(self, item):
-#         return item.beschreibung
+    def item_guid(self, item):
+        return str(item.pk)
 
-#     def item_guid(self, item):
-#         return str(item.pk)
+    def item_pubdate(self, item):
+        return item.created
 
-#     def item_pubdate(self, item):
-#         return item.created
-
-#     def item_link(self, item):
-#         return settings.SITE_URL + '/orte/' + str(item.ort.pk)
+    def item_link(self, item):
+        return settings.SITE_URL + reverse('wbc.process.views.place', args=[item.place.pk])
