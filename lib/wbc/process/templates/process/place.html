@@ -10,14 +10,14 @@
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/OSMBuildings-Leaflet.js' %}"  ></script>
     <script type="text/javascript">
+        var _tiles_url = "{{tiles_url}}";
+        var _tiles_opt = {{tiles_opt|safe}};
+        var _default_view = {{default_view|safe}};
+
         var _lon = {{ place.lon|stringformat:"F" }};
         var _lat = {{ place.lat|stringformat:"F" }};
-        {% if place.polygon %}
-        var _polygon = {{place.polygon}};
-        var _polygontype = '{{place.polygontype}}'
-        {% endif %}
+        // var _polygon = {{place.polygon|safe}};
     </script>
-    <script type="text/javascript" src="{% static 'options.js' %}" ></script>
     <script type="text/javascript" src="{% static 'localmap.js' %}" ></script>
 {% endblock %}
 

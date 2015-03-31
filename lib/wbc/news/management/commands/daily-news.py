@@ -37,9 +37,9 @@ class Command(BaseCommand):
             # an zu verschickende News anhängen
             news[subscriber.email] = news_items
 
-        # get the link for places the unsubscribe from a reverse url lookup
-        place_link = reverse('wbc.process.views.place',args=['.']).strip('.')
-        unsubscribe_link = reverse('wbc.news.views.unsubscribe',args=['.']).strip('.')
+        # get the path for places the unsubscribe from a reverse url lookup
+        place_path = reverse('wbc.process.views.place',args=['.']).strip('.')
+        unsubscribe_path = reverse('wbc.news.views.unsubscribe',args=['.']).strip('.')
 
         i = 0
         for email in news:
@@ -49,8 +49,8 @@ class Command(BaseCommand):
 
                 send_mail(email, 'news/mail/newsletter.html', {
                     'publications': news[email],
-                    'place_link': settings.SITE_URL + place_link,
-                    'unsubscribe_link': settings.SITE_URL + unsubscribe_link + email
+                    'place_link': settings.SITE_URL + place_path,
+                    'unsubscribe_link': settings.SITE_URL + unsubscribe_path + email
                 })
 
         # store information about this newsletter in the database

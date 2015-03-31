@@ -1,30 +1,47 @@
 # -*- coding: utf-8 -*-
+from django.core.urlresolvers import reverse
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
+from wbc.region.serializers import DistrictSerializer,DepartmentSerializer
 from models import *
-
-class PlaceSerializer(GeoFeatureModelSerializer):
-
-    point = serializers.SerializerMethodField('point_serializer_method')
-
-    def point_serializer_method(self, obj):
-        return {'type': 'point', 'coordinates': [obj.lat,obj.lon]}
-
-    class Meta:
-        depth = 1
-        model = Place
-        geo_field = 'point'
-        fields = ('id','identifier','address','description','entities','point')
-
-class PublicationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Publication
-
-class ProcessStepSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProcessStep
 
 class ProcessTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProcessType
+        fields = ('id','name','description')
+
+class ProcessStepSerializer(serializers.ModelSerializer):
+    link = serializers.SerializerMethodField('link_serializer_method')
+    process_type = ProcessTypeSerializer()
+
+    def link_serializer_method(self, obj):
+        return reverse('wbc.process.views.process') + '#' + str(obj.id)
+
+    class Meta:
+        model = ProcessStep
+        fields = ('id','name','description','icon','hover_icon','order','link','process_type')
+
+class PublicationSerializer(serializers.ModelSerializer):
+    process_step = ProcessStepSerializer()
+    department = DepartmentSerializer()
+    class Meta:
+        model = Publication
+        fields = ('id','begin','end','office','office_hours','link','process_step','place','department')
+
+class PlaceSerializer(GeoFeatureModelSerializer):
+
+    point = serializers.SerializerMethodField('point_serializer_method')
+    link = serializers.SerializerMethodField('link_serializer_method')
+    publications = PublicationSerializer(many=True)
+
+    def point_serializer_method(self, obj):
+        return {'type': 'point', 'coordinates': [obj.lon,obj.lat]}
+
+    def link_serializer_method(self, obj):
+        return reverse('wbc.process.views.place',args=[obj.id])
+
+    class Meta:
+        model = Place
+        geo_field = 'point'
+        fields = ('id','identifier','address','description','entities','point','publications','link')
