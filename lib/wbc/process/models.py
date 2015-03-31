@@ -6,12 +6,14 @@ from wbc.region.models import Entity,Department
 
 class Place(Model):
     identifier  = models.CharField(blank=True, max_length=64, verbose_name="Bezeichner", help_text="ggf. Bezeichner des Beplauungsplans")
-    address     = models.CharField(max_length=256, verbose_name="Adresse", help_text="Eine genaue Adresse des Vorhabens")
+    address     = models.CharField(max_length=256, blank=True, verbose_name="Adresse", help_text="Eine genaue Adresse des Vorhabens")
     description = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Örtliche Beschreibung")
-    entities    = models.ManyToManyField(Entity, verbose_name="Einheit", related_name='places')
+    entities    = models.ManyToManyField(Entity, blank=True, verbose_name="Einheit", related_name='places')
     lat         = models.FloatField(verbose_name="Breitengrad")
     lon         = models.FloatField(verbose_name="Längengrad")
     polygon     = models.TextField(null=True, blank=True)
+    active      = models.NullBooleanField(null=True)
+    link        = models.URLField(blank=True)
 
     def __unicode__(self):
         if self.identifier:
