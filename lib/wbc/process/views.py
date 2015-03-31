@@ -6,7 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.http import HttpResponseRedirect, HttpResponse
+
 from rest_framework import viewsets
+from rest_framework.response import Response
 
 from wbc.region.models import District
 from wbc.comments.models import Comment
@@ -15,27 +17,57 @@ from models import *
 from serializers import *
 from forms import *
 
-class PlaceViewSet(viewsets.ModelViewSet):
-    serializer_class = PlaceSerializer
-    queryset = Place.objects.all()
+class PlaceViewSet(viewsets.ViewSet):
+
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(request, queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = self.get_queryset()
+        instance = get_object_or_404(queryset, pk=pk)
+        serializer = self.get_serializer(request, instance)
+        return Response(serializer.data)
 
     def get_queryset(self):
         queryset = Place.objects.all()
-        active = self.request.QUERY_PARAMS.get('active', None)
-        print active
+        active = self.request.query_params.get('active', None)
+
         if active is not None:
             queryset = queryset.filter(active=active)
         return queryset
 
-class PublicationViewSet(viewsets.ModelViewSet):
+    def get_serializer(self, request, queryset, **kwargs):
+
+        internal = self.request.query_params.get('internal', None)
+        geometry = self.request.query_params.get('geometry', None)
+
+        if geometry == 'point':
+            if internal:
+                return InternalPlacePointSerializer(queryset, **kwargs)
+            else:
+                return PlacePointSerializer(queryset, **kwargs)
+        elif geometry == 'polygon':
+            if internal:
+                return InternalPlacePolygonSerializer(queryset, **kwargs)
+            else:
+                return PlacePolygonSerializer(queryset, **kwargs)
+        else:
+            if internal:
+                return InternalPlaceSerializer(queryset, **kwargs)
+            else:
+                return PlaceSerializer(queryset, **kwargs)
+
+class PublicationViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = PublicationSerializer
     queryset = Publication.objects.all()
 
-class ProcessStepViewSet(viewsets.ModelViewSet):
+class ProcessStepViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProcessStepSerializer
     queryset = ProcessStep.objects.all()
 
-class ProcessTypeViewSet(viewsets.ModelViewSet):
+class ProcessTypeViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProcessTypeSerializer
     queryset = ProcessType.objects.all()
 
