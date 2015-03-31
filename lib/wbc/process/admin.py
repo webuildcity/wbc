@@ -5,9 +5,9 @@ from django.contrib import admin
 from models import *
 
 class PlaceAdmin(admin.ModelAdmin):
-    list_display = ('id','identifier','address')
-    list_display_links = ('id','identifier','address')
-    fields = ['address','entities','lat','lon','description','identifier','polygon']
+    list_display = ('id','identifier','address','active')
+    list_display_links = ('id','identifier','address','active')
+    fields = ['address','entities','lat','lon','description','identifier','link','polygon','active']
     ordering = ['id']
     change_form_template = "process/admin/change_form.html"
     add_form_template = "process/admin/change_form.html"

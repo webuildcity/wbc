@@ -12,7 +12,7 @@ class Place(Model):
     lat         = models.FloatField(verbose_name="Breitengrad")
     lon         = models.FloatField(verbose_name="Längengrad")
     polygon     = models.TextField(null=True, blank=True)
-    active      = models.NullBooleanField(null=True)
+    active      = models.BooleanField()
     link        = models.URLField(blank=True)
 
     def __unicode__(self):

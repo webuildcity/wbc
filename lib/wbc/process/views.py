@@ -19,6 +19,14 @@ class PlaceViewSet(viewsets.ModelViewSet):
     serializer_class = PlaceSerializer
     queryset = Place.objects.all()
 
+    def get_queryset(self):
+        queryset = Place.objects.all()
+        active = self.request.QUERY_PARAMS.get('active', None)
+        print active
+        if active is not None:
+            queryset = queryset.filter(active=active)
+        return queryset
+
 class PublicationViewSet(viewsets.ModelViewSet):
     serializer_class = PublicationSerializer
     queryset = Publication.objects.all()
