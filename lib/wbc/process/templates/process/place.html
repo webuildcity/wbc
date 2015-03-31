@@ -17,7 +17,7 @@
 
         var _lon = {{ place.lon|stringformat:"F" }};
         var _lat = {{ place.lat|stringformat:"F" }};
-        // var _polygon = {{place.polygon|safe}};
+        var _polygon = {{place.polygon|safe}};
     </script>
     <script type="text/javascript" src="{% static 'placemap.js' %}" ></script>
 {% endblock %}
