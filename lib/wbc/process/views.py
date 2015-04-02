@@ -39,25 +39,25 @@ class PlaceViewSet(viewsets.ViewSet):
         return queryset
 
     def get_serializer(self, request, queryset, **kwargs):
-
-        internal = self.request.query_params.get('internal', None)
         geometry = self.request.query_params.get('geometry', None)
 
         if geometry == 'point':
-            if internal:
-                return InternalPlacePointSerializer(queryset, **kwargs)
-            else:
-                return PlacePointSerializer(queryset, **kwargs)
+            return PlacePointSerializer(queryset, **kwargs)
         elif geometry == 'polygon':
-            if internal:
-                return InternalPlacePolygonSerializer(queryset, **kwargs)
-            else:
-                return PlacePolygonSerializer(queryset, **kwargs)
+            return PlacePolygonSerializer(queryset, **kwargs)
         else:
-            if internal:
-                return InternalPlaceSerializer(queryset, **kwargs)
-            else:
-                return PlaceSerializer(queryset, **kwargs)
+            return PlaceSerializer(queryset, **kwargs)
+
+class ListViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = ListSerializer
+    queryset = Place.objects.all()
+
+    paginate_by = 10
+    paginate_by_param = 'page_size'
+
+class MapViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = MapSerializer
+    queryset = Place.objects.all().filter(active=True)
 
 class PublicationViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = PublicationSerializer

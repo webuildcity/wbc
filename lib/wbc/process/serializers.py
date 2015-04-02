@@ -23,38 +23,13 @@ class ProcessStepSerializer(serializers.ModelSerializer):
         model = ProcessStep
         fields = ('id','name','description','icon','hover_icon','order','process_type','internal_link')
 
-class InternalProcessStepSerializer(serializers.ModelSerializer):
-    internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
-    process_type = serializers.SerializerMethodField('process_type_serializer_method')
-
-    def internal_link_serializer_method(self, obj):
-        return reverse('wbc.process.views.process') + '#' + str(obj.id)
-
-    def process_type_serializer_method(self, obj):
-        return obj.process_type.name
-
-    class Meta:
-        model = ProcessStep
-        fields = ('id','name','process_type','internal_link')
-
 class PublicationSerializer(serializers.ModelSerializer):
-    process_step_id = ProcessStepSerializer()
+    process_step = ProcessStepSerializer()
     department = DepartmentSerializer()
 
     class Meta:
         model = Publication
         fields = ('id','begin','end','office','office_hours','link','process_step','place','department')
-
-class InternalPublicationSerializer(serializers.ModelSerializer):
-    department = serializers.SerializerMethodField('department_serializer_method')
-    process_step = InternalProcessStepSerializer()
-
-    def department_serializer_method(self, obj):
-        return obj.department.name
-
-    class Meta:
-        model = Publication
-        fields = ('id','begin','end','process_step','department')
 
 class PlaceSerializer(serializers.ModelSerializer):
     point = serializers.SerializerMethodField('point_serializer_method')
@@ -71,21 +46,6 @@ class PlaceSerializer(serializers.ModelSerializer):
         model = Place
         fields = ('id','point','identifier','address','description','entities','publications','link','internal_link')
 
-class InternalPlaceSerializer(serializers.ModelSerializer):
-    point = serializers.SerializerMethodField('point_serializer_method')
-    internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
-    publications = InternalPublicationSerializer(many=True)
-
-    def point_serializer_method(self, obj):
-        return [obj.lon,obj.lat]
-
-    def internal_link_serializer_method(self, obj):
-        return reverse('wbc.process.views.place',args=[obj.id])
-
-    class Meta:
-        model = Place
-        fields = ('id','point','identifier','address','description','link','internal_link','publications')
-
 class PlacePointSerializer(GeoFeatureModelSerializer):
     point = serializers.SerializerMethodField('point_serializer_method')
     internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
@@ -101,18 +61,6 @@ class PlacePointSerializer(GeoFeatureModelSerializer):
         model = Place
         geo_field = 'point'
         fields = ('id','point','identifier','address','description','entities','publications','link','internal_link')
-
-class InternalPlacePointSerializer(GeoFeatureModelSerializer):
-
-    point = serializers.SerializerMethodField('point_serializer_method')
-
-    def point_serializer_method(self, obj):
-        return {'type': 'Point', 'coordinates': [obj.lon,obj.lat]}
-
-    class Meta:
-        model = Place
-        geo_field = 'point'
-        fields = ('id','point')
 
 class PlacePolygonSerializer(GeoFeatureModelSerializer):
 
@@ -138,21 +86,45 @@ class PlacePolygonSerializer(GeoFeatureModelSerializer):
         geo_field = 'polygon'
         fields = ('id','polygon','identifier','address','description','entities','point','publications','link','internal_link')
 
-class InternalPlacePolygonSerializer(GeoFeatureModelSerializer):
+class ListSerializer(serializers.ModelSerializer):
+    # entities = serializers.SerializerMethodField('entities_serializer_method')
+    internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
 
-    polygon = serializers.SerializerMethodField('polygon_serializer_method')
+    # def entities_serializer_method(self, obj):
+    #     return [obj]
+
+    def internal_link_serializer_method(self, obj):
+        return reverse('wbc.process.views.place',args=[obj.id])
+
+    class Meta:
+        model = Place
+        fields = ('id','identifier','address','entities','internal_link')
+
+class MapSerializer(serializers.ModelSerializer):
     point = serializers.SerializerMethodField('point_serializer_method')
-
-    def polygon_serializer_method(self, obj):
-        if obj.polygon:
-            return {'type': 'MultiPolygon', 'coordinates': json.loads(obj.polygon)}
-        else:
-            return {}
+    internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
+    publication = serializers.SerializerMethodField('publication_serializer_method')
 
     def point_serializer_method(self, obj):
         return [obj.lon,obj.lat]
 
+    def internal_link_serializer_method(self, obj):
+        return reverse('wbc.process.views.place',args=[obj.id])
+
+    def publication_serializer_method(self, obj):
+        last_publication = obj.publications.all()[0]
+        return {
+            'begin': last_publication.begin,
+            'end': last_publication.end,
+            'department': last_publication.department.name,
+            'process_step': {
+                'id': last_publication.process_step.id,
+                'name': last_publication.process_step.name,
+                'internal_link': reverse('wbc.process.views.process') + '#' + str(last_publication.process_step.id),
+                'process_type': last_publication.process_step.process_type.name
+            }
+        }
+
     class Meta:
         model = Place
-        geo_field = 'polygon'
-        fields = ('id','polygon','point')
+        fields = ('id','point','identifier','address','entities','publication','internal_link')
