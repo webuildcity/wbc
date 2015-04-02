@@ -5,7 +5,8 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -50,10 +51,18 @@ class PlaceViewSet(viewsets.ViewSet):
 
 class ListViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ListSerializer
-    queryset = Place.objects.all()
 
-    paginate_by = 10
+    paginate_by = 25
     paginate_by_param = 'page_size'
+
+    def get_queryset(self):
+        queryset = Place.objects.all()
+
+        search = self.request.query_params.get('search', None)
+        if search is not None:
+            queryset = queryset.filter(Q(identifier__icontains=search) | Q(address__icontains=search) | Q(entities__name__icontains=search))
+
+        return queryset
 
 class MapViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = MapSerializer

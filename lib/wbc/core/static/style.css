@@ -68,7 +68,6 @@ a:hover,
     background-color: white;
 }
 
-
 /* Sitenav */
 .sitenav {
     font-family: titillium;
@@ -124,15 +123,6 @@ a:hover,
     font-weight: normal;
 }
 
-#table {
-    margin-top: 20px;
-    margin-bottom: 40px;
-}
-.jk-table table {
-    background-color: white;
-}
-
-
 /* navbar */
 .navbar-brand {
     padding-top: 10px;
@@ -174,7 +164,6 @@ a:hover,
     padding-left: 10px;
 }
 
-
 /* wordpress stuff */
 .blog .post-footer {
     color: #646464;
@@ -203,15 +192,12 @@ a:hover,
 }
 
 /* ort */
-
-.place-buttons {
-    margin-top: 20px;
-}
-
 #place-map {
     height: 400px;
 }
-
+.place-buttons {
+    margin-top: 20px;
+}
 .place {
     margin-top: 20px;
     margin-bottom: 40px;
@@ -229,6 +215,30 @@ a:hover,
         font-size: 14px;
         color: #646464;
         line-height: 20px;
+    }
+}
+
+/* list */
+.list-header {
+    margin-top: 20px;
+}
+.list-header .pagination {
+    margin: 0;
+}
+.list-header p {
+    margin: 0;
+    line-height: 32px;
+    text-align: right;
+}
+@media (max-width: 768px) {
+    .list-header form {
+        margin-bottom: 20px;
+    }
+    .list-header .pagination {
+        float: left;
+    }
+    .list-table {
+        margin-top: 20px;
     }
 }
 

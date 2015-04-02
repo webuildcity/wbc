@@ -22,7 +22,7 @@ class Place(Model):
             return self.address
 
     class Meta:
-        ordering            = ("identifier",)
+        ordering            = ("-created",)
         verbose_name        = "Ort"
         verbose_name_plural = "Orte"
 

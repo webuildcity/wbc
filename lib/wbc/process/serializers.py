@@ -87,11 +87,11 @@ class PlacePolygonSerializer(GeoFeatureModelSerializer):
         fields = ('id','polygon','identifier','address','description','entities','point','publications','link','internal_link')
 
 class ListSerializer(serializers.ModelSerializer):
-    # entities = serializers.SerializerMethodField('entities_serializer_method')
+    entities = serializers.SerializerMethodField('entities_serializer_method')
     internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
 
-    # def entities_serializer_method(self, obj):
-    #     return [obj]
+    def entities_serializer_method(self, obj):
+        return ', '.join([entity.name for entity in obj.entities.all()])
 
     def internal_link_serializer_method(self, obj):
         return reverse('wbc.process.views.place',args=[obj.id])
