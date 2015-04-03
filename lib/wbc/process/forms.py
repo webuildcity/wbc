@@ -11,6 +11,7 @@ class FindPlace(forms.Form):
 class CreatePublication(ModelForm):
     class Meta:
         model = Publication
+        fields = '__all__'
 
 class CreatePlace(ModelForm):
     class Meta:

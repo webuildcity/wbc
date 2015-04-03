@@ -9,12 +9,13 @@ class PlaceAdmin(admin.ModelAdmin):
     list_display_links = ('id','identifier','address','active')
     fields = ['address','entities','lat','lon','description','identifier','link','polygon','active']
     ordering = ['id']
-    change_form_template = "process/admin/change_form.html"
-    add_form_template = "process/admin/change_form.html"
+    change_form_template = 'process/admin/change_form.html'
+    add_form_template = 'process/admin/change_form.html'
 
 class PublicationAdminForm(forms.ModelForm):
     class Meta:
         model = Publication
+        fields = '__all__'
 
     def __init__(self, *args, **kwds):
         super(PublicationAdminForm, self).__init__(*args, **kwds)
