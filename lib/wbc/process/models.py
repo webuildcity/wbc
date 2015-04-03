@@ -16,10 +16,13 @@ class Place(Model):
     link        = models.URLField(blank=True)
 
     def __unicode__(self):
+        strings = []
         if self.identifier:
-            return self.identifier + ', ' + self.address
-        else:
-            return self.address
+            strings.append(self.identifier)
+        if self.address:
+            strings.append(self.address)
+
+        return ', '.join(strings)
 
     class Meta:
         ordering            = ("-created",)
