@@ -112,18 +112,22 @@ class MapSerializer(serializers.ModelSerializer):
         return reverse('wbc.process.views.place',args=[obj.id])
 
     def publication_serializer_method(self, obj):
-        last_publication = obj.publications.all()[0]
-        return {
-            'begin': last_publication.begin,
-            'end': last_publication.end,
-            'department': last_publication.department.name,
-            'process_step': {
-                'id': last_publication.process_step.id,
-                'name': last_publication.process_step.name,
-                'internal_link': reverse('wbc.process.views.process') + '#' + str(last_publication.process_step.id),
-                'process_type': last_publication.process_step.process_type.name
+        publications = obj.publications.all()
+        if len(publications) > 0:
+            last_publication = obj.publications.all()[0]
+            return {
+                'begin': last_publication.begin,
+                'end': last_publication.end,
+                'department': last_publication.department.name,
+                'process_step': {
+                    'id': last_publication.process_step.id,
+                    'name': last_publication.process_step.name,
+                    'internal_link': reverse('wbc.process.views.process') + '#' + str(last_publication.process_step.id),
+                    'process_type': last_publication.process_step.process_type.name
+                }
             }
-        }
+        else:
+            return {}
 
     class Meta:
         model = Place
