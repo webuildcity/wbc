@@ -38,8 +38,8 @@ class Command(BaseCommand):
             news[subscriber.email] = news_items
 
         # get the path for places the unsubscribe from a reverse url lookup
-        place_path = reverse('wbc.process.views.place',args=['.']).strip('.')
-        unsubscribe_path = reverse('wbc.news.views.unsubscribe',args=['.']).strip('.')
+        place_path = reverse('wbc.process.views.place',args=['1']).strip('1')
+        unsubscribe_path = reverse('wbc.news.views.unsubscribe',args=['1']).strip('1')
 
         i = 0
         for email in news:
