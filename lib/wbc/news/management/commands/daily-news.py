@@ -10,10 +10,18 @@ from wbc.process.models import Publication
 from wbc.news.models import Subscriber, Newsletter
 from wbc.news.lib import send_mail
 
+# temporary fix for Django 1.8
+# http://stackoverflow.com/questions/29571606/django-not-able-to-render-context-when-in-shell
+from django.utils.translation import activate
+
 class Command(BaseCommand):
     help = u'Schickt die Newsletter-Mail für alle seit gestern eingetragenen Veröffentlichungen.'
 
     def handle(self, *args, **options):
+
+        # temporary fix for Django 1.8
+        activate('de')
+
         # get all publication since the last time a newsletter was send
         last = Newsletter.objects.all().aggregate(Max('send'))
         if last['send__max'] == None:
@@ -38,8 +46,8 @@ class Command(BaseCommand):
             news[subscriber.email] = news_items
 
         # get the path for places the unsubscribe from a reverse url lookup
-        place_path = reverse('wbc.process.views.place',args=['1']).strip('1')
-        unsubscribe_path = reverse('wbc.news.views.unsubscribe',args=['1']).strip('1')
+        place_path = reverse('wbc.process.views.place',args=['1']).rstrip('1/') + '/'
+        unsubscribe_path = reverse('wbc.news.views.unsubscribe',args=['1']).rstrip('1/') + '/'
 
         i = 0
         for email in news:
@@ -54,7 +62,7 @@ class Command(BaseCommand):
                 })
 
         # store information about this newsletter in the database
-        # Newsletter(send=now(),n=i).save()
+        Newsletter(send=now(),n=i).save()
 
         # print some output
         print i,"Mails gesendet."
