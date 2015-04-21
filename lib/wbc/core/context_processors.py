@@ -8,6 +8,8 @@ def settings(request):
         facebookapikey = ''
 
     return {
+        'site_title': django_settings.SITE_TITLE,
+        'site_url': django_settings.SITE_URL,
         'tiles_url': django_settings.TILES_URL,
         'tiles_opt': django_settings.TILES_OPT,
         'default_view': django_settings.DEFAULT_VIEW,

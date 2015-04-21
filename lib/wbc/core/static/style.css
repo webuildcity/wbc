@@ -68,6 +68,16 @@ a:hover,
     background-color: white;
 }
 
+/* brand */
+#brand img {
+    height: 65px;
+}
+@media (max-width: 992px) {
+    #brand img {
+        height: 55px;
+    }
+}
+
 /* Sitenav */
 .sitenav {
     font-family: titillium;

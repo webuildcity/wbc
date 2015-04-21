@@ -22,9 +22,6 @@ body {
     float: right;
 }
 @media (max-width: 992px) {
-    #brand img {
-        height: 55px;
-    }
     #header-left {
         margin-top: 5px;
     }

@@ -187,9 +187,6 @@ body, html {
 }
 
 @media (max-width: 992px) {
-    #brand img {
-        height: 55px;
-    }
     #header-left{
         top: 25px;
     }
