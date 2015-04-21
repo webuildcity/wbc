@@ -11,9 +11,6 @@ def send_mail(to, template, context):
     t = loader.get_template(template)
     c = Context(context)
 
-    for line in t:
-        print line.render(c)
-
     html_part = t.render(c)
     text_part = strip_tags(html_part)
 
@@ -22,4 +19,3 @@ def send_mail(to, template, context):
     msg = EmailMultiAlternatives(subject.strip(),body.strip(),settings.EMAIL_FROM,to)
 
     return msg.send()
-
