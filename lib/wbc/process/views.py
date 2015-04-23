@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 from django.conf import settings
 from django.shortcuts import render,get_object_or_404
 from django.core.urlresolvers import reverse
@@ -7,6 +8,7 @@ from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.http import HttpResponseRedirect
 from django.db.models import Q
+from django.utils.timezone import now
 
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -66,7 +68,8 @@ class ListViewSet(viewsets.ReadOnlyModelViewSet):
 
 class MapViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = MapSerializer
-    queryset = Place.objects.all().filter(active=True)
+    delta = now() - datetime.timedelta(days=100)
+    queryset = Place.objects.all().filter(publications__end__gte=delta)
 
 class PublicationViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = PublicationSerializer

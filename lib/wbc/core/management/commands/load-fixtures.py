@@ -10,6 +10,7 @@ fixtures = [
     'region/muncipalities.json',
     'region/districts.json',
     'region/departments.json',
+    'region/quarters.json',
     # process
     'process/places.json',
     'process/processtypes.json',
@@ -28,5 +29,8 @@ class Command(BaseCommand):
         fixture_dir = os.path.join(django_settings.SITE_ROOT,'fixtures')
 
         for fixture in fixtures:
-            self.stdout.write('Installing ' + fixture)
-            call_command("loaddata", os.path.join(fixture_dir,fixture))
+            filepath = os.path.join(fixture_dir,fixture)
+
+            if os.path.isfile(filepath):
+                self.stdout.write('Installing ' + fixture)
+                call_command("loaddata", filepath)
