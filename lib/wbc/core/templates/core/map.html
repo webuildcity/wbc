@@ -21,7 +21,7 @@
 {% block content %}
 <div ng-app="map" ng-controller="MapController">
 
-    <div class="container" >
+    <div class="container" ng-class="{'hidden-xs': !map}">
         <div id="buttons-left">
             <i id="zoom-in" class="fa fa-2x fa-plus-square-o" ng-click="zoomIn()"></i>
             <i id="zoom-out" class="fa fa-2x fa-minus-square-o" ng-click="zoomOut()"></i>
@@ -29,9 +29,9 @@
         <div id="buttons-right"></div>
     </div>
 
-    <div id="map"></div>
+    <div id="map" ng-class="{'hidden-xs': !map}"></div>
 
-    <div id="footer">
+    <div id="footer" ng-class="{'hidden-xs': !map}">
         <div class="container">
             <div id="footer-left">
             </div>
@@ -48,7 +48,7 @@
 
     </div>
 
-    <div id="info">
+    <div id="info" ng-class="{'hidden-xs': map}">
         {% include "core/map_info.html"%}
     </div>
 

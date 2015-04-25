@@ -70,6 +70,17 @@ body, html {
 #buttons-right div {
     margin-top: 20px;
 }
+@media (max-width: 992px) {
+    #header-left{
+        top: 25px;
+    }
+}
+@media (max-width: 768px) {
+    #buttons-left,
+    #buttons-right {
+        top: 0;
+    }
+}
 
 /* navbar */
 
@@ -90,7 +101,7 @@ body, html {
     color: #de6a00;
 }
 
-/* the canvas for the map */
+/* the canvas for the map and the zoom buttons */
 
 #map {
     position: absolute;
@@ -100,9 +111,6 @@ body, html {
     right: 0;
     z-index: 0;
 }
-
-/* zoom buttons */
-
 #zoom-in,
 #zoom-out {
     line-height: 30px;
@@ -157,6 +165,14 @@ body, html {
     font-family: titillium;
     font-size: 20px;
 }
+@media (max-width: 768px) {
+    #info {
+        position: relative;
+    }
+    .info-link .glyphicon {
+        display: none;
+    }
+}
 
 /* misc */
 
@@ -168,7 +184,6 @@ body, html {
     margin-top: 20px;
     margin-bottom: 20px;
 }
-
 .responsive-video iframe{
     position: absolute;
     top: 0;
@@ -176,29 +191,10 @@ body, html {
     width: 100%;
     height: 100%;
 }
-
 .sep60 {
     height: 60px;
 }
-
 .link {
     color: #de6a00;
     font-family: titillium;
-}
-
-@media (max-width: 992px) {
-    #header-left{
-        top: 25px;
-    }
-}
-
-@media (max-width: 768px) {
-    #buttons-left,
-    #buttons-right {
-        top: 0;
-    }
-
-    .info-link .glyphicon {
-        display: none;
-    }
 }
