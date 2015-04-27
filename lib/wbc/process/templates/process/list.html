@@ -18,11 +18,11 @@
             <h2>Liste</h2>
             <div class="row">
                 <div class="col-md-9">
-                     {% include "process/list_info.html" %}
+                    {% include "process/list_info.html" %}
                 </div>
             </div>
             <div infinite-scroll="loadMoreItems()" infinite-scroll-distance="0.1">
-                <list></list>
+                {% include "process/list_directive.html" %}
             </div>
     </div>
 {% endblock %}
