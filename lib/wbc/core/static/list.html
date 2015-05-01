@@ -22,18 +22,21 @@
 <table class="table list-table">
     <thead>
         <tr>
-            <th style="width: 10%;">Bezeichner</th>
-            <th style="width: 40%;">Adresse</th>
-            <th style="width: 30%;">{{entity}}</th>
-            <th style="width: 5%;"></th>
+            <th>Bezeichner</th>
+            <th class="hidden-xs">Adresse</th>
+            <th class="hidden-xs">{{entity}}</th>
+            <th class="hidden-xs"></th>
+            <th class="visible-xs">Adresse, {{entity}}</th>
         </tr/>
     </thead>
     <tbody>
         <tr ng-repeat="(iRow,row) in data.rows">
-            <td>{{row.identifier}}</td>
-            <td>{{row.address}}</td>
-            <td>{{row.entities}}</td>
-            <td><a href="{{row.internal_link}}" target="_blank">Details</td>
+            <td class="hidden-xs"></td>
+            <td class="visible-xs"><a href="{{row.internal_link}}">{{row.identifier}}</a></td>
+            <td class="hidden-xs">{{row.address}}</td>
+            <td class="hidden-xs">{{row.entities}}</td>
+            <td class="hidden-xs"><a href="{{row.internal_link}}" target="_blank">Details</a></td>
+            <td class="visible-xs">{{row.address}}<br/>{{row.entities}}</td>
         </tr>
     </tbody>
 </table>
