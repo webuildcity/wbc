@@ -31,7 +31,7 @@
     </thead>
     <tbody>
         <tr ng-repeat="(iRow,row) in data.rows">
-            <td class="hidden-xs"></td>
+            <td class="hidden-xs">{{row.identifier}}</td>
             <td class="visible-xs"><a href="{{row.internal_link}}">{{row.identifier}}</a></td>
             <td class="hidden-xs">{{row.address}}</td>
             <td class="hidden-xs">{{row.entities}}</td>
