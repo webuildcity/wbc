@@ -166,11 +166,11 @@ body, html {
     font-size: 20px;
 }
 @media (max-width: 768px) {
-    #info {
-        position: relative;
-    }
     .info-link .glyphicon {
         display: none;
+    }
+    #info.up {
+        top: 50px;
     }
 }
 
