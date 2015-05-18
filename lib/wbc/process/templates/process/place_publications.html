@@ -55,6 +55,12 @@
             {{ publication.office_hours }}
         </p>
         {% endif %}
+
+        {% if publication.is_active and publication.process_step.participation  %}
+        <p>
+            <a href="/veroeffentlichungen/{{ publication.pk }}" target="_blank">Jetzt beteiligen</a>
+        </p>
+        {% endif %}
         {% if publication.link %}
         <p>
             <a href="{{ publication.link }}" target="_blank">Link zur Seite</a>
