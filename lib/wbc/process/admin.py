@@ -3,6 +3,7 @@ from django import forms
 from django.contrib import admin
 
 from models import *
+from forms import ProcessstepForm
 
 class PlaceAdmin(admin.ModelAdmin):
     list_display = ('id','identifier','address','active')
@@ -28,6 +29,7 @@ class PublicationAdmin(admin.ModelAdmin):
     form = PublicationAdminForm
 
 class ProcessStepAdmin(admin.ModelAdmin):
+    form = ProcessstepForm
     list_display = ('id','name','order','process_type')
     list_display_links = ('id','name','order','process_type')
     ordering = ['id']
@@ -41,3 +43,4 @@ admin.site.register(Place, PlaceAdmin)
 admin.site.register(Publication, PublicationAdmin)
 admin.site.register(ProcessStep, ProcessStepAdmin)
 admin.site.register(ProcessType, ProcessTypeAdmin)
+admin.site.register(Participation)
