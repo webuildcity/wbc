@@ -9,9 +9,14 @@ from django.utils.feedgenerator import Rss201rev2Feed
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.utils.timezone import now
+from django.contrib.contenttypes.models import ContentType
+from django.views.generic.edit import CreateView
+
 
 from rest_framework import viewsets
 from rest_framework.response import Response
+
+from participation.models import *
 
 from wbc.region.models import District
 from wbc.comments.models import Comment
@@ -51,6 +56,7 @@ class PlaceViewSet(viewsets.ViewSet):
         else:
             return PlaceSerializer(queryset, **kwargs)
 
+
 class ListViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ListSerializer
 
@@ -66,52 +72,90 @@ class ListViewSet(viewsets.ReadOnlyModelViewSet):
 
         return queryset
 
+
 class MapViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = MapSerializer
     delta = now() - datetime.timedelta(days=100)
     queryset = Place.objects.all().filter(publications__end__gte=delta)
 
+
 class PublicationViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = PublicationSerializer
     queryset = Publication.objects.all()
+
 
 class ProcessStepViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProcessStepSerializer
     queryset = ProcessStep.objects.all()
 
+
 class ProcessTypeViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProcessTypeSerializer
     queryset = ProcessType.objects.all()
 
+
 def process(request):
     process_types = ProcessType.objects.all()
-    return render(request,'process/process.html',{'process_types': process_types})
+    return render(request, 'process/process.html', {'process_types': process_types})
+
 
 def place(request, pk):
-    p = get_object_or_404(Place, id = int(pk))
+    p = get_object_or_404(Place, id=int(pk))
 
     if request.method == 'POST':
         if len(request.POST["author_email1"]) == 0:
             form = CommentForm(request.POST)
             if form.is_valid():
                 comment = form.save(commit=False)
-                comment.enabled = True;
+                comment.enabled = True
                 comment.place = p
                 comment.save()
 
-    return render(request,'process/place.html',{
+    return render(request, 'process/place.html', {
         'place': p,
-        'comments': Comment.objects.filter(place_id = int(pk), enabled = True),
+        'comments': Comment.objects.filter(place_id=int(pk), enabled=True),
         'process_link': reverse('wbc.process.views.process'),
         'new_publication_link': reverse('wbc.process.views.create_publication')
     })
 
+
+class createParticipation(CreateView):
+    fields = '__all__'
+
+    def get_template_names(self):
+        path = 'process/publication.html'
+        template_list = []
+        template_list.append(path)
+        return template_list
+
+    def get_queryset(self):
+        publication = Publication.objects.get(pk=self.kwargs['pk'])
+        querystring = publication.process_step.participation
+        participation = get_object_or_404(ContentType, app_label='participation', model=querystring)
+        participationclass = participation.model_class()
+        return participationclass.objects.all()
+
+    def get_initial(self):
+        publication = Publication.objects.get(pk=self.kwargs['pk'])
+        return {'publication': publication}
+
+    def get_context_data(self, **kwargs):
+        context = super(createParticipation, self).get_context_data(**kwargs)
+        context['publication'] = Publication.objects.get(pk=self.kwargs['pk'])
+        return context
+
+    def get_success_url(self):
+        publication = Publication.objects.get(pk=self.kwargs['pk'])
+        return '/veroeffentlichungen/%s/' %(publication.pk)
+
+
+
 @login_required
 def create_publication(request):
     place_id = request.GET.get('place_id', None)
-    place_url = reverse('wbc.process.views.place',args=['1'])[:-2]
+    place_url = reverse('wbc.process.views.place', args=['1'])[:-2]
 
-    if place_id == None:
+    if place_id is None:
         form = FindPlace()
         return render(request, 'process/create_publication_step_1.html', {
             'form': form,
@@ -130,10 +174,12 @@ def create_publication(request):
                 return render(request, 'process/create_publication_step_2.html', {'form': form})
         else:
             form = CreatePublication(initial={'place': place})
-            return render(request,'process/create_publication_step_2.html',{'form': form})
+            return render(request, 'process/create_publication_step_2.html', {'form': form})
+
 
 class PublicationFeedMimeType(Rss201rev2Feed):
     mime_type = 'application/xml'
+
 
 class PublicationFeed(Feed):
     title = settings.FEED_TITLE
@@ -156,7 +202,7 @@ class PublicationFeed(Feed):
         return objs.order_by('-created')[:10]
 
     def item_title(self, item):
-        return item.process_step.process_type.name + ': ' +  item.process_step.name + ' (' + item.place.identifier + ', ' + item.place.entities.all()[0].name + ')'
+        return item.process_step.process_type.name + ': ' + item.process_step.name + ' (' + item.place.identifier + ', ' + item.place.entities.all()[0].name + ')'
 
     def item_description(self, item):
         return item.description
