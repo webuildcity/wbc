@@ -207,7 +207,20 @@ class PublicationFeed(Feed):
         return objs.order_by('-created')[:10]
 
     def item_title(self, item):
-        return item.process_step.process_type.name + ': ' + item.process_step.name + ' (' + item.place.identifier + ', ' + item.place.entities.all()[0].name + ')'
+        title = item.process_step.process_type.name + ': ' +  item.process_step.name
+
+        l = []
+        if item.place.identifier != '':
+            l.append(item.place.identifier)
+
+        try:
+            l.append(item.place.entities.all()[0].name)
+        except IndexError:
+            pass
+
+        if l != []: title += ' (' + ', '.join(l) + ')'
+
+        return title
 
     def item_description(self, item):
         return item.description
