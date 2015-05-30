@@ -29,8 +29,10 @@ class CreatePlace(ModelForm):
 class ProcessstepForm(ModelForm):
     class Meta:
         CHOICES = ContentType.objects.all().filter(app_label='participation')
+        choices = list((x.model, x.name) for x in CHOICES)
+        choices.insert(0, ("", "--------------"))
         model = ProcessStep
         fields = '__all__'
         widgets = {
-            'participation': widgets.Select(choices=( (x.model, x.name) for x in CHOICES ))
+            'participation': widgets.Select(choices=choices)
         }
