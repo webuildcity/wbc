@@ -146,7 +146,12 @@ class createParticipation(CreateView):
 
     def get_success_url(self):
         publication = Publication.objects.get(pk=self.kwargs['pk'])
-        return '/veroeffentlichungen/%s/' %(publication.pk)
+        return '/veroeffentlichungen/%s/' % (publication.pk)
+
+    def get_form(self, form_class):
+        form = super(createParticipation, self).get_form(form_class)
+        form.fields['publication'].widget.attrs['disabled'] = True
+        return form
 
 
 
