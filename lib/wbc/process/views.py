@@ -163,9 +163,9 @@ class PublicationFeed(Feed):
             l.append(item.place.identifier)
 
         try:
-                l.append(item.place.entities.all()[0].name)
-            except IndexError:
-                pass
+            l.append(item.place.entities.all()[0].name)
+        except IndexError:
+            pass
 
         if l != []: title += ' (' + ', '.join(l) + ')'
 
