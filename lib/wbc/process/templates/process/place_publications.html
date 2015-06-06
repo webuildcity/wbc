@@ -7,14 +7,6 @@
 
     {% for publication in place.publications.all %}
 
-    {% if user.is_authenticated %}
-    <div class="row">
-        <div class="col-sm-12">
-            <a  target="_blank" class="btn btn-primary pull-right" href="/admin/process/publication/{{publication.pk}}">Veröffentlichung bearbeiten</a>
-        </div>
-    </div>
-    {% endif %}
-
     {% if forloop.counter != 1 %}
     <hr style="visible-xs" />
     {% endif %}
@@ -64,6 +56,11 @@
             <a href="{{ publication.department.link }}">Link zur verantwortlichen Behörde</a>
         </p>
 
+        {% if user.is_authenticated %}
+        <p><strong>
+            <a href="/admin/process/publication/{{publication.pk}}">Veröffentlichung bearbeiten</a>
+        </p></strong>
+        {% endif %}
     </div>
 
     {% endfor %}

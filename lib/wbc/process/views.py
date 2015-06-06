@@ -2,13 +2,14 @@
 import datetime
 from django.conf import settings
 from django.shortcuts import render,get_object_or_404
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse,reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.utils.timezone import now
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -82,6 +83,21 @@ class ProcessStepViewSet(viewsets.ReadOnlyModelViewSet):
 class ProcessTypeViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProcessTypeSerializer
     queryset = ProcessType.objects.all()
+
+@login_required
+class PlaceCreate(CreateView):
+    model = Place
+    fields = '__all__'
+
+@login_required
+class PlaceUpdate(UpdateView):
+    model = Place
+    fields = '__all__'
+
+@login_required
+class PlaceDelete(DeleteView):
+    model = Place
+    success_url = reverse_lazy('places')
 
 def process(request):
     process_types = ProcessType.objects.all()
@@ -182,18 +198,3 @@ class PublicationFeed(Feed):
 
     def item_link(self, item):
         return settings.SITE_URL + reverse('wbc.process.views.place', args=[item.place.pk])
-
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.core.urlresolvers import reverse_lazy
-
-class PlaceCreate(CreateView):
-    model = Place
-    fields = '__all__'
-
-class PlaceUpdate(UpdateView):
-    model = Place
-    fields = '__all__'
-
-class PlaceDelete(DeleteView):
-    model = Place
-    success_url = reverse_lazy('places')
