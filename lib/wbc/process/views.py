@@ -182,3 +182,18 @@ class PublicationFeed(Feed):
 
     def item_link(self, item):
         return settings.SITE_URL + reverse('wbc.process.views.place', args=[item.place.pk])
+
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.urlresolvers import reverse_lazy
+
+class PlaceCreate(CreateView):
+    model = Place
+    fields = '__all__'
+
+class PlaceUpdate(UpdateView):
+    model = Place
+    fields = '__all__'
+
+class PlaceDelete(DeleteView):
+    model = Place
+    success_url = reverse_lazy('places')

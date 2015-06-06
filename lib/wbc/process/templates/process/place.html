@@ -29,9 +29,8 @@
         {% if user.is_authenticated %}
         <div class="row place-buttons">
             <div class="col-sm-12">
-                <a target="_blank" href="/admin/process/place/{{ place.pk }}/" class="btn btn-primary">
-                    Ort bearbeiten
-                </a>
+                <a href="bearbeiten" class="btn btn-primary">Ort bearbeiten</a>
+                <a href="entfernen" class="btn btn-primary">Ort entfernen</a>
                 <a href="{{new_publication_link}}?place_id={{place.pk}}" class="btn btn-primary">
                     Neue Veröffentlichung hinzufügen
                 </a>

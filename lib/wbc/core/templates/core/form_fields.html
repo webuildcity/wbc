@@ -1,10 +1,6 @@
-{% extends "core/page.html" %}
 {% load widget_tweaks %}
 {% load i18n %}
-{% load staticfiles %}
 
-{% block page %}
-<form action="" method="post" class="form" role="form">{% csrf_token %}
 {% for field in form %}
  <div class="form-group{% if field.errors %} has-error{% endif %}">
         <label>
@@ -28,8 +24,4 @@
             </div>
         </div>
     </div>
-
 {% endfor %}
-<input class="btn btn-primary" type="submit" value="Submit" />
-</form>
-{% endblock%}

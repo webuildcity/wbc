@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.core.urlresolvers import reverse
 
 from wbc.core.models import Model
 from wbc.region.models import Entity,Department
@@ -14,6 +15,9 @@ class Place(Model):
     polygon     = models.TextField(null=True, blank=True)
     active      = models.BooleanField()
     link        = models.URLField(blank=True)
+
+    def get_absolute_url(self):
+        return reverse('place', kwargs={'pk': self.pk})
 
     def __unicode__(self):
         strings = []
