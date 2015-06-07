@@ -44,8 +44,8 @@
             <div class="col-sm-3">
                 <h3>Admin</h3>
                 <ul class="list-unstyled">
-                    <li><strong><a href="bearbeiten">Ort bearbeiten</a></strong></li>
-                    <li><strong><a href="entfernen">Ort entfernen</a></strong></li>
+                    <li><strong><a href="{{ place.get_update_url }}">Ort bearbeiten</a></strong></li>
+                    <li><strong><a href="{{ place.get_delete_url }}">Ort entfernen</a></strong></li>
                     <li><strong><a href="{{new_publication_link}}?place_id={{place.pk}}">
                             Neue Veröffentlichung
                     </a></strong></li>

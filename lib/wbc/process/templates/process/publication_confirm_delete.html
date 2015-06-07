@@ -1,0 +1,10 @@
+{% extends "core/page.html" %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block page %}
+<form action="" method="post" class="form" role="form">{% csrf_token %}
+    <input class="btn btn-danger" type="submit" value="Veröffentlichung entfernen" />
+</form>
+{% endblock%}

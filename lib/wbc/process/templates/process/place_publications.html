@@ -57,9 +57,14 @@
         </p>
 
         {% if user.is_authenticated %}
-        <p><strong>
-            <a href="/admin/process/publication/{{publication.pk}}">Veröffentlichung bearbeiten</a>
-        </p></strong>
+        <strong>
+            <p>
+                <a href="{{ publication.get_update_url }}">Veröffentlichung bearbeiten</a>
+            </p>
+            <p>
+                <a href="{{ publication.get_delete_url }}">Veröffentlichung entfernen</a>
+            </p>
+        </strong>
         {% endif %}
     </div>
 

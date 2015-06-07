@@ -19,6 +19,12 @@ class Place(Model):
     def get_absolute_url(self):
         return reverse('place', kwargs={'pk': self.pk})
 
+    def get_update_url(self):
+        return reverse('place_update', kwargs={'pk': self.pk})
+
+    def get_delete_url(self):
+        return reverse('place_delete', kwargs={'pk': self.pk})
+
     def __unicode__(self):
         strings = []
         if self.identifier:
@@ -43,6 +49,15 @@ class Publication(Model):
     office_hours = models.TextField(blank=True, verbose_name="Öffnungszeiten der Auslegungsstelle")
     department   = models.ForeignKey(Department, verbose_name="Verantwortliche Behörde")
     link         = models.URLField(blank=True)
+
+    def get_absolute_url(self):
+        return reverse('place', kwargs={'pk': self.place.pk})
+
+    def get_update_url(self):
+        return reverse('publication_update', kwargs={'pk': self.pk})
+
+    def get_delete_url(self):
+        return reverse('publication_delete', kwargs={'pk': self.pk})
 
     def __unicode__(self):
         return unicode(self.place) + ', ' + self.process_step.name
