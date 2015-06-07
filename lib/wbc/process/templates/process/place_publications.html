@@ -57,14 +57,10 @@
         </p>
 
         {% if user.is_authenticated %}
-        <strong>
-            <p>
-                <a href="{{ publication.get_update_url }}">Veröffentlichung bearbeiten</a>
-            </p>
-            <p>
-                <a href="{{ publication.get_delete_url }}">Veröffentlichung entfernen</a>
-            </p>
-        </strong>
+        <ul class="list-unstyled admin-area">
+            <li><a href="{{ publication.get_update_url }}">Veröffentlichung bearbeiten</a></li>
+            <li><a href="{{ publication.get_delete_url }}">Veröffentlichung entfernen</a></li>
+        </ul>
         {% endif %}
     </div>
 

@@ -20,7 +20,17 @@
                 <div class="col-md-9">
                      {% include "process/list_info.html" %}
                 </div>
+                {% if user.is_authenticated %}
+                <div class="col-md-3">
+                    <ul class="list-unstyled admin-area">
+                        <li>
+                            <a class="admin-link" href="{{ new_place_link }}">Neuen Ort anlegen</a>
+                        </li>
+                    </ul>
+                </div>
+                {% endif %}
             </div>
+
             <div infinite-scroll="loadMoreItems()" infinite-scroll-distance="0.1">
                 {% include "process/list_directive.html" %}
             </div>

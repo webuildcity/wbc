@@ -9,17 +9,18 @@ from django.utils.feedgenerator import Rss201rev2Feed
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.utils.timezone import now
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from rest_framework import viewsets
 from rest_framework.response import Response
 
+from wbc.core.views import ProtectedCreateView, ProtectedUpdateView, ProtectedDeleteView
 from wbc.region.models import District
 from wbc.comments.models import Comment
 from wbc.comments.forms import CommentForm
 from models import *
 from serializers import *
 from forms import *
+
 
 class PlaceViewSet(viewsets.ViewSet):
 
@@ -52,6 +53,7 @@ class PlaceViewSet(viewsets.ViewSet):
         else:
             return PlaceSerializer(queryset, **kwargs)
 
+
 class ListViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ListSerializer
 
@@ -67,36 +69,44 @@ class ListViewSet(viewsets.ReadOnlyModelViewSet):
 
         return queryset
 
+
 class MapViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = MapSerializer
     delta = now() - datetime.timedelta(days=100)
     queryset = Place.objects.all().filter(publications__end__gte=delta)
 
+
 class PublicationViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = PublicationSerializer
     queryset = Publication.objects.all()
+
 
 class ProcessStepViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProcessStepSerializer
     queryset = ProcessStep.objects.all()
 
+
 class ProcessTypeViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProcessTypeSerializer
     queryset = ProcessType.objects.all()
 
-class PlaceCreate(CreateView):
+
+class PlaceCreate(ProtectedCreateView):
     model = Place
     fields = '__all__'
 
-class PlaceUpdate(UpdateView):
+
+class PlaceUpdate(ProtectedUpdateView):
     model = Place
     fields = '__all__'
 
-class PlaceDelete(DeleteView):
+
+class PlaceDelete(ProtectedDeleteView):
     model = Place
     success_url = reverse_lazy('places')
 
-class PublicationCreate(CreateView):
+
+class PublicationCreate(ProtectedCreateView):
     model = Publication
     fields = '__all__'
 
@@ -107,19 +117,25 @@ class PublicationCreate(CreateView):
             self.initial['place'] = {}
         return self.initial
 
-class PublicationUpdate(UpdateView):
+
+class PublicationUpdate(ProtectedUpdateView):
     model = Publication
     fields = '__all__'
 
-class PublicationDelete(DeleteView):
+
+class PublicationDelete(ProtectedDeleteView):
     model = Publication
 
     def get_success_url(self):
         return self.object.place.get_absolute_url()
 
+
 def process(request):
     process_types = ProcessType.objects.all()
     return render(request,'process/process.html',{'process_types': process_types})
+
+def places(request):
+    return render(request,'process/list.html',{'new_place_link': reverse('place_create')})
 
 def place(request, pk):
     p = get_object_or_404(Place, id = int(pk))
@@ -140,8 +156,10 @@ def place(request, pk):
         'new_publication_link': reverse('publication_create'),
     })
 
+
 class PublicationFeedMimeType(Rss201rev2Feed):
     mime_type = 'application/xml'
+
 
 class PublicationFeed(Feed):
     title = settings.FEED_TITLE

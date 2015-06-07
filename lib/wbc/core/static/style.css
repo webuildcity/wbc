@@ -58,6 +58,11 @@ a:hover,
 .fa:hover{
     color: #e58833;
 }
+.admin-area {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    padding: 10px;
+}
 
 .panel {
     -webkit-box-shadow: none;

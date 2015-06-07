@@ -27,7 +27,7 @@
 
     <div class="container">
         <div class="row place">
-            <div class="col-sm-8">
+            <div class="col-md-9">
                 <h3>Betroffenes Gebiet</h3>
                 <p>
                     <strong>Bezeichner:</strong> {{ place.identifier }}
@@ -40,15 +40,13 @@
                 </p>
             </div>
             {% if user.is_authenticated %}
-            <div class="col-sm-1"></div>
-            <div class="col-sm-3">
-                <h3>Admin</h3>
-                <ul class="list-unstyled">
-                    <li><strong><a href="{{ place.get_update_url }}">Ort bearbeiten</a></strong></li>
-                    <li><strong><a href="{{ place.get_delete_url }}">Ort entfernen</a></strong></li>
-                    <li><strong><a href="{{new_publication_link}}?place_id={{place.pk}}">
+            <div class="col-md-3">
+                <ul class="list-unstyled admin-area" style="margin-top: 50px;">
+                    <li><a class="admin-link" href="{{ place.get_update_url }}">Ort bearbeiten</a></li>
+                    <li><a class="admin-link" href="{{ place.get_delete_url }}">Ort entfernen</a></li>
+                    <li><a class="admin-link" href="{{new_publication_link}}?place_id={{place.pk}}">
                             Neue Veröffentlichung
-                    </a></strong></li>
+                    </a></li>
                 </ul>
             </div>
             {% endif %}
