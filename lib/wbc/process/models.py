@@ -45,6 +45,7 @@ class Publication(Model):
     office_hours = models.TextField(blank=True, verbose_name="Öffnungszeiten der Auslegungsstelle")
     department = models.ForeignKey(Department, verbose_name="Verantwortliche Behörde")
     link = models.URLField(blank=True)
+    email = models.EmailField(blank=True, verbose_name="Emailadresse von der Verwaltung")
 
     @property
     def is_active(self):
