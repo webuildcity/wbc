@@ -11,7 +11,8 @@ from django.db.models import Q
 from django.utils.timezone import now
 from django.contrib.contenttypes.models import ContentType
 from django.views.generic.edit import CreateView
-
+from django.forms.models import modelform_factory
+from django.forms.widgets import HiddenInput
 
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -118,41 +119,34 @@ def place(request, pk):
         'new_publication_link': reverse('wbc.process.views.create_publication')
     })
 
-
 class createParticipation(CreateView):
     fields = '__all__'
 
+    def dispatch(self, *args, **kwarg):
+        self.publication = Publication.objects.get(pk=self.kwargs['pk'])
+        querystring = self.publication.process_step.participation
+        participation = get_object_or_404(ContentType, app_label='participation', model=querystring)
+        self.participationclass = participation.model_class()
+        return super(createParticipation, self).dispatch(*args, **kwarg)
+
     def get_template_names(self):
-        path = 'process/publication.html'
-        template_list = []
-        template_list.append(path)
-        return template_list
+        return ['process/publication.html']
 
     def get_queryset(self):
-        publication = Publication.objects.get(pk=self.kwargs['pk'])
-        querystring = publication.process_step.participation
-        participation = get_object_or_404(ContentType, app_label='participation', model=querystring)
-        participationclass = participation.model_class()
-        return participationclass.objects.all()
-
-    def get_initial(self):
-        publication = Publication.objects.get(pk=self.kwargs['pk'])
-        return {'publication': publication}
+        return self.participationclass.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super(createParticipation, self).get_context_data(**kwargs)
-        context['publication'] = Publication.objects.get(pk=self.kwargs['pk'])
+        context['publication'] = self.publication
         return context
 
     def get_success_url(self):
         publication = Publication.objects.get(pk=self.kwargs['pk'])
         return '/veroeffentlichungen/%s/' % (publication.pk)
 
-    def get_form(self, form_class):
-        form = super(createParticipation, self).get_form(form_class)
-        form.fields['publication'].widget.attrs['disabled'] = True
-        return form
-
+    def form_valid(self, form):
+        form.instance.publication = self.publication
+        return super(createParticipation, self).form_valid(form)
 
 
 @login_required

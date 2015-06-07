@@ -95,7 +95,7 @@ class ProcessType(Model):
 
 class Participation(Model):
     content_type = models.ForeignKey(ContentType, related_name='widget_get_contenttype', editable=False)
-    publication = models.ForeignKey(Publication, related_name='widgets')
+    publication = models.ForeignKey(Publication, related_name='widgets', editable=False)
 
     def get_content_type(self):
         class_name = self.__class__.__name__
@@ -104,4 +104,3 @@ class Participation(Model):
     def save(self, *args, **kwargs):
         self.content_type = self.get_content_type()
         super(Participation, self).save(*args, **kwargs)
-
