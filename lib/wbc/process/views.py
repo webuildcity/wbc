@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 from django.conf import settings
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
@@ -11,11 +11,12 @@ from django.db.models import Q
 from django.utils.timezone import now
 from django.contrib.contenttypes.models import ContentType
 from django.views.generic.edit import CreateView
-from django.forms.models import modelform_factory
-from django.forms.widgets import HiddenInput
-
+from django.core.mail import send_mail
 from rest_framework import viewsets
 from rest_framework.response import Response
+from django.conf import settings
+from django.template.loader import get_template
+from django.template import Context
 
 from participation.models import *
 
@@ -146,6 +147,17 @@ class createParticipation(CreateView):
 
     def form_valid(self, form):
         form.instance.publication = self.publication
+
+        if self.publication.email:
+            template = get_template('process/participation_email.html')
+            context = Context({'form': form, 'publication': self.publication})
+            content = template.render(context)
+            subject = "Neue Einwendung"
+            message = "test"
+            sender = settings.EMAIL_FROM
+            recipients = [self.publication.email]
+            send_mail(subject, content, sender, recipients)
+
         return super(createParticipation, self).form_valid(form)
 
 
