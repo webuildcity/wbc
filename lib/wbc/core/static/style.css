@@ -73,6 +73,17 @@ a:hover,
     background-color: white;
 }
 
+/* wbc forms */
+.wbc-form-modelmultiplechoicefield-group select[multiple="multiple"]{
+    height: 120px;
+}
+.wbc-form-booleanfield-group input[type="checkbox"]{
+    display: inline-block;
+    width: auto;
+    height: auto;
+    margin: 0 0 0 5px;
+}
+
 /* brand */
 #brand img {
     height: 65px;
