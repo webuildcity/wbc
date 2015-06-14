@@ -2,6 +2,7 @@
 from datetime import date
 
 from django.db import models
+from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 
 from wbc.core.models import Model
@@ -19,6 +20,15 @@ class Place(Model):
     polygon = models.TextField(null=True, blank=True)
     active = models.BooleanField()
     link = models.URLField(blank=True)
+
+    def get_absolute_url(self):
+        return reverse('place', kwargs={'pk': self.pk})
+
+    def get_update_url(self):
+        return reverse('place_update', kwargs={'pk': self.pk})
+
+    def get_delete_url(self):
+        return reverse('place_delete', kwargs={'pk': self.pk})
 
     def __unicode__(self):
         strings = []
@@ -47,6 +57,15 @@ class Publication(Model):
     link = models.URLField(blank=True)
     email = models.EmailField(blank=True, verbose_name="Emailadresse von der Verwaltung")
 
+    def get_absolute_url(self):
+        return reverse('place', kwargs={'pk': self.place.pk})
+
+    def get_update_url(self):
+        return reverse('publication_update', kwargs={'pk': self.pk})
+
+    def get_delete_url(self):
+        return reverse('publication_delete', kwargs={'pk': self.pk})
+    
     @property
     def is_active(self):
         if date.today() < self.end and date.today() > self.begin:

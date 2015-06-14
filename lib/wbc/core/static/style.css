@@ -58,6 +58,11 @@ a:hover,
 .fa:hover{
     color: #e58833;
 }
+.admin-area {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    padding: 10px;
+}
 
 .panel {
     -webkit-box-shadow: none;
@@ -66,6 +71,20 @@ a:hover,
 }
 .panel-default > .panel-heading {
     background-color: white;
+}
+
+/* wbc forms */
+.wbc-form-modelmultiplechoicefield-group select[multiple="multiple"]{
+    height: 120px;
+}
+.wbc-form-booleanfield-group input[type="checkbox"]{
+    display: inline-block;
+    width: auto;
+    height: auto;
+    margin: 0 0 0 5px;
+}
+.wbc-delete-form {
+    margin-top: 20px;
 }
 
 /* brand */
