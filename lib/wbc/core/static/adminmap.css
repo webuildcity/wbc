@@ -1,8 +1,15 @@
 #adminmap {
-    height: 450px;
-    width: 610px;
+    height: 400px;
+    width: 100%;
     border: 1px solid rgb(204, 204, 204);
+    border-radius: 4px;
 }
+
+#place_form #adminmap {
+    width: 610px;
+    border-radius: 0;
+}
+
 .map-error {
     color: #a94442;
 }
@@ -38,4 +45,3 @@
     margin-top: 5px;
     margin-bottom: 5px;
 }
-

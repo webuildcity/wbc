@@ -2,7 +2,7 @@
 import datetime
 from django.conf import settings
 from django.shortcuts import render,get_object_or_404
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse,reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
@@ -13,12 +13,14 @@ from django.utils.timezone import now
 from rest_framework import viewsets
 from rest_framework.response import Response
 
+from wbc.core.views import ProtectedCreateView, ProtectedUpdateView, ProtectedDeleteView
 from wbc.region.models import District
 from wbc.comments.models import Comment
 from wbc.comments.forms import CommentForm
 from models import *
 from serializers import *
 from forms import *
+
 
 class PlaceViewSet(viewsets.ViewSet):
 
@@ -51,6 +53,7 @@ class PlaceViewSet(viewsets.ViewSet):
         else:
             return PlaceSerializer(queryset, **kwargs)
 
+
 class ListViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ListSerializer
 
@@ -66,26 +69,73 @@ class ListViewSet(viewsets.ReadOnlyModelViewSet):
 
         return queryset
 
+
 class MapViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = MapSerializer
     delta = now() - datetime.timedelta(days=100)
     queryset = Place.objects.all().filter(publications__end__gte=delta)
 
+
 class PublicationViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = PublicationSerializer
     queryset = Publication.objects.all()
+
 
 class ProcessStepViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProcessStepSerializer
     queryset = ProcessStep.objects.all()
 
+
 class ProcessTypeViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProcessTypeSerializer
     queryset = ProcessType.objects.all()
 
+
+class PlaceCreate(ProtectedCreateView):
+    model = Place
+    fields = '__all__'
+
+
+class PlaceUpdate(ProtectedUpdateView):
+    model = Place
+    fields = '__all__'
+
+
+class PlaceDelete(ProtectedDeleteView):
+    model = Place
+    success_url = reverse_lazy('places')
+
+
+class PublicationCreate(ProtectedCreateView):
+    model = Publication
+    fields = '__all__'
+
+    def get_initial(self):
+        try:
+            self.initial['place'] = Place.objects.get(pk=self.request.GET.get('place_id', None))
+        except Place.DoesNotExist:
+            self.initial['place'] = {}
+        return self.initial
+
+
+class PublicationUpdate(ProtectedUpdateView):
+    model = Publication
+    fields = '__all__'
+
+
+class PublicationDelete(ProtectedDeleteView):
+    model = Publication
+
+    def get_success_url(self):
+        return self.object.place.get_absolute_url()
+
+
 def process(request):
     process_types = ProcessType.objects.all()
     return render(request,'process/process.html',{'process_types': process_types})
+
+def places(request):
+    return render(request,'process/list.html',{'new_place_link': reverse('place_create')})
 
 def place(request, pk):
     p = get_object_or_404(Place, id = int(pk))
@@ -103,37 +153,13 @@ def place(request, pk):
         'place': p,
         'comments': Comment.objects.filter(place_id = int(pk), enabled = True),
         'process_link': reverse('wbc.process.views.process'),
-        'new_publication_link': reverse('wbc.process.views.create_publication')
+        'new_publication_link': reverse('publication_create'),
     })
 
-@login_required
-def create_publication(request):
-    place_id = request.GET.get('place_id', None)
-    place_url = reverse('wbc.process.views.place',args=['1'])[:-2]
-
-    if place_id == None:
-        form = FindPlace()
-        return render(request, 'process/create_publication_step_1.html', {
-            'form': form,
-            'new_publication_link': reverse('wbc.process.views.create_publication')
-        })
-
-    else:
-        place = Place.objects.get(pk=place_id)
-
-        if request.method == 'POST':
-            form = CreatePublication(request.POST)
-            if form.is_valid():
-                form.save()
-                return HttpResponseRedirect(place_url + str(place.pk))
-            else:
-                return render(request, 'process/create_publication_step_2.html', {'form': form})
-        else:
-            form = CreatePublication(initial={'place': place})
-            return render(request,'process/create_publication_step_2.html',{'form': form})
 
 class PublicationFeedMimeType(Rss201rev2Feed):
     mime_type = 'application/xml'
+
 
 class PublicationFeed(Feed):
     title = settings.FEED_TITLE
