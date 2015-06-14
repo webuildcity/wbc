@@ -83,6 +83,9 @@ a:hover,
     height: auto;
     margin: 0 0 0 5px;
 }
+.wbc-delete-form {
+    margin-top: 20px;
+}
 
 /* brand */
 #brand img {

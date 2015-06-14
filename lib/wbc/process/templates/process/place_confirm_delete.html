@@ -4,7 +4,12 @@
 {% load staticfiles %}
 
 {% block page %}
-<form action="" method="post" class="form" role="form">{% csrf_token %}
+<p>
+    Willst Du den Ort <strong>{{ object }}</strong> wirklich entfernen? Dieser Vorgang kann nicht Rückgängig gemacht werden.
+</p>
+
+<form action="" method="post" class="form wbc-delete-form" role="form">
+    {% csrf_token %}
     <input class="btn btn-danger" type="submit" value="Ort entfernen" />
 </form>
 {% endblock%}
