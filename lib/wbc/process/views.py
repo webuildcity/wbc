@@ -4,20 +4,21 @@ from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.utils.timezone import now
-from django.contrib.contenttypes.models import ContentType
 from django.views.generic.edit import CreateView
-from django.core.mail import send_mail
-from rest_framework import viewsets
-from rest_framework.response import Response
 from django.template.loader import get_template
 from django.template import Context
 
+from rest_framework import viewsets
+from rest_framework.response import Response
+
 from wbc.core.views import ProtectedCreateView, ProtectedUpdateView, ProtectedDeleteView
+from wbc.core.lib import send_mail
 from wbc.region.models import District
 from wbc.comments.models import Comment
 from wbc.comments.forms import CommentForm
@@ -191,14 +192,11 @@ class ParticipationCreate(CreateView):
         form.instance.publication = self.publication
 
         if self.publication.email:
-            template = get_template('process/participation_email.html')
-            context = Context({'form': form, 'publication': self.publication})
-            content = template.render(context)
-            subject = "Neue Einwendung"
-            message = "test"
-            sender = settings.EMAIL_FROM
-            recipients = [self.publication.email]
-            send_mail(subject, content, sender, recipients)
+
+            send_mail(self.publication.email, 'process/mail/participation.html', {
+                'form': form,
+                'publication': self.publication
+            })
 
         return super(ParticipationCreate, self).form_valid(form)
 
