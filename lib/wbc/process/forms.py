@@ -9,31 +9,21 @@ from models import Publication
 from models import ProcessStep
 
 
-class FindPlace(forms.Form):
-    place = Place.objects.all()
-    description = forms.CharField(max_length=100, required=False)
+class ParticipationSelect(widgets.Select):
 
+    def __init__(self, *args, **kwargs):
+        super(ParticipationSelect, self).__init__(*args, **kwargs)
 
-class CreatePublication(ModelForm):
-    class Meta:
-        model = Publication
-        fields = '__all__'
+        participation_models = ContentType.objects.all().filter(app_label='participation')
 
-
-class CreatePlace(ModelForm):
-    class Meta:
-        model = Place
-        exclude = ('polygontype',)
+        self.choices = [('', '---------')]
+        self.choices += list((x.model, x.name) for x in participation_models)
 
 
 class ProcessstepForm(ModelForm):
     class Meta:
-        #CHOICES = ContentType.objects.all().filter(app_label='participation')
-        #choices = list((x.model, x.name) for x in CHOICES)
-        choices = []
-        choices.insert(0, ("", "--------------"))
         model = ProcessStep
         fields = '__all__'
         widgets = {
-            'participation': widgets.Select(choices=choices)
+            'participation': ParticipationSelect()
         }
