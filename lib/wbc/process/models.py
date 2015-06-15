@@ -65,7 +65,7 @@ class Publication(Model):
 
     def get_delete_url(self):
         return reverse('publication_delete', kwargs={'pk': self.pk})
-    
+
     @property
     def is_active(self):
         if date.today() < self.end and date.today() > self.begin:
@@ -116,9 +116,12 @@ class Participation(Model):
     content_type = models.ForeignKey(ContentType, related_name='widget_get_contenttype', editable=False)
     publication = models.ForeignKey(Publication, related_name='widgets', editable=False)
 
+    def get_absolute_url(self):
+        return reverse('place', kwargs={'pk': self.publication.place.pk})
+
     def get_content_type(self):
         class_name = self.__class__.__name__
-        return ContentType.objects.get(app_label="participation", model=class_name)
+        return ContentType.objects.get(app_label="participation", model=class_name.lower())
 
     def save(self, *args, **kwargs):
         self.content_type = self.get_content_type()

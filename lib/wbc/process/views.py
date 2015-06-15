@@ -161,32 +161,31 @@ def place(request, pk):
         'comments': Comment.objects.filter(place_id=int(pk), enabled=True),
         'process_link': reverse('wbc.process.views.process'),
         'new_publication_link': reverse('publication_create'),
+        'new_participation_link': reverse('participation_create'),
     })
 
-class createParticipation(CreateView):
+class ParticipationCreate(CreateView):
     fields = '__all__'
 
     def dispatch(self, *args, **kwarg):
-        self.publication = Publication.objects.get(pk=self.kwargs['pk'])
+        publication_id = self.request.GET.get('publication_id', None)
+
+        self.publication = Publication.objects.get(pk=publication_id)
         querystring = self.publication.process_step.participation
         participation = get_object_or_404(ContentType, app_label='participation', model=querystring)
-        self.participationclass = participation.model_class()
-        return super(createParticipation, self).dispatch(*args, **kwarg)
+        self.participation_class = participation.model_class()
+        return super(ParticipationCreate, self).dispatch(*args, **kwarg)
 
     def get_template_names(self):
         return ['process/publication.html']
 
     def get_queryset(self):
-        return self.participationclass.objects.all()
+        return self.participation_class.objects.all()
 
     def get_context_data(self, **kwargs):
-        context = super(createParticipation, self).get_context_data(**kwargs)
+        context = super(ParticipationCreate, self).get_context_data(**kwargs)
         context['publication'] = self.publication
         return context
-
-    def get_success_url(self):
-        publication = Publication.objects.get(pk=self.kwargs['pk'])
-        return '/veroeffentlichungen/%s/' % (publication.pk)
 
     def form_valid(self, form):
         form.instance.publication = self.publication
@@ -201,34 +200,7 @@ class createParticipation(CreateView):
             recipients = [self.publication.email]
             send_mail(subject, content, sender, recipients)
 
-        return super(createParticipation, self).form_valid(form)
-
-
-@login_required
-def create_publication(request):
-    place_id = request.GET.get('place_id', None)
-    place_url = reverse('wbc.process.views.place', args=['1'])[:-2]
-
-    if place_id is None:
-        form = FindPlace()
-        return render(request, 'process/create_publication_step_1.html', {
-            'form': form,
-            'new_publication_link': reverse('wbc.process.views.create_publication')
-        })
-
-    else:
-        place = Place.objects.get(pk=place_id)
-
-        if request.method == 'POST':
-            form = CreatePublication(request.POST)
-            if form.is_valid():
-                form.save()
-                return HttpResponseRedirect(place_url + str(place.pk))
-            else:
-                return render(request, 'process/create_publication_step_2.html', {'form': form})
-        else:
-            form = CreatePublication(initial={'place': place})
-            return render(request, 'process/create_publication_step_2.html', {'form': form})
+        return super(ParticipationCreate, self).form_valid(form)
 
 
 class PublicationFeedMimeType(Rss201rev2Feed):
