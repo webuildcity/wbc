@@ -28,8 +28,9 @@ class CreatePlace(ModelForm):
 
 class ProcessstepForm(ModelForm):
     class Meta:
-        CHOICES = ContentType.objects.all().filter(app_label='participation')
-        choices = list((x.model, x.name) for x in CHOICES)
+        #CHOICES = ContentType.objects.all().filter(app_label='participation')
+        #choices = list((x.model, x.name) for x in CHOICES)
+        choices = []
         choices.insert(0, ("", "--------------"))
         model = ProcessStep
         fields = '__all__'
