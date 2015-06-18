@@ -26,7 +26,7 @@ class CoreTestCase(TestCase):
 
     def test_form_login(self):
         request = self.factory.post(
-            '/login', {'username': 'john', 'password': 'johnpassword'})
+            '', {'username': 'john', 'password': 'johnpassword'})
         form = LoginForm(request.POST)
         if form.is_valid():
             user = form.login(request)
