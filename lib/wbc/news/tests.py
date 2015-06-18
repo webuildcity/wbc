@@ -5,6 +5,9 @@ from models import Subscriber
 from models import Newsletter
 from wbc.region.models import Entity
 from models import *
+from forms import SubscribeForm
+from django.test.client import RequestFactory
+from wbc.region.models import District
 
 # Test for Models
 
@@ -24,7 +27,12 @@ class NewsTestCase(TestCase):
 class SubscriberTestCase(TestCase):
 
     def setUp(self):
-        Entity(name='Berlin').save()
+        self.entity = Entity(name='Berlin').save()
+        self.entity = Entity(name='Hamburg').save()
+        self.factory = RequestFactory()
+        self.entities = Entity.objects.all().values()
+
+    # Models
 
     def create_subscriber(email='test@test.de'):
         entity = Entity.objects.get(name='Berlin')
@@ -37,6 +45,14 @@ class SubscriberTestCase(TestCase):
         self.assertTrue(isinstance(s, Subscriber))
         self.assertEqual(
             s.__unicode__(), s.email)
+
+    # Form
+
+    def test_subscribe_form(self):
+        data = {'email': 'test@test.de'}
+        request = self.factory.post('', data)
+        form = SubscribeForm(request.POST, entities=self.entities)
+        self.assertTrue(isinstance(form, SubscribeForm))
 
 
 class NewsletterTestCase(TestCase):
