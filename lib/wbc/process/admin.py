@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 from django import forms
+from django.conf import settings
 from django.contrib import admin
+from django.forms import ModelForm,widgets
 
 from models import *
-from forms import ProcessstepForm
+
 
 class PlaceAdmin(admin.ModelAdmin):
     list_display = ('id','identifier','address','active')
@@ -13,31 +15,43 @@ class PlaceAdmin(admin.ModelAdmin):
     change_form_template = 'process/admin/change_form.html'
     add_form_template = 'process/admin/change_form.html'
 
-class PublicationAdminForm(forms.ModelForm):
-    class Meta:
-        model = Publication
-        fields = '__all__'
-
-    def __init__(self, *args, **kwds):
-        super(PublicationAdminForm, self).__init__(*args, **kwds)
-        self.fields['process_step'].queryset = ProcessStep.objects
 
 class PublicationAdmin(admin.ModelAdmin):
     list_display = ('id','process_step','place','end')
     list_display_links = ('id','process_step','place','end')
     ordering = ['id']
-    form = PublicationAdminForm
+
+
+class ParticipationAdminSelect(widgets.Select):
+    def __init__(self, *args, **kwargs):
+        super(ParticipationAdminSelect, self).__init__(*args, **kwargs)
+
+        self.choices = [('', '---------')]
+        if hasattr(settings,'PARTICIPATION_MODELS'):
+            self.choices += settings.PARTICIPATION_MODELS
+
+
+class ProcessstepAdminForm(ModelForm):
+    class Meta:
+        model = ProcessStep
+        fields = '__all__'
+        widgets = {
+            'participation': ParticipationAdminSelect()
+        }
+
 
 class ProcessStepAdmin(admin.ModelAdmin):
-    form = ProcessstepForm
+    form = ProcessstepAdminForm
     list_display = ('id','name','order','process_type')
     list_display_links = ('id','name','order','process_type')
     ordering = ['id']
+
 
 class ProcessTypeAdmin(admin.ModelAdmin):
     list_display = ('id','name')
     list_display_links = ('id','name')
     ordering = ['id']
+
 
 admin.site.register(Place, PlaceAdmin)
 admin.site.register(Publication, PublicationAdmin)

@@ -172,7 +172,7 @@ class ParticipationCreate(CreateView):
         publication_id = self.request.GET.get('publication_id', None)
 
         self.publication = Publication.objects.get(pk=publication_id)
-        querystring = self.publication.process_step.participation
+        querystring = self.publication.process_step.participation.lower()
         participation = get_object_or_404(ContentType, app_label='participation', model=querystring)
         self.participation_class = participation.model_class()
         return super(ParticipationCreate, self).dispatch(*args, **kwarg)
