@@ -13,7 +13,7 @@ from wbc.region.models import District
 
 def feeds(request):
     entities = District.objects.all()
-    return render(request,'core/feeds.html',{
+    return render(request, 'core/feeds.html', {
         'entities': entities,
         'publication_feed_url': reverse('publication_feed_url')
     })
