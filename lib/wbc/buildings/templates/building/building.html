@@ -1,1 +1,41 @@
-<img src="{{ building.model.url }}" alt="Smiley face" height="42" width="42">
+{% extends 'core/layout.html' %}
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'page.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'lib/wbc3d/css/vizi.css' %}" />
+    <style>
+        #vizicities-viewport {
+            height: 500px;
+            position: relative;
+        }
+    </style>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+    if (!window.wbc3d) {
+        window.wbc3d_conf = {};
+        wbc3d_conf.DATADIR = "{% static 'lib/wbc3d/data/' %}";
+        wbc3d_conf.WORKERPATH = "../..{% static 'lib/wbc3d/js/vizi-worker.min.js' %}";
+    }
+
+    </script>
+    <script type="text/javascript" src="{% static 'lib/wbc3d/js/vizi.min.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/wbc3d/js/wbc_3d.min.js' %}" ></script>
+    <script>
+    wbc3d('#vizicities-viewport',
+        [53.556392, 9.969535],
+        '/media/{{building.model}}',
+        [53.555835, 9.969030, 53.557227, 9.970746],
+        '/media/{{building.additional_file}}'
+    );
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container page">
+        <div id="vizicities-viewport"></div>
+    </div>
+{% endblock %}
