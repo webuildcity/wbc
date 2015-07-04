@@ -108,4 +108,3 @@ class ProcessTestCase(TestCase):
     def test_process_type(self):
         pt = ProcessType.objects.get(name="BplanVerfahren")
         self.assertEqual(pt.__unicode__(), pt.name)
-

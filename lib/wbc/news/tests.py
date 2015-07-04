@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.test import TestCase
+from django.test import Client
 from models import Validation
 from models import Subscriber
 from models import Newsletter
@@ -7,7 +8,7 @@ from wbc.region.models import Entity
 from models import *
 from forms import SubscribeForm
 from django.test.client import RequestFactory
-from wbc.region.models import District
+from django.utils.timezone import now
 
 # Test for Models
 
@@ -28,9 +29,10 @@ class SubscriberTestCase(TestCase):
 
     def setUp(self):
         self.entity = Entity(name='Berlin').save()
-        self.entity = Entity(name='Hamburg').save()
+        self.entity2 = Entity(name='Hamburg').save()
         self.factory = RequestFactory()
         self.entities = Entity.objects.all().values()
+        self.validation = Validation(email='test@test.de')
 
     # Models
 
@@ -54,13 +56,17 @@ class SubscriberTestCase(TestCase):
         form = SubscribeForm(request.POST, entities=self.entities)
         self.assertTrue(isinstance(form, SubscribeForm))
 
+    # Views
+
+    def test_subscribe_view(self):
+        url = reverse('wbc.news.views.subscribe')
+        resp = Client().post(url, {'username': self.user.username})
+
 
 class NewsletterTestCase(TestCase):
 
     def create_newsletter(email='test@test.de'):
-        import datetime
-        now = datetime.datetime.now()
-        n = Newsletter.objects.create(send=now, n=5)
+        n = Newsletter.objects.create(send=now(), n=5)
         return n
 
     def test_validation(self):
