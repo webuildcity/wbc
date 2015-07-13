@@ -1,9 +1,18 @@
 {% extends 'core/layout.html' %}
 {% load staticfiles %}
+{% load static buildings_tags %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'page.css' %}" />
     <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
+    <link rel="stylesheet" href="{% static 'page.css' %}" />
+    <link rel="stylesheet" href="{% static 'lib/wbc3d/css/vizi.css' %}" />
+    <style>
+        #vizicities-viewport {
+            height: 300px;
+            position: relative;
+        }
+    </style>
 {% endblock %}
 
 {% block js %}
@@ -20,6 +29,24 @@
         var _polygon = {% if place.polygon %}{{place.polygon|safe}}{% else %}[]{% endif %};
     </script>
     <script type="text/javascript" src="{% static 'placemap.js' %}" ></script>
+    <script type="text/javascript">
+    if (!window.wbc3d) {
+        window.wbc3d_conf = {};
+        wbc3d_conf.DATADIR = "{% static 'lib/wbc3d/data/' %}";
+        wbc3d_conf.WORKERPATH = "../..{% static 'lib/wbc3d/js/vizi-worker.min.js' %}";
+    }
+
+    </script>
+    <script type="text/javascript" src="{% static 'lib/wbc3d/js/vizi.min.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/wbc3d/js/wbc_3d.min.js' %}" ></script>
+    <script>
+    wbc3d('#vizicities-viewport',
+        [53.556392, 9.969535],
+        '/media/{{place.building.model}}',
+        [53.555835, 9.969030, 53.557227, 9.970746],
+        '/media/{{place.building.additional_file}}'
+    );
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -28,6 +55,7 @@
     <div class="container">
         <div class="row place">
             <div class="col-md-9">
+                <div id="vizicities-viewport"></div>
                 <h3>Betroffenes Gebiet</h3>
                 <p>
                     <strong>Bezeichner:</strong> {{ place.identifier }}
