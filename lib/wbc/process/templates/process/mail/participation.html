@@ -1,0 +1,12 @@
+Neue Einwendung
+
+---
+
+Ort: {{ publication.place }}
+Verfahren: {{ publication.process_step.process_type }}
+Verfahrensschritt: {{ publication.process_step }}
+
+{% for field in form %}
+{{ field.label }}
+{{ field.value }}
+{% endfor %}

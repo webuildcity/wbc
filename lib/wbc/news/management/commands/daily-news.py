@@ -6,9 +6,9 @@ from django.core.urlresolvers import reverse
 from django.utils.timezone import now
 from django.db.models import Max
 
+from wbc.core.lib import send_mail
 from wbc.process.models import Publication
 from wbc.news.models import Subscriber, Newsletter
-from wbc.news.lib import send_mail
 
 # temporary fix for Django 1.8
 # http://stackoverflow.com/questions/29571606/django-not-able-to-render-context-when-in-shell

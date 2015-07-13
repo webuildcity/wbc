@@ -47,14 +47,24 @@
             {{ publication.office_hours }}
         </p>
         {% endif %}
+
         {% if publication.link %}
         <p>
             <a href="{{ publication.link }}" target="_blank">Link zur Seite</a>
         </p>
         {% endif %}
+
         <p>
             <a href="{{ publication.department.link }}">Link zur verantwortlichen Behörde</a>
         </p>
+
+        {% if publication.is_active and publication.process_step.participation  %}
+        <p>
+            <a href="{{new_participation_link}}?publication_id={{ publication.pk }}" target="_blank">
+                <strong>Jetzt beteiligen</strong>
+            </a>
+        </p>
+        {% endif %}
 
         {% if user.is_authenticated %}
         <ul class="list-unstyled admin-area">

@@ -1,22 +1,30 @@
 # -*- coding: utf-8 -*-
 import datetime
 from django.conf import settings
-from django.shortcuts import render,get_object_or_404
-from django.core.urlresolvers import reverse,reverse_lazy
+from django.shortcuts import render, get_object_or_404
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.utils.timezone import now
+from django.views.generic.edit import CreateView
+from django.template.loader import get_template
+from django.template import Context
 
 from rest_framework import viewsets
 from rest_framework.response import Response
 
 from wbc.core.views import ProtectedCreateView, ProtectedUpdateView, ProtectedDeleteView
+from wbc.core.lib import send_mail
 from wbc.region.models import District
 from wbc.comments.models import Comment
 from wbc.comments.forms import CommentForm
+
+from participation.models import *
+
 from models import *
 from serializers import *
 from forms import *
@@ -132,29 +140,65 @@ class PublicationDelete(ProtectedDeleteView):
 
 def process(request):
     process_types = ProcessType.objects.all()
-    return render(request,'process/process.html',{'process_types': process_types})
+    return render(request, 'process/process.html', {'process_types': process_types})
 
 def places(request):
-    return render(request,'process/list.html',{'new_place_link': reverse('place_create')})
+    return render(request, 'process/list.html', {'new_place_link': reverse('place_create')})
 
 def place(request, pk):
-    p = get_object_or_404(Place, id = int(pk))
+    p = get_object_or_404(Place, id=int(pk))
 
     if request.method == 'POST':
         if len(request.POST["author_email1"]) == 0:
             form = CommentForm(request.POST)
             if form.is_valid():
                 comment = form.save(commit=False)
-                comment.enabled = True;
+                comment.enabled = True
                 comment.place = p
                 comment.save()
 
-    return render(request,'process/place.html',{
+    return render(request, 'process/place.html', {
         'place': p,
-        'comments': Comment.objects.filter(place_id = int(pk), enabled = True),
+        'comments': Comment.objects.filter(place_id=int(pk), enabled=True),
         'process_link': reverse('wbc.process.views.process'),
         'new_publication_link': reverse('publication_create'),
+        'new_participation_link': reverse('participation_create'),
     })
+
+class ParticipationCreate(CreateView):
+    fields = '__all__'
+
+    def dispatch(self, *args, **kwarg):
+        publication_id = self.request.GET.get('publication_id', None)
+
+        self.publication = Publication.objects.get(pk=publication_id)
+        querystring = self.publication.process_step.participation.lower()
+        participation = get_object_or_404(ContentType, app_label='participation', model=querystring)
+        self.participation_class = participation.model_class()
+        return super(ParticipationCreate, self).dispatch(*args, **kwarg)
+
+    def get_template_names(self):
+        return ['process/publication.html']
+
+    def get_queryset(self):
+        return self.participation_class.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(ParticipationCreate, self).get_context_data(**kwargs)
+        context['publication'] = self.publication
+        return context
+
+    def form_valid(self, form):
+        form.instance.publication = self.publication
+
+        if self.publication.email:
+
+            send_mail(self.publication.email, 'process/mail/participation.html', {
+                'form': form,
+                'publication': self.publication
+            })
+
+        return super(ParticipationCreate, self).form_valid(form)
 
 
 class PublicationFeedMimeType(Rss201rev2Feed):
