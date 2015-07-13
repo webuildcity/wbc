@@ -5,6 +5,6 @@ from wbc.core.models import Model
 
 class Building(Model):
 
-    polygon = models.TextField(null=True, blank=True)
+    exclude_region = models.TextField(null=True)
     model = models.FileField(upload_to='models')
     additional_file = models.FileField(upload_to='other')
