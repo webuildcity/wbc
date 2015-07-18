@@ -15,6 +15,11 @@
     <link rel="stylesheet" href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" />
     {% block css %}{% endblock %}
     <link rel="stylesheet" href="{% static 'style.css' %}" />
+
+    <script type="text/javascript" src="{% static 'lib/jquery.min.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/angular/angular.min.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}" ></script>
+    {% block js %}{% endblock %}
 </head>
 
 <body>
@@ -55,34 +60,11 @@
             </div>
         </div>
     </div>
-    
-    {% block content %}{% endblock %}  
 
-    <script type="text/javascript" src="{% static 'lib/jquery.min.js' %}" ></script>
-    <script type="text/javascript" src="{% static 'lib/angular/angular.min.js' %}" ></script>
-    <script type="text/javascript" src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}" ></script>
+    {% block content %}{% endblock %}
 
-    {% block js %}{% endblock %}
-    
     {% if not debug %}
-	<!-- Piwik -->
-	<script type="text/javascript">
-	  var _paq = _paq || [];
-	  _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
-	  _paq.push(["setCookieDomain", "*.buergerbautstadt.de"]);
-	  _paq.push(["setDomains", ["*.buergerbautstadt.de","*.blog.buergerbautstadt.de"]]);
-	  _paq.push(["trackPageView"]);
-	  _paq.push(["enableLinkTracking"]);
-
-	  (function() {
-	    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://buergerbautstadt.de/piwik/";
-	    _paq.push(["setTrackerUrl", u+"piwik.php"]);
-	    _paq.push(["setSiteId", "4"]);
-	    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
-	    g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
-	  })();
-	</script>
-	<!-- End Piwik Code -->
+        {% include "core/layout_piwik.html" %}
     {% endif %}
 </body>
 </html>

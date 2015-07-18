@@ -26,21 +26,8 @@
     <div id="place-map"></div>
 
     <div class="container">
-        {% if user.is_authenticated %}
-        <div class="row place-buttons">
-            <div class="col-sm-12">
-                <a target="_blank" href="/admin/process/place/{{ place.pk }}/" class="btn btn-primary">
-                    Ort bearbeiten
-                </a>
-                <a href="{{new_publication_link}}?place_id={{place.pk}}" class="btn btn-primary">
-                    Neue Veröffentlichung hinzufügen
-                </a>
-            </div>
-        </div>
-        {% endif %}
-
         <div class="row place">
-            <div class="col-sm-8">
+            <div class="col-md-9">
                 <h3>Betroffenes Gebiet</h3>
                 <p>
                     <strong>Bezeichner:</strong> {{ place.identifier }}
@@ -52,6 +39,17 @@
                     <strong>im Bezirk/in den Bezirken:</strong> {{ place.entities.all|join:", "}}
                 </p>
             </div>
+            {% if user.is_authenticated %}
+            <div class="col-md-3">
+                <ul class="list-unstyled admin-area" style="margin-top: 50px;">
+                    <li><a class="admin-link" href="{{ place.get_update_url }}">Ort bearbeiten</a></li>
+                    <li><a class="admin-link" href="{{ place.get_delete_url }}">Ort entfernen</a></li>
+                    <li><a class="admin-link" href="{{new_publication_link}}?place_id={{place.pk}}">
+                            Neue Veröffentlichung
+                    </a></li>
+                </ul>
+            </div>
+            {% endif %}
         </div>
 
         <h3>Veröffentlichungen zu diesem Gebiet</h3>
