@@ -13,9 +13,6 @@ class Stakeholder(Model):
     tags        = models.ManyToManyField(Tag, blank=True, verbose_name="Tags", related_name='tags_%(class)s')
     entities    = models.ManyToManyField(Entity, blank=True, verbose_name="Einheit", related_name='places_%(class)s')
 
-    class Meta:
-        abstract = True
-
 class Organization(Stakeholder):
     name        = models.CharField(blank=False, max_length=64, verbose_name="Name", help_text="Name der Organisation")
     class Meta:

@@ -4,6 +4,7 @@ from django.db import models
 from wbc.core.models import Model
 from wbc.region.models import Entity
 from wbc.tags.models import Tag
+from wbc.stakeholder.models import Stakeholder
 
 class Event(Model):
     title       = models.CharField(max_length=256, blank=False, verbose_name="Titel", help_text="Der Titel eines Events")
@@ -49,7 +50,7 @@ class Media(Event):
     dateCopyrighted  = models.DateField(verbose_name="Copyright Datum")
 
     date          = models.DateField(verbose_name="Offenes Datum Feld")
-    created       = models.DateField(verbose_name="Erstellt am")
+    media_created = models.DateField(verbose_name="Medieneintrag erstellt am")
     modified      = models.DateField(verbose_name="Geändert am")
     dateSubmitted = models.DateField(verbose_name="vorgelegt am")
     dateAccepted  = models.DateField(verbose_name="Eingegangen bzw. angelegt am")

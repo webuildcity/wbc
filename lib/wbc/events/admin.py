@@ -3,15 +3,15 @@ from django.contrib import admin
 
 from models import *
 
-class OrganizationAdmin(admin.ModelAdmin):
-    list_display = ('id','name', 'address')
-    list_display_links = ('id','name', 'address')
+class DateAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title','begin', 'address')
+    list_display_links = ('id', 'title','begin', 'address')
     ordering = ['id']
 
-class PersonAdmin(admin.ModelAdmin):
-    list_display = ('id','firstName', 'lastName', 'address')
-    list_display_links = ('id', 'firstName', 'lastName', 'address')
+class MediaAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'creator', 'indentifier')
+    list_display_links = ('id', 'title', 'creator', 'indentifier')
     ordering = ['id']
 
-admin.site.register(Organization, OrganizationAdmin)
-admin.site.register(Person, PersonAdmin)
+admin.site.register(Date, DateAdmin)
+admin.site.register(Media, MediaAdmin)
