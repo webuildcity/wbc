@@ -3,12 +3,17 @@ from rest_framework import serializers
 
 from models import *
 
-class OrganizationSerializer(serializers.ModelSerializer):
+class DateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Organization
+        model = Event
         fields = ('name','address','description','link')
 
-class PersonSerializer(serializers.ModelSerializer):
+class MediaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Person
+        model = Date
+        fields = ('firstName','lastName','address','description','link')
+
+class Process_bplanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Date
         fields = ('firstName','lastName','address','description','link')

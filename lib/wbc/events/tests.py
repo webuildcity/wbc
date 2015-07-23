@@ -3,11 +3,13 @@ from django.test import TestCase, Client
 
 from wbc.projects.models import *
 
-class StakeholderTestCase(TestCase):
+class EventTestCase(TestCase):
     def setUp(self):
         pass
 
-    def test_organization(self):
+    def test_date(self):
         pass
-    def test_person(self):
+    def test_media(self):
+        pass
+    def test_Process_bplan(self):
         pass
