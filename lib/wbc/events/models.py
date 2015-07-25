@@ -13,7 +13,7 @@ class Event(Model):
     link        = models.URLField(blank=True)
     tags        = models.ManyToManyField(Tag, blank=True, verbose_name="Tags", related_name='tags_%(class)s')
     stakeholder = models.ManyToManyField(Stakeholder, blank=True, verbose_name="Stakeholder (Creator)", related_name='stakeholders_%(class)s', help_text="Lorem_ipsum_Test_Help_Text")
-    entities    = models.ManyToManyField(Entity, blank=True, verbose_name="Einheit", related_name='places_%(class)s')
+    entities    = models.ManyToManyField(Entity, blank=True, verbose_name="Region", related_name='places_%(class)s')
     active      = models.BooleanField()
     begin       = models.DateField(verbose_name="Beginn")
     end         = models.DateField(verbose_name="Ende der Auslegungszeit",blank=True)
@@ -48,13 +48,13 @@ class Media(Event):
     source           = models.CharField(blank=False, max_length=128, verbose_name="Quelle des Dokuments (Source)", help_text="URL, Freie Angabe wo das Dokument herkommt") 
     dateCopyrighted  = models.DateField(verbose_name="Copyright Datum")
 
-    date          = models.DateField(verbose_name="Offenes Datum Feld")
-    media_created = models.DateField(verbose_name="Medieneintrag erstellt am")
-    modified      = models.DateField(verbose_name="Geändert am")
-    dateSubmitted = models.DateField(verbose_name="vorgelegt am")
-    dateAccepted  = models.DateField(verbose_name="Eingegangen bzw. angelegt am")
-    issued        = models.DateField(verbose_name="Veröffentlicht am")
-    valid         = models.DateField(verbose_name="In Kraft getreten am, gültig von bis")
+    date          = models.DateField(blank=True, verbose_name="Offenes Datum Feld")
+    media_created = models.DateField(blank=True, verbose_name="Medieneintrag erstellt am")
+    modified      = models.DateField(blank=True, verbose_name="Geändert am")
+    dateSubmitted = models.DateField(blank=True, verbose_name="vorgelegt am")
+    dateAccepted  = models.DateField(blank=True, verbose_name="Eingegangen bzw. angelegt am")
+    issued        = models.DateField(blank=True, verbose_name="Veröffentlicht am")
+    valid         = models.DateField(blank=True, verbose_name="In Kraft getreten am, gültig von bis")
 
 
 #   STANDARD FUER IMAGES FEHLT
