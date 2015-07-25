@@ -15,36 +15,36 @@
         var _tiles_opt = {{tiles_opt|safe}};
         var _default_view = {{default_view|safe}};
 
-        var _lon = {{ place.lon|stringformat:"F" }};
-        var _lat = {{ place.lat|stringformat:"F" }};
-        var _polygon = {% if place.polygon %}{{place.polygon|safe}}{% else %}[]{% endif %};
+        var _lon = {{ project.lon|stringformat:"F" }};
+        var _lat = {{ project.lat|stringformat:"F" }};
+        var _polygon = {% if project.polygon %}{{project.polygon|safe}}{% else %}[]{% endif %};
     </script>
-    <script type="text/javascript" src="{% static 'placemap.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'projectmap.js' %}" ></script>
 {% endblock %}
 
 {% block content %}
-    <div id="place-map"></div>
+    <div id="project-map"></div>
 
     <div class="container">
-        <div class="row place">
+        <div class="row project">
             <div class="col-md-9">
                 <h3>Betroffenes Gebiet</h3>
                 <p>
-                    <strong>Bezeichner:</strong> {{ place.identifier }}
+                    <strong>Bezeichner:</strong> {{ project.identifier }}
                 </p>
                 <p>
-                    <strong>genaue örtliche Beschreibung:</strong> {{ place.description }}
+                    <strong>genaue örtliche Beschreibung:</strong> {{ project.description }}
                 </p>
                 <p>
-                    <strong>im Bezirk/in den Bezirken:</strong> {{ place.entities.all|join:", "}}
+                    <strong>im Bezirk/in den Bezirken:</strong> {{ project.entities.all|join:", "}}
                 </p>
             </div>
             {% if user.is_authenticated %}
             <div class="col-md-3">
                 <ul class="list-unstyled admin-area" style="margin-top: 50px;">
-                    <li><a class="admin-link" href="{{ place.get_update_url }}">Ort bearbeiten</a></li>
-                    <li><a class="admin-link" href="{{ place.get_delete_url }}">Ort entfernen</a></li>
-                    <li><a class="admin-link" href="{{new_publication_link}}?place_id={{place.pk}}">
+                    <li><a class="admin-link" href="{{ project.get_update_url }}">Ort bearbeiten</a></li>
+                    <li><a class="admin-link" href="{{ project.get_delete_url }}">Ort entfernen</a></li>
+                    <li><a class="admin-link" href="{{new_publication_link}}?project_id={{project.pk}}">
                             Neue Veröffentlichung
                     </a></li>
                 </ul>
@@ -54,7 +54,7 @@
 
         <h3>Veröffentlichungen zu diesem Gebiet</h3>
 
-        {% include "process/place_publications.html" %}
+        {% include "projects/project_publications.html" %}
     </div>
 
     <div class="comments-wrapper">

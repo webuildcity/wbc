@@ -5,15 +5,15 @@ from models import *
 
 class DateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Event
-        fields = ('name','address','description','link')
+        model = Date
+        fields = ('title','description','link')
 
 class MediaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Date
-        fields = ('firstName','lastName','address','description','link')
+        model = Media
+        fields = ('title','description','link')
 
-class Process_bplanSerializer(serializers.ModelSerializer):
+class PublicationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Date
-        fields = ('firstName','lastName','address','description','link')
+        model = Publication
+        fields = ('title','description','link')

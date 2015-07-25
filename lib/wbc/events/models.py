@@ -5,23 +5,22 @@ from wbc.core.models import Model
 from wbc.region.models import Entity
 from wbc.tags.models import Tag
 from wbc.stakeholder.models import Stakeholder
+from wbc.projects.models import Project
 
 class Event(Model):
     title       = models.CharField(max_length=256, blank=False, verbose_name="Titel", help_text="Der Titel eines Events")
     description = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Beschreibungstext eines Events")
     link        = models.URLField(blank=True)
     tags        = models.ManyToManyField(Tag, blank=True, verbose_name="Tags", related_name='tags_%(class)s')
-    stakeholder = models.ManyToManyField(Stakeholder, blank=True, verbose_name="Stakeholder (Creator)", related_name='stakeholder_%(class)s', help_text="Lorem_ipsum_Test_Help_Text")
+    stakeholder = models.ManyToManyField(Stakeholder, blank=True, verbose_name="Stakeholder (Creator)", related_name='stakeholders_%(class)s', help_text="Lorem_ipsum_Test_Help_Text")
     entities    = models.ManyToManyField(Entity, blank=True, verbose_name="Einheit", related_name='places_%(class)s')
     active      = models.BooleanField()
     begin       = models.DateField(verbose_name="Beginn")
     end         = models.DateField(verbose_name="Ende der Auslegungszeit",blank=True)
+    project     = models.ManyToManyField(Project, related_name='projects__%(class)s', verbose_name="Projekt")
 
     def __unicode__(self):
         return unicode(self.title)
-
-    class Meta:
-        abstract = True
 
 class Date(Event):
     contact     = models.CharField(max_length=256, blank=True, verbose_name="Ansprechpartner", help_text="Der Ansprechpartner dieses Termins")
@@ -36,7 +35,7 @@ class Date(Event):
 
 class Media(Event):
     indentifier      = models.CharField(blank=True, max_length=128, verbose_name="Identifier (ID) des Dokuments", help_text="ISBN/ISSN, URL/PURL, URN oder DOI") 
-    type             = models.CharField(blank=True, max_length=128, verbose_name="Typ des des Dokuments", help_text="Text, Dataset, Event, Interactive Resource, Service") 
+    mediatype        = models.CharField(blank=True, max_length=128, verbose_name="Typ des des Dokuments", help_text="Text, Dataset, Event, Interactive Resource, Service") 
     language         = models.CharField(blank=True, max_length=128, verbose_name="Sprache des Dokuments", help_text="ISO_639-1; en, de, fr") 
     subject          = models.CharField(blank=True, max_length=128, verbose_name="Suchtaugliche Schlagwörter (Keywords)", help_text="Verwandt/Redundant mit Tags?") 
     creator          = models.CharField(blank=True, max_length=128, verbose_name="Verantwortliche Person oder Organisation", help_text="Wenn Stakeholder nicht bereits vorhanden, hier vorrangig verantwortliche Person oder Organisation")
@@ -67,16 +66,19 @@ class Media(Event):
 #   MUSS NACHGEPFLEGT WERDEN...
 
     class Meta:
-        verbose_name        = 'Veröffentlichung'
-        verbose_name_plural = 'Veröffentlichungen'
+        verbose_name        = 'Medienbeitrag'
+        verbose_name_plural = 'Medienbeiträge'
 
+class Publication(Event):
+    process_step = models.ForeignKey('process.ProcessStep', related_name='publications', verbose_name="Verfahrensschritt")
+    office       = models.TextField(blank=True, verbose_name="Auslegungsstelle")
+    office_hours = models.TextField(blank=True, verbose_name="Öffnungszeiten der Auslegungsstelle")
+    department   = models.ForeignKey(Stakeholder, verbose_name="Verantwortliche Behörde")
 
-#class Process_bplan(Event):
-#      bebauungsplanverfahren        = models.ManyToManyField(Tag, blank=True, verbose_name="Bebauungsplanverfahren", related_name='tags_%(class)s')
+    def __unicode__(self):
+        return unicode(self.project.name) + ', ' + self.process_step.name
 
-#   class Meta:
-#       verbose_name        = 'Veröffentlichung'
-#       verbose_name_plural = 'Veröffentlichungen'
-
-# class PersonOrganizationRelation(Model):
-#     firstName     = models.CharField(blank=False, max_length=64, verbose_name="Vorname", help_text="Vorname")
+    class Meta:
+        ordering            = ("-end",)
+        verbose_name        = "Veröffentlichung"
+        verbose_name_plural = "Veröffentlichungen"

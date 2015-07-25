@@ -1,0 +1,38 @@
+{% extends 'core/layout.html' %}
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'page.css' %}" />
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static 'lib/ng-infinite-scroll.min.js' %}" ></script>
+    <script type="text/javascript">
+        var _static_url = "{% static '' %}";
+    </script>
+    <script type="text/javascript" src="{% static 'list.js' %}" ></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container page" ng-app="list" ng-controller="ListController">
+            <h2>Liste</h2>
+            <div class="row">
+                <div class="col-md-9">
+                     {% include "projects/list_info.html" %}
+                </div>
+                {% if user.is_authenticated %}
+                <div class="col-md-3">
+                    <ul class="list-unstyled admin-area">
+                        <li>
+                            <a class="admin-link" href="{{ new_place_link }}">Neuen Ort anlegen</a>
+                        </li>
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+
+            <div infinite-scroll="loadMoreItems()" infinite-scroll-distance="0.1">
+                {% include "projects/list_directive.html" %}
+            </div>
+    </div>
+{% endblock %}

@@ -4,10 +4,10 @@ import urllib,hashlib
 from django.db import models
 
 from wbc.core.models import Model
-from wbc.process.models import Place
+from wbc.projects.models import Project
 
 class Comment(Model):
-    place        = models.ForeignKey(Place, verbose_name="Ort")
+    project      = models.ForeignKey(Project, verbose_name="Ort")
     author_name  = models.CharField(max_length=100, verbose_name="Autorin/Author")
     author_email = models.CharField(max_length=256, verbose_name="Email")
     author_url   = models.CharField(max_length=256, blank=True, verbose_name="Url")
@@ -23,7 +23,7 @@ class Comment(Model):
         return gravatar_url
 
     def __unicode__(self):
-        return unicode(self.place) + ', ' + self.author_name
+        return unicode(self.project) + ', ' + self.author_name
 
     class Meta:
         ordering            = ("created",)

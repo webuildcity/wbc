@@ -36,7 +36,7 @@ class Command(BaseCommand):
             news_items = []
             for entity in subscriber.entities.all():
                 for publication in publications:
-                    if entity in publication.place.entities.all():
+                    if entity in publication.project.entities.all():
                         news_items.append(publication)
 
             # Doubletten ausfiltern
@@ -46,7 +46,7 @@ class Command(BaseCommand):
             news[subscriber.email] = news_items
 
         # get the path for places the unsubscribe from a reverse url lookup
-        place_path = reverse('wbc.process.views.place',args=['0']).rstrip('0/') + '/'
+        project_path = reverse('wbc.projects.views.project',args=['0']).rstrip('0/') + '/'
         unsubscribe_path = reverse('wbc.news.views.unsubscribe',args=['0']).rstrip('0/') + '/'
 
         i = 0
@@ -57,7 +57,7 @@ class Command(BaseCommand):
 
                 send_mail(email, 'news/mail/newsletter.html', {
                     'publications': news[email],
-                    'place_link': settings.SITE_URL + place_path,
+                    'project_link': settings.SITE_URL + project_path,
                     'unsubscribe_link': settings.SITE_URL + unsubscribe_path + email
                 })
 

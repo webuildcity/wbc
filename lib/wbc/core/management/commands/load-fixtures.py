@@ -12,14 +12,15 @@ fixtures = [
     'region/departments.json',
     'region/quarters.json',
     # process
-    'process/places.json',
     'process/processtypes.json',
     'process/processsteps.json',
     'process/publications.json',
     # comments
     'comments/comments.json',
     # news
-    'news/subscriber.json'
+    'news/subscriber.json',
+    # projects
+    'projects/project.json'
 ]
 
 class Command(BaseCommand):

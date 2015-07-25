@@ -221,13 +221,13 @@ a:hover,
 }
 
 /* ort */
-#place-map {
+#project-map {
     height: 400px;
 }
-.place-buttons {
+.project-buttons {
     margin-top: 20px;
 }
-.place {
+.project {
     margin-top: 20px;
     margin-bottom: 40px;
 }

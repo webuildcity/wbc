@@ -12,6 +12,6 @@ class MediaViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = PersonSerializer
     queryset = Person.objects.all()
 
-class Process_bplanViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = OrganizationSerializer
-    queryset = Organization.objects.all()
+class PublicationViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = PublicationSerializer
+    queryset = Publication.objects.all()
