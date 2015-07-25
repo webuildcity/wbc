@@ -46,15 +46,14 @@ class Media(Event):
     provenanceactive = models.BooleanField()
     provenance       = models.CharField(blank=True, max_length=128, verbose_name="Echtheit des Dokuments", help_text="Welche Zweifel oder Probleme mit dem Dokument?") 
     source           = models.CharField(blank=False, max_length=128, verbose_name="Quelle des Dokuments (Source)", help_text="URL, Freie Angabe wo das Dokument herkommt") 
-    dateCopyrighted  = models.DateField(verbose_name="Copyright Datum")
-
-    date          = models.DateField(blank=True, verbose_name="Offenes Datum Feld")
-    media_created = models.DateField(blank=True, verbose_name="Medieneintrag erstellt am")
-    modified      = models.DateField(blank=True, verbose_name="Geändert am")
-    dateSubmitted = models.DateField(blank=True, verbose_name="vorgelegt am")
-    dateAccepted  = models.DateField(blank=True, verbose_name="Eingegangen bzw. angelegt am")
-    issued        = models.DateField(blank=True, verbose_name="Veröffentlicht am")
-    valid         = models.DateField(blank=True, verbose_name="In Kraft getreten am, gültig von bis")
+    dateCopyrighted  = models.DateField(blank=True, verbose_name="Copyright Datum")
+    other_date       = models.DateField(null=True, blank=True, verbose_name="Offenes Datum Feld")
+    media_created    = models.DateField(null=True, blank=True, verbose_name="Medieneintrag erstellt am")
+    modified         = models.DateField(null=True, blank=True, verbose_name="Geändert am")
+    dateSubmitted    = models.DateField(null=True, blank=True, verbose_name="vorgelegt am")
+    dateAccepted     = models.DateField(null=True, blank=True, verbose_name="Eingegangen bzw. angelegt am")
+    issued           = models.DateField(null=True, blank=True, verbose_name="Veröffentlicht am")
+    valid            = models.DateField(null=True, blank=True, verbose_name="In Kraft getreten am, gültig von bis")
 
 
 #   STANDARD FUER IMAGES FEHLT
