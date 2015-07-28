@@ -31,5 +31,8 @@ class Person(Stakeholder):
         verbose_name        = 'Person'
         verbose_name_plural = 'Persons'
 
+    def __unicode__(self):
+        return unicode(self.firstName+" "+self.lastName)
+
 # class PersonOrganizationRelation(Model):
 #     firstName     = models.CharField(blank=False, max_length=64, verbose_name="Vorname", help_text="Vorname")

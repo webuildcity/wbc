@@ -5,9 +5,7 @@ from django.core.urlresolvers import reverse
 from wbc.core.models import Model
 from wbc.region.models import Entity,Department
 from wbc.projects.slug import unique_slugify
-from wbc.region.models import Muncipality 
-
-from taggit.managers import TaggableManager
+from wbc.region.models import Muncipality
 
 class Address(Model):
     slug         = models.SlugField(unique=True,editable=False)
@@ -31,17 +29,16 @@ class Address(Model):
 class Project(Model):
     name        = models.CharField(blank=False, max_length=64, verbose_name="Name", help_text="Name des Projekts")
     identifier  = models.CharField(blank=True, max_length=64, verbose_name="Bezeichner", help_text="ggf. Bezeichner des Projekts")
-    address     = models.CharField(max_length=256, blank=True, verbose_name="Adresse", help_text="Eine genaue Adresse des Projekts")
+    address     = models.CharField(max_length=256, blank=True, verbose_name="Adresse (Statisch)", help_text="Altes, statisches Adress-Feld")
     description = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Örtliche Beschreibung")
-    entities    = models.ManyToManyField(Entity, blank=True, verbose_name="Einheit", related_name='project_places')
+    entities    = models.ManyToManyField(Entity, blank=True, verbose_name="Verwaltungseinheit", related_name='project_places')
     lat         = models.FloatField(verbose_name="Breitengrad")
     lon         = models.FloatField(verbose_name="Längengrad")
     polygon     = models.TextField(null=True, blank=True)
     active      = models.BooleanField()
     link        = models.URLField(blank=True)
-    slug        = models.SlugField(unique=True)
+    slug        = models.SlugField(unique=True, editable=False)
     addressObj  = models.ForeignKey(Address, blank=True, null=True, verbose_name="Adresse")
-    tags        = TaggableManager()
 
 
     def get_absolute_url(self):
