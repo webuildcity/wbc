@@ -16,12 +16,16 @@ class Event(Model):
     stakeholder = models.ManyToManyField(Stakeholder, blank=True, verbose_name="stakeholders", related_name='stakeholders_%(class)s', help_text="Lorem_ipsum_Test_Help_Text")
     entities    = models.ManyToManyField(Entity, blank=True, verbose_name="Region", related_name='places_%(class)s')
     active      = models.BooleanField()
-    begin       = models.DateField(verbose_name="Beginn")
-    end         = models.DateField(verbose_name="Ende der Auslegungszeit",blank=True, null=True)
+    begin       = models.DateField(verbose_name="Anfang Timeline")
+    end         = models.DateField(verbose_name="Ende Timeline",blank=True, null=True)
     projects    = models.ForeignKey(Project, blank=True, related_name='projects__%(class)s', verbose_name="Projekt")
 
     def __unicode__(self):
         return unicode(self.title)
+
+    class Meta:
+        verbose_name        = "Event (Meta)"
+        verbose_name_plural = "Events (Meta)"
 
 class Date(Event):
     contact     = models.CharField(max_length=256, blank=True, verbose_name="Ansprechpartner", help_text="Der Ansprechpartner dieses Termins")
@@ -35,17 +39,17 @@ class Date(Event):
         verbose_name_plural = 'Veranstaltungen'
 
 class Media(Event):
+    teaser           = models.CharField(blank=True, max_length=110, verbose_name="Teaser-Text", help_text="Teaser / Vorschau-Text") 
     indentifier      = models.CharField(blank=True, max_length=128, verbose_name="Identifier (ID) des Dokuments", help_text="ISBN/ISSN, URL/PURL, URN oder DOI") 
     mediatype        = models.CharField(blank=True, max_length=128, verbose_name="Typ des des Dokuments", help_text="Text, Dataset, Event, Interactive Resource, Service") 
-    language         = models.CharField(blank=True, max_length=128, verbose_name="Sprache des Dokuments", help_text="ISO_639-1; en, de, fr") 
-    subject          = models.CharField(blank=True, max_length=128, verbose_name="Suchtaugliche Schlagwörter (Keywords)", help_text="Verwandt/Redundant mit Tags?") 
+    language         = models.CharField(blank=True, max_length=128, verbose_name="Sprache des Dokuments", help_text="ISO_639-1; en, de, fr")
     creator          = models.CharField(blank=True, max_length=128, verbose_name="Verantwortliche Person oder Organisation", help_text="Wenn Stakeholder nicht bereits vorhanden, hier vorrangig verantwortliche Person oder Organisation")
     publisher        = models.CharField(blank=True, max_length=128, verbose_name="Verlag", help_text="Verlag oder Herausgeber, die veröffentlichende Instanz")
     contributor      = models.CharField(blank=True, max_length=128, verbose_name="Contributor", help_text="Namen von weiteren Autoren/Mitarbeitern an dem Inhalt")
     rightsHolder     = models.CharField(blank=True, max_length=128, verbose_name="Rechteinhaber", help_text="Name der Person oder Organisation, die Eigner oder Verwerter der Rechte an diesem Dokument ist.")
     rights           = models.CharField(blank=True, max_length=128, verbose_name="Rechteinhaber", help_text="Information zur Klarstellung der Rechte, die an dem Dokument gehalten werden (Lizenzbedingungen)") 
-    provenanceactive = models.BooleanField()
-    provenance       = models.CharField(blank=True, max_length=128, verbose_name="Echtheit des Dokuments", help_text="Welche Zweifel oder Probleme mit dem Dokument?") 
+    provenanceactive = models.BooleanField(verbose_name="Echtheit des Dokuments geprüft")
+    provenance       = models.CharField(blank=True, max_length=128, verbose_name="Echtheit des Dokuments", help_text="Welche Zweifel oder Probleme gibt es mit dem Dokument?") 
     source           = models.CharField(blank=False, max_length=128, verbose_name="Quelle des Dokuments (Source)", help_text="URL, Freie Angabe wo das Dokument herkommt") 
     dateCopyrighted  = models.DateField(null=True, blank=True, verbose_name="Copyright Datum")
     other_date       = models.DateField(null=True, blank=True, verbose_name="Offenes Datum Feld")
