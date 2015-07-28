@@ -2,22 +2,23 @@
 from django.db import models
 
 from wbc.core.models import Model
+from wbc.projects.models import Project, Address
 from wbc.region.models import Entity
 from wbc.tags.models import Tag
 from wbc.stakeholder.models import Stakeholder
-from wbc.projects.models import Project
+
 
 class Event(Model):
     title       = models.CharField(max_length=256, blank=False, verbose_name="Titel", help_text="Der Titel eines Events")
     description = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Beschreibungstext eines Events")
     link        = models.URLField(blank=True)
     tags        = models.ManyToManyField(Tag, blank=True, verbose_name="Tags", related_name='tags_%(class)s')
-    stakeholder = models.ManyToManyField(Stakeholder, blank=True, verbose_name="Stakeholder (Creator)", related_name='stakeholders_%(class)s', help_text="Lorem_ipsum_Test_Help_Text")
+    stakeholder = models.ManyToManyField(Stakeholder, blank=True, verbose_name="stakeholders", related_name='stakeholders_%(class)s', help_text="Lorem_ipsum_Test_Help_Text")
     entities    = models.ManyToManyField(Entity, blank=True, verbose_name="Region", related_name='places_%(class)s')
     active      = models.BooleanField()
     begin       = models.DateField(verbose_name="Beginn")
-    end         = models.DateField(verbose_name="Ende der Auslegungszeit",blank=True)
-    project     = models.ManyToManyField(Project, related_name='projects__%(class)s', verbose_name="Projekt")
+    end         = models.DateField(verbose_name="Ende der Auslegungszeit",blank=True, null=True)
+    projects    = models.ForeignKey(Project, blank=True, related_name='projects__%(class)s', verbose_name="Projekt")
 
     def __unicode__(self):
         return unicode(self.title)
@@ -46,7 +47,7 @@ class Media(Event):
     provenanceactive = models.BooleanField()
     provenance       = models.CharField(blank=True, max_length=128, verbose_name="Echtheit des Dokuments", help_text="Welche Zweifel oder Probleme mit dem Dokument?") 
     source           = models.CharField(blank=False, max_length=128, verbose_name="Quelle des Dokuments (Source)", help_text="URL, Freie Angabe wo das Dokument herkommt") 
-    dateCopyrighted  = models.DateField(blank=True, verbose_name="Copyright Datum")
+    dateCopyrighted  = models.DateField(null=True, blank=True, verbose_name="Copyright Datum")
     other_date       = models.DateField(null=True, blank=True, verbose_name="Offenes Datum Feld")
     media_created    = models.DateField(null=True, blank=True, verbose_name="Medieneintrag erstellt am")
     modified         = models.DateField(null=True, blank=True, verbose_name="Geändert am")

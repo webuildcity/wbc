@@ -1,0 +1,33 @@
+<div class="row events">
+
+    {% if events %}
+
+    <section id="cd-timeline" class="cd-container">
+    {% for event in events.all %}
+
+    {% if forloop.counter != 1 %}
+
+    {% endif %}
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="img/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+
+            <div class="cd-timeline-content">
+                <h2> {{ event.title }} </h2>
+                <p> {{ event.description }} </p>
+                <a href="event.link" class="cd-read-more">Read more</a>
+                <span class="cd-date">{{event.begin}}</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+    {% endfor %}
+    </section>
+    {% else %}
+
+    <div class="text-center">
+        <strong>Bisher keine Events.</strong>
+    </div>
+
+    {% endif %}
+</div>

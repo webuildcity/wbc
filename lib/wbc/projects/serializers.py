@@ -6,10 +6,13 @@ from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 from wbc.region.serializers import DepartmentSerializer
 from models import *
+from wbc.events.serializers import EventSerializer
+
 
 class ProjectSerializer(serializers.ModelSerializer):
     point = serializers.SerializerMethodField('point_serializer_method')
     internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
+    events = EventSerializer(many=True)
 
     def point_serializer_method(self, obj):
         return [obj.lon,obj.lat]
@@ -19,12 +22,12 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('id','point','identifier','address','description','entities','link','internal_link')
+        fields = ('id','point','identifier','address','description','entities','events','link','internal_link')
 
 class ProjectPointSerializer(GeoFeatureModelSerializer):
     point = serializers.SerializerMethodField('point_serializer_method')
     internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
-    # publications = PublicationSerializer(many=True)
+    # publications = publication_serializer_method(many=True)
 
     def point_serializer_method(self, obj):
         return {'type': 'Point', 'coordinates': [obj.lon,obj.lat]}

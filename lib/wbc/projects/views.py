@@ -17,6 +17,7 @@ from wbc.core.views import ProtectedCreateView, ProtectedUpdateView, ProtectedDe
 from wbc.region.models import District
 from wbc.comments.models import Comment
 from wbc.comments.forms import CommentForm
+from wbc.events.models import Event
 from models import *
 from serializers import *
 # from forms import *
@@ -94,7 +95,6 @@ def projects(request):
 
 def project(request, pk):
     p = get_object_or_404(Project, id = int(pk))
-
     if request.method == 'POST':
         if len(request.POST["author_email1"]) == 0:
             form = CommentForm(request.POST)
@@ -103,11 +103,11 @@ def project(request, pk):
                 comment.enabled = True;
                 comment.project = p
                 comment.save()
-
+    print Event.objects.filter(projects = int(pk))
     return render(request,'projects/project.html',{
         'project': p,
         'comments': Comment.objects.filter(project = int(pk), enabled = True),
-       # 'process_link': reverse('wbc.projects.views.project'),
+        'events': Event.objects.filter(projects = int(pk))
         # 'new_publication_link': reverse('publication_create'),
     })
 
