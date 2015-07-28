@@ -10,9 +10,9 @@
     {% endif %}
         <div class="cd-timeline-block">
             <div class="cd-timeline-img cd-picture">
-                <img src="img/cd-icon-picture.svg" alt="Picture">
+                <span><i class="fa fa-calendar"></i></span>
             </div> <!-- cd-timeline-img -->
-
+            {{ event.model }}
             <div class="cd-timeline-content">
                 <h2> {{ event.title }} </h2>
                 <p> {{ event.description }} </p>

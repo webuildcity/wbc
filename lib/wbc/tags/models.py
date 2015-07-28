@@ -8,7 +8,7 @@ class Tag(Model):
     abbreviation  = models.CharField(max_length=256, blank=True, verbose_name="Abkürzung", help_text="Kürzel")
     description   = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Beschreibung des Tags")
     other         = models.CharField(max_length=256, blank=True, verbose_name="Sonstiges", help_text="sonstiges")
-    parentTag     = models.ForeignKey('self', blank=True)   
+    parentTag     = models.ForeignKey('self', blank=True, null=True)   
 
     def __unicode__(self):
         return unicode(self.name)

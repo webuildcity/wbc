@@ -9,8 +9,8 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display_links = ('id','name','address','active')
     # fields = ['active','address','entities','lat','lon','description','identifier','link','polygon']
     ordering = ['id']
-    # change_form_template = 'projects/admin/change_form.html'
-    # add_form_template = 'projects/admin/change_form.html'
+    change_form_template = 'projects/admin/change_form.html'
+    add_form_template = 'projects/admin/change_form.html'
 
 class AddressAdmin(admin.ModelAdmin):
     list_display = ('id', 'zipcode','street','streetnumber')
