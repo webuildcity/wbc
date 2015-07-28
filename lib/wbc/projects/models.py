@@ -7,6 +7,8 @@ from wbc.region.models import Entity,Department
 from wbc.projects.slug import unique_slugify
 from wbc.region.models import Muncipality 
 
+from taggit.managers import TaggableManager
+
 class Address(Model):
     slug         = models.SlugField(unique=True,editable=False)
     street       = models.CharField(max_length = 64, blank = False, verbose_name="Strasse", help_text="Strassenname")
@@ -37,8 +39,9 @@ class Project(Model):
     polygon     = models.TextField(null=True, blank=True)
     active      = models.BooleanField()
     link        = models.URLField(blank=True)
-    slug        = models.SlugField(unique=True,editable=False)
+    slug        = models.SlugField(unique=True)
     addressObj  = models.ForeignKey(Address, blank=True, null=True, verbose_name="Adresse")
+    tags        = TaggableManager()
 
 
     def get_absolute_url(self):

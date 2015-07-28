@@ -112,3 +112,23 @@ def project(request, pk):
     })
 
 
+def projectslug(request, slug):
+    print slug
+    p = Project.objects.get(slug__iexact=slug)
+    # p = get_object_or_404(Project, slug = slug)
+    if request.method == 'POST':
+        if len(request.POST["author_email1"]) == 0:
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.enabled = True;
+                comment.project = p
+                comment.save()
+    print Event.objects.filter(projects = int(p.pk))
+    return render(request,'projects/project.html',{
+        'project': p,
+        'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
+        'events': Event.objects.filter(projects = int(p.pk))
+        # 'new_publication_link': reverse('publication_create'),
+    })
+
