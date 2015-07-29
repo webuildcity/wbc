@@ -4,8 +4,9 @@ from rest_framework import routers
 from views import *
 
 router = routers.DefaultRouter()
-router.register(r'organizations', OrganizationViewSet, base_name='organization')
-router.register(r'persons', PersonViewSet, base_name='person')
+router.register(r'stakeholders', StakeholderViewSet, base_name='stakeholder')
+router.register(r'stakeholderRoles', StakeholderRoleViewSet, base_name='stakeholder_role')
+router.register(r'departments', DepartmentViewSet, base_name='department')
 
 urlpatterns = patterns('',
     url(r'^', include(router.urls)),

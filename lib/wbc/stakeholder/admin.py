@@ -3,15 +3,22 @@ from django.contrib import admin
 
 from models import *
 
-class OrganizationAdmin(admin.ModelAdmin):
+class StakeholderAdmin(admin.ModelAdmin):
     list_display = ('id','name', 'address')
     list_display_links = ('id','name', 'address')
     ordering = ['id']
 
-class PersonAdmin(admin.ModelAdmin):
-    list_display = ('id','firstName', 'lastName', 'address')
-    list_display_links = ('id', 'firstName', 'lastName', 'address')
+class StakeholderRoleAdmin(admin.ModelAdmin):
+    list_display = ('id','role', 'description')
+    list_display_links = ('id','role', 'description')
     ordering = ['id']
 
-admin.site.register(Organization, OrganizationAdmin)
-admin.site.register(Person, PersonAdmin)
+
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ('id','name')
+    list_display_links = ('id','name')
+    ordering = ['id']
+
+admin.site.register(Stakeholder, StakeholderAdmin)
+admin.site.register(StakeholderRole, StakeholderRoleAdmin)
+admin.site.register(Department, DepartmentAdmin)

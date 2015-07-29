@@ -21,24 +21,37 @@
 
         var _lon = {{ project.lon|stringformat:"F" }};
         var _lat = {{ project.lat|stringformat:"F" }};
+        var _address = "{{ project.address|safe }}";
         var _polygon = {% if project.polygon %}{{project.polygon|safe}}{% else %}[]{% endif %};
     </script>
     <script type="text/javascript" src="{% static 'projectmap.js' %}" ></script>
 {% endblock %}
 
 {% block content %}
-    <div id="project-map"></div>
 
     <div class="container">
+        <h1> {{project.name}} </h1>
+
+        <div id="project-map" class="col-md-9"></div>
+        <div id="subscribe-widget" class="col-md-3"><button class="btn default">SUBSCRIBE_PROJECT</button></div>
+
+        <div id="subscribe-widget" class="col-md-3"><br><br>NEXT MEETINGS ETC</div>
+
+        <div id="subscribe-widget" class="col-md-3"><br><br>LAST NEWS ITEM</div>
+
         <div class="row project">
             <div class="col-md-9">
-                <h3>Betroffenes Gebiet</h3>
+                <h3>Beschreibung</h3>
                 <p>
-                    <strong>Bezeichner:</strong> {{ project.identifier }}
+                    {{ project.description }}
                 </p>
-                <p>
-                    <strong>genaue örtliche Beschreibung:</strong> {{ project.description }}
-                </p>
+
+                {% if project.description_official %}                    
+                 <p>
+                    <strong>Genaue örtliche Beschreibung (Amtsblatt):</strong> {{ project.description_official }}
+                 </p>
+                {% endif %}
+                
                 <p>
                     <strong>im Bezirk/in den Bezirken:</strong> {{ project.entities.all|join:", "}}
                 </p>

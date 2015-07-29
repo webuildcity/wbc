@@ -7,7 +7,7 @@ class StakeholderTestCase(TestCase):
     def setUp(self):
         pass
 
-    def test_organization(self):
+    def test_stakeholder(self):
         pass
-    def test_person(self):
+    def test_stakeholderRole(self):
         pass

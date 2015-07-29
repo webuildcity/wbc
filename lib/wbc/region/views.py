@@ -15,7 +15,3 @@ class DistrictViewSet(viewsets.ReadOnlyModelViewSet):
 class QuarterViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = QuarterSerializer
     queryset = Quarter.objects.all()
-
-class DepartmentViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = DepartmentSerializer
-    queryset = Department.objects.all()

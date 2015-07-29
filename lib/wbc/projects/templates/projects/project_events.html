@@ -4,7 +4,6 @@
 
     <section id="cd-timeline" class="cd-container">
     {% for event in events.all %}
-
     {% if forloop.counter != 1 %}
 
     {% endif %}
@@ -12,7 +11,6 @@
             <div class="cd-timeline-img cd-picture">
                 <span><i class="fa fa-calendar"></i></span>
             </div> <!-- cd-timeline-img -->
-            {{ event.model }}
             <div class="cd-timeline-content">
                 <h2> {{ event.title }} </h2>
                 <p> {{ event.description }} </p>

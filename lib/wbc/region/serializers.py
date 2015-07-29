@@ -21,8 +21,3 @@ class MuncipalitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Muncipality
         fields = ('id','name','description','lat','lon','polygon','districts')
-
-class DepartmentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Department
-        fields = ('id','name','description','link','entity')

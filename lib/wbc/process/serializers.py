@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
-from wbc.region.serializers import DepartmentSerializer
+from wbc.stakeholder.serializers import DepartmentSerializer
 from models import *
 
 class ProcessTypeSerializer(serializers.ModelSerializer):

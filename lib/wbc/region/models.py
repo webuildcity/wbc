@@ -35,17 +35,3 @@ class Quarter(Entity):
     class Meta:
         verbose_name        = 'Ortsteil'
         verbose_name_plural = 'Ortsteile'
-
-class Department(Model):
-    name        = models.CharField(max_length=256)
-    description = models.TextField(blank=True)
-    link        = models.URLField(blank=True)
-    entity      = models.ForeignKey(Entity, related_name='departments')
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        verbose_name        = 'Behörde'
-        verbose_name_plural = 'Behörden'
-

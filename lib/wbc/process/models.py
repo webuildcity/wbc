@@ -3,7 +3,7 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from wbc.core.models import Model
-from wbc.region.models import Entity,Department
+from wbc.region.models import Entity
 
 # class Publication(Model):
 #     process_step = models.ForeignKey('ProcessStep', related_name='publications', verbose_name="Verfahrensschritt")

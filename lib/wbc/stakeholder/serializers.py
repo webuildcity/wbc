@@ -3,12 +3,17 @@ from rest_framework import serializers
 
 from models import *
 
-class OrganizationSerializer(serializers.ModelSerializer):
+class StakeholderSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Organization
-        fields = ('name','address','description','link')
+        model = Stakeholder
+        fields = ('name','address','description')
 
-class PersonSerializer(serializers.ModelSerializer):
+class StakeholderRoleSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Person
-        fields = ('firstName','lastName','address','description','link')
+        model = StakeholderRole
+        fields = ('role','description')
+
+class DepartmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Department
+        fields = ('id','name','description','link','entity')

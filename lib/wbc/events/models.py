@@ -33,7 +33,7 @@ class Date(Event):
     lat         = models.FloatField(null=True,blank=True)
     lon         = models.FloatField(null=True,blank=True)
     other       = models.CharField(max_length=256, blank=True, verbose_name="Sonstiges", help_text="sonstiges")
-
+    modelType   = models.CharField(default="date", editable=False, max_length=20)
     class Meta:
         verbose_name        = 'Veranstaltung'
         verbose_name_plural = 'Veranstaltungen'
@@ -59,7 +59,7 @@ class Media(Event):
     dateAccepted     = models.DateField(null=True, blank=True, verbose_name="Eingegangen bzw. angelegt am")
     issued           = models.DateField(null=True, blank=True, verbose_name="Veröffentlicht am")
     valid            = models.DateField(null=True, blank=True, verbose_name="In Kraft getreten am, gültig von bis")
-
+    modelType        = models.CharField(default="media", editable=False, max_length=20)
 
 #   STANDARD FUER IMAGES FEHLT
 #
@@ -78,7 +78,7 @@ class Publication(Event):
     office       = models.TextField(blank=True, verbose_name="Auslegungsstelle")
     office_hours = models.TextField(blank=True, verbose_name="Öffnungszeiten der Auslegungsstelle")
     department   = models.ForeignKey(Stakeholder, verbose_name="Verantwortliche Behörde")
-
+    modelType    = models.CharField(default="pub", editable=False, max_length=20)
     def __unicode__(self):
         return unicode(self.project.name) + ', ' + self.process_step.name
 
