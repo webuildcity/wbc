@@ -6,6 +6,7 @@ from wbc.core.models import Model
 from wbc.region.models import Entity
 from wbc.projects.slug import unique_slugify
 from wbc.region.models import Muncipality
+from photologue.models import Gallery
 
 class Address(Model):
     slug         = models.SlugField(unique=True,editable=False)
@@ -40,7 +41,7 @@ class Project(Model):
     link                 = models.URLField(blank=True)
     slug                 = models.SlugField(unique=True, editable=False)
     addressObj           = models.ForeignKey(Address, blank=True, null=True, verbose_name="Adresse")
-
+    gallery              = models.OneToOneField(Gallery, related_name='gallery', blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('project', kwargs={'pk': self.pk})

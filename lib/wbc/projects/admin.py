@@ -2,9 +2,21 @@
 from django import forms
 from django.contrib import admin
 
+from photologue.admin import GalleryAdmin as GalleryAdminDefault
+from photologue.models import Gallery
 from models import *
 
+
+class ProjectInline(admin.StackedInline):
+    model = Project
+    can_delete = False
+
+class GalleryAdmin(GalleryAdminDefault):
+    inlines = [ProjectInline]
+
 class ProjectAdmin(admin.ModelAdmin):
+    # inlines = [GalleryInline]
+
     list_display = ('id','name','address','active')
     list_display_links = ('id','name','address','active')
     # fields = ['active','address','entities','lat','lon','description','identifier','link','polygon']
@@ -17,6 +29,9 @@ class AddressAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'zipcode','street','streetnumber')
     # fields = ['active','address','entities','lat','lon','description','identifier','link','polygon']
     ordering = ['id']
+
+admin.site.unregister(Gallery)
+admin.site.register(Gallery, GalleryAdmin)
 
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Address, AddressAdmin)
