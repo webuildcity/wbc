@@ -59,8 +59,8 @@
             {% if user.is_authenticated %}
             <div class="col-md-3">
                 <ul class="list-unstyled admin-area" style="margin-top: 50px;">
-                    <li><a class="admin-link" href="{{ project.get_update_url }}">Ort bearbeiten</a></li>
-                    <li><a class="admin-link" href="{{ project.get_delete_url }}">Ort entfernen</a></li>
+                    <li><a class="admin-link" href="{{ project.get_update_url }}">Projekt bearbeiten</a></li>
+                    <li><a class="admin-link" href="{{ project.get_delete_url }}">Projekt entfernen</a></li>
                     <li><a class="admin-link" href="{{new_publication_link}}?project_id={{project.pk}}">
                             Neue Veröffentlichung
                     </a></li>

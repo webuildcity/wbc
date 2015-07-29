@@ -18,7 +18,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         return [obj.lon,obj.lat]
 
     def internal_link_serializer_method(self, obj):
-        return reverse('wbc.projects.views.project',args=[obj.id])
+        return reverse('wbc.projects.views.project',args=[obj.slug])
 
     class Meta:
         model = Project
@@ -87,7 +87,7 @@ class MapSerializer(serializers.ModelSerializer):
         return [obj.lon,obj.lat]
 
     def internal_link_serializer_method(self, obj):
-        return reverse('wbc.projects.views.project',args=[obj.id])
+        return reverse('wbc.projects.views.projectslug',args=[obj.slug])
 
     # def publication_serializer_method(self, obj):
     #     publications = obj.publications.all()
