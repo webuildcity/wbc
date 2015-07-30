@@ -167,6 +167,14 @@ header h1 {
 .cd-timeline-img.cd-location {
   background: #f0ca45;
 }
+
+.timeline-text {
+      white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+
+}
 @media only screen and (min-width: 1170px) {
   .cd-timeline-img {
     width: 60px;
