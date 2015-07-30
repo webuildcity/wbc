@@ -247,11 +247,54 @@ a:hover,
     }
 }
 
+/*SLIDESHOW*/
+
+#slider_container1 {
+    position: relative;
+    /*margin: 0px 5px 5px 0px; */
+    /*float: left; */
+    top: 0px; 
+    left: 0px; 
+    width: 800px;
+    height: 450px; 
+    overflow: hidden;
+    background: #191919;
+}
+
+.slides {
+    cursor: move; 
+    position: absolute; 
+    overflow: hidden; 
+    left: 0px; 
+    top: 0px; 
+    width: 800px; 
+    height: 350px;
+}
+
+.jssora05l, .jssora05r {
+                display: block;
+                position: absolute;
+                /* size of arrow element */
+                width: 40px;
+                height: 40px;
+                cursor: pointer;
+                background: url(img/a17.png) no-repeat;
+                overflow: hidden;
+            }
+.jssora05l { background-position: -10px -40px; }
+.jssora05r { background-position: -70px -40px; }
+.jssora05l:hover { background-position: -130px -40px; }
+.jssora05r:hover { background-position: -190px -40px; }
+.jssora05l.jssora05ldn { background-position: -250px -40px; }
+.jssora05r.jssora05rdn { background-position: -310px -40px; }
+
 .jssort01 {
     position: absolute;
     /* size of thumbnail navigator container */
     width: 800px;
     height: 100px;
+    bottom: 0px;
+    left: 0px;
 }
 
 .jssort01 .p {
