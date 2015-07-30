@@ -7,22 +7,34 @@ from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from wbc.stakeholder.serializers import DepartmentSerializer
 from models import *
 from wbc.events.serializers import EventSerializer
+from photologue.models import Gallery
 
+
+
+class GallerySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Gallery
+        fields = ('title','description','sample', 'date_added')
 
 class ProjectSerializer(serializers.ModelSerializer):
     point = serializers.SerializerMethodField('point_serializer_method')
     internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
-    events = EventSerializer(many=True)
-
+    # events = EventSerializer(many=True)
+    # gallery = GallerySerializer(many=True)
+    
     def point_serializer_method(self, obj):
         return [obj.lon,obj.lat]
 
     def internal_link_serializer_method(self, obj):
-        return reverse('wbc.projects.views.project',args=[obj.slug])
+        return reverse('wbc.projects.views.projectslug',args=[obj.slug])
+
+    # def gallery_serializer_method(self, obj):
+    #     print obj.gallery
+    #     return obj.gallery
 
     class Meta:
         model = Project
-        fields = ('id','point','identifier','address','description','entities','events','link','internal_link')
+        fields = ('id','point','identifier','address','description','entities','events','link','internal_link', 'gallery')
 
 class ProjectPointSerializer(GeoFeatureModelSerializer):
     point = serializers.SerializerMethodField('point_serializer_method')
@@ -110,3 +122,4 @@ class MapSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = ('id','point','identifier','address','entities','internal_link')
+

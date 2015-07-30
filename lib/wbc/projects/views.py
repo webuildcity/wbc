@@ -95,6 +95,7 @@ def projects(request):
 
 def project(request, pk):
     p = get_object_or_404(Project, id = int(pk))
+    print p.gallery
     if request.method == 'POST':
         if len(request.POST["author_email1"]) == 0:
             form = CommentForm(request.POST)
@@ -103,17 +104,18 @@ def project(request, pk):
                 comment.enabled = True;
                 comment.project = p
                 comment.save()
-    print Event.objects.filter(projects = int(pk))
+
     return render(request,'projects/project.html',{
         'project': p,
         'comments': Comment.objects.filter(project = int(pk), enabled = True),
-        'events': Event.objects.filter(projects = int(pk))
+        'events': Event.objects.filter(projects = int(pk)),
+        'gallery': Gallery.objects.filter(slug = p.gallery)
+
         # 'new_publication_link': reverse('publication_create'),
     })
 
 
 def projectslug(request, slug):
-    print slug
     p = Project.objects.get(slug__iexact=slug)
     # p = get_object_or_404(Project, slug = slug)
     if request.method == 'POST':
@@ -124,11 +126,12 @@ def projectslug(request, slug):
                 comment.enabled = True;
                 comment.project = p
                 comment.save()
-    print Event.objects.filter(projects = int(p.pk))
+
     return render(request,'projects/project.html',{
         'project': p,
         'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
-        'events': Event.objects.filter(projects = int(p.pk))
+        'events': Event.objects.filter(projects = int(p.pk)),
+        'gallery': Gallery.objects.filter(slug = p.gallery)
         # 'new_publication_link': reverse('publication_create'),
     })
 
