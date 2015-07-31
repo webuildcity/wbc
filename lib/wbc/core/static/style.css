@@ -247,6 +247,13 @@ a:hover,
     }
 }
 
+/*WIDGETS */
+
+.widget .fa {
+    color: #646464;
+    padding-right: 4px;
+}
+
 /*SLIDESHOW*/
 
 #slider1_container {

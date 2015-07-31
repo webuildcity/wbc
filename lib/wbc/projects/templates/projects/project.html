@@ -37,9 +37,22 @@
         <div id="project-map" class="col-md-9"></div>
         <div id="subscribe-widget" class="col-md-3"><button class="btn default">SUBSCRIBE_PROJECT</button></div>
 
-        <div id="subscribe-widget" class="col-md-3"><br><br>NEXT MEETINGS ETC</div>
-
-        <div id="subscribe-widget" class="col-md-3"><br><br>LAST NEWS ITEM</div>
+        {% if nextDate %}
+        <div id="next-date-widget" class="widget col-md-3">
+            <h3><i class="fa fa-calendar"> </i>Nächster Termin</h3>
+            <p>{{nextDate.title}}</p>
+            <p>{{nextDate.begin}}</p>
+            <p>{{nextDate.address}}</p>
+        </div>
+        {% endif %}
+        {% if lastNews %}
+        <div id="next-date-widget" class="widget col-md-3">
+            <h3><i class="fa fa-newspaper-o"> </i>Letzte Neuigkeiten</h3>
+            <p>{{lastNews.title}}</p>
+            <p>{{lastNews.teaser}}</p>
+            <a href={{lastNews.link}}>Mehr</a>
+        </div>
+        {% endif %}
 
         <div class="row project">
             <div class="col-md-9">

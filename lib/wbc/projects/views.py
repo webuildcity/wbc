@@ -17,7 +17,7 @@ from wbc.core.views import ProtectedCreateView, ProtectedUpdateView, ProtectedDe
 from wbc.region.models import District
 from wbc.comments.models import Comment
 from wbc.comments.forms import CommentForm
-from wbc.events.models import Event
+from wbc.events.models import Event, Date, Media
 from models import *
 from serializers import *
 # from forms import *
@@ -105,11 +105,15 @@ def project(request, pk):
                 comment.project = p
                 comment.save()
 
+    today = datetime.datetime.today()
+
     return render(request,'projects/project.html',{
         'project': p,
         'comments': Comment.objects.filter(project = int(pk), enabled = True),
         'events': Event.objects.filter(projects = int(pk)),
-        'gallery': Gallery.objects.filter(slug = p.gallery)
+        'gallery': Gallery.objects.filter(slug = p.gallery),
+        'nextDate': Date.objects.filter(projects = int(p.pk), begin__gte=today).order_by('begin').first(),
+        'lastNews': Media.objects.filter(projects = int(p.pk)).order_by('begin').first()
 
         # 'new_publication_link': reverse('publication_create'),
     })
@@ -127,11 +131,15 @@ def projectslug(request, slug):
                 comment.project = p
                 comment.save()
 
+    today = datetime.datetime.today()
+
     return render(request,'projects/project.html',{
         'project': p,
         'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
         'events': Event.objects.filter(projects = int(p.pk)),
-        'gallery': Gallery.objects.filter(slug = p.gallery)
-        # 'new_publication_link': reverse('publication_create'),
+        'gallery': Gallery.objects.filter(slug = p.gallery),
+        # 'nextDate': Event.objects.filter(projects = int(p.pk))
+        'nextDate': Date.objects.filter(projects = int(p.pk), begin__gte=today).orderBy('begin')[0],
+        'lastNews': Media.objects.filter(projects = int(p.pk)).order_by('begin')[0]
     })
 
