@@ -8,9 +8,24 @@
 
     {% endif %}
         <div class="cd-timeline-block">
+            {% if event.date %}
             <div class="cd-timeline-img cd-picture">
                 <span><i class="fa fa-calendar"></i></span>
             </div> <!-- cd-timeline-img -->
+            {% elif event.publication %}    
+             <div class="cd-timeline-img cd-picture">
+                <span><i class="fa fa-calendar"></i></span>
+            </div> <!-- cd-timeline-img -->
+            {% elif event.media %}  
+            <div class="cd-timeline-img cd-picture">
+                <span><i class="fa fa-newspaper-o"></i></span>
+            </div> <!-- cd-timeline-img -->
+            {% else %}  
+            <div class="cd-timeline-img cd-picture">
+                <span><i class="fa fa-newspaper-o"></i></span>
+            </div> <!-- cd-timeline-img -->
+            {% endif %}
+
             <div class="cd-timeline-content">
                 <h2> {{ event.title }} </h2>
                 <p class="timeline-text"> {{ event.description }} </p>
