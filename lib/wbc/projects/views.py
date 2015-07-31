@@ -139,7 +139,7 @@ def projectslug(request, slug):
         'events': Event.objects.filter(projects = int(p.pk)),
         'gallery': Gallery.objects.filter(slug = p.gallery),
         # 'nextDate': Event.objects.filter(projects = int(p.pk))
-        'nextDate': Date.objects.filter(projects = int(p.pk), begin__gte=today).orderBy('begin')[0],
+        'nextDate': Date.objects.filter(projects = int(p.pk), begin__gte=today).order_by('begin')[0],
         'lastNews': Media.objects.filter(projects = int(p.pk)).order_by('begin')[0]
     })
 
