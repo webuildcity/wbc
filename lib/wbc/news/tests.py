@@ -4,11 +4,12 @@ from django.test import Client
 from models import Validation
 from models import Subscriber
 from models import Newsletter
-from wbc.region.models import Entity
+from wbc.region.models import Entity, Muncipality, District
 from models import *
 from forms import SubscribeForm
 from django.test.client import RequestFactory
 from django.utils.timezone import now
+from django.core.urlresolvers import reverse
 
 # Test for Models
 
@@ -28,18 +29,22 @@ class NewsTestCase(TestCase):
 class SubscriberTestCase(TestCase):
 
     def setUp(self):
-        self.entity = Entity(name='Berlin').save()
+        self.entity = Entity(name='München').save()
         self.entity2 = Entity(name='Hamburg').save()
+        Muncipality(name='Berlin').save()
+        self.muncipality = Muncipality.objects.get(name='Berlin')
+        District(name="Charlottenburg", muncipality=self.muncipality).save()
+        District(name="Schöneberg", muncipality=self.muncipality).save()
         self.factory = RequestFactory()
         self.entities = Entity.objects.all().values()
-        self.validation = Validation(email='test@test.de')
 
     # Models
 
-    def create_subscriber(email='test@test.de'):
-        entity = Entity.objects.get(name='Berlin')
+    def create_subscriber(self, email='test@test.de'):
+        entity = Entity.objects.get(name='Charlottenburg')
         s = Subscriber.objects.create(email=email)
         s.entities.add(entity)
+        s.save()
         return s
 
     def test_validation(self):
@@ -58,9 +63,131 @@ class SubscriberTestCase(TestCase):
 
     # Views
 
-    def test_subscribe_view(self):
+    def test_subscribe_view_post(self):
         url = reverse('wbc.news.views.subscribe')
-        resp = Client().post(url, {'username': self.user.username})
+        Client().post(url, {'email': 'test1@test.de'})
+        validation = Validation.objects.get(email='test1@test.de')
+        self.assertEqual(validation.email, 'test1@test.de')
+
+    def test_subscribe_view_get(self):
+        url = reverse('wbc.news.views.subscribe')
+        page = Client().get(url)
+        self.assertEqual(page.status_code, 200)
+        self.assertEqual(len(page.context['entities']), 2)
+
+    def test_unsubscribe_view_post(self):
+        subscriber = self.create_subscriber()
+        count = Subscriber.objects.all().count()
+        self.assertEqual(count, 1)
+        url = reverse('wbc.news.views.unsubscribe', args=[subscriber.email])
+        page = Client().post(url, {'email': subscriber.email})
+        validation = Validation.objects.get(email=subscriber.email)
+        self.assertEqual(validation.action, 'unsubscribe')
+        self.assertEqual(page.status_code, 200)
+        self.assertEqual(page.context['success'], True)
+
+    def test_unsubscribe_view_post_email_does_not_exist(self):
+        email = 'test3@test.de'
+        try:
+            Subscriber.objects.get(email=email)
+            exists = True
+        except:
+            exists = False
+        self.assertEqual(exists, False)
+        url = reverse('wbc.news.views.unsubscribe', args=[email])
+        page = Client().post(url, {'email': email})
+        self.assertEqual(page.status_code, 200)
+        self.assertEqual(page.context['success'], True)
+
+    def test_unsubscribe_view_get(self):
+        subscriber = self.create_subscriber()
+        count = Subscriber.objects.all().count()
+        self.assertEqual(count, 1)
+        url = reverse('wbc.news.views.unsubscribe', args=[subscriber.email])
+        page = Client().get(url)
+        self.assertEqual(page.status_code, 200)
+        self.assertTrue('form' in page.context)
+
+    def getJson(self):
+        import json
+        districts = District.objects.all()
+        entities = {}
+        for district in districts:
+            entities[district.pk] = True
+        return json.dumps(entities)
+
+    def test_validation_subscribe(self):
+        self.assertEqual(Subscriber.objects.all().count(), 0)
+        entity_json = self.getJson()
+        validation = Validation.objects.create(email='test1@test.de', action='subscribe', entities=entity_json)
+        validation.save()
+        url = reverse('wbc.news.views.validate', args=[validation.code])
+        page = Client().get(url)
+        self.assertEqual(page.status_code, 200)
+        self.assertEqual(page.context['success'], True)
+        self.assertEqual(Validation.objects.all().count(), 0)
+        self.assertEqual(Subscriber.objects.all().count(), 1)
+
+    def test_validation_subscribe_subscriber_exits(self):
+        subscriber = self.create_subscriber()
+        self.assertEqual(Subscriber.objects.all().count(), 1)
+        entity_json = self.getJson()
+        validation = Validation.objects.create(email=subscriber.email, action='subscribe', entities=entity_json)
+        validation.save()
+        url = reverse('wbc.news.views.validate', args=[validation.code])
+        page = Client().get(url)
+        self.assertEqual(page.status_code, 200)
+        self.assertEqual(page.context['success'], True)
+        self.assertEqual(Validation.objects.all().count(), 0)
+        self.assertEqual(Subscriber.objects.all().count(), 1)
+
+    def test_validation_unsubscribe(self):
+        subscriber = self.create_subscriber()
+        count = Subscriber.objects.all().count()
+        self.assertEqual(count, 1)
+        entity_json = self.getJson()
+        validation = Validation.objects.create(email=subscriber.email, action='unsubscribe', entities=entity_json)
+        validation.save()
+        url = reverse('wbc.news.views.validate', args=[validation.code])
+        page = Client().get(url)
+        self.assertEqual(page.status_code, 200)
+        self.assertEqual(page.context['success'], True)
+        self.assertEqual(Validation.objects.all().count(), 0)
+        self.assertEqual(Subscriber.objects.all().count(), 0)
+
+    def test_validation_unsubscribe_subscriber_does_not_exist(self):
+        count = Subscriber.objects.all().count()
+        self.assertEqual(count, 0)
+        entity_json = self.getJson()
+        validation = Validation.objects.create(email='hallo@example.com', action='unsubscribe', entities=entity_json)
+        validation.save()
+        url = reverse('wbc.news.views.validate', args=[validation.code])
+        page = Client().get(url)
+        self.assertEqual(page.status_code, 200)
+        self.assertEqual(page.context['success'], True)
+        self.assertEqual(Validation.objects.all().count(), 0)
+        self.assertEqual(Subscriber.objects.all().count(), 0)
+
+    def test_validation_wrong_action(self):
+        count = Subscriber.objects.all().count()
+        self.assertEqual(count, 0)
+        entity_json = self.getJson()
+        validation = Validation.objects.create(email='hallo@example.com', action='wrong_action', entities=entity_json)
+        validation.save()
+        url = reverse('wbc.news.views.validate', args=[validation.code])
+        try:
+            Client().get(url)
+        except:
+            error_occured = True
+        self.assertTrue(error_occured)
+
+    def test_validation_does_not_exist(self):
+        url = reverse('wbc.news.views.validate', args=['abc'])
+        page = Client().get(url)
+        self.assertEqual(page.status_code, 200)
+        self.assertFalse('success' in page.context)
+        self.assertEqual(Validation.objects.all().count(), 0)
+        self.assertEqual(Subscriber.objects.all().count(), 0)
 
 
 class NewsletterTestCase(TestCase):
