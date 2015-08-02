@@ -42,7 +42,7 @@
 
     <script>
         wbc3d('#vizicities-viewport',
-            [{{place.lat|stringformat:"f"}}, {{place.lon|stringformat:"f"}}],
+            [_lat, _lon],
             '/media/{{place.building.model}}',
             {{place.building.exclude_region}},
             '/media/{{place.building.additional_file}}'
