@@ -15,6 +15,12 @@
     <link rel="stylesheet" href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" />
     {% block css %}{% endblock %}
     <link rel="stylesheet" href="{% static 'style.css' %}" />
+
+    <script type="text/javascript" src="{% static 'lib/jquery.min.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/angular/angular.min.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}" ></script>
+
+    {% block js %}{% endblock %}
 </head>
 
 <body>
@@ -55,15 +61,9 @@
             </div>
         </div>
     </div>
-    
-    {% block content %}{% endblock %}  
 
-    <script type="text/javascript" src="{% static 'lib/jquery.min.js' %}" ></script>
-    <script type="text/javascript" src="{% static 'lib/angular/angular.min.js' %}" ></script>
-    <script type="text/javascript" src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}" ></script>
+    {% block content %}{% endblock %}
 
-    {% block js %}{% endblock %}
-    
     {% if not debug %}
 	<!-- Piwik -->
 	<script type="text/javascript">

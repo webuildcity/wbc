@@ -4,13 +4,6 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'page.css' %}" />
     <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
-    <link rel="stylesheet" href="{% static 'lib/wbc3d/css/vizi.css' %}" />
-    <style>
-        #vizicities-viewport {
-            height: 300px;
-            position: relative;
-        }
-    </style>
 {% endblock %}
 
 {% block js %}
@@ -29,6 +22,14 @@
     <script type="text/javascript" src="{% static 'placemap.js' %}" ></script>
 
     {% if place.building %}
+    <style>
+        #vizicities-viewport {
+            height: 300px;
+            position: relative;
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'lib/wbc3d/css/vizi.css' %}" />
+
     <script type="text/javascript">
     if (!window.wbc3d) {
         window.wbc3d_conf = {};
@@ -40,14 +41,15 @@
     <script type="text/javascript" src="{% static 'lib/wbc3d/js/wbc_3d.min.js' %}" ></script>
 
     <script>
-    wbc3d('#vizicities-viewport',
-        [53.556392, 9.969535],
-        '/media/{{place.building.model}}',
-        [53.555835, 9.969030, 53.557227, 9.970746],
-        '/media/{{place.building.additional_file}}'
-    );
+        wbc3d('#vizicities-viewport',
+            [{{place.lat|stringformat:"f"}}, {{place.lon|stringformat:"f"}}],
+            '/media/{{place.building.model}}',
+            {{place.building.exclude_region}},
+            '/media/{{place.building.additional_file}}'
+        );
     </script>
     {% endif %}
+
 {% endblock %}
 
 {% block content %}
@@ -59,6 +61,7 @@
                 {% if place.building %}
                 <div id="vizicities-viewport"></div>
                 {% endif %}
+
                 <h3>Betroffenes Gebiet</h3>
                 <p>
                     <strong>Bezeichner:</strong> {{ place.identifier }}
