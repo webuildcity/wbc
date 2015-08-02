@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.test import TestCase
-from models import Place
+from django.test import Client
+
 from django.core.urlresolvers import reverse
 
 from wbc.process.models import Place
@@ -25,7 +26,7 @@ class ProcessTestCase(TestCase):
         )
         a.save()
 
-        m = Muncipality(name='Berlin').save()
+        Muncipality(name='Berlin').save()
 
         d = District(
             name='Mitte')
@@ -48,6 +49,8 @@ class ProcessTestCase(TestCase):
         d = Department(name="Gemeinde")
         d.entity = Muncipality.objects.get(name='Berlin')
         d.save()
+
+    # Models
 
     def create_place(self, address='Unter den Linden 1', description='Brandenburger Tor', lat='-13', lon='52', identifier='ACB', active=False):
         return Place.objects.create(
@@ -103,8 +106,21 @@ class ProcessTestCase(TestCase):
 
     def test_process_step(self):
         ps = ProcessStep.objects.get(name="Schritt1")
-        self.assertEqual(ps.__unicode__(), unicode(ps.process_type) + ', ' + ps.name)
+        self.assertEqual(
+            ps.__unicode__(), unicode(ps.process_type) + ', ' + ps.name)
 
     def test_process_type(self):
         pt = ProcessType.objects.get(name="BplanVerfahren")
         self.assertEqual(pt.__unicode__(), pt.name)
+
+    # Views
+
+    def test_process_api_list(self):
+        url = "/process/list/"
+        page = Client().get(url)
+        self.assertEqual(page['content-type'], 'application/json')
+
+    def test_places_api(self):
+        url = "/process/places/"
+        page = Client().get(url)
+        self.assertEqual(page['content-type'], 'application/json')

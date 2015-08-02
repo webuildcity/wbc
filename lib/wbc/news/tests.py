@@ -90,7 +90,6 @@ class SubscriberTestCase(TestCase):
         email = 'test3@test.de'
         try:
             Subscriber.objects.get(email=email)
-            exists = True
         except:
             exists = False
         self.assertEqual(exists, False)
