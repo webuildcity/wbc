@@ -4,6 +4,16 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'page.css' %}" />
     <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
+
+    {% if place.building %}
+    <link rel="stylesheet" href="{% static 'lib/wbc3d/css/vizi.css' %}" />
+    <style>
+        #vizicities-viewport {
+            height: 300px;
+            position: relative;
+        }
+    </style>
+    {% endif %}
 {% endblock %}
 
 {% block js %}
@@ -22,14 +32,6 @@
     <script type="text/javascript" src="{% static 'placemap.js' %}" ></script>
 
     {% if place.building %}
-    <style>
-        #vizicities-viewport {
-            height: 300px;
-            position: relative;
-        }
-    </style>
-    <link rel="stylesheet" href="{% static 'lib/wbc3d/css/vizi.css' %}" />
-
     <script type="text/javascript">
     if (!window.wbc3d) {
         window.wbc3d_conf = {};
@@ -39,15 +41,6 @@
     </script>
     <script type="text/javascript" src="{% static 'lib/wbc3d/js/vizi.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/wbc3d/js/wbc_3d.min.js' %}" ></script>
-
-    <script>
-        wbc3d('#vizicities-viewport',
-            [_lat, _lon],
-            '/media/{{place.building.model}}',
-            {{place.building.exclude_region}},
-            '/media/{{place.building.additional_file}}'
-        );
-    </script>
     {% endif %}
 
 {% endblock %}
@@ -58,9 +51,7 @@
     <div class="container">
         <div class="row place">
             <div class="col-md-9">
-                {% if place.building %}
-                <div id="vizicities-viewport"></div>
-                {% endif %}
+
 
                 <h3>Betroffenes Gebiet</h3>
                 <p>
@@ -86,6 +77,19 @@
             {% endif %}
         </div>
 
+        {% if place.building %}
+        <h3>3D Visualisierung des Bauvorhabens</h3>
+        <div id="vizicities-viewport"></div>
+        <script>
+            wbc3d('#vizicities-viewport',
+                [_lat, _lon],
+                '/media/{{place.building.model}}',
+                {{place.building.exclude_region}},
+                '/media/{{place.building.additional_file}}'
+            );
+        </script>
+        {% endif %}
+
         <h3>Veröffentlichungen zu diesem Gebiet</h3>
 
         {% include "process/place_publications.html" %}
@@ -104,4 +108,5 @@
             {% include "comments/form.html" %}
         </div>
     </div>
+
 {% endblock %}
