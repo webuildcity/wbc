@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from django.test import TestCase
-from models import Comment
+from django.test import Client
+
+from django.core.urlresolvers import reverse
+
 from wbc.process.models import Place
 from wbc.region.models import District
 from wbc.region.models import Muncipality
 
-# models test
-
+from models import Comment
 
 class CommentTestCase(TestCase):
 
@@ -53,3 +55,17 @@ class CommentTestCase(TestCase):
             hashlib.md5(c.author_email.lower()).hexdigest() + "?"
         gravatar_url += urllib.urlencode({'s': str(32)})
         self.assertEqual(c.gravatar, gravatar_url)
+
+    def test_view_place_post_comment(self):
+        url = reverse('place', args=['1'])
+
+        comment = {
+            'author_name': 'Thomas Testuser',
+            'author_email': 'test@example.com',
+            'author_email1': '',
+            'author_url': 'example.com',
+            'content': 'Test'
+        }
+
+        response = Client().post(url, comment)
+        self.assertEqual(response.status_code, 200)

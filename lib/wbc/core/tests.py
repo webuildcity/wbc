@@ -2,9 +2,10 @@
 from django.test import TestCase
 from django.test import Client
 from django.contrib.auth.models import User
-from wbc.core.forms import LoginForm
 from django.test.client import RequestFactory
 from django.core.urlresolvers import reverse
+
+from wbc.core.forms import LoginForm
 from wbc.region.models import District
 from wbc.region.models import Muncipality
 
@@ -31,16 +32,13 @@ class CoreFormTestCase(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_form_login(self):
-        request = self.factory.post(
-            '', {'username': 'john', 'password': 'johnpassword'})
+        request = self.factory.post('', {'username': 'john', 'password': 'johnpassword'})
         form = LoginForm(request.POST)
         self.assertTrue(form.is_valid())
         user = form.login(request)
         self.assertTrue(user, self.user)
 
-
 # view tests
-
 
 class CoreViewTestCase(TestCase):
 
