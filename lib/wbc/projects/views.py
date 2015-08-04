@@ -106,12 +106,15 @@ def project(request, pk):
                 comment.save()
 
     today = datetime.datetime.today()
+    gallery = None
+    if p.gallery:
+        gallery = Gallery.objects.filter(slug = p.gallery)
 
     return render(request,'projects/project.html',{
         'project': p,
         'comments': Comment.objects.filter(project = int(pk), enabled = True),
         'events': Event.objects.filter(projects = int(pk)),
-        'gallery': Gallery.objects.filter(slug = p.gallery),
+        'gallery': gallery,
         'nextDate': Date.objects.filter(projects = int(p.pk), begin__gte=today).order_by('begin').first(),
         'lastNews': Media.objects.filter(projects = int(p.pk)).order_by('begin').first()
 
@@ -132,14 +135,17 @@ def projectslug(request, slug):
                 comment.save()
 
     today = datetime.datetime.today()
+    gallery = None
+    if p.gallery:
+        gallery = Gallery.objects.filter(slug = p.gallery)
 
     return render(request,'projects/project.html',{
         'project': p,
         'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
-        'events': Event.objects.filter(projects = int(p.pk)),
-        'gallery': Gallery.objects.filter(slug = p.gallery),
+        'events': Event.objects.filter(projects = int(p.pk)),   
+        'gallery': gallery,
         # 'nextDate': Event.objects.filter(projects = int(p.pk))
-        'nextDate': Date.objects.filter(projects = int(p.pk), begin__gte=today).order_by('begin')[0],
-        'lastNews': Media.objects.filter(projects = int(p.pk)).order_by('begin')[0]
+        'nextDate': Date.objects.filter(projects = int(p.pk), begin__gte=today).order_by('begin').first(),
+        'lastNews': Media.objects.filter(projects = int(p.pk)).order_by('begin').first()
     })
 
