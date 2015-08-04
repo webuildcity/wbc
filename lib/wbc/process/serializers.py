@@ -7,13 +7,17 @@ from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from wbc.stakeholder.serializers import DepartmentSerializer
 from models import *
 
+
 class ProcessTypeSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = ProcessType
-        fields = ('id','name','description')
+        fields = ('id', 'name', 'description')
+
 
 class ProcessStepSerializer(serializers.ModelSerializer):
-    internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
+    internal_link = serializers.SerializerMethodField(
+        'internal_link_serializer_method')
     process_type = ProcessTypeSerializer()
 
     def internal_link_serializer_method(self, obj):

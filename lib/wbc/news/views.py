@@ -8,14 +8,16 @@ from django.core.urlresolvers import reverse
 from wbc.region.models import District
 
 from forms import SubscribeForm, UnsubscribeForm
-from models import Validation,Subscriber
+from models import Validation, Subscriber
 from lib import send_mail
+
 
 def subscribe(request):
     entities = District.objects.all().values()
 
-    unsubscribe_path = reverse('wbc.news.views.unsubscribe',args=['.']).strip('.')
-    validate_path = reverse('wbc.news.views.validate',args=['.']).strip('.')
+    unsubscribe_path = reverse(
+        'wbc.news.views.unsubscribe', args=['.']).strip('.')
+    validate_path = reverse('wbc.news.views.validate', args=['.']).strip('.')
 
     if request.method == 'POST':
         form = SubscribeForm(request.POST, entities=entities)
@@ -37,18 +39,19 @@ def subscribe(request):
                 'validate_link': settings.SITE_URL + validate_path + v.code
             })
 
-            return render(request,'news/subscribe.html', {
+            return render(request, 'news/subscribe.html', {
                 'success': True,
                 'unsubscribe_link': settings.SITE_URL + unsubscribe_path + email
             })
     else:
         form = SubscribeForm(entities=entities)
 
-    return render(request,'news/subscribe.html', {
+    return render(request, 'news/subscribe.html', {
         'form': form,
         'unsubscribe_link': settings.SITE_URL + unsubscribe_path,
         'entities': entities
     })
+
 
 def unsubscribe(request, email=None):
     if request.method == 'POST':
@@ -63,23 +66,25 @@ def unsubscribe(request, email=None):
                 except Validation.DoesNotExist:
                     v = Validation(email=email)
 
-                v.action='unsubscribe'
+                v.action = 'unsubscribe'
                 v.save()
 
-                validate_path = reverse('wbc.news.views.validate',args=['.']).strip('.')
+                validate_path = reverse(
+                    'wbc.news.views.validate', args=['.']).strip('.')
 
                 send_mail(email, 'news/mail/unsubscribe.html', {
                     'validate_link': settings.SITE_URL + validate_path + v.code
                 })
 
             except Subscriber.DoesNotExist:
-                pass # don't tell the user
+                pass  # don't tell the user
 
-            return render(request,'news/unsubscribe.html', {'success': True})
+            return render(request, 'news/unsubscribe.html', {'success': True})
     else:
         form = UnsubscribeForm(initial={'email': email})
 
-    return render(request,'news/unsubscribe.html', {'form': form})
+    return render(request, 'news/unsubscribe.html', {'form': form})
+
 
 def validate(request, code):
     try:
@@ -106,20 +111,22 @@ def validate(request, code):
                 subscriber = Subscriber.objects.get(email=validation.email)
                 subscriber.delete()
             except Subscriber.DoesNotExist:
-                pass # don't tell the user
+                pass  # don't tell the user
 
             validation.delete()
 
         else:
-            raise Exception("Unknown action '%s' for validation" % validation.action)
+            raise Exception(
+                "Unknown action '%s' for validation" % validation.action)
 
-        unsubscribe_path = reverse('wbc.news.views.unsubscribe',args=['.']).strip('.')
+        unsubscribe_path = reverse(
+            'wbc.news.views.unsubscribe', args=['.']).strip('.')
 
-        return render(request,'news/validate.html', {
+        return render(request, 'news/validate.html', {
             'success': True,
             'action': validation.action,
             'unsubscribe_link': settings.SITE_URL + unsubscribe_path
         })
 
     except Validation.DoesNotExist:
-        return render(request,'news/validate.html', {})
+        return render(request, 'news/validate.html', {})

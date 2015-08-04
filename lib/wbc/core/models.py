@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
-
 from django.db import models
 from django.utils.timezone import now
+
 
 class Model(models.Model):
     created = models.DateTimeField(editable=False)
