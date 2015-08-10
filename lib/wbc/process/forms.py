@@ -2,7 +2,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from models import Place,Publication
+from .models import Place,Publication
 
 class FindPlace(forms.Form):
     place = Place.objects.all()

@@ -25,7 +25,7 @@ class Place(Model):
     def get_delete_url(self):
         return reverse('place_delete', kwargs={'pk': self.pk})
 
-    def __unicode__(self):
+    def __str__(self):
         strings = []
         if self.identifier:
             strings.append(self.identifier)
@@ -33,6 +33,9 @@ class Place(Model):
             strings.append(self.address)
 
         return ', '.join(strings)
+
+    def __unicode__(self):
+        return unicode(self.__str__())
 
     class Meta:
         ordering            = ("-created",)
@@ -59,8 +62,11 @@ class Publication(Model):
     def get_delete_url(self):
         return reverse('publication_delete', kwargs={'pk': self.pk})
 
+    def __str__(self):
+        return str(self.place) + ', ' + self.process_step.name
+
     def __unicode__(self):
-        return unicode(self.place) + ', ' + self.process_step.name
+        return unicode(self.__str__())
 
     class Meta:
         ordering            = ("-end",)
@@ -75,8 +81,11 @@ class ProcessStep(Model):
     order        = models.IntegerField(verbose_name="Reihenfolge", help_text="Nummer in der Reihenfolge")
     process_type = models.ForeignKey('ProcessType', related_name='process_steps', verbose_name="Verfahren")
 
+    def __str__(self):
+        return str(self.process_type) + ', ' + self.name
+
     def __unicode__(self):
-        return unicode(self.process_type) + ', ' + self.name
+        return unicode(self.__str__())
 
     class Meta:
         ordering            = ("process_type","order")

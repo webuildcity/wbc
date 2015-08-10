@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from models import Subscriber,Newsletter
+from .models import Subscriber,Newsletter
 
 class SubscriberAdmin(admin.ModelAdmin):
     list_display = ('email','created')

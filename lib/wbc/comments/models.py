@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import urllib
+from six.moves.urllib_parse import urlencode
 import hashlib
 
 from django.db import models
@@ -23,12 +23,15 @@ class Comment(Model):
     def gravatar(self):
         gravatar_url = "http://www.gravatar.com/avatar/" + \
             hashlib.md5(self.author_email.lower()).hexdigest() + "?"
-        gravatar_url += urllib.urlencode({'s': str(32)})
+        gravatar_url += urlencode({'s': str(32)})
 
         return gravatar_url
 
+    def __str__(self):
+        return str(self.place) + ', ' + self.author_name
+
     def __unicode__(self):
-        return unicode(self.place) + ', ' + self.author_name
+        return unicode(self.__str__())
 
     class Meta:
         ordering = ("created",)
