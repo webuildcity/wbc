@@ -95,35 +95,13 @@ def projects(request):
 
 def project(request, pk):
     p = get_object_or_404(Project, id = int(pk))
-    if request.method == 'POST':
-        if len(request.POST["author_email1"]) == 0:
-            form = CommentForm(request.POST)
-            if form.is_valid():
-                comment = form.save(commit=False)
-                comment.enabled = True;
-                comment.project = p
-                comment.save()
-
-    today = datetime.datetime.today()
-    gallery = None
-    if p.gallery:
-        gallery = Gallery.objects.filter(slug = p.gallery.slug)
-
-    return render(request,'projects/project.html',{
-        'project': p,
-        'comments': Comment.objects.filter(project = int(pk), enabled = True),
-        'events': Event.objects.filter(projects = int(pk)),
-        'gallery': gallery,
-        'nextDate': Date.objects.filter(projects = int(p.pk), begin__gte=today).order_by('begin').first(),
-        'lastNews': Media.objects.filter(projects = int(p.pk)).order_by('begin').first()
-
-        # 'new_publication_link': reverse('publication_create'),
-    })
-
+    return project_request(request, p)
 
 def projectslug(request, slug):
     p = Project.objects.get(slug__iexact=slug)
-    # p = get_object_or_404(Project, slug = slug)
+    return project_request(request, p)
+
+def project_request(request, p):
     if request.method == 'POST':
         if len(request.POST["author_email1"]) == 0:
             form = CommentForm(request.POST)
@@ -147,4 +125,3 @@ def projectslug(request, slug):
         'nextDate': Date.objects.filter(projects = int(p.pk), begin__gte=today).order_by('begin').first(),
         'lastNews': Media.objects.filter(projects = int(p.pk)).order_by('begin').first()
     })
-
