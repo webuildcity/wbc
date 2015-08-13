@@ -95,7 +95,6 @@ def projects(request):
 
 def project(request, pk):
     p = get_object_or_404(Project, id = int(pk))
-    print p.gallery
     if request.method == 'POST':
         if len(request.POST["author_email1"]) == 0:
             form = CommentForm(request.POST)
@@ -108,7 +107,7 @@ def project(request, pk):
     today = datetime.datetime.today()
     gallery = None
     if p.gallery:
-        gallery = Gallery.objects.filter(slug = p.gallery)
+        gallery = Gallery.objects.filter(slug = p.gallery.slug)
 
     return render(request,'projects/project.html',{
         'project': p,
@@ -137,7 +136,7 @@ def projectslug(request, slug):
     today = datetime.datetime.today()
     gallery = None
     if p.gallery:
-        gallery = Gallery.objects.filter(slug = p.gallery)
+        gallery = Gallery.objects.filter(slug = p.gallery.slug)
 
     return render(request,'projects/project.html',{
         'project': p,
