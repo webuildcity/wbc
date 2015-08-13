@@ -119,7 +119,7 @@ def project_request(request, p):
     return render(request,'projects/project.html',{
         'project': p,
         'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
-        'events': Event.objects.filter(projects = int(p.pk)),   
+        'events': Event.objects.filter(projects = int(p.pk)).order_by('-begin'),   
         'gallery': gallery,
         # 'nextDate': Event.objects.filter(projects = int(p.pk))
         'nextDate': Date.objects.filter(projects = int(p.pk), begin__gte=today).order_by('begin').first(),
