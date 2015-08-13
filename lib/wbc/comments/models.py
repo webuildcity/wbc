@@ -11,7 +11,6 @@ from wbc.projects.models import Project
 class Comment(Model):
     project      = models.ForeignKey(Project, verbose_name="Ort")
     author_name  = models.CharField(max_length=100, verbose_name="Autorin/Author")
-        max_length=100, verbose_name="Autorin/Author")
     author_email = models.CharField(max_length=256, verbose_name="Email")
     author_url = models.CharField(
         max_length=256, blank=True, verbose_name="Url")
