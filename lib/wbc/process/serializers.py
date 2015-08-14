@@ -35,7 +35,7 @@ class PublicationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Publication
-        fields = ('id', 'begin', 'end', 'office', 'office_hours',
+        fields = ('id', 'description', 'begin', 'end', 'office', 'office_hours',
                   'link', 'process_step', 'place', 'department')
 
 
