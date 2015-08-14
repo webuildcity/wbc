@@ -254,6 +254,17 @@ a:hover,
     padding-right: 4px;
 }
 
+/* TAGS */
+
+.tagspan {
+    background-color: #e58833 ;
+    color: white;
+    padding: 1px 2px;
+    /*margin: 3px;*/
+    border-radius: 2px;
+    white-space: pre;
+}
+
 /*SLIDESHOW*/
 
 #slider1_container {

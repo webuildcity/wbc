@@ -18,6 +18,7 @@ from wbc.region.models import District
 from wbc.comments.models import Comment
 from wbc.comments.forms import CommentForm
 from wbc.events.models import Event, Date, Media
+from wbc.tags.models import Tag
 from models import *
 from serializers import *
 # from forms import *
@@ -117,11 +118,11 @@ def project_request(request, p):
         gallery = Gallery.objects.filter(slug = p.gallery.slug)
 
     return render(request,'projects/project.html',{
-        'project': p,
+        'project' : p,
         'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
-        'events': Event.objects.filter(projects = int(p.pk)).order_by('-begin'),   
-        'gallery': gallery,
-        # 'nextDate': Event.objects.filter(projects = int(p.pk))
+        'events'  : Event.objects.filter(projects = int(p.pk)).order_by('-begin'),   
+        'gallery' : gallery,
         'nextDate': Date.objects.filter(projects = int(p.pk), begin__gte=today).order_by('begin').first(),
-        'lastNews': Media.objects.filter(projects = int(p.pk)).order_by('begin').first()
+        'lastNews': Media.objects.filter(projects = int(p.pk)).order_by('begin').first(),
+        'tags'    : Tag.objects.filter(tags_project = int(p.pk))
     })
