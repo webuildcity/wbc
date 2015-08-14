@@ -81,7 +81,7 @@
             <div class="col-md-9">
                 <h3>Beschreibung</h3>
                 <p>
-                    {{ project.description }}
+                    {{ project.description | linebreaks }}
                 </p>
 
                 {% if project.description_official %}                    
