@@ -14,7 +14,7 @@ from django.core.urlresolvers import reverse
 # Test for Models
 
 
-class NewsTestCase(TestCase):
+class notificationsTestCase(TestCase):
 
     def create_validation(email='test@test.de', code='xyz', action='action'):
         return Validation.objects.create(email=email, code=code, action=action)
@@ -64,13 +64,13 @@ class SubscriberTestCase(TestCase):
     # Views
 
     def test_subscribe_view_post(self):
-        url = reverse('wbc.news.views.subscribe')
+        url = reverse('wbc.notifications.views.subscribe')
         Client().post(url, {'email': 'test1@test.de'})
         validation = Validation.objects.get(email='test1@test.de')
         self.assertEqual(validation.email, 'test1@test.de')
 
     def test_subscribe_view_get(self):
-        url = reverse('wbc.news.views.subscribe')
+        url = reverse('wbc.notifications.views.subscribe')
         page = Client().get(url)
         self.assertEqual(page.status_code, 200)
         self.assertEqual(len(page.context['entities']), 2)
@@ -79,7 +79,7 @@ class SubscriberTestCase(TestCase):
         subscriber = self.create_subscriber()
         count = Subscriber.objects.all().count()
         self.assertEqual(count, 1)
-        url = reverse('wbc.news.views.unsubscribe', args=[subscriber.email])
+        url = reverse('wbc.notifications.views.unsubscribe', args=[subscriber.email])
         page = Client().post(url, {'email': subscriber.email})
         validation = Validation.objects.get(email=subscriber.email)
         self.assertEqual(validation.action, 'unsubscribe')
@@ -93,7 +93,7 @@ class SubscriberTestCase(TestCase):
         except:
             exists = False
         self.assertEqual(exists, False)
-        url = reverse('wbc.news.views.unsubscribe', args=[email])
+        url = reverse('wbc.notifications.views.unsubscribe', args=[email])
         page = Client().post(url, {'email': email})
         self.assertEqual(page.status_code, 200)
         self.assertEqual(page.context['success'], True)
@@ -102,7 +102,7 @@ class SubscriberTestCase(TestCase):
         subscriber = self.create_subscriber()
         count = Subscriber.objects.all().count()
         self.assertEqual(count, 1)
-        url = reverse('wbc.news.views.unsubscribe', args=[subscriber.email])
+        url = reverse('wbc.notifications.views.unsubscribe', args=[subscriber.email])
         page = Client().get(url)
         self.assertEqual(page.status_code, 200)
         self.assertTrue('form' in page.context)
@@ -120,7 +120,7 @@ class SubscriberTestCase(TestCase):
         entity_json = self.getJson()
         validation = Validation.objects.create(email='test1@test.de', action='subscribe', entities=entity_json)
         validation.save()
-        url = reverse('wbc.news.views.validate', args=[validation.code])
+        url = reverse('wbc.notifications.views.validate', args=[validation.code])
         page = Client().get(url)
         self.assertEqual(page.status_code, 200)
         self.assertEqual(page.context['success'], True)
@@ -133,7 +133,7 @@ class SubscriberTestCase(TestCase):
         entity_json = self.getJson()
         validation = Validation.objects.create(email=subscriber.email, action='subscribe', entities=entity_json)
         validation.save()
-        url = reverse('wbc.news.views.validate', args=[validation.code])
+        url = reverse('wbc.notifications.views.validate', args=[validation.code])
         page = Client().get(url)
         self.assertEqual(page.status_code, 200)
         self.assertEqual(page.context['success'], True)
@@ -147,7 +147,7 @@ class SubscriberTestCase(TestCase):
         entity_json = self.getJson()
         validation = Validation.objects.create(email=subscriber.email, action='unsubscribe', entities=entity_json)
         validation.save()
-        url = reverse('wbc.news.views.validate', args=[validation.code])
+        url = reverse('wbc.notifications.views.validate', args=[validation.code])
         page = Client().get(url)
         self.assertEqual(page.status_code, 200)
         self.assertEqual(page.context['success'], True)
@@ -160,7 +160,7 @@ class SubscriberTestCase(TestCase):
         entity_json = self.getJson()
         validation = Validation.objects.create(email='hallo@example.com', action='unsubscribe', entities=entity_json)
         validation.save()
-        url = reverse('wbc.news.views.validate', args=[validation.code])
+        url = reverse('wbc.notifications.views.validate', args=[validation.code])
         page = Client().get(url)
         self.assertEqual(page.status_code, 200)
         self.assertEqual(page.context['success'], True)
@@ -173,7 +173,7 @@ class SubscriberTestCase(TestCase):
         entity_json = self.getJson()
         validation = Validation.objects.create(email='hallo@example.com', action='wrong_action', entities=entity_json)
         validation.save()
-        url = reverse('wbc.news.views.validate', args=[validation.code])
+        url = reverse('wbc.notifications.views.validate', args=[validation.code])
         try:
             Client().get(url)
         except:
@@ -181,7 +181,7 @@ class SubscriberTestCase(TestCase):
         self.assertTrue(error_occured)
 
     def test_validation_does_not_exist(self):
-        url = reverse('wbc.news.views.validate', args=['abc'])
+        url = reverse('wbc.notifications.views.validate', args=['abc'])
         page = Client().get(url)
         self.assertEqual(page.status_code, 200)
         self.assertFalse('success' in page.context)

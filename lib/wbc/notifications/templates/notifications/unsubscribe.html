@@ -1,7 +1,7 @@
 {% extends 'core/page.html' %}
 
 {% block page %}
-<div class="news">
+<div class="notifications">
     <h2>Newletter für deinen Bezirk abbestellen</h2>
 
     {% if success %}
@@ -12,7 +12,7 @@
     <p>
         Um den Newsletter abzubestellen trage bitte deine Emailadresse ein.
     </p>
-    <form action="/news/abbestellen/" method="post" role="form" class="">
+    <form action="/notifications/abbestellen/" method="post" role="form" class="">
         {% csrf_token %}
         <div class="form-group {{field.errors|yesno:"has-error,"}}">
             <div class="controls">

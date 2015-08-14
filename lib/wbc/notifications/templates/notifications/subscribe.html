@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block page %}
-<div class="news">
+<div class="notifications">
     <h2>Newsletter für deinen Bezirk abonnieren</h2>
 
     {% if success %}
@@ -14,9 +14,9 @@
     </p>
     {% else %}
 
-    {% include "news/subscribe_info.html" %}
+    {% include "notifications/subscribe_info.html" %}
 
-    <form action="/news/abonnieren/" method="post" role="form" class="form-horizontal">
+    <form action="/notifications/abonnieren/" method="post" role="form" class="form-horizontal">
         {% csrf_token %}
         <div class="form-group">
             <label class="control-label col-sm-2">Bezirke</label>

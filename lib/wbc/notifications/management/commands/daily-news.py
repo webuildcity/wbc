@@ -7,8 +7,8 @@ from django.utils.timezone import now
 from django.db.models import Max
 
 from wbc.process.models import Publication
-from wbc.news.models import Subscriber, Newsletter
-from wbc.news.lib import send_mail
+from wbc.notifications.models import Subscriber, Newsletter
+from wbc.notifications.lib import send_mail
 
 # temporary fix for Django 1.8
 # http://stackoverflow.com/questions/29571606/django-not-able-to-render-context-when-in-shell
@@ -30,33 +30,33 @@ class Command(BaseCommand):
         else:
             publications = Publication.objects.filter(created__range=[last['send__max'], now()]).all()
 
-        news = {}
+        notifications = {}
         for subscriber in Subscriber.objects.all():
             # gather the subscription for the subscribers
-            news_items = []
+            notifications_items = []
             for entity in subscriber.entities.all():
                 for publication in publications:
                     if entity in publication.project.entities.all():
-                        news_items.append(publication)
+                        notifications_items.append(publication)
 
             # Doubletten ausfiltern
-            news_items = list(set(news_items))
+            notifications_items = list(set(notifications_items))
 
             # an zu verschickende News anhängen
-            news[subscriber.email] = news_items
+            notifications[subscriber.email] = notifications_items
 
         # get the path for places the unsubscribe from a reverse url lookup
         project_path = reverse('wbc.projects.views.project',args=['0']).rstrip('0/') + '/'
-        unsubscribe_path = reverse('wbc.news.views.unsubscribe',args=['0']).rstrip('0/') + '/'
+        unsubscribe_path = reverse('wbc.notifications.views.unsubscribe',args=['0']).rstrip('0/') + '/'
 
         i = 0
-        for email in news:
+        for email in notifications:
             # Mail abschicken
-            if news[email]:
+            if notifications[email]:
                 i += 1
 
-                send_mail(email, 'news/mail/newsletter.html', {
-                    'publications': news[email],
+                send_mail(email, 'notifications/mail/newsletter.html', {
+                    'publications': notifications[email],
                     'project_link': settings.SITE_URL + project_path,
                     'unsubscribe_link': settings.SITE_URL + unsubscribe_path + email
                 })

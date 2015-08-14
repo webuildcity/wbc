@@ -162,34 +162,34 @@ a:hover,
 }
 
 /* 'Abonieren' Form */
-.news form ul {
+.notifications form ul {
     margin: 5px 0 0 0;
     padding: 0;
 }
-.news form li {
+.notifications form li {
     line-height: 20px;
     list-style: none;
 }
-.news form li label,
-.news form li input {
+.notifications form li label,
+.notifications form li input {
     display: inline-block;
 }
-.news form li input {
+.notifications form li input {
     margin-bottom: 5px;
 }
-.news form li label {
+.notifications form li label {
     margin-left: 10px;
 }
-.news label {
+.notifications label {
     font-weight: normal;
 }
-.news .feed-list {
+.notifications .feed-list {
     margin-left: -10px;
 }
-.news .feed-list li {
+.notifications .feed-list li {
     margin-bottom: 5px;
 }
-.news .feed-list li a span {
+.notifications .feed-list li a span {
     padding-left: 10px;
 }
 
