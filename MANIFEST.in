@@ -1,0 +1,6 @@
+include LICENSE
+include README.rst
+recursive-include wbc/core/static *
+recursive-include wbc/core/templates *
+recursive-include wbc/news/templates *
+recursive-include wbc/process/templates *
