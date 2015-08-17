@@ -22,7 +22,7 @@ setup(
     author_email='info@we-build.city',
     maintainer=u'Jochen Klar',
     maintainer_email=u'jochenklar@gmail.com',
-    description=u'We-build.city is a Django module for a collaboration platform about participation in urban planning.',
+    description=u'We build City is a Django module for a collaboration platform about participation in urban planning.',
     include_package_data=True,
     install_requires=install_requires,
     classifiers=[
