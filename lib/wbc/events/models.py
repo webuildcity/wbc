@@ -4,21 +4,24 @@ from django.db import models
 from wbc.core.models import Model
 from wbc.projects.models import Project, Address
 from wbc.region.models import Entity
-from wbc.tags.models import Tag
 from wbc.stakeholder.models import Stakeholder
+
+from photologue.models import Gallery
+from taggit.managers import TaggableManager
 
 
 class Event(Model):
     title       = models.CharField(max_length=256, blank=False, verbose_name="Titel", help_text="Der Titel eines Events")
     description = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Beschreibungstext eines Events")
     link        = models.URLField(blank=True)
-    tags        = models.ManyToManyField(Tag, blank=True, verbose_name="Tags", related_name='tags_%(class)s')
+    tags        = TaggableManager(blank=True)
     stakeholder = models.ManyToManyField(Stakeholder, blank=True, verbose_name="stakeholders", related_name='stakeholders_%(class)s', help_text="Lorem_ipsum_Test_Help_Text")
     entities    = models.ManyToManyField(Entity, blank=True, verbose_name="Region", related_name='places_%(class)s')
     active      = models.BooleanField()
     begin       = models.DateField(verbose_name="Anfang Timeline")
     end         = models.DateField(verbose_name="Ende Timeline",blank=True, null=True)
     projects    = models.ForeignKey(Project, blank=True, related_name='projects__%(class)s', verbose_name="Projekt")
+    gallery     = models.OneToOneField(Gallery, blank=True, null=True)
 
     def __unicode__(self):
         return unicode(self.title)

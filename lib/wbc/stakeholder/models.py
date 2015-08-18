@@ -3,9 +3,10 @@ from django.db import models
 
 from wbc.core.models import Model
 from wbc.region.models import Entity
-from wbc.tags.models import Tag
+from photologue.models import Photo
 from wbc.projects.slug import unique_slugify
 
+from taggit.managers import TaggableManager
 
 class StakeholderRole(Model):
     role        = models.CharField(blank=False, max_length=64, verbose_name="Rolle", help_text="Art der Rolle")
@@ -29,10 +30,11 @@ class Stakeholder(Model):
     description = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Beschreibung des Stakeholders")
     active      = models.BooleanField()
     link        = models.URLField(blank=True)
-    tags        = models.ManyToManyField(Tag, blank=True, verbose_name="Tags", related_name='tags_%(class)s')
+    tags        = TaggableManager(blank=True)
     entities    = models.ManyToManyField(Entity, blank=True, verbose_name="Region", related_name='places_%(class)s')
     slug        = models.SlugField(unique=True,editable=False)
     roles       = models.ManyToManyField(StakeholderRole, blank=True, related_name='roles_%(class)s', verbose_name='Rollen')
+    picture     = models.OneToOneField(Photo, blank=True, null=True, verbose_name='Bild')
 
     class Meta:
         verbose_name        = 'Akteur'
