@@ -45,7 +45,12 @@
         </div>
         {% endif %}
 
-        <div id="project-map" class="col-md-9"></div>
+        {% if gallery %}
+            {% include "projects/project_gallery.html" %}
+        {% else %}
+            <p>No galleries were found</p>
+        {% endif %}
+
         <div id="subscribe-widget" class="col-md-3">
             <button class="btn default">SUBSCRIBE_PROJECT</button>
         </div>
@@ -76,9 +81,10 @@
             {% endfor %}
         </div>
         {% endif %}
+        
 
-        <div class="row project">
-            <div class="col-md-9">
+        <div class="col-md-9">
+            <div>
                 <h3>Beschreibung</h3>
                 <p>
                     {{ project.description | linebreaks }}
@@ -94,28 +100,32 @@
                     <strong>im Bezirk/in den Bezirken:</strong> {{ project.entities.all|join:", "}}
                 </p>
             </div>
-            {% if user.is_authenticated %}
-            <div class="col-md-3">
-                <ul class="list-unstyled admin-area" style="margin-top: 50px;">
-                    <li><a class="admin-link" href="{{ project.get_update_url }}">Projekt bearbeiten</a></li>
-                    <li><a class="admin-link" href="{{ project.get_delete_url }}">Projekt entfernen</a></li>
-                    <li><a class="admin-link" href="{{new_publication_link}}?project_id={{project.pk}}">
-                            Neue Veröffentlichung
-                    </a></li>
-                </ul>
-            </div>
-            {% endif %}
         </div>
-
-        {% if gallery %}
-            {% include "projects/project_gallery.html" %}
-        {% else %}
-            <p>No galleries were found</p>
+        
+        <div id="project-map" class="col-md-3"></div>
+        
+        {% if stakeholders %}
+            {% include "projects/project_stakeholders.html" %}
         {% endif %}
 
-        <h3>Events</h3>
+        
+        {% if user.is_authenticated %}
+        <div class="col-md-3">
+            <ul class="list-unstyled admin-area" style="margin-top: 50px;">
+                <li><a class="admin-link" href="{{ project.get_update_url }}">Projekt bearbeiten</a></li>
+                <li><a class="admin-link" href="{{ project.get_delete_url }}">Projekt entfernen</a></li>
+                <li><a class="admin-link" href="{{new_publication_link}}?project_id={{project.pk}}">
+                        Neue Veröffentlichung
+                </a></li>
+            </ul>
+        </div>
+        {% endif %}
 
-        {% include "projects/project_events.html" %}
+        <div class='col-md-12'>
+            <h3>Events</h3>
+
+            {% include "projects/project_events.html" %}
+        </div>
     </div>
 
     <div class="comments-wrapper">

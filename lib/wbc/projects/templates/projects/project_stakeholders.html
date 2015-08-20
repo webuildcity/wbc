@@ -1,0 +1,21 @@
+{% load staticfiles %}
+
+<div class="col-md-9 stakeholders">
+    <h2> Wichtige Akteure </h2>
+
+    {% for stakeholder in stakeholders %}
+
+    <div class="stakeholder-widget col-md-3">
+        {% if stakeholder.picture %}
+        <img class="stakeholder_img" src="{{ stakeholder.picture.get_stakeholder_url }}" />
+        {% else %}
+        <img class="stakeholder_img" src="{% static 'img/person_placeholder.png' %}" />
+        {% endif %}
+        <h4> {{stakeholder.name}}</h4>
+        {% for role in stakeholder.roles.all %}
+             {{role}}
+        {% endfor %}
+    </div>
+
+    {% endfor %}
+</div>

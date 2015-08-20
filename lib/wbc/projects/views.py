@@ -123,5 +123,6 @@ def project_request(request, p):
         'gallery' : gallery,
         'nextDate': p.events.filter(begin__gte=today, date__isnull=False).order_by('begin').first(),
         'lastNews': p.events.filter(media__isnull=False).order_by('begin').first(),
-        'tags'    : p.tags.all()
+        'tags'    : p.tags.all(),
+        'stakeholders' : p.stakeholders.all()
     })
