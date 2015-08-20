@@ -2,7 +2,6 @@
 from django.db import models
 
 from wbc.core.models import Model
-from wbc.projects.models import Project, Address
 from wbc.region.models import Entity
 from wbc.stakeholder.models import Stakeholder
 
@@ -20,7 +19,7 @@ class Event(Model):
     active      = models.BooleanField()
     begin       = models.DateField(verbose_name="Anfang Timeline")
     end         = models.DateField(verbose_name="Ende Timeline",blank=True, null=True)
-    projects    = models.ForeignKey(Project, blank=True, related_name='projects__%(class)s', verbose_name="Projekt")
+    # projects    = models.ForeignKey(Project, blank=True, related_name='projects__%(class)s', verbose_name="Projekt")
     gallery     = models.OneToOneField(Gallery, blank=True, null=True)
 
     def __unicode__(self):

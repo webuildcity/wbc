@@ -19,7 +19,7 @@ class GallerySerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     point = serializers.SerializerMethodField('point_serializer_method')
     internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
-    # events = EventSerializer(many=True)
+    events = serializers.RelatedField(source="event", read_only=True)
     # gallery = GallerySerializer(many=True)
     
     def point_serializer_method(self, obj):
@@ -34,7 +34,8 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('id','point','identifier','address','description','entities','events','link','internal_link', 'gallery')
+        fields = ('id','point', 'events','identifier','address','description','entities','link','internal_link', 'gallery')
+        depth = 1
 
 class ProjectPointSerializer(GeoFeatureModelSerializer):
     point = serializers.SerializerMethodField('point_serializer_method')

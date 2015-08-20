@@ -4,13 +4,13 @@ from rest_framework import serializers
 from models import *
 
 class EventSerializer(serializers.ModelSerializer):
-    def to_representation(self, value):
-        if isinstance(value, Date):
-            print "date"
-        if isinstance(value, Media):
-            print "media"
-        if isinstance(value, Event):
-            print "event"
+    # def to_representation(self, value):
+    #     if isinstance(value, Date):
+    #         print "date"
+    #     if isinstance(value, Media):
+    #         print "media"
+    #     if isinstance(value, Event):
+    #         print "event"
     class Meta:
         model = Event
         fields = ('title','description','link')

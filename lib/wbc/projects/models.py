@@ -6,6 +6,7 @@ from wbc.core.models import Model
 from wbc.region.models import Entity
 from wbc.projects.slug import unique_slugify
 from wbc.region.models import Muncipality
+from wbc.events.models import Event
 
 from photologue.models import Gallery
 from taggit.managers import TaggableManager
@@ -37,6 +38,7 @@ class Project(Model):
     description          = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Beschreibung des Projektes")
     description_official = models.TextField(blank=True, verbose_name="Beschreibung (Amtsblatt)", help_text="Örtliche Beschreibung aus dem Amtsblatt")
     entities             = models.ManyToManyField(Entity, blank=True, verbose_name="Verwaltungseinheit", related_name='project_places')
+    events               = models.ManyToManyField(Event, blank=True, verbose_name="Events", related_name='projects_events')
     lat                  = models.FloatField(verbose_name="Breitengrad")
     lon                  = models.FloatField(verbose_name="Längengrad")
     polygon              = models.TextField(null=True, blank=True)
