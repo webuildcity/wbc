@@ -119,9 +119,9 @@ def project_request(request, p):
     return render(request,'projects/project.html',{
         'project' : p,
         'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
-        'events'  : p.events,   
+        'events'  : p.events.order_by('-begin'),   
         'gallery' : gallery,
-        'nextDate': p.events.filter(begin__gte=today).order_by('begin').first(),
-        'lastNews': p.events.order_by('begin').first(),
+        'nextDate': p.events.filter(begin__gte=today, date__isnull=False).order_by('begin').first(),
+        'lastNews': p.events.filter(media__isnull=False).order_by('begin').first(),
         'tags'    : p.tags.all()
     })
