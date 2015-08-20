@@ -48,7 +48,7 @@
         {% if gallery %}
             {% include "projects/project_gallery.html" %}
         {% else %}
-            <p>No galleries were found</p>
+            <div id="project-map" class="col-md-9"></div>
         {% endif %}
 
         <div id="subscribe-widget" class="col-md-3">
@@ -101,9 +101,10 @@
                 </p>
             </div>
         </div>
-        
+        {% if gallery != true %}
         <div id="project-map" class="col-md-3"></div>
-        
+        {% endif %}
+
         {% if stakeholders %}
             {% include "projects/project_stakeholders.html" %}
         {% endif %}
