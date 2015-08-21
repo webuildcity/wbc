@@ -8,6 +8,7 @@ from wbc.projects.slug import unique_slugify
 from wbc.region.models import Muncipality
 from wbc.events.models import Event
 from wbc.stakeholder.models import Stakeholder
+from wbc.tags.models import TaggedItems
 
 from photologue.models import Gallery
 from taggit.managers import TaggableManager
@@ -48,7 +49,7 @@ class Project(Model):
     slug                 = models.SlugField(unique=True, editable=False)
     addressObj           = models.ForeignKey(Address, blank=True, null=True, verbose_name="Adresse")
     gallery              = models.OneToOneField(Gallery, related_name='gallery', blank=True, null=True)
-    tags                 = TaggableManager(blank=True)
+    tags                 = TaggableManager(through=TaggedItems, blank=True, verbose_name="Schlagworte")
     stakeholders         = models.ManyToManyField(Stakeholder, blank=True, verbose_name="Akteure")
 
     def get_absolute_url(self):

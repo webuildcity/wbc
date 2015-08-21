@@ -39,7 +39,7 @@
         <div class="headline-tags" class="col-md-9">
             {% for tag in tags %}
                 {% if tag.important %}
-                <span class='tagspan'>{{tag.name}}</span>
+                <a class="taglink" href="{{tag.get_absolute_url}}">{{tag.name}}</a>
                 {% endif %}
             {% endfor %}
         </div>
@@ -77,7 +77,7 @@
         <div id="tags-widget" class="widget col-md-3">
             <h3><i class="fa fa-tags"> </i>Schlagworte</h3>
             {% for tag in tags %}
-                <span class='tagspan'>{{tag.name}}</span>
+                <a class="taglink" href="{{tag.get_absolute_url}}">{{tag.name}}</a>
             {% endfor %}
         </div>
         {% endif %}

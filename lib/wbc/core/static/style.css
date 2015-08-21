@@ -256,7 +256,7 @@ a:hover,
 
 /* STAKEHOLDER WIDGET */
 
-.stakeholder-widget img {
+.stakeholder_img {
     display: block;
     width: 140px;
     height: 140px;
@@ -265,9 +265,9 @@ a:hover,
 
 /* TAGS */
 
-.tagspan {
+.taglink {
     background-color: #e58833 ;
-    color: white;
+    color: white !important;
     padding: 1px 2px;
     /*margin: 3px;*/
     border-radius: 2px;

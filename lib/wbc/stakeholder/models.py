@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.core.urlresolvers import reverse
 
 from wbc.core.models import Model
 from wbc.region.models import Entity
 from photologue.models import Photo
 from wbc.projects.slug import unique_slugify
+from wbc.tags.models import TaggedItems
 
 from taggit.managers import TaggableManager
 
@@ -30,11 +32,16 @@ class Stakeholder(Model):
     description = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Beschreibung des Stakeholders")
     active      = models.BooleanField()
     link        = models.URLField(blank=True)
-    tags        = TaggableManager(blank=True)
+    tags        = TaggableManager(through=TaggedItems, blank=True)
     entities    = models.ManyToManyField(Entity, blank=True, verbose_name="Region", related_name='places_%(class)s')
     slug        = models.SlugField(unique=True,editable=False)
     roles       = models.ManyToManyField(StakeholderRole, blank=True, related_name='roles_%(class)s', verbose_name='Rollen')
     picture     = models.OneToOneField(Photo, blank=True, null=True, verbose_name='Bild')
+
+
+    def get_absolute_url(self):
+        return reverse('stakeholder', kwargs={'slug': self.slug})
+
 
     class Meta:
         verbose_name        = 'Akteur'

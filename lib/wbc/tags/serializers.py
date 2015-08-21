@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
-from rest_framework import serializers
+# # -*- coding: utf-8 -*-
+# from rest_framework import serializers
 
-from models import *
+# from models import *
 
-class TagSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tag
-        fields = ('name','description','other')
+# class WbcTagSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = WbcTag
+#         fields = ('name','description','other')
 

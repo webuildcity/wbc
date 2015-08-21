@@ -3,20 +3,18 @@ from rest_framework import viewsets
 
 from models import *
 from wbc.projects.models  import Project
+from wbc.events.models import Event
+from wbc.stakeholder.models import Stakeholder
 from serializers import *
 from django.shortcuts import render,get_object_or_404
 
 
 def tagview(request, slug):
-    t = Tag.objects.get(slug__iexact=slug)
+    t = WbcTag.objects.get(slug__iexact=slug)
 
     return render(request,'tags/tag.html',{
-        'tag'      : t,
-        'projects' : Project.objects.filter(tags = int(t.pk))
-        # 'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
-        # 'events'  : Event.objects.filter(projects = int(p.pk)).order_by('-begin'),   
-        # 'gallery' : gallery,
-        # 'nextDate': Date.objects.filter(projects = int(p.pk), begin__gte=today).order_by('begin').first(),
-        # 'lastNews': Media.objects.filter(projects = int(p.pk)).order_by('begin').first(),
-        # 'tags'    : Tag.objects.filter(tags_project = int(p.pk))
+        'tag'            : t,
+        'projects'       : Project.objects.filter(tags__name__in=[slug]).distinct(),
+        'events'         : Event.objects.filter(tags__name__in=[slug]).distinct(),   
+        'stakeholders'   : Stakeholder.objects.filter(tags__name__in=[slug]).distinct(),   
     })
