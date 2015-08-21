@@ -274,6 +274,12 @@ a:hover,
     white-space: pre;
 }
 
+/* TAG PAGE */
+
+.description_img {
+    float: left;
+}
+
 /*SLIDESHOW*/
 
 #slider1_container {

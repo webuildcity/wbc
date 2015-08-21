@@ -19,10 +19,23 @@
         <h1> <i class="fa fa-tags"> </i>{{tag.name}} </h1>
         
         {% if projects %}
-        <div class="headline-tags" class="col-md-9">
+        <h2> Projekte: </h2>
+        <div class="project-widget" class="col-md-3">
             {% for project in projects %}
-                <h3>{{project.name}}</h3>
+                <h3><a href="{{project.get_absolute_url}}">{{project.name}}</a></h3>
+                <img class="description_img" src="{{project.gallery.photos.all.0.get_stakeholder_url}}" />
                 <p>{{project.description}}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if stakeholders %}
+        <h2> Akteure: </h2>
+        <div class="project-widget" class="col-md-3">
+            {% for stakeholder in stakeholders %}
+                <h3><a href="{{stakeholder.get_absolute_url}}">{{stakeholder.name}}</a></h3>
+                <img class="description_img" src="{{stakeholder.picture.get_stakeholder_url}}" />
+                <p>{{stakeholder.description}}</p>
             {% endfor %}
         </div>
         {% endif %}
