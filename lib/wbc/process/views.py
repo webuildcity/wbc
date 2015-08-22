@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 import datetime
+import time
+from io import BytesIO
+
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -13,6 +16,7 @@ from django.utils.timezone import now
 from django.views.generic.edit import CreateView
 from django.template.loader import get_template
 from django.template import Context
+from django.http import HttpResponse
 
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -28,6 +32,7 @@ from participation.models import *
 from models import *
 from serializers import *
 from forms import *
+from pdf import Letter
 
 
 class PlaceViewSet(viewsets.ViewSet):
@@ -165,6 +170,7 @@ def place(request, pk):
         'new_participation_link': reverse('participation_create'),
     })
 
+
 class ParticipationCreate(CreateView):
     fields = '__all__'
 
@@ -197,6 +203,16 @@ class ParticipationCreate(CreateView):
                 'form': form,
                 'publication': self.publication
             })
+
+        else:
+            response = HttpResponse(content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
+            buffer = BytesIO()
+            letter = Letter(buffer, 'A4')
+            pdf = letter.printForm(form, self.publication)
+            response.write(pdf)
+            super(ParticipationCreate, self).form_valid(form)
+            return response
 
         return super(ParticipationCreate, self).form_valid(form)
 
