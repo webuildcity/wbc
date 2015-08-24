@@ -4,7 +4,6 @@ from django.core.urlresolvers import reverse
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
-from wbc.stakeholder.serializers import DepartmentSerializer
 from models import *
 
 
@@ -25,4 +24,5 @@ class ProcessStepSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProcessStep
-        fields = ('id','name','description','icon','hover_icon','order','process_type','internal_link')
+        fields = ('id', 'name', 'description', 'icon', 'hover_icon',
+                  'order', 'process_type', 'internal_link')
