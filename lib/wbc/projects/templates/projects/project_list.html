@@ -1,0 +1,18 @@
+{% load staticfiles %}
+
+{% for project in projects %}
+<a href="{{project.get_absolute_url}}">
+<div class="project-description col-md-6">
+    {% if project.gallery %}
+    <img class="description_img" src="{{project.gallery.photos.all.0.get_description_url}}" />
+    {% else %}
+    <img class="description_img" src="{% static 'img/person_placeholder.png' %}" />
+    {% endif %}
+    <div style="float:left; padding-left:10px;">
+    <h3>{{project.name}}</h3>
+    <p >{{project.address}}</p>
+    <p>Erstellt am: {{project.created|date:"d.m.Y"}}</p>
+    </div>
+</div>
+</a>
+{% endfor %}

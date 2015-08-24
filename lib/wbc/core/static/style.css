@@ -256,6 +256,16 @@ a:hover,
 
 /* STAKEHOLDER WIDGET */
 
+.stakeholder-widget {
+    background-color: white;
+    border-radius: 5px;
+    border: #fafafa 2px solid;
+}
+
+.stakeholder-widget p{
+    color: #646464;
+}
+
 .stakeholder_img {
     display: block;
     width: 140px;
@@ -276,8 +286,39 @@ a:hover,
 
 /* TAG PAGE */
 
+.project-descriptions {
+    clear: both;
+}
+
+.project-description {
+    background-color: white;
+    border-radius: 5px;
+    border: #fafafa 2px solid;
+    padding: 10px;
+    display: inline-block;
+}
+
+.project-description h3 {
+    margin-top: 5px;
+}
+
+.project-description p {
+    color: #646464;
+}
+
+
 .description_img {
     float: left;
+    height: 100px;
+    width: 200px;
+} 
+
+.stakeholder-descriptions {
+    clear: both;
+}
+
+.stakeholder_page_img {
+    float: right;
 }
 
 /*SLIDESHOW*/

@@ -2,6 +2,7 @@
 from rest_framework import viewsets
 from django.shortcuts import render
 
+from wbc.projects.models import Project
 from models import *
 from serializers import *
 
@@ -22,7 +23,7 @@ def stakeholderview(request, slug):
 
     return render(request,'stakeholder/stakeholder.html',{
         'stakeholder'       : s,
-        # 'projects'       : Project.objects.filter(tags__name__in=[slug]).distinct(),
+        'projects'       : Project.objects.filter(stakeholders=s.id).distinct(),
         # 'events'         : Event.objects.filter(tags__name__in=[slug]).distinct(),   
         # 'stakeholders'   : Stakeholder.objects.filter(tags__name__in=[slug]).distinct(),   
     })

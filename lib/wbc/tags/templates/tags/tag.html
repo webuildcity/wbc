@@ -19,24 +19,27 @@
         <h1> <i class="fa fa-tags"> </i>{{tag.name}} </h1>
         
         {% if projects %}
-        <h2> Projekte: </h2>
-        <div class="project-widget" class="col-md-3">
-            {% for project in projects %}
-                <h3><a href="{{project.get_absolute_url}}">{{project.name}}</a></h3>
-                <img class="description_img" src="{{project.gallery.photos.all.0.get_stakeholder_url}}" />
-                <p>{{project.description}}</p>
-            {% endfor %}
+        <div class="project-descriptions col-md-12">
+            <h2> Projekte: </h2>
+            {% include "projects/project_list.html" %}
         </div>
         {% endif %}
 
         {% if stakeholders %}
+        <div class="stakeholder-descriptions col-md-9">
         <h2> Akteure: </h2>
-        <div class="project-widget" class="col-md-3">
-            {% for stakeholder in stakeholders %}
-                <h3><a href="{{stakeholder.get_absolute_url}}">{{stakeholder.name}}</a></h3>
-                <img class="description_img" src="{{stakeholder.picture.get_stakeholder_url}}" />
-                <p>{{stakeholder.description}}</p>
-            {% endfor %}
+            {% include "stakeholder/stakeholder_list.html" %}
+
+<!--         <div class="stakeholder-descriptions">
+            <h2> Akteure: </h2>
+            <div class="stakeholder-description" class="col-md-3">
+                {% for stakeholder in stakeholders %}
+                    <h3><a href="{{stakeholder.get_absolute_url}}">{{stakeholder.name}}</a></h3>
+                    <img class="description_img" src="{{stakeholder.picture.get_stakeholder_url}}" />
+                    <p>{{stakeholder.description}}</p>
+                {% endfor %}
+            </div>
+        </div> -->
         </div>
         {% endif %}
     </div>

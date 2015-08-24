@@ -106,7 +106,11 @@
         {% endif %}
 
         {% if stakeholders %}
-            {% include "projects/project_stakeholders.html" %}
+            <div class="col-md-9 stakeholders">
+                <h2> Wichtige Akteure </h2>
+
+                {% include "stakeholder/stakeholder_list.html" %}
+            </div>
         {% endif %}
 
         

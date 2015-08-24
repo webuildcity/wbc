@@ -1,0 +1,20 @@
+{% load staticfiles %}
+{% for stakeholder in stakeholders %}
+
+<a href="{{stakeholder.get_absolute_url }}">
+<div class="stakeholder-widget col-md-3">
+    {% if stakeholder.picture %}
+    <img class="stakeholder_img" src="{{ stakeholder.picture.get_stakeholder_url }}" />
+    {% else %}
+    <img class="stakeholder_img" src="{% static 'img/person_placeholder.png' %}" />
+    {% endif %}
+    <h4> {{stakeholder.name}}</h4>
+    <p>
+    {% for role in stakeholder.roles.all %}
+         {{role}}
+    {% endfor %}
+    </p>
+</div>
+</a>
+
+{% endfor %}
