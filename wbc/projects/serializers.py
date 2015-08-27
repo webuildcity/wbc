@@ -19,7 +19,7 @@ class GallerySerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     point = serializers.SerializerMethodField('point_serializer_method')
     internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
-    events = serializers.RelatedField(source="event", read_only=True)
+    # events = serializers.RelatedField(read_only='True')
     # gallery = GallerySerializer(many=True)
     
     def point_serializer_method(self, obj):

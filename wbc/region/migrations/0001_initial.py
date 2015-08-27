@@ -11,21 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Department',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('created', models.DateTimeField(editable=False)),
-                ('updated', models.DateTimeField(editable=False)),
-                ('name', models.CharField(max_length=256)),
-                ('description', models.TextField(blank=True)),
-                ('link', models.URLField(blank=True)),
-            ],
-            options={
-                'verbose_name': 'Beh\xf6rde',
-                'verbose_name_plural': 'Beh\xf6rden',
-            },
-        ),
-        migrations.CreateModel(
             name='Entity',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -75,11 +60,6 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'Ortsteile',
             },
             bases=('region.entity',),
-        ),
-        migrations.AddField(
-            model_name='department',
-            name='entity',
-            field=models.ForeignKey(related_name='departments', to='region.Entity'),
         ),
         migrations.AddField(
             model_name='district',

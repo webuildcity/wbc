@@ -8,13 +8,14 @@ import taggit.managers
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stakeholder', '0003_auto_20150818_2042'),
+        ('stakeholder', '0001_initial'),
+        ('tags', '0001_initial'),
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.AddField(
             model_name='stakeholder',
             name='tags',
-            field=taggit.managers.TaggableManager(to='tags.Tag', through='tags.TaggedItems', blank=True, help_text='A comma-separated list of tags.', verbose_name='Tags'),
+            field=taggit.managers.TaggableManager(to='tags.WbcTag', through='tags.TaggedItems', blank=True, help_text='A comma-separated list of tags.', verbose_name='Tags'),
         ),
     ]

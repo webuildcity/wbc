@@ -30,7 +30,7 @@ class Stakeholder(Model):
     name        = models.CharField(blank=False, max_length=64, verbose_name="Name", help_text="Name des Akteurs")
     address     = models.CharField(max_length=256, blank=True, verbose_name="Adresse", help_text="Eine genaue Adresse des Akteur")
     description = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Beschreibung des Stakeholders")
-    active      = models.BooleanField()
+    active      = models.BooleanField(default=True)
     link        = models.URLField(blank=True)
     tags        = TaggableManager(through=TaggedItems, blank=True)
     entities    = models.ManyToManyField(Entity, blank=True, verbose_name="Region", related_name='places_%(class)s')

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 
+from django.core.urlresolvers import reverse
+
 from wbc.core.models import Model
 from wbc.region.models import Entity
 from wbc.stakeholder.models import Stakeholder
@@ -17,7 +19,7 @@ class Event(Model):
     tags        = TaggableManager(through=TaggedItems, blank=True)
     stakeholder = models.ManyToManyField(Stakeholder, blank=True, verbose_name="stakeholders", related_name='stakeholders_%(class)s', help_text="Lorem_ipsum_Test_Help_Text")
     entities    = models.ManyToManyField(Entity, blank=True, verbose_name="Region", related_name='places_%(class)s')
-    active      = models.BooleanField()
+    active      = models.BooleanField(default=True)
     begin       = models.DateField(verbose_name="Anfang Timeline")
     end         = models.DateField(verbose_name="Ende Timeline",blank=True, null=True)
     # projects    = models.ForeignKey(Project, blank=True, related_name='projects__%(class)s', verbose_name="Projekt")
@@ -82,8 +84,19 @@ class Publication(Event):
     office_hours = models.TextField(blank=True, verbose_name="Öffnungszeiten der Auslegungsstelle")
     department   = models.ForeignKey(Stakeholder, verbose_name="Verantwortliche Behörde")
     modelType    = models.CharField(default="pub", editable=False, max_length=20)
+   
     def __unicode__(self):
-        return unicode(self.project.name) + ', ' + self.process_step.name
+        return unicode(self.title) + ', ' + self.process_step.name
+
+    # def get_absolute_url(self):
+    #     return reverse('project', kwargs={'pk': self.projects_events.all()[0].project})
+
+    def get_update_url(self):
+        return reverse('publication_update', kwargs={'pk': self.pk})
+
+    def get_delete_url(self):
+        return reverse('publication_delete', kwargs={'pk': self.pk})
+
 
     class Meta:
         ordering            = ("-end",)

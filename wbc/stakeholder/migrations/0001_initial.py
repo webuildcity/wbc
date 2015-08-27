@@ -8,46 +8,67 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('region', '0001_initial'),
+        ('photologue', '0008_auto_20150509_1557'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Organization',
+            name='Stakeholder',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('created', models.DateTimeField(editable=False)),
                 ('updated', models.DateTimeField(editable=False)),
-                ('address', models.CharField(help_text=b'Eine genaue Adresse des Stakeholders', max_length=256, verbose_name=b'Adresse', blank=True)),
+                ('name', models.CharField(help_text=b'Name des Akteurs', max_length=64, verbose_name=b'Name')),
+                ('address', models.CharField(help_text=b'Eine genaue Adresse des Akteur', max_length=256, verbose_name=b'Adresse', blank=True)),
                 ('description', models.TextField(help_text=b'Beschreibung des Stakeholders', verbose_name=b'Beschreibung', blank=True)),
-                ('active', models.BooleanField()),
+                ('active', models.BooleanField(default=True)),
                 ('link', models.URLField(blank=True)),
-                ('name', models.CharField(help_text=b'Name der Organisation', max_length=64, verbose_name=b'Name')),
-                ('entities', models.ManyToManyField(related_name='orgaPlaces', verbose_name=b'Einheit', to='region.Entity', blank=True)),
+                ('slug', models.SlugField(unique=True, editable=False)),
             ],
             options={
-                'verbose_name': 'Organization',
-                'verbose_name_plural': 'Organizations',
+                'verbose_name': 'Akteur',
+                'verbose_name_plural': 'Akteure',
             },
         ),
         migrations.CreateModel(
-            name='Person',
+            name='StakeholderRole',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('created', models.DateTimeField(editable=False)),
                 ('updated', models.DateTimeField(editable=False)),
-                ('address', models.CharField(help_text=b'Eine genaue Adresse des Stakeholders', max_length=256, verbose_name=b'Adresse', blank=True)),
-                ('description', models.TextField(help_text=b'Beschreibung des Stakeholders', verbose_name=b'Beschreibung', blank=True)),
-                ('active', models.BooleanField()),
-                ('link', models.URLField(blank=True)),
-                ('firstName', models.CharField(help_text=b'Vorname', max_length=64, verbose_name=b'Vorname')),
-                ('lastName', models.CharField(help_text=b'Nachname', max_length=64, verbose_name=b'Nachname')),
-                ('test', models.CharField(help_text=b'test', max_length=64, verbose_name=b'test', blank=True)),
-                ('entities', models.ManyToManyField(related_name='personPlaces', verbose_name=b'Einheit', to='region.Entity', blank=True)),
-                ('organizations', models.ManyToManyField(related_name='personOrganization', verbose_name=b'Organization', to='stakeholder.Organization', blank=True)),
+                ('role', models.CharField(help_text=b'Art der Rolle', max_length=64, verbose_name=b'Rolle')),
+                ('slug', models.SlugField(unique=True, editable=False)),
+                ('description', models.TextField(null=True, blank=True)),
             ],
             options={
-                'verbose_name': 'Person',
-                'verbose_name_plural': 'Persons',
+                'verbose_name': 'Rolle',
+                'verbose_name_plural': 'Rollen',
             },
+        ),
+        migrations.CreateModel(
+            name='Department',
+            fields=[
+                ('stakeholder_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='stakeholder.Stakeholder')),
+            ],
+            options={
+                'verbose_name': 'Beh\xf6rde',
+                'verbose_name_plural': 'Beh\xf6rden',
+            },
+            bases=('stakeholder.stakeholder',),
+        ),
+        migrations.AddField(
+            model_name='stakeholder',
+            name='entities',
+            field=models.ManyToManyField(related_name='places_stakeholder', verbose_name=b'Region', to='region.Entity', blank=True),
+        ),
+        migrations.AddField(
+            model_name='stakeholder',
+            name='picture',
+            field=models.OneToOneField(null=True, blank=True, to='photologue.Photo', verbose_name=b'Bild'),
+        ),
+        migrations.AddField(
+            model_name='stakeholder',
+            name='roles',
+            field=models.ManyToManyField(related_name='roles_stakeholder', verbose_name=b'Rollen', to='stakeholder.StakeholderRole', blank=True),
         ),
     ]

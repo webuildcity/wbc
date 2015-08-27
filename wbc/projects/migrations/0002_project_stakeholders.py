@@ -7,14 +7,14 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tags', '0005_auto_20150814_1018'),
-        ('projects', '0003_project_gallery'),
+        ('stakeholder', '0001_initial'),
+        ('projects', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='project',
-            name='tags',
-            field=models.ManyToManyField(related_name='tags_project', verbose_name=b'Tags', to='tags.Tag', blank=True),
+            name='stakeholders',
+            field=models.ManyToManyField(to='stakeholder.Stakeholder', verbose_name=b'Akteure', blank=True),
         ),
     ]

@@ -4,7 +4,7 @@ from django.test import Client
 
 from django.core.urlresolvers import reverse
 
-from wbc.process.models import Place
+from wbc.projects.models import Project
 from wbc.region.models import District
 from wbc.region.models import Muncipality
 
@@ -13,7 +13,7 @@ from models import Comment
 class CommentTestCase(TestCase):
 
     def setUp(self):
-        a = Place(
+        a = Project(
             address='Unter den Linden 1',
             description='Brandenburger Tor',
             lat='-13',
@@ -36,9 +36,9 @@ class CommentTestCase(TestCase):
         a.save()
 
     def create_comment(self, author_name='test_author', author_email='author@test.de', author_url='http://google.com', enabled=True, content='content'):
-        place = Place.objects.get(address='Unter den Linden 1')
+        project = Project.objects.get(address='Unter den Linden 1')
         return Comment.objects.create(
-            place=place,
+            project=project,
             author_name=author_name,
             author_email=author_email,
             author_url=author_url,
@@ -50,14 +50,14 @@ class CommentTestCase(TestCase):
         c = self.create_comment()
         self.assertTrue(isinstance(c, Comment))
         self.assertEqual(
-            c.__unicode__(), unicode(c.place) + ', ' + c.author_name)
+            c.__unicode__(), unicode(c.project) + ', ' + c.author_name)
         gravatar_url = "http://www.gravatar.com/avatar/" + \
             hashlib.md5(c.author_email.lower()).hexdigest() + "?"
         gravatar_url += urllib.urlencode({'s': str(32)})
         self.assertEqual(c.gravatar, gravatar_url)
 
-    def test_view_place_post_comment(self):
-        url = reverse('place', args=['1'])
+    def test_view_Project_post_comment(self):
+        url = reverse('project', args=['1'])
 
         comment = {
             'author_name': 'Thomas Testuser',
