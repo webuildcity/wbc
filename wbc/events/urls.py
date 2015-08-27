@@ -4,10 +4,10 @@ from rest_framework import routers
 from views import *
 
 router = routers.DefaultRouter()
-router.register(r'event', EventViewSet, base_name='event')
-router.register(r'date', DateViewSet, base_name='date')
+router.register(r'events', EventViewSet, base_name='event')
+router.register(r'dates', DateViewSet, base_name='date')
 router.register(r'media', MediaViewSet, base_name='media')
-router.register(r'publication', PublicationViewSet, base_name='Process_bplan')
+router.register(r'publications', PublicationViewSet, base_name='publication')
 
 urlpatterns = patterns('',
     url(r'^', include(router.urls)),

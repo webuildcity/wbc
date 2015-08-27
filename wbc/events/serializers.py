@@ -28,4 +28,4 @@ class MediaSerializer(serializers.ModelSerializer):
 class PublicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publication
-        fields = ('title','description','link')
+        fields = ('project','description','link')

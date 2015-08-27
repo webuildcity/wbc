@@ -88,7 +88,7 @@ class ProjectUpdate(ProtectedUpdateView):
 
 class ProjectDelete(ProtectedDeleteView):
     model = Project
-    success_url = reverse_lazy('Projects')
+    success_url = reverse_lazy('projects')
 
 def projects(request):
     return render(request,'projects/list.html',{'new_project_link': reverse('project_create')})

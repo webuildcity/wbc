@@ -2,13 +2,12 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import datetime
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('region', '0001_initial'),
-        ('photologue', '0008_auto_20150509_1557'),
     ]
 
     operations = [
@@ -28,6 +27,25 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Event (Meta)',
                 'verbose_name_plural': 'Events (Meta)',
+            },
+        ),
+        migrations.CreateModel(
+            name='Publication',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', models.DateTimeField(editable=False)),
+                ('updated', models.DateTimeField(editable=False)),
+                ('office', models.TextField(verbose_name=b'Auslegungsstelle', blank=True)),
+                ('office_hours', models.TextField(verbose_name=b'\xc3\x96ffnungszeiten der Auslegungsstelle', blank=True)),
+                ('begin', models.DateField(default=datetime.datetime.now, verbose_name=b'Anfang Timeline')),
+                ('end', models.DateField(null=True, verbose_name=b'Ende Timeline', blank=True)),
+                ('link', models.URLField(blank=True)),
+                ('description', models.TextField(help_text=b'Beschreibungstext eines Events', verbose_name=b'Beschreibung', blank=True)),
+            ],
+            options={
+                'ordering': ('-end',),
+                'verbose_name': 'Ver\xf6ffentlichung',
+                'verbose_name_plural': 'Ver\xf6ffentlichungen',
             },
         ),
         migrations.CreateModel(
@@ -78,30 +96,5 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'Medienbeitr\xe4ge',
             },
             bases=('events.event',),
-        ),
-        migrations.CreateModel(
-            name='Publication',
-            fields=[
-                ('event_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='events.Event')),
-                ('office', models.TextField(verbose_name=b'Auslegungsstelle', blank=True)),
-                ('office_hours', models.TextField(verbose_name=b'\xc3\x96ffnungszeiten der Auslegungsstelle', blank=True)),
-                ('modelType', models.CharField(default=b'pub', max_length=20, editable=False)),
-            ],
-            options={
-                'ordering': ('-end',),
-                'verbose_name': 'Ver\xf6ffentlichung',
-                'verbose_name_plural': 'Ver\xf6ffentlichungen',
-            },
-            bases=('events.event',),
-        ),
-        migrations.AddField(
-            model_name='event',
-            name='entities',
-            field=models.ManyToManyField(related_name='places_event', verbose_name=b'Region', to='region.Entity', blank=True),
-        ),
-        migrations.AddField(
-            model_name='event',
-            name='gallery',
-            field=models.OneToOneField(null=True, blank=True, to='photologue.Gallery'),
         ),
     ]

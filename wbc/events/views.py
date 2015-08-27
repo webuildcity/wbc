@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.contrib.syndication.views import Feed
 from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect, Http404
 
 from rest_framework import viewsets
 
@@ -75,7 +76,7 @@ class PublicationFeed(Feed):
                 District.objects.get(name=district)
             except District.DoesNotExist:
                 raise Http404
-            return Publication.objects.filter(projects_events__entities__name=district)
+            return Publication.objects.filter(project__entities__name=district)
         return Publication.objects
 
     def items(self, objs):
@@ -86,16 +87,12 @@ class PublicationFeed(Feed):
             ': ' + item.process_step.name
 
         l = []
-        if item.projects_events.all():
-            for item in item.projects_events.all():
-                l.append(item.name)
-        # if item.projects_events.identifier != '':
-        #     l.append(item.project.identifier)
-
-        # try:
-        #     l.append(item.project.entities.all()[0].name)
-        # except IndexError:
-        #     pass
+        if item.project.name != '':
+            l.append(item.project.name)
+        try:
+            l.append(item.project.entities.all()[0].name)
+        except IndexError:
+            pass
 
         if l != []:
             title += ' (' + ', '.join(l) + ')'
@@ -111,5 +108,6 @@ class PublicationFeed(Feed):
     def item_pubdate(self, item):
         return item.created
 
-    # def item_link(self, item):
-    #     return settings.SITE_URL + reverse('wbc.projects.views.project', args=[item.projects_events.all()[0].pk])
+    def item_link(self, item):
+        return "test"
+        return settings.SITE_URL + reverse('wbc.projects.views.project', args=[item.project.pk])

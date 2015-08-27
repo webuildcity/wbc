@@ -19,8 +19,8 @@ class MediaAdmin(admin.ModelAdmin):
     ordering = ['id']
 
 class PublicationAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'begin')
-    list_display_links = ('id', 'title', 'begin')
+    list_display = ('id', 'project', 'begin')
+    list_display_links = ('id', 'project', 'begin')
     ordering = ['id']
 
 admin.site.register(Event, EventAdmin)

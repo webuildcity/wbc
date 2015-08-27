@@ -78,18 +78,23 @@ class Media(Event):
         verbose_name        = 'Medienbeitrag'
         verbose_name_plural = 'Medienbeiträge'
 
-class Publication(Event):
+class Publication(Model):
     process_step = models.ForeignKey('process.ProcessStep', related_name='publications', verbose_name="Verfahrensschritt")
     office       = models.TextField(blank=True, verbose_name="Auslegungsstelle")
     office_hours = models.TextField(blank=True, verbose_name="Öffnungszeiten der Auslegungsstelle")
     department   = models.ForeignKey(Stakeholder, verbose_name="Verantwortliche Behörde")
-    modelType    = models.CharField(default="pub", editable=False, max_length=20)
-   
-    def __unicode__(self):
-        return unicode(self.title) + ', ' + self.process_step.name
+    project      = models.ForeignKey('projects.Project', verbose_name="Projekt")
+    begin        = models.DateField(verbose_name="Anfang Timeline")
+    end          = models.DateField(verbose_name="Ende Timeline",blank=True, null=True)
+    link         = models.URLField(blank=True)
+    description  = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Beschreibungstext eines Events")
 
-    # def get_absolute_url(self):
-    #     return reverse('project', kwargs={'pk': self.projects_events.all()[0].project})
+
+    def __unicode__(self):
+        return unicode(self.project) + ', ' + self.process_step.name
+
+    def get_absolute_url(self):
+        return reverse('project', kwargs={'pk': self.project.pk})
 
     def get_update_url(self):
         return reverse('publication_update', kwargs={'pk': self.pk})
