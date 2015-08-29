@@ -56,9 +56,6 @@ class Stakeholder(Model):
 
 class Department(Stakeholder):
 
-    def __unicode__(self):
-        return unicode(self.name)
-
     class Meta:
         verbose_name        = 'Behörde'
         verbose_name_plural = 'Behörden'

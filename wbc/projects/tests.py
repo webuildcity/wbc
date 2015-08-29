@@ -128,7 +128,7 @@ class ProjectTestCase(TestCase):
 
     # model tests
 
-    def test_model_Project(self):
+    def test_model_project(self):
         p = Project.objects.first()
         self.assertTrue(isinstance(p, Project))
         detail_url = reverse('project', kwargs={'pk': p.pk})

@@ -39,10 +39,10 @@ class EventTestCase(TestCase):
         
         now = datetime.datetime.now()
 
-
         a = Project(
             address='Unter den Linden 1',
             description='Brandenburger Tor',
+            name='name',
             lat='-13',
             lon='52',
             identifier='ACB',
