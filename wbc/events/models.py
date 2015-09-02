@@ -79,7 +79,7 @@ class Media(Event):
         verbose_name_plural = 'Medienbeiträge'
 
 class Publication(Model):
-    process_step = models.ForeignKey('process.ProcessStep', related_name='publications', verbose_name="Verfahrensschritt")
+    process_step = models.ForeignKey('process.ProcessStep', verbose_name="Verfahrensschritt")
     office       = models.TextField(blank=True, verbose_name="Auslegungsstelle")
     office_hours = models.TextField(blank=True, verbose_name="Öffnungszeiten der Auslegungsstelle")
     department   = models.ForeignKey(Stakeholder, verbose_name="Verantwortliche Behörde")

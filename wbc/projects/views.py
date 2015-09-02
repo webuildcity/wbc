@@ -17,7 +17,8 @@ from wbc.core.views import ProtectedCreateView, ProtectedUpdateView, ProtectedDe
 from wbc.region.models import District
 from wbc.comments.models import Comment
 from wbc.comments.forms import CommentForm
-from wbc.events.models import Event, Date, Media
+from wbc.events.models import Event, Date, Media, Publication
+from wbc.process.models import ProcessType, ProcessStep
 from models import *
 from serializers import *
 # from forms import *
@@ -115,7 +116,9 @@ def project_request(request, p):
     gallery = None
     if p.gallery:
         gallery = Gallery.objects.filter(slug = p.gallery.slug)
-
+    # print p.publication_set.all().process_step
+    # print p
+    # print ProcessType.objects.filter(process_steps__publications__project=p)
     return render(request,'projects/project.html',{
         'project' : p,
         'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
@@ -124,5 +127,8 @@ def project_request(request, p):
         'nextDate': p.events.filter(begin__gte=today, date__isnull=False).order_by('begin').first(),
         'lastNews': p.events.filter(media__isnull=False).order_by('begin').first(),
         'tags'    : p.tags.all(),
-        'stakeholders' : p.stakeholders.all()
+        'stakeholders' : p.stakeholders.all(),
+        'publications' : p.publication_set.all().order_by('process_step__process_type__name','process_step__order'),
+        #'processSteps' : ProcessStep.objects.filter(publication_processsteps),
+        'processTypes' : ProcessType.objects.filter(process_steps__publication__project = p)
     })
