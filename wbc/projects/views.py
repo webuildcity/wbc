@@ -116,9 +116,20 @@ def project_request(request, p):
     gallery = None
     if p.gallery:
         gallery = Gallery.objects.filter(slug = p.gallery.slug)
-    # print p.publication_set.all().process_step
-    # print p
-    # print ProcessType.objects.filter(process_steps__publications__project=p)
+    
+    processTypeList = None
+    publications = p.publication_set.all()
+
+    if publications:
+        processTypeList = {}
+        processTypes = ProcessType.objects.filter(process_steps__publication__project = p).distinct()
+        processTypeList = list(processTypes)
+        for proType in processTypeList:
+            proType.process_steps2 = list(proType.process_steps.all())
+            for step in proType.process_steps2:
+                for pub in publications.filter(process_step = step):
+                    step.publication = pub
+
     return render(request,'projects/project.html',{
         'project' : p,
         'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
@@ -128,7 +139,7 @@ def project_request(request, p):
         'lastNews': p.events.filter(media__isnull=False).order_by('begin').first(),
         'tags'    : p.tags.all(),
         'stakeholders' : p.stakeholders.all(),
-        'publications' : p.publication_set.all().order_by('process_step__process_type__name','process_step__order'),
+        # 'publications' : p.publication_set.all().order_by('process_step__process_type__name','process_step__order'),
         #'processSteps' : ProcessStep.objects.filter(publication_processsteps),
-        'processTypes' : ProcessType.objects.filter(process_steps__publication__project = p)
+         'processTypes' : processTypeList
     })

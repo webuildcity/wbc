@@ -51,8 +51,6 @@
             <div id="project-map" class="col-md-9"></div>
         {% endif %}
         
-        {% include "process/process_bar.html" %}
-
         <div id="subscribe-widget" class="col-md-3">
             <button class="btn default">SUBSCRIBE_PROJECT</button>
         </div>
@@ -75,6 +73,7 @@
         </div>
         {% endif %}
 
+        
         {% if tags %}
         <div id="tags-widget" class="widget col-md-3">
             <h3><i class="fa fa-tags"> </i>Schlagworte</h3>
@@ -84,6 +83,9 @@
         </div>
         {% endif %}
         
+        {% if processTypes %}
+            {% include "process/process_bar.html" %}
+        {% endif %}
 
         <div class="col-md-9">
             <div>

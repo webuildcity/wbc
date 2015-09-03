@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import date
 from django.db import models
 
 from django.core.urlresolvers import reverse
@@ -102,6 +103,15 @@ class Publication(Model):
     def get_delete_url(self):
         return reverse('publication_delete', kwargs={'pk': self.pk})
 
+    def is_in_past(self):
+        if date.today() > self.end:
+            return True
+        return False
+
+    def is_started(self):
+        if date.today() >= self.begin:
+            return True
+        return False
 
     class Meta:
         ordering            = ("-end",)

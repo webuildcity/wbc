@@ -1,52 +1,23 @@
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'css/process_bar.css' %}" />
 <!-- <p>{{process}}</p> --> 
+
 {% for process in processTypes %}
-
-<ol class="process-bar col-md-9" data-process-bar-steps="{{process.process_steps.all|length}}">
-  {% for step in process.process_steps.all %}
-    <li class="process-todo">{{step.name}}</li>
-  {% endfor %}
-</ol>
-
-{% endfor %}
-
-<!--
-{% for pub in publications %}
-    <div class="progress col-md-9">
-    {% for step in pub.process_step.process_type.process_steps.all %}
-    <div class="circle done">
-      <span class="label">{{step.order}}</span>
-      <span class="title" style="overflow:hidden;">{{step.name}}</span>
-    </div>
-    <span class="bar done"></span>
-
+<div class="col-md-9">
+  <h3>{{process.name}}</h3>
+  <ol class="process-bar" data-process-bar-steps="{{process.process_steps.all|length}}">
+    {% for step in process.process_steps2 %}
+      {% if step.publication %}
+        {% if step.publication.is_in_past %}
+         <li class="process-done">{{step.name}}</li>
+        {% elif step.publication.is_started %}
+         <li class="process-running">{{step.name}}</li>
+        {% endif %}
+      {% else %}
+         <li class="process-todo">{{step.name}}</li>
+      {% endif %}
     {% endfor %}
-    </div>
+  </ol>
+</div>
+  
 {% endfor %}
-<div class="progress col-md-9">
-  <div class="circle done">
-    <span class="label">1</span>
-    <span class="title">Personal</span>
-  </div>
-  <span class="bar done"></span>
-  <div class="circle done">
-    <span class="label">2</span>
-    <span class="title">Address</span>
-  </div>
-  <span class="bar half"></span>
-  <div class="circle active">
-    <span class="label">3</span>
-    <span class="title">Payment</span>
-  </div>
-  <span class="bar"></span>
-  <div class="circle">
-    <span class="label">4</span>
-    <span class="title">Review</span>
-  </div>
-  <span class="bar"></span>
-  <div class="circle">
-    <span class="label">5</span>
-    <span class="title">Finish</span>
-  </div>
-</div> -->
