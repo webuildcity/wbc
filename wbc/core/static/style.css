@@ -513,7 +513,7 @@ a:hover,
     line-height: 20px;
     text-align: center;
     width: 100%;
-    
+    box-shadow: 2px 2px 5px #ccc;
     border:1px solid #F2C399; 
     -webkit-border-radius: 3px; 
     -moz-border-radius: 3px;
