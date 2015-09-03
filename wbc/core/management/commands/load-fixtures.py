@@ -9,18 +9,20 @@ fixtures = [
     # region
     'region/muncipalities.json',
     'region/districts.json',
-    'region/departments.json',
     'region/quarters.json',
     # process
     'process/processtypes.json',
     'process/processsteps.json',
-    'process/publications.json',
+    # projects
+    'projects/project.json'
     # comments
     'comments/comments.json',
     # news
-    'news/subscriber.json',
-    # projects
-    'projects/project.json'
+    'notifications/subscriber.json',
+    #stakeholder
+    'stakeholder/departments.json',
+    #photologue
+    'photologue/photosize.json',
 ]
 
 class Command(BaseCommand):
