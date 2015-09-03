@@ -109,5 +109,4 @@ class PublicationFeed(Feed):
         return item.created
 
     def item_link(self, item):
-        return "test"
         return settings.SITE_URL + reverse('wbc.projects.views.project', args=[item.project.pk])
