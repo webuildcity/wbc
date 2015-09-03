@@ -109,9 +109,6 @@ class Publication(Model):
         return False
 
     def is_started(self):
-        print date.today()
-        print self.begin
-        print "done"
         if date.today() >= self.begin:
             return True
         return False
