@@ -107,11 +107,21 @@ class EventTestCase(TestCase):
             process_step=process_step,
             description='description',
             project=c,
-            begin=now,
-            end=now + datetime.timedelta(days=3),
+            begin=now + datetime.timedelta(days=3),
+            end=now + datetime.timedelta(days=6),
             department=department
         )
         p2.save()
+
+        p3 = Publication(
+            process_step=process_step,
+            description='description',
+            project=c,
+            begin=now - datetime.timedelta(days=6),
+            end=now - datetime.timedelta(days=3),
+            department=department
+        )
+        p3.save()
 
 
         e = Event(
@@ -124,7 +134,9 @@ class EventTestCase(TestCase):
     #model tests
 
     def test_model_publication(self):
-        p = Publication.objects.first()
+        p = Publication.objects.filter(pk=1)[0]
+        p2 = Publication.objects.filter(pk=2)[0]
+        p3 = Publication.objects.filter(pk=3)[0]
         self.assertTrue(isinstance(p, Publication))
         detail_url = reverse('project', kwargs={'pk': p.project.pk})
         self.assertEqual(p.get_absolute_url(), detail_url)
@@ -134,6 +146,11 @@ class EventTestCase(TestCase):
         self.assertEqual(p.get_delete_url(), delete_url)
         string = unicode(p.project) + ', ' + p.process_step.name
         self.assertEqual(p.__unicode__(), string)
+        
+        self.assertTrue(p.is_started())
+        self.assertEqual(p.is_in_past(), False)
+        self.assertTrue(p3.is_in_past())
+        self.assertEqual(p2.is_started(), False)
 
     def test_model_event(self):
         e = Event.objects.first()

@@ -492,3 +492,15 @@ a:hover,
 }
 
 
+/* GENERAL*/
+
+.content-container {
+    padding: 0px 5px 5px 5px;
+    margin: 5px 0px;
+    /*border: 1px solid  #ccc;*/
+    border-radius: 4px;
+    box-shadow: 2px 2px 5px #ccc;
+    background: rgba(252, 240, 229,0.5);
+    /*background: rgba(240,240,240,0.5);*/
+    overflow: auto;
+}

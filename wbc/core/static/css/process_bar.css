@@ -1,7 +1,9 @@
 ol.process-bar {
   margin: 0;
   padding: 0;
+  padding-bottom: 6px;
   list-style-type: none; 
+  overflow: hidden;
 }
 
 ol.process-bar li {
