@@ -14,7 +14,7 @@ fixtures = [
     'process/processtypes.json',
     'process/processsteps.json',
     # projects
-    'projects/projects.json'
+    'projects/projects.json',
     # comments
     'comments/comments.json',
     # news
