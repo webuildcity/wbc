@@ -1,0 +1,7 @@
+{% if tags %}
+<div class="headline-tags" class="col-md-9">
+    {% for tag in tags %}
+        <a class="taglink" href="{{tag.get_absolute_url}}">{{tag.name}}</a>
+    {% endfor %}
+</div>
+{% endif %}

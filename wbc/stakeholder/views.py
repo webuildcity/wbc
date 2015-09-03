@@ -23,7 +23,8 @@ def stakeholderview(request, slug):
 
     return render(request,'stakeholder/stakeholder.html',{
         'stakeholder'       : s,
-        'projects'       : Project.objects.filter(stakeholders=s.id).distinct(),
+        'projects'          : Project.objects.filter(stakeholders=s.id).distinct(),
+        'tags'              : s.tags.all()
         # 'events'         : Event.objects.filter(tags__name__in=[slug]).distinct(),   
         # 'stakeholders'   : Stakeholder.objects.filter(tags__name__in=[slug]).distinct(),   
     })

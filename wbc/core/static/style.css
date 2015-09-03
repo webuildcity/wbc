@@ -251,7 +251,7 @@ a:hover,
 
 .widget .fa {
     color: #646464;
-    padding-right: 4px;
+    margin-right: 4px;
 }
 
 /* STAKEHOLDER WIDGET */
@@ -500,7 +500,51 @@ a:hover,
     /*border: 1px solid  #ccc;*/
     border-radius: 4px;
     box-shadow: 2px 2px 5px #ccc;
-    background: rgba(252, 240, 229,0.5);
-    /*background: rgba(240,240,240,0.5);*/
-    overflow: auto;
+    /*background: rgba(252, 240, 229,0.5);*/
+    background: rgba(240,240,240,0.5);
+    overflow: hidden;
+}
+
+.wbc-button {
+    font-family: dejavu;
+    font-weight: bold;
+    font-size: 14px;
+    color: #646464;
+    line-height: 20px;
+    text-align: center;
+    width: 100%;
+    
+    border:1px solid #F2C399; 
+    -webkit-border-radius: 3px; 
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    /*font-size:12px;
+    font-family:arial, helvetica, sans-serif;*/
+    padding: 10px 10px 10px 10px; 
+    /*text-decoration:none; 
+    display:inline-block;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+    font-weight:bold; color*/: #FFFFFF;
+    background-color: #FCF0E5; background-image: -webkit-gradient(linear, left top, left bottom, from(#FCF0E5), to(#E8974D));
+    background-image: -webkit-linear-gradient(top, #FCF0E5, #E8974D);
+    background-image: -moz-linear-gradient(top, #FCF0E5, #E8974D);
+    background-image: -ms-linear-gradient(top, #FCF0E5, #E8974D);
+    background-image: -o-linear-gradient(top, #FCF0E5, #E8974D);
+    background-image: linear-gradient(to bottom, #FCF0E5, #E8974D);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#FCF0E5, endColorstr=#E8974D);
+}
+
+.wbc-button:hover {
+    border:1px solid #DE6A00;
+    background-color: #F2C399; background-image: -webkit-gradient(linear, left top, left bottom, from(#F2C399), to(#DE6A00));
+    background-image: -webkit-linear-gradient(top, #F2C399, #DE6A00);
+    background-image: -moz-linear-gradient(top, #F2C399, #DE6A00);
+    background-image: -ms-linear-gradient(top, #F2C399, #DE6A00);
+    background-image: -o-linear-gradient(top, #F2C399, #DE6A00);
+    background-image: linear-gradient(to bottom, #F2C399, #DE6A00);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#F2C399, endColorstr=#DE6A00);
+}
+
+span .fa-circle-thin {
+    background-color: white;
+    border-radius: 60px;
+    color: white !important;
 }

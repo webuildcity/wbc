@@ -17,6 +17,9 @@
 
     <div class="container">
         <h1> {{stakeholder.name}} </h1>
+        {% if tags %}
+            {% include "tags/tag_list.html" %}
+        {% endif %}
     
         {% if stakeholder.picture %}
         <img class="stakeholder_img stakeholder_page_img" src="{{ stakeholder.picture.get_stakeholder_url }}" />

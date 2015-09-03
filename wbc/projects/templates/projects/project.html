@@ -51,8 +51,14 @@
             <div id="project-map" class="col-md-9"></div>
         {% endif %}
         
-        <div id="subscribe-widget" class="col-md-3">
-            <button class="btn default">SUBSCRIBE_PROJECT</button>
+        <div id="subscribe-widget" class="widget col-md-3">
+            <button class="btn default wbc-button">
+                <span class="fa-stack">
+                  <i class="fa fa-circle-thin fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-lg"></i>
+                </span>
+                Project abonnieren
+            </button>
         </div>
 
         {% if nextDate %}
@@ -112,7 +118,11 @@
             </div>
         </div>
         {% if gallery != true %}
-        <div id="project-map" class="col-md-3"></div>
+        <div class="col-md-9">
+            <div class="content-container">
+                <div id="project-map"></div>
+            </div>
+        </div>
         {% endif %}
 
         {% if stakeholders %}
