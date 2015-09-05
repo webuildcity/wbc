@@ -1,0 +1,4 @@
+include LICENSE
+include README.md
+
+recursive-include wbc *.html *.png *.svg *.js *.js.map *.css *.ttf *.otf *.eot *.woff

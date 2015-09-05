@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import datetime
 from django.conf import settings
-from django.shortcuts import render,get_object_or_404
-from django.core.urlresolvers import reverse,reverse_lazy
+from django.shortcuts import render, get_object_or_404
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.db.models import Q
 from django.utils.timezone import now
 
@@ -65,7 +65,8 @@ class ListViewSet(viewsets.ReadOnlyModelViewSet):
 
         search = self.request.query_params.get('search', None)
         if search is not None:
-            queryset = queryset.filter(Q(identifier__icontains=search) | Q(address__icontains=search) | Q(entities__name__icontains=search))
+            queryset = queryset.filter(Q(identifier__icontains=search) | Q(
+                address__icontains=search) | Q(entities__name__icontains=search))
 
         return queryset
 
@@ -112,7 +113,8 @@ class PublicationCreate(ProtectedCreateView):
 
     def get_initial(self):
         try:
-            self.initial['place'] = Place.objects.get(pk=self.request.GET.get('place_id', None))
+            self.initial['place'] = Place.objects.get(
+                pk=self.request.GET.get('place_id', None))
         except Place.DoesNotExist:
             self.initial['place'] = {}
         return self.initial
@@ -132,26 +134,28 @@ class PublicationDelete(ProtectedDeleteView):
 
 def process(request):
     process_types = ProcessType.objects.all()
-    return render(request,'process/process.html',{'process_types': process_types})
+    return render(request, 'process/process.html', {'process_types': process_types})
+
 
 def places(request):
-    return render(request,'process/list.html',{'new_place_link': reverse('place_create')})
+    return render(request, 'process/list.html', {'new_place_link': reverse('place_create')})
+
 
 def place(request, pk):
-    p = get_object_or_404(Place, id = int(pk))
+    p = get_object_or_404(Place, id=int(pk))
 
     if request.method == 'POST':
         if len(request.POST["author_email1"]) == 0:
             form = CommentForm(request.POST)
             if form.is_valid():
                 comment = form.save(commit=False)
-                comment.enabled = True;
+                comment.enabled = True
                 comment.place = p
                 comment.save()
 
-    return render(request,'process/place.html',{
+    return render(request, 'process/place.html', {
         'place': p,
-        'comments': Comment.objects.filter(place_id = int(pk), enabled = True),
+        'comments': Comment.objects.filter(place_id=int(pk), enabled=True),
         'process_link': reverse('wbc.process.views.process'),
         'new_publication_link': reverse('publication_create'),
     })
@@ -182,7 +186,8 @@ class PublicationFeed(Feed):
         return objs.order_by('-created')[:10]
 
     def item_title(self, item):
-        title = item.process_step.process_type.name + ': ' +  item.process_step.name
+        title = item.process_step.process_type.name + \
+            ': ' + item.process_step.name
 
         l = []
         if item.place.identifier != '':
@@ -193,7 +198,8 @@ class PublicationFeed(Feed):
         except IndexError:
             pass
 
-        if l != []: title += ' (' + ', '.join(l) + ')'
+        if l != []:
+            title += ' (' + ', '.join(l) + ')'
 
         return title
 
