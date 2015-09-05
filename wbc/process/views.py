@@ -17,9 +17,9 @@ from wbc.core.views import ProtectedCreateView, ProtectedUpdateView, ProtectedDe
 from wbc.region.models import District
 from wbc.comments.models import Comment
 from wbc.comments.forms import CommentForm
-from models import *
-from serializers import *
-from forms import *
+from .models import *
+from .serializers import *
+from .forms import *
 
 
 class PlaceViewSet(viewsets.ViewSet):

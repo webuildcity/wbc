@@ -139,13 +139,13 @@ class ProcessTestCase(TestCase):
         self.assertEqual(p.get_update_url(), update_url)
         delete_url = reverse('publication_delete', kwargs={'pk': p.pk})
         self.assertEqual(p.get_delete_url(), delete_url)
-        string = unicode(p.place) + ', ' + p.process_step.name
-        self.assertEqual(p.__unicode__(), string)
+        string = str(p.place) + ', ' + p.process_step.name
+        self.assertEqual(p.__str__(), string)
 
     def test_model_process_step(self):
         ps = ProcessStep.objects.get(name="ProcessStep")
         self.assertEqual(
-            ps.__unicode__(), unicode(ps.process_type) + ', ' + ps.name)
+            ps.__str__(), str(ps.process_type) + ', ' + ps.name)
 
     def test_model_process_type(self):
         pt = ProcessType.objects.get(name="ProcessType")

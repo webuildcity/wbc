@@ -8,7 +8,7 @@ from wbc.process.models import Place
 from wbc.region.models import District
 from wbc.region.models import Muncipality
 
-from models import Comment
+from .models import Comment
 
 class CommentTestCase(TestCase):
 
@@ -45,15 +45,15 @@ class CommentTestCase(TestCase):
             enabled=enabled)
 
     def test_comment(self):
-        import urllib
+        from six.moves.urllib_parse import urlencode
         import hashlib
         c = self.create_comment()
         self.assertTrue(isinstance(c, Comment))
         self.assertEqual(
-            c.__unicode__(), unicode(c.place) + ', ' + c.author_name)
+            c.__str__(), str(c.place) + ', ' + c.author_name)
         gravatar_url = "http://www.gravatar.com/avatar/" + \
             hashlib.md5(c.author_email.lower()).hexdigest() + "?"
-        gravatar_url += urllib.urlencode({'s': str(32)})
+        gravatar_url += urlencode({'s': str(32)})
         self.assertEqual(c.gravatar, gravatar_url)
 
     def test_view_place_post_comment(self):

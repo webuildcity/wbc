@@ -7,9 +7,9 @@ from django.core.urlresolvers import reverse
 
 from wbc.region.models import District
 
-from forms import SubscribeForm, UnsubscribeForm
-from models import Validation, Subscriber
-from lib import send_mail
+from .forms import SubscribeForm, UnsubscribeForm
+from .models import Validation, Subscriber
+from .lib import send_mail
 
 
 def subscribe(request):
