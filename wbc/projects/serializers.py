@@ -46,7 +46,7 @@ class ProjectPointSerializer(GeoFeatureModelSerializer):
         return {'type': 'Point', 'coordinates': [obj.lon,obj.lat]}
 
     def internal_link_serializer_method(self, obj):
-        return reverse('wbc.projects.views.project',args=[obj.id])
+        return reverse('wbc.projects..views.projectslug',args=[obj.slug])
 
     class Meta:
         model = Project
@@ -70,7 +70,7 @@ class ProjectPolygonSerializer(GeoFeatureModelSerializer):
         return [obj.lon,obj.lat]
 
     def internal_link_serializer_method(self, obj):
-        return reverse('wbc.projects.views.project',args=[obj.id])
+        return reverse('wbc.projects.views.projectslug',args=[obj.slug])
 
     class Meta:
         model = Project
@@ -85,7 +85,7 @@ class ListSerializer(serializers.ModelSerializer):
         return ', '.join([entity.name for entity in obj.entities.all()])
 
     def internal_link_serializer_method(self, obj):
-        return reverse('wbc.projects.views.project',args=[obj.id])
+        return reverse('wbc.projects.views.projectslug',args=[obj.slug])
 
     class Meta:
         model = Project
