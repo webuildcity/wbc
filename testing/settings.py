@@ -1,13 +1,4 @@
-SECRET_KEY = 'this is a not very secret key'
-
-SITE_URL = 'http://localhost:8000'
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/tmp/wbc.sqlite3'
-    }
-}
+from .local import *
 
 INSTALLED_APPS = [
     # django
@@ -42,8 +33,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'tests.urls'
-WSGI_APPLICATION = 'bbs.wsgi.application'
+ROOT_URLCONF = 'testing.urls'
+WSGI_APPLICATION = 'wbc.wsgi.application'
 
 LANGUAGE_CODE = 'de-de'
 TIME_ZONE = 'Europe/Berlin'
