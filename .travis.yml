@@ -9,4 +9,4 @@ install:
 before_script:
 - cp testing/travis.local.py testing/local.py
 script:
-- python manage.py test
+- python runtests.py
