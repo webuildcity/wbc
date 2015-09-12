@@ -70,8 +70,8 @@ class Publication(Model):
 
     class Meta:
         ordering            = ("-end",)
-        verbose_name        = "Veröffentlichung"
-        verbose_name_plural = "Veröffentlichungen"
+        verbose_name        = u"Veröffentlichung"
+        verbose_name_plural = u"Veröffentlichungen"
 
 class ProcessStep(Model):
     name         = models.CharField(max_length=256, verbose_name="Name")

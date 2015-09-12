@@ -13,27 +13,27 @@ from .models import Comment
 class CommentTestCase(TestCase):
 
     def setUp(self):
-        a = Place(
+
+        Muncipality(name='Berlin').save()
+
+        district = District(
+            name='Mitte',
+            muncipality=Muncipality.objects.get(name='Berlin')
+        )
+        district.save()
+
+        place = Place(
             address='Unter den Linden 1',
             description='Brandenburger Tor',
             lat='-13',
             lon='52',
-            identifier='ACB',
+            identifier='A',
             active=False,
         )
-        a.save()
-
-        Muncipality(name='Berlin').save()
-
-        d = District(
-            name='Mitte',
-            muncipality=Muncipality.objects.get(name='Berlin')
-        )
-        d.save()
-
-        b = District.objects.get(name='Mitte')
-        a.entities.add(b)
-        a.save()
+        place.save()
+        place.entities.add(district)
+        place.save()
+        self.place_id = place.pk
 
     def create_comment(self, author_name='test_author', author_email='author@test.de', author_url='http://google.com', enabled=True, content='content'):
         place = Place.objects.get(address='Unter den Linden 1')
@@ -57,7 +57,7 @@ class CommentTestCase(TestCase):
         self.assertEqual(c.gravatar, gravatar_url)
 
     def test_view_place_post_comment(self):
-        url = reverse('place', args=['1'])
+        url = reverse('place', args=[self.place_id])
 
         comment = {
             'author_name': 'Thomas Testuser',
