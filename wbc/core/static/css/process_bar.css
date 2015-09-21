@@ -13,6 +13,7 @@ ol.process-bar li {
   float:left;
 }
 
+
 ol.process-bar[data-process-bar-steps="2"] li { width: 49%; }
 ol.process-bar[data-process-bar-steps="3"] li { width: 33%; }
 ol.process-bar[data-process-bar-steps="4"] li { width: 24%; }
