@@ -182,16 +182,3 @@ body, html {
     color: #de6a00;
     font-family: titillium;
 }
-
-.startpage {
-  height: 100%;
-}
-
-.container-table {
-    height: 100%;
-    display: table;
-}
-.vertical-center-row {
-    display: table-row;
-    vertical-align: middle;
-}

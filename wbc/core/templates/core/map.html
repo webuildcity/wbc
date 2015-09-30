@@ -86,26 +86,28 @@
 
     <div id="map" ng-class="{'hidden-xs': !map}"></div>
 
-    <div class="container container-table">
+    <div class="container" ng-class="{'container-table': data.searchEmpty }">
 
-        <div class="row vertical-center-row">
+        <div class="row" ng-class="{'vertical-center-row': data.searchEmpty }">
 
             <div class="text-center col-md-8 col-md-offset-2">
 
 
-                <img src="{% static 'img/title.png' %}" width="240">
+                <img ng-if="data.searchEmpty" src="{% static 'img/title.png' %}" width="240">
 
                 <div class="pull-right">
 
-
-                    <h2>Finde geplante Bauvorhaben in deinem Stadtteil</h2>
-
+                    <h2 ng-if="data.searchEmpty">Finde geplante Bauvorhaben in deinem Stadtteil</h2>
 
                     <div class="search-form">
 
                         <form id="table-pager-search" class="search-form">
                             <div class="input-group">
-                                <input id="table-pager-search-input" placeholder="Bauprojekte, Akteure und Projekte durchsuchen" type="text" class="form-control" ng-model="data.search">
+                                <input
+                                placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
+                                type="text" class="form-control"
+                                ng-model="data.search" ng-change="onSearchChanged()">
+
                                 <a href="" class="input-group-addon" ng-click="search()">
                                     <span class="glyphicon glyphicon-search"></span>
                                 </a>
@@ -116,8 +118,17 @@
 
                 </div>
 
+                <div class="row" ng-hide="data.searchEmpty">
+                    <div class="col-md-4" ng-repeat="result in data.results" ng-click="focusLocation(result)">
+                    {% verbatim %}
 
-                <div class="row">
+                    {{ result.identifier }}
+
+                    {% endverbatim %}
+                    </div>
+                </div>
+
+                <div class="row" ng-if="data.searchEmpty">
                        <div class="col-md-4">
                            <a href="{% url 'process' %}">
                                <div class="teaser">

@@ -8,12 +8,16 @@ app.config(['$httpProvider', function($httpProvider) {
 app.factory('MapService',['$http',function($http) {
 
     var map = new L.Map("map", {
-        'zoomControl': false,
-        'scrollWheelZoom': false
+        'zoomControl': true,
+        'scrollWheelZoom': true
     });
 
+
+    var defaultLocation = new L.LatLng(_default_view.lat,_default_view.lon);
+    var defaultZoom = _default_view.zoom;
+
     map.addLayer(new L.TileLayer(_tiles_url + '/{z}/{x}/{y}.png',_tiles_opt));
-    map.setView(new L.LatLng(_default_view.lat,_default_view.lon),_default_view.zoom);
+    map.setView(defaultLocation,defaultZoom);
 
     var markerLayer = L.layerGroup().addTo(map);
     var icons = {};
@@ -136,15 +140,73 @@ app.factory('MapService',['$http',function($http) {
         //         }
         //     });
         // });
+        //
+        //
+    var setViewOptions = {
+      pan: {
+        animate: true,
+        duration: 3
+      },
+      zoom: {
+        animate: true
+      }
+    };
 
     return {
-        map: map
+
+        map: map,
+
+        focusLocation: function(point) {
+          map.setView(point, 16, setViewOptions);
+        },
+
+        resetToDefaults: function() {
+          map.setView(defaultLocation, defaultZoom,  setViewOptions);
+        }
     };
 }]);
 
 
+var m;
+
 app.controller('StartpageController', ['$scope', '$document', 'MapService', function($scope, $document, MapService) {
 
+  m = MapService;
+
+  $scope.data = {
+    results: [{
+      "identifier": 'bahrenfeld50',
+      label: 'Bahrenfeld 50',
+      "id": 24,
+      type: 'bplan',
+      point: [53.562462532, 9.92805384479]
+    }, {
+        "id": 152,
+        "point": [
+            53.591481067,
+            9.94544308897
+        ],
+        "identifier": "Lokstedt64",
+        type: 'bplan',
+    }
+    ],
+    search: 'Bah',
+    searchEmpty: false,
+  };
+
+  $scope.focusLocation = function(result) {
+    console.log('focusLocation', result);
+    MapService.focusLocation(result.point);
+  };
+
+  $scope.onSearchChanged = function() {
+    console.log($scope.data.search);
+
+    $scope.data.searchEmpty = $scope.data.search === '';
+    if($scope.data.searchEmpty) {
+      MapService.resetToDefaults();
+    }
+  };
 
 }]);
 
