@@ -1,18 +1,21 @@
-import datetime
+
+from rest_framework.reverse import reverse
+
 from haystack import indexes
 from models import Project
 
 
 class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
+
     text = indexes.CharField(document=True, use_template=True)
     name = indexes.CharField(model_attr='name')
     description = indexes.CharField(model_attr='description')
     location = indexes.LocationField()
     tags = indexes.MultiValueField()
-    link = indexes.CharField()
+    api_url = indexes.CharField()
+    type = indexes.CharField()
 
-    #for autocomplete
-    content_auto = indexes.EdgeNgramField(use_template=True)
+    content_auto = indexes.NgramField(use_template=True)
 
     def get_model(self):
         return Project
@@ -24,8 +27,8 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
         # If you're just storing the floats...
         return "%s,%s" % (obj.lon, obj.lat)
 
-    def prepare_link(self, obj):
-        return obj.get_absolute_url()
+    def prepare_type(self, obj):
+        return 'project'
 
     def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""

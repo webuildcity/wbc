@@ -117,14 +117,22 @@
 
                 <div class="clearfix"></div>
 
-                <div class="row" ng-hide="data.searchEmpty">
-                    <div class="col-md-4" ng-repeat="(id, result) in data.results" ng-click="focusLocation(result.location)">
-                    {% verbatim %}
+                <div class="row search-results" ng-hide="data.searchEmpty">
 
-                    <b>{{ result.name }}</b>
-                    {{ result.id }}
+                    <div class="col-md-4"
+                        ng-repeat="(id, result) in data.results"
+                        ng-mouseenter="focusLocation(result.location)"
+                        ng-mouseleave="resetLocation()"
+                        ng-click="loadResultDetails(result)">
 
-                    {% endverbatim %}
+                        <div class="search-result">
+                            {% verbatim %}
+
+                            {{ result | json }}
+                            <b>{{ result.name }}</b>
+
+                            {% endverbatim %}
+                        </div>
                     </div>
                 </div>
 

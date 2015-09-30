@@ -157,17 +157,19 @@ app.factory('MapService',['$http',function($http) {
         map: map,
 
         focusLocation: function(point) {
-          map.setView(point, 16, setViewOptions);
+
+            map.setView(point, 15, setViewOptions);
         },
 
         resetToDefaults: function() {
-          map.setView(defaultLocation, defaultZoom,  setViewOptions);
+            map.setView(defaultLocation, defaultZoom,  setViewOptions);
         }
     };
 }]);
 
 
-app.controller('StartpageController', ['$scope', '$document', '$http', 'MapService', function($scope, $document, $http, MapService) {
+app.controller('StartpageController', ['$scope', '$document', '$http', '$window', 'MapService',
+    function($scope, $document, $http, $window, MapService) {
 
   $scope.data = {
     results: {},
@@ -176,8 +178,23 @@ app.controller('StartpageController', ['$scope', '$document', '$http', 'MapServi
   };
 
   $scope.focusLocation = function(location) {
-    console.log('focusLocation', location);
     MapService.focusLocation(location);
+  };
+
+  $scope.resetLocation = MapService.resetToDefaults;
+  $scope.loadResultDetails = function(result) {
+    if(result.type === 'project') {
+        $http({
+            method: 'GET',
+            // TODO: fixme
+            uri: '/project/projects/' + result.pk,
+            params: {
+                geometry: 'polygon'
+            }
+        }).success(function(response) {
+            console.log(response);
+        });
+    }
   };
 
   $scope.onSearchChanged = function() {
