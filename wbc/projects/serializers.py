@@ -5,6 +5,8 @@ from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 from wbc.stakeholder.serializers import DepartmentSerializer
+from taggit_serializer.serializers import (TagListSerializerField, TaggitSerializer)
+
 from models import *
 from wbc.events.serializers import EventSerializer
 from photologue.models import Gallery
@@ -34,7 +36,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('id','point', 'events','identifier','address','description','entities','link','internal_link', 'gallery')
+        fields = ('id','tags','name','point', 'events','identifier','address','description','entities','link','internal_link', 'gallery')
         depth = 1
 
 class ProjectPointSerializer(GeoFeatureModelSerializer):
@@ -51,7 +53,7 @@ class ProjectPointSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Project
         geo_field = 'point'
-        fields = ('id','point','identifier','address','description','entities','link','internal_link')
+        fields = ('id','name','point','identifier','address','description','entities','link','internal_link')
 
 class ProjectPolygonSerializer(GeoFeatureModelSerializer):
 
@@ -75,7 +77,7 @@ class ProjectPolygonSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Project
         geo_field = 'polygon'
-        fields = ('id','polygon','identifier','address','description','entities','point','link','internal_link')
+        fields = ('id','name','polygon','identifier','address','description','entities','point','link','internal_link')
 
 class ListSerializer(serializers.ModelSerializer):
     entities = serializers.SerializerMethodField('entities_serializer_method')
@@ -89,12 +91,13 @@ class ListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('id','identifier','address','entities','internal_link')
+        fields = ('id','name','identifier','address','entities','internal_link')
 
-class MapSerializer(serializers.ModelSerializer):
+class MapSerializer(TaggitSerializer, serializers.ModelSerializer):
     point = serializers.SerializerMethodField('point_serializer_method')
     internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
     # publication = serializers.SerializerMethodField('publication_serializer_method')
+    tags = TagListSerializerField()
 
     def point_serializer_method(self, obj):
         return [obj.lon,obj.lat]
@@ -122,5 +125,5 @@ class MapSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('id','point','identifier','address','entities','internal_link')
+        fields = ('id','tags','name','point','identifier','address','entities','internal_link')
 

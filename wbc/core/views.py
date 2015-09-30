@@ -8,7 +8,7 @@ from django.template import RequestContext
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
 
-from wbc.core.forms import LoginForm
+from wbc.core.forms import LoginForm, GeneralSearchForm
 from wbc.region.models import District
 
 
@@ -59,3 +59,13 @@ class ProtectedDeleteView(DeleteView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(ProtectedDeleteView, self).dispatch(*args, **kwargs)
+
+
+def start(request):
+    return render(request,'core/startpage.html')
+def map(request):
+    return render(request,'core/mappage.html')
+def search(request):
+    form = GeneralSearchForm(request.POST or None)
+
+    return render(request,'core/search.html', {'form': form })

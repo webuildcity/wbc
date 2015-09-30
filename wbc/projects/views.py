@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse,reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.db.models import Q
 from django.utils.timezone import now
 
@@ -22,6 +22,7 @@ from wbc.process.models import ProcessType, ProcessStep
 from models import *
 from serializers import *
 # from forms import *
+from haystack.query import SearchQuerySet
 
 
 class ProjectViewSet(viewsets.ViewSet):
@@ -143,3 +144,11 @@ def project_request(request, p):
         #'processSteps' : ProcessStep.objects.filter(publication_processsteps),
          'processTypes' : processTypeList
     })
+
+def autocomplete(request):
+    sqs = SearchQuerySet().autocomplete(content_auto=request.GET.get('q', ''))[:8]
+    suggestions = [result.name for result in sqs]
+    data = json.dumps({
+        'results': suggestions
+        })
+    return HttpResponse(data, content_type='application/json')

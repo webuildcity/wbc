@@ -1,0 +1,20 @@
+.teaser {
+    text-align: center;
+    color: #646464;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+
+.teaser:hover {
+    border: 1px solid #de6a00;
+}
+
+.teaser i {
+    font-size: 45px;
+}
+
+.teaser p {
+    font-size: 18px;
+}
