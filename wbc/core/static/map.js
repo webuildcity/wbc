@@ -187,12 +187,14 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
         $http({
             method: 'GET',
             // TODO: fixme
-            uri: '/project/projects/' + result.pk,
+            url: '/project/projects/' + result.pk,
             params: {
                 geometry: 'polygon'
             }
         }).success(function(response) {
             console.log(response);
+        }).error(function(e){
+            console.log(e)
         });
     }
   };
@@ -213,7 +215,7 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
     }).success(function(response) {
         $scope.data.results = {};
         response.results.forEach(function(result) {
-            $scope.data.results[result.id] = result;
+            $scope.data.results[result.pk] = result;
         });
     });
 
