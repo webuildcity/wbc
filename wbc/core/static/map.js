@@ -167,45 +167,39 @@ app.factory('MapService',['$http',function($http) {
 }]);
 
 
-var m;
-
-app.controller('StartpageController', ['$scope', '$document', 'MapService', function($scope, $document, MapService) {
-
-  m = MapService;
+app.controller('StartpageController', ['$scope', '$document', '$http', 'MapService', function($scope, $document, $http, MapService) {
 
   $scope.data = {
-    results: [{
-      "identifier": 'bahrenfeld50',
-      label: 'Bahrenfeld 50',
-      "id": 24,
-      type: 'bplan',
-      point: [53.562462532, 9.92805384479]
-    }, {
-        "id": 152,
-        "point": [
-            53.591481067,
-            9.94544308897
-        ],
-        "identifier": "Lokstedt64",
-        type: 'bplan',
-    }
-    ],
-    search: 'Bah',
-    searchEmpty: false,
+    results: {},
+    search: '',
+    searchEmpty: true
   };
 
-  $scope.focusLocation = function(result) {
-    console.log('focusLocation', result);
-    MapService.focusLocation(result.point);
+  $scope.focusLocation = function(location) {
+    console.log('focusLocation', location);
+    MapService.focusLocation(location);
   };
 
   $scope.onSearchChanged = function() {
-    console.log($scope.data.search);
-
     $scope.data.searchEmpty = $scope.data.search === '';
     if($scope.data.searchEmpty) {
       MapService.resetToDefaults();
+      return;
     }
+
+    $http({
+        method: 'GET',
+        url:  '/autocomplete',
+        params: {
+            q: $scope.data.search
+        }
+    }).success(function(response) {
+        $scope.data.results = {};
+        response.results.forEach(function(result) {
+            $scope.data.results[result.id] = result;
+        });
+    });
+
   };
 
 }]);

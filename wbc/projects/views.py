@@ -116,7 +116,7 @@ def project_request(request, p):
     gallery = None
     if p.gallery:
         gallery = Gallery.objects.filter(slug = p.gallery.slug)
-    
+
     processTypeList = None
     publications = p.publication_set.all()
 
@@ -133,7 +133,7 @@ def project_request(request, p):
     return render(request,'projects/project.html',{
         'project' : p,
         'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
-        'events'  : p.events.order_by('-begin'),   
+        'events'  : p.events.order_by('-begin'),
         'gallery' : gallery,
         'nextDate': p.events.filter(begin__gte=today, date__isnull=False).order_by('begin').first(),
         'lastNews': p.events.filter(media__isnull=False).order_by('begin').first(),
@@ -143,3 +143,4 @@ def project_request(request, p):
         #'processSteps' : ProcessStep.objects.filter(publication_processsteps),
          'processTypes' : processTypeList
     })
+

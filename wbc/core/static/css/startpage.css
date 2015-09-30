@@ -5,10 +5,8 @@
 
 .container-table {
     height: 100%;
-    display: table;
 }
 .vertical-center-row {
-    display: table-row;
     vertical-align: middle;
 }
 

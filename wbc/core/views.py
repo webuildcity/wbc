@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-from django.http import HttpResponseRedirect
+
+import json
+
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login, logout
@@ -10,6 +13,9 @@ from django.utils.decorators import method_decorator
 
 from wbc.core.forms import LoginForm
 from wbc.region.models import District
+
+from haystack.query import SearchQuerySet
+
 
 
 def feeds(request):
@@ -38,6 +44,27 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return render_to_response('core/logout.html', context_instance=RequestContext(request))
+
+
+def autocomplete(request):
+    sqs = SearchQuerySet().autocomplete(content_auto=request.GET.get('q', ''))
+
+    suggestions = []
+    for result in sqs:
+        resultdict = dict(name=result.name, id=result.id, link=result.link)
+
+        if result.location:
+            resultdict['location'] = [result.location[0], result.location[1]]
+
+        suggestions.append(resultdict)
+
+    # suggestions = [dict(location=result.location, name=result.name) for result in sqs]
+
+    data = json.dumps({
+        'results': suggestions
+    })
+    print data
+    return HttpResponse(data, content_type='application/json')
 
 
 class ProtectedCreateView(CreateView):

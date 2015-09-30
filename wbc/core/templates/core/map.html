@@ -84,7 +84,7 @@
 
 <div ng-app="map" ng-controller="StartpageController" class="startpage">
 
-    <div id="map" ng-class="{'hidden-xs': !map}"></div>
+    <div id="map"></div>
 
     <div class="container" ng-class="{'container-table': data.searchEmpty }">
 
@@ -92,37 +92,37 @@
 
             <div class="text-center col-md-8 col-md-offset-2">
 
-
                 <img ng-if="data.searchEmpty" src="{% static 'img/title.png' %}" width="240">
 
-                <div class="pull-right">
+                <h2 ng-if="data.searchEmpty">Finde geplante Bauvorhaben in deinem Stadtteil</h2>
 
-                    <h2 ng-if="data.searchEmpty">Finde geplante Bauvorhaben in deinem Stadtteil</h2>
+                <div class="search-form">
 
-                    <div class="search-form">
+                    <form id="table-pager-search" class="search-form">
+                        <div class="input-group">
+                            <input
+                            placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
+                            type="text" class="form-control"
+                            ng-model="data.search"
+                            ng-change="onSearchChanged()"
+                            ng-model-options="{ debounce: 1200 }">
 
-                        <form id="table-pager-search" class="search-form">
-                            <div class="input-group">
-                                <input
-                                placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
-                                type="text" class="form-control"
-                                ng-model="data.search" ng-change="onSearchChanged()">
-
-                                <a href="" class="input-group-addon" ng-click="search()">
-                                    <span class="glyphicon glyphicon-search"></span>
-                                </a>
-                            </div>
-                        </form>
-
-                    </div>
+                            <a href="" class="input-group-addon" ng-click="search()">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </a>
+                        </div>
+                    </form>
 
                 </div>
 
+                <div class="clearfix"></div>
+
                 <div class="row" ng-hide="data.searchEmpty">
-                    <div class="col-md-4" ng-repeat="result in data.results" ng-click="focusLocation(result)">
+                    <div class="col-md-4" ng-repeat="(id, result) in data.results" ng-click="focusLocation(result.location)">
                     {% verbatim %}
 
-                    {{ result.identifier }}
+                    <b>{{ result.name }}</b>
+                    {{ result.id }}
 
                     {% endverbatim %}
                     </div>
