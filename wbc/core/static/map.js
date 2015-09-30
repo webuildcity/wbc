@@ -12,7 +12,6 @@ app.factory('MapService',['$http',function($http) {
         'scrollWheelZoom': true
     });
 
-
     var defaultLocation = new L.LatLng(_default_view.lat,_default_view.lon);
     var defaultZoom = _default_view.zoom;
 
@@ -21,21 +20,6 @@ app.factory('MapService',['$http',function($http) {
 
     var markerLayer = L.layerGroup().addTo(map);
     var icons = {};
-
-    // $http.get('/process/processsteps/').success(function(process_steps) {
-    //     // create icons for process steps
-    //     angular.forEach(process_steps, function(process_step, key) {
-    //         icons[process_step.id] = {
-    //             icon: L.icon({
-    //                 iconUrl: _static_url + process_step.icon,
-    //                 iconSize:     [26, 45],
-    //                 iconAnchor:   [13, 45],
-    //                 popupAnchor:  [0, -46]
-    //             }),
-    //             iconUrl: _static_url + process_step.icon,
-    //             hoverIconUrl: _static_url + process_step.hover_icon
-    //         };
-    //     });
 
         // create icon for old projects
         icons.old = {
@@ -47,110 +31,15 @@ app.factory('MapService',['$http',function($http) {
             })
         };
 
-        // get date
-        var now = new Date();
-
-        // $http.get('/project/map/').success(function(projects) {
-
-        //     // add points to map
-        //     angular.forEach(projects, function(project, key) {
-
-        //         // get coordinates
-        //         var lat = project.point[1];
-        //         var lon = project.point[0];
-        //             // get the first publication
-        //         var popuptext = '';
-        //         if (project.publication) {
-        //             var publication = project.publication;
-
-
-        //             if (angular.isUndefined(publication.process_step)) {
-        //                 // set grey marker
-        //                 marker = L.marker([lat,lon], {icon: icons.old.icon});
-
-        //                 // prepare popup
-        //                 popuptext += '<p>Betrifft Gegend um: ' + project.address + '</p>';
-        //                 popuptext += '<p>Bebauungsplan befindet sich im Verfahren.</p>';
-        //                 popuptext += '<p>Zur Zeit ist keine Bürgerbeteiligung möglich.</p>';
-        //                 popuptext += '<p><a href="' + project.internal_link + '" >Details</a></p>';
-        //             } else {
-        //                 // get the pk of the process step
-        //                 var process_step_id = publication.process_step.id;
-
-        //                 // get begin, end, and now
-        //                 var begin = new Date(publication.begin);
-        //                 var end = new Date(publication.end);
-        //                 var now = new Date();
-
-        //                 if (end < now) {
-        //                     // set grey marker
-        //                     marker = L.marker([lat,lon], {icon: icons.old.icon});
-        //                 } else {
-        //                     marker = L.marker([lat,lon], {
-        //                         icon: icons[process_step_id].icon,
-        //                         zIndexOffset: 100
-        //                     });
-
-        //                     // enable hover icon
-        //                     marker.iconUrl = icons[process_step_id].iconUrl;
-        //                     marker.hoverIconUrl = icons[process_step_id].hoverIconUrl;
-
-        //                     marker.on("mouseover", function(e) {
-        //                         e.target._icon.src = this.hoverIconUrl;
-        //                     }).on("mouseout", function(e) {
-        //                         e.target._icon.src = this.iconUrl;
-        //                     });
-        //                 }
-
-        //                 // prepare popup
-        //                 var d = end.getDate() + '.' + (end.getMonth() + 1) + '.' + end.getFullYear();
-        //                 popuptext += '<p><b>' + publication.process_step.process_type + '</b>';
-        //                 popuptext += '<p><i>' + publication.process_step.name + '</i>';
-        //                 popuptext += ' <a href="' + publication.process_step.internal_link +  '" >(?)</a></p>';
-        //                 popuptext += '<p>Betrifft Gegend um: ' + project.address + '</p>';
-        //                 popuptext += '<p>Verantwortlich: ' + publication.department + '</p>';
-        //                 if (begin == end) {
-        //                     popuptext += '<p>Zeitpunkt: ' + d + '</p>';
-        //                 } else {
-        //                     popuptext += '<p>Beteiligung möglich bis: ' + d + '</p>';
-        //                 }
-        //                 popuptext += '<p><a href="' + project.internal_link + '" >Details</a></p>';
-        //             }
-
-        //             // popup to marker
-        //             marker.bindPopup(popuptext, {
-        //                 autoPanPaddingTopLeft: new L.Point(10,100),
-        //                 autoPanPaddingBottomRight: new L.Point(10,0)
-        //             });
-
-        //             // add marker to layer
-        //             markerLayer.addLayer(marker);
-        //         } else {
-
-        //             popuptext += '<p>Betrifft Gegend um: ' + project.address + '</p>';
-        //             popuptext += '<p><a href="' + project.internal_link + '" >Details</a></p>';
-
-        //             marker = L.marker([lat,lon], {icon: icons.old.icon});
-        //             marker.bindPopup(popuptext, {
-        //                 autoPanPaddingTopLeft: new L.Point(10,100),
-        //                 autoPanPaddingBottomRight: new L.Point(10,0)
-        //             });
-
-        //             markerLayer.addLayer(marker);
-        //         }
-        //     });
-        // });
-        //
-        //
-    var setViewOptions = {
-      pan: {
-        animate: true,
-        duration: 3
-      },
-      zoom: {
-        animate: true
-      }
-    };
+        var setViewOptions = {
+          pan: {
+            animate: true,
+            duration: 3
+          },
+          zoom: {
+            animate: true
+          }
+        };
 
     return {
 
@@ -171,55 +60,94 @@ app.factory('MapService',['$http',function($http) {
 app.controller('StartpageController', ['$scope', '$document', '$http', '$window', 'MapService',
     function($scope, $document, $http, $window, MapService) {
 
-  $scope.data = {
-    results: {},
-    search: '',
-    searchEmpty: true
-  };
+    $scope.data = {
+        results: [],
+        search: '',
+        searchEmpty: true,
+        currentPoly: null,
+        currentIdx: -1
+    };
 
-  $scope.focusLocation = function(location) {
-    MapService.focusLocation(location);
-  };
+    $scope.focusLocation = function(location) {
+        MapService.focusLocation(location);
+    };
 
-  $scope.resetLocation = MapService.resetToDefaults;
-  $scope.loadResultDetails = function(result) {
-    if(result.type === 'project') {
-        $http({
-            method: 'GET',
+    $scope.resetLocation = MapService.resetToDefaults;
+
+    $scope.loadResultDetails = function(result) {
+        if(result.type === 'project') {
+            $http({
+                method: 'GET',
             // TODO: fixme
             url: '/project/projects/' + result.pk,
             params: {
                 geometry: 'polygon'
             }
-        }).success(function(response) {
-            console.log(response);
-        }).error(function(e){
-            console.log(e)
-        });
-    }
-  };
+            }).success(function(response) {
 
-  $scope.onSearchChanged = function() {
-    $scope.data.searchEmpty = $scope.data.search === '';
-    if($scope.data.searchEmpty) {
-      MapService.resetToDefaults();
-      return;
-    }
+                if($scope.data.currentPoly !== null) {
+                    MapService.map.removeLayer($scope.data.currentPoly);
+                }
 
-    $http({
-        method: 'GET',
-        url:  '/autocomplete',
-        params: {
-            q: $scope.data.search
+                // var osmb = new OSMBuildings(MapService.map).loadData();
+
+                var polygonOptions = {
+                    weight: 3,
+                    color: '#de6a00',
+                    opacity: 1,
+                    fill: true,
+                    fillColor: '#de6a00',
+                    fillOpacity: 0.05
+                };
+
+                if(response.geometry.coordinates && response.geometry.coordinates.length > 2) {
+                    $scope.data.currentPoly = L.multiPolygon(response.geometry.coordinates)
+                    .setStyle(polygonOptions)
+                    .addTo(MapService.map);
+                }
+
+            }).error(function(e) {
+                console.log('could not load result details', e);
+            });
         }
-    }).success(function(response) {
-        $scope.data.results = {};
-        response.results.forEach(function(result) {
-            $scope.data.results[result.pk] = result;
-        });
-    });
+    };
 
-  };
+    $scope.onKeyDown = function(evt) {
+        if($scope.data.results.length > 0) {
+            if (evt.keyCode == '38') {
+                    // up arrow
+                $scope.data.currentIdx += 1;
+
+            } else if (evt.keyCode == '40') {
+                    // down arrow
+                $scope.data.currentIdx -= 1;
+            }
+
+            console.log($scope.data.currentIdx)
+        }
+
+
+    };
+
+    $scope.onSearchChanged = function() {
+
+        $scope.data.searchEmpty = $scope.data.search === '';
+        if($scope.data.searchEmpty) {
+            MapService.resetToDefaults();
+            return;
+        }
+
+        $http({
+            method: 'GET',
+            url:  '/autocomplete',
+            params: {
+                q: $scope.data.search
+            }
+        }).success(function(response) {
+            $scope.data.results = response.results;
+            $scope.data.currentIdx = 0;
+        });
+    };
 
 }]);
 
