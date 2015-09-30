@@ -22,11 +22,14 @@
 
 
     <script type="text/javascript" src="{% static 'lib/jquery.min.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/modernizr.js' %}"  ></script>
+
     <script type="text/javascript" src="{% static 'lib/angular/angular.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}" ></script>
 
     <script type="text/javascript" src="{% static 'lib/angular/angular-scroll.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
+
     <script type="text/javascript">
         var _static_url = {% static '' %}
         var _tiles_url = "{{tiles_url}}";
@@ -105,6 +108,7 @@
                             type="text" class="form-control"
                             ng-model="data.search"
                             ng-change="onSearchChanged()"
+                            ng-keydown="onKeyDown($event)"
                             ng-model-options="{ debounce: 1200 }">
 
                             <a href="" class="input-group-addon" ng-click="search()">
@@ -113,6 +117,7 @@
                         </div>
                     </form>
 
+
                 </div>
 
                 <div class="clearfix"></div>
@@ -120,15 +125,15 @@
                 <div class="row search-results" ng-hide="data.searchEmpty">
 
                     <div class="col-md-4"
-                        ng-repeat="(id, result) in data.results"
-                        ng-mouseenter="focusLocation(result.location)"
-                        ng-mouseleave="resetLocation()"
-                        ng-click="loadResultDetails(result)">
+                        ng-repeat="result in data.results">
 
-                        <div class="search-result">
+                        <div class="search-result"
+                            ng-click="loadResultDetails(result)"
+                            ng-class="{'selected-result': $index == data.currentIdx}">
+
                             {% verbatim %}
 
-                            {{ result | json }}
+
                             <b>{{ result.name }}</b>
 
                             {% endverbatim %}

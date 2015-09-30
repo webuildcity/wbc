@@ -29,6 +29,12 @@
 }
 
 
+
+.selected-result {
+    outline: 1px solid green;
+}
+
+
 .search-results {
 }
 
