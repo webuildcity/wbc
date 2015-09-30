@@ -1,0 +1,32 @@
+
+.startpage {
+  height: 100%;
+}
+
+.container-table {
+    height: 100%;
+    display: table;
+}
+.vertical-center-row {
+    display: table-row;
+    vertical-align: middle;
+}
+
+.teaser {
+   text-align: center;
+   color: #646464 ;
+   background-color: white;
+   border-radius: 5px;
+   border: 1px solid #ddd;
+   padding: 3px;
+   margin-top: 20px;
+}
+
+.teaser:hover {
+   border: 1px solid #de6a00 ;
+}
+
+.teaser i {
+   font-size: 42px;
+}
+

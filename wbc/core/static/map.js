@@ -46,100 +46,106 @@ app.factory('MapService',['$http',function($http) {
         // get date
         var now = new Date();
 
-        $http.get('/project/map/').success(function(projects) {
+        // $http.get('/project/map/').success(function(projects) {
 
-            // add points to map
-            angular.forEach(projects, function(project, key) {
+        //     // add points to map
+        //     angular.forEach(projects, function(project, key) {
 
-                // get coordinates
-                var lat = project.point[1];
-                var lon = project.point[0];
-                    // get the first publication
-                var popuptext = '';
-                if (project.publication) {
-                    var publication = project.publication;
+        //         // get coordinates
+        //         var lat = project.point[1];
+        //         var lon = project.point[0];
+        //             // get the first publication
+        //         var popuptext = '';
+        //         if (project.publication) {
+        //             var publication = project.publication;
 
 
-                    if (angular.isUndefined(publication.process_step)) {
-                        // set grey marker
-                        marker = L.marker([lat,lon], {icon: icons.old.icon});
+        //             if (angular.isUndefined(publication.process_step)) {
+        //                 // set grey marker
+        //                 marker = L.marker([lat,lon], {icon: icons.old.icon});
 
-                        // prepare popup
-                        popuptext += '<p>Betrifft Gegend um: ' + project.address + '</p>';
-                        popuptext += '<p>Bebauungsplan befindet sich im Verfahren.</p>';
-                        popuptext += '<p>Zur Zeit ist keine Bürgerbeteiligung möglich.</p>';
-                        popuptext += '<p><a href="' + project.internal_link + '" >Details</a></p>';
-                    } else {
-                        // get the pk of the process step
-                        var process_step_id = publication.process_step.id;
+        //                 // prepare popup
+        //                 popuptext += '<p>Betrifft Gegend um: ' + project.address + '</p>';
+        //                 popuptext += '<p>Bebauungsplan befindet sich im Verfahren.</p>';
+        //                 popuptext += '<p>Zur Zeit ist keine Bürgerbeteiligung möglich.</p>';
+        //                 popuptext += '<p><a href="' + project.internal_link + '" >Details</a></p>';
+        //             } else {
+        //                 // get the pk of the process step
+        //                 var process_step_id = publication.process_step.id;
 
-                        // get begin, end, and now
-                        var begin = new Date(publication.begin);
-                        var end = new Date(publication.end);
-                        var now = new Date();
+        //                 // get begin, end, and now
+        //                 var begin = new Date(publication.begin);
+        //                 var end = new Date(publication.end);
+        //                 var now = new Date();
 
-                        if (end < now) {
-                            // set grey marker
-                            marker = L.marker([lat,lon], {icon: icons.old.icon});
-                        } else {
-                            marker = L.marker([lat,lon], {
-                                icon: icons[process_step_id].icon,
-                                zIndexOffset: 100
-                            });
+        //                 if (end < now) {
+        //                     // set grey marker
+        //                     marker = L.marker([lat,lon], {icon: icons.old.icon});
+        //                 } else {
+        //                     marker = L.marker([lat,lon], {
+        //                         icon: icons[process_step_id].icon,
+        //                         zIndexOffset: 100
+        //                     });
 
-                            // enable hover icon
-                            marker.iconUrl = icons[process_step_id].iconUrl;
-                            marker.hoverIconUrl = icons[process_step_id].hoverIconUrl;
+        //                     // enable hover icon
+        //                     marker.iconUrl = icons[process_step_id].iconUrl;
+        //                     marker.hoverIconUrl = icons[process_step_id].hoverIconUrl;
 
-                            marker.on("mouseover", function(e) {
-                                e.target._icon.src = this.hoverIconUrl;
-                            }).on("mouseout", function(e) {
-                                e.target._icon.src = this.iconUrl;
-                            });
-                        }
+        //                     marker.on("mouseover", function(e) {
+        //                         e.target._icon.src = this.hoverIconUrl;
+        //                     }).on("mouseout", function(e) {
+        //                         e.target._icon.src = this.iconUrl;
+        //                     });
+        //                 }
 
-                        // prepare popup
-                        var d = end.getDate() + '.' + (end.getMonth() + 1) + '.' + end.getFullYear();
-                        popuptext += '<p><b>' + publication.process_step.process_type + '</b>';
-                        popuptext += '<p><i>' + publication.process_step.name + '</i>';
-                        popuptext += ' <a href="' + publication.process_step.internal_link +  '" >(?)</a></p>';
-                        popuptext += '<p>Betrifft Gegend um: ' + project.address + '</p>';
-                        popuptext += '<p>Verantwortlich: ' + publication.department + '</p>';
-                        if (begin == end) {
-                            popuptext += '<p>Zeitpunkt: ' + d + '</p>';
-                        } else {
-                            popuptext += '<p>Beteiligung möglich bis: ' + d + '</p>';
-                        }
-                        popuptext += '<p><a href="' + project.internal_link + '" >Details</a></p>';
-                    }
+        //                 // prepare popup
+        //                 var d = end.getDate() + '.' + (end.getMonth() + 1) + '.' + end.getFullYear();
+        //                 popuptext += '<p><b>' + publication.process_step.process_type + '</b>';
+        //                 popuptext += '<p><i>' + publication.process_step.name + '</i>';
+        //                 popuptext += ' <a href="' + publication.process_step.internal_link +  '" >(?)</a></p>';
+        //                 popuptext += '<p>Betrifft Gegend um: ' + project.address + '</p>';
+        //                 popuptext += '<p>Verantwortlich: ' + publication.department + '</p>';
+        //                 if (begin == end) {
+        //                     popuptext += '<p>Zeitpunkt: ' + d + '</p>';
+        //                 } else {
+        //                     popuptext += '<p>Beteiligung möglich bis: ' + d + '</p>';
+        //                 }
+        //                 popuptext += '<p><a href="' + project.internal_link + '" >Details</a></p>';
+        //             }
 
-                    // popup to marker
-                    marker.bindPopup(popuptext, {
-                        autoPanPaddingTopLeft: new L.Point(10,100),
-                        autoPanPaddingBottomRight: new L.Point(10,0)
-                    });
+        //             // popup to marker
+        //             marker.bindPopup(popuptext, {
+        //                 autoPanPaddingTopLeft: new L.Point(10,100),
+        //                 autoPanPaddingBottomRight: new L.Point(10,0)
+        //             });
 
-                    // add marker to layer
-                    markerLayer.addLayer(marker);
-                } else {
-                    
-                    popuptext += '<p>Betrifft Gegend um: ' + project.address + '</p>';
-                    popuptext += '<p><a href="' + project.internal_link + '" >Details</a></p>';
+        //             // add marker to layer
+        //             markerLayer.addLayer(marker);
+        //         } else {
 
-                    marker = L.marker([lat,lon], {icon: icons.old.icon});
-                    marker.bindPopup(popuptext, {
-                        autoPanPaddingTopLeft: new L.Point(10,100),
-                        autoPanPaddingBottomRight: new L.Point(10,0)
-                    });
+        //             popuptext += '<p>Betrifft Gegend um: ' + project.address + '</p>';
+        //             popuptext += '<p><a href="' + project.internal_link + '" >Details</a></p>';
 
-                    markerLayer.addLayer(marker);
-                }
-            });
-        });
+        //             marker = L.marker([lat,lon], {icon: icons.old.icon});
+        //             marker.bindPopup(popuptext, {
+        //                 autoPanPaddingTopLeft: new L.Point(10,100),
+        //                 autoPanPaddingBottomRight: new L.Point(10,0)
+        //             });
+
+        //             markerLayer.addLayer(marker);
+        //         }
+        //     });
+        // });
 
     return {
         map: map
     };
+}]);
+
+
+app.controller('StartpageController', ['$scope', '$document', 'MapService', function($scope, $document, MapService) {
+
+
 }]);
 
 app.controller('MapController',['$scope','$document','$window','$timeout','$location','$anchorScroll','MapService',function($scope,$document,$window,$timeout,$location,$anchorScroll,MapService) {

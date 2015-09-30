@@ -1,12 +1,30 @@
-{% extends 'core/layout.html' %}
-{% load staticfiles %}
+{% load staticfiles %}<!DOCTYPE html>
+<html>
+<head>
+    <title>{{site_title}}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-{% block css %}
+    <meta property="og:title" content="{{site_title}}" />
+    <meta property="og:url" content="{{site_url}}" />
+    <meta property="og:image" content="{{site_url}}/static/img/karte.png"/>
+
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/x-icon" />
+
+    <link rel="stylesheet" href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+
     <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
     <link rel="stylesheet" href="{% static 'map.css' %}" />
-{% endblock %}
+    <link rel="stylesheet" href="{% static 'css/startpage.css' %}" />
 
-{% block js %}
+
+    <script type="text/javascript" src="{% static 'lib/jquery.min.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/angular/angular.min.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}" ></script>
+
     <script type="text/javascript" src="{% static 'lib/angular/angular-scroll.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
     <script type="text/javascript">
@@ -16,41 +34,132 @@
         var _default_view = {{default_view|safe}};
     </script>
     <script type="text/javascript" src="{% static 'map.js' %}" ></script>
-{% endblock %}
 
-{% block content %}
-<div ng-app="map" ng-controller="MapController">
+    {% block js %}{% endblock %}
+</head>
 
-    <div class="container" ng-class="{'hidden-xs': !map}">
-        <div id="buttons-left">
-            <i id="zoom-in" class="fa fa-2x fa-plus-square-o" ng-click="zoomIn()"></i>
-            <i id="zoom-out" class="fa fa-2x fa-minus-square-o" ng-click="zoomOut()"></i>
+<body>
+    <nav class="navbar navbar-default visible-xs" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">
+                <img src="{% static 'img/title.png' %}" alt="Bürger baut Stadt">
+            </a>
         </div>
-        <div id="buttons-right"></div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav">
+                {% include "core/layout_navigation.html" %}
+            </ul>
+        </div>
+    </nav>
+
+    <!--
+
+    <div id="header" class="hidden-xs">
+        <div class="container" >
+            <div id="header-left">
+                <div id="brand">
+                    <a href="/">
+                        <img src="{% static 'img/title.png' %}" alt="Bürger baut Stadt">
+                    </a>
+                </div>
+            </div>
+
+            <div id="header-right">
+                <ul class="sitenav">
+                    {% include "core/layout_navigation.html" %}
+                    {% include "core/layout_social.html" %}
+                </ul>
+            </div>
+        </div>
     </div>
+
+    -->
+
+
+<div ng-app="map" ng-controller="StartpageController" class="startpage">
 
     <div id="map" ng-class="{'hidden-xs': !map}"></div>
 
-    <div id="footer" ng-class="{'hidden-xs': !map}">
-        <div class="container">
-            <div id="footer-left">
+    <div class="container container-table">
+
+        <div class="row vertical-center-row">
+
+            <div class="text-center col-md-8 col-md-offset-2">
+
+
+                <img src="{% static 'img/title.png' %}" width="240">
+
+                <div class="pull-right">
+
+
+                    <h2>Finde geplante Bauvorhaben in deinem Stadtteil</h2>
+
+
+                    <div class="search-form">
+
+                        <form id="table-pager-search" class="search-form">
+                            <div class="input-group">
+                                <input id="table-pager-search-input" placeholder="Bauprojekte, Akteure und Projekte durchsuchen" type="text" class="form-control" ng-model="data.search">
+                                <a href="" class="input-group-addon" ng-click="search()">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </a>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+                       <div class="col-md-4">
+                           <a href="{% url 'process' %}">
+                               <div class="teaser">
+                                   <i class='fa fa-globe'></i>
+                                   <p>Alle Bauvorhaben auf einer Karte.</p>
+                               </div>
+                           </a>
+                       </div>
+                       <div class="col-md-4">
+                           <a href="{% url 'process' %}">
+                               <div class="teaser">
+                                   <i class='fa fa-search'></i>
+                                   <p>Suche nach Themen, Projekten oder Akteuren.</p>
+                               </div>
+                           </a>
+                       </div>
+                       <div class="col-md-4">
+                           <a href="{% url 'process' %}">
+                               <div class="teaser">
+                                   <i class='fa fa-lightbulb-o'></i>
+                                   <p>Informiere dich über die Gesetzeslage in deiner Stadt</p>
+                               </div>
+                           </a>
+                       </div>
+                   </div>
+
+
+
+
             </div>
-            <div id="footer-center">
-                <a class="info-link" ng-click="showInfo()">
-                    <span class="glyphicon glyphicon-chevron-down"></span>
-                    <span class="info-link-text">Worum geht es hier?</span>
-                    <span class="glyphicon glyphicon-chevron-down"></span>
-                </a>
-            </div>
-            <div id="footer-right">
-            </div>
+
         </div>
 
-    </div>
 
-    <div id="info" ng-class="{'hidden-xs': map, 'up': !map}">
-        {% include "core/map_info.html"%}
     </div>
 
 </div>
-{% endblock %}
+
+
+    {% if not debug %}
+        {% include "core/layout_piwik.html" %}
+    {% endif %}
+</body>
+</html>
+
