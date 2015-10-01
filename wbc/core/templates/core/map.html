@@ -129,7 +129,9 @@
 
                         <div class="search-result"
                             ng-click="loadResultDetails(result)"
-                            ng-class="{'selected-result': $index == data.currentIdx}">
+                            ng-class="{'selected-result': $index == data.currentIdx,
+                               'search-result-type-project':  result.type == 'project',
+                               'search-result-type-stakeholder':  result.type == 'stakeholder'}">
 
 
                             {% verbatim %}

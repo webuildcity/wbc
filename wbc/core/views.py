@@ -55,6 +55,9 @@ def autocomplete(request):
         if result.location:
             resultdict['location'] = [result.location[0], result.location[1]]
 
+        if result.polygon:
+            resultdict['polygon'] = result.polygon
+
         suggestions.append(resultdict)
 
     # suggestions = [dict(location=result.location, name=result.name) for result in sqs]
