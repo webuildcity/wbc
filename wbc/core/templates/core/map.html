@@ -128,7 +128,8 @@
                         ng-repeat="result in data.suggestions">
 
                         <div class="search-result"
-                            ng-click="focusResult(result)"
+                            ng-mouseover="focusResult(result)"
+                            ng-click="loadDetails(result)"
                             ng-class="{'selected-result': $index == selectedSuggestionIdx,
                                'search-result-type-project':  result.type == 'project',
                                'search-result-type-stakeholder':  result.type == 'stakeholder'}">

@@ -139,6 +139,10 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
     $scope.focusResult = focusAutoCompletionResult;
     $scope.resetLocation = MapService.resetToDefaults;
 
+    $scope.loadDetails = function(result) {
+        alert(result.name);
+    }
+
     $scope.onKeyDown = function(evt) {
 
         $scope.currentSearchTerm = $scope.currentSearchTerm.trim();
@@ -148,7 +152,7 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
 
             if($scope.currentSearchTerm.trim().length) {
                 if($scope.selectedSuggestionIdx !== -1) {
-                    alert('show ' + $scope.selectedSuggestionIdx);
+                    $scope.loadDetails($scope.data.suggestions[$scope.selectedSuggestionIdx]);
                     evt.preventDefault();
 
                 }
