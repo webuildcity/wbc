@@ -9,7 +9,7 @@ class StakeholderIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     name = indexes.CharField(model_attr='name')
     description = indexes.CharField(model_attr='description')
-    active = indexes.BooleanField(model_attr='active')
+    active = indexes.BooleanField(model_attr='active', null=True)
     tags = indexes.MultiValueField()
     roles = indexes.MultiValueField()
     type = indexes.CharField()
@@ -26,7 +26,7 @@ class StakeholderIndex(indexes.SearchIndex, indexes.Indexable):
         return 'stakeholder'
 
     def prepare_roles(self, obj):
-        return [role.name for role in obj.roles.all()]
+        return [role.role for role in obj.roles.all()]
 
     def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""
