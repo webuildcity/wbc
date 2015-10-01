@@ -87,10 +87,10 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
     $scope.resetLocation = MapService.resetToDefaults;
 
     $scope.focusResult = function(result) {
-        console.log(result)
+
         $scope.data.currentIdx = $scope.data.results.indexOf(result);
         $scope.data.search = result.name;
-        
+
         var searchInput = angular.element('#search input');
         searchInput.select();
 
@@ -128,7 +128,7 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
 
 
         //         if(response.geometry.coordinates) {
-                    
+
         //         }
 
         //     }).error(function(e) {
@@ -142,7 +142,7 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
             if (evt.keyCode == '40') {
                 // down arrow
                 if($scope.data.currentIdx  < $scope.data.results.length) {
-                    $scope.data.currentIdx += 1;                    
+                    $scope.data.currentIdx += 1;
                 } else {
                     $scope.data.currentIdx = 0;
                 }
@@ -177,8 +177,10 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
                 q: $scope.data.search
             }
         }).success(function(response) {
+
             $scope.data.results = response.results;
-            $scope.data.currentIdx = 0;
+            $scope.data.currentIdx = response.results.length >= 1 ? 0 : -1;
+
         });
     };
 

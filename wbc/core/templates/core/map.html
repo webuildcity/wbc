@@ -144,6 +144,15 @@
                     </div>
                 </div>
 
+
+                <div class="row" ng-if="!data.searchEmpty && data.results.length == 0">
+                    <div class="col-md-12 search-result">
+                        Keine Ergebnisse. <br/> <a href="#todop">Detailsuche</a>
+                    </div>
+                </div>
+
+
+
                 <div class="row" ng-if="data.searchEmpty">
                        <div class="col-md-4">
                            <a href="{% url 'process' %}">
