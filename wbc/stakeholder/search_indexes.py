@@ -10,7 +10,7 @@ class StakeholderIndex(indexes.SearchIndex, indexes.Indexable):
     name = indexes.CharField(model_attr='name')
     description = indexes.CharField(model_attr='description')
     active = indexes.BooleanField(model_attr='active', null=True)
-    tags = indexes.MultiValueField()
+    tags = indexes.MultiValueField(faceted=True)
     roles = indexes.MultiValueField()
     internal_link = indexes.CharField()
     type = indexes.CharField()
