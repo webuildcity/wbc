@@ -51,7 +51,7 @@ def autocomplete(request):
 
     suggestions = []
     for result in sqs:
-        resultdict = dict(name=result.name, pk=result.pk, type=result.type)
+        resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link)
         if result.location:
             resultdict['location'] = [result.location[0], result.location[1]]
 

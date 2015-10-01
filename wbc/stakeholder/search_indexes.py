@@ -12,6 +12,7 @@ class StakeholderIndex(indexes.SearchIndex, indexes.Indexable):
     active = indexes.BooleanField(model_attr='active', null=True)
     tags = indexes.MultiValueField()
     roles = indexes.MultiValueField()
+    internal_link = indexes.CharField()
     type = indexes.CharField()
 
     content_auto = indexes.NgramField(use_template=True)
@@ -27,6 +28,9 @@ class StakeholderIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_roles(self, obj):
         return [role.role for role in obj.roles.all()]
+
+    def prepare_internal_link(self, obj):
+        return obj.get_absolute_url()
 
     def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""

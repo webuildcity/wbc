@@ -70,6 +70,7 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
     s = $scope;
 
     $scope.showLanding = true;
+
     $scope.data = { suggestions: [] };
     $scope.noResults = false;
     $scope.currentSearchTerm = "";
@@ -140,8 +141,8 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
     $scope.resetLocation = MapService.resetToDefaults;
 
     $scope.loadDetails = function(result) {
-        alert(result.name);
-    }
+        $window.location.pathname = result.internal_link;
+    };
 
     $scope.onKeyDown = function(evt) {
 

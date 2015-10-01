@@ -55,8 +55,11 @@ class Stakeholder(Model):
         super(Stakeholder, self).save(*args, **kwargs)
 
 class Department(Stakeholder):
+    polygon              = models.TextField(null=True, blank=True)
 
     class Meta:
         verbose_name        = 'Behörde'
         verbose_name_plural = 'Behörden'
+
+
 

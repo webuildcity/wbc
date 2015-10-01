@@ -14,7 +14,7 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     polygon = indexes.CharField(model_attr='polygon', null=True)
     active = indexes.BooleanField(model_attr='active')
     tags = indexes.MultiValueField()
-    api_url = indexes.CharField()
+    internal_link = indexes.CharField()
     type = indexes.CharField()
 
     content_auto = indexes.NgramField(use_template=True)
@@ -31,6 +31,9 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_type(self, obj):
         return 'project'
+
+    def prepare_internal_link(self, obj):
+        return obj.get_absolute_url()
 
     def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""
