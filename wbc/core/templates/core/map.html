@@ -89,15 +89,15 @@
 
     <div id="map"></div>
 
-    <div class="container" ng-class="{'container-table': data.searchEmpty }">
+    <div class="container" ng-class="{'container-table': showLanding }">
 
-        <div class="row" ng-class="{'vertical-center-row': data.searchEmpty }">
+        <div class="row" ng-class="{'vertical-center-row': showLanding }">
 
             <div class="text-center col-md-8 col-md-offset-2">
 
-                <img ng-if="data.searchEmpty" src="{% static 'img/title.png' %}" width="240">
+                <img ng-if="showLanding" src="{% static 'img/title.png' %}" width="240">
 
-                <h2 ng-if="data.searchEmpty">Finde geplante Bauvorhaben in deinem Stadtteil</h2>
+                <h2 ng-if="showLanding">Finde geplante Bauvorhaben in deinem Stadtteil</h2>
 
                 <div class="search-form">
 
@@ -106,7 +106,7 @@
                             <input
                             placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
                             type="text" class="form-control"
-                            ng-model="data.search"
+                            ng-model="currentSearchTerm"
                             ng-change="onSearchChanged()"
                             ng-keydown="onKeyDown($event)"
                             ng-model-options="{ debounce: 1200 }">
@@ -122,14 +122,14 @@
 
                 <div class="clearfix"></div>
 
-                <div class="row search-results" ng-hide="data.searchEmpty">
+                <div class="row search-results" ng-hide="showLanding">
 
                     <div class="col-md-4"
-                        ng-repeat="result in data.results">
+                        ng-repeat="result in data.suggestions">
 
                         <div class="search-result"
                             ng-click="focusResult(result)"
-                            ng-class="{'selected-result': $index == data.currentIdx,
+                            ng-class="{'selected-result': $index == selectedSuggestionIdx,
                                'search-result-type-project':  result.type == 'project',
                                'search-result-type-stakeholder':  result.type == 'stakeholder'}">
 
@@ -145,15 +145,15 @@
                 </div>
 
 
-                <div class="row" ng-if="!data.searchEmpty && data.results.length == 0">
+                <div class="row" ng-if="noResults">
                     <div class="col-md-12 search-result">
-                        Keine Ergebnisse. <br/> <a href="#todop">Detailsuche</a>
+                        Keine Ergebnisse für {% verbatim %}<strong>{{currentSearchTerm}}</strong>{% endverbatim %}. <br/> <a href="#todop">Detailsuche</a>
                     </div>
                 </div>
 
 
 
-                <div class="row" ng-if="data.searchEmpty">
+                <div class="row" ng-if="showLanding">
                        <div class="col-md-4">
                            <a href="{% url 'process' %}">
                                <div class="teaser">

@@ -31,17 +31,16 @@
 
 
 .selected-result {
-    outline: 1px solid green;
+    outline: 2px solid #de6a00 ;
 }
 
 .search-result-type-project {
-    outline: 1px solid red;
+    /* outline: 1px solid red; */
 
 }
 
 .search-result-type-stakeholder {
-    outline: 1px solid yellow;
-
+    /* outline: 1px solid yellow; */
 }
 
 

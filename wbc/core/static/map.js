@@ -62,30 +62,159 @@ app.factory('MapService',['$http',function($http) {
     };
 }]);
 
+var s;
 
 app.controller('StartpageController', ['$scope', '$document', '$http', '$window', 'MapService',
     function($scope, $document, $http, $window, MapService) {
 
-    $scope.data = {
-        results: [],
-        search: '',
-        searchEmpty: true,
-        currentPoly: null,
-        currentIdx: -1
+    s = $scope;
+
+    $scope.showLanding = true;
+    $scope.data = { suggestions: [] };
+    $scope.noResults = false;
+    $scope.currentSearchTerm = "";
+    $scope.selectedSuggestion = null;
+    $scope.selectedSuggestionIdx = -1;
+    var focusedPoly = null;
+
+    var polygonOptions = {
+        weight: 3,
+        color: '#de6a00',
+        opacity: 1,
+        fill: true,
+        fillColor: '#de6a00',
+        fillOpacity: 0.05
+    };
+
+    $scope.reset = function() {
+        unfocusAll();
+        MapService.resetToDefaults();
     };
 
     $scope.focusLocation = function(location) {
         MapService.focusLocation(location);
     };
 
-    $scope.focusPoly = function() {
-        MapService.map.fitBounds($scope.data.currentPoly.getBounds(), {
+
+    $scope.focusPoly = function(poly) {
+        unfocusAll();
+        focusedPoly = L.multiPolygon(poly)
+            .setStyle(polygonOptions)
+            .addTo(MapService.map);
+        MapService.map.fitBounds(focusedPoly.getBounds(), {
             padding: [30, 30]
         });
+    };
+
+
+    var unfocusAll = function() {
+        if(focusedPoly) {
+            MapService.map.removeLayer(focusedPoly);
+        }
     }
+
+    var focusAutoCompletionResult = function(result) {
+
+        if(result.polygon !== undefined) {
+            $scope.focusPoly(result.polygon);
+            return;
+        }
+
+        if(result.location !== undefined) {
+            $scope.focusLocation(result.location);
+            return;
+        }
+
+
+        // nothing to focus
+        MapService.resetToDefaults();
+
+        // if poly still focused remove it too
+        unfocusAll();
+
+    };
 
     $scope.resetLocation = MapService.resetToDefaults;
 
+    $scope.onKeyDown = function(evt) {
+
+        $scope.currentSearchTerm = $scope.currentSearchTerm.trim();
+
+        // tab and enter
+        if(evt.keyCode == '9' || evt.keyCode == '13') {
+
+            if($scope.currentSearchTerm.trim().length) {
+                if($scope.selectedSuggestionIdx !== -1) {
+                    alert('show ' + $scope.selectedSuggestionIdx);
+                    evt.preventDefault();
+
+                }
+            }
+        }
+
+        // arrow down
+        else if (evt.keyCode == '40') {
+            $scope.selectedSuggestionIdx++;
+        }
+
+        // arrow up
+        else if (evt.keyCode == '38') {
+            $scope.selectedSuggestionIdx--;
+            evt.preventDefault();
+        }
+
+        if ($scope.selectedSuggestionIdx >= $scope.data.suggestions.length -1) {
+            $scope.selectedSuggestionIdx = 0;
+        }
+
+        if($scope.selectedSuggestionIdx == -1) {
+            $scope.selectedSuggestionIdx = $scope.data.suggestions.length-1;
+        }
+
+        if($scope.selectedSuggestionIdx !== -1) {
+            var selectedSuggestion = $scope.data.suggestions[$scope.selectedSuggestionIdx];
+            if(selectedSuggestion) {
+                focusAutoCompletionResult(selectedSuggestion);
+                $scope.selectedSuggestion = selectedSuggestion;
+            } else {
+                $scope.selectedSuggestion = null;
+            }
+        }
+    };
+
+    $scope.onSearchChanged = function() {
+        $scope.noResults = false;
+        if($scope.currentSearchTerm) {
+            $http({
+                method: 'GET',
+                url:  '/autocomplete',
+                params: {
+                    q: $scope.currentSearchTerm
+                }
+            }).success(function(response) {
+
+                if (response.results.length) {
+                    $scope.data.suggestions = response.results;
+                    $scope.showLanding = false;
+                } else {
+                    $scope.data.suggestions = [];
+                    $scope.noResults = true;
+
+                    MapService.resetToDefaults();
+                    unfocusAll();
+
+                }
+            });
+        } else {
+            unfocusAll();
+            $scope.data.suggestions = [];
+            $scope.showLanding = true;
+            MapService.resetToDefaults();
+        }
+    };
+
+
+    /*
     $scope.focusResult = function(result) {
 
         $scope.data.currentIdx = $scope.data.results.indexOf(result);
@@ -113,28 +242,7 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
 
             MapService.fitPoly($scope.data.currentPoly);
         }
-        // if(result.type === 'project') {
-        //     $http({
-        //         method: 'GET',
-        //     // TODO: fixme
-        //     url: '/project/projects/' + result.pk,
-        //     params: {
-        //         geometry: 'polygon'
-        //     }
-        //     }).success(function(response) {
-        //         console.log(response);
 
-        //         // var osmb = new OSMBuildings(MapService.map).loadData();
-
-
-        //         if(response.geometry.coordinates) {
-
-        //         }
-
-        //     }).error(function(e) {
-        //         console.log('could not load result details', e);
-        //     });
-        // }
     };
 
     $scope.onKeyDown = function(evt) {
@@ -162,27 +270,9 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
 
     };
 
-    $scope.onSearchChanged = function() {
+    */
 
-        $scope.data.searchEmpty = $scope.data.search === '';
-        if($scope.data.searchEmpty) {
-            MapService.resetToDefaults();
-            return;
-        }
 
-        $http({
-            method: 'GET',
-            url:  '/autocomplete',
-            params: {
-                q: $scope.data.search
-            }
-        }).success(function(response) {
-
-            $scope.data.results = response.results;
-            $scope.data.currentIdx = response.results.length >= 1 ? 0 : -1;
-
-        });
-    };
 
 }]);
 
