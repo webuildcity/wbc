@@ -86,52 +86,55 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
 
     $scope.resetLocation = MapService.resetToDefaults;
 
-    $scope.loadResultDetails = function(result) {
-        // console.log(result)
+    $scope.focusResult = function(result) {
+        console.log(result)
         $scope.data.currentIdx = $scope.data.results.indexOf(result);
         $scope.data.search = result.name;
         
         var searchInput = angular.element('#search input');
         searchInput.select();
 
-        if(result.type === 'project') {
-            $http({
-                method: 'GET',
-            // TODO: fixme
-            url: '/project/projects/' + result.pk,
-            params: {
-                geometry: 'polygon'
-            }
-            }).success(function(response) {
-                console.log(response);
-                if($scope.data.currentPoly !== null) {
-                    MapService.map.removeLayer($scope.data.currentPoly);
-                }
-
-                // var osmb = new OSMBuildings(MapService.map).loadData();
-
-                var polygonOptions = {
-                    weight: 3,
-                    color: '#de6a00',
-                    opacity: 1,
-                    fill: true,
-                    fillColor: '#de6a00',
-                    fillOpacity: 0.05
-                };
-
-                if(response.geometry.coordinates) {
-                    
-                    $scope.data.currentPoly = L.multiPolygon(response.geometry.coordinates)
-                        .setStyle(polygonOptions)
-                        .addTo(MapService.map);
-
-                    MapService.fitPoly($scope.data.currentPoly);
-                }
-
-            }).error(function(e) {
-                console.log('could not load result details', e);
-            });
+        if($scope.data.currentPoly !== null) {
+            MapService.map.removeLayer($scope.data.currentPoly);
         }
+
+        if(result.polygon){
+            var polygonOptions = {
+                weight: 3,
+                color: '#de6a00',
+                opacity: 1,
+                fill: true,
+                fillColor: '#de6a00',
+                fillOpacity: 0.05
+            };
+            $scope.data.currentPoly = L.multiPolygon(result.polygon)
+                .setStyle(polygonOptions)
+                .addTo(MapService.map);
+
+            MapService.fitPoly($scope.data.currentPoly);
+        }
+        // if(result.type === 'project') {
+        //     $http({
+        //         method: 'GET',
+        //     // TODO: fixme
+        //     url: '/project/projects/' + result.pk,
+        //     params: {
+        //         geometry: 'polygon'
+        //     }
+        //     }).success(function(response) {
+        //         console.log(response);
+
+        //         // var osmb = new OSMBuildings(MapService.map).loadData();
+
+
+        //         if(response.geometry.coordinates) {
+                    
+        //         }
+
+        //     }).error(function(e) {
+        //         console.log('could not load result details', e);
+        //     });
+        // }
     };
 
     $scope.onKeyDown = function(evt) {
@@ -153,7 +156,7 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
             }
 
             var selectedResult = $scope.data.results[$scope.data.currentIdx];
-            $scope.loadResultDetails(selectedResult);
+            $scope.focusResult(selectedResult);
         }
 
 

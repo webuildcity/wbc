@@ -56,7 +56,7 @@ def autocomplete(request):
             resultdict['location'] = [result.location[0], result.location[1]]
 
         if result.polygon:
-            resultdict['polygon'] = result.polygon
+            resultdict['polygon'] = json.loads(result.polygon)
 
         suggestions.append(resultdict)
 
