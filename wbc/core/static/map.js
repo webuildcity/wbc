@@ -113,15 +113,18 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
         }
     }
 
+
     var focusAutoCompletionResult = function(result) {
 
         if(result.polygon !== undefined) {
             $scope.focusPoly(result.polygon);
+            $scope.selectedSuggestionIdx = $scope.data.suggestions.indexOf(result);
             return;
         }
 
         if(result.location !== undefined) {
             $scope.focusLocation(result.location);
+            $scope.selectedSuggestionIdx = $scope.data.suggestions.indexOf(result);
             return;
         }
 
@@ -134,6 +137,7 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
 
     };
 
+    $scope.focusResult = focusAutoCompletionResult;
     $scope.resetLocation = MapService.resetToDefaults;
 
     $scope.onKeyDown = function(evt) {
