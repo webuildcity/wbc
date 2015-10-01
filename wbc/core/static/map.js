@@ -32,6 +32,8 @@ app.factory('MapService',['$http',function($http) {
         };
 
         var setViewOptions = {
+          padding: [30, 30],
+          maxZoom: 15,
           pan: {
             animate: true,
             duration: 3
@@ -48,6 +50,10 @@ app.factory('MapService',['$http',function($http) {
         focusLocation: function(point) {
 
             map.setView(point, 15, setViewOptions);
+        },
+
+        fitPoly: function(poly) {
+            map.fitBounds(poly.getBounds(), setViewOptions);
         },
 
         resetToDefaults: function() {
@@ -72,9 +78,22 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
         MapService.focusLocation(location);
     };
 
+    $scope.focusPoly = function() {
+        MapService.map.fitBounds($scope.data.currentPoly.getBounds(), {
+            padding: [30, 30]
+        });
+    }
+
     $scope.resetLocation = MapService.resetToDefaults;
 
     $scope.loadResultDetails = function(result) {
+        // console.log(result)
+        $scope.data.currentIdx = $scope.data.results.indexOf(result);
+        $scope.data.search = result.name;
+        
+        var searchInput = angular.element('#search input');
+        searchInput.select();
+
         if(result.type === 'project') {
             $http({
                 method: 'GET',
@@ -84,7 +103,7 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
                 geometry: 'polygon'
             }
             }).success(function(response) {
-
+                console.log(response);
                 if($scope.data.currentPoly !== null) {
                     MapService.map.removeLayer($scope.data.currentPoly);
                 }
@@ -100,10 +119,13 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
                     fillOpacity: 0.05
                 };
 
-                if(response.geometry.coordinates && response.geometry.coordinates.length > 2) {
+                if(response.geometry.coordinates) {
+                    
                     $scope.data.currentPoly = L.multiPolygon(response.geometry.coordinates)
-                    .setStyle(polygonOptions)
-                    .addTo(MapService.map);
+                        .setStyle(polygonOptions)
+                        .addTo(MapService.map);
+
+                    MapService.fitPoly($scope.data.currentPoly);
                 }
 
             }).error(function(e) {
@@ -114,16 +136,24 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
 
     $scope.onKeyDown = function(evt) {
         if($scope.data.results.length > 0) {
-            if (evt.keyCode == '38') {
-                    // up arrow
-                $scope.data.currentIdx += 1;
+            if (evt.keyCode == '40') {
+                // down arrow
+                if($scope.data.currentIdx  < $scope.data.results.length) {
+                    $scope.data.currentIdx += 1;                    
+                } else {
+                    $scope.data.currentIdx = 0;
+                }
 
-            } else if (evt.keyCode == '40') {
-                    // down arrow
-                $scope.data.currentIdx -= 1;
+
+            } else if (evt.keyCode == '38') {
+                    // up arrow
+                if($scope.data.currentIdx !== 0) {
+                    $scope.data.currentIdx -= 1;
+                }
             }
 
-            console.log($scope.data.currentIdx)
+            var selectedResult = $scope.data.results[$scope.data.currentIdx];
+            $scope.loadResultDetails(selectedResult);
         }
 
 

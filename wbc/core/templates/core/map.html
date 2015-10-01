@@ -101,7 +101,7 @@
 
                 <div class="search-form">
 
-                    <form id="table-pager-search" class="search-form">
+                    <form id="search" class="search-form">
                         <div class="input-group">
                             <input
                             placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
@@ -132,8 +132,7 @@
                             ng-class="{'selected-result': $index == data.currentIdx}">
 
                             {% verbatim %}
-
-
+                            
                             <b>{{ result.name }}</b>
 
                             {% endverbatim %}
