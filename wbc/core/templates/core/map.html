@@ -131,9 +131,11 @@
                             ng-click="loadResultDetails(result)"
                             ng-class="{'selected-result': $index == data.currentIdx}">
 
+
                             {% verbatim %}
-                            
+
                             <b>{{ result.name }}</b>
+                            {{result.type}}
 
                             {% endverbatim %}
                         </div>
