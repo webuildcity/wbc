@@ -66,6 +66,9 @@ def autocomplete(request):
     })
     return HttpResponse(data, content_type='application/json')
 
+def search(request):
+    return null
+
 
 class ProtectedCreateView(CreateView):
 

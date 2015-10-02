@@ -13,7 +13,7 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     location = indexes.LocationField()
     polygon = indexes.CharField(model_attr='polygon', null=True)
     active = indexes.BooleanField(model_attr='active')
-    tags = indexes.MultiValueField()
+    tags = indexes.MultiValueField(faceted=True)
     internal_link = indexes.CharField()
     type = indexes.CharField()
 
