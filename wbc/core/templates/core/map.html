@@ -87,9 +87,17 @@
 
 <div ng-app="map" ng-controller="StartpageController" class="startpage">
 
-    <div id="map"></div>
 
-    <div class="container" ng-class="{'container-table': showLanding }">
+    <div id="map"></div>
+    <div ng-if="!showLanding" class="navigation_map sitenav">
+        <ul>
+            <li><i class='fa fa-globe'></i>Karte</li>
+            <li><i class='fa fa-search'></i>Archiv</li>
+            <li><i class='fa fa-lightbulb-o'></i>Begriffe</li>
+        </ul>
+    </div>
+
+    <div ng-class="{'container-table': showLanding, 'overlay' : showDetails }">
 
         <div class="row" ng-class="{'vertical-center-row': showLanding }">
 
@@ -190,6 +198,18 @@
 
 
     </div>
+    {% verbatim %}
+    <div ng-if="showDetails" class="detail-overlay">
+        <div class='col-md-12 overlay'><h1>{{details.identifier}}</h1></div>
+        <div class="col-md-6 col-md-offset-6 overlay infobox-right">
+            {{details.name}}
+            {{details.identifier}}
+        </div>
+        <div class="col-md-12 overlay">
+            <b>{{ details }}</b>
+        </div>
+    </div>
+    {% endverbatim %}
 
 </div>
 

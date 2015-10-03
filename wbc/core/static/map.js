@@ -70,6 +70,7 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
     s = $scope;
 
     $scope.showLanding = true;
+    $scope.showDetails = false;
 
     $scope.data = { suggestions: [] };
     $scope.noResults = false;
@@ -77,6 +78,8 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
     $scope.selectedSuggestion = null;
     $scope.selectedSuggestionIdx = -1;
     var focusedPoly = null;
+
+    $scope.details = null;
 
     var polygonOptions = {
         weight: 3,
@@ -90,6 +93,14 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
     $scope.reset = function() {
         unfocusAll();
         MapService.resetToDefaults();
+    };
+
+    $scope.resetSearch = function() {
+        $scope.data = { suggestions: [] };
+        $scope.noResults = false;
+        $scope.currentSearchTerm = "";
+        $scope.selectedSuggestion = null;
+        $scope.selectedSuggestionIdx = -1;
     };
 
     $scope.focusLocation = function(location) {
@@ -107,8 +118,19 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
         });
     };
 
+    $scope.detailFocus = function(poly) {
+        var bounds = poly.getBounds();
+        var diffLat = bounds._northEast.lat - bounds._southWest.lat;
+        var diffLng = bounds._northEast.lng - bounds._southWest.lng;
+        bounds._southWest.lat = bounds._southWest.lat - diffLat;
+        bounds._northEast.lng = bounds._northEast.lng + diffLng*1.5;
+        MapService.map.fitBounds(bounds, {
+            padding: [0, 0]
+        });
+    }
 
     var unfocusAll = function() {
+        $scope.showDetails = false;
         if(focusedPoly) {
             MapService.map.removeLayer(focusedPoly);
         }
@@ -141,7 +163,24 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
     $scope.resetLocation = MapService.resetToDefaults;
 
     $scope.loadDetails = function(result) {
-        $window.location.pathname = result.internal_link;
+        // $window.location.pathname = result.internal_link;
+       $scope.showDetails = true;
+       $scope.detailFocus(focusedPoly);
+       $scope.resetSearch();
+
+       $http({
+            method: 'GET',
+            url:  '/project/projects/'+result.pk,
+            params: {
+                
+            },
+        }).success(function(response) {
+            console.log(response)
+            $scope.details = response;
+        });
+
+       
+
     };
 
     $scope.onKeyDown = function(evt) {

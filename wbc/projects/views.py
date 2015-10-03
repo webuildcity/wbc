@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse,reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.db.models import Q
 from django.utils.timezone import now
 
@@ -144,3 +144,37 @@ def project_request(request, p):
          'processTypes' : processTypeList
     })
 
+
+# def project_for_map(request,pk):
+#     p = Project.objects.get(id=int(pk))
+#     today = datetime.datetime.today()
+#     gallery = None
+#     if p.gallery:
+#         gallery = Gallery.objects.filter(slug = p.gallery.slug)
+
+#     processTypeList = None
+#     publications = p.publication_set.all()
+
+#     if publications:
+#         processTypeList = {}
+#         processTypes = ProcessType.objects.filter(process_steps__publication__project = p).distinct()
+#         processTypeList = list(processTypes)
+#         for proType in processTypeList:
+#             proType.process_steps2 = list(proType.process_steps.all())
+#             for step in proType.process_steps2:
+#                 for pub in publications.filter(process_step = step):
+#                     step.publication = pub
+
+#     return HttpResponse({
+#         'project' : p,
+#         'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
+#         'events'  : p.events.order_by('-begin'),
+#         'gallery' : gallery,
+#         'nextDate': p.events.filter(begin__gte=today, date__isnull=False).order_by('begin').first(),
+#         'lastNews': p.events.filter(media__isnull=False).order_by('begin').first(),
+#         'tags'    : p.tags.all(),
+#         'stakeholders' : p.stakeholders.all(),
+#         # 'publications' : p.publication_set.all().order_by('process_step__process_type__name','process_step__order'),
+#         #'processSteps' : ProcessStep.objects.filter(publication_processsteps),
+#          'processTypes' : processTypeList
+#     }, content_type='application/json')

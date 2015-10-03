@@ -1,10 +1,11 @@
 
 .startpage {
-  padding-top: 2em;
+  /*padding-top: 2em;*/
+  height: 100%;
 }
 
 .container-table {
-    height: 100%;
+    height: 100%; 
 }
 .vertical-center-row {
     vertical-align: middle;
@@ -62,3 +63,33 @@
 .bplan {
     background-color: red;
 }
+
+.navigation_map {
+  background-color: rgba(255,255,255,0.8);
+  position: relative;
+  overflow: auto;
+}
+
+.navigation_map ul {
+  float: right;
+  position: relative;
+  right: 100px;
+}
+
+.detail-overlay {
+  height: 100%;
+}
+
+.overlay {
+  background-color: rgba(255,255,255,0.8);
+  position: relative;
+}
+
+.infobox-right {
+  height: 50%;
+}
+
+.infobox-bottom {
+  
+}
+
