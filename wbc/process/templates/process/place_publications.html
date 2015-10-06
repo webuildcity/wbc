@@ -1,0 +1,76 @@
+<div class="row publications">
+    {% if place.publications.all %}
+
+    <h4 class="col-sm-3 hidden-xs">Was?</h4>
+    <h4 class="col-sm-3 hidden-xs">Wann?</h4>
+    <h4 class="col-sm-6 hidden-xs">Details</h4>
+
+    {% for publication in place.publications.all %}
+
+    {% if forloop.counter != 1 %}
+    <hr style="visible-xs" />
+    {% endif %}
+
+    <div class="col-sm-3">
+        <a href="{{process_link}}#{{ publication.process_step.pk}}" class="publication-title">
+            {{ publication.process_step.name}} ({{ publication.process_step.process_type.name }})
+        </a>
+    </div>
+    <div class="col-sm-3">
+        {% if publication.begin == publication.end %}
+        {{ publication.begin }}
+        {% else %}
+        {{ publication.begin }} bis {{ publication.end }}
+        {% endif %}
+    </div>
+    <div class="col-sm-6">
+        {% if publication.description %}
+        <p>
+            <b>Beschreibung</b>
+        </p>
+        <p>
+            {{ publication.description }}
+        </p>
+        {% endif %}
+        {% if publication.office %}
+        <p>
+            <b>Auslegungsstelle</b>
+        </p>
+        <p>
+            {{ publication.office }}
+        </p>
+        {% endif %}
+        {% if publication.office_hours %}
+        <p>
+            <b>Öffnungszeiten</b>
+        </p>
+            {{ publication.office_hours }}
+        </p>
+        {% endif %}
+        {% if publication.link %}
+        <p>
+            <a href="{{ publication.link }}" target="_blank">Link zur Seite</a>
+        </p>
+        {% endif %}
+        <p>
+            <a href="{{ publication.department.link }}">Link zur verantwortlichen Behörde</a>
+        </p>
+
+        {% if user.is_authenticated %}
+        <ul class="list-unstyled admin-area">
+            <li><a href="{{ publication.get_update_url }}">Veröffentlichung bearbeiten</a></li>
+            <li><a href="{{ publication.get_delete_url }}">Veröffentlichung entfernen</a></li>
+        </ul>
+        {% endif %}
+    </div>
+
+    {% endfor %}
+
+    {% else %}
+
+    <div class="text-center">
+        <strong>Bisher keine Veröffentlichungen.</strong>
+    </div>
+
+    {% endif %}
+</div>

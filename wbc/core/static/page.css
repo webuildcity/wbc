@@ -1,0 +1,28 @@
+html {
+    background-image: url('img/hintergrund.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+body {
+    background-color: transparent;
+}
+.page {
+    margin-bottom: 80px;
+}
+#header {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 85px;
+}
+#header-left {
+    float: left;
+}
+#header-right {
+    margin-top: 20px;
+    float: right;
+}
+@media (max-width: 992px) {
+    #header-left {
+        margin-top: 5px;
+    }
+}

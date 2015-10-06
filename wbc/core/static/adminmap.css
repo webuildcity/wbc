@@ -1,0 +1,47 @@
+#adminmap {
+    height: 400px;
+    width: 100%;
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 4px;
+}
+
+#place_form #adminmap {
+    width: 610px;
+    border-radius: 0;
+}
+
+.map-error {
+    color: #a94442;
+}
+
+/* Leaflet Container */
+.leaflet-popup-pane {
+    z-index: 1000;
+}
+.leaflet-popup-content {
+    font-family: dejavu;
+    font-size: 14px;
+    color: #333;
+}
+.leaflet-popup-content-wrapper,
+.leaflet-control-zoom,
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+    border-radius: 0px !important;
+}
+.leaflet-control-zoom {
+    padding: 2px;
+    box-shadow: none !important;
+    background: rgba(0, 0, 0, 0.25);
+}
+.leaflet-control-zoom-in:focus,
+.leaflet-control-zoom-out:focus { 
+    outline: none;
+}
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    background-color: white;
+}
+.leaflet-popup-content p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
