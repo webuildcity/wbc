@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.core.urlresolvers import reverse
+import datetime
 
 from wbc.core.models import Model
 from wbc.region.models import Entity
@@ -60,6 +61,13 @@ class Project(Model):
 
     def get_delete_url(self):
         return reverse('project_delete', kwargs={'pk': self.pk})
+
+    def get_next_date(self):
+        today = datetime.datetime.today()
+        return self.events.filter(begin__gte=today, date__isnull=False).order_by('begin').first()
+
+    def get_last_news(self):
+        return self.events.filter(media__isnull=False).order_by('begin').first()
 
     def __unicode__(self):
         strings = []

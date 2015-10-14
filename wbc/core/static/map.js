@@ -78,8 +78,8 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
     $scope.selectedSuggestion = null;
     $scope.selectedSuggestionIdx = -1;
     var focusedPoly = null;
-
     $scope.details = null;
+
 
     var polygonOptions = {
         weight: 3,
@@ -239,7 +239,7 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
                     q: $scope.currentSearchTerm
                 }
             }).success(function(response) {
-
+                $scope.showDetails = false;
                 if (response.results.length) {
                     $scope.data.suggestions = response.results;
                     $scope.showLanding = false;

@@ -17,6 +17,12 @@ html, body {
     font-family: dejavu;
     font-size: 14px;
 }
+h1 {
+    font-family: dejavu;
+    font-weight: bold;
+    font-size: 34px;
+    color: #646464;
+}
 h2 {
     font-weight: normal;
     font-family: titillium;
@@ -89,11 +95,11 @@ a:hover,
 
 /* brand */
 #brand img {
-    height: 65px;
+    height: 40px;
 }
 @media (max-width: 992px) {
     #brand img {
-        height: 55px;
+        height: 40px;
     }
 }
 
