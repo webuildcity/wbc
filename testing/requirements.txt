@@ -14,3 +14,12 @@ Pillow==2.9.0
 six>=1.9
 wheel==0.24.0
 factory-boy==2.5.2
+
+
+# fulltext search
+django-haystack==2.4.0
+elasticsearch==1.7.0
+
+
+
+
