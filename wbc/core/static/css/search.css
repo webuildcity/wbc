@@ -5,3 +5,16 @@
 .input-group  {
     float: left !important;
 }
+
+#map {
+    height: 400px;
+}
+
+.search-result {
+    height: 45px;
+    border-bottom: 1px solid #ccc;
+}
+
+.search-result:hover {
+    background-color: rgba(229, 136, 51, 0.1);
+}

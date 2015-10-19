@@ -4,14 +4,26 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'page.css' %}" />
     <link rel="stylesheet" href="{% static 'css/search.css' %}" />
+    <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
+
 {% endblock %}
 {% block js %}
+    <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
+
     <script type="text/javascript" src="{% static 'lib/angular/checklist-model.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/angular-mapservice.js' %}"></script>
+    <script type="text/javascript">
+        var _static_url = {% static '' %}
+        var _tiles_url = "{{tiles_url}}";
+        var _tiles_opt = {{tiles_opt|safe}};
+        var _default_view = {{default_view|safe}};
+    </script>
 {% endblock %}
 {% block content %}
     <div class="container page" ng-app="search" ng-controller="SearchController">
         <form id="search" class="search-form">
+            {% csrf_token %}
             <div class="input-group">
                 <input
                 placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
@@ -43,7 +55,7 @@
             <div class="row">
                 <div class="col-md-3">  
                     <div  ng-if="facets.length > 0" class="facet-container">
-                        Nach Schlagwörtern filter:
+                        <h3>Nach Schlagwörtern filter:</h3>
                         <div ng-repeat="facet in facets">
                             <label>
                                 <input type="checkbox" checklist-model="formData.tags" checklist-value="facet[0]" checklist-change="onSearchChanged()"> 
@@ -52,7 +64,7 @@
                         </div>
                     </div>
                     <div  ng-if="entitiesFacets.length > 0" class="facet-container">
-                        Nach Regionen filter:
+                        <h3>Nach Regionen filter:</h3>
                         <div ng-repeat="facet in entitiesFacets">
                             <label>
                                 <input type="checkbox" checklist-model="formData.entities" checklist-value="facet[0]" checklist-change="onSearchChanged()"> 
@@ -61,19 +73,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-4">
                     <div class="result-list">
                         <div ng-repeat="result in results">
-                            <a ng-href="{[{result.internal_link}]}">
-                                <div class="search-result">
+                            <div class="search-result" ng-click="focusResult(result)">
+                                <a ng-href="{[{result.internal_link}]}">
                                     <b>{[{ result.name }]}</b>
-                                    {[{result.type}]}
-                                </div>
-                            </a>
+                                </a>
+                                {[{result.type}]}
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-5">
+                    <div id="map"></div>
+                </div>
             </div>
         </form>
+
     </div>
 {% endblock %}

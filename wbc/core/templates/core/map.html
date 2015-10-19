@@ -37,6 +37,7 @@
         var _default_view = {{default_view|safe}};
     </script>
     <script type="text/javascript" src="{% static 'map.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'js/angular-mapservice.js' %}" ></script>
 
     {% block js %}{% endblock %}
 </head>
@@ -67,7 +68,7 @@
             </div>
         </nav>
 
-        <div ng-if="!showLanding" id="header" class="hidden-xs">
+        <div id="header" class="hidden-xs">
             <div class="container">
                 <div id="header-left">
                     <div id="brand">

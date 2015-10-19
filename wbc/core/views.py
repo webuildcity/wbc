@@ -67,54 +67,58 @@ def autocomplete(request):
     return HttpResponse(data, content_type='application/json')
 
 def search(request):
-    data = json.loads(request.body)
-    sqs = SearchQuerySet().facet('tags').facet('entities')
-    model_dict = {
-        'project' : Project,
-        'stakeholder': Stakeholder 
-    }
-    offset = 0
+    if request.method == "POST":
+        data = json.loads(request.body)
+        sqs = SearchQuerySet().facet('tags').facet('entities')
+        model_dict = {
+            'project' : Project,
+            'stakeholder': Stakeholder 
+        }
+        offset = 0
 
-    if 'offset' in data:
-        offset = data['offset'] 
-    
-    if 'currentSearchTerm' in data:
-        if data['currentSearchTerm'] != "":
-            sqs = sqs.filter(content=AuyatoQuery(data['currentSearchTerm']))
-    
-    if 'models' in data:
-        for model in data['models']:
-            sqs = sqs.models(model_dict[model])
-
-    if 'tags' in data:
-        if len(data['tags']) >0:
-            sqs = sqs.filter(tags__name__in=data['tags'])
-
-    if 'entities' in data:
-        if len(data['entities']) >0:
-            sqs = sqs.filter(entities__name__in=data['entities'])
+        if 'offset' in data:
+            offset = data['offset'] 
         
+        if 'currentSearchTerm' in data:
+            if data['currentSearchTerm'] != "":
+                sqs = sqs.filter(content=AutoQuery(data['currentSearchTerm']))
+        
+        if 'models' in data:
+            for model in data['models']:
+                sqs = sqs.models(model_dict[model])
 
-    results = []
+        if 'tags' in data:
+            if len(data['tags']) >0:
+                sqs = sqs.filter(tags__name__in=data['tags'])
 
-    for result in sqs[:offset+20]:
-        resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link)
-        if result.location:
-            resultdict['location'] = [result.location[0], result.location[1]]
+        if 'entities' in data:
+            if len(data['entities']) >0:
+                sqs = sqs.filter(entities__name__in=data['entities'])
+            
 
-        if result.polygon:
-            resultdict['polygon'] = json.loads(result.polygon)
+        results = []
 
-        results.append(resultdict)
+        for result in sqs[:offset+20]:
+            resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link)
+            if result.location:
+                resultdict['location'] = [result.location[0], result.location[1]]
 
-    # suggestions = [dict(location=result.location, name=result.name) for result in sqs]
-    data = json.dumps({
-        'results': results,
-        'length': len(sqs),
-        'facets' : sqs.facet_counts(),
-        'suggestion': sqs.spelling_suggestion()
-    })
-    return HttpResponse(data, content_type='application/json')
+            if result.polygon:
+                resultdict['polygon'] = json.loads(result.polygon)
+
+            results.append(resultdict)
+
+        # suggestions = [dict(location=result.location, name=result.name) for result in sqs]
+        data = json.dumps({
+            'results': results,
+            'length': len(sqs),
+            'facets' : sqs.facet_counts(),
+            'suggestion': sqs.spelling_suggestion()
+        })
+        return HttpResponse(data, content_type='application/json')
+        
+    if request.method=="GET":
+        return render(request, 'core/search.html')
 
 class ProtectedCreateView(CreateView):
 

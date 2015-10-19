@@ -6,9 +6,8 @@ app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $in
     $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 }]);
 
-
-app.controller('SearchController', ['$scope', '$document', '$http', '$window',
-    function($scope, $document, $http, $window) {
+app.controller('SearchController', ['$scope', '$document', '$http', '$window', 'MapService',
+    function($scope, $document, $http, $window, MapService) {
 
     $scope.models = {
         'project': 'Projekte',
@@ -53,6 +52,50 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window',
         $scope.formData.currentSearchTerm = term;
         $scope.onSearchChanged();
     };
+    var focusedPoly = null;
+    $scope.focusPoly = function(poly) {
+        if(focusedPoly) {
+            // MapService.map.removeLayer(focusedPoly);
+        }
+        var polygonOptions = {
+            weight: 3,
+            color: '#de6a00',
+            opacity: 1,
+            fill: true,
+            fillColor: '#de6a00',
+            fillOpacity: 0.05
+        };
+
+        focusedPoly = L.multiPolygon(poly)
+            .setStyle(polygonOptions)
+            .addTo(MapService.map);
+        MapService.map.fitBounds(focusedPoly.getBounds(), {
+            padding: [30, 30]
+        });
+    };
+
+
+    $scope.focusResult = function(result) {
+
+
+        if(result.polygon !== undefined) {
+            $scope.focusPoly(result.polygon);
+            return;
+        }
+
+        if(result.location !== undefined) {
+            $scope.focusLocation(result.location);
+            return;
+        }
+
+        // nothing to focus
+        MapService.resetToDefaults();
+
+        // if poly still focused remove it too
+    };
+
+
 
 
 }]);
+
