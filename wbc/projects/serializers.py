@@ -21,7 +21,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
     # events = serializers.RelatedField(read_only='True')
     # gallery = GallerySerializer(many=True)
-    
+
     def point_serializer_method(self, obj):
         return [obj.lon,obj.lat]
 
@@ -46,7 +46,7 @@ class ProjectPointSerializer(GeoFeatureModelSerializer):
         return {'type': 'Point', 'coordinates': [obj.lon,obj.lat]}
 
     def internal_link_serializer_method(self, obj):
-        return reverse('wbc.projects..views.projectslug',args=[obj.slug])
+        return reverse('wbc.projects.views.projectslug',args=[obj.slug])
 
     class Meta:
         model = Project
