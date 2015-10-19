@@ -55,7 +55,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     var focusedPoly = null;
     $scope.focusPoly = function(poly) {
         if(focusedPoly) {
-            // MapService.map.removeLayer(focusedPoly);
+            MapService.map.removeLayer(focusedPoly);
         }
         var polygonOptions = {
             weight: 3,
