@@ -13,14 +13,15 @@ from django.utils.timezone import now
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-from models import *
-from serializers import *
-from forms import *
+from .models import *
+from .serializers import *
+from .forms import *
 
 
 class ProcessStepViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProcessStepSerializer
     queryset = ProcessStep.objects.all()
+
 
 class ProcessTypeViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProcessTypeSerializer

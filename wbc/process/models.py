@@ -13,8 +13,11 @@ class ProcessStep(Model):
     order        = models.IntegerField(verbose_name="Reihenfolge", help_text="Nummer in der Reihenfolge")
     process_type = models.ForeignKey('ProcessType', related_name='process_steps', verbose_name="Verfahren")
 
+    def __str__(self):
+        return str(self.process_type) + ', ' + self.name
+
     def __unicode__(self):
-        return unicode(self.process_type) + ', ' + self.name
+        return unicode(self.__str__())
 
     class Meta:
         ordering            = ("process_type","order")

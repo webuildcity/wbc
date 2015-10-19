@@ -2,3 +2,8 @@
 *.pyc
 .DS_Store
 django_wbc.egg-info/*
+
+.coverage
+testing/local.py
+env
+htmlcov

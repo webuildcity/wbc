@@ -21,6 +21,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
     # events = serializers.RelatedField(read_only='True')
     # gallery = GallerySerializer(many=True)
+
     last_news = serializers.SerializerMethodField('last_news_serializer')
     next_date = serializers.SerializerMethodField('next_date_serializer')
     

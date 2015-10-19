@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
+
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
@@ -65,4 +67,4 @@ class Command(BaseCommand):
         Newsletter(send=now(),n=i).save()
 
         # print some output
-        print i,"Mails gesendet."
+        print(i, "Mails gesendet.")

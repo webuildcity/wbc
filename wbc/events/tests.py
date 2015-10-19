@@ -36,7 +36,7 @@ class EventTestCase(TestCase):
         department = Department(name="Department")
         department.entity = muncipality
         department.save()
-        
+
         now = datetime.datetime.now()
 
         a = Project(
@@ -52,6 +52,7 @@ class EventTestCase(TestCase):
         a.entities.add(district)
         # a.events.add(p)
         a.save()
+        self.a_id = a.pk
 
         b = Project(
             address='Unter den Linden 2',
@@ -78,21 +79,6 @@ class EventTestCase(TestCase):
         )
         c.save()
 
-        d = Project(
-            address='Unter den Linden 4',
-            description='Brandenburger Tor',
-            lat='-13',
-            lon='52',
-            identifier='ACB',
-            active=False,
-            polygon='[]'
-        )
-        d.save()
-        d.entities.add(district)
-        # d.events.add(p)
-
-        d.save()
-
         p = Publication(
             process_step=process_step,
             description='description',
@@ -102,16 +88,18 @@ class EventTestCase(TestCase):
             department=department
         )
         p.save()
+        self.p_id = p.pk
 
         p2 = Publication(
             process_step=process_step,
             description='description',
-            project=c,
+            project=b,
             begin=now + datetime.timedelta(days=3),
             end=now + datetime.timedelta(days=6),
             department=department
         )
         p2.save()
+        self.p2_id = p2.pk
 
         p3 = Publication(
             process_step=process_step,
@@ -122,7 +110,7 @@ class EventTestCase(TestCase):
             department=department
         )
         p3.save()
-
+        self.p3_id = p3.pk
 
         e = Event(
             title='title',
@@ -131,12 +119,14 @@ class EventTestCase(TestCase):
             end=now + datetime.timedelta(days=3)
         )
         e.save()
+        self.e_id = e.pk
+
     #model tests
 
     def test_model_publication(self):
-        p = Publication.objects.filter(pk=1)[0]
-        p2 = Publication.objects.filter(pk=2)[0]
-        p3 = Publication.objects.filter(pk=3)[0]
+        p = Publication.objects.filter(pk=self.p_id)[0]
+        p2 = Publication.objects.filter(pk=self.p2_id)[0]
+        p3 = Publication.objects.filter(pk=self.p3_id)[0]
         self.assertTrue(isinstance(p, Publication))
         detail_url = reverse('project', kwargs={'pk': p.project.pk})
         self.assertEqual(p.get_absolute_url(), detail_url)
@@ -146,7 +136,7 @@ class EventTestCase(TestCase):
         self.assertEqual(p.get_delete_url(), delete_url)
         string = unicode(p.project) + ', ' + p.process_step.name
         self.assertEqual(p.__unicode__(), string)
-        
+
         self.assertTrue(p.is_started())
         self.assertEqual(p.is_in_past(), False)
         self.assertTrue(p3.is_in_past())
@@ -198,7 +188,7 @@ class EventTestCase(TestCase):
         client = Client()
 
         # try to GET when not logged in
-        response = client.get(url + '?project_id=1')
+        response = client.get(url + '?project_id=%i' % self.a_id)
         self.assertEqual(response.status_code, 302)
         self.assertTrue(url in response.url)
 
@@ -211,7 +201,7 @@ class EventTestCase(TestCase):
         self.assertTrue('form' in response.context)
 
     def test_view_publication_update_get(self):
-        url = reverse('publication_update', args=['1'])
+        url = reverse('publication_update', args=[self.p_id])
 
         client = Client()
 
@@ -229,7 +219,7 @@ class EventTestCase(TestCase):
         self.assertTrue('form' in response.context)
 
     def test_view_publication_delete_get(self):
-        url = reverse('publication_delete', args=['1'])
+        url = reverse('publication_delete', args=[self.p_id])
 
         client = Client()
 
@@ -246,7 +236,7 @@ class EventTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_view_publication_delete_post(self):
-        url = reverse('publication_delete', args=['1'])
+        url = reverse('publication_delete', args=[self.p_id])
 
         client = Client()
 
@@ -261,7 +251,7 @@ class EventTestCase(TestCase):
         # try to POST when logged in
         response = client.post(url)
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.endswith(reverse('project', args=['1']))) # should redirect to '/liste/'
+        self.assertTrue(response.url.endswith(reverse('project', args=[self.a_id])))
 
     # rest api tests
 
