@@ -3,7 +3,7 @@ from django import forms
 
 class SubscribeForm(forms.Form):
     def __init__(self, *args, **kwargs):
-        if (kwargs.has_key('entities')):
+        if 'entities' in kwargs:
             entities = kwargs.pop('entities')
 
         kwargs['label_suffix'] = ''

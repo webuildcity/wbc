@@ -39,7 +39,7 @@ class ProjectTestCase(TestCase):
         department = Department(name="Department")
         department.entity = muncipality
         department.save()
-        
+
         now = datetime.datetime.now()
 
         test_gallery = GalleryFactory()
@@ -47,7 +47,6 @@ class ProjectTestCase(TestCase):
         pl2 = PhotoFactory()
         test_gallery.photos.add(pl)
         test_gallery.photos.add(pl2)
-
 
         a = Project(
             address='Unter den Linden 1',
