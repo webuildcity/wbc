@@ -146,7 +146,7 @@
 
                     <div class="row" ng-if="noResults">
                         <div class="col-md-12 search-result">
-                            Keine Ergebnisse für {% verbatim %}<strong>{{currentSearchTerm}}</strong>{% endverbatim %}. <br/> <a href="#todop">Detailsuche</a>
+                            Keine Ergebnisse für {% verbatim %}<strong>{{currentSearchTerm}}</strong>{% endverbatim %}. <br/> <a href="/suche">Detailsuche</a>
                         </div>
                     </div>
 
@@ -224,7 +224,7 @@
                     </div>
                 </div>
                 <div id="last-news-widget" class="widget">
-                    <h3><i class="fa fa-calendar"> </i>Letzte Neuigkeiten</h3>
+                    <h3><i class="fa fa-newspaper-o"> </i>Letzte Neuigkeiten</h3>
                     <div ng-if="details.last_news">
                         <p>{{details.last_news.title}}</p>
                         <p>{{details.last_news.begin}}</p>

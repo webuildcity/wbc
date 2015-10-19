@@ -3,10 +3,77 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'page.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/search.css' %}" />
 {% endblock %}
-
+{% block js %}
+    <script type="text/javascript" src="{% static 'lib/angular/checklist-model.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
+{% endblock %}
 {% block content %}
-    <div class="container page">
-      
+    <div class="container page" ng-app="search" ng-controller="SearchController">
+        <form id="search" class="search-form">
+            <div class="input-group">
+                <input
+                placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
+                type="text" class="form-control"
+                ng-model="formData.currentSearchTerm"
+                ng-change="onSearchChanged()"
+                ng-keydown="onKeyDown($event)"
+                ng-model-options="{ debounce: 1200 }">
+
+                <a href="" class="input-group-addon" ng-click="search()">
+                    <span class="glyphicon glyphicon-search"></span>
+                </a>
+            </div>
+            <div ng-if="suggestion" class="suggestion-container">
+                Meinten Sie: <a href="" ng-click="selectTerm(suggestion)">
+                        {[{suggestion}]} 
+                </a>
+            </div>
+            <div class="form-group">
+                <div ng-repeat="(key, text) in models">
+                    <label>
+                        <input type="checkbox" checklist-model="formData.models" checklist-value="key" checklist-change="onSearchChanged()"> 
+                            {[{text}]}
+                    </label>
+                </div>
+            </div>
+            
+            <p ng-if="resultLength">{[{resultLength}]} Einträge gefunden</p>
+            <div class="row">
+                <div class="col-md-3">  
+                    <div  ng-if="facets.length > 0" class="facet-container">
+                        Nach Schlagwörtern filter:
+                        <div ng-repeat="facet in facets">
+                            <label>
+                                <input type="checkbox" checklist-model="formData.tags" checklist-value="facet[0]" checklist-change="onSearchChanged()"> 
+                                    {[{facet[0]}]} ({[{facet[1]}]})
+                            </label>
+                        </div>
+                    </div>
+                    <div  ng-if="entitiesFacets.length > 0" class="facet-container">
+                        Nach Regionen filter:
+                        <div ng-repeat="facet in entitiesFacets">
+                            <label>
+                                <input type="checkbox" checklist-model="formData.entities" checklist-value="facet[0]" checklist-change="onSearchChanged()"> 
+                                    {[{facet[0]}]} ({[{facet[1]}]})
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="result-list">
+                        <div ng-repeat="result in results">
+                            <a ng-href="{[{result.internal_link}]}">
+                                <div class="search-result">
+                                    <b>{[{ result.name }]}</b>
+                                    {[{result.type}]}
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 {% endblock %}

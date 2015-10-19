@@ -258,6 +258,7 @@ a:hover,
 .widget .fa {
     color: #646464;
     margin-right: 4px;
+    border-bottom: 1px solid #646464;
 }
 
 /* STAKEHOLDER WIDGET */

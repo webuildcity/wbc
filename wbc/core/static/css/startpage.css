@@ -174,9 +174,6 @@ body, html {
 .detail-overlay::-webkit-scrollbar { 
     display: none; 
 }
-.detail-overlay::-webkit-scrollbar { 
-    display: none; 
-}
 
 .overlay {
   background-color: rgba(255,255,255,0.8);
@@ -245,4 +242,8 @@ body, html {
 
 .search-overlay {
     padding-top: 10px;
+}
+
+.widget {
+    border-bottom: 1px solid #ccc;
 }

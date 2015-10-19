@@ -14,6 +14,7 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     polygon = indexes.CharField(model_attr='polygon', null=True)
     active = indexes.BooleanField(model_attr='active')
     tags = indexes.MultiValueField(faceted=True)
+    entities = indexes.MultiValueField(faceted=True)
     internal_link = indexes.CharField()
     type = indexes.CharField()
 
@@ -24,6 +25,9 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_tags(self, obj):
         return [tag.name for tag in obj.tags.all()]
+
+    def prepare_entities(self, obj):
+        return [ent.name for ent in obj.entities.all()]
 
     def prepare_location(self, obj):
         # If you're just storing the floats...
