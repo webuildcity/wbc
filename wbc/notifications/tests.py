@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.test import TestCase
 from django.test import Client
-from models import Validation
-from models import Subscriber
-from models import Newsletter
+from .models import Validation
+from .models import Subscriber
+from .models import Newsletter
 from wbc.region.models import Entity, Muncipality, District
-from models import *
-from forms import SubscribeForm
+from .models import *
+from .forms import SubscribeForm
 from django.test.client import RequestFactory
 from django.utils.timezone import now
 from django.core.urlresolvers import reverse

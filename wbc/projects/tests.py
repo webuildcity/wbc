@@ -39,7 +39,7 @@ class ProjectTestCase(TestCase):
         department = Department(name="Department")
         department.entity = muncipality
         department.save()
-        
+
         now = datetime.datetime.now()
 
         test_gallery = GalleryFactory()
@@ -48,8 +48,7 @@ class ProjectTestCase(TestCase):
         test_gallery.photos.add(pl)
         test_gallery.photos.add(pl2)
 
-
-        a = Project(
+        project = Project(
             address='Unter den Linden 1',
             description='Brandenburger Tor',
             lat='-13',
@@ -59,72 +58,22 @@ class ProjectTestCase(TestCase):
             active=False,
             gallery=test_gallery
         )
-        a.save()
-        a.entities.add(district)
-        # a.events.add(p)
-        a.save()
+        project.save()
+        project.entities.add(district)
+        # project.events.add(p)
+        project.save()
+        self.project_id = project.pk
 
-        b = Project(
-            address='Unter den Linden 2',
-            description='Brandenburger Tor',
-            lat='-13',
-            lon='52',
-            identifier='ACB',
-            name='ACB',
-            active=False,
-            polygon='[]'
-        )
-        b.save()
-        b.entities.add(district)
-        # b.events.add(p) 
-        b.save()
-
-        c = Project(
-            address='Unter den Linden 3',
-            description='Brandenburger Tor',
-            lat='-13',
-            lon='52',
-            identifier='ACB',
-            name='ACB',
-            active=False,
-            polygon='[]'
-        )
-        c.save()
-
-        d = Project(
-            address='bla',
-            description='Brandenburger Tor',
-            lat='-13',
-            lon='52',
-            identifier='ACB',
-            name='ACB',
-            active=False,
-            polygon='[]'
-        )
-        d.save()
-        d.entities.add(district)
-        # d.events.add(p)
-        d.save()
-
-        p = Publication(
+        publication = Publication(
             process_step=process_step,
             description='description',
-            project=a,
+            project=project,
             begin=now,
             end=now + datetime.timedelta(days=3),
             department=department
         )
-        p.save()
-
-        p2 = Publication(
-            process_step=process_step,
-            description='description',
-            project=c,
-            begin=now,
-            end=now + datetime.timedelta(days=3),
-            department=department
-        )
-        p2.save()
+        publication.save()
+        self.publication_id = publication.pk
 
     # model tests
 
@@ -152,7 +101,7 @@ class ProjectTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_view_project(self):
-        url = reverse('project', args=['1'])
+        url = reverse('project', args=[self.project_id])
         response = Client().get(url)
         self.assertEqual(response.status_code, 200)
         detail_url = reverse('projectslug', kwargs={'slug':'acb'} )
@@ -179,7 +128,7 @@ class ProjectTestCase(TestCase):
         self.assertTrue('form' in response.context)
 
     def test_view_project_update_get(self):
-        url = reverse('project_update', args=['1'])
+        url = reverse('project_update', args=[self.project_id])
 
         client = Client()
 
@@ -197,7 +146,7 @@ class ProjectTestCase(TestCase):
         self.assertTrue('form' in response.context)
 
     def test_view_project_delete_get(self):
-        url = reverse('project_delete', args=['2'])
+        url = reverse('project_delete', args=[self.project_id])
 
         client = Client()
 
@@ -214,7 +163,7 @@ class ProjectTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_view_project_delete_post(self):
-        url = reverse('project_delete', args=['2'])
+        url = reverse('project_delete', args=[self.project_id])
 
         client = Client()
 
@@ -253,7 +202,7 @@ class ProjectTestCase(TestCase):
         self.assertEqual(response['content-type'], 'application/json')
 
     def test_api_mapitem(self):
-        url = '/project/map/1/'
+        url = '/project/map/%i/' % self.project_id
         response = Client().get(url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['content-type'], 'application/json')
@@ -271,7 +220,7 @@ class ProjectTestCase(TestCase):
         self.assertEqual(response['content-type'], 'application/json')
 
     def test_api_project(self):
-        url = '/project/projects/1/'
+        url = '/project/projects/%i/' % self.project_id
         response = Client().get(url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['content-type'], 'application/json')
@@ -289,12 +238,12 @@ class ProjectTestCase(TestCase):
         self.assertEqual(response['content-type'], 'application/json')
 
     def test_api_project_polygon(self):
-        url = '/project/projects/1/?geometry=polygon'
+        url = '/project/projects/%i/?geometry=polygon' % self.project_id
         response = Client().get(url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['content-type'], 'application/json')
 
-        url = '/project/projects/2/?geometry=polygon'
+        url = '/project/projects/%i/?geometry=polygon' % self.project_id
         response = Client().get(url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['content-type'], 'application/json')
@@ -303,6 +252,6 @@ class ProjectTestCase(TestCase):
     # serializer test
 
     def test_serializer_map(self):
-        queryset = Project.objects.get(pk=4)
+        queryset = Project.objects.get(pk=self.project_id)
         serializer = MapSerializer(queryset)
         self.assertEqual(serializer.data['identifier'],'ACB')

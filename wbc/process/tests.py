@@ -40,82 +40,44 @@ class ProcessTestCase(TestCase):
         department = Department(name="Department")
         department.entity = muncipality
         department.save()
-        
+
         now = datetime.datetime.now()
 
-
-        a = Project(
+        project = Project(
             address='Unter den Linden 1',
             description='Brandenburger Tor',
             lat='-13',
             lon='52',
-            identifier='ACB',
+            identifier='A',
             active=False,
         )
-        a.save()
-        a.entities.add(district)
-        # a.events.add(p)
-        a.save()
+        project.save()
+        project.entities.add(district)
+        project.save()
+        self.project_id = project.pk
 
-        b = Project(
-            address='Unter den Linden 2',
-            description='Brandenburger Tor',
-            lat='-13',
-            lon='52',
-            identifier='ACB',
-            active=False,
-            polygon='[]'
-        )
-        b.save()
-        b.entities.add(district)
-        # b.events.add(p) 
-        b.save()
-
-        c = Project(
-            address='Unter den Linden 3',
-            description='Brandenburger Tor',
-            lat='-13',
-            lon='52',
-            identifier='ACB',
-            active=False,
-            polygon='[]'
-        )
-        c.save()
-
-        d = Project(
-            address='Unter den Linden 4',
-            description='Brandenburger Tor',
-            lat='-13',
-            lon='52',
-            identifier='ACB',
-            active=False,
-            polygon='[]'
-        )
-        d.save()
-        d.entities.add(district)
-        # d.events.add(p)
-
-        d.save()
-
-        p = Publication(
+        now = datetime.datetime.now()
+        publication1 = Publication(
             process_step=process_step,
             description='description',
-            project=a,
+            project=project,
             begin=now,
             end=now + datetime.timedelta(days=3),
             department=department
         )
-        p.save()
+        publication1.save()
+        self.publication1_id = publication1.pk
 
-        p2 = Publication(
+        publication2 = Publication(
             process_step=process_step,
             description='description',
-            project=c,
+            project=project,
             begin=now,
             end=now + datetime.timedelta(days=3),
             department=department
         )
-        p2.save()
+        publication2.save()
+        self.publication2_id = publication2.pk
 
     # model tests
 
@@ -135,7 +97,7 @@ class ProcessTestCase(TestCase):
         response = Client().get(url)
         self.assertEqual(response.status_code, 200)
 
-
+    # api test
 
     def test_api_processsteps(self):
         url = '/process/processsteps/'
