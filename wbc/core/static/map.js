@@ -12,7 +12,7 @@ app.factory('MapService',['$http',function($http) {
         'scrollWheelZoom': false
     });
 
-    map.addLayer(new L.TileLayer(_tiles_url + '/{z}/{x}/{y}.png',_tiles_opt));
+    map.addLayer(new L.TileLayer(_tiles_url,_tiles_opt));
     map.setView(new L.LatLng(_default_view.lat,_default_view.lon),_default_view.zoom);
 
     var markerLayer = L.layerGroup().addTo(map);
@@ -122,7 +122,7 @@ app.factory('MapService',['$http',function($http) {
                     // add marker to layer
                     markerLayer.addLayer(marker);
                 } else {
-                    
+
                     popuptext += '<p>Betrifft Gegend um: ' + project.address + '</p>';
                     popuptext += '<p><a href="' + project.internal_link + '" >Details</a></p>';
 
