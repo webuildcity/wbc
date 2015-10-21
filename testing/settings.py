@@ -1,3 +1,4 @@
+import os
 from .local import *
 
 INSTALLED_APPS = [
@@ -18,6 +19,8 @@ INSTALLED_APPS = [
     'rest_framework_gis',
     'widget_tweaks',
     'markdown',
+    'compressor',
+
     'photologue',
     'taggit',
     'taggit_templatetags',
@@ -45,6 +48,22 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 )
+
+
+STATICFILES_DIRS = (
+    os.path.join(SITE_ROOT, 'static/'),
+)
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
+
 
 ROOT_URLCONF = 'testing.urls'
 WSGI_APPLICATION = 'wbc.wsgi.application'

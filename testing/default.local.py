@@ -1,6 +1,9 @@
 SECRET_KEY = 'this is a not very secret key'
 
 SITE_URL = 'http://localhost:8000'
+SITE_ROOT = '/tmp/wbc/site_root'
+MEDIA_ROOT = '/tmp/wbc/media'
+STATIC_ROOT = '/tmp/wbc/static'
 
 SITE_ID = 1
 
