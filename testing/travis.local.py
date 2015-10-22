@@ -1,9 +1,11 @@
 SECRET_KEY = 'this is a not very secret key'
 
 SITE_URL = 'http://localhost:8000'
+SITE_ROOT = '/tmp/wbc/site_root'
+STATIC_ROOT = '/tmp/wbc/static_root'
+MEDIA_ROOT = '/tmp/wbc/media'
 
 SITE_ID = 1
-
 
 DATABASES = {
     'default': {
@@ -20,5 +22,3 @@ HAYSTACK_CONNECTIONS = {
         'INDEX_NAME': 'haystack',
     },
 }
-
-MEDIA_ROOT = '/tmp/wbc_media'

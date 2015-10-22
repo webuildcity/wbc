@@ -1,14 +1,14 @@
 @font-face {
     font-family: titillium;
-    src: url('font/TitilliumText25L.otf');
+    src: url('/static/font/TitilliumText25L.otf');
 }
 @font-face {
     font-family: dejavu;
-    src: url('font/DejaVuSansCondensed.ttf');
+    src: url('/static/font/DejaVuSansCondensed.ttf');
 }
 @font-face {
     font-family: dejavu;
-    src: url('font/DejaVuSansCondensed-Bold.ttf');
+    src: url('/static/font/DejaVuSansCondensed-Bold.ttf');
     font-weight: bold;
 }
 html, body {
@@ -524,13 +524,14 @@ a:hover,
     -webkit-border-radius: 3px; 
     -moz-border-radius: 3px;
     border-radius: 3px;
-    /*font-size:12px;
-    font-family:arial, helvetica, sans-serif;*/
-    padding: 10px 10px 10px 10px; 
-    /*text-decoration:none; 
-    display:inline-block;
-    text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
-    font-weight:bold; color*/: #FFFFFF;
+    /* font-size:12px; */
+    /* font-family:arial, helvetica, sans-serif; */
+    padding: 10px 10px 10px 10px;
+    /* text-decoration:none; */
+    /* display:inline-block; */
+    /* text-shadow: -1px -1px 0 rgba(0,0,0,0.3); */
+    /* font-weight: bold;
+    /* color: #FFFFFF; */
     background-color: #FCF0E5; background-image: -webkit-gradient(linear, left top, left bottom, from(#FCF0E5), to(#E8974D));
     background-image: -webkit-linear-gradient(top, #FCF0E5, #E8974D);
     background-image: -moz-linear-gradient(top, #FCF0E5, #E8974D);

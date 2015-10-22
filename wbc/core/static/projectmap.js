@@ -1,7 +1,7 @@
 function initMap() {
     // add the map layer and center map
     map = new L.Map("project-map",{scrollWheelZoom: false});
-    map.addLayer(new L.TileLayer(_tiles_url + '/{z}/{x}/{y}.png',_tiles_opt));
+    map.addLayer(new L.TileLayer(_tiles_url,_tiles_opt));
     map.setView(new L.LatLng(_lat, _lon), 16);
 
     var osmb = new OSMBuildings(map).loadData();
