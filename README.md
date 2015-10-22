@@ -1,7 +1,7 @@
 We build City
 =============
 
-[![Build Status](https://travis-ci.org/webuildcity/wbc.svg)](https://travis-ci.org/webuildcity/wbc)
+[![Build Status](https://travis-ci.org/webuildcity/wbc.svg?branch=master)](https://travis-ci.org/webuildcity/wbc)
 
 We build City (WBC) is a open source and collaboration platform designed to make urban planning more graspable and accessible for everyone involved, thus enabling more transparency and participation in urban planning processes. Our goal is to let urban projects more successful, to make public administration processes more efficient and to create responsible and satisfied citizens!
 
