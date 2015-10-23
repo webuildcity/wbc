@@ -92,7 +92,6 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
         MapService.resetToDefaults();
     };
 
-<<<<<<< HEAD
     $scope.resetSearch = function() {
         $scope.data = { suggestions: [] };
         $scope.noResults = false;

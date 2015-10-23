@@ -8,7 +8,7 @@ app.factory('MapService',['$http',function($http) {
     var defaultLocation = new L.LatLng(_default_view.lat,_default_view.lon);
     var defaultZoom = _default_view.zoom;
 
-    map.addLayer(new L.TileLayer(_tiles_url + '/{z}/{x}/{y}.png',_tiles_opt));
+    map.addLayer(new L.TileLayer(_tiles_url,_tiles_opt));
     map.setView(defaultLocation,defaultZoom);
 
     var markerLayer = L.layerGroup().addTo(map);

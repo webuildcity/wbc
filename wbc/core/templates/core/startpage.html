@@ -1,0 +1,73 @@
+{% extends 'core/layout.html' %}
+{% load staticfiles compress %}
+
+{% compress css %}
+    <link rel="stylesheet" type="text/x-scss" href="{% static "css/startpage.scss" %}" />
+{% endcompress %}
+
+{% block content %}
+<div id="startpage">
+    <div id="top-container">
+        <div class="top-overlay col-md-8 col-md-offset-2 text-center">
+            <h1>Informiere dich über Bauvorhaben in deinem Stadtteil.</h1>
+            <div class="search-form">
+                <form id="search" class="search-form">
+                    <div class="input-group">
+                        <input
+                            placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
+                            type="text" class="form-control"
+                            ng-model="currentSearchTerm"
+                            ng-change="onSearchChanged()"
+                            ng-keydown="onKeyDown($event)"
+                            ng-model-options="{ debounce: 1200 }">
+
+                        <a href="" class="input-group-addon" ng-click="search()">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <button id="map-button" class="btn default wbc-button">Auf zur Karte</button>
+    </div>
+    <div id="bottom-container"> 
+        <ul class="nav nav-tabs" data-tabs="tabs">
+          <li class="active"><a href="#start-tab" data-toggle="tab">Startseite</a></li>
+          <li><a href="#news-tab" data-toggle="tab">Aktuelles</a></li>
+          <li><a href="#" data-toggle="tab">Impressum</a></li>
+        </ul>
+        <div id="tab-content" class="tab-content container-fluid">
+            <div id="start-tab" class="tab-pane active container">
+                <div class="col-md-4">
+                    <a href="{% url 'process' %}">
+                       <div class="teaser">
+                           <i class='fa fa-globe'></i>
+                           <p>Alle Bauvorhaben auf einer Karte.</p>
+                       </div>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="{% url 'process' %}">
+                       <div class="teaser">
+                           <i class='fa fa-search'></i>
+                           <p>Suche nach Themen, Projekten oder Akteuren.</p>
+                       </div>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="{% url 'process' %}">
+                       <div class="teaser">
+                           <i class='fa fa-lightbulb-o'></i>
+                           <p>Informiere dich über die Gesetzeslage in deiner Stadt</p>
+                       </div>
+                    </a>
+                </div>
+            </div>
+            <div class="tab-pane" id="news-tab">
+                aktuelles
+            </div>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}

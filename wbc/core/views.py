@@ -18,6 +18,7 @@ from wbc.region.models import District
 
 from haystack.query import SearchQuerySet
 from haystack.inputs import AutoQuery, Exact, Clean
+from haystack.utils.geo import Point
 
 def feeds(request):
     entities = District.objects.all()
@@ -76,6 +77,12 @@ def search(request):
         }
         offset = 0
 
+
+        if 'bounds' in data:
+            bl = Point(data['bounds']['_southWest']['lat'], data['bounds']['_southWest']['lng'])
+            tr = Point(data['bounds']['_northEast']['lat'], data['bounds']['_northEast']['lng'])
+            sqs = sqs.within('location', bl, tr)
+              
         if 'offset' in data:
             offset = data['offset'] 
         
@@ -98,7 +105,7 @@ def search(request):
 
         results = []
 
-        for result in sqs[:offset+20]:
+        for result in sqs:
             resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link)
             if result.location:
                 resultdict['location'] = [result.location[0], result.location[1]]
