@@ -28,7 +28,7 @@
                 </form>
             </div>
         </div>
-        <button id="map-button" class="btn default wbc-button">Auf zur Karte</button>
+        <a href="{% url 'process' %}" id="map-button" class="btn default wbc-button">Auf zur Karte</a>
     </div>
     <div id="bottom-container"> 
         <ul class="nav nav-tabs" data-tabs="tabs">
@@ -42,7 +42,7 @@
                     <a href="{% url 'process' %}">
                        <div class="teaser">
                            <i class='fa fa-globe'></i>
-                           <p>Alle Bauvorhaben auf einer Karte.</p>
+                           <p>Stöber durch alle Bauvorhaben auf einer Karte.</p>
                        </div>
                     </a>
                 </div>
@@ -69,5 +69,4 @@
         </div>
     </div>
 </div>
-    
 {% endblock %}

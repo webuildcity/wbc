@@ -12,6 +12,7 @@ body {
 .text-center {
     text-align: center;
 }
+
 #top-container {
     position: relative;
     background-position: center;
@@ -25,7 +26,7 @@ body {
 
     .top-overlay {
         position: relative;
-        padding-top: 30px;
+        padding-top: 40px;
         @media (max-width: 760px) {
             padding-top: 10px;
 
@@ -33,12 +34,23 @@ body {
                 margin-top: 0px;
             }
         }
+
+        .search-form {
+            padding-top: 10px;
+        }
     }
 
     #map-button {
         position: absolute;
         bottom: 5px;
         right: 10px;
+        background-color: #EC972F;
+        z-index: 10;
+        color: white;
+        box-shadow: 2px 2px #ccc;
+    }
+    #map-button:hover {
+        border: 2px solid $highlight-color;
     }
 }
 
@@ -47,8 +59,13 @@ body {
     top: -40px;
 
 
-    .nav li {
+    .nav li a {
         background: rgba(255,255,255,0.8);
+        margin-right: 0pxs;
+    }
+
+    .nav li:last-child {
+        border-radius: 3px;
     }
 
     #tab-content {
@@ -61,15 +78,16 @@ body {
         text-align: center;
         color: #646464 ;
         background-color: white;
-        border-radius: 5px;
+        border-radius: 2px;
         border: 1px solid #ddd;
         padding: 3px;
         margin-top: 20px;
+        height: 100px;
         /*max-width: 300px;*/
     }
 
     .teaser:hover {
-        border: 1px solid #de6a00 ;
+        border: 1px solid $highlight-color;
     }
 
     .teaser i {
