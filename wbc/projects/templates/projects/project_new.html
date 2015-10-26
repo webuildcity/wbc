@@ -32,117 +32,117 @@
     <script type="text/javascript" src="{% static 'js/projectmap.js' %}" ></script>
 {% endblock %}
 
+{% block controller %}
+DetailsController
+{% endblock %}
+
 {% block side_content %}
 
-    <div id="left-content max-height" class="col-md-4">
-        <h1> {{project.name}} </h1>
-        {% if tags %}
-        <div class="headline-tags">
+    <h1> {{project.name}} </h1>
+    {% if tags %}
+    <div class="headline-tags">
+        {% for tag in tags %}
+            {% if tag.important %}
+            <a class="taglink" href="{{tag.get_absolute_url}}">{{tag.name}}</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div id="subscribe-widget" class="widget">
+    <button class="btn default wbc-button">
+        <span class="fa-stack">
+          <i class="fa fa-circle-thin fa-stack-2x"></i>
+          <i class="fa fa-envelope fa-stack-1x fa-lg"></i>
+        </span>
+        Project abonnieren
+    </button>
+    </div>
+
+    <ul class="right-nav nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a data-toggle="tab" href="#info">Info</a></li>
+        <li><a data-toggle="tab" href="#project_map">Karte</a></li>
+        <li><a data-toggle="tab" href="#gallery">Gallery</a></li>
+    </ul>
+
+
+
+    {% if nextDate %}
+    <div id="next-date-widget" class="widget col-md-6">
+        <div class="content-container">
+            <h3><i class="fa fa-calendar"> </i>Nächster Termin</h3>
+            <p>{{nextDate.title}}</p>
+            <p>{{nextDate.begin}}</p>
+            <p>{{nextDate.address}}</p>
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if lastNews %}
+    <div id="next-date-widget" class="widget">
+        <div class="content-container"> 
+            <h3><i class="fa fa-newspaper-o"> </i>Letzte Neuigkeiten</h3>
+            <p>{{lastNews.title}}</p>
+            <p>{{lastNews.teaser}}</p>
+            <a href={{lastNews.link}}>Mehr</a>
+        </div>
+    </div>
+    {% endif %}
+
+    
+    {% if tags %}
+    <div id="tags-widget" class="widget">
+        <div class="content-container">
+            <h3><i class="fa fa-tags"> </i>Schlagworte</h3>
             {% for tag in tags %}
-                {% if tag.important %}
                 <a class="taglink" href="{{tag.get_absolute_url}}">{{tag.name}}</a>
-                {% endif %}
             {% endfor %}
         </div>
-        {% endif %}
-        <div id="subscribe-widget" class="widget">
-        <button class="btn default wbc-button">
-            <span class="fa-stack">
-              <i class="fa fa-circle-thin fa-stack-2x"></i>
-              <i class="fa fa-envelope fa-stack-1x fa-lg"></i>
-            </span>
-            Project abonnieren
-        </button>
-        </div>
-    
-        <ul class="right-nav nav nav-tabs" data-tabs="tabs">
-            <li class="active"><a data-toggle="tab" href="#info">Info</a></li>
-            <li><a data-toggle="tab" href="#project_map">Karte</a></li>
-            <li><a data-toggle="tab" href="#gallery">Gallery</a></li>
-        </ul>
-
-
-
-        {% if nextDate %}
-        <div id="next-date-widget" class="widget col-md-6">
-            <div class="content-container">
-                <h3><i class="fa fa-calendar"> </i>Nächster Termin</h3>
-                <p>{{nextDate.title}}</p>
-                <p>{{nextDate.begin}}</p>
-                <p>{{nextDate.address}}</p>
-            </div>
-        </div>
-        {% endif %}
-        
-        {% if lastNews %}
-        <div id="next-date-widget" class="widget">
-            <div class="content-container"> 
-                <h3><i class="fa fa-newspaper-o"> </i>Letzte Neuigkeiten</h3>
-                <p>{{lastNews.title}}</p>
-                <p>{{lastNews.teaser}}</p>
-                <a href={{lastNews.link}}>Mehr</a>
-            </div>
-        </div>
-        {% endif %}
-
-        
-        {% if tags %}
-        <div id="tags-widget" class="widget col-md-3">
-            <div class="content-container">
-                <h3><i class="fa fa-tags"> </i>Schlagworte</h3>
-                {% for tag in tags %}
-                    <a class="taglink" href="{{tag.get_absolute_url}}">{{tag.name}}</a>
-                {% endfor %}
-            </div>
-        </div>
-        {% endif %}
     </div>
+    {% endif %}
 {% endblock %}
+
+
 {% block main_content %}
-    <div class="col-md-8 max-height">
-        <div id="tab-content" class="tab-content max-height">
-            <div id="info" class="tab-pane">
-                <div class="content-container">
-                    <h3>Beschreibung</h3>
-                    <p>
-                        {{ project.description | linebreaks }}
-                    </p>
+    <div id="tab-content" class="tab-content max-height">
+        <div id="info" class="tab-pane">
+            <div class="content-container">
+                <h3>Beschreibung</h3>
+                <p>
+                    {{ project.description | linebreaks }}
+                </p>
 
-                    {% if project.description_official %}                    
-                     <p>
-                        <strong>Genaue örtliche Beschreibung (Amtsblatt):</strong> {{ project.description_official }}
-                     </p>
-                    {% endif %}
-                    
-                    <p>
-                        <strong>im Bezirk/in den Bezirken:</strong> {{ project.entities.all|join:", "}}
-                    </p>
-                </div>
+                {% if project.description_official %}                    
+                 <p>
+                    <strong>Genaue örtliche Beschreibung (Amtsblatt):</strong> {{ project.description_official }}
+                 </p>
+                {% endif %}
+                
+                <p>
+                    <strong>im Bezirk/in den Bezirken:</strong> {{ project.entities.all|join:", "}}
+                </p>
+            </div>
 
-            </div>
-            <div id="project_map" class="tab-pane max-height">
-                 <div id="map"></div>
-            </div>
-            <div id="gallery" class="tab-pane">
-            {% if gallery %}
-               {% include "projects/project_gallery.html" %}
-            {% endif %}
-            </div>
         </div>
-        
-    </div>
+        <div id="project_map" class="tab-pane max-height">
+             <div id="map"></div>
+        </div>
+        <div id="gallery" class="tab-pane">
+        {% if gallery %}
+           {% include "projects/project_gallery.html" %}
+        {% endif %}
+        </div>
+    </div>    
 {% endblock %}
-
         
-        <div id="subscribe-widget" class="widget col-md-3">
-            <button class="btn default wbc-button">
-                <span class="fa-stack">
-                  <i class="fa fa-circle-thin fa-stack-2x"></i>
-                  <i class="fa fa-envelope fa-stack-1x fa-lg"></i>
-                </span>
-                Project abonnieren
-            </button>
-        </div>
+<div id="subscribe-widget" class="widget col-md-3">
+    <button class="btn default wbc-button">
+        <span class="fa-stack">
+          <i class="fa fa-circle-thin fa-stack-2x"></i>
+          <i class="fa fa-envelope fa-stack-1x fa-lg"></i>
+        </span>
+        Project abonnieren
+    </button>
+</div>
 
         
         {% if processTypes %}

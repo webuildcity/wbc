@@ -17,78 +17,77 @@
 StartpageController
 {% endblock %}
 {% block content %}
-    <div id="top-container">
-        <div class="top-overlay col-md-8 col-md-offset-2 text-center">
-            <h1>Informiere dich über Bauvorhaben in deinem Stadtteil.</h1>
-            <div class="search-form">
-                <form id="search" class="search-form">
-                    <div class="input-group">
-                        <input
-                            placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
-                            type="text" class="form-control"
-                            ng-model="currentSearchTerm"
-                            ng-change="onSearchChanged()"
-                            ng-keydown="onKeyDown($event)"
-                            ng-model-options="{ debounce: 1200 }">
+<div id="top-container">
+    <div class="top-overlay col-md-8 col-md-offset-2 text-center">
+        <h1>Informiere dich über Bauvorhaben in deinem Stadtteil.</h1>
+        <div class="search-form">
+            <form id="search" class="search-form">
+                <div class="input-group">
+                    <input
+                        placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
+                        type="text" class="form-control"
+                        ng-model="currentSearchTerm"
+                        ng-change="onSearchChanged()"
+                        ng-keydown="onKeyDown($event)"
+                        ng-model-options="{ debounce: 1200 }">
 
-                        <a href="" class="input-group-addon" ng-click="search()">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </a>
-                    </div>
-                </form>
-            </div>
+                    <a href="" class="input-group-addon" ng-click="search()">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </a>
+                </div>
+            </form>
+        </div>
 
-            <div class="row search-results">
-                <div class="col-md-4" ng-repeat="result in data.suggestions">
-                    <div class="search-result"
-                         ng-mouseover="focusResult(result)"
-                         ng-click="loadDetails(result)"
-                         ng-class="{'selected-result': $index == selectedSuggestionIdx, 'search-result-type-project':  result.type == 'project', 'search-result-type-stakeholder':  result.type == 'stakeholder'}">
+        <div class="row search-results">
+            <div class="col-md-4" ng-repeat="result in data.suggestions">
+                <div class="search-result"
+                     ng-mouseover="focusResult(result)"
+                     ng-click="loadDetails(result)"
+                     ng-class="{'selected-result': $index == selectedSuggestionIdx, 'search-result-type-project':  result.type == 'project', 'search-result-type-stakeholder':  result.type == 'stakeholder'}">
 
-                            <b>{[{ result.name }]}</b>
-                            {[{result.type}]}
-                    </div>
+                        <b>{[{ result.name }]}</b>
+                        {[{result.type}]}
                 </div>
             </div>
         </div>
-        <a href="{% url 'map' %}" id="map-button" class="btn default wbc-button">Auf zur Karte</a>
     </div>
-    <div id="bottom-container"> 
-        <ul class="nav nav-tabs" data-tabs="tabs">
-          <li class="active"><a href="#start-tab" data-toggle="tab">Startseite</a></li>
-          <li><a href="#news-tab" data-toggle="tab">Aktuelles</a></li>
-          <li><a href="#" data-toggle="tab">Impressum</a></li>
-        </ul>
-        <div id="tab-content" class="tab-content container-fluid">
-            <div id="start-tab" class="tab-pane active container">
-                <div class="col-md-4">
-                    <a href="{% url 'map' %}">
-                       <div class="teaser">
-                           <i class='fa fa-globe'></i>
-                           <p>Stöber durch alle Bauvorhaben auf einer Karte.</p>
-                       </div>
-                    </a>
-                </div>
-                <div class="col-md-4">
-                    <a href="{% url 'search' %}">
-                       <div class="teaser">
-                           <i class='fa fa-search'></i>
-                           <p>Suche nach Themen, Projekten oder Akteuren.</p>
-                       </div>
-                    </a>
-                </div>
-                <div class="col-md-4">
-                    <a href="{% url 'process' %}">
-                       <div class="teaser">
-                           <i class='fa fa-lightbulb-o'></i>
-                           <p>Informiere dich über die Gesetzeslage in deiner Stadt</p>
-                       </div>
-                    </a>
-                </div>
+    <a href="{% url 'map' %}" id="map-button" class="btn default wbc-button">Auf zur Karte</a>
+</div>
+<div id="bottom-container"> 
+    <ul class="nav nav-tabs" data-tabs="tabs">
+      <li class="active"><a href="#start-tab" data-toggle="tab">Startseite</a></li>
+      <li><a href="#news-tab" data-toggle="tab">Aktuelles</a></li>
+      <li><a href="#" data-toggle="tab">Impressum</a></li>
+    </ul>
+    <div id="tab-content" class="tab-content container-fluid">
+        <div id="start-tab" class="tab-pane active container">
+            <div class="col-md-4">
+                <a href="{% url 'map' %}">
+                   <div class="teaser">
+                       <i class='fa fa-globe'></i>
+                       <p>Stöber durch alle Bauvorhaben auf einer Karte.</p>
+                   </div>
+                </a>
             </div>
-            <div class="tab-pane" id="news-tab">
-                aktuelles
+            <div class="col-md-4">
+                <a href="{% url 'search' %}">
+                   <div class="teaser">
+                       <i class='fa fa-search'></i>
+                       <p>Suche nach Themen, Projekten oder Akteuren.</p>
+                   </div>
+                </a>
             </div>
+            <div class="col-md-4">
+                <a href="{% url 'process' %}">
+                   <div class="teaser">
+                       <i class='fa fa-lightbulb-o'></i>
+                       <p>Informiere dich über die Gesetzeslage in deiner Stadt</p>
+                   </div>
+                </a>
+            </div>
+        </div>
+        <div class="tab-pane" id="news-tab">
+            aktuelles
         </div>
     </div>
 </div>

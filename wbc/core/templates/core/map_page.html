@@ -27,6 +27,7 @@
 {% block controller %}
 MapController
 {% endblock %}
+
 {% block side_content %}
 <div>
     <form id="search" class="search-form">
@@ -58,25 +59,23 @@ MapController
             </div>
             <div ng-if="resultLength">
                 <h3 class="collapse-heading" data-toggle="collapse" data-target=".result-list">Ergebnisse</h3>
-                    <p ng-if="resultLength">{[{resultLength}]} Einträge gefunden</p>
-                    <div class="result-list in">
-                        <div ng-repeat="result in results">
-                            <div class="search-result" ng-mouseover="focusResult(result)">
-                                <a ng-href="{[{result.internal_link}]}">
-                                    <b>{[{ result.name }]}</b>
-                                </a>
-                                {[{result.type}]}
-                            </div>
+                <p ng-if="resultLength">{[{resultLength}]} Einträge gefunden</p>
+                <div class="result-list in">
+                    <div ng-repeat="result in results">
+                        <div class="search-result" ng-mouseover="focusResult(result)">
+                            <a ng-href="{[{result.internal_link}]}">
+                                <b>{[{ result.name }]}</b>
+                            </a>
+                            {[{result.type}]}
                         </div>
                     </div>
+                </div>
             </div>
         </div>
     </form>
 </div>
 {% endblock %}
+
 {% block main_content %}
 <div id="map"></div>
 {% endblock %}
-
-
-
