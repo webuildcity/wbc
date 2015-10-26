@@ -1,10 +1,10 @@
 function initMap() {
     // add the map layer and center map
-    map = new L.Map("project-map",{scrollWheelZoom: false});
+    map = new L.Map("map",{scrollWheelZoom: false});
     map.addLayer(new L.TileLayer(_tiles_url,_tiles_opt));
     map.setView(new L.LatLng(_lat, _lon), 16);
 
-    var osmb = new OSMBuildings(map).loadData();
+    // var osmb = new OSMBuildings(map).loadData();
 
     var icon = L.icon({
         iconUrl: _static_url + 'img/icons/gruen.png',
@@ -12,13 +12,19 @@ function initMap() {
         iconAnchor: [13, 45], // point of the icon which will correspond to marker's location
     });
 
+    var polygonColor = null;
+    var cssPolyRule = getRuleForSelector('.poly');
+    if(cssPolyRule) {
+        polygonColor = cssPolyRule.style.color;
+    }
+
     if (typeof(_polygon) !== 'undefined') {
         var polygonOptions = {
             weight: 3,
-            color: '#de6a00',
+            color: 'polygonColor',
             opacity: 1,
             fill: true,
-            fillColor: '#de6a00',
+            fillColor: 'polygonColor',
             fillOpacity: 0.05
         };
 

@@ -1,5 +1,25 @@
-#project-map {
-    height: 400px;
+@import 'variables';
+/*
+* { outline: 2px dotted red }
+
+* * { outline: 2px dotted green }
+
+* * * { outline: 2px dotted orange }
+
+* * * * { outline: 2px dotted blue }
+
+* * * * * { outline: 1px solid red }
+
+* * * * * * { outline: 1px solid green }
+
+* * * * * * * { outline: 1px solid orange }
+
+* * * * * * * * { outline: 1px solid blue }*/
+
+
+#map {
+    height: 100%;
+    position: relative;
 }
 .project-buttons {
     margin-top: 20px;

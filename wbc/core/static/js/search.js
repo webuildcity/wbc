@@ -1,4 +1,4 @@
-var app = angular.module('search', ["checklist-model"]);
+var app = angular.module('wbc', ["checklist-model"]);
 
 app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $interpolateProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
@@ -16,57 +16,19 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
     $scope.formData = {};
 
+    var polygonColor = null;
+    var cssPolyRule = getRuleForSelector('.poly');
+    if(cssPolyRule) {
+        polygonColor = cssPolyRule.style.color;
+    }
     var polygonOptions = {
         weight: 3,
-        color: '#de6a00',
+        color: polygonColor,
         opacity: 1,
         fill: true,
-        fillColor: '#de6a00',
+        fillColor: polygonColor,
         fillOpacity: 0.05
     };
-
-    // MapService.map.on('zoomend', function() {
-    //     console.log(MapService.map.getBounds() )
-    //     $http({
-    //             method: 'POST',
-    //             url:  '/search/',
-    //             data: {bounds: MapService.map.getBounds()}
-    //         }).success(function(response) {
-    //             if(multipoly != []) {
-    //                MapService.map.removeLayer(multipoly);
-    //             }
-    //             console.log(response);
-    //             console.log($scope.formData);
-    //             // $scope.showDetails = false;
-    //             $scope.resultLength = response.length
-    //             $scope.facets = response.facets.fields.tags;
-    //             $scope.entitiesFacets = response.facets.fields.entities;
-    //             if (response.results.length) {
-    //                 $scope.results = response.results;
-    //                 $scope.suggestion = null;
-    //                 multipoly=[];
-    //                 response.results.forEach(function(result){
-    //                     console.log(result.polygon)
-    //                     if(result.polygon)  {
-    //                         multipoly.push(result.polygon[0])
-    //                     }
-    //                 });
-    //                 multipoly = L.multiPolygon(multipoly)
-    //                     .setStyle(polygonOptions)
-    //                     .addTo(MapService.map);
-    //                 console.log(multipoly)
-    //                 // MapService.map.fitBounds(multipoly.getBounds(), {
-    //                 //     padding: [30, 30]
-    //                 // });
-
-    //                 // $scope.showLanding = false;
-    //             } else {
-    //                 $scope.results = [];
-    //                 $scope.suggestion = response.suggestion;
-    //             }
-    //         });
-    // });
-
 
     var multipoly = [];
     $scope.onSearchChanged = function() {

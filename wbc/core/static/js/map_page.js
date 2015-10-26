@@ -1,4 +1,4 @@
-var app = angular.module('search', ["checklist-model"]);
+var app = angular.module('wbc', ["checklist-model"]);
 
 app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $interpolateProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
@@ -6,7 +6,7 @@ app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $in
     $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 }]);
 
-app.controller('SearchController', ['$scope', '$document', '$http', '$window', 'MapService',
+app.controller('MapController', ['$scope', '$document', '$http', '$window', 'MapService',
     function($scope, $document, $http, $window, MapService) {
 
     $scope.models = {

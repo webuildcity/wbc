@@ -23,10 +23,13 @@
     <script type="text/javascript" src="{% static 'lib/jquery.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/angular/angular.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}" ></script>
-    {% block js %}{% endblock %}
+    <script type="text/javascript" src="{% static 'js/utils.js' %}" ></script>
+    {% block js %}
+
+    {% endblock %}
 </head>
 
-<body>
+<body ng-app="wbc" ng-controller="{% block controller %}WbcController{% endblock %}">
     <nav class="navbar navbar-default visible-xs" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">

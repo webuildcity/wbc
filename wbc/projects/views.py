@@ -130,7 +130,7 @@ def project_request(request, p):
                 for pub in publications.filter(process_step = step):
                     step.publication = pub
 
-    return render(request,'projects/project.html',{
+    return render(request,'projects/project_new.html',{
         'project' : p,
         'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
         'events'  : p.events.order_by('-begin'),

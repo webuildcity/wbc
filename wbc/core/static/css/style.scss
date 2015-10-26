@@ -1,6 +1,14 @@
 @import 'variables';
 @import 'sitenav';
 
+html {
+    height: 100%;
+    overflow: hidden;
+}
+body {
+    height: 100%;
+    overflow: hidden;
+}
 @font-face {
     font-family: titillium;
     src: url('/static/font/TitilliumText25L.otf');
@@ -46,6 +54,31 @@ h4 {
     color: $headlines-color;
     line-height: 20px;
 }
+
+/**LAYOUT **/
+.big-page {
+    position: absolute;
+    top: 50px;
+    bottom: 0px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.max-height {
+    height: 100%;
+}
+
+#side_content {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/** POLY **/
+
+.poly {
+    color: $primary-color;
+}
+
 a,
 a:visited,
 .leaflet-container a,

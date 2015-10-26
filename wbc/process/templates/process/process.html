@@ -1,4 +1,12 @@
-{% extends 'core/page.html' %}
+{% extends 'core/layout.html' %}
+{% load staticfiles compress %}
+
+{% block css %}
+    {% compress css %}
+    {{block.super}}
+      
+    {% endcompress %}
+{% endblock %}
 
 {% block js %}
     <script type="text/javascript">
@@ -9,7 +17,7 @@
     </script>
 {% endblock %}
 
-{% block page %}
+{% block content %}
     <h2>Begriffe</h2>
     {% for process_type in process_types %}
         <h3>{{process_type.name}}</h3>

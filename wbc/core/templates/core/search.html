@@ -1,4 +1,4 @@
-{% extends 'core/layout.html' %}
+{% extends 'core/layout_split.html' %}
 {% load staticfiles compress %}
 
 {% block css %}
@@ -6,7 +6,6 @@
     {{block.super}}
     <link rel="stylesheet" type="text/x-scss" href="{% static "css/search.scss" %}" />
     <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
-
     {% endcompress %}
 {% endblock %}
 
@@ -23,84 +22,85 @@
         var _default_view = {{default_view|safe}};
     </script>
 {% endblock %}
-{% block content %}
-    <div class="big-page" ng-app="search" ng-controller="SearchController">
-        <div id="left-content" class='col-md-4 max-height'>
-            <form id="search" class="search-form">
-                {% csrf_token %}
-                <div class="input-group">
-                    <input
-                    placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
-                    type="text" class="form-control"
-                    ng-model="formData.currentSearchTerm"
-                    ng-change="onSearchChanged()"
-                    ng-keydown="onKeyDown($event)"
-                    ng-model-options="{ debounce: 1200 }">
 
-                    <a href="" class="input-group-addon" ng-click="search()">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </a>
+{% block controller %}
+SearchController
+{% endblock %}
+
+{% block side_content %}
+    <div>
+        <form id="search" class="search-form">
+            {% csrf_token %}
+            <div class="input-group">
+                <input
+                placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
+                type="text" class="form-control"
+                ng-model="formData.currentSearchTerm"
+                ng-change="onSearchChanged()"
+                ng-keydown="onKeyDown($event)"
+                ng-model-options="{ debounce: 1200 }">
+
+                <a href="" class="input-group-addon" ng-click="search()">
+                    <span class="glyphicon glyphicon-search"></span>
+                </a>
+            </div>
+            <div ng-if="suggestion" class="suggestion-container">
+                Meinten Sie: <a href="" ng-click="selectTerm(suggestion)">
+                    {[{suggestion}]} 
+                </a>
+            </div>
+            <div class="form-group">
+                <div ng-repeat="(key, text) in models">
+                    <label>
+                        <input type="checkbox" checklist-model="formData.models" checklist-value="key" checklist-change="onSearchChanged()"> 
+                            {[{text}]}
+                    </label>
                 </div>
-                <div ng-if="suggestion" class="suggestion-container">
-                    Meinten Sie: <a href="" ng-click="selectTerm(suggestion)">
-                            {[{suggestion}]} 
-                    </a>
-                </div>
-                <div class="form-group">
-                    <div ng-repeat="(key, text) in models">
-                        <label>
-                            <input type="checkbox" checklist-model="formData.models" checklist-value="key" checklist-change="onSearchChanged()"> 
-                                {[{text}]}
-                        </label>
-                    </div>
-                </div>
-                
-                <div>
-                    <div>  
-                        <div  ng-if="facets.length > 0" class="facet-container">
-                            <h3 class="collapse-heading collapsed" data-toggle="collapse" data-target="#tag-facets">Nach Schlagwörtern filtern</h3>
-                            <div id='tag-facets' class="collapse">
-                                <div ng-repeat="facet in facets">
-                                    <label>
-                                        <input type="checkbox" checklist-model="formData.tags" checklist-value="facet[0]" checklist-change="onSearchChanged()"> 
-                                            {[{facet[0]}]} ({[{facet[1]}]})
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div  ng-if="entitiesFacets.length > 0" class="facet-container">
-                            <h3 class="collapse-heading collapsed" data-toggle="collapse" data-target="#region-facets">Nach Regionen filtern</h3>
-                            <div id='region-facets' class='collapse'>
-                                <div ng-repeat="facet in entitiesFacets">
-                                    <label>
-                                        <input type="checkbox" checklist-model="formData.entities" checklist-value="facet[0]" checklist-change="onSearchChanged()"> 
-                                            {[{facet[0]}]} ({[{facet[1]}]})
-                                    </label>
-                                </div>
+            </div>
+            
+            <div>
+                <div>  
+                    <div  ng-if="facets.length > 0" class="facet-container">
+                        <h3 class="collapse-heading collapsed" data-toggle="collapse" data-target="#tag-facets">Nach Schlagwörtern filtern</h3>
+                        <div id='tag-facets' class="collapse">
+                            <div ng-repeat="facet in facets">
+                                <label>
+                                    <input type="checkbox" checklist-model="formData.tags" checklist-value="facet[0]" checklist-change="onSearchChanged()"> 
+                                        {[{facet[0]}]} ({[{facet[1]}]})
+                                </label>
                             </div>
                         </div>
                     </div>
-                    <div ng-if="resultLength">
-                        <h3 class="collapse-heading" data-toggle="collapse" data-target=".result-list">Ergebnisse</h3>
-                            <p ng-if="resultLength">{[{resultLength}]} Einträge gefunden</p>
-                            <div class="result-list in">
-                                <div ng-repeat="result in results">
-                                    <div class="search-result" ng-mouseover="focusResult(result)">
-                                        <a ng-href="{[{result.internal_link}]}">
-                                            <b>{[{ result.name }]}</b>
-                                        </a>
-                                        {[{result.type}]}
-                                    </div>
-                                </div>
+                    <div  ng-if="entitiesFacets.length > 0" class="facet-container">
+                        <h3 class="collapse-heading collapsed" data-toggle="collapse" data-target="#region-facets">Nach Regionen filtern</h3>
+                        <div id='region-facets' class='collapse'>
+                            <div ng-repeat="facet in entitiesFacets">
+                                <label>
+                                    <input type="checkbox" checklist-model="formData.entities" checklist-value="facet[0]" checklist-change="onSearchChanged()"> 
+                                        {[{facet[0]}]} ({[{facet[1]}]})
+                                </label>
                             </div>
+                        </div>
                     </div>
                 </div>
-            </form>
-        </div>
-        <div class='col-md-8 max-height'>
-            <div id="map"></div>
-
-        </div>
-
+                <div ng-if="resultLength">
+                    <h3 class="collapse-heading" data-toggle="collapse" data-target=".result-list">Ergebnisse</h3>
+                        <p ng-if="resultLength">{[{resultLength}]} Einträge gefunden</p>
+                        <div class="result-list in">
+                            <div ng-repeat="result in results">
+                                <div class="search-result" ng-mouseover="focusResult(result)">
+                                    <a ng-href="{[{result.internal_link}]}">
+                                        <b>{[{ result.name }]}</b>
+                                    </a>
+                                    {[{result.type}]}
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </form>
     </div>
+{% endblock %}
+{% block main_content %}
+    <div id="map"></div>
 {% endblock %}

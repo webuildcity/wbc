@@ -3,6 +3,7 @@ var app = angular.module('map',['duScroll']);
 app.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+    $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 }]);
 
 // app.factory('MapService',['$http',function($http) {

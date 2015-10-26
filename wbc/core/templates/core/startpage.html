@@ -8,8 +8,15 @@
     {% endcompress %}
 {% endblock %}
 
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/startpage.js' %}"></script>
+{% endblock %}
+
+
+{% block controller %}
+StartpageController
+{% endblock %}
 {% block content %}
-<div id="startpage">
     <div id="top-container">
         <div class="top-overlay col-md-8 col-md-offset-2 text-center">
             <h1>Informiere dich über Bauvorhaben in deinem Stadtteil.</h1>
@@ -30,8 +37,21 @@
                     </div>
                 </form>
             </div>
+
+            <div class="row search-results">
+                <div class="col-md-4" ng-repeat="result in data.suggestions">
+                    <div class="search-result"
+                         ng-mouseover="focusResult(result)"
+                         ng-click="loadDetails(result)"
+                         ng-class="{'selected-result': $index == selectedSuggestionIdx, 'search-result-type-project':  result.type == 'project', 'search-result-type-stakeholder':  result.type == 'stakeholder'}">
+
+                            <b>{[{ result.name }]}</b>
+                            {[{result.type}]}
+                    </div>
+                </div>
+            </div>
         </div>
-        <a href="{% url 'process' %}" id="map-button" class="btn default wbc-button">Auf zur Karte</a>
+        <a href="{% url 'map' %}" id="map-button" class="btn default wbc-button">Auf zur Karte</a>
     </div>
     <div id="bottom-container"> 
         <ul class="nav nav-tabs" data-tabs="tabs">
@@ -42,7 +62,7 @@
         <div id="tab-content" class="tab-content container-fluid">
             <div id="start-tab" class="tab-pane active container">
                 <div class="col-md-4">
-                    <a href="{% url 'process' %}">
+                    <a href="{% url 'map' %}">
                        <div class="teaser">
                            <i class='fa fa-globe'></i>
                            <p>Stöber durch alle Bauvorhaben auf einer Karte.</p>
@@ -50,7 +70,7 @@
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a href="{% url 'process' %}">
+                    <a href="{% url 'search' %}">
                        <div class="teaser">
                            <i class='fa fa-search'></i>
                            <p>Suche nach Themen, Projekten oder Akteuren.</p>
