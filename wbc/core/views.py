@@ -127,6 +127,10 @@ def search(request):
     if request.method=="GET":
         return render(request, 'core/search.html')
 
+def map(request):
+    return render(request, 'core/map_page.html')
+
+
 class ProtectedCreateView(CreateView):
 
     @method_decorator(login_required)

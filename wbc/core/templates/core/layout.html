@@ -1,4 +1,5 @@
-{% load staticfiles compress %}<!DOCTYPE html>
+{% load staticfiles compress %}
+<!DOCTYPE html>
 <html>
 <head>
     <title>{{site_title}}</title>
@@ -13,12 +14,11 @@
 
     <link rel="stylesheet" href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" />
     <link rel="stylesheet" href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" />
-    {% block css %}{% endblock %}
 
-    {% compress css %}
+    {% block css %}
     <link rel="stylesheet" type="text/x-scss" href="{% static "css/style.scss" %}" />
-    <link rel="stylesheet" type="text/x-scss" href="{% static "css/startpage.scss" %}" />
-    {% endcompress %}
+    {% endblock %} 
+
 
     <script type="text/javascript" src="{% static 'lib/jquery.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/angular/angular.min.js' %}" ></script>

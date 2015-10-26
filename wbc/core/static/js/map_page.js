@@ -25,47 +25,47 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         fillOpacity: 0.05
     };
 
-    // MapService.map.on('zoomend', function() {
-    //     console.log(MapService.map.getBounds() )
-    //     $http({
-    //             method: 'POST',
-    //             url:  '/search/',
-    //             data: {bounds: MapService.map.getBounds()}
-    //         }).success(function(response) {
-    //             if(multipoly != []) {
-    //                MapService.map.removeLayer(multipoly);
-    //             }
-    //             console.log(response);
-    //             console.log($scope.formData);
-    //             // $scope.showDetails = false;
-    //             $scope.resultLength = response.length
-    //             $scope.facets = response.facets.fields.tags;
-    //             $scope.entitiesFacets = response.facets.fields.entities;
-    //             if (response.results.length) {
-    //                 $scope.results = response.results;
-    //                 $scope.suggestion = null;
-    //                 multipoly=[];
-    //                 response.results.forEach(function(result){
-    //                     console.log(result.polygon)
-    //                     if(result.polygon)  {
-    //                         multipoly.push(result.polygon[0])
-    //                     }
-    //                 });
-    //                 multipoly = L.multiPolygon(multipoly)
-    //                     .setStyle(polygonOptions)
-    //                     .addTo(MapService.map);
-    //                 console.log(multipoly)
-    //                 // MapService.map.fitBounds(multipoly.getBounds(), {
-    //                 //     padding: [30, 30]
-    //                 // });
+    MapService.map.on('zoomend', function() {
+        console.log(MapService.map.getBounds() )
+        $http({
+                method: 'POST',
+                url:  '/search/',
+                data: {bounds: MapService.map.getBounds()}
+            }).success(function(response) {
+                if(multipoly != []) {
+                   MapService.map.removeLayer(multipoly);
+                }
+                console.log(response);
+                console.log($scope.formData);
+                // $scope.showDetails = false;
+                $scope.resultLength = response.length
+                $scope.facets = response.facets.fields.tags;
+                $scope.entitiesFacets = response.facets.fields.entities;
+                if (response.results.length) {
+                    $scope.results = response.results;
+                    $scope.suggestion = null;
+                    multipoly=[];
+                    response.results.forEach(function(result){
+                        console.log(result.polygon)
+                        if(result.polygon)  {
+                            multipoly.push(result.polygon[0])
+                        }
+                    });
+                    multipoly = L.multiPolygon(multipoly)
+                        .setStyle(polygonOptions)
+                        .addTo(MapService.map);
+                    console.log(multipoly)
+                    // MapService.map.fitBounds(multipoly.getBounds(), {
+                    //     padding: [30, 30]
+                    // });
 
-    //                 // $scope.showLanding = false;
-    //             } else {
-    //                 $scope.results = [];
-    //                 $scope.suggestion = response.suggestion;
-    //             }
-    //         });
-    // });
+                    // $scope.showLanding = false;
+                } else {
+                    $scope.results = [];
+                    $scope.suggestion = response.suggestion;
+                }
+            });
+    });
 
 
     var multipoly = [];
@@ -119,10 +119,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         // }
     };
 
-    $scope.selectTerm = function(term) {
-        $scope.formData.currentSearchTerm = term;
-        $scope.onSearchChanged();
-    };
+    // $scope.selectTerm = function(term) {
+    //     $scope.formData.currentSearchTerm = term;
+    //     $scope.onSearchChanged();
+    // };
     var focusedPoly = null;
     $scope.focusPoly = function(poly) {
         if(focusedPoly) {

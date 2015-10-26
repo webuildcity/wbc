@@ -1,9 +1,12 @@
 {% extends 'core/layout.html' %}
 {% load staticfiles compress %}
 
-{% compress css %}
-    <link rel="stylesheet" type="text/x-scss" href="{% static "css/startpage.scss" %}" />
-{% endcompress %}
+{% block css %}
+    {% compress css %}
+    {{block.super}}
+    <link rel="stylesheet" type="text/x-scss" href="{% static "css/startpage.scss" %}" />    
+    {% endcompress %}
+{% endblock %}
 
 {% block content %}
 <div id="startpage">

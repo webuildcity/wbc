@@ -1,0 +1,63 @@
+/*html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.model-selection {
+    padding: 0px;
+}
+
+.input-group  {
+    float: left !important;
+}
+
+.search-result {
+    height: 45px;
+    border-bottom: 1px solid #ccc;
+}
+
+.search-result:hover {
+    background-color: rgba(229, 136, 51, 0.1);
+}
+*/
+
+/** AB HIER TEST NEUE SEITE **/
+
+.big-page {
+    position: absolute;
+    top: 50px;
+    bottom: 0px;
+    overflow: hidden;
+    width: 100%;
+}
+
+#left-content {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.max-height {
+    /*position: relative;*/
+    height: 100%;
+}
+
+@media (max-width: 880px) {
+    .max-height {
+        height: 50%;
+    }
+}
+
+#map {
+    height: 100%;
+}
+
+.collapse-heading:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+    content: "\e114";    /* adjust as needed, taken from bootstrap.css */
+    float: right;        /* adjust as needed */
+    /*color: grey;          adjust as needed */
+}
+.collapse-heading.collapsed:after {
+    /* symbol for "collapsed" panels */
+    content: "\e080";    /* adjust as needed, taken from bootstrap.css */
+}

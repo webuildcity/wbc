@@ -14,7 +14,7 @@
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
 
     <script type="text/javascript" src="{% static 'lib/angular/checklist-model.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/map_page.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/angular-mapservice.js' %}"></script>
     <script type="text/javascript">
         var _static_url = {% static '' %}
@@ -28,24 +28,6 @@
         <div id="left-content" class='col-md-4 max-height'>
             <form id="search" class="search-form">
                 {% csrf_token %}
-                <div class="input-group">
-                    <input
-                    placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
-                    type="text" class="form-control"
-                    ng-model="formData.currentSearchTerm"
-                    ng-change="onSearchChanged()"
-                    ng-keydown="onKeyDown($event)"
-                    ng-model-options="{ debounce: 1200 }">
-
-                    <a href="" class="input-group-addon" ng-click="search()">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </a>
-                </div>
-                <div ng-if="suggestion" class="suggestion-container">
-                    Meinten Sie: <a href="" ng-click="selectTerm(suggestion)">
-                            {[{suggestion}]} 
-                    </a>
-                </div>
                 <div class="form-group">
                     <div ng-repeat="(key, text) in models">
                         <label>
