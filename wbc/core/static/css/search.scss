@@ -1,6 +1,14 @@
 /** AB HIER TEST NEUE SEITE **/
 
-#left-content {
+
+#side_content {
+    padding: 0px;
+    
+    #search_sidebar {
+        height: 100%;
+        overflow-y: scroll;
+        padding: 0px 10px;
+    }
 
     .search-result {
         height: 45px;
@@ -9,12 +17,6 @@
 
     .search-result:hover {
         background-color: rgba(229, 136, 51, 0.1);
-    }
-
-}
-@media (max-width: 880px) {
-    .max-height {
-        height: 50%;
     }
 }
 

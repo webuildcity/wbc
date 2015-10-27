@@ -3,23 +3,21 @@
 <!-- <p>{{process}}</p> --> 
 
 {% for process in processTypes %}
-<div class="col-md-9">
-  <div class="content-container">
+<div class="content-container">
     <h3>{{process.name}}</h3>
     <ol class="process-bar" data-process-bar-steps="{{process.process_steps.all|length}}">
-      {% for step in process.process_steps2 %}
+    {% for step in process.process_steps2 %}
         {% if step.publication %}
-          {% if step.publication.is_in_past %}
-           <li class="process-done">{{step.name}}</li>
-          {% elif step.publication.is_started %}
-           <li class="process-running">{{step.name}}</li>
-          {% endif %}
-        {% else %}
-           <li class="process-todo">{{step.name}}</li>
-        {% endif %}
-      {% endfor %}
+            {% if step.publication.is_in_past %}
+                <li class="process-done">{{step.name}}</li>
+            {% elif step.publication.is_started %}
+                <li class="process-running">{{step.name}}</li>
+            {% endif %}
+            {% else %}
+                <li class="process-todo">{{step.name}}</li>
+            {% endif %}
+    {% endfor %}
     </ol>
-  </div>
 </div>
   
 {% endfor %}

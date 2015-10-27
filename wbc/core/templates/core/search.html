@@ -28,26 +28,28 @@ SearchController
 {% endblock %}
 
 {% block side_content %}
-    <div>
+    <div id="search_sidebar">
         <form id="search" class="search-form">
             {% csrf_token %}
-            <div class="input-group">
-                <input
-                placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
-                type="text" class="form-control"
-                ng-model="formData.currentSearchTerm"
-                ng-change="onSearchChanged()"
-                ng-keydown="onKeyDown($event)"
-                ng-model-options="{ debounce: 1200 }">
+            <div class="anchor">
+                <div class="input-group">
+                    <input
+                    placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
+                    type="text" class="form-control"
+                    ng-model="formData.currentSearchTerm"
+                    ng-change="onSearchChanged()"
+                    ng-keydown="onKeyDown($event)"
+                    ng-model-options="{ debounce: 1200 }">
 
-                <a href="" class="input-group-addon" ng-click="search()">
-                    <span class="glyphicon glyphicon-search"></span>
-                </a>
-            </div>
-            <div ng-if="suggestion" class="suggestion-container">
-                Meinten Sie: <a href="" ng-click="selectTerm(suggestion)">
-                    {[{suggestion}]} 
-                </a>
+                    <a href="" class="input-group-addon" ng-click="search()">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </a>
+                </div>
+                <div ng-if="suggestion" class="suggestion-container">
+                    Meinten Sie: <a href="" ng-click="selectTerm(suggestion)">
+                        {[{suggestion}]} 
+                    </a>
+                </div>
             </div>
             <div class="form-group">
                 <div ng-repeat="(key, text) in models">
@@ -83,22 +85,23 @@ SearchController
                         </div>
                     </div>
                 </div>
-                <div ng-if="resultLength">
-                    <h3 class="collapse-heading" data-toggle="collapse" data-target=".result-list">Ergebnisse</h3>
-                        <p ng-if="resultLength">{[{resultLength}]} Einträge gefunden</p>
-                        <div class="result-list in">
-                            <div ng-repeat="result in results">
-                                <div class="search-result" ng-mouseover="focusResult(result)">
-                                    <a ng-href="{[{result.internal_link}]}">
-                                        <b>{[{ result.name }]}</b>
-                                    </a>
-                                    {[{result.type}]}
-                                </div>
-                            </div>
-                        </div>
-                </div>
             </div>
         </form>
+        <div ng-if="resultLength">
+            <h3 class="collapse-heading" data-toggle="collapse" data-target=".result-list">Ergebnisse</h3>
+                <p ng-if="resultLength">{[{resultLength}]} Einträge gefunden</p>
+                <div class="result-list in">
+                    <div ng-repeat="result in results">
+                        <div class="search-result" ng-mouseover="focusResult(result)">
+                            <a ng-href="{[{result.internal_link}]}">
+                                <b>{[{ result.name }]}</b>
+                            </a>
+                            <p>{[{ result.address_obj }]}  {[{result.type}]}</p>
+                            
+                        </div>
+                    </div>
+                </div>
+        </div>
     </div>
 {% endblock %}
 {% block main_content %}

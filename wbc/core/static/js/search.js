@@ -126,9 +126,11 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
         // if poly still focused remove it too
     };
-
-
-
-
 }]);
+
+
+/** NON ANGULAR **/
+$(document).ready(function(){
+    moveScroller('.anchor', '#search_sidebar');
+});
 

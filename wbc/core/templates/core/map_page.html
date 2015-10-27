@@ -34,7 +34,7 @@ MapController
         {% csrf_token %}                
         <div>
             <div>  
-                <div  ng-if="facets.length > 0" class="facet-container">
+                <div ng-if="facets.length > 0" class="facet-container">
                     <h3 class="collapse-heading collapsed" data-toggle="collapse" data-target="#tag-facets">Nach Schlagwörtern filtern</h3>
                     <div id='tag-facets' class="collapse">
                         <div ng-repeat="facet in facets">

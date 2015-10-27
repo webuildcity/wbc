@@ -24,7 +24,7 @@ class Address(Model):
     entities     = models.ManyToManyField(Entity, blank=True, verbose_name="Einheit", related_name='adress_places')
 
     def __unicode__(self):
-        return "%s-%s-%s-%s" % (self.zipcode, self.city.name, self.street, self.streetnumber)
+        return "%s %s, %s %s" % (self.street, self.streetnumber, self.zipcode, self.city.name)
 
     class Meta:
         verbose_name        = "Adresse"
@@ -48,7 +48,7 @@ class Project(Model):
     active               = models.BooleanField()
     link                 = models.URLField(blank=True)
     slug                 = models.SlugField(unique=True, editable=False)
-    addressObj           = models.ForeignKey(Address, blank=True, null=True, verbose_name="Adresse")
+    address_obj           = models.ForeignKey(Address, blank=True, null=True, verbose_name="Adresse")
     gallery              = models.OneToOneField(Gallery, related_name='gallery', blank=True, null=True)
     tags                 = TaggableManager(through=TaggedItems, blank=True, verbose_name="Schlagworte")
     stakeholders         = models.ManyToManyField(Stakeholder, blank=True, verbose_name="Akteure")

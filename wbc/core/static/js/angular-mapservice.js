@@ -4,6 +4,7 @@ app.factory('MapService',['$http',function($http) {
         'zoomControl': true,
         'scrollWheelZoom': true
     });
+    var focusedPoly = undefined;
 
     var defaultLocation = new L.LatLng(_default_view.lat,_default_view.lon);
     var defaultZoom = _default_view.zoom;
@@ -11,30 +12,17 @@ app.factory('MapService',['$http',function($http) {
     map.addLayer(new L.TileLayer(_tiles_url,_tiles_opt));
     map.setView(defaultLocation,defaultZoom);
 
-    var markerLayer = L.layerGroup().addTo(map);
-    var icons = {};
-
-        // create icon for old projects
-        icons.old = {
-            icon: L.icon({
-                iconUrl: _static_url + 'img/icons/grau.png',
-                iconSize:     [26, 45],
-                iconAnchor:   [13, 45],
-                popupAnchor:  [0, -46]
-            })
-        };
-
-        var setViewOptions = {
-          padding: [30, 30],
-          maxZoom: 15,
-          pan: {
+    var setViewOptions = {
+        padding: [30, 30],
+        maxZoom: 15,
+        pan: {
             animate: true,
             duration: 3
-          },
-          zoom: {
+        },
+        zoom: {
             animate: true
-          }
-        };
+        }
+    };
 
     return {
 
@@ -45,11 +33,36 @@ app.factory('MapService',['$http',function($http) {
         },
 
         fitPoly: function(poly) {
+            if (poly === undefined){
+                poly = focusedPoly;
+            }
             map.fitBounds(poly.getBounds(), setViewOptions);
         },
 
         resetToDefaults: function() {
             map.setView(defaultLocation, defaultZoom,  setViewOptions);
+        },
+
+        loadPoly: function(poly) {
+            var cssPolyRule = getRuleForSelector('.poly');
+            if(cssPolyRule) {
+                polygonColor = cssPolyRule.style.color;
+            }
+
+            if (typeof(poly) !== 'undefined') {
+                var polygonOptions = {
+                    weight: 3,
+                    color: polygonColor,
+                    opacity: 1,
+                    fill: true,
+                    fillColor: polygonColor,
+                    fillOpacity: 0.05
+                };
+
+                var polygon = L.multiPolygon(poly).setStyle(polygonOptions);
+                polygon.addTo(map);
+                focusedPoly = polygon;
+            }
         }
     };
 }]);

@@ -17,6 +17,7 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     entities = indexes.MultiValueField(faceted=True)
     internal_link = indexes.CharField()
     type = indexes.CharField()
+    address_obj = indexes.CharField()
 
     content_auto = indexes.NgramField(use_template=True)
 
@@ -28,6 +29,11 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_entities(self, obj):
         return [ent.name for ent in obj.entities.all()]
+    
+    def prepare_address_obj(self, obj):
+        if obj.address_obj:
+            return "%s %s" % (obj.address_obj.street, obj.address_obj.streetnumber)
+        return None
 
     def prepare_location(self, obj):
         # If you're just storing the floats...

@@ -38,8 +38,8 @@ StartpageController
             </form>
         </div>
 
-        <div class="row search-results">
-            <div class="col-md-4" ng-repeat="result in data.suggestions">
+        <div class="search-results">
+            <div ng-repeat="result in data.suggestions">
                 <div class="search-result"
                      ng-mouseover="focusResult(result)"
                      ng-click="loadDetails(result)"

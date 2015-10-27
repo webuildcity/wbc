@@ -30,6 +30,7 @@
         var _polygon = {% if project.polygon %}{{project.polygon|safe}}{% else %}[]{% endif %};
     </script>
     <script type="text/javascript" src="{% static 'js/projectmap.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'js/angular-mapservice.js' %}" ></script>
 {% endblock %}
 
 {% block controller %}
@@ -37,37 +38,36 @@ DetailsController
 {% endblock %}
 
 {% block side_content %}
-
-    <h1> {{project.name}} </h1>
-    {% if tags %}
-    <div class="headline-tags">
-        {% for tag in tags %}
-            {% if tag.important %}
-            <a class="taglink" href="{{tag.get_absolute_url}}">{{tag.name}}</a>
+    <div class="anchor">
+        <div class="details-headline">
+            <h1> {{project.name}} </h1>    
+            {% if project.address_obj %}
+            <div class="address map-link">
+                {{project.address_obj}}
+            </div>
             {% endif %}
-        {% endfor %}
+        </div>
+
+        <ul class="sidebar-nav nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#info">Info</a></li>
+            <li><a class="map-link" data-toggle="tab" href="#project_map">Karte</a></li>
+            <li><a data-toggle="tab" href="#gallery">Gallery</a></li>
+            <li><a data-toggle="tab" href="#timeline">Events</a></li>
+        </ul>
     </div>
-    {% endif %}
+
     <div id="subscribe-widget" class="widget">
-    <button class="btn default wbc-button">
-        <span class="fa-stack">
-          <i class="fa fa-circle-thin fa-stack-2x"></i>
-          <i class="fa fa-envelope fa-stack-1x fa-lg"></i>
-        </span>
-        Project abonnieren
-    </button>
+        <button class="btn default wbc-button">
+            <span class="fa-stack">
+              <i class="fa fa-circle-thin fa-stack-2x"></i>
+              <i class="fa fa-envelope fa-stack-1x fa-lg"></i>
+            </span>
+            Project abonnieren
+        </button>
     </div>
-
-    <ul class="right-nav nav nav-tabs" data-tabs="tabs">
-        <li class="active"><a data-toggle="tab" href="#info">Info</a></li>
-        <li><a data-toggle="tab" href="#project_map">Karte</a></li>
-        <li><a data-toggle="tab" href="#gallery">Gallery</a></li>
-    </ul>
-
-
 
     {% if nextDate %}
-    <div id="next-date-widget" class="widget col-md-6">
+    <div id="next-date-widget" class="widget">
         <div class="content-container">
             <h3><i class="fa fa-calendar"> </i>Nächster Termin</h3>
             <p>{{nextDate.title}}</p>
@@ -99,12 +99,38 @@ DetailsController
         </div>
     </div>
     {% endif %}
+
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+
+    {{ project.description | linebreaks }}
+    {{ project.description | linebreaks }}
+
+
 {% endblock %}
 
 
 {% block main_content %}
     <div id="tab-content" class="tab-content max-height">
-        <div id="info" class="tab-pane">
+        <div id="info" class="tab-pane active">
             <div class="content-container">
                 <h3>Beschreibung</h3>
                 <p>
@@ -120,38 +146,44 @@ DetailsController
                 <p>
                     <strong>im Bezirk/in den Bezirken:</strong> {{ project.entities.all|join:", "}}
                 </p>
+            </div> 
+
+            {% if processTypes %}
+                {% include "process/process_bar.html" %}
+            {% endif %}
+
+            {% if stakeholders %}
+            <div class="stakeholders">
+                <div class="content-container">
+                    <h2> Wichtige Akteure </h2>
+                    {% include "stakeholder/stakeholder_list.html" %}
+                </div>
             </div>
+            {% endif %}
+
 
         </div>
-        <div id="project_map" class="tab-pane max-height">
+        <div id="project_map" class="tab-pane">
              <div id="map"></div>
         </div>
+
         <div id="gallery" class="tab-pane">
         {% if gallery %}
            {% include "projects/project_gallery.html" %}
         {% endif %}
         </div>
+
+        <div id="timeline" class="tab-pane">
+            <h3>Events</h3>
+            {% include "projects/project_events.html" %}
+        </div>
+        </div>
     </div>    
 {% endblock %}
         
-<div id="subscribe-widget" class="widget col-md-3">
-    <button class="btn default wbc-button">
-        <span class="fa-stack">
-          <i class="fa fa-circle-thin fa-stack-2x"></i>
-          <i class="fa fa-envelope fa-stack-1x fa-lg"></i>
-        </span>
-        Project abonnieren
-    </button>
-</div>
-
         
-        {% if processTypes %}
-            {% include "process/process_bar.html" %}
-        {% endif %}
 
-        <div class="col-md-9">
-            
-        </div>
+
     <!--     {% if gallery != true %}
         <div class="col-md-9">
             <div class="content-container">
@@ -160,14 +192,7 @@ DetailsController
         </div>
         {% endif %} -->
 
-        {% if stakeholders %}
-            <div class="col-md-9 stakeholders">
-                <div class="content-container">
-                    <h2> Wichtige Akteure </h2>
-                    {% include "stakeholder/stakeholder_list.html" %}
-                </div>
-            </div>
-        {% endif %}
+
 
         
         <!-- {% if user.is_authenticated %}
@@ -182,11 +207,7 @@ DetailsController
         </div>
         {% endif %}
  -->
-        <div class='col-md-12'>
-            <h3>Events</h3>
 
-            {% include "projects/project_events.html" %}
-        </div>
 
 <!--     <div class="comments-wrapper">
         <div class="container">

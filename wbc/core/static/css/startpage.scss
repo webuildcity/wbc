@@ -12,10 +12,8 @@ body {
 
 #top-container {
     position: relative;
+    height: 400px;
 
-    @media (min-width: 760px) {
-        height: 400px;
-    }
     @media (max-width: 760px) {
         height: 250px;
     }
@@ -33,6 +31,27 @@ body {
 
         .search-form {
             padding-top: 10px;
+        }
+
+        .selected-result {
+            border: 1px solid $primary-color !important;
+        }
+
+        .search-results {
+            border: 1px solid #ddd;
+            // min-height: 40px;
+            background-color:rgba(255,255,255,0.5);
+        
+            .search-result {
+                border: 1px solid #ddd;
+                // min-height: 40px;
+                background-color:rgba(255,255,255,0.5);
+            }
+
+            .search-result:hover {
+                border: 1px solid $primary-color-light;
+                background-color:rgba(255,255,255,0.8);
+            }
         }
     }
 
@@ -54,7 +73,6 @@ body {
     position: relative;
     top: -40px;
 
-
     .nav li a {
         background: rgba(255,255,255,0.8);
         margin-right: 0pxs;
@@ -67,9 +85,8 @@ body {
     #tab-content {
         height: 540px;
         background: rgba(255,255,255,0.8);
-
-        /*background-image: $background-image-blur;*/
     }
+
     .teaser {
         text-align: center;
         color: #646464 ;

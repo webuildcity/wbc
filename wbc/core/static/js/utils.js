@@ -15,3 +15,18 @@ function getRuleForSelector(selector) {
     var selectors = getAllNamedSelectors();
     return selectors[selector];
 }
+
+function moveScroller(anchor, scroller) {
+    var move = function() {
+        var st = $(scroller).scrollTop();
+        var ot = $(scroller).offset().top;
+        var s = $(anchor);
+        if(st > ot) {
+            s.addClass('fixed-top')
+        } else {
+            s.removeClass('fixed-top')
+        }
+    };
+    $(scroller).scroll(move);
+    move();
+}

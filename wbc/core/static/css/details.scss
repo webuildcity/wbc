@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'vertical-timeline';
 /*
 * { outline: 2px dotted red }
 
@@ -16,11 +17,68 @@
 
 * * * * * * * * { outline: 1px solid blue }*/
 
-
-#map {
+#project_map {
     height: 100%;
-    position: relative;
+    
+    #map {
+        height: 100%;
+        position: relative;
+    }
 }
+
+.details-headline {
+    float: left;
+}
+
+.fixed-top {
+    .details-headline {
+        // background: rgba(250, 250, 250, 0.9);
+        background-color: white;
+        padding: 5px;
+        border-radius: 2px;
+        // border: 1px solid $primary-color-light;
+        box-shadow: 2px 0px 2px 2px #ccc;
+
+    }
+    h1 {
+        margin: 0px;
+        padding: 0px 5px 5px 5px;
+    }
+} 
+
+.sidebar-nav {
+    padding: 0;
+    width: 100px;
+    float: right;
+    position: relative;
+    right: -18px;
+    z-index: 2;
+    border-bottom: 0px;
+    
+    ul {
+        float: none;
+        display: block;
+    }
+    li {
+        float: none;
+        display: block;
+        clear: both;
+    }
+    li a {
+        background-color: white;
+        margin-bottom: 4px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        float: right;
+    }
+    li.active a {
+        border-right: 0px !important;
+        box-shadow:-3px -0px 4px 1px #ccc;
+        // box-shadow: -3px 2px 4px -2px #ccc;
+    }
+}
+
+
 .project-buttons {
     margin-top: 20px;
 }
@@ -149,7 +207,7 @@
     width: 55px;
     height: 55px;
     cursor: pointer;
-    background: url(img/a02.png) no-repeat;
+    background: url(/static/img/a02.png) no-repeat;
     overflow: hidden;
 }
 .jssora02l { background-position: -3px -33px; }

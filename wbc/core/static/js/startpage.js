@@ -8,7 +8,7 @@ app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $in
 
 app.controller('StartpageController', ['$scope', '$document', '$http', '$window',
     function($scope, $document, $http, $window) {
-    console.log($scope)
+
     $scope.data = { suggestions: [] };
     $scope.noResults = false;
     $scope.currentSearchTerm = "";
@@ -21,6 +21,10 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
         $scope.currentSearchTerm = "";
         $scope.selectedSuggestion = null;
         $scope.selectedSuggestionIdx = -1;
+    };
+
+    $scope.loadDetails = function(result) {
+        window.location.href = result.internal_link;
     };
 
     var focusAutoCompletionResult = function(result) {
@@ -79,7 +83,6 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
 
     $scope.onSearchChanged = function() {
         $scope.noResults = false;
-        console.log("searhc")
         if($scope.currentSearchTerm) {
             $http({
                 method: 'GET',
@@ -88,9 +91,9 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
                     q: $scope.currentSearchTerm
                 }
             }).success(function(response) {
-                $scope.showDetails = false;
                 if (response.results.length) {
                     $scope.data.suggestions = response.results;
+                    console.log($scope.data.suggestions);
                 } else {
                     $scope.data.suggestions = [];
                     $scope.noResults = true;

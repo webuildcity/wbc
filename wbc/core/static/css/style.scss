@@ -68,9 +68,27 @@ h4 {
     height: 100%;
 }
 
+@media (max-width: 880px) {
+    .max-height {
+        height: 50%;
+    }
+}
+
+.fixed-top {
+    position: fixed;
+    width: 31%;
+}
 #side_content {
     overflow-y: scroll;
-    overflow-x: hidden;
+    // overflow-x: hidden;
+}
+
+#main_content {
+    box-shadow: -0px -5px 5px #ccc;
+}
+
+.tab-content {
+    height: 100%;
 }
 
 /** POLY **/

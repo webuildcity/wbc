@@ -106,7 +106,7 @@ def search(request):
         results = []
 
         for result in sqs:
-            resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link)
+            resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link, address_obj=result.address_obj)
             if result.location:
                 resultdict['location'] = [result.location[0], result.location[1]]
 
