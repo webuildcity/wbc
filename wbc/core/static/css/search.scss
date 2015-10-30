@@ -137,7 +137,7 @@
     }
 
     .search-result {
-        height: 45px;
+        overflow: auto;
         padding-left: 1em;
         border-bottom: 1px solid #ccc;
 
@@ -146,6 +146,13 @@
             padding-top: 0.5em;
             padding-right: 1em;
             color: $headline-color;
+        }
+
+        a {
+            margin-top: 3px;
+        }
+        p {
+            margin-bottom: 5px;
         }
     }
 
