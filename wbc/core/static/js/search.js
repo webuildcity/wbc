@@ -122,6 +122,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         MapService.map.fitBounds(focusedPoly.getBounds(), {
             padding: [30, 30]
         });
+
+        focusedPoly.setStyle({color: '#3E445C', fillColor: '#70D9E8'});
     };
 
 
