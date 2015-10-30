@@ -120,17 +120,19 @@ SearchController
             <div class="collapse-heading" data-toggle="collapse" data-target=".result-list"><i class="result-anchor anchor fa fa-list-ul"> </i>Ergebnisse</div>
             <p id="result-number" class="wbc-dropdown-container text-muted" ng-if="resultLength">{[{resultLength}]} Einträge gefunden</p>
             <div class="result-list in wbc-dropdown-container">
-                <div ng-repeat="result in results">
+                <div class="clearfix" ng-repeat="result in results">
                     <div class="search-result" ng-mouseover="focusResult(result)">
                         <div class="result-type" ng-switch on="result.type">
                             <i ng-switch-when="project" class="fa fa-home fa-2x"></i>
                             <i ng-switch-when="stakeholder" class="fa fa-user fa-2x"></i>
                         </div>
-                        <a ng-href="{[{result.internal_link}]}">
-                            <b>{[{ result.name }]}</b>
-                        </a>
-                        <p ng-if="result.address_obj">{[{ result.address_obj }]}</p>
-                        <p ng-if="!result.address_obj">Keine Adresse</p>
+                        <div class="pull-left"> 
+                            <a ng-href="{[{result.internal_link}]}">
+                                <b>{[{ result.name }]}</b>
+                            </a>
+                            <p ng-if="result.address_obj">{[{ result.address_obj }]}</p>
+                            <p ng-if="!result.address_obj">Keine Adresse</p>
+                        </div>
                         <div class="pull-right">
                             <i ng-if="result.polygon" class="fa fa-globe"></i>
                         </div>
