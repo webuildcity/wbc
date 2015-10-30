@@ -15,7 +15,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     };
 
     $scope.formData = {};
-
+    
     var polygonColor = null;
     var cssPolyRule = getRuleForSelector('.poly');
     if(cssPolyRule) {
@@ -30,50 +30,67 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         fillOpacity: 0.05
     };
 
+    var search = function(data){
+        $http({
+            method: 'POST',
+            url:  '/search/',
+            data: data
+        }).success(function(response) {
+            if(multipoly != []) {
+               MapService.map.removeLayer(multipoly);
+            }
+            $scope.resultLength = response.length
+            $scope.tagFacets = response.facets.fields.tags;
+            $scope.entitiesFacets = response.facets.fields.entities;
+
+            if (response.results.length>0) {
+                $scope.results = response.results;
+                $scope.suggestion = null;
+                multipoly=[];
+                response.results.forEach(function(result){
+                    if(result.polygon)  {
+                        multipoly.push(result.polygon[0])
+                    }
+                });
+                multipoly = L.multiPolygon(multipoly)
+                    .setStyle(polygonOptions)
+                    .addTo(MapService.map);
+                MapService.map.fitBounds(multipoly.getBounds(), {
+                    padding: [30, 30]
+                });
+
+                //scroll things
+                setTimeout(function() {
+                    moveScroller('.tag-anchor', '#search_sidebar');
+                    moveScroller('.region-anchor', '#search_sidebar');
+                    moveScroller('.result-anchor', '#search_sidebar');
+                    $('.collapse-heading .anchor').click(function(){
+                        if($(this).hasClass('fixed-top')){
+                            
+                            var container = $('#search_sidebar')
+                            var scrollTo = $(this).parent();
+                            container.animate({
+                                scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop() -70
+                            });
+                        }
+                    });
+                }, 100);
+
+
+            } else {
+                $scope.results = [];
+                $scope.suggestion = response.suggestion;
+            }
+        });
+    }
+
     var multipoly = [];
     $scope.onSearchChanged = function() {
         $scope.noResults = false;
-        console.log($scope.formData);
+        search($scope.formData);
         // console.log($.param($scope.formData));
         // if($scope.currentSearchTerm) {
-            $http({
-                method: 'POST',
-                url:  '/search/',
-                data: $scope.formData
-            }).success(function(response) {
-                if(multipoly != []) {
-                   MapService.map.removeLayer(multipoly);
-                }
-                console.log(response);
-                console.log($scope.formData);
-                // $scope.showDetails = false;
-                $scope.resultLength = response.length
-                $scope.facets = response.facets.fields.tags;
-                $scope.entitiesFacets = response.facets.fields.entities;
-                if (response.results.length) {
-                    $scope.results = response.results;
-                    $scope.suggestion = null;
-                    multipoly=[];
-                    response.results.forEach(function(result){
-                        console.log(result.polygon)
-                        if(result.polygon)  {
-                            multipoly.push(result.polygon[0])
-                        }
-                    });
-                    multipoly = L.multiPolygon(multipoly)
-                        .setStyle(polygonOptions)
-                        .addTo(MapService.map);
-                    console.log(multipoly)
-                    MapService.map.fitBounds(multipoly.getBounds(), {
-                        padding: [30, 30]
-                    });
-
-                    // $scope.showLanding = false;
-                } else {
-                    $scope.results = [];
-                    $scope.suggestion = response.suggestion;
-                }
-            });
+            
         // } else {
         //     // $scope.results = [];
         //     // $scope.showLanding = true;
@@ -126,11 +143,17 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
         // if poly still focused remove it too
     };
+
+    $scope.toggleSelectedItems = function(event){
+        $(event.target).siblings('.active-facets').toggleClass('hidden');
+    }
+    search($scope.formData);
 }]);
 
 
 /** NON ANGULAR **/
 $(document).ready(function(){
-    moveScroller('.anchor', '#search_sidebar');
+    moveScroller('.search-anchor', '#search_sidebar');
+    moveScroller('#type-anchor', '#search_sidebar');
 });
 

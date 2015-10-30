@@ -31,8 +31,8 @@ SearchController
     <div id="search_sidebar">
         <form id="search" class="search-form">
             {% csrf_token %}
-            <div class="anchor">
-                <div class="input-group">
+            <div class="search-anchor anchor">
+                <div class="input-group search-field">
                     <input
                     placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
                     type="text" class="form-control"
@@ -51,21 +51,40 @@ SearchController
                     </a>
                 </div>
             </div>
-            <div class="form-group">
-                <div ng-repeat="(key, text) in models">
-                    <label>
-                        <input type="checkbox" checklist-model="formData.models" checklist-value="key" checklist-change="onSearchChanged()"> 
+            <div>
+                <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target="#type-facets">
+                    <i id="type-anchor" class="anchor fa fa-circle-o"> </i> Typen
+                </div>
+                <div class="active-facets wbc-dropdown-container">
+                    <div class="facet-item" ng-repeat="model in formData.models">
+                        <span>{[{models[model]}]}</span>
+                        <a class="close-button" ng-click="formData.models.splice(formData.models.indexOf(model), 1)"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                    </div>
+                </div>
+                <div id="type-facets" class="collapse wbc-dropdown-container" >
+                    <div ng-repeat="(key, text) in models"  class="facet-select">
+                        <label>
+                            <input type="checkbox" checklist-model="formData.models" checklist-value="key" checklist-change="onSearchChanged()"> 
                             {[{text}]}
-                    </label>
+                        </label>
+                    </div>
                 </div>
             </div>
             
             <div>
                 <div>  
-                    <div  ng-if="facets.length > 0" class="facet-container">
-                        <h3 class="collapse-heading collapsed" data-toggle="collapse" data-target="#tag-facets">Nach Schlagwörtern filtern</h3>
-                        <div id='tag-facets' class="collapse">
-                            <div ng-repeat="facet in facets">
+                    <div ng-if="tagFacets.length > 0" class="facet-container">
+                        <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target="#tag-facets">
+                            <i class="tag-anchor anchor fa fa-tags"> </i> Schlagwörter
+                        </div>
+                        <div class="active-facets wbc-dropdown-container">
+                            <div class="facet-item" ng-repeat="tag in formData.tags">
+                                <span>{[{tag}]}</span>
+                                <a class="close-button" ng-click="formData.tags.splice(formData.tags.indexOf(tag), 1)"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                            </div>
+                        </div>
+                        <div id='tag-facets' class="collapse wbc-dropdown-container">
+                            <div class="facet-select" ng-repeat="facet in tagFacets">
                                 <label>
                                     <input type="checkbox" checklist-model="formData.tags" checklist-value="facet[0]" checklist-change="onSearchChanged()"> 
                                         {[{facet[0]}]} ({[{facet[1]}]})
@@ -74,9 +93,19 @@ SearchController
                         </div>
                     </div>
                     <div  ng-if="entitiesFacets.length > 0" class="facet-container">
-                        <h3 class="collapse-heading collapsed" data-toggle="collapse" data-target="#region-facets">Nach Regionen filtern</h3>
-                        <div id='region-facets' class='collapse'>
-                            <div ng-repeat="facet in entitiesFacets">
+                        <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target=".region-facets">
+                            <i class="region-anchor anchor fa fa-image"></i>Regionen
+                        </div>
+                        <div class="active-facets wbc-dropdown-container">
+                             <div class="facet-item" ng-repeat="entity in formData.entities">
+                                <span>{[{entity}]}</span>
+                                <a ng-click="formData.entities.splice(formData.entities.indexOf(entity), 1)" class="close-button">
+                                    <i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                                </a>
+                            </div>
+                        </div>
+                        <div id='region-facets' class='region-facets collapse wbc-dropdown-container'>
+                            <div class="facet-select" ng-repeat="facet in entitiesFacets">
                                 <label>
                                     <input type="checkbox" checklist-model="formData.entities" checklist-value="facet[0]" checklist-change="onSearchChanged()"> 
                                         {[{facet[0]}]} ({[{facet[1]}]})
@@ -88,19 +117,27 @@ SearchController
             </div>
         </form>
         <div ng-if="resultLength">
-            <h3 class="collapse-heading" data-toggle="collapse" data-target=".result-list">Ergebnisse</h3>
-                <p ng-if="resultLength">{[{resultLength}]} Einträge gefunden</p>
-                <div class="result-list in">
-                    <div ng-repeat="result in results">
-                        <div class="search-result" ng-mouseover="focusResult(result)">
-                            <a ng-href="{[{result.internal_link}]}">
-                                <b>{[{ result.name }]}</b>
-                            </a>
-                            <p>{[{ result.address_obj }]}  {[{result.type}]}</p>
-                            
+            <div class="collapse-heading" data-toggle="collapse" data-target=".result-list"><i class="result-anchor anchor fa fa-list-ul"> </i>Ergebnisse</div>
+            <p id="result-number" class="wbc-dropdown-container text-muted" ng-if="resultLength">{[{resultLength}]} Einträge gefunden</p>
+            <div class="result-list in wbc-dropdown-container">
+                <div ng-repeat="result in results">
+                    <div class="search-result" ng-mouseover="focusResult(result)">
+                        <div class="result-type" ng-switch on="result.type">
+                            <i ng-switch-when="project" class="fa fa-home fa-2x"></i>
+                            <i ng-switch-when="stakeholder" class="fa fa-user fa-2x"></i>
                         </div>
+                        <a ng-href="{[{result.internal_link}]}">
+                            <b>{[{ result.name }]}</b>
+                        </a>
+                        <p ng-if="result.address_obj">{[{ result.address_obj }]}</p>
+                        <p ng-if="!result.address_obj">Keine Adresse</p>
+                        <div class="pull-right">
+                            <i ng-if="result.polygon" class="fa fa-globe"></i>
+                        </div>
+                        
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 {% endblock %}

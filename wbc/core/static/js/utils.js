@@ -19,7 +19,7 @@ function getRuleForSelector(selector) {
 function moveScroller(anchor, scroller) {
     var move = function() {
         var st = $(scroller).scrollTop();
-        var ot = $(scroller).offset().top;
+        var ot = $(anchor).offset().top;
         var s = $(anchor);
         if(st > ot) {
             s.addClass('fixed-top')

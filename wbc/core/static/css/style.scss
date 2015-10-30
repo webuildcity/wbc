@@ -32,26 +32,26 @@ h1 {
     font-family: dejavu;
     font-weight: bold;
     font-size: 34px;
-    color: $headlines-color;
+    color: $headline-color;
 }
 h2 {
     font-weight: normal;
     font-family: titillium;
     font-size: 28px;
-    color: $headlines-color;
+    color: $headline-color;
 }
 h3 {
     font-family: dejavu;
     font-weight: bold;
     font-size: 16px;
-    color: $headlines-color;
+    color: $headline-color;
     line-height: 20px;
 }
 h4 {
     font-family: dejavu;
     font-weight: bold;
     font-size: 14px;
-    color: $headlines-color;
+    color: $headline-color;
     line-height: 20px;
 }
 
@@ -76,15 +76,14 @@ h4 {
 
 .fixed-top {
     position: fixed;
-    width: 31%;
 }
 #side_content {
-    overflow-y: scroll;
+    // overflow-y: scroll;
     // overflow-x: hidden;
 }
 
 #main_content {
-    box-shadow: -0px -5px 5px #ccc;
+    padding: 0px;
 }
 
 .tab-content {
@@ -97,6 +96,20 @@ h4 {
     color: $primary-color;
 }
 
+/** Close Button **/
+// .close-button {
+//     float:right;
+//     cursor: pointer;
+//     // display:inline-block;
+//     // padding:2px 2px;
+//     // border: 1px solid #ccc;
+
+// }
+
+#close-button:hover {
+    float:right;
+    display:inline-block;
+}
 a,
 a:visited,
 .leaflet-container a,
@@ -112,12 +125,7 @@ a:hover,
 .btn.btn-primary {
     color: white !important;
 }
-.fa {
-    color: $primary-color;
-}
-.fa:hover{
-    color: $primary-color-light;
-}
+
 .admin-area {
     background: rgba(0, 0, 0, 0.1);
     border-radius: 3px;

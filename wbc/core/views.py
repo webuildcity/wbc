@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
+from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
 
@@ -67,16 +68,17 @@ def autocomplete(request):
     })
     return HttpResponse(data, content_type='application/json')
 
-def search(request):
-    if request.method == "POST":
-        data = json.loads(request.body)
+class SearchView(TemplateView):
+
+    template_name = "core/search.html"
+    
+    def search(self, data):
         sqs = SearchQuerySet().facet('tags').facet('entities')
         model_dict = {
             'project' : Project,
             'stakeholder': Stakeholder 
         }
         offset = 0
-
 
         if 'bounds' in data:
             bl = Point(data['bounds']['_southWest']['lat'], data['bounds']['_southWest']['lng'])
@@ -102,7 +104,6 @@ def search(request):
             if len(data['entities']) >0:
                 sqs = sqs.filter(entities__name__in=data['entities'])
             
-
         results = []
 
         for result in sqs:
@@ -122,11 +123,13 @@ def search(request):
             'facets' : sqs.facet_counts(),
             'suggestion': sqs.spelling_suggestion()
         })
-        return HttpResponse(data, content_type='application/json')
-        
-    if request.method=="GET":
-        return render(request, 'core/search.html')
+        return data
 
+    def post(self, request):
+        data = json.loads(request.body)
+        data = self.search(data);
+        return HttpResponse(data, content_type='application/json')
+    
 def map(request):
     return render(request, 'core/map_page.html')
 

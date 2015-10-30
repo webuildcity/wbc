@@ -53,6 +53,12 @@
             height: 30px;
         }
     }
+    .fa {
+    color: $primary-color;
+    }
+    .fa:hover{
+        color: $primary-color-light;
+    }
 }
 
 .navbar {

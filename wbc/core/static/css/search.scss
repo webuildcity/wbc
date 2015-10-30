@@ -1,3 +1,4 @@
+@import 'variables';
 /** AB HIER TEST NEUE SEITE **/
 
 
@@ -6,13 +7,146 @@
     
     #search_sidebar {
         height: 100%;
-        overflow-y: scroll;
-        padding: 0px 10px;
+        overflow-y: auto;
+        // padding: 0px 10px;
+
+        .search-field {
+            padding: 2em 1em;
+        }
+        .fixed-top .search-field {
+            padding: 5px 5px;
+            width: 31%;
+                @media (max-width: 880px){
+                    width: 95%;
+                }
+        }
+        .collapse-heading {
+            // border: 1px solid #E5E5E5;
+            font-size: 15px;
+            color: $primary-color;
+            // background-color: $primary-color-lightest;
+            
+            padding: 8px 15px;
+            font-family: titillium;
+            border-bottom: 1px solid #eee;
+            box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.44);
+            margin-bottom: 0.2em;
+
+            .fa {
+                padding-right: 1em;
+            }
+            .anchor.fixed-top {
+                font-size: 20px;
+                background: #eee;
+                top: 30px;
+                transform: translateY(60px);
+                padding: 5px 15px;
+                border: 1px solid $primary-color;
+                // border-radius: 0px 3px 3px 3px;
+                &.fa-tags {
+                    transform: translate(50px, 60px);
+                }
+                &.fa-image {
+                    transform: translate(104px,60px);
+                }
+                &.fa-list-ul {
+                    transform: translate(158px, 60px);
+                }
+                &:hover {
+                    background: white;
+                }
+            }
+        }
+        .collapse-heading.collapsed {
+            //color: #333;
+            background-color: white;
+            color: $primary-color;
+            // box-shadow: none !important;
+        }
+        .collapse-heading:hover {
+            background-color: #eee;
+            color: $primary-color;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .collapse-heading:after {
+            /* symbol for "opening" panels */
+            font-family: 'Glyphicons Halflings';
+            content: "\e114";    
+            float: right;        
+            /*color: grey;    */
+        }
+        .collapse-heading.collapsed:after {
+            /* symbol for "collapsed" panels */
+            content: "\e080";   
+        }
+
+        .facet-container {
+            overflow: auto
+        }
+        .active-facets {
+            padding-bottom: 0px;
+            overflow:auto;
+
+            .facet-item {
+                padding: .15em .6em .2em;
+                margin: 0 .1em;
+                font-size: 85%;
+                border-radius: .25em;
+                color: white;
+                background-color: $primary-color-light;
+                font-weight: bold;
+                float: left;
+
+                span {
+                    float: left;
+                }
+                a {
+                    float: left;
+                    color: white;
+                    opacity: 0.6;
+                    margin: 0px 0px 0px 0.3em;
+                    position: relative;
+                    bottom: -1px;
+                }
+                a:hover {
+                    opacity: 1.0;
+                }
+            }
+        }
+        .wbc-dropdown-container {
+            margin-left: 10px;
+            // background-color: $primary-color-lightest;
+            border-left: 1px solid #eee;
+
+            .facet-select {
+                padding-left: 10px;
+            }
+            .facet-select:hover {
+                background-color: #eee;
+                color: $primary-color;
+            }
+        }
+
+    }
+
+    #result-number {
+        text-align: right;
+        padding-right: 5px;
+        margin-bottom: 1px;
     }
 
     .search-result {
         height: 45px;
+        padding-left: 1em;
         border-bottom: 1px solid #ccc;
+
+        .result-type {
+            float: left;
+            padding-top: 0.5em;
+            padding-right: 1em;
+            color: $headline-color;
+        }
     }
 
     .search-result:hover {
@@ -22,16 +156,4 @@
 
 #map {
     height: 100%;
-}
-
-.collapse-heading:after {
-    /* symbol for "opening" panels */
-    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
-    content: "\e114";    /* adjust as needed, taken from bootstrap.css */
-    float: right;        /* adjust as needed */
-    /*color: grey;          adjust as needed */
-}
-.collapse-heading.collapsed:after {
-    /* symbol for "collapsed" panels */
-    content: "\e080";    /* adjust as needed, taken from bootstrap.css */
 }

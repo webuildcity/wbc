@@ -13,7 +13,7 @@ app.factory('MapService',['$http',function($http) {
     map.setView(defaultLocation,defaultZoom);
 
     var setViewOptions = {
-        padding: [30, 30],
+        padding: [15, 15],
         maxZoom: 15,
         pan: {
             animate: true,
