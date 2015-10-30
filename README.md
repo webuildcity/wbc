@@ -45,5 +45,4 @@ http://we-build.city/en/about/team/
 
 
 Cheers,
-
-Jochen, Magda, Umut, Solveig, Volker, Sarah and Timo 
+[Magda (Berlin)] (https://github.com/MagdaN), [Jochen (Berlin)] (https://github.com/jochenklar), [Umut (Berlin)] (https://github.com/umut0), [Solveig (Hamburg)] (https://github.com/solveigs), [Volker (Hamburg)] (https://github.com/vse), [Sarah (Hamburg)] (http://lundelius.com), [Timo (Hamburg)] (https://github.com/lundelius)
