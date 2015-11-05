@@ -15,7 +15,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     };
 
     $scope.formData = {};
-    
+    var allResultPoly = null;
+    // var polygonLayer = null;
     var polygonColor = null;
     var cssPolyRule = getRuleForSelector('.poly');
     if(cssPolyRule) {
@@ -30,15 +31,27 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         fillOpacity: 0.05
     };
 
+    var highlightFunction = function(id){
+        // console.log(id);
+        var resultDiv = $('#result-'+id);
+        var $parentDiv = $('#search_sidebar');
+        resultDiv.toggleClass('selected');
+        $parentDiv.scrollTop($parentDiv.scrollTop() + resultDiv.position().top - $parentDiv.height()/2 + resultDiv.height()/2);
+
+        // return null;
+    }
+
     var search = function(data){
         $http({
             method: 'POST',
             url:  '/search/',
             data: data
         }).success(function(response) {
-            if(multipoly != []) {
-               MapService.map.removeLayer(multipoly);
-            }
+            MapService.clearPolys();
+            console.log("clear");
+            // if(polygonLayer != null) {
+            //    MapService.map.removeLayer(multipoly);
+            // }
             $scope.resultLength = response.length
             $scope.tagFacets = response.facets.fields.tags;
             $scope.entitiesFacets = response.facets.fields.entities;
@@ -46,35 +59,48 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             if (response.results.length>0) {
                 $scope.results = response.results;
                 $scope.suggestion = null;
-                multipoly=[];
+                var multipoly = [];
+
                 response.results.forEach(function(result){
                     if(result.polygon)  {
-                        multipoly.push(result.polygon[0])
+                        // console.log(result);
+                        result.polygon.id = result.pk;
+                        MapService.loadPoly(result.polygon, result.pk, highlightFunction);
+                        multipoly.push(result.polygon[0]);
                     }
                 });
-                multipoly = L.multiPolygon(multipoly)
-                    .setStyle(polygonOptions)
-                    .addTo(MapService.map);
-                MapService.map.fitBounds(multipoly.getBounds(), {
+                allResultPoly = L.multiPolygon(multipoly);
+                //     .setStyle(polygonOptions)
+                //     .addTo(MapService.map);
+
+                // var highlightFeature = function(){
+                //     console.log("yo")
+                // }
+                // multipoly.on({
+                //     mouseover: highlightFeature,
+                // });
+
+
+                MapService.map.fitBounds(allResultPoly.getBounds(), {
                     padding: [30, 30]
                 });
 
-                //scroll things
-                setTimeout(function() {
-                    moveScroller('.tag-anchor', '#search_sidebar');
-                    moveScroller('.region-anchor', '#search_sidebar');
-                    moveScroller('.result-anchor', '#search_sidebar');
-                    $('.collapse-heading .anchor').click(function(){
-                        if($(this).hasClass('fixed-top')){
+                // //scroll things
+                // setTimeout(function() {
+                //     moveScroller('.tag-anchor', '#search_sidebar');
+                //     moveScroller('.region-anchor', '#search_sidebar');
+                //     moveScroller('.result-anchor', '#search_sidebar');
+                //     // $('.collapse-heading .anchor').click(function(){
+                //     //     if($(this).hasClass('fixed-top')){
                             
-                            var container = $('#search_sidebar')
-                            var scrollTo = $(this).parent();
-                            container.animate({
-                                scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop() -70
-                            });
-                        }
-                    });
-                }, 100);
+                //     //         var container = $('#search_sidebar')
+                //     //         var scrollTo = $(this).parent();
+                //     //         container.animate({
+                //     //             scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop() -70
+                //     //         });
+                //     //     }
+                //     // });
+                // }, 100);
 
 
             } else {
@@ -84,7 +110,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         });
     }
 
-    var multipoly = [];
+    // var multipoly = [];
     $scope.onSearchChanged = function() {
         $scope.noResults = false;
         search($scope.formData);
@@ -103,27 +129,36 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $scope.onSearchChanged();
     };
     var focusedPoly = null;
+    
     $scope.focusPoly = function(poly) {
-        if(focusedPoly) {
-            MapService.map.removeLayer(focusedPoly);
-        }
-        var polygonOptions = {
-            weight: 3,
-            color: '#de6a00',
-            opacity: 1,
-            fill: true,
-            fillColor: '#de6a00',
-            fillOpacity: 0.05
-        };
+        // console.log($('.poly-'+poly.pk));
 
-        focusedPoly = L.multiPolygon(poly)
-            .setStyle(polygonOptions)
-            .addTo(MapService.map);
-        MapService.map.fitBounds(focusedPoly.getBounds(), {
+        $('.poly-'+poly.pk).attr('class', 'leaflet-clickable focused-poly poly-'+poly.pk);
+        var tempPoly = L.multiPolygon(poly.polygon);
+        MapService.map.fitBounds(tempPoly.getBounds(), {
             padding: [30, 30]
         });
 
-        focusedPoly.setStyle({color: '#3E445C', fillColor: '#70D9E8'});
+        // if(focusedPoly) {
+        //     MapService.map.removeLayer(focusedPoly);
+        // }
+        // var polygonOptions = {
+        //     weight: 3,
+        //     color: '#de6a00',
+        //     opacity: 1,
+        //     fill: true,
+        //     fillColor: '#de6a00',
+        //     fillOpacity: 0.05
+        // };
+
+        // focusedPoly = L.multiPolygon(poly)
+        //     .setStyle(polygonOptions)
+        //     .addTo(MapService.map);
+        // MapService.map.fitBounds(focusedPoly.getBounds(), {
+        //     padding: [30, 30]
+        // });
+
+        // focusedPoly.setStyle({color: '#3E445C', fillColor: '#70D9E8'});
     };
 
 
@@ -131,7 +166,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
 
         if(result.polygon !== undefined) {
-            $scope.focusPoly(result.polygon);
+            $scope.focusPoly(result);
             return;
         }
 
@@ -141,7 +176,31 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         }
 
         // nothing to focus
-        MapService.resetToDefaults();
+        // MapService.resetToDefaults();
+
+        // if poly still focused remove it too
+    };
+
+    $scope.defocusResult = function(result) {
+
+
+        if(result.polygon !== undefined) {
+            // $scope.focusPoly(result);
+            $('.poly-'+result.pk).attr('class', 'leaflet-clickable poly-'+result.pk);
+            MapService.map.fitBounds(allResultPoly.getBounds(), {
+                padding: [30, 30]
+            });
+
+            return;
+        }
+
+        // if(result.location !== undefined) {
+        //     $scope.focusLocation(result.location);
+        //     return;
+        // }
+
+        // nothing to focus
+        // MapService.resetToDefaults();
 
         // if poly still focused remove it too
     };
@@ -156,6 +215,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 /** NON ANGULAR **/
 $(document).ready(function(){
     moveScroller('.search-anchor', '#search_sidebar');
-    moveScroller('#type-anchor', '#search_sidebar');
+    // moveScroller('#type-anchor', '#search_sidebar');
 });
 

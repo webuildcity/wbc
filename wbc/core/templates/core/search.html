@@ -51,6 +51,8 @@ SearchController
                     </a>
                 </div>
             </div>
+            <div class="height-taker">
+            </div>
             <div>
                 <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target="#type-facets">
                     <i id="type-anchor" class="anchor fa fa-circle-o"> </i> Typen
@@ -121,7 +123,7 @@ SearchController
             <p id="result-number" class="wbc-dropdown-container text-muted" ng-if="resultLength">{[{resultLength}]} Einträge gefunden</p>
             <div class="result-list in wbc-dropdown-container">
                 <div class="clearfix" ng-repeat="result in results">
-                    <div class="search-result" ng-mouseover="focusResult(result)">
+                    <div id="result-{[{result.pk}]}" class="search-result" ng-mouseover="focusResult(result)" ng-mouseout="defocusResult(result)">
                         <div class="result-type" ng-switch on="result.type">
                             <i ng-switch-when="project" class="fa fa-home fa-2x"></i>
                             <i ng-switch-when="stakeholder" class="fa fa-user fa-2x"></i>

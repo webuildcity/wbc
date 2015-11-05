@@ -17,6 +17,11 @@
 
 * * * * * * * * { outline: 1px solid blue }*/
 
+body {
+    background: $background-image-light;
+}
+
+
 #project_map {
     height: 100%;
     
@@ -26,57 +31,95 @@
     }
 }
 
-.details-headline {
-    float: left;
-}
+#project_sidebar {
+    overflow-y: auto;
+    height: 100%;
 
-.fixed-top {
-    .details-headline {
-        // background: rgba(250, 250, 250, 0.9);
-        background-color: white;
-        padding: 5px;
-        border-radius: 2px;
-        // border: 1px solid $primary-color-light;
-        box-shadow: 2px 0px 2px 2px #ccc;
-
+    .fixed-top {
+        .details-headline {
+            // background: rgba(250, 250, 250, 0.9);
+            background-color: white;
+            padding: 5px;
+            border-radius: 2px;
+            // border: 1px solid $primary-color-light;
+            box-shadow: 2px 0px 2px 2px #ccc;
+            float: left;
+        }
+        h1 {
+            margin: 0px;
+            padding: 0px 5px 5px 5px;
+        }
     }
-    h1 {
-        margin: 0px;
-        padding: 0px 5px 5px 5px;
-    }
-} 
 
-.sidebar-nav {
-    padding: 0;
-    width: 100px;
-    float: right;
-    position: relative;
-    right: -18px;
-    z-index: 2;
-    border-bottom: 0px;
+    .current-step  {
+        background: white;
+        // margin: 1em;
+        padding: 1em;
+        .fa-stack {
+            z-index: 3;
+            float: left;
+            // position: absolute;
+            // top: -15px;
+            // left: -20px;
+            // background: $primary-color;
+        }
+        .fa-circle-o {
+            color: white;
+        }
+        .fa-gears {
+            color: $headline-color;
+            z-index: 5;
+            position: relative;
+        } 
+        p {
+            padding-left: 1em;
+        }
+        // p {
+        //     position: relative;
+        //     padding: 1em;
+        //     z-index: 4;
+        //     background: white;
+        //     border: 1px solid $primary-color-light;
+        // }
+    } 
     
-    ul {
-        float: none;
-        display: block;
-    }
-    li {
-        float: none;
-        display: block;
-        clear: both;
-    }
-    li a {
-        background-color: white;
-        margin-bottom: 4px;
-        padding-top: 12px;
-        padding-bottom: 12px;
-        float: right;
-    }
-    li.active a {
-        border-right: 0px !important;
-        box-shadow:-3px -0px 4px 1px #ccc;
-        // box-shadow: -3px 2px 4px -2px #ccc;
-    }
 }
+
+.main-content-nav {
+    width: 100%;
+    height:  42px;
+}
+// .sidebar-nav {
+//     padding: 0;
+//     width: 100px;
+//     float: right;
+//     position: relative;
+//     right: -18px;
+//     z-index: 2;
+//     border-bottom: 0px;
+    
+//     ul {
+//         float: none;
+//         display: block;
+//     }
+//     li {
+//         float: none;
+//         display: block;
+//         clear: both;
+//     }
+//     li a {
+//         background-color: white;
+//         margin-bottom: 4px;
+//         padding-top: 12px;
+//         padding-bottom: 12px;
+//         float: right;
+//     }
+//     li.active a {
+//         border-right: 0px !important;
+//         box-shadow:-3px -0px 4px 1px #ccc;
+//         // box-shadow: -3px 2px 4px -2px #ccc;
+//     }
+// }
 
 
 .project-buttons {
@@ -314,14 +357,22 @@
 /* GENERAL*/
 
 .content-container {
-    padding: 0px 5px 5px 5px;
-    margin: 5px 0px;
+    padding: 0em 1em 1em 1em;
+    border-bottom: 1px solid #eee;
+    overflow: auto;
+}
+
+.content-container:hover {
+    // padding: 0px 5px 5px 5px;
+    // margin: 5px 0px;
     /*border: 1px solid  #ccc;*/
-    border-radius: 4px;
-    box-shadow: 2px 2px 5px #ccc;
+    // border-radius: 4px;
+    // box-shadow: 2px 2px 5px #ccc;
     /*background: rgba(252, 240, 229,0.5);*/
-    background: rgba(240,240,240,0.5);
-    overflow: hidden;
+    // background: rgba(240,240,240,0.5);
+    background: white;
+    // cursor: pointer;
+    // overflow: hidden;
 }
 
 .wbc-button {
@@ -331,7 +382,7 @@
     color: #646464;
     line-height: 20px;
     text-align: center;
-    width: 100%;
+    // width: 100%;
     box-shadow: 2px 2px 5px #ccc;
     border:1px solid #F2C399; 
     -webkit-border-radius: 3px; 

@@ -1,5 +1,5 @@
 {% extends 'core/layout_split.html' %}
-{% load staticfiles compress %}
+{% load staticfiles compress lineage %}
 
 {% block css %}
     {% compress css %}
@@ -38,22 +38,19 @@ DetailsController
 {% endblock %}
 
 {% block side_content %}
+<div id="project_sidebar">
     <div class="anchor">
         <div class="details-headline">
             <h1> {{project.name}} </h1>    
             {% if project.address_obj %}
-            <div class="address map-link">
-                {{project.address_obj}}
-            </div>
+
+            <a class="map-link" data-toggle="tab" href="#project_map">
+                <div class="address">
+                    {{project.address_obj}}
+                </div>
+            </a>
             {% endif %}
         </div>
-
-        <ul class="sidebar-nav nav nav-tabs" data-tabs="tabs">
-            <li class="active"><a data-toggle="tab" href="#info">Info</a></li>
-            <li><a class="map-link" data-toggle="tab" href="#project_map">Karte</a></li>
-            <li><a data-toggle="tab" href="#gallery">Gallery</a></li>
-            <li><a data-toggle="tab" href="#timeline">Events</a></li>
-        </ul>
     </div>
 
     <div id="subscribe-widget" class="widget">
@@ -66,26 +63,49 @@ DetailsController
         </button>
     </div>
 
-    {% if nextDate %}
-    <div id="next-date-widget" class="widget">
-        <div class="content-container">
-            <h3><i class="fa fa-calendar"> </i>Nächster Termin</h3>
-            <p>{{nextDate.title}}</p>
-            <p>{{nextDate.begin}}</p>
-            <p>{{nextDate.address}}</p>
+    {% if processSteps %}
+        <h3>Aktuelle(r) Verfahrenssschritt(e)</h3>
+        {% for pub in processSteps %}
+        <div class="current-step tooltip-container">
+             <span class="fa-stack fa-2x">
+                <i class="fa fa-circle-o fa-stack-2x"></i>
+                <i class="fa fa-gears fa-stack-1x fa-inverse"></i>
+            </span>
+            <p>
+            {{pub.process_step}}
+            </p>
+            <div class="tooltip"> 
+                <p><b>{{pub.process_step}}</b></p>
+                {{pub.process_step.description}} 
+            </div>
         </div>
-    </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if nextDate %}
+    <a data-toggle="tab" href="#timeline">
+        <div id="next-date-widget" class="widget">
+            <div class="content-container">
+                <h3><i class="fa fa-calendar"> </i>Nächster Termin</h3>
+                <p>{{nextDate.title}}</p>
+                <p>{{nextDate.begin}}</p>
+                <p>{{nextDate.address}}</p>
+            </div>
+        </div>
+    </a>
     {% endif %}
     
     {% if lastNews %}
-    <div id="next-date-widget" class="widget">
-        <div class="content-container"> 
-            <h3><i class="fa fa-newspaper-o"> </i>Letzte Neuigkeiten</h3>
-            <p>{{lastNews.title}}</p>
-            <p>{{lastNews.teaser}}</p>
-            <a href={{lastNews.link}}>Mehr</a>
+    <a data-toggle="tab" href="#timeline">
+        <div id="next-date-widget" class="widget">
+            <div class="content-container"> 
+                <h3><i class="fa fa-newspaper-o"> </i>Letzte Neuigkeiten</h3>
+                <p>{{lastNews.title}}</p>
+                <p>{{lastNews.teaser}}</p>
+                <a href={{lastNews.link}}>Mehr</a>
+            </div>
         </div>
-    </div>
+    </a>
     {% endif %}
 
     
@@ -100,36 +120,18 @@ DetailsController
     </div>
     {% endif %}
 
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-
-    {{ project.description | linebreaks }}
-    {{ project.description | linebreaks }}
-
-
+</div>
 {% endblock %}
 
 
 {% block main_content %}
-    <div id="tab-content" class="tab-content max-height">
+    <ul class="main-content-nav nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a data-toggle="tab" href="#info">Info</a></li>
+        <li><a class="map-link" data-toggle="tab" href="#project_map">Karte</a></li>
+        <li><a data-toggle="tab" href="#gallery">Gallery</a></li>
+        <li><a data-toggle="tab" href="#timeline">Events</a></li>
+    </ul>
+    <div id="tab-content" class="tab-content">
         <div id="info" class="tab-pane active">
             <div class="content-container">
                 <h3>Beschreibung</h3>

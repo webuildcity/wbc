@@ -5,6 +5,8 @@ app.factory('MapService',['$http',function($http) {
         'scrollWheelZoom': true
     });
     var focusedPoly = undefined;
+    var polygonLayer= new L.layerGroup();
+    map.addLayer(polygonLayer);
 
     var defaultLocation = new L.LatLng(_default_view.lat,_default_view.lon);
     var defaultZoom = _default_view.zoom;
@@ -43,7 +45,7 @@ app.factory('MapService',['$http',function($http) {
             map.setView(defaultLocation, defaultZoom,  setViewOptions);
         },
 
-        loadPoly: function(poly) {
+        loadPoly: function(poly, id, highlight) {
             var cssPolyRule = getRuleForSelector('.poly');
             if(cssPolyRule) {
                 polygonColor = cssPolyRule.style.color;
@@ -56,13 +58,33 @@ app.factory('MapService',['$http',function($http) {
                     opacity: 1,
                     fill: true,
                     fillColor: polygonColor,
-                    fillOpacity: 0.05
+                    fillOpacity: 0.05,
+                    className: 'poly-'+id
                 };
 
                 var polygon = L.multiPolygon(poly).setStyle(polygonOptions);
-                polygon.addTo(map);
-                focusedPoly = polygon;
+                polygonLayer.addLayer(polygon);
+
+                polygon.on('mouseover', function() {
+                    $('.poly-'+id).attr('class', 'leaflet-clickable focused-poly poly-'+id);
+                    if (highlight)
+                        highlight(id);
+                    focusedPoly = polygon;
+                });
+                polygon.on('mouseout', function() {
+                    $('.poly-'+id).attr('class', 'leaflet-clickable poly-'+id);
+                    // polygon.setStyle({className: 'poly-'+id});
+                    if (highlight)
+                        highlight(id);
+                    focusedPoly = null;
+                });
             }
+        },
+
+        clearPolys: function(){
+            map.removeLayer(polygonLayer);
+            polygonLayer = new L.layerGroup();
+            map.addLayer(polygonLayer);
         }
     };
 }]);

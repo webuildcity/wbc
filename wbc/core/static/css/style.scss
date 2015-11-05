@@ -60,7 +60,7 @@ h4 {
     position: absolute;
     top: 50px;
     bottom: 0px;
-    overflow: hidden;
+    // overflow: hidden;
     width: 100%;
 }
 
@@ -78,6 +78,7 @@ h4 {
     position: fixed;
 }
 #side_content {
+    padding: 0px;
     // overflow-y: scroll;
     // overflow-x: hidden;
 }
@@ -87,13 +88,47 @@ h4 {
 }
 
 .tab-content {
-    height: 100%;
+    // height: 100%;
+    position: absolute;
+    top: 42px;
+    bottom: 0px;
+    width: 100%;
 }
 
 /** POLY **/
 
 .poly {
     color: $primary-color;
+}
+
+
+/** TOOLTIP **/
+.tooltip-container {
+    position:relative;
+}
+
+.tooltip { /* hide and position tooltip */
+  top:10px;
+  background-color:white;
+  border: 1px solid $primary-color;
+  color:$headline-color;
+  border-radius:5px;
+  opacity:0;
+  padding: 1em;
+  left: 100px;
+  position:absolute;
+  -webkit-transition: opacity 0.5s;
+  -moz-transition: opacity 0.5s;
+  -ms-transition: opacity 0.5s;
+  -o-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+  visibility: hidden;
+}
+
+.tooltip-container:hover .tooltip { /* display tooltip on hover */
+    visibility: visible;
+    opacity:1;
+    // display: block;
 }
 
 /** Close Button **/

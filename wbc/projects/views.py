@@ -130,6 +130,7 @@ def project_request(request, p):
                 for pub in publications.filter(process_step = step):
                     step.publication = pub
 
+    print p.publication_set.filter(begin__lte=today, end__gte=today)
     return render(request,'projects/project_new.html',{
         'project' : p,
         'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
@@ -139,6 +140,7 @@ def project_request(request, p):
         'lastNews': p.events.filter(media__isnull=False).order_by('begin').first(),
         'tags'    : p.tags.all(),
         'stakeholders' : p.stakeholders.all(),
+        'processSteps': p.publication_set.filter(begin__lte=today, end__gte=today),
         # 'publications' : p.publication_set.all().order_by('process_step__process_type__name','process_step__order'),
         #'processSteps' : ProcessStep.objects.filter(publication_processsteps),
          'processTypes' : processTypeList
