@@ -1,5 +1,5 @@
 {% extends 'core/layout_split.html' %}
-{% load staticfiles compress lineage %}
+{% load staticfiles compress %}
 
 {% block css %}
     {% compress css %}
@@ -41,7 +41,7 @@ DetailsController
 <div id="project_sidebar">
     <div class="anchor">
         <div class="details-headline content-container">
-            <h1> {{project.name}} </h1>    
+            <h1> {{project.name}} </h1>
             {% if project.address_obj %}
 
             <a class="map-link" data-toggle="tab" href="#project_map">
@@ -74,9 +74,9 @@ DetailsController
             <p>
             {{pub.process_step}}
             </p>
-            <div class="tooltip"> 
+            <div class="tooltip">
                 <p><b>{{pub.process_step}}</b></p>
-                {{pub.process_step.description}} 
+                {{pub.process_step.description}}
             </div>
         </div>
         {% endfor %}
@@ -94,11 +94,11 @@ DetailsController
         </div>
     </a>
     {% endif %}
-    
+
     {% if lastNews %}
     <a data-toggle="tab" href="#timeline">
         <div id="next-date-widget" class="widget">
-            <div class="content-container"> 
+            <div class="content-container">
                 <h3><i class="fa fa-newspaper-o"> </i>Letzte Neuigkeiten</h3>
                 <p>{{lastNews.title}}</p>
                 <p>{{lastNews.teaser}}</p>
@@ -108,7 +108,7 @@ DetailsController
     </a>
     {% endif %}
 
-    
+
     {% if tags %}
     <div id="tags-widget" class="widget">
         <div class="content-container">
@@ -139,16 +139,16 @@ DetailsController
                     {{ project.description | linebreaks }}
                 </p>
 
-                {% if project.description_official %}                    
+                {% if project.description_official %}
                  <p>
                     <strong>Genaue örtliche Beschreibung (Amtsblatt):</strong> {{ project.description_official }}
                  </p>
                 {% endif %}
-                
+
                 <p>
                     <strong>im Bezirk/in den Bezirken:</strong> {{ project.entities.all|join:", "}}
                 </p>
-            </div> 
+            </div>
 
             {% if processTypes %}
                 {% include "process/process_bar.html" %}
@@ -180,10 +180,10 @@ DetailsController
             {% include "projects/project_events.html" %}
         </div>
         </div>
-    </div>    
+    </div>
 {% endblock %}
-        
-        
+
+
 
 
     <!--     {% if gallery != true %}
@@ -196,7 +196,7 @@ DetailsController
 
 
 
-        
+
         <!-- {% if user.is_authenticated %}
         <div class="col-md-3">
             <ul class="list-unstyled admin-area" style="margin-top: 50px;">
