@@ -1,9 +1,11 @@
+
 app.factory('MapService',['$http',function($http) {
 
     var map = new L.Map("map", {
         'zoomControl': true,
         'scrollWheelZoom': true
     });
+
     var focusedPoly = undefined;
     var polygonLayer= new L.layerGroup();
     map.addLayer(polygonLayer);
@@ -11,8 +13,25 @@ app.factory('MapService',['$http',function($http) {
     var defaultLocation = new L.LatLng(_default_view.lat,_default_view.lon);
     var defaultZoom = _default_view.zoom;
 
-    map.addLayer(new L.TileLayer(_tiles_url,_tiles_opt));
+
+    var baseTileLayer = new L.TileLayer(_tiles_url,_tiles_opt);
+
+    map.addLayer(baseTileLayer);
     map.setView(defaultLocation,defaultZoom);
+
+
+
+    // FIXME: there should be a better way to toggle this
+
+    if(L.control.minimap !== undefined) {
+        var minimapTiles = L.tileLayer(_tiles_url);
+        var minimap = L.control.minimap(minimapTiles, {
+            zoomLevelFixed: 11,
+            autoToggleDisplay: true
+        });
+        minimap.addTo(map);
+    };
+
 
     var setViewOptions = {
         padding: [15, 15],
@@ -29,6 +48,31 @@ app.factory('MapService',['$http',function($http) {
     return {
 
         map: map,
+
+        showMinimap: function() {
+            // FIXME
+            if(minimap) {
+                try {
+                    minimap.addTo(map);
+                } catch (e) {
+                    console.log(e);
+                    // pass
+                }
+
+            }
+        },
+
+        hideMinimap: function() {
+            // FIXME
+            if(minimap) {
+                try {
+                    minimap.removeFrom(map);
+                } catch (e) {
+                    console.log(e);
+                    // pass
+                }
+            }
+        },
 
         focusLocation: function(point) {
             map.setView(point, 15, setViewOptions);

@@ -6,11 +6,13 @@
     {{block.super}}
     <link rel="stylesheet" type="text/x-scss" href="{% static "css/search.scss" %}" />
     <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
+    <link rel="stylesheet" href="{% static 'lib/leaflet/Control.MiniMap.min.css' %}" />
     {% endcompress %}
 {% endblock %}
 
 {% block js %}
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/leaflet/Control.MiniMap.min.js' %}" ></script>
 
     <script type="text/javascript" src="{% static 'lib/angular/checklist-model.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
@@ -47,13 +49,13 @@ SearchController
                 </div>
                 <div ng-if="suggestion" class="suggestion-container">
                     Meinten Sie: <a href="" ng-click="selectTerm(suggestion)">
-                        {[{suggestion}]} 
+                        {[{suggestion}]}
                     </a>
                 </div>
             </div>
             <div class="height-taker">
-            </div>        
-    
+            </div>
+
             <div ng-if="entitiesFacets.length > 0" class="facet-container">
                 <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target=".region-facets">
                     <i class="region-anchor anchor fa fa-image"></i>Stadtteile
@@ -69,7 +71,7 @@ SearchController
                 <div id='region-facets' class='region-facets collapse wbc-dropdown-container'>
                     <div class="facet-select" ng-repeat="facet in entitiesFacets">
                         <label>
-                            <input type="checkbox" checklist-model="formData.entities" checklist-value="facet[0]" checklist-change="onSearchChanged()"> 
+                            <input type="checkbox" checklist-model="formData.entities" checklist-value="facet[0]" checklist-change="onSearchChanged()">
                                 {[{facet[0]}]} ({[{facet[1]}]})
                         </label>
                     </div>
@@ -89,13 +91,13 @@ SearchController
                 <div id='tag-facets' class="collapse wbc-dropdown-container">
                     <div class="facet-select" ng-repeat="facet in tagFacets">
                         <label>
-                            <input type="checkbox" checklist-model="formData.tags" checklist-value="facet[0]" checklist-change="onSearchChanged()"> 
+                            <input type="checkbox" checklist-model="formData.tags" checklist-value="facet[0]" checklist-change="onSearchChanged()">
                                 {[{facet[0]}]} ({[{facet[1]}]})
                         </label>
                     </div>
                 </div>
             </div>
-            
+
             <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target="#type-facets">
                 <i id="type-anchor" class="anchor fa fa-circle-o"> </i> Typen
             </div>
@@ -108,12 +110,12 @@ SearchController
             <div id="type-facets" class="collapse wbc-dropdown-container" >
                 <div ng-repeat="(key, text) in models"  class="facet-select">
                     <label>
-                        <input type="checkbox" checklist-model="formData.models" checklist-value="key" checklist-change="onSearchChanged()"> 
+                        <input type="checkbox" checklist-model="formData.models" checklist-value="key" checklist-change="onSearchChanged()">
                         {[{text}]}
                     </label>
                 </div>
             </div>
-            
+
         </form>
         <div ng-if="resultLength">
             <div class="collapse-heading" data-toggle="collapse" data-target=".result-list"><i class="result-anchor anchor fa fa-list-ul"> </i>Ergebnisse</div>
@@ -125,7 +127,7 @@ SearchController
                             <i ng-switch-when="project" class="fa fa-home fa-2x"></i>
                             <i ng-switch-when="stakeholder" class="fa fa-user fa-2x"></i>
                         </div>
-                        <div class="pull-left"> 
+                        <div class="pull-left">
                             <a ng-href="{[{result.internal_link}]}">
                                 <b>{[{ result.name }]}</b>
                             </a>
@@ -135,7 +137,7 @@ SearchController
                         <div class="pull-right">
                             <i ng-if="result.polygon" class="fa fa-globe"></i>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

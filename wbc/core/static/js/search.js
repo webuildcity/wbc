@@ -9,6 +9,8 @@ app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $in
 app.controller('SearchController', ['$scope', '$document', '$http', '$window', 'MapService',
     function($scope, $document, $http, $window, MapService) {
 
+    console.log(MapService)
+
     $scope.models = {
         'project': 'Projekte',
         'stakeholder': 'Akteure'
@@ -92,7 +94,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 //     moveScroller('.result-anchor', '#search_sidebar');
                 //     // $('.collapse-heading .anchor').click(function(){
                 //     //     if($(this).hasClass('fixed-top')){
-                            
+
                 //     //         var container = $('#search_sidebar')
                 //     //         var scrollTo = $(this).parent();
                 //     //         container.animate({
@@ -116,7 +118,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         search($scope.formData);
         // console.log($.param($scope.formData));
         // if($scope.currentSearchTerm) {
-            
+
         // } else {
         //     // $scope.results = [];
         //     // $scope.showLanding = true;
@@ -129,7 +131,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $scope.onSearchChanged();
     };
     var focusedPoly = null;
-    
+
     $scope.focusPoly = function(poly) {
         // console.log($('.poly-'+poly.pk));
 
