@@ -44,7 +44,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     var search = function(data){
         $http({
             method: 'POST',
-            url:  '/search/',
+            url:  '/suche/',
             data: data
         }).success(function(response) {
             MapService.clearPolys();

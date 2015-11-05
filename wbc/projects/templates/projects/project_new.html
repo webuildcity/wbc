@@ -40,7 +40,7 @@ DetailsController
 {% block side_content %}
 <div id="project_sidebar">
     <div class="anchor">
-        <div class="details-headline">
+        <div class="details-headline content-container">
             <h1> {{project.name}} </h1>    
             {% if project.address_obj %}
 
@@ -68,7 +68,7 @@ DetailsController
         {% for pub in processSteps %}
         <div class="current-step tooltip-container">
              <span class="fa-stack fa-2x">
-                <i class="fa fa-circle-o fa-stack-2x"></i>
+                <i class="fa fa-circle-thin fa-stack-2x"></i>
                 <i class="fa fa-gears fa-stack-1x fa-inverse"></i>
             </span>
             <p>

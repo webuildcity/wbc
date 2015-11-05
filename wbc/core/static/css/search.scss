@@ -97,7 +97,8 @@
         }
 
         .facet-container {
-            overflow: auto
+            overflow: auto;
+            clear: both;
         }
         .active-facets {
             padding-bottom: 0px;
