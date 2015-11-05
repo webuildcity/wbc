@@ -51,20 +51,35 @@ DetailsController
             </a>
             {% endif %}
         </div>
-    </div>
 
-    <div id="subscribe-widget" class="widget">
-        <button class="btn default wbc-button">
-            <span class="fa-stack">
-              <i class="fa fa-circle-thin fa-stack-2x"></i>
-              <i class="fa fa-envelope fa-stack-1x fa-lg"></i>
-            </span>
-            Project abonnieren
-        </button>
+        <div id="subscribe-widget" class="widget">
+            <button class="btn default wbc-button">
+                <span class="fa-stack">
+                  <i class="fa fa-circle-thin fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-lg"></i>
+                </span>
+                Abo
+            </button>
+        </div>
     </div>
-
+    <div class="availability-icons">
+        {% if gallery %}
+        <a title="Information" href="#info"><i class="fa fa-info fa-2x"></i></a>
+        {% endif %}
+        {% if gallery %}
+        <a title="Karte" href="#project_map"><i class="fa fa-map-marker fa-2x"></i></a>
+        {% endif %}
+        {% if gallery %}
+        <a title="Bilder" href="#gallery"><i class="fa fa-image fa-2x"></i></a>
+        {% endif %}
+        {% if stakeholders %}
+        <a title="Beteiligte" href="#info"><i class="fa fa-user fa-2x"></i></a>
+        {% endif %}
+        {% if buildings %}
+        <a title="3D" href="#info"><i class="fa fa-cube fa-2x"></i></a>
+        {% endif %}
+    </div>
     {% if processSteps %}
-        <h3>Aktuelle(r) Verfahrenssschritt(e)</h3>
         {% for pub in processSteps %}
         <div class="current-step tooltip-container">
              <span class="fa-stack fa-2x">
@@ -82,31 +97,7 @@ DetailsController
         {% endfor %}
     {% endif %}
 
-    {% if nextDate %}
-    <a data-toggle="tab" href="#timeline">
-        <div id="next-date-widget" class="widget">
-            <div class="content-container">
-                <h3><i class="fa fa-calendar"> </i>Nächster Termin</h3>
-                <p>{{nextDate.title}}</p>
-                <p>{{nextDate.begin}}</p>
-                <p>{{nextDate.address}}</p>
-            </div>
-        </div>
-    </a>
-    {% endif %}
-    
-    {% if lastNews %}
-    <a data-toggle="tab" href="#timeline">
-        <div id="next-date-widget" class="widget">
-            <div class="content-container"> 
-                <h3><i class="fa fa-newspaper-o"> </i>Letzte Neuigkeiten</h3>
-                <p>{{lastNews.title}}</p>
-                <p>{{lastNews.teaser}}</p>
-                <a href={{lastNews.link}}>Mehr</a>
-            </div>
-        </div>
-    </a>
-    {% endif %}
+
 
     
     {% if tags %}
@@ -151,13 +142,49 @@ DetailsController
             </div> 
 
             {% if processTypes %}
+            <div class="container-fluid">
                 {% include "process/process_bar.html" %}
+                <div class="processstep_text">
+                    <h4>{{processSteps.0.process_step.name}}</h4>
+                    <p>{{processSteps.0.process_step.description}}</p>
+                </div>
+            </div>
             {% endif %}
+
+            <div class="container-fluid">
+                <div class="row">
+                    {% if nextDate %}
+                    <a class="col-md-6 event-item" data-toggle="tab" href="#timeline">
+                        <div id="next-date-widget" class="widget">
+                            <div class="content-container">
+                                <h3><i class="fa fa-calendar"> </i>Nächster Termin</h3>
+                                <p>{{nextDate.title}}</p>
+                                <p>{{nextDate.begin}}</p>
+                                <p>{{nextDate.address}}</p>
+                            </div>
+                        </div>
+                    </a>
+                    {% endif %}
+                    
+                    {% if lastNews %}
+                    <a class="col-md-6 event-item" data-toggle="tab" href="#timeline">
+                        <div id="last-news-widget" class="widget">
+                            <div class="content-container"> 
+                                <h3><i class="fa fa-newspaper-o"> </i>Letzte Neuigkeiten</h3>
+                                <p>{{lastNews.title}}</p>
+                                <p>{{lastNews.teaser}}</p>
+                                <p>{{lastNews.begin}}</p>
+                            </div>
+                        </div>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
 
             {% if stakeholders %}
             <div class="stakeholders">
                 <div class="content-container">
-                    <h2> Wichtige Akteure </h2>
+                    <h3> Projektbeteiligte </h3>
                     {% include "stakeholder/stakeholder_list.html" %}
                 </div>
             </div>
@@ -176,7 +203,6 @@ DetailsController
         </div>
 
         <div id="timeline" class="tab-pane">
-            <h3>Events</h3>
             {% include "projects/project_events.html" %}
         </div>
         </div>

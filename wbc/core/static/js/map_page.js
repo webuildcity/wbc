@@ -29,7 +29,7 @@ app.controller('MapController', ['$scope', '$document', '$http', '$window', 'Map
         console.log(MapService.map.getBounds() )
         $http({
                 method: 'POST',
-                url:  '/search/',
+                url:  '/suche/',
                 data: {bounds: MapService.map.getBounds()}
             }).success(function(response) {
                 if(multipoly != []) {

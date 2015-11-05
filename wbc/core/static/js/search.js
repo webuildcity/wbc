@@ -48,7 +48,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             data: data
         }).success(function(response) {
             MapService.clearPolys();
-            console.log("clear");
             // if(polygonLayer != null) {
             //    MapService.map.removeLayer(multipoly);
             // }
