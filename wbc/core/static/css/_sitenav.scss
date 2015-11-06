@@ -52,6 +52,36 @@
             float: left;
             max-width: 200px;
             padding-right: 2em;
+
+            .spinner-icon {
+                position: absolute;
+                right: 43px;
+                top: 10px;
+                z-index: 10;
+            }
+        }
+
+        .selected-result {
+            border: 1px solid $primary-color !important;
+        }
+
+        .search-results {
+            border: 1px solid #ddd;
+            position: absolute;
+            top: 39px;
+            // min-height: 40px;
+            background-color:rgba(255,255,255,0.5);
+        
+            .search-result {
+                border: 1px solid #ddd;
+                // min-height: 40px;
+                background-color:rgba(255,255,255,0.5);
+            }
+
+            .search-result:hover {
+                border: 1px solid $primary-color-light;
+                background-color:rgba(255,255,255,0.8);
+            }
         }
 
         .navbar-brand {

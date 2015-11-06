@@ -1,6 +1,6 @@
 {% load staticfiles compress %}
 <!DOCTYPE html>
-<html>
+<html ng-app="wbc">
 <head>
     <title>{{site_title}}</title>
     <meta charset="UTF-8" />
@@ -26,14 +26,48 @@
 
     <script type="text/javascript" src="{% static 'js/main.js' %}" ></script>
 
+    <script type="text/ng-template" id="/wbc-searchdirective.html">
+        <form id="search" class="search-form" ng-submit="submit(formData.searchTerm)">
+            <div>
+                <div class="input-group search-field">
+                    <input
+                    placeholder="Suche"
+                    type="text" class="form-control"
+                    ng-model="formData.searchTerm"
+                    ng-change="onSearchChanged()"
+                    ng-keydown="onKeyDown($event)"
+                    ng-model-options="{ debounce: 1200 }"/>
+
+                    <i ng-show="isLoading" class="spinner-icon fa fa-spinner fa-spin"></i>
+
+                    <a href="" class="input-group-addon" ng-click="search()">
+                        <span class="glyphicon glyphicon-search">
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </form>
+        <div class="search-results">
+            <div ng-repeat="result in data.suggestions">
+                <div class="search-result"
+                     ng-click="loadDetails(result.internal_link)"
+                     ng-class="{'selected-result': $index == selectedSuggestionIdx, 'search-result-type-project':  result.type == 'project', 'search-result-type-stakeholder':  result.type == 'stakeholder'}">
+                        <b>{[{ result.name }]}</b>
+                        {[{result.type}]}
+                </div>
+            </div>
+        </div>
+    </script>
+
     <script type="text/javascript" src="{% static 'js/angular-searchdirective.js' %}" ></script>
     <script type="text/javascript" src="{% static 'js/utils.js' %}" ></script>
+
     {% block js %}
 
     {% endblock %}
 </head>
 
-<body ng-app="wbc" ng-controller="{% block controller %}WbcController{% endblock %}">
+<body ng-controller="{% block controller %}WbcController{% endblock %}">
     <nav class="navbar navbar-default visible-xs" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
@@ -66,25 +100,11 @@
             </div>
 
             <div id="header-right">
-                <wbc-search />
-                <form id="search" class="search-form">
-                    <div class="input-group">
-                        <input
-                            placeholder="Suche"
-                            type="text" class="form-control"
-                            ng-model="currentSearchTerm"
-                            ng-change="onSearchChanged()"
-                            ng-keydown="onKeyDown($event)"
-                            ng-model-options="{ debounce: 1200 }">
-
-                        <a href="" class="input-group-addon" ng-click="search()">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </a>
-                    </div>
-                </form>
+                <wbc-search>
+                </wbc-search>
                 <ul class="sitenav">
                     {% include "core/layout_navigation.html" %}
-                    {% include "core/layout_social.html" %}
+                   <!-- {% include "core/layout_social.html" %}  -->
                 </ul>
             </div>
         </div>
