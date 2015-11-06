@@ -29,7 +29,7 @@
         var _address = "{{ project.address|safe }}";
         var _polygon = {% if project.polygon %}{{project.polygon|safe}}{% else %}[]{% endif %};
     </script>
-    <script type="text/javascript" src="{% static 'js/projectmap.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'js/details.js' %}" ></script>
     <script type="text/javascript" src="{% static 'js/angular-mapservice.js' %}" ></script>
 {% endblock %}
 
@@ -66,9 +66,9 @@ DetailsController
         {% if gallery %}
         <a title="Information" href="#info"><i class="fa fa-info fa-2x"></i></a>
         {% endif %}
-        {% if gallery %}
-        <a title="Karte" href="#project_map"><i class="fa fa-map-marker fa-2x"></i></a>
-        {% endif %}
+
+        <a class="map-link" title="Karte" href="#project_map"><i class="fa fa-map-marker fa-2x"></i></a>
+
         {% if gallery %}
         <a title="Bilder" href="#gallery"><i class="fa fa-image fa-2x"></i></a>
         {% endif %}
@@ -79,6 +79,13 @@ DetailsController
         <a title="3D" href="#info"><i class="fa fa-cube fa-2x"></i></a>
         {% endif %}
     </div>
+
+
+    {% if gallery %}
+    <img u="image" src="{{ gallery.0.latest.0.get_description_url }}" />
+        
+    {% endif %}
+
     {% if processSteps %}
         {% for pub in processSteps %}
         <div class="current-step tooltip-container">
@@ -116,8 +123,13 @@ DetailsController
     <ul class="main-content-nav nav nav-tabs" data-tabs="tabs">
         <li class="active"><a data-toggle="tab" href="#info">Info</a></li>
         <li><a class="map-link" data-toggle="tab" href="#project_map">Karte</a></li>
-        <li><a data-toggle="tab" href="#gallery">Gallery</a></li>
-        <li><a data-toggle="tab" href="#timeline">Events</a></li>
+        <li  {{gallery|yesno:' ,class=not-active'}}><a data-toggle="tab" href="#gallery">Gallery</a></li>
+        <li>
+            <a data-toggle="tab" href="#timeline">Ereignisse</a>
+        </li>
+        <li {{stakeholders|yesno:' ,class=not-active'}}>
+            <a data-toggle="tab" href="#stakeholder">Beteiligte</a> 
+        </li>
     </ul>
     <div id="tab-content" class="tab-content">
         <div id="info" class="tab-pane active">
@@ -178,14 +190,7 @@ DetailsController
                 </div>
             </div>
 
-            {% if stakeholders %}
-            <div class="stakeholders">
-                <div class="content-container">
-                    <h3> Projektbeteiligte </h3>
-                    {% include "stakeholder/stakeholder_list.html" %}
-                </div>
-            </div>
-            {% endif %}
+       
 
 
         </div>
@@ -202,6 +207,12 @@ DetailsController
         <div id="timeline" class="tab-pane">
             {% include "projects/project_events.html" %}
         </div>
+             
+        {% if stakeholders %}   
+        <div id="stakeholder" class="tab-pane">
+            {% include "projects/project_stakeholder.html" %}
+        </div>
+        {% endif %}
         </div>
     </div>
 {% endblock %}

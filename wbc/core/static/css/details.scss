@@ -108,60 +108,18 @@ body {
         width: 100%;
         height:  42px;
 
-        li {
-            // width: 200px;
-            // height: 100px;
+        .not-active {
+            pointer-events: none;
+            a {
+                color: #ccc;    
+            }
         }
     }
 
     .event-item {
     }
 
-    // .process-bar {
-    //     .process-desc {
-    //         display: none;
-    //         position: relative;
-    //         top: -50px;
-    //     }
-    // }
-    // .process-step:hover {
-    //     ~ .process-desc {
-    //         display: block;
-    //     }
-    // }
 }
-// .sidebar-nav {
-//     padding: 0;
-//     width: 100px;
-//     float: right;
-//     position: relative;
-//     right: -18px;
-//     z-index: 2;
-//     border-bottom: 0px;
-    
-//     ul {
-//         float: none;
-//         display: block;
-//     }
-//     li {
-//         float: none;
-//         display: block;
-//         clear: both;
-//     }
-//     li a {
-//         background-color: white;
-//         margin-bottom: 4px;
-//         padding-top: 12px;
-//         padding-bottom: 12px;
-//         float: right;
-//     }
-//     li.active a {
-//         border-right: 0px !important;
-//         box-shadow:-3px -0px 4px 1px #ccc;
-//         // box-shadow: -3px 2px 4px -2px #ccc;
-//     }
-// }
-
 
 .project-buttons {
     margin-top: 20px;

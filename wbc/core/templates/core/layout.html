@@ -62,6 +62,21 @@
             </div>
 
             <div id="header-right">
+                <form id="search" class="search-form">
+                    <div class="input-group">
+                        <input
+                            placeholder="Suche"
+                            type="text" class="form-control"
+                            ng-model="currentSearchTerm"
+                            ng-change="onSearchChanged()"
+                            ng-keydown="onKeyDown($event)"
+                            ng-model-options="{ debounce: 1200 }">
+
+                        <a href="" class="input-group-addon" ng-click="search()">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </a>
+                    </div>
+                </form>
                 <ul class="sitenav">
                     {% include "core/layout_navigation.html" %}
                     {% include "core/layout_social.html" %}

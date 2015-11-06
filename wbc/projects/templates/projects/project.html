@@ -27,7 +27,7 @@
         var _address = "{{ project.address|safe }}";
         var _polygon = {% if project.polygon %}{{project.polygon|safe}}{% else %}[]{% endif %};
     </script>
-    <script type="text/javascript" src="{% static 'projectmap.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'details.js' %}" ></script>
 {% endblock %}
 
 {% block content %}

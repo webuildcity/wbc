@@ -24,7 +24,7 @@
     }
 
     #header-right {
-        margin-top: 15px;
+        // margin-top: 15px;
         float: right;
         padding-right: 20px;
 
@@ -33,6 +33,8 @@
             font-size: 16px;
             color: #646464;
             padding: 0;
+            float: left;
+            margin-top: 12px;
             
             li {
                 display: inline;
@@ -45,6 +47,13 @@
             }
         }
 
+        .search-form {
+            margin-top: 5px;
+            float: left;
+            max-width: 200px;
+            padding-right: 2em;
+        }
+
         .navbar-brand {
             padding-top: 10px;
             padding-bottom: 10px;
@@ -54,7 +63,7 @@
         }
     }
     .fa {
-    color: $primary-color;
+        color: $primary-color;
     }
     .fa:hover{
         color: $primary-color-light;
