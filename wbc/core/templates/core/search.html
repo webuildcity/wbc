@@ -38,11 +38,12 @@ SearchController
                     <input
                     placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
                     type="text" class="form-control"
-                    ng-model="formData.currentSearchTerm"
+                    ng-model="formData.searchTerm"
                     ng-change="onSearchChanged()"
                     ng-keydown="onKeyDown($event)"
-                    ng-model-options="{ debounce: 1200 }">
-
+                    ng-model-options="{ debounce: 1200 }"
+                    ng-init="formData.searchTerm = '{{searchTerm}}'">
+                    
                     <a href="" class="input-group-addon" ng-click="search()">
                         <span class="glyphicon glyphicon-search"></span>
                     </a>

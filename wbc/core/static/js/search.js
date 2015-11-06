@@ -6,8 +6,8 @@ app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $in
     $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 }]);
 
-app.controller('SearchController', ['$scope', '$document', '$http', '$window', 'MapService',
-    function($scope, $document, $http, $window, MapService) {
+app.controller('SearchController', ['$scope', '$document', '$http', '$window', '$location', 'MapService',
+    function($scope, $document, $http, $window, $location, MapService) {
 
     
     $scope.models = {
@@ -16,6 +16,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     };
 
     $scope.formData = {};
+
     var allResultPoly = null;
     // var polygonLayer = null;
     var polygonColor = null;
@@ -115,7 +116,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $scope.noResults = false;
         search($scope.formData);
         // console.log($.param($scope.formData));
-        // if($scope.currentSearchTerm) {
+        // if($scope.searchTerm) {
 
         // } else {
         //     // $scope.results = [];
@@ -125,7 +126,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     };
 
     $scope.selectTerm = function(term) {
-        $scope.formData.currentSearchTerm = term;
+        $scope.formData.searchTerm = term;
         $scope.onSearchChanged();
     };
     var focusedPoly = null;
