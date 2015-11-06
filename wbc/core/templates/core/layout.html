@@ -17,12 +17,16 @@
 
     {% block css %}
     <link rel="stylesheet" type="text/x-scss" href="{% static "css/style.scss" %}" />
-    {% endblock %} 
+    {% endblock %}
 
 
     <script type="text/javascript" src="{% static 'lib/jquery.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/angular/angular.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}" ></script>
+
+    <script type="text/javascript" src="{% static 'js/main.js' %}" ></script>
+
+    <script type="text/javascript" src="{% static 'js/angular-searchdirective.js' %}" ></script>
     <script type="text/javascript" src="{% static 'js/utils.js' %}" ></script>
     {% block js %}
 
@@ -62,6 +66,7 @@
             </div>
 
             <div id="header-right">
+                <wbc-search />
                 <form id="search" class="search-form">
                     <div class="input-group">
                         <input

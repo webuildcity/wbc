@@ -1,4 +1,3 @@
-var app = angular.module('wbc', ["checklist-model"]);
 
 app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $interpolateProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
@@ -9,7 +8,7 @@ app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $in
 app.controller('SearchController', ['$scope', '$document', '$http', '$window', 'MapService',
     function($scope, $document, $http, $window, MapService) {
 
-    
+
     $scope.models = {
         'project': 'Projekte',
         'stakeholder': 'Akteure'
