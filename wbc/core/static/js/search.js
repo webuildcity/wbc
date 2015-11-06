@@ -6,8 +6,8 @@ app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $in
     $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 }]);
 
-app.controller('SearchController', ['$scope', '$document', '$http', '$window', '$location', 'MapService',
-    function($scope, $document, $http, $window, $location, MapService) {
+app.controller('SearchController', ['$scope', '$document', '$http', '$window', 'MapService',
+    function($scope, $document, $http, $window, MapService) {
 
     
     $scope.models = {
