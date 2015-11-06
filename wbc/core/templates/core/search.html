@@ -6,13 +6,11 @@
     {{block.super}}
     <link rel="stylesheet" type="text/x-scss" href="{% static "css/search.scss" %}" />
     <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
-    <link rel="stylesheet" href="{% static 'lib/leaflet/Control.MiniMap.min.css' %}" />
     {% endcompress %}
 {% endblock %}
 
 {% block js %}
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
-    <script type="text/javascript" src="{% static 'lib/leaflet/Control.MiniMap.min.js' %}" ></script>
 
     <script type="text/javascript" src="{% static 'lib/angular/checklist-model.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
@@ -43,7 +41,7 @@ SearchController
                     ng-keydown="onKeyDown($event)"
                     ng-model-options="{ debounce: 1200 }"
                     ng-init="formData.searchTerm = '{{searchTerm}}'">
-                    
+
                     <a href="" class="input-group-addon" ng-click="search()">
                         <span class="glyphicon glyphicon-search"></span>
                     </a>

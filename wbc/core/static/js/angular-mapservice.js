@@ -20,19 +20,6 @@ app.factory('MapService',['$http',function($http) {
     map.setView(defaultLocation,defaultZoom);
 
 
-
-    // FIXME: there should be a better way to toggle this
-
-    if(L.control.minimap !== undefined) {
-        var minimapTiles = L.tileLayer(_tiles_url);
-        var minimap = L.control.minimap(minimapTiles, {
-            zoomLevelFixed: 11,
-            autoToggleDisplay: true
-        });
-        minimap.addTo(map);
-    };
-
-
     var setViewOptions = {
         padding: [15, 15],
         maxZoom: 15,
@@ -48,31 +35,6 @@ app.factory('MapService',['$http',function($http) {
     return {
 
         map: map,
-
-        showMinimap: function() {
-            // FIXME
-            if(minimap) {
-                try {
-                    minimap.addTo(map);
-                } catch (e) {
-                    console.log(e);
-                    // pass
-                }
-
-            }
-        },
-
-        hideMinimap: function() {
-            // FIXME
-            if(minimap) {
-                try {
-                    minimap.removeFrom(map);
-                } catch (e) {
-                    console.log(e);
-                    // pass
-                }
-            }
-        },
 
         focusLocation: function(point) {
             map.setView(point, 15, setViewOptions);
