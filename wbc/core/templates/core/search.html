@@ -121,8 +121,13 @@ SearchController
             <div class="collapse-heading" data-toggle="collapse" data-target=".result-list"><i class="result-anchor anchor fa fa-list-ul"> </i>Ergebnisse</div>
             <p id="result-number" class="wbc-dropdown-container text-muted" ng-if="resultLength">{[{resultLength}]} Einträge gefunden</p>
             <div class="result-list in wbc-dropdown-container">
-                <div class="clearfix" ng-repeat="result in results">
-                    <div id="result-{[{result.pk}]}" class="search-result" ng-mouseover="focusResult(result)" ng-mouseout="defocusResult(result)">
+
+                <div class="clearfix"
+                    ng-repeat="result in results"
+                    ng-mouseover="focusResult(result)"
+                    ng-mouseout="defocusResult(result)">
+
+                    <div id="result-{[{result.pk}]}" class="search-result">
                         <div class="result-type" ng-switch on="result.type">
                             <i ng-switch-when="project" class="fa fa-home fa-2x"></i>
                             <i ng-switch-when="stakeholder" class="fa fa-user fa-2x"></i>
