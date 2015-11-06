@@ -100,7 +100,7 @@ DetailsController
     {% if tags %}
     <div id="tags-widget" class="widget">
         <div class="content-container">
-            <h3><i class="fa fa-tags"> </i>Schlagworte</h3>
+            <h3><i class="fa fa-tags"> </i>Stichwörter</h3>
             {% for tag in tags %}
                 <a class="taglink" href="{{tag.get_absolute_url}}">{{tag.name}}</a>
             {% endfor %}
@@ -141,7 +141,7 @@ DetailsController
             {% if processTypes %}
             <div class="container-fluid">
                 {% include "process/process_bar.html" %}
-                <div class="processstep_text">
+                <div class="processstep-text">
                     <h4>{{processSteps.0.process_step.name}}</h4>
                     <p>{{processSteps.0.process_step.description}}</p>
                 </div>

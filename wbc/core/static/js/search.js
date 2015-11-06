@@ -9,8 +9,7 @@ app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $in
 app.controller('SearchController', ['$scope', '$document', '$http', '$window', 'MapService',
     function($scope, $document, $http, $window, MapService) {
 
-    console.log(MapService)
-
+    
     $scope.models = {
         'project': 'Projekte',
         'stakeholder': 'Akteure'

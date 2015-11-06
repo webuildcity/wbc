@@ -52,6 +52,11 @@ def logout_user(request):
 def autocomplete(request):
     sqs = SearchQuerySet().autocomplete(content_auto=request.GET.get('q', ''))
     suggestions = []
+
+    # spell_suggestions = sqs.spelling_suggestion()
+    # print spell_suggestions
+
+
     for result in sqs:
         resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link)
         if result.location:
@@ -79,7 +84,7 @@ class SearchView(TemplateView):
             'stakeholder': Stakeholder 
         }
         offset = 0
-
+        
         if 'bounds' in data:
             bl = Point(data['bounds']['_southWest']['lat'], data['bounds']['_southWest']['lng'])
             tr = Point(data['bounds']['_northEast']['lat'], data['bounds']['_northEast']['lng'])
@@ -92,6 +97,9 @@ class SearchView(TemplateView):
             if data['currentSearchTerm'] != "":
                 sqs = sqs.filter(content=AutoQuery(data['currentSearchTerm']))
         
+        suggestions = sqs.spelling_suggestion()
+        # print suggestions
+
         if 'models' in data:
             for model in data['models']:
                 sqs = sqs.models(model_dict[model])
@@ -121,7 +129,7 @@ class SearchView(TemplateView):
             'results': results,
             'length': len(sqs),
             'facets' : sqs.facet_counts(),
-            'suggestion': sqs.spelling_suggestion()
+            'suggestion': suggestions
         })
         return data
 

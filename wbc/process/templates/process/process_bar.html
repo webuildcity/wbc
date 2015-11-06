@@ -9,13 +9,14 @@
     {% for step in process.process_steps2 %}
         {% if step.publication %}
             {% if step.publication.is_in_past %}
-                <li class="process-done">{{step.name}}</li>
+                <li class="process-step process-done">{{step.name}}</li>
             {% elif step.publication.is_started %}
-                <li class="process-running">{{step.name}}</li>
+                <li class="process-step process-running">{{step.name}}</li>
             {% endif %}
             {% else %}
-                <li class="process-todo">{{step.name}}</li>
+                <li class="process-step process-todo">{{step.name}}</li>
             {% endif %}
+                <!-- <p class="process-step process-desc">{{step.description}}</p> -->
     {% endfor %}
     </ol>
 </div>
