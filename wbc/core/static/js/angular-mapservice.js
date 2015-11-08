@@ -22,13 +22,14 @@ app.factory('MapService',['$http',function($http) {
 
     var setViewOptions = {
         padding: [15, 15],
-        maxZoom: 15,
+        maxZoom: 20,
         pan: {
             animate: true,
-            duration: 3
+            duration: 0
         },
         zoom: {
-            animate: true
+            animate: true,
+            // duration: 3
         }
     };
 
@@ -40,10 +41,28 @@ app.factory('MapService',['$http',function($http) {
             map.setView(point, 15, setViewOptions);
         },
 
-        fitPoly: function(poly) {
-            if (poly === undefined){
-                poly = focusedPoly;
+        fitPoly: function(poly, maxZoom) {
+            // if (poly === undefined){
+            //     poly = focusedPoly;
+            // }
+            var setViewOptions = {
+                padding: [15, 15],
+                maxZoom: 20,
+                pan: {
+                    animate: true,
+                    duration: 0
+                },
+                zoom: {
+                    animate: true,
+                    // duration: 3
+                }
+            };
+            if (maxZoom){
+                console.log(maxZoom)
+                setViewOptions.maxZoom = maxZoom;
             }
+            // console.log(setViewOptions);
+            // console.log(setViewOptions.maxZoom);
             map.fitBounds(poly.getBounds(), setViewOptions);
         },
 
@@ -85,6 +104,7 @@ app.factory('MapService',['$http',function($http) {
                     focusedPoly = null;
                 });
             }
+            return polygon;
         },
 
         clearPolys: function(){

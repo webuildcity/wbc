@@ -111,7 +111,18 @@ body {
         .not-active {
             pointer-events: none;
             a {
-                color: #ccc;    
+                color: #ccc !important;    
+            }
+            .fa {
+                color: #ccc;
+            }
+        }
+        .active {
+            a {
+                color: #555;
+            }
+            .fa {
+                color: #555;
             }
         }
     }

@@ -1,1 +1,1 @@
-var app = angular.module('wbc', []);
+var app = angular.module('wbc', ['checklist-model']);

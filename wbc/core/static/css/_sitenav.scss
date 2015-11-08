@@ -92,12 +92,6 @@
             height: 30px;
         }
     }
-    .fa {
-        color: $primary-color;
-    }
-    .fa:hover{
-        color: $primary-color-light;
-    }
 }
 
 .navbar {
@@ -110,6 +104,12 @@
     }
 }
 
-.fa {
-    padding-right: 3px;
+.wbc-nav {
+    .fa {
+        padding-right: 0.6em;
+        color: $primary-color;
+    }
+    .fa:hover {
+        color: $primary-color-light;
+    }
 }

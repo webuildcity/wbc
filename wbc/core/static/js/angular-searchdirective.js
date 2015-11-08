@@ -26,7 +26,7 @@ app.directive('wbcSearch', function() {
                             q: $scope.formData.searchTerm
                         }
                     }).success(function(response) {
-
+                        console.log(response)
                         $scope.isLoading = false;
                         if (response.results.length) {
                             $scope.data.suggestions = response.results;

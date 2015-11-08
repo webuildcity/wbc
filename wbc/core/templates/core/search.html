@@ -12,7 +12,6 @@
 {% block js %}
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
 
-    <script type="text/javascript" src="{% static 'lib/angular/checklist-model.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/angular-mapservice.js' %}"></script>
     <script type="text/javascript">
@@ -124,7 +123,8 @@ SearchController
                 <div class="clearfix"
                     ng-repeat="result in results"
                     ng-mouseover="focusResult(result)"
-                    ng-mouseout="defocusResult(result)">
+                    ng-mouseout="defocusResult(result)"
+                    ng-click="selectResult(result)">
 
                     <div id="result-{[{result.pk}]}" class="search-result">
                         <div class="result-type" ng-switch on="result.type">

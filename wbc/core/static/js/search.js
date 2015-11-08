@@ -5,8 +5,8 @@ app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $in
     $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
 }]);
 
-app.controller('SearchController', ['$scope', '$document', '$http', '$window', 'MapService',
-    function($scope, $document, $http, $window, MapService) {
+app.controller('SearchController', ['$scope', '$document', '$http', '$window', '$timeout', 'MapService',
+    function($scope, $document, $http, $window, $timeout, MapService) {
 
 
     $scope.models = {
@@ -15,8 +15,12 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     };
 
     $scope.formData = {};
+    $scope.selectedResult = null;
 
     var allResultPoly = null;
+    var maxZoom = null;
+    var animationTimer;
+
     // var polygonLayer = null;
     var polygonColor = null;
     var cssPolyRule = getRuleForSelector('.poly');
@@ -43,6 +47,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     }
 
     var search = function(data){
+        console.log(data);
         $http({
             method: 'POST',
             url:  '/suche/',
@@ -65,7 +70,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                     if(result.polygon)  {
                         // console.log(result);
                         result.polygon.id = result.pk;
-                        MapService.loadPoly(result.polygon, result.pk, highlightFunction);
+                        myPoly = MapService.loadPoly(result.polygon, result.pk, highlightFunction);
+                        myPoly.on('click', function() {
+                            $scope.selectResult(result);
+                        });
                         multipoly.push(result.polygon[0]);
                     }
                 });
@@ -84,6 +92,9 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 MapService.map.fitBounds(allResultPoly.getBounds(), {
                     padding: [30, 30]
                 });
+                maxZoom = MapService.map.getZoom();
+                console.log(maxZoom);
+
 
                 // //scroll things
                 // setTimeout(function() {
@@ -135,9 +146,15 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
         $('.poly-'+poly.pk).attr('class', 'leaflet-clickable focused-poly poly-'+poly.pk);
         var tempPoly = L.multiPolygon(poly.polygon);
-        MapService.map.fitBounds(tempPoly.getBounds(), {
-            padding: [30, 30]
-        });
+        // if (maxZoom < 10){
+        //     MapService.fitPoly(tempPoly, maxZoom);
+        // } else {
+        MapService.fitPoly(tempPoly, maxZoom+1);
+        // }
+        // ZOOM  TO POLY
+        // MapService.map.fitBounds(tempPoly.getBounds(), {
+        //     padding: [30, 30]
+        // });
 
         // if(focusedPoly) {
         //     MapService.map.removeLayer(focusedPoly);
@@ -163,17 +180,18 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
 
     $scope.focusResult = function(result) {
+        animationTimer = $timeout(function () {
 
+            if(result.polygon !== undefined) {
+                $scope.focusPoly(result);
+                return;
+            }
 
-        if(result.polygon !== undefined) {
-            $scope.focusPoly(result);
-            return;
-        }
-
-        if(result.location !== undefined) {
-            $scope.focusLocation(result.location);
-            return;
-        }
+            if(result.location !== undefined) {
+                $scope.focusLocation(result.location);
+                return;
+            }
+        }, 400);
 
         // nothing to focus
         // MapService.resetToDefaults();
@@ -182,14 +200,15 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     };
 
     $scope.defocusResult = function(result) {
-
+        $timeout.cancel(animationTimer);
 
         if(result.polygon !== undefined) {
             // $scope.focusPoly(result);
             $('.poly-'+result.pk).attr('class', 'leaflet-clickable poly-'+result.pk);
-            MapService.map.fitBounds(allResultPoly.getBounds(), {
-                padding: [30, 30]
-            });
+            // MapService.map.fitBounds(allResultPoly.getBounds(), {
+            //     padding: [30, 30]
+            // });
+            // MapService.fitPoly(allResultPoly);
 
             return;
         }
@@ -204,6 +223,17 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
         // if poly still focused remove it too
     };
+
+    $scope.selectResult = function(result) {
+        $scope.selectedResult = result;
+        // $('.poly-'+result.pk).attr('class', 'leaflet-clickable poly-'+result.pk);
+        
+        if (result.polygon){
+            var tempPoly = L.multiPolygon(result.polygon);
+            // ZOOM  TO POLY
+            MapService.fitPoly(tempPoly);
+        }
+    }
 
     $scope.toggleSelectedItems = function(event){
         $(event.target).siblings('.active-facets').toggleClass('hidden');
