@@ -71,33 +71,30 @@ app.factory('MapService',['$http',function($http) {
         },
 
         loadPoly: function(poly, id, highlight) {
-            var cssPolyRule = getRuleForSelector('.poly');
-            if(cssPolyRule) {
-                polygonColor = cssPolyRule.style.color;
-            }
+            // var cssPolyRule = getRuleForSelector('.poly');
+            // if(cssPolyRule) {
+            //     polygonColor = cssPolyRule.style.color;
+            // }
 
             if (typeof(poly) !== 'undefined') {
                 var polygonOptions = {
+                    className: 'wbc-poly poly-'+id,
                     weight: 3,
-                    color: polygonColor,
-                    opacity: 1,
-                    fill: true,
-                    fillColor: polygonColor,
-                    fillOpacity: 0.05,
-                    className: 'poly-'+id
+                    fill: true
+
                 };
 
                 var polygon = L.multiPolygon(poly).setStyle(polygonOptions);
                 polygonLayer.addLayer(polygon);
 
                 polygon.on('mouseover', function() {
-                    $('.poly-'+id).attr('class', 'leaflet-clickable focused-poly poly-'+id);
+                    $('.poly-'+id).attr('class', 'leaflet-clickable wbc-poly focused-poly poly-'+id);
                     if (highlight)
                         highlight(id);
                     focusedPoly = polygon;
                 });
                 polygon.on('mouseout', function() {
-                    $('.poly-'+id).attr('class', 'leaflet-clickable poly-'+id);
+                    $('.poly-'+id).attr('class', 'leaflet-clickable wbc-poly poly-'+id);
                     // polygon.setStyle({className: 'poly-'+id});
                     if (highlight)
                         highlight(id);

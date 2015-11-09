@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+from datetime import datetime
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
@@ -73,6 +74,17 @@ def autocomplete(request):
     })
     return HttpResponse(data, content_type='application/json')
 
+class StartView(TemplateView):
+
+    template_name="core/startpage.html"
+
+    def get_context_data(self, **kwargs):
+        now = datetime.now()
+        context = super(StartView, self).get_context_data(**kwargs)
+        # context['latest'] = 
+        p = Project.objects.filter(events__begin__gte=now)
+        context['projects'] = p
+        return context
 class SearchView(TemplateView):
 
     template_name = "core/search.html"

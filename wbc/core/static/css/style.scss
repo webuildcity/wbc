@@ -103,6 +103,16 @@ h4 {
     color: $primary-color;
 }
 
+.wbc-poly {
+    fill: $primary-color;
+    stroke: $primary-color;
+    stroke-opacity: 1;
+    fill-opactity: 0.10;
+    // color: $primary-color;
+    // opacity: 1;
+    // fill: true;
+}
+
 
 /** TOOLTIP **/
 .tooltip-container {

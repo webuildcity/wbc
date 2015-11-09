@@ -60,7 +60,7 @@ StartpageController
       <li><a href="#" data-toggle="tab">Impressum</a></li>
     </ul> -->
     <div id="tab-content" class="tab-content container-fluid">
-        <div id="start-tab" class="tab-pane active container">
+        <div id="start-tab" class="container">
             <div class="col-md-4">
                 <a href="{% url 'map' %}">
                    <div class="teaser">
@@ -85,6 +85,14 @@ StartpageController
                    </div>
                 </a>
             </div>
+        </div>
+        <div class="upcoming">
+          {% if projects %}
+            <div class="project-descriptions col-md-12">
+              <h2> Aktuelle Veranstaltungen &amp; Projekte mit Bürgerbeteiligung </h2>
+              {% include "projects/project_list.html" %}
+            </div>
+          {% endif %}
         </div>
     </div>
 </div>

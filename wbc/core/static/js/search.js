@@ -22,19 +22,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     var animationTimer;
 
     // var polygonLayer = null;
-    var polygonColor = null;
-    var cssPolyRule = getRuleForSelector('.poly');
-    if(cssPolyRule) {
-        polygonColor = cssPolyRule.style.color;
-    }
-    var polygonOptions = {
-        weight: 3,
-        color: polygonColor,
-        opacity: 1,
-        fill: true,
-        fillColor: polygonColor,
-        fillOpacity: 0.05
-    };
 
     var highlightFunction = function(id){
         // console.log(id);
@@ -144,7 +131,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.focusPoly = function(poly) {
         // console.log($('.poly-'+poly.pk));
 
-        $('.poly-'+poly.pk).attr('class', 'leaflet-clickable focused-poly poly-'+poly.pk);
+        $('.poly-'+poly.pk).attr('class', 'leaflet-clickable wbc-poly focused-poly poly-'+poly.pk);
         var tempPoly = L.multiPolygon(poly.polygon);
         // if (maxZoom < 10){
         //     MapService.fitPoly(tempPoly, maxZoom);
@@ -204,7 +191,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
         if(result.polygon !== undefined) {
             // $scope.focusPoly(result);
-            $('.poly-'+result.pk).attr('class', 'leaflet-clickable poly-'+result.pk);
+            $('.poly-'+result.pk).attr('class', 'leaflet-clickable wbc-poly poly-'+result.pk);
             // MapService.map.fitBounds(allResultPoly.getBounds(), {
             //     padding: [30, 30]
             // });
