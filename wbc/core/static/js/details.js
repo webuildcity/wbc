@@ -39,7 +39,6 @@ $(document).ready(function(){
 
     moveScroller('.anchor', '#side_content');
     
-
     /*TAB NAVIGATION MIT URLS */
     var prefix = "tab_";
 
@@ -49,28 +48,14 @@ $(document).ready(function(){
     } else {
         $('.main-content-nav .nav-tabs a:first').tab('show');
     }
-    // setTimeout(function() {
-    //     window.scrollTo(0, 0);
-    // }, 1);
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         e.preventDefault();
         var target = this.href.split('#');
-        // console.log(target);
-        // history.pushState(null, null, target[1])
         $('.nav a').filter('.main-content-nav a[href="#'+target[1]+'"]').tab('show');
         window.location.hash = e.target.hash.replace("#", "#" + prefix);
     });
-    // var activetab = window.location.pathname.split('/')[3];
-    // if (activetab) {
-    //     $('.nav a').filter('[href="#'+activetab+'"]').tab('show');
-    // }
-    // console.log(window.location.pathname);
-    // console.log(window.location.pathname.split('/')[3]);
 
-    // $('a[data-toggle="tab"]').on('click', function(e) {
-    //     history.pushState(null, null, $(this).attr('href'));
-    // });
   // navigate to a tab when the history changes
     window.addEventListener("popstate", function(e) {
         var activeTab = $('.main-content-nav a[href=' + location.hash.replace(prefix,'') + ']');
