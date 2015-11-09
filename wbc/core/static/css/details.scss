@@ -69,6 +69,15 @@ body {
         }
     }
 
+    img {
+        width: 100%;
+    }
+    .participation span {
+        color: green;
+    }
+    .no-participation span {
+        color: red;
+    }
     .current-step  {
         background: white;
         // margin: 1em;

@@ -89,7 +89,12 @@ DetailsController
 
     {% if processSteps %}
         {% for pub in processSteps %}
-        <div class="current-step tooltip-container">
+            {% if pub.process_step.participation %}
+                <p class="participation"><span>o</span>Beteiligung möglich</p>
+            {% else %}
+                <p class="no-participation"><span>x</span>Beteiligung zur Zeit nicht möglich</p>
+            {% endif %}
+       <!--  <div class="current-step tooltip-container">
              <span class="fa-stack fa-2x">
                 <i class="fa fa-circle-thin fa-stack-2x"></i>
                 <i class="fa fa-gears fa-stack-1x fa-inverse"></i>
@@ -101,7 +106,7 @@ DetailsController
                 <p><b>{{pub.process_step}}</b></p>
                 {{pub.process_step.description}}
             </div>
-        </div>
+        </div> -->
         {% endfor %}
     {% endif %}
 
