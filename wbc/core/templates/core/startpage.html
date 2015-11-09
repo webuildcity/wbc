@@ -59,8 +59,8 @@ StartpageController
       <li><a href="#news-tab" data-toggle="tab">Aktuelles</a></li>
       <li><a href="#" data-toggle="tab">Impressum</a></li>
     </ul> -->
-    <div id="tab-content" class="tab-content container-fluid">
-        <div id="start-tab" class="container">
+    <div class="container-fluid">
+        <div id="navigation-boxes" class="container">
             <div class="col-md-4">
                 <a href="{% url 'map' %}">
                    <div class="teaser">
@@ -86,7 +86,18 @@ StartpageController
                 </a>
             </div>
         </div>
-        <div class="upcoming">
+        <div id="question-container" class="container">
+          <div class="col-md-4">
+            <h3> Was können sie hier tun? </h3>
+          </div>
+          <div class="col-md-4"> 
+            <h3> Wie funktioniert <a href="{% url 'start' %}">Wir-bauen-Hamburg.de?</a></h3>
+          </div>
+          <div class="col-md-4">
+            <h3> Wer betreibt diese Plattform? </h3>
+          </div>
+        </div>
+        <div class="upcoming container">
           {% if projects %}
             <div class="project-descriptions col-md-12">
               <h2> Aktuelle Veranstaltungen &amp; Projekte mit Bürgerbeteiligung </h2>

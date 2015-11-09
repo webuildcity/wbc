@@ -72,20 +72,7 @@ body {
 #bottom-container {
     position: relative;
     top: -40px;
-
-    .nav li a {
-        background: rgba(255,255,255,0.8);
-        margin-right: 0pxs;
-    }
-
-    .nav li:last-child {
-        border-radius: 3px;
-    }
-
-    #tab-content {
-        height: 540px;
-        background: rgba(255,255,255,0.8);
-    }
+    background: rgba(255,255,255,0.8);
 
     .teaser {
         text-align: center;
