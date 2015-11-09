@@ -1,10 +1,21 @@
-$primary-color: #de6a00;
-// $primary-color: #cc0000;
-// $primary-color-light: #ee0000;
-$primary-color-light: #e58833;
-// $primary-color-lightest: #fcf0e5;
-$primary-color-lightest: #ff0000;
-$headline-color: #646464;
-$highlight-color: #EBAB0C;
+
+
+
+
+$primary-color-dark: #303f9f;
+$primary-color: #3f51b5;
+$primary-color-light: #c5cae9;
+
+
+$headline-color: $primary-color;
+$highlight-color: #4caf50;
+
+$primary-text: #212121;
+$primary-secondary: #727272;
+$divider-color: #b6b6b6;
+
+$icon-color: #fff;
+
+
 $background-image: url(static('img/background.png'));
 $background-image-light: url(static('img/hintergrund.png'));

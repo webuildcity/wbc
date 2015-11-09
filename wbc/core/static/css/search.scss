@@ -177,10 +177,10 @@
     }
 
     .search-result:hover {
-        background-color: rgba(229, 136, 51, 0.1);
+        background-color: $highlight-color;
     }
     .search-result.selected {
-        background-color: rgba(229, 136, 51, 0.1);
+        background-color: $highlight-color;
     }
 }
 
@@ -188,7 +188,8 @@
     height: 100%;
 
     .focused-poly {
-        stroke-width: 5px;
-        stroke: $highlight-color;
+        stroke-width: 2px;
+        fill: $primary-color;
+        stroke: $primary-color;
     }
 }
