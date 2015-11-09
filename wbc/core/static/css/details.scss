@@ -74,8 +74,8 @@ body {
         width: 100%;
     }
     .teaser-text {
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
+        padding-top: 0.3em;
+        padding-left: 1em;
     }
     
     #participate-widget {
