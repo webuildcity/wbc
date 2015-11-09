@@ -131,7 +131,7 @@ def project_request(request, p):
                     step.publication = pub
 
     print p.publication_set.filter(begin__lte=today, end__gte=today)
-    return render(request,'projects/project_new.html',{
+    return render(request,'projects/details.html',{
         'project' : p,
         'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
         'events'  : p.events.order_by('-begin'),
