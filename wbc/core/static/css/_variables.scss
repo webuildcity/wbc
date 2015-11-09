@@ -19,3 +19,15 @@ $icon-color: #fff;
 
 $background-image: url(static('img/background.png'));
 $background-image-light: url(static('img/hintergrund.png'));
+
+@mixin gradient(){
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#3f51b5+0,ffffff+100 */
+    background: rgb(63,81,181); /* Old browsers */
+    background: -moz-linear-gradient(left,  rgba(63,81,181,1) 0%, rgba(255,255,255,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(63,81,181,1)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left,  rgba(63,81,181,1) 0%,rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  rgba(63,81,181,1) 0%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  rgba(63,81,181,1) 0%,rgba(255,255,255,1) 100%); /* IE10+ */
+    background: linear-gradient(to right,  rgba(63,81,181,1) 0%,rgba(255,255,255,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f51b5', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 */
+}
