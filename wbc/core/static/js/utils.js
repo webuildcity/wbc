@@ -30,3 +30,22 @@ function moveScroller(anchor, scroller) {
     $(scroller).scroll(move);
     move();
 }
+
+function scrollCheck(element, scroller){
+    console.log(element);
+    console.log(scroller);
+    var move = function() {
+        var st = $(scroller).scrollTop();
+        var ot = $(element).offset().top+100;
+        var el = $('#nav-search');
+        console.log(st)
+        console.log(ot)
+        if (st> ot){
+            el.addClass('fade-in');
+        } else {
+            el.removeClass('fade-in')
+        }
+    }
+    $(scroller).scroll(move);
+    move();
+}

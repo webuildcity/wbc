@@ -6,6 +6,20 @@ body {
 }
 
 
+#header {
+    #nav-search {
+        opacity: 0;
+    }
+    #nav-search.fade-in {
+        opacity: 1;
+        -webkit-transition: opacity 1s ease-in;
+        -moz-transition: opacity 1s ease-in;
+        -o-transition: opacity 1s ease-in;
+        -ms-transition: opacity 1s ease-in;
+        transition: opacity 1s ease-in;
+    }
+}
+
 .text-center {
     text-align: center;
 }

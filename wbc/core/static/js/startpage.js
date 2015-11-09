@@ -106,7 +106,7 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
         }
     };
 
-
+    /** SHOW IF SCROLLED **/
     /*
     $scope.focusResult = function(result) {
 
@@ -168,3 +168,8 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
 
 
 }]);
+
+
+$(document).ready(function(){
+    scrollCheck('.top-overlay', '.big-page');
+})
