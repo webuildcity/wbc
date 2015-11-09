@@ -36,7 +36,7 @@ function scrollCheck(element, scroller){
     console.log(scroller);
     var move = function() {
         var st = $(scroller).scrollTop();
-        var ot = $(element).offset().top+100;
+        var ot = $(element).offset().top+250;
         var el = $('#nav-search');
         console.log(st)
         console.log(ot)
