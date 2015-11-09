@@ -93,13 +93,13 @@ DetailsController
         </button>
     </div>
 
-
+    <div id="participate-widget" class="widget">
     {% if processSteps %}
         {% for pub in processSteps %}
             {% if pub.process_step.participation %}
-                <p class="participation"><span>o</span>Beteiligung möglich</p>
+                <div><img class="participation" src="/static/img/participation.png"> Beteiligung möglich</div>
             {% else %}
-                <p class="no-participation"><span>x</span>Beteiligung zur Zeit nicht möglich</p>
+                <div><img class="no-participation" src="/static/img/no-participation.png"> Beteiligung zur Zeit nicht möglich</div>
             {% endif %}
        <!--  <div class="current-step tooltip-container">
              <span class="fa-stack fa-2x">
@@ -116,6 +116,8 @@ DetailsController
         </div> -->
         {% endfor %}
     {% endif %}
+    </div>
+
 
     {% if tags %}
     <div id="tags-widget" class="widget">
