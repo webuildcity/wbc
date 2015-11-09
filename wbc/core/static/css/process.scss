@@ -1,0 +1,28 @@
+@import 'variables';
+/** AB HIER TEST NEUE SEITE **/
+
+
+#side_content {
+
+    background-image: $background-image-light;
+
+    #process_sidebar {
+
+        height: 100%;
+        overflow-y: auto;
+        // padding: 0px 10px;
+
+        .search-field {
+            padding: 2em 1em;
+        }
+        .search-anchor {
+            width:99%;
+            height: 90px;
+            float: left;
+        }
+    }
+}
+
+#main_content { 
+    
+}

@@ -1,41 +1,55 @@
-{% extends 'core/layout.html' %}
+{% extends 'core/layout_split.html' %}
 {% load staticfiles compress %}
 
 {% block css %}
     {% compress css %}
     {{block.super}}
-      
+
+    <link rel="stylesheet" type="text/x-scss" href="{% static "css/process.scss" %}" />
+
     {% endcompress %}
 {% endblock %}
 
 {% block js %}
-    <script type="text/javascript">
-    $(document).ready(function(){
-      var openVs = window.location.toString().split('#')[1];
-      $('#collapse-' + openVs).addClass('in');
-    });
-    </script>
+
 {% endblock %}
 
-{% block content %}
-    <h2>Begriffe</h2>
-    {% for process_type in process_types %}
-        <h3>{{process_type.name}}</h3>
-        <p>{{process_type.description}}</p>
-        <div class="panel-group" id="accordion-{{ v.pk }}">
-            {% for process_step in process_type.process_steps.all %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <a data-toggle="collapse" data-parent="#accordion-{{ process_type.pk }}" href="#collapse-{{ process_step.pk }}">{{ process_step.name }}</a>
-                </div>
+{% block controller %}
+DefaultController
+{% endblock %}
 
-                <div id="collapse-{{ process_step.pk }}" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        {{ process_step.description }}
-                        </div>
-                    </div>
+
+{% block side_content %}
+    <div id="process_sidebar">
+        <h2>Begriffe </h2>
+        {% for process_type in process_types %}
+            <div class="panel-group">
+                <h3>{{process_type.name}}</h3>
+                {% for process_step in process_type.process_steps.all %}
+                <div class="panel panel-default">
+                    <a href="{% url 'process_step' pk=process_step.pk %}">{{ process_step.name }}</a>
                 </div>
-            {% endfor %}
-        </div>
-    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+
+{% block main_content %}
+
+            <h2>{{process_step.process_type.name}}</h2>
+            <p>{{process_step.process_type.description}}</p>
+            
+            <h3>{{process_step.name}}</h3>
+            <p>{{process_step.description}}</p>
+
+            {% if process_step.participation %}
+                <div><img class="participation" src="/static/img/participation.png"> Beteiligung möglich</div>
+            {% else %}
+                <div><img class="no-participation" src="/static/img/no-participation.png"> Beteiligung zur Zeit nicht möglich</div>
+            {% endif %}
+
+
 {% endblock %}

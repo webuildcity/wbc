@@ -27,6 +27,15 @@ class ProcessTypeViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProcessTypeSerializer
     queryset = ProcessType.objects.all()
 
-def process(request):
+def process(request, pk=None):
     process_types = ProcessType.objects.all()
+    if pk:
+        process_step = get_object_or_404(ProcessStep, pk=int(pk))
+        return render(request, 'process/process.html', {
+                'process_types': process_types, 
+                'process_step': process_step
+        })
+
     return render(request,'process/process.html',{'process_types': process_types})
+
+

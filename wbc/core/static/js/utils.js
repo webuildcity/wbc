@@ -16,18 +16,24 @@ function getRuleForSelector(selector) {
     return selectors[selector];
 }
 
-function moveScroller(anchor, scroller) {
+function moveScroller(anchorSelector, scrollerSelector) {
     var move = function() {
-        var st = $(scroller).scrollTop();
-        var ot = $(anchor).offset().top;
-        var s = $(anchor);
-        if(st > ot) {
-            s.addClass('fixed-top')
+        var scrollTop = $(scrollerSelector).scrollTop();
+        var offset = $(anchorSelector).offset();
+        var offsetTop = 0;
+        if(offset !== undefined) {
+            offsetTop = offset.top;
+        }
+
+        var anchor = $(anchorSelector);
+        if(scrollTop > offsetTop) {
+            anchor.addClass('fixed-top')
         } else {
-            s.removeClass('fixed-top')
+            anchor.removeClass('fixed-top')
         }
     };
-    $(scroller).scroll(move);
+
+    $(scrollerSelector).scroll(move);
     move();
 }
 
