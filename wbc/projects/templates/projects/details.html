@@ -51,6 +51,31 @@ DetailsController
             </a>
             {% endif %}
         </div>
+        <div id="participate-widget" class="widget">
+        {% if processSteps %}
+            {% for pub in processSteps %}
+                {% if pub.process_step.participation %}
+                    <div><img class="participation" src="/static/img/participation.png" title="Beteiligung möglich"></div>
+                {% else %}
+                    <div><img class="no-participation" src="/static/img/no-participation.png" title="Beteiligung zur Zeit nicht möglich"></div>
+                {% endif %}
+           <!--  <div class="current-step tooltip-container">
+                 <span class="fa-stack fa-2x">
+                    <i class="fa fa-circle-thin fa-stack-2x"></i>
+                    <i class="fa fa-gears fa-stack-1x fa-inverse"></i>
+                </span>
+                <p>
+                {{pub.process_step}}
+                </p>
+                <div class="tooltip">
+                    <p><b>{{pub.process_step}}</b></p>
+                    {{pub.process_step.description}}
+                </div>
+            </div> -->
+            {% endfor %}
+        {% endif %}
+        </div>
+
     </div>
 
   <!--   <div class="availability-icons">
@@ -73,7 +98,7 @@ DetailsController
 
 
     {% if gallery %}
-    <img u="image" src="{{ gallery.0.latest.0.get_description_url }}" />
+    <img class="project-image" u="image" src="{{ gallery.0.latest.0.get_description_url }}" />
         
     {% endif %}
 
@@ -93,30 +118,7 @@ DetailsController
         </button>
     </div>
 
-    <div id="participate-widget" class="widget">
-    {% if processSteps %}
-        {% for pub in processSteps %}
-            {% if pub.process_step.participation %}
-                <div><img class="participation" src="/static/img/participation.png"> Beteiligung möglich</div>
-            {% else %}
-                <div><img class="no-participation" src="/static/img/no-participation.png"> Beteiligung zur Zeit nicht möglich</div>
-            {% endif %}
-       <!--  <div class="current-step tooltip-container">
-             <span class="fa-stack fa-2x">
-                <i class="fa fa-circle-thin fa-stack-2x"></i>
-                <i class="fa fa-gears fa-stack-1x fa-inverse"></i>
-            </span>
-            <p>
-            {{pub.process_step}}
-            </p>
-            <div class="tooltip">
-                <p><b>{{pub.process_step}}</b></p>
-                {{pub.process_step.description}}
-            </div>
-        </div> -->
-        {% endfor %}
-    {% endif %}
-    </div>
+
 
     {% if nextDate %}
     <a class="event-item" data-toggle="tab" href="#timeline">

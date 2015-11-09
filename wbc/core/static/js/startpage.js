@@ -1,4 +1,4 @@
-var app = angular.module('wbc', []);
+// var app = angular.module('wbc', []);
 
 app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $interpolateProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
@@ -106,7 +106,6 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
         }
     };
 
-
     /*
     $scope.focusResult = function(result) {
 
@@ -168,3 +167,8 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
 
 
 }]);
+
+/** SHOW IF SCROLLED **/    
+$(document).ready(function(){
+    scrollCheck('.top-overlay', '.big-page');
+})

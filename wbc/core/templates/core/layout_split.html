@@ -1,16 +1,14 @@
 {% extends 'core/layout.html' %}
 
 {% block content %}
-<div class="big-page">
-    <div id="side_content" class="col-md-4 max-height">
-    {% block side_content %}
+<div id="side_content" class="col-md-4 max-height">
+{% block side_content %}
 
-    {% endblock %}
-    </div>
+{% endblock %}
+</div>
 
-    <div id="main_content" class="col-md-8 max-height">
-    {% block main_content %}
-    {% endblock %}
-    </div>
+<div id="main_content" class="col-md-8 max-height">
+{% block main_content %}
+{% endblock %}
 </div>
 {% endblock %}

@@ -1,6 +1,11 @@
 @import 'variables';
 /** AB HIER TEST NEUE SEITE **/
 
+#header {
+    .search-field {
+        display: none;
+    }
+}
 
 #side_content {
     background-image: $background-image-light;

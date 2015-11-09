@@ -6,92 +6,118 @@ body {
 }
 
 
+#header {
+    #nav-search {
+        opacity: 0;
+         -webkit-transition: opacity 0.2s ease-in;
+        -moz-transition: opacity 0.2s ease-in;
+        -o-transition: opacity 0.2s ease-in;
+        -ms-transition: opacity 0.2s ease-in;
+        transition: opacity 0.2s ease-in;
+    }
+    #nav-search.fade-in {
+        opacity: 1;
+        -webkit-transition: opacity 1s ease-in;
+        -moz-transition: opacity 1s ease-in;
+        -o-transition: opacity 1s ease-in;
+        -ms-transition: opacity 1s ease-in;
+        transition: opacity 1s ease-in;
+    }
+}
+
 .text-center {
     text-align: center;
 }
 
-#top-container {
-    position: relative;
-    height: 400px;
+.big-page {
+    overflow: auto;
+}
 
-    @media (max-width: 760px) {
-        height: 250px;
-    }
+#startpage-content {
 
-    .top-overlay {
+    #top-container {
         position: relative;
-        padding-top: 40px;
+        height: 400px;
+
         @media (max-width: 760px) {
-            padding-top: 10px;
+            height: 250px;
+        }
 
-            h1 {
-                margin-top: 0px;
+        .top-overlay {
+            position: relative;
+            padding-top: 40px;
+            @media (max-width: 760px) {
+                padding-top: 10px;
+
+                h1 {
+                    margin-top: 0px;
+                }
             }
-        }
 
-        .search-form {
-            padding-top: 10px;
-        }
+            .search-form {
+                padding-top: 10px;
+            }
 
-        .selected-result {
-            border: 1px solid $primary-color !important;
-        }
+            .selected-result {
+                border: 1px solid $primary-color !important;
+            }
 
-        .search-results {
-            border: 1px solid #ddd;
-            // min-height: 40px;
-            background-color:rgba(255,255,255,0.5);
-        
-            .search-result {
+            .search-results {
                 border: 1px solid #ddd;
                 // min-height: 40px;
                 background-color:rgba(255,255,255,0.5);
-            }
+            
+                .search-result {
+                    border: 1px solid #ddd;
+                    // min-height: 40px;
+                    background-color:rgba(255,255,255,0.5);
+                }
 
-            .search-result:hover {
-                border: 1px solid $primary-color-light;
-                background-color:rgba(255,255,255,0.8);
+                .search-result:hover {
+                    border: 1px solid $primary-color-light;
+                    background-color:rgba(255,255,255,0.8);
+                }
             }
+        }
+
+        #map-button {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            background-color: #EC972F;
+            z-index: 10;
+            color: white;
+            box-shadow: 2px 2px #ccc;
+        }
+        #map-button:hover {
+            border: 2px solid $highlight-color;
         }
     }
 
-    #map-button {
-        position: absolute;
-        bottom: 5px;
-        right: 10px;
-        background-color: #EC972F;
-        z-index: 10;
-        color: white;
-        box-shadow: 2px 2px #ccc;
-    }
-    #map-button:hover {
-        border: 2px solid $highlight-color;
-    }
-}
+    #bottom-container {
+        position: relative;
+        top: -40px;
+        background: rgba(255,255,255,0.8);
 
-#bottom-container {
-    position: relative;
-    top: -40px;
-    background: rgba(255,255,255,0.8);
+        .teaser {
+            text-align: center;
+            color: #646464 ;
+            background-color: white;
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            padding: 3px;
+            margin-top: 20px;
+            height: 100px;
+            /*max-width: 300px;*/
+        }
 
-    .teaser {
-        text-align: center;
-        color: #646464 ;
-        background-color: white;
-        border-radius: 2px;
-        border: 1px solid #ddd;
-        padding: 3px;
-        margin-top: 20px;
-        height: 100px;
-        /*max-width: 300px;*/
-    }
+        .teaser:hover {
+            border: 1px solid $highlight-color;
+        }
 
-    .teaser:hover {
-        border: 1px solid $highlight-color;
-    }
-
-    .teaser i {
-        font-size: 42px;
+        .teaser i {
+            font-size: 42px;
+        }
     }
 }
 

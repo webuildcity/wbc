@@ -17,104 +17,107 @@
 StartpageController
 {% endblock %}
 {% block content %}
-<div id="top-container">
-    <div class="top-overlay col-md-8 col-md-offset-2 text-center">
-        <h1>Informiere dich über Bauvorhaben in deinem Stadtteil.</h1>
-        <div class="search-form">
-            <form id="search" class="search-form">
-                <div class="input-group">
-                    <input
-                        placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
-                        type="text" class="form-control"
-                        ng-model="currentSearchTerm"
-                        ng-change="onSearchChanged()"
-                        ng-keydown="onKeyDown($event)"
-                        ng-model-options="{ debounce: 1200 }">
+<div id="startpage-content">
+  <div id="top-container">
+      <div class="top-overlay col-md-8 col-md-offset-2 text-center">
+          <h1>Informiere dich über Bauvorhaben in deinem Stadtteil.</h1>
+          <div class="search-form">
+              <form id="search" class="search-form">
+                  <div class="input-group">
+                      <input
+                          placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
+                          type="text" class="form-control"
+                          ng-model="currentSearchTerm"
+                          ng-change="onSearchChanged()"
+                          ng-keydown="onKeyDown($event)"
+                          ng-model-options="{ debounce: 1200 }">
 
-                    <a href="" class="input-group-addon" ng-click="search()">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </a>
-                </div>
-            </form>
-        </div>
-
-        <div class="search-results">
-            <div ng-repeat="result in data.suggestions">
-                <div class="search-result"
-                     ng-mouseover="focusResult(result)"
-                     ng-click="loadDetails(result)"
-                     ng-class="{'selected-result': $index == selectedSuggestionIdx, 'search-result-type-project':  result.type == 'project', 'search-result-type-stakeholder':  result.type == 'stakeholder'}">
-
-                        <b>{[{ result.name }]}</b>
-                        {[{result.type}]}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="bottom-container"> 
-<!--     <ul class="nav nav-tabs" data-tabs="tabs">
-      <li class="active"><a href="#start-tab" data-toggle="tab">Startseite</a></li>
-      <li><a href="#news-tab" data-toggle="tab">Aktuelles</a></li>
-      <li><a href="#" data-toggle="tab">Impressum</a></li>
-    </ul> -->
-    <div class="container-fluid">
-        <div id="navigation-boxes" class="container">
-            <div class="col-md-4">
-                <a href="{% url 'map' %}">
-                   <div class="teaser">
-                       <i class='fa fa-globe'></i>
-                       <p>Stöber durch alle Bauvorhaben auf einer Karte.</p>
-                   </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="{% url 'search' %}">
-                   <div class="teaser">
-                       <i class='fa fa-search'></i>
-                       <p>Suche nach Themen, Projekten oder Akteuren.</p>
-                   </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="{% url 'process' %}">
-                   <div class="teaser">
-                       <i class='fa fa-lightbulb-o'></i>
-                       <p>Informiere dich über die Gesetzeslage in deiner Stadt</p>
-                   </div>
-                </a>
-            </div>
-        </div>
-        <div id="question-container" class="container">
-          <div class="col-md-4">
-            <h3> Was können Sie hier tun? </h3>
-            <p>Sie können sich über laufende "Stadtplanungsprojekte informieren" [Suche-Seite], detaillierte Informationen zu bestimmten "Projekten" (z.B. [Tag-Olympia, Tag-Elbphilharmonie, Tag-Hildegarden] bekommen und auf einer Karte [Link zur Karte] stöbern, was gerade in Hamburg passiert.
-
-            Darüber hinaus lernen Sie Stadtplanungs- und Verwaltungsprozesse [Begriffe-Seite] besser zu verstehen.</p>
+                      <a href="" class="input-group-addon" ng-click="search()">
+                          <span class="glyphicon glyphicon-search"></span>
+                      </a>
+                  </div>
+              </form>
           </div>
-          <div class="col-md-4"> 
-            <h3> Wie kann mich <a href="{% url 'start' %}">Wir-bauen-Hamburg.de?</a> unterstützen</h3>
-            <p>
-            Bleiben Sie auf dem Laufenden durch regelmäßige Besuche &amp; E-Mail-Benachrichtungen. Wir-bauen-Hamburg.de bekommt regelmäßig und automatisiert neue Informationen vom "Transparenz-Portal"[transparenz.hamburg.de] der Freien- und Hansestadt Hamburg [hamburg.de]
-            </p>
-          </div>
-          <div class="col-md-4">
-            <h3> Wer betreibt diese Plattform? </h3>
-            <p>
-            Wir-bauen-Hamburg ist eine freie Open Source Software Plattform die von We-Build.City [www.we-build.city] betrieben wird. Die Software wurde im Rahmen der Open Knowledge-Labs des [CodeforBerlins] und [CodeforHamburgs] entwickelt sowie von einer einer Förderung der EU-Kommission mitfinanziert.
 
-            Wir verstehen uns als Brückenbauer zwischen Stadt, Verwaltung, Bürgern und Investoren. Gute und effektive Kommunikation ist in unseren Augen das A und O einer gelungenen Stadtentwicklung und die Grundlage von Demokratie. [services.we-build.city]. 
+          <div ng-show="data.suggestions.length >0"class="search-results">
+              <div ng-repeat="result in data.suggestions">
+                  <div class="search-result"
+                       ng-mouseover="focusResult(result)"
+                       ng-click="loadDetails(result)"
+                       ng-class="{'selected-result': $index == selectedSuggestionIdx, 'search-result-type-project':  result.type == 'project', 'search-result-type-stakeholder':  result.type == 'stakeholder'}">
+
+                          <b>{[{ result.name }]}</b>
+                          {[{result.type}]}
+                  </div>
+              </div>
           </div>
-        </div>
-        <div class="upcoming container">
-          {% if projects %}
-            <div class="project-descriptions col-md-12">
-              <h2> Aktuelle Veranstaltungen &amp; Projekte mit Bürgerbeteiligung </h2>
-              {% include "projects/project_list.html" %}
+      </div>
+  </div>
+
+  <div id="bottom-container"> 
+  <!--     <ul class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a href="#start-tab" data-toggle="tab">Startseite</a></li>
+        <li><a href="#news-tab" data-toggle="tab">Aktuelles</a></li>
+        <li><a href="#" data-toggle="tab">Impressum</a></li>
+      </ul> -->
+      <div class="container-fluid">
+          <div id="navigation-boxes" class="container">
+              <div class="col-md-4">
+                  <a href="{% url 'map' %}">
+                     <div class="teaser">
+                         <i class='fa fa-globe'></i>
+                         <p>Stöber durch alle Bauvorhaben auf einer Karte.</p>
+                     </div>
+                  </a>
+              </div>
+              <div class="col-md-4">
+                  <a href="{% url 'search' %}">
+                     <div class="teaser">
+                         <i class='fa fa-search'></i>
+                         <p>Suche nach Themen, Projekten oder Akteuren.</p>
+                     </div>
+                  </a>
+              </div>
+              <div class="col-md-4">
+                  <a href="{% url 'process' %}">
+                     <div class="teaser">
+                         <i class='fa fa-lightbulb-o'></i>
+                         <p>Informiere dich über die Gesetzeslage in deiner Stadt</p>
+                     </div>
+                  </a>
+              </div>
+          </div>
+          <div id="question-container" class="container">
+            <div class="col-md-4">
+              <h3> Was können Sie hier tun? </h3>
+              <p>Sie können sich über laufende "Stadtplanungsprojekte informieren" [Suche-Seite], detaillierte Informationen zu bestimmten "Projekten" (z.B. [Tag-Olympia, Tag-Elbphilharmonie, Tag-Hildegarden] bekommen und auf einer Karte [Link zur Karte] stöbern, was gerade in Hamburg passiert.
+
+              Darüber hinaus lernen Sie Stadtplanungs- und Verwaltungsprozesse [Begriffe-Seite] besser zu verstehen.</p>
             </div>
-          {% endif %}
-        </div>
+            <div class="col-md-4"> 
+              <h3> Wie kann mich <a href="{% url 'start' %}">Wir-bauen-Hamburg.de?</a> unterstützen</h3>
+              <p>
+              Bleiben Sie auf dem Laufenden durch regelmäßige Besuche &amp; E-Mail-Benachrichtungen. Wir-bauen-Hamburg.de bekommt regelmäßig und automatisiert neue Informationen vom "Transparenz-Portal"[transparenz.hamburg.de] der Freien- und Hansestadt Hamburg [hamburg.de]
+              </p>
+            </div>
+            <div class="col-md-4">
+              <h3> Wer betreibt diese Plattform? </h3>
+              <p>
+              Wir-bauen-Hamburg ist eine freie Open Source Software Plattform die von We-Build.City [www.we-build.city] betrieben wird. Die Software wurde im Rahmen der Open Knowledge-Labs des [CodeforBerlins] und [CodeforHamburgs] entwickelt sowie von einer einer Förderung der EU-Kommission mitfinanziert.
+
+              Wir verstehen uns als Brückenbauer zwischen Stadt, Verwaltung, Bürgern und Investoren. Gute und effektive Kommunikation ist in unseren Augen das A und O einer gelungenen Stadtentwicklung und die Grundlage von Demokratie. [services.we-build.city]. 
+              </p>
+            </div>
+          </div>
+          <div class="upcoming container">
+            {% if projects %}
+              <div class="project-descriptions col-md-12">
+                <h2> Aktuelle Veranstaltungen &amp; Projekte mit Bürgerbeteiligung </h2>
+                {% include "projects/project_list.html" %}
+              </div>
+            {% endif %}
+          </div>
+      </div>
     </div>
 </div>
 {% endblock %}

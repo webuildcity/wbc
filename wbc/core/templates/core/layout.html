@@ -30,7 +30,7 @@
     <script type="text/javascript" src="{% static 'js/main.js' %}" ></script>
 
     <script type="text/ng-template" id="/wbc-searchdirective.html">
-        <form id="search" class="search-form" ng-submit="submit(formData.searchTerm)">
+        <form id="nav-search" class="search-form" ng-submit="submit(formData.searchTerm)">
             <div>
                 <div class="input-group search-field">
                     <input
@@ -115,8 +115,9 @@
             </div>
         </div>
     </div>
-    {% block content %}{% endblock %}
-
+    <div class="big-page">
+        {% block content %}{% endblock %}
+    </div>
     {% if not debug %}
         {% include "core/layout_piwik.html" %}
     {% endif %}
