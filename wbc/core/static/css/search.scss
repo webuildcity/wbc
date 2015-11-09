@@ -177,10 +177,10 @@
     }
 
     .search-result:hover {
-        background-color: $highlight-color;
+        background-color: $primary-color-light;
     }
     .search-result.selected {
-        background-color: $highlight-color;
+        background-color: $primary-color-light;
     }
 }
 
@@ -189,7 +189,7 @@
 
     .focused-poly {
         stroke-width: 2px;
-        fill: $primary-color;
-        stroke: $primary-color;
+        fill: $highlight-color;
+        stroke: $highlight-color;
     }
 }

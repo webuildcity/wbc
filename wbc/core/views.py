@@ -93,7 +93,7 @@ class SearchView(TemplateView):
         sqs = SearchQuerySet().facet('tags').facet('entities')
         model_dict = {
             'project' : Project,
-            'stakeholder': Stakeholder 
+#            'stakeholder': Stakeholder 
         }
         offset = 0
         

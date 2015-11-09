@@ -15,7 +15,7 @@ class StakeholderIndex(indexes.SearchIndex, indexes.Indexable):
     internal_link = indexes.CharField()
     type = indexes.CharField()
 
-    content_auto = indexes.NgramField(use_template=True)
+#    content_auto = indexes.NgramField(use_template=True)
 
     def get_model(self):
         return Stakeholder
