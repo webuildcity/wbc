@@ -1,4 +1,4 @@
-var app = angular.module('wbc', []);
+// var app = angular.module('wbc', []);
 
 app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $interpolateProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';

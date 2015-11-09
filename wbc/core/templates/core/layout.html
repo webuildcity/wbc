@@ -114,8 +114,9 @@
             </div>
         </div>
     </div>
-    {% block content %}{% endblock %}
-
+    <div class="big-page">
+        {% block content %}{% endblock %}
+    </div>
     {% if not debug %}
         {% include "core/layout_piwik.html" %}
     {% endif %}

@@ -43,7 +43,7 @@ body {
     }
     #subscribe-widget {
         // float: right;
-        width: 100%;
+        // width: 100%;
         margin: 2em 1em;
     }
 
@@ -70,19 +70,27 @@ body {
         }
     }
 
-    img {
+    .project-image {
         width: 100%;
     }
     .teaser-text {
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
     }
-
-    .participation span {
-        color: green;
-    }
-    .no-participation span {
-        color: red;
+    
+    #participate-widget {
+        float: right;
+        margin-top: 10px;
+        margin-left: 5px;
+        .participation {
+            width: 5em;
+        }
+        .participation span {
+            color: green;
+        }
+        .no-participation span {
+            color: red;
+        }
     }
     .current-step  {
         background: white;
