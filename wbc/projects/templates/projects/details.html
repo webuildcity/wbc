@@ -51,16 +51,6 @@ DetailsController
             </a>
             {% endif %}
         </div>
-
-        <div id="subscribe-widget" class="widget">
-            <button class="btn default wbc-button">
-                <span class="fa-stack">
-                  <i class="fa fa-circle-thin fa-stack-2x"></i>
-                  <i class="fa fa-envelope fa-stack-1x fa-lg"></i>
-                </span>
-                Abo
-            </button>
-        </div>
     </div>
 
   <!--   <div class="availability-icons">
@@ -86,6 +76,23 @@ DetailsController
     <img u="image" src="{{ gallery.0.latest.0.get_description_url }}" />
         
     {% endif %}
+
+    {% if project.description %}
+    <div class="teaser-text">
+        {{project.get_teaser}}
+    </div>
+    {% endif %}
+
+    <div id="subscribe-widget" class="widget">
+        <button class="btn default wbc-button">
+            <span class="fa-stack">
+              <i class="fa fa-circle-thin fa-stack-2x"></i>
+              <i class="fa fa-bell fa-stack-1x fa-lg"></i>
+            </span>
+            Benachrichtigungen
+        </button>
+    </div>
+
 
     {% if processSteps %}
         {% for pub in processSteps %}

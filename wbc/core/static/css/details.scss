@@ -42,7 +42,8 @@ body {
         float: left;
     }
     #subscribe-widget {
-        float: right;
+        // float: right;
+        width: 100%;
         margin: 2em 1em;
     }
 
@@ -72,6 +73,11 @@ body {
     img {
         width: 100%;
     }
+    .teaser-text {
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
     .participation span {
         color: green;
     }
