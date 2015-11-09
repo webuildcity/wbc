@@ -40,7 +40,7 @@ $(document).ready(function(){
     moveScroller('.anchor', '#side_content');
     
     /*TAB NAVIGATION MIT URLS */
-    var prefix = "tab_";
+    var prefix = "/";
 
     var activeTab = $('.main-content-nav a[href=' + location.hash.replace(prefix,'') + ']');
     if (activeTab.length) {

@@ -21,36 +21,7 @@ StartpageController
     <div id="top-container" class="container"> 
         <div class="top-overlay text-center">
             <h1>Informiere dich über Bauvorhaben in deinem Stadtteil.</h1>
-            <div class="search-container">
-                <form id="search" class="search-form">
-                    <div class="input-group">
-                        <input
-                          placeholder="Nach Bauvorhaben, Stadteilen oder Themen suchen"
-                          type="text" class="form-control"
-                          ng-model="currentSearchTerm"
-                          ng-change="onSearchChanged()"
-                          ng-keydown="onKeyDown($event)"
-                          ng-model-options="{ debounce: 1200 }">
-
-                        <a href="" class="input-group-addon" ng-click="search()">
-                          <span class="glyphicon glyphicon-search"></span>
-                        </a>
-                        </div>
-                        </form>
-
-                        <div ng-show="data.suggestions.length >0"class="search-results">
-                        <div ng-repeat="result in data.suggestions">
-                        <div class="search-result"
-                           ng-mouseover="focusResult(result)"
-                           ng-click="loadDetails(result)"
-                           ng-class="{'selected-result': $index == selectedSuggestionIdx, 'search-result-type-project':  result.type == 'project', 'search-result-type-stakeholder':  result.type == 'stakeholder'}">
-
-                              <b>{[{ result.name }]}</b>
-                              {[{result.type}]}
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <wbc-search></wbc-search>
         </div>
     </div>
 
