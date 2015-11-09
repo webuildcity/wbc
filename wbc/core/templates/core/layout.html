@@ -34,7 +34,7 @@
             <div>
                 <div class="input-group search-field">
                     <input
-                    placeholder="Suche"
+                    placeholder="{[{text}]}"
                     type="text" class="form-control"
                     ng-model="formData.searchTerm"
                     ng-change="onSearchChanged()"
@@ -50,7 +50,7 @@
                 </div>
             </div>
         </form>
-        <div class="search-results">
+        <div ng-show="data.suggestions.length >0"class="search-results">
             <div ng-repeat="result in data.suggestions">
                 <div class="search-result"
                      ng-click="loadDetails(result.internal_link)"
@@ -106,7 +106,7 @@
             </div>
 
             <div id="header-right">
-                <wbc-search>
+                <wbc-search text="Suche">
                 </wbc-search>
                 <ul class="sitenav wbc-nav">
                     {% include "core/layout_navigation.html" %}

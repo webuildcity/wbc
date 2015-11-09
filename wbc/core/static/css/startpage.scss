@@ -70,6 +70,7 @@ body {
                 padding-top: 10px;
                 padding-left: 60px;
                 padding-right: 60px;
+                z-index: 20;
                 @media (max-width: 760px) {
                     padding-left: 20px;
                     padding-right: 20px
@@ -86,9 +87,11 @@ body {
                 background-color:rgba(255,255,255,0.5);
                 text-align: left;
                 padding-left: 0.3em;
+                z-index: 20;
+                position: relative;
             
                 .search-result {
-                    // border: 1px solid #ddd;
+                    border: 1px solid #fff;
                     // min-height: 40px;
                     background-color:rgba(255,255,255,0.5);
                 }
