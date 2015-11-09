@@ -118,18 +118,6 @@ DetailsController
     {% endif %}
     </div>
 
-
-    {% if tags %}
-    <div id="tags-widget" class="widget">
-        <div class="content-container">
-            <h3><i class="fa fa-tags"> </i>Stichwörter</h3>
-            {% for tag in tags %}
-                <a class="taglink" href="{{tag.get_absolute_url}}">{{tag.name}}</a>
-            {% endfor %}
-        </div>
-    </div>
-    {% endif %}
-
     {% if nextDate %}
     <a class="event-item" data-toggle="tab" href="#timeline">
         <div id="next-date-widget" class="widget">
@@ -154,6 +142,17 @@ DetailsController
             </div>
         </div>
     </a>
+    {% endif %}
+
+    {% if tags %}
+    <div id="tags-widget" class="widget">
+        <div class="content-container">
+            <h3><i class="fa fa-tags"> </i>Stichwörter</h3>
+            {% for tag in tags %}
+                <a class="taglink" href="{{tag.get_absolute_url}}">{{tag.name}}</a>
+            {% endfor %}
+        </div>
+    </div>
     {% endif %}
 
 </div>
@@ -200,10 +199,6 @@ DetailsController
                 </div>
             </div>
             {% endif %}
-
-
-       
-
 
         </div>
         <div id="project_map" class="tab-pane">
