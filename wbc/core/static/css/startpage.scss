@@ -122,8 +122,10 @@ body {
         // background: rgba(255,255,255,0.8);
         .wbc-headline {
             margin: 0px;
-            padding: 0.3em;
+            padding: 0.2em;
             padding-left: 2em;
+            background-color: #D8E2EC;
+            color: #646464;
         }
         .wbc-divider {
             @include gradient();
