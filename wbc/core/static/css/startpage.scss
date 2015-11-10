@@ -41,18 +41,17 @@ body {
     text-align: center;
 }
 
-.big-page {
-    overflow: auto;
-}
-
 #startpage-content {
+    height: 100%;
+    position: relative;
+    overflow-y: auto;
 
     #top-container {
         position: relative;
-        height: 400px;
+        height: 300px;
 
         @media (max-width: 760px) {
-            height: 250px;
+            height: 200px;
         }
 
         .top-overlay {
@@ -70,6 +69,7 @@ body {
                 padding-top: 10px;
                 padding-left: 60px;
                 padding-right: 60px;
+                z-index: 20;
                 @media (max-width: 760px) {
                     padding-left: 20px;
                     padding-right: 20px
@@ -86,9 +86,11 @@ body {
                 background-color:rgba(255,255,255,0.5);
                 text-align: left;
                 padding-left: 0.3em;
+                z-index: 20;
+                position: relative;
             
                 .search-result {
-                    // border: 1px solid #ddd;
+                    border: 1px solid #fff;
                     // min-height: 40px;
                     background-color:rgba(255,255,255,0.5);
                 }
@@ -116,7 +118,7 @@ body {
 
     #bottom-container {
         position: relative;
-        top: -9em;
+        // top: -9em;
         // background: rgba(255,255,255,0.8);
         .wbc-headline {
             margin: 0px;
@@ -152,6 +154,22 @@ body {
 
         .teaser i {
             font-size: 42px;
+        }
+
+        .project-description {
+            float: left;
+            
+            .description_img {
+                max-width: 100%;
+            }
+            // img {
+            //     width: 200px;
+            // }
+            .date {
+                padding-left: 1em;
+                position: relative;
+                top: -8px;
+            }
         }
     }
 }

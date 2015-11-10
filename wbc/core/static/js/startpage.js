@@ -170,5 +170,5 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
 
 /** SHOW IF SCROLLED **/    
 $(document).ready(function(){
-    scrollCheck('.top-overlay', '.big-page');
+    scrollCheck('.top-overlay', '#startpage-content');
 })

@@ -2,7 +2,8 @@ app.directive('wbcSearch', function() {
     return {
         restrict: 'E',
         scope: {
-            searchTerm: '&'
+            searchTerm: '&',
+            text: '@text'
         },
         templateUrl: '/wbc-searchdirective.html',
         controller: ['$scope', '$http', '$location', function($scope, $http, $location){
@@ -17,6 +18,7 @@ app.directive('wbcSearch', function() {
 
             $scope.onSearchChanged = function() {
                 // $scope.noResults = false;
+                // console.log($scope.text);
                 if($scope.formData.searchTerm) {
                     $scope.isLoading = true;
                     $http({
