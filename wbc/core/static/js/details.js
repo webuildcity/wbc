@@ -25,7 +25,8 @@ app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 
     $('.3d-link').on('click',function(){
          setTimeout(function(){
             if(!is3d)
-                wbc3d('#vizicities-viewport', [53.5393717769,9.99273093895]);
+                wbc3d('#vizicities-viewport', [_lat,_lon]);
+                is3d = true;
         }, 10);
     });
     $(document).ready(function(){
@@ -41,7 +42,8 @@ app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 
         if(location.hash == "#/3d"){
             setTimeout(function(){
                 if(!is3d)
-                    wbc3d('#vizicities-viewport', [53.5393717769,9.99273093895]);    
+                    wbc3d('#vizicities-viewport', [_lat,_lon]);    
+                    is3d = true;
             }, 10); 
         } 
     })
