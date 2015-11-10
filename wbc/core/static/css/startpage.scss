@@ -1,7 +1,6 @@
 @import 'variables'; 
 
 body {
-    background-image: $background-image;
     background-position: center;
 }
 
@@ -49,7 +48,7 @@ body {
     #top-container {
         position: relative;
         height: 300px;
-
+        background-image: $startpage-image:;
         @media (max-width: 760px) {
             height: 200px;
         }
@@ -120,11 +119,12 @@ body {
         position: relative;
         // top: -9em;
         // background: rgba(255,255,255,0.8);
+
         .wbc-headline {
             margin: 0px;
             padding: 0.2em;
             padding-left: 2em;
-            background-color: #D8E2EC;
+            background-color: $secondary-text;
             color: #646464;
         }
         .wbc-divider {
