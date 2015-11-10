@@ -153,6 +153,16 @@ body {
     .event-item {
     }
 
+    .tab-pane {
+        height: 100%;
+        width: 100%;
+
+        #vizicities-viewport {
+            height: 100%;
+            width: 100%;
+        }
+    }
+
 }
 
 .project-buttons {

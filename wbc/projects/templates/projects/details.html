@@ -2,11 +2,11 @@
 {% load staticfiles compress %}
 
 {% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/vizi.css" %}" />
     {% compress css %}
     {{block.super}}
     <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
     <link rel="stylesheet" type="text/x-scss" href="{% static "css/details.scss" %}" />
-
     {% endcompress %}
 {% endblock %}
 
@@ -16,7 +16,9 @@
     <script type="text/javascript" src="{% static 'lib/OSMBuildings-Leaflet.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/modernizr.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/vertical-timeline.js' %}"  ></script>
-
+    <script type="text/javascript" src="{% static 'lib/vizicities/vizi.min.js' %}"  ></script>
+    <script type="text/javascript" src="{% static 'js/3d.js' %}"  ></script>
+    
 
     <script type="text/javascript">
         var _static_url = {% static '' %}
@@ -28,6 +30,11 @@
         var _lat = {{ project.lat|stringformat:"F" }};
         var _address = "{{ project.address|safe }}";
         var _polygon = {% if project.polygon %}{{project.polygon|safe}}{% else %}[]{% endif %};
+        if (!window.wbc3d) {
+            window.wbc3d_conf = {};
+            // wbc3d_conf.DATADIR = "{% static 'lib/wbc3d/data/' %}";
+            wbc3d_conf.WORKERPATH = "../..{% static 'lib/vizicities/vizi-worker.min.js' %}";
+        }
     </script>
     <script type="text/javascript" src="{% static 'js/details.js' %}" ></script>
     <script type="text/javascript" src="{% static 'js/angular-mapservice.js' %}" ></script>
@@ -38,6 +45,7 @@ DetailsController
 {% endblock %}
 
 {% block side_content %}
+
 <div id="project_sidebar">
     <div class="anchor">
         <div class="details-headline content-container">
@@ -55,7 +63,7 @@ DetailsController
         {% if processSteps %}
             {% for pub in processSteps %}
                 {% if pub.process_step.participation %}
-                    <div><img class="participation" src="/static/img/participation.png" title="Beteiligung möglich"></div>
+                    <div><img class="participation" src="/static/img/participation.png" title="Bürgerbeteiligung möglich"></div>
                 {% else %}
                     <div><img class="no-participation" src="/static/img/no-participation.png" title="Beteiligung zur Zeit nicht möglich"></div>
                 {% endif %}
@@ -172,6 +180,7 @@ DetailsController
         <li {{stakeholders|yesno:' ,class=not-active'}}>
             <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Beteiligte</a> 
         </li>
+        <li><a class="vizi-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>3D</a></li>
     </ul>
     <div id="tab-content" class="tab-content">
         <div id="info" class="tab-pane active">
@@ -222,6 +231,12 @@ DetailsController
             {% include "projects/project_stakeholder.html" %}
         </div>
         {% endif %}
+        
+        <div id="3d" class="tab-pane">
+            <div id="vizicities-viewport">
+            </div>
+        </div>
+
         </div>
     </div>
 {% endblock %}

@@ -9,6 +9,7 @@ app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $in
 app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 'MapService',
     function($scope, $document, $http, $window, MapService) {
       
+    var is3d = false;  
     MapService.loadPoly(_polygon, undefined, undefined, true);
 
     $('.map-link').on('click',function(){
@@ -20,6 +21,12 @@ app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 
                 poly = tempPoly;
             }
         }, 100);
+    }); 
+    $('.3d-link').on('click',function(){
+         setTimeout(function(){
+            if(!is3d)
+                wbc3d('#vizicities-viewport', [53.5393717769,9.99273093895]);
+        }, 10);
     });
     $(document).ready(function(){
         if(location.hash == "#/project_map"){
@@ -31,6 +38,12 @@ app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 
                 }
             }, 100);  
         }
+        if(location.hash == "#/3d"){
+            setTimeout(function(){
+                if(!is3d)
+                    wbc3d('#vizicities-viewport', [53.5393717769,9.99273093895]);    
+            }, 10); 
+        } 
     })
 }]);
 
