@@ -48,7 +48,7 @@ body {
     #top-container {
         position: relative;
         height: 300px;
-        background-image: $startpage-image:;
+        background-image: $startpage-image;
         @media (max-width: 760px) {
             height: 200px;
         }
