@@ -69,11 +69,11 @@ class Project(Model):
     def get_last_news(self):
         return self.events.filter(media__isnull=False).order_by('begin').first()
 
-    def get_teaser(self):
-        if len(self.description) <= 200:
+    def get_teaser(self, chars):
+        if len(self.description) <= chars:
             return self.description
         else:
-            return ' '.join(self.description[:200+1].split(' ')[0:-1]) + '...'
+            return ' '.join(self.description[:chars+1].split(' ')[0:-1]) + '...'
 
 
     def __unicode__(self):

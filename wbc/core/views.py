@@ -82,9 +82,10 @@ class StartView(TemplateView):
         now = datetime.now()
         context = super(StartView, self).get_context_data(**kwargs)
         # context['latest'] = 
-        p = Project.objects.filter(events__begin__gte=now)
-        context['projects'] = p
+        projects = Project.objects.filter(events__begin__gte=now)
+        context['upcoming'] = projects
         return context
+        
 class SearchView(TemplateView):
 
     template_name = "core/search.html"
