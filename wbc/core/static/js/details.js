@@ -17,11 +17,12 @@ app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 
             if (typeof(_polygon) !== 'undefined') {
                 var tempPoly = L.multiPolygon(_polygon);
                 MapService.fitPoly(tempPoly);
+                poly = tempPoly;
             }
         }, 100);
     });
     $(document).ready(function(){
-        if(location.hash == "#tab_project_map"){
+        if(location.hash == "#/project_map"){
             setTimeout(function(){
                 MapService.map.invalidateSize();
                 if (typeof(_polygon) !== 'undefined') {
