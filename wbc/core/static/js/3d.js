@@ -291,7 +291,7 @@ $(document).ready(function(){
   //   input: {
   //     type: "BlueprintInputGeoJSON",
   //     options: {
-  //       path: "../data/sample.geojson"
+  //       path: poly
   //     }
   //   },
   //   output: {

@@ -157,21 +157,25 @@ body {
         .teaser i {
             font-size: 42px;
         }
-
-        .project-description {
-            float: left;
+        
+        .upcoming {
+            padding-top: 12px;
+            .project-description {
+                float: left;
+                
+                .description_img {
+                    max-width: 100%;
+                }
+                // img {
+                //     width: 200px;
+                // }
+                .date {
+                    padding-left: 1em;
+                    position: relative;
+                    top: -8px;
+                }
+            }
             
-            .description_img {
-                max-width: 100%;
-            }
-            // img {
-            //     width: 200px;
-            // }
-            .date {
-                padding-left: 1em;
-                position: relative;
-                top: -8px;
-            }
         }
     }
 }

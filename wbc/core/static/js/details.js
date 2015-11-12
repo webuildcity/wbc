@@ -10,6 +10,7 @@ app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 
     function($scope, $document, $http, $window, MapService) {
       
     var is3d = false;  
+    var poly;
     MapService.loadPoly(_polygon, undefined, undefined, true);
 
     $('.map-link').on('click',function(){
