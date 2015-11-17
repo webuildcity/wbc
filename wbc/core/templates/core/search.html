@@ -28,7 +28,7 @@ SearchController
 
 {% block side_content %}
     <div id="search_sidebar">
-        <form id="search" class="search-form">
+        <form id="search">
             {% csrf_token %}
             <div class="search-anchor anchor">
                 <div class="input-group search-field">
@@ -51,9 +51,6 @@ SearchController
                     </a>
                 </div>
             </div>
-            <div class="height-taker">
-            </div>
-
             <div ng-if="entitiesFacets.length > 0" class="facet-container">
                 <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target=".region-facets">
                     <i class="region-anchor anchor fa fa-image"></i>Stadtteile
