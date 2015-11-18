@@ -105,13 +105,13 @@
             clear: both;
         }
         .active-facets {
-            padding-bottom: 0px;
+            padding-bottom: .1em;
             overflow:auto;
 
             .facet-item {
-                padding: .15em .6em .2em;
-                margin: 0 .1em;
-                font-size: 85%;
+                padding: .4em .7em .3em;
+                margin: .1em .1em;
+                font-size: 90%;
                 border-radius: .25em;
                 color: white;
                 background-color: $primary-color-light;
