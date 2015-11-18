@@ -10,33 +10,31 @@
 #side_content {
     background-image: $background-image-light;
 
-    
+
     #search_sidebar {
         height: 100%;
         overflow-y: auto;
         // padding: 0px 10px;
 
         .search-field {
-            padding: 2em 1em;
+            padding: .7em 1em;
+            // border aus .collapse-heading
+            border-bottom: 1px solid #eee;
+            box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.44);
+            margin-bottom: 0.2em;
         }
         .search-anchor {
-            width:99%;
-            height: 90px;
+            width: 100%;
+            height: 55px;
             float: left;
+            z-index: 1;
         }
-        .height-taker {
-            height:90px;
-            width: 1%;
-            float: left;
-        }
-        // .height-taker::after {
-        //     clear: both;
-        // }
         .fixed-top .search-field {
-            padding: 5px 5px;
-            width: 31%;
+            background: white;
+            padding: .7em 1em;
+            width: 33.2%;
                 @media (max-width: 880px){
-                    width: 95%;
+                    width: 100%; // 95%;
                 }
         }
         .collapse-heading {
@@ -62,6 +60,7 @@
                 transform: translateY(60px);
                 padding: 5px 15px;
                 border: 1px solid $primary-color;
+
                 // border-radius: 0px 3px 3px 3px;
                 &.fa-tags {
                     transform: translate(50px, 60px);
@@ -92,13 +91,13 @@
         .collapse-heading:after {
             /* symbol for "opening" panels */
             font-family: 'Glyphicons Halflings';
-            content: "\e114";    
-            float: right;        
+            content: "\e114";
+            float: right;
             /*color: grey;    */
         }
         .collapse-heading.collapsed:after {
             /* symbol for "collapsed" panels */
-            content: "\e080";   
+            content: "\e080";
         }
 
         .facet-container {
@@ -136,7 +135,7 @@
             }
         }
         .wbc-dropdown-container {
-            margin-left: 10px;
+            // margin-left: 10px;
             // background-color: $primary-color-lightest;
             border-left: 1px solid #eee;
 
@@ -149,7 +148,8 @@
             }
             label input[type="checkbox"] {
                 position: relative;
-                top: 2px;
+                bottom: 1px;
+                // z-index: -1;
             }
         }
 
@@ -183,6 +183,9 @@
 
     .search-result:hover {
         background-color: $primary-color-light;
+        a {
+          color: $headline-color;
+        }
     }
     .search-result.selected {
         background-color: $primary-color-light;
@@ -191,6 +194,11 @@
 
 #map {
     height: 100%;
+    @media (max-width: 880px){
+      border-top-style: solid;
+      border-width: thin;
+      border-color: $primary-color;
+    }
 
     .focused-poly {
         stroke-width: 2px;
