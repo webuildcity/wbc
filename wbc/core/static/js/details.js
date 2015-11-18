@@ -10,7 +10,7 @@ app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 
     function($scope, $document, $http, $window, MapService) {
       
     var is3d = false;  
-    var poly;
+    var poly = L.multiPolygon(_polygon);;
     MapService.loadPoly(_polygon, undefined, undefined, true);
 
     $('.map-link').on('click',function(){
@@ -26,7 +26,7 @@ app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 
     $('.3d-link').on('click',function(){
          setTimeout(function(){
             if(!is3d)
-                wbc3d('#vizicities-viewport', [_lat,_lon]);
+                wbc3d('#vizicities-viewport', [_lat,_lon], poly);
                 is3d = true;
         }, 10);
     });
@@ -35,15 +35,15 @@ app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 
             setTimeout(function(){
                 MapService.map.invalidateSize();
                 if (typeof(_polygon) !== 'undefined') {
-                    var tempPoly = L.multiPolygon(_polygon);
-                    MapService.fitPoly(tempPoly);
+                    // poly = L.multiPolygon(_polygon);
+                    MapService.fitPoly(poly);
                 }
             }, 100);  
         }
         if(location.hash == "#/3d"){
             setTimeout(function(){
                 if(!is3d)
-                    wbc3d('#vizicities-viewport', [_lat,_lon]);    
+                    wbc3d('#vizicities-viewport', [_lat,_lon], poly);    
                     is3d = true;
             }, 10); 
         } 

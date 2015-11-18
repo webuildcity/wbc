@@ -7,7 +7,7 @@
 
 $(document).ready(function(){
 
-  wbc3d =function(div, coord) {
+  wbc3d =function(div, coord, poly) {
 
     var centerLatLon = new VIZI.LatLon(coord);
 
@@ -26,11 +26,6 @@ $(document).ready(function(){
       viewport: world.options.viewport
     });
 
-    // var descriptionUI = new VIZI.DescriptionUI({
-    //   title: "Basic example",
-    //   body: "This is a basic example showing a 2D basemap, 3D building tiles and a choropleth of population density."
-    // });
-
     var mapConfig = {
       input: {
         type: "BlueprintInputMapTiles",
@@ -45,32 +40,32 @@ $(document).ready(function(){
           grids: [{
             zoom: 19,
             tilesPerDirection: 3,
-            cullZoom: 17
-          }, {
-            zoom: 18,
-            tilesPerDirection: 3,
             cullZoom: 16
-          }, {
-            zoom: 17,
-            tilesPerDirection: 3,
-            cullZoom: 15
+          // }, {
+          //   zoom: 18,
+          //   tilesPerDirection: 3,
+          //   cullZoom: 16
+          // }, {
+          //   zoom: 17,
+          //   tilesPerDirection: 3,
+          //   cullZoom: 15
           }, {
             zoom: 16,
             tilesPerDirection: 3,
-            cullZoom: 14
-          }, {
-            zoom: 15,
-            tilesPerDirection: 3,
-            cullZoom: 13
-          }, {
-            zoom: 14,
-            tilesPerDirection: 3,
             cullZoom: 12
-          }, {
+          // }, {
+          //   zoom: 15,
+          //   tilesPerDirection: 3,
+          //   cullZoom: 13
+          // }, {
+          //   zoom: 14,
+          //   tilesPerDirection: 3,
+          //   cullZoom: 12
+           }, {
             zoom: 13,
-            tilesPerDirection: 5,
+            tilesPerDirection: 1,
             cullZoom: 11
-          }]
+           }]
         }
       },
       triggers: [{
@@ -111,114 +106,6 @@ $(document).ready(function(){
     switchboardMap.addToWorld(world);
 
 
-  //   var objConfig = {
-  //     input: {
-  //       type: "BlueprintInputData",
-  //       options: {
-  //         path: "../data/obj_models.json"
-  //       }
-  //     },
-  //     output: {
-  //       type: "BlueprintOutputOBJ",
-  //       options: {
-  //         // infoUI: true
-  //       }
-  //     },
-  //     triggers: [{
-  //       triggerObject: "output",
-  //       triggerName: "initialised",
-  //       triggerArguments: [ ],
-  //       actionObject: "input",
-  //       actionName: "requestData",
-  //       actionArguments: [],
-  //       actionOutput: {}
-  //     },{
-  //       triggerObject: "input",
-  //       triggerName: "dataReceived",
-  //       triggerArguments: ['dataJSON'],
-  //       actionObject: "output",
-  //       actionName: "outputOBJ",
-  //       actionArguments: ["obj"],
-  //       actionOutput: {
-  //         obj: {
-  //           process: "map",
-  //           itemsObject: "dataJSON",
-  //           itemsProperties: "data",
-  //           transformation: {
-  //             modelPath: "modelPath",
-  //             coordinates: "coordinates"
-  //           }
-  //         }
-  //       }
-  //     }]
-  //   };
-    
-
-  //   var switchboardOBJ = new VIZI.BlueprintSwitchboard(objConfig);
-  //   switchboardOBJ.addToWorld(world);
-  //   // world.layers[1].hide();
-  // var excludeBuildingsConfig = [
-  //       //ALEX werden nicht alle gefunden
-  //       19046101,
-  //       230818931,
-  //       30498717175,
-  //       96880477,
-  //       304987174,
-  //       304987173,
-  //       304987172,
-  //       304987176,
-  //       //New
-  //       32405120,
-  //       -4564300,
-  //       326772329,
-  //       217537048,
-  //       217537051,
-  //       217537050,
-  //       230818931,
-  //       217537052,
-  //       96880470,
-  //       //kirche
-  //       230953325,
-  //       230953324,
-  //       230953323,
-  //       230953322,
-  //       230953321,
-  //       230953317,
-  //       230953320,
-  //       230953319,
-  //       230953318,
-  //       230953316,
-  //       23853149,
-  //       //dom
-  //       313670734,
-  //       24044997,
-  //       230353895,
-  //       230017203,
-  //       230017202,
-  //       230353893, 
-  //       42349275, 
-  //       42349274, 
-  //       230353891, 
-  //       230017196, 
-  //       230017197, 
-  //       230017199,
-  //       //arkaden
-  //       25094154,
-  //       //rathaus
-  //       -4211905,
-  //       128396192,
-  //       222813051,
-  //       230838701,
-  //       222813052,
-  //       222813049,
-  //        ];
-
-  //   // var bbox= [52.520533, 13.408884, 52.521180, 13.409825]
-  //   // var bbox= [52.5203420041,13.406526092,52.520764985,13.4078792981]
-  //   // var bbox= [52.51861851,13.4002604518,52.5195637713,13.4018175057]
-  //   var bbox= [52.5176308789,13.4073725775,52.5188838912,13.4096409307]
-
-
   var buildingsConfig = {
     input: {
       type: "BlueprintInputGeoJSON",
@@ -227,7 +114,7 @@ $(document).ready(function(){
       }
     },
     output: {
-      type: "BlueprintOutputBuildingTiles",
+      type: "BlueprintOutputCustomBuildingTiles",
       options: {
         grids: [{
           zoom: 15,
@@ -236,7 +123,7 @@ $(document).ready(function(){
         }],
         workerURL: window.wbc3d_conf.WORKERPATH,
         // excludeArray: excludeBuildingsConfig,
-        // bbox: bbox
+        bbox: window.polygonmesh
       }
     },
     triggers: [{
@@ -287,55 +174,54 @@ $(document).ready(function(){
   switchboardBuildings.addToWorld(world);
 
 
-  // var choroplethConfig = {
-  //   input: {
-  //     type: "BlueprintInputGeoJSON",
-  //     options: {
-  //       path: poly
-  //     }
-  //   },
-  //   output: {
-  //     type: "BlueprintOutputChoropleth",
-  //     options: {
-  //       colourRange: ["#ffffe5","#f7fcb9","#d9f0a3","#addd8e","#78c679","#41ab5d","#238443","#006837","#004529"],
-  //       layer: 100,
-  //       infoUI: true,
-  //       description: "Number of people per hectare"
-  //     }
-  //   },
-  //   triggers: [{
-  //     triggerObject: "output",
-  //     triggerName: "initialised",
-  //     triggerArguments: [],
-  //     actionObject: "input",
-  //     actionName: "requestData",
-  //     actionArguments: [],
-  //     actionOutput: {}
-  //   }, {
-  //     triggerObject: "input",
-  //     triggerName: "dataReceived",
-  //     triggerArguments: ["geoJSON"],
-  //     actionObject: "output",
-  //     actionName: "outputChoropleth",
-  //     actionArguments: ["data"],
-  //     actionOutput: {
-  //       data: {
-  //         // Loop through each item in trigger.geoJSON and return a new array of processed values (a map)
-  //         process: "map",
-  //         itemsObject: "geoJSON",
-  //         itemsProperties: "features",
-  //         // Return a new object for each item with the given properties
-  //         transformation: {
-  //           outline: "geometry.coordinates[0]",
-  //           value: "properties.POPDEN"
-  //         }
-  //       }
-  //     }
-  //   }]
-  // };
+  var polygonConfig = {
+    input: {
+      type: "BlueprintInputPolygon",
+      options: {
+        poly: poly
+      }
+    },
+    output: {
+      type: "BlueprintOutputPolygon",
+      options: {
+        colourRange: ["#ffffe5","#f7fcb9","#d9f0a3","#addd8e","#78c679","#41ab5d","#238443","#006837","#004529"],
+        layer: 100,
+        infoUI: true,
+        description: "Polygon"
+      }
+    },
+    triggers: [{
+      triggerObject: "output",
+      triggerName: "initialised",
+      triggerArguments: [],
+      actionObject: "input",
+      actionName: "requestData",
+      actionArguments: [],
+      actionOutput: {}
+    }, {
+      triggerObject: "input",
+      triggerName: "dataReceived",
+      triggerArguments: ["geoJSON"],
+      actionObject: "output",
+      actionName: "outputPolygon",
+      actionArguments: ["data"],
+      actionOutput: {
+        data: {
+          // Loop through each item in trigger.geoJSON and return a new array of processed values (a map)
+          process: "map",
+          itemsObject: "geoJSON",
+          itemsProperties: "data",
+          // Return a new object for each item with the given properties
+          transformation: {
+              outline: "geometry.coordinates[0]"
+          }
+        }
+      }
+    }]
+  };
 
-  // var switchboardChoropleth = new VIZI.BlueprintSwitchboard(choroplethConfig);
-  // switchboardChoropleth.addToWorld(world);
+  var switchboardChoropleth = new VIZI.BlueprintSwitchboard(polygonConfig);
+  switchboardChoropleth.addToWorld(world);
 
 
   // var reverseBuildingsConfig = {
