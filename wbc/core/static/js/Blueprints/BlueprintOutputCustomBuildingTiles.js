@@ -193,12 +193,13 @@
         var material = new THREE['MeshLambertMaterial'](self.options.materialOptions);
 
         var mesh = new THREE.Mesh(geom, material);
-
+        // console.log(mesh.geometry)
         // Use previously calculated offset to return merged mesh to correct position
         // This allows frustum culling to work correctly
         mesh.position.x = -1 * offset.x;
         mesh.position.y = -1 * offset.y;
         mesh.position.z = -1 * offset.z;
+        // mesh.position.needsUpdate = true;
 
         gridHash.meshes[tileKey] = mesh;
 
@@ -206,6 +207,20 @@
         var bbox_poly = new THREE.Box3().setFromObject(window.polygonmesh);
         // console.log(bbox_poly);
         if(bbox.isIntersectionBox(bbox_poly)){
+            // var verticeList = mesh.geometry.attributes.position;
+            // console.log(mesh.geometry.attributes.position.array)
+            // for (var vertexIndex = 0; vertexIndex < verticeList.length; vertexIndex++)
+            // {
+            //     console.log(verticeList[vertexIndex])       
+            //     var localVertex = verticeList[vertexIndex].clone();
+            //     var globalVertex = localVertex.applyMatrix4( mesh.matrix );
+            //     var directionVector = globalVertex.sub( mesh.position );
+                
+            //     var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
+            //     var collisionResults = ray.intersectObjects( window.polygonmesh );
+            //     if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
+            //         console.log("hit")
+            // }   
             // console.log(mesh)
             material = new THREE['MeshLambertMaterial'](self.options.highlightMaterialOptions);
             mesh.material = material;
