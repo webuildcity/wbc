@@ -76,7 +76,7 @@ def autocomplete(request):
 
 class StartView(TemplateView):
 
-    template_name="core/startpage.html"
+    # template_name="core/startpage.html"
 
     def get_context_data(self, **kwargs):
         now = datetime.now()

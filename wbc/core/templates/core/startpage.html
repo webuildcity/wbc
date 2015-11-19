@@ -39,10 +39,9 @@ StartpageController
             <h2 class="wbc-headline"> Was können Sie hier tun? </h2>
             <div class="wbc-divider"></div>
             <div class="container">
-                <p>Sie können sich über <a href="{% url 'search' %}">laufende Stadtplanungsprojekte</a> informieren, detaillierte Informationen zu
-                  bestimmten Projekten (z.B. [Tag-Olympia, Tag-Elbphilharmonie, Tag-Hildegarden] bekommen und auf einer <a href="{% url 'search' %}">Karte</a>
-                  stöbern, was gerade in Hamburg passiert.
-                  Darüber hinaus lernen Sie <a href="{% url 'process' %}">Stadtplanungs- und Verwaltungsprozesse</a> besser zu verstehen.</p>
+                {% block description %}
+
+                {% endblock %}
             </div>
             <div id="navigation-boxes" class="container">
 
@@ -72,31 +71,11 @@ StartpageController
                 </div>
             </div>
         </div>
-        <div class="bottom-block">
-            <h2 class="wbc-headline">Wie kann mich Wir bauen Hamburg unterstützen?</h2>
-            <div class="wbc-divider"></div>
-            <div class="container">
-              <p>
-                Bleiben Sie auf dem Laufenden durch regelmäßige Besuche und E-Mail-Benachrichtungen.
-                <strong>Wir&nbsp;bauen&nbsp;Hamburg</strong> bekommt regelmäßig und automatisiert neue
-                Informationen vom "Transparenz-Portal"[transparenz.hamburg.de] der Freien- und Hansestadt
-                Hamburg. [hamburg.de]
-              </p>
-            </div>
-        </div>
-        <div class="bottom-block">
-            <h2 class="wbc-headline">Wer betreibt diese Platform?</h2>
-            <div class="wbc-divider"></div>
-            <div class="container">
-              <p>
-                <strong>Wir&nbsp;bauen&nbsp;Hamburg</strong> ist eine freie Open Source Software
-                Plattform die von We-Build.City [www.we-build.city] betrieben wird. Die Software wurde
-                im Rahmen der Open Knowledge-Labs des [CodeforBerlins] und [CodeforHamburgs] entwickelt
-                sowie von einer einer Förderung der EU-Kommission mitfinanziert.
-                Wir verstehen uns als Brückenbauer zwischen Stadt, Verwaltung, Bürgern und Investoren. Gute und effektive Kommunikation ist in unseren Augen das A und O einer gelungenen Stadtentwicklung und die Grundlage von Demokratie. [services.we-build.city].
-              </p>
-            </div>
-        </div>
+        
+        {% block questions %}
+        
+        {% endblock %}
+        
         {% if upcoming %}
         <div class="bottom-block">
             <h2 class="wbc-headline">Aktuelle Veranstaltungen &amp; Projekte mit Bürgerbeteiligung</h2>
