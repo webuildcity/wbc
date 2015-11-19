@@ -26,7 +26,7 @@ DefaultController
             <div class="panel-group">
                 <h3>{{process_type.name}}</h3>
                 {% for process_step in process_type.process_steps.all %}
-                <div class="panel panel-default">
+                <div class="panel panel-default process-item">
                     <a href="{% url 'process_step' pk=process_step.pk %}">{{ process_step.name }}</a>
                 </div>
                 {% endfor %}
@@ -41,7 +41,7 @@ DefaultController
 
             <h2>{{process_step.process_type.name}}</h2>
             <p>{{process_step.process_type.description}}</p>
-            
+
             <h3>{{process_step.name}}</h3>
             <p>{{process_step.description}}</p>
 
