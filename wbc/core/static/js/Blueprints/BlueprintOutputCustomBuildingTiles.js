@@ -2,22 +2,7 @@
 (function() {
   "use strict";
 
-/**
- * Blueprint building tiles output
- * @author Robin Hawkes - vizicities.com
- */
 
-  // output: {
-  //   type: "BlueprintOutputCustomBuildingTiles",
-  //   options: {
-  //     grids: [{
-  //       zoom: 19,
-  //       tilesPerDirection: 3,
-  //       cullZoom: 15
-  //     },
-  //     ...
-  //   }
-  // }
   VIZI.BlueprintOutputCustomBuildingTiles = function(options) {
     var self = this;
 
@@ -203,27 +188,29 @@
 
         gridHash.meshes[tileKey] = mesh;
 
-        var bbox = new THREE.Box3().setFromObject(mesh);
-        var bbox_poly = new THREE.Box3().setFromObject(window.polygonmesh);
-        // console.log(bbox_poly);
-        if(bbox.isIntersectionBox(bbox_poly)){
-            // var verticeList = mesh.geometry.attributes.position;
-            // console.log(mesh.geometry.attributes.position.array)
-            // for (var vertexIndex = 0; vertexIndex < verticeList.length; vertexIndex++)
-            // {
-            //     console.log(verticeList[vertexIndex])       
-            //     var localVertex = verticeList[vertexIndex].clone();
-            //     var globalVertex = localVertex.applyMatrix4( mesh.matrix );
-            //     var directionVector = globalVertex.sub( mesh.position );
-                
-            //     var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
-            //     var collisionResults = ray.intersectObjects( window.polygonmesh );
-            //     if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
-            //         console.log("hit")
-            // }   
-            // console.log(mesh)
-            material = new THREE['MeshLambertMaterial'](self.options.highlightMaterialOptions);
-            mesh.material = material;
+        if(window.polygonmesh){
+            var bbox = new THREE.Box3().setFromObject(mesh);
+            var bbox_poly = new THREE.Box3().setFromObject(window.polygonmesh);
+            // console.log(bbox_poly);
+            if(bbox.isIntersectionBox(bbox_poly)){
+                // var verticeList = mesh.geometry.attributes.position;
+                // console.log(mesh.geometry.attributes.position.array)
+                // for (var vertexIndex = 0; vertexIndex < verticeList.length; vertexIndex++)
+                // {
+                //     console.log(verticeList[vertexIndex])       
+                //     var localVertex = verticeList[vertexIndex].clone();
+                //     var globalVertex = localVertex.applyMatrix4( mesh.matrix );
+                //     var directionVector = globalVertex.sub( mesh.position );
+                    
+                //     var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
+                //     var collisionResults = ray.intersectObjects( window.polygonmesh );
+                //     if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
+                //         console.log("hit")
+                // }   
+                // console.log(mesh)
+                material = new THREE['MeshLambertMaterial'](self.options.highlightMaterialOptions);
+                mesh.material = material;
+            }
         }
         // TODO: Make sure coordinate space is right
         self.add(mesh);

@@ -52,7 +52,6 @@
     }
 
     // Request data
-    console.log(self.options.poly.toGeoJSON());
     var data = { 'data': self.options.poly.toGeoJSON()};
     self.emit("dataReceived", data);
   };

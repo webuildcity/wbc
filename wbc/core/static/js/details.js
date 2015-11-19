@@ -9,17 +9,23 @@ app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $in
 app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 'MapService',
     function($scope, $document, $http, $window, MapService) {
       
-    var is3d = false;  
-    var poly = L.multiPolygon(_polygon);;
-    MapService.loadPoly(_polygon, undefined, undefined, true);
+    var is3d = false;
+
+    var poly;
+    if (_polygon.length >0) {  
+        poly = L.multiPolygon(_polygon);;
+        MapService.loadPoly(_polygon, undefined, undefined, true);
+    } else {
+        poly = undefined;
+    }
 
     $('.map-link').on('click',function(){
          setTimeout(function(){
             MapService.map.invalidateSize();
-            if (typeof(_polygon) !== 'undefined') {
-                var tempPoly = L.multiPolygon(_polygon);
-                MapService.fitPoly(tempPoly);
-                poly = tempPoly;
+            if (_polygon.length >0) {
+                MapService.fitPoly(poly);
+            // } else {
+            //     MapService.fitLocation()
             }
         }, 100);
     }); 
@@ -34,8 +40,7 @@ app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 
         if(location.hash == "#/project_map"){
             setTimeout(function(){
                 MapService.map.invalidateSize();
-                if (typeof(_polygon) !== 'undefined') {
-                    // poly = L.multiPolygon(_polygon);
+                if (_polygon.length >0) {
                     MapService.fitPoly(poly);
                 }
             }, 100);  
