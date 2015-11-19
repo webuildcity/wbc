@@ -34,7 +34,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     }
 
     var search = function(data){
-        console.log(data);
         $http({
             method: 'POST',
             url:  '/suche/',
@@ -80,7 +79,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                     padding: [30, 30]
                 });
                 maxZoom = MapService.map.getZoom();
-                console.log(maxZoom);
 
 
                 // //scroll things
