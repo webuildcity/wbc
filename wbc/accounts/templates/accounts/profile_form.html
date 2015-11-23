@@ -1,0 +1,26 @@
+{% extends 'core/page.html' %}
+{% load i18n %}
+
+{% block page %}
+
+<h2>Profile aktualisieren</h2>
+<p>
+    Bitte aktualisieren Sie die Angaben in Ihrem Benutzerkonto.
+</p>
+
+<form method="post" action="">
+    {% csrf_token %}
+
+    {% with user_form as form %}
+    {% include 'core/form_fields.html' %}
+    {% endwith %}
+
+    {% with profile_form as form %}
+    {% include 'core/form_fields.html' %}
+    {% endwith %}
+
+    <input type="submit" value="{% trans 'Update profile' %}" class="btn btn-primary" />
+    <input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+{% endblock %}
