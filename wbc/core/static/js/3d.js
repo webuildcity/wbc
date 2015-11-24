@@ -230,90 +230,83 @@ $(document).ready(function(){
     world.render();
 
     window.requestAnimationFrame(update);
-    // TWEEN.update();
+    TWEEN.update();
   };
 
   update();
 
+  //camera flight
+  function cameraflight(){
+      // position = {x: 100, y: 0};
+      // console.log("jupp")
+      // var testTween = new Tween.Tween(position);
+      // testTween.to({x:200}, 1000);
+      // testTween.onUpdate(function() {
+      //     console.log(this.x);
+      // });
+      // testTween.start();
+      var camera = world.camera.camera;
+      var current = {x: 0.5};
+      var target = {x: 1.5};
+      var tween = new TWEEN.Tween(current).to(target, 7000).easing(TWEEN.Easing.Linear.None);
+      tween.onUpdate(function(){
+        camera.position.x = 0 + 600 * Math.cos( 6 * this.x );         
+        camera.position.z = 0 + 600 * Math.sin( 6 * this.x );
+        camera.lookAt(new VIZI.Point(0,0,0));
+      });
+      tween.start();
+  }
 
-  //camera flight etc... not  needed for now
+  function tweenTo(position){
+      var camera = world.camera.camera;
+      var current = camera.position;
+      var target = position;
+      var tween = new TWEEN.Tween(current).to(target, 2500).easing(TWEEN.Easing.Quartic.Out);
+      tween.onUpdate(function(){
+        camera.position.x = this.x;         
+        camera.position.z = this.z;
+        camera.position.y = this.y;
+      });
+      tween.start();
 
-  //   function cameraflight(){
-  //       // position = {x: 100, y: 0};
-  //       // console.log("jupp")
-  //       // var testTween = new Tween.Tween(position);
-  //       // testTween.to({x:200}, 1000);
-  //       // testTween.onUpdate(function() {
-  //       //     console.log(this.x);
-  //       // });
-  //       // testTween.start();
-  //       var camera = world.camera.camera;
-  //       var current = {x: 0.5};
-  //       var target = {x: 1.5};
-  //       var tween = new TWEEN.Tween(current).to(target, 7000).easing(TWEEN.Easing.Linear.None);
-  //       tween.onUpdate(function(){
-  //         console.log("update");
-  //         console.log(this);
-  //         camera.position.x = 0 + 600 * Math.cos( 6 * this.x );         
-  //         camera.position.z = 0 + 600 * Math.sin( 6 * this.x );
-  //         camera.lookAt(new VIZI.Point(0,0,0));
-  //       });
-  //       tween.onComplete(function(){
-  //         console.log("complete")
-  //       });
-  //       tween.start();
-  //       console.log('start tween');
-  //   }
-
-  //   function tweenTo(position){
-  //       var camera = world.camera.camera;
-  //       var current = camera.position;
-  //       var target = position;
-  //       var tween = new TWEEN.Tween(current).to(target, 2500).easing(TWEEN.Easing.Quartic.Out);
-  //       tween.onUpdate(function(){
-  //         console.log("update");
-  //         console.log(this);
-  //         camera.position.x = this.x;         
-  //         camera.position.z = this.z;
-  //         camera.position.y = this.y;
-  //         camera.lookAt(new VIZI.Point(0,75,0));
-  //       });
-  //       tween.onComplete(function(){
-  //         console.log("complete")
-  //       });
-  //       tween.start();
-  //       console.log('start tween');
-
-
-  //   }
-  //   //buttons
-  //   var citygml = false;
-  //   $('#citygml-switch').click(function(){
-  //     if(citygml){
-  //       world.layers[1].hide();
-  //       world.layers[3].show();
-  //       citygml = false;
-  //     } else {
-  //       world.layers[1].show();
-  //       world.layers[3].hide();
-  //       citygml = true;
-  //     }
-  //     // console.log("yo");
-  //   });
-  //   $('#camera-flight').click(function(){
-  //     cameraflight();
-  //   })
-  //   $('#north').click(function(){
-  //     tweenTo({x:0, y:200, z:-450});
-  //   })
-  //   $('#east').click(function(){
-  //     tweenTo({x:450, y:200, z:0});
-  //   })
-  //   $('#south').click(function(){
-  //     tweenTo({x:0, y:200, z:450});
-  //   })
-  //   $('#west').click(function(){
-  //     tweenTo({x:-450, y:200, z:0});
-  //   })
+      var current2 = {x: 0};
+      var target2 = {x: Math.PI};
+      var currenty = camera.position.y;
+      var tween2 = new TWEEN.Tween(current2).to(target2, 2500).easing(TWEEN.Easing.Linear.None);
+      tween2.onUpdate(function(){
+        camera.position.y =  200 + Math.sin(this.x)*90;
+        camera.lookAt(new VIZI.Point(0,0,0));
+      });
+      tween2.start(); 
+    }
+    //buttons
+    // var citygml = false;
+    // $('#citygml-switch').click(function(){
+    //   if(citygml){
+    //     world.layers[1].hide();
+    //     world.layers[3].show();
+    //     citygml = false;
+    //   } else {
+    //     world.layers[1].show();
+    //     world.layers[3].hide();
+    //     citygml = true;
+    //   }
+    //   // console.log("yo");
+    // });
+    $('#camera-flight').click(function(){
+      cameraflight();
+    })
+    $('#north').click(function(){
+      tweenTo({x:0, y:200, z:-450});
+    })
+    $('#east').click(function(){
+      tweenTo({x:450, y:200, z:0});
+    })
+    $('#south').click(function(){
+      tweenTo({x:0, y:200, z:450});
+    })
+    $('#west').click(function(){
+      tweenTo({x:-450, y:200, z:0});
+    })
   }
 });

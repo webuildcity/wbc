@@ -17,6 +17,7 @@
     <script type="text/javascript" src="{% static 'lib/modernizr.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/vertical-timeline.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/vizicities/vizi.min.js' %}"  ></script>
+    <script type="text/javascript" src="{% static 'lib/vizicities/tween.min.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintOutputPolygon.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintInputPolygon.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintOutputCustomBuildingTiles.js' %}"  ></script>
@@ -237,6 +238,14 @@ DetailsController
         
         <div id="3d" class="tab-pane">
             <div id="vizicities-viewport">
+                <div class="vizicities-ui-item" id="vizi-menu">
+                    <button class="btn btn-default" id="citygml-switch"> old/new </button>
+                    <button class="btn btn-default" id="camera-flight"> Kameraflug </button>
+                    <button class="btn btn-default" id="north"> N </button>
+                    <button class="btn btn-default" id="west"> W </button>
+                    <button class="btn btn-default" id="east"> E </button>
+                    <button class="btn btn-default" id="south"> S </button>
+                </div>
             </div>
         </div>
 

@@ -161,6 +161,37 @@ body {
             // position: absolute;
             height: 100%;
             width: 100%;
+            #vizi-menu {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+
+
+                #north {
+                    position: absolute;
+                    top: 35px;
+                    left: 30px;
+                }
+
+                #south {
+                    position: absolute;
+                    top: 105px;
+                    left: 30px;
+                }
+
+                #west {
+                    position: absolute;
+                    top: 70px;
+                    left: 10px;
+                }
+
+
+                #east {
+                    position: absolute;
+                    top: 70px;
+                    left: 50px;
+                }
+            }
         }
     }
 
