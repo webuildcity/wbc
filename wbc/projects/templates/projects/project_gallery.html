@@ -19,7 +19,7 @@
         <div class="slides" u="slides">
             {% for photo in galleryItem.latest %}
                 <div>
-                    <img u="image" src="{{ photo.get_test_url }}" />
+                    <img u="image" src="{{ photo.get_gallery_url }}" />
                     <img u="thumb" src="{{ photo.get_thumbnail_url }}" />
                 </div>
             {% endfor %}
