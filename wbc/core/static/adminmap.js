@@ -12,7 +12,7 @@ function drawMap(){
 
     // add the map layer
     map = new L.Map("adminmap");
-    map.addLayer(new L.TileLayer(_tiles_url + '/{z}/{x}/{y}.png',_tiles_opt));
+    map.addLayer(new L.TileLayer(_tiles_url + '/{z}/{x}/{y}.png' + _tiles_url_opt,_tiles_opt));
 
     // get lat and lon from the form fields
     var lat, lon;
