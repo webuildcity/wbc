@@ -8,7 +8,7 @@ html {
 body {
     height: 100%;
     overflow: auto;
-    color: $primary-text; 
+    color: $primary-text;
     background-color: $background-color;
 }
 html, body {
@@ -46,7 +46,7 @@ h4 {
     height: 100%;
 }
 
-@media (max-width: 880px) {
+@media (max-width: 768px) {
     .max-height {
         height: 50%;
     }
