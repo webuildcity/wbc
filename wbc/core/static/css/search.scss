@@ -45,7 +45,7 @@
             // background-color: $primary-color-lightest;
             background: white;
             padding: 8px 15px;
-            font-family: titillium;
+            font: $font-nav;
             border-bottom: 1px solid #eee;
             box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.44);
             margin-bottom: 0.2em;
@@ -54,7 +54,7 @@
                 padding-right: 1em;
             }
             .anchor.fixed-top {
-                font-size: 20px;
+                font-size: 1.25em;
                 background: #eee;
                 top: 30px;
                 transform: translateY(60px);
@@ -103,6 +103,10 @@
         .facet-container {
             overflow: auto;
             clear: both;
+
+            label {
+              font-size: .85em;
+            }
         }
         .active-facets {
             padding-bottom: .1em;
@@ -111,7 +115,7 @@
             .facet-item {
                 padding: .4em .7em .3em;
                 margin: .1em .1em;
-                font-size: 90%;
+                font-size: .85em;
                 border-radius: .25em;
                 color: white;
                 background-color: $primary-color-light;
@@ -162,33 +166,35 @@
     }
 
     .search-result {
+        font-size: 0.875em;
         overflow: auto;
         padding-left: 1em;
+        padding-top: 0.25em;
         border-bottom: 1px solid #ccc;
 
         .result-type {
             float: left;
-            padding-top: 0.5em;
+            padding-top: 0.25em;
             padding-right: 1em;
             color: $headline-color;
         }
 
         a {
-            margin-top: 3px;
+            margin-top: .25em;
         }
         p {
-            margin-bottom: 5px;
+            margin-bottom: .25em;
         }
     }
 
     .search-result:hover {
-        background-color: $primary-color-light;
+        background-color: rgba($highlight-color,0.2);
         a {
           color: $headline-color;
         }
     }
     .search-result.selected {
-        background-color: $primary-color-light;
+        background-color: rgba($highlight-color,0.2);
     }
 }
 

@@ -8,51 +8,29 @@ html {
 body {
     height: 100%;
     overflow: auto;
-}
-@font-face {
-    font-family: titillium;
-    src: url('/static/font/TitilliumText25L.otf');
-}
-@font-face {
-    font-family: dejavu;
-    src: url('/static/font/DejaVuSansCondensed.ttf');
-}
-@font-face {
-    font-family: dejavu;
-    src: url('/static/font/DejaVuSansCondensed-Bold.ttf');
-    font-weight: bold;
+    color: $primary-text; 
+    background-color: $background-color;
 }
 html, body {
     padding: 0;
     margin: 0;
-    font-family: dejavu;
-    font-size: 14px;
+    font: $font-body-copy;
 }
 h1 {
-    font-family: dejavu;
-    font-weight: bold;
-    font-size: 34px;
+    font: $font-h1;
     color: $headline-color;
 }
 h2 {
-    font-weight: normal;
-    font-family: titillium;
-    font-size: 28px;
+    font: $font-h2;
     color: $headline-color;
 }
 h3 {
-    font-family: dejavu;
-    font-weight: bold;
-    font-size: 16px;
+    font: $font-h3;
     color: $headline-color;
-    line-height: 20px;
 }
 h4 {
-    font-family: dejavu;
-    font-weight: bold;
-    font-size: 14px;
+    font: $font-h4;
     color: $headline-color;
-    line-height: 20px;
 }
 
 /**LAYOUT **/
@@ -167,7 +145,7 @@ a:visited,
 }
 a:hover,
 .leaflet-container a:hover {
-    color: $primary-color-light;
+    color: $primary-color-dark;
     text-decoration: none;
 }
 .btn.btn-primary {
