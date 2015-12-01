@@ -98,9 +98,8 @@ class EventUpdate(ProtectedUpdateView):
     
     def get_initial(self):
         initial_data = super(EventUpdate, self).get_initial()
-        print self.initial
         try:
-            initial_data['projects']= [Project.objects.get(pk=self.request.GET.get('project_id'))]
+            initial_data['projects']= self.object.projects_events.all()
         except Project.DoesNotExist:
             initial_data['projects'] = []
         return initial_data

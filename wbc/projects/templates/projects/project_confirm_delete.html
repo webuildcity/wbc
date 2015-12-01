@@ -2,11 +2,6 @@
 {% load i18n %}
 {% load staticfiles %}
 
-<div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal">×</button>
-
-    <h3>Löschen?</h3>
-</div>
 <div class="modal-body">
     <p>
         Willst Du das Projekt <strong>{{ object }}</strong> wirklich entfernen? Dieser Vorgang kann nicht Rückgängig gemacht werden.
@@ -14,7 +9,7 @@
 
     <form action="{% url 'project_delete' project.pk %}" method="post" class="form wbc-delete-form" role="form">
         {% csrf_token %}
-        <input class="btn btn-danger" type="submit" value="Ort entfernen" />
+        <input class="btn btn-danger" type="submit" value="Projekt entfernen" />
     </form>
 </div>
 
