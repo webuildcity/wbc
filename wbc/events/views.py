@@ -5,12 +5,13 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.contrib.syndication.views import Feed
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, JsonResponse
 
 from rest_framework import viewsets
 
 from models import *
 from serializers import *
+from forms import *
 
 from wbc.core.views import ProtectedCreateView, ProtectedUpdateView, ProtectedDeleteView
 from wbc.region.models import District
@@ -54,12 +55,101 @@ class PublicationUpdate(ProtectedUpdateView):
     model = Publication
     fields = '__all__'
 
+    def get_initial(self):
+        try:
+            self.initial.project_events.add(Project.objects.get(
+                pk=self.request.GET.get('project_id', None)))
+        except Project.DoesNotExist:
+            self.initial['project'] = {}
+        return self.initial
+
 
 class PublicationDelete(ProtectedDeleteView):
     model = Publication
 
     def get_success_url(self):
         return self.object.project.get_absolute_url()
+
+class EventCreate(ProtectedCreateView):
+    model = Event
+    form_class = EventForm
+
+    def get_initial(self):
+        initial_data = super(EventCreate, self).get_initial()
+        try:
+            initial_data['projects']= [Project.objects.get(pk=self.request.GET.get('project_id'))]
+        except Project.DoesNotExist:
+            initial_data['projects'] = []
+        return initial_data
+
+    def form_valid(self, form):
+        self.object = form.save()
+        url = self.object.projects_events.all()[0].get_absolute_url()
+        return JsonResponse({'redirect':  url})
+
+    def form_invalid(self, form):
+        response = super(EventCreate, self).form_invalid(form)
+        return response
+
+class EventUpdate(ProtectedCreateView):
+    model = Event
+    form_class = EventForm
+
+    def get_initial(self):
+        initial_data = super(EventCreate, self).get_initial()
+        try:
+            initial_data['projects']= [Project.objects.get(pk=self.request.GET.get('project_id'))]
+        except Project.DoesNotExist:
+            initial_data['projects'] = []
+        return initial_data
+    
+    def form_valid(self, form):
+        self.object = form.save()
+        url = self.object.projects_events.all()[0].get_absolute_url()
+        return JsonResponse({'redirect':  url})
+
+    def form_invalid(self, form):
+        response = super(EventCreate, self).form_invalid(form)
+        return response
+
+class EventDelete(ProtectedDeleteView):
+    model = Event
+
+
+class DateCreate(EventCreate):
+    model = Date
+    form_class = DateForm
+
+class DateUpdate(EventUpdate):
+    model = Date
+    form_class = DateForm
+    
+class DateDelete(EventDelete):
+    model = Date
+
+
+class MediaCreate(EventCreate):
+    model = Media
+    form_class = MediaForm
+
+class MediaUpdate(EventUpdate):
+    model = Media
+    form_class = MediaForm
+
+class MediaDelete(EventDelete):
+    model = Media
+
+
+class PubCreate(EventCreate):
+    model = Publication
+    form_class = PubForm
+
+class PubUpdate(EventUpdate):
+    model = Publication
+    form_class = PubForm
+    
+class PubDelete(EventDelete):
+    model = Publication
 
 
 class PublicationFeed(Feed):

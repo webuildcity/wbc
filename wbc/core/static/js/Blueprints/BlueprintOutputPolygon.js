@@ -75,7 +75,7 @@
         shape.lineTo( geoCoord.x + offset.x, geoCoord.y + offset.y );
       }
     });
-    var extrudeSettings = { amount: -5, bevelEnabled: true, bevelSegments: 2, steps: 2, bevelSize: 1, bevelThickness: 1 };
+    var extrudeSettings = { amount: -1, bevelEnabled: true, bevelSegments: 2, steps: 2, bevelSize: 1, bevelThickness: 1 };
     var geom = new THREE.ExtrudeGeometry( shape, extrudeSettings );
 
     var colour = new THREE.Color(0xffffff * Math.random());

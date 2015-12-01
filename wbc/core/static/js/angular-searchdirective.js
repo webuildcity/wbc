@@ -17,8 +17,6 @@ app.directive('wbcSearch', function() {
 
 
             $scope.onSearchChanged = function() {
-                // $scope.noResults = false;
-                // console.log($scope.text);
                 if($scope.formData.searchTerm) {
                     $scope.isLoading = true;
                     $http({
@@ -62,13 +60,6 @@ app.directive('wbcSearch', function() {
                     if($scope.selectedSuggestionIdx !== -1) {
                         evt.preventDefault();
                         $scope.loadDetails($scope.data.suggestions[$scope.selectedSuggestionIdx].internal_link);
-
-                        // window.location = "/suche/?searchTerm="+ $scope.formData.searchTerm;
-
-                    //     if($scope.selectedSuggestionIdx !== -1) {
-                    //         $scope.loadDetails($scope.data.suggestions[$scope.selectedSuggestionIdx]);
-                    //         evt.preventDefault();
-                    //     }
                     }
                 }
 

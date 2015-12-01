@@ -237,14 +237,7 @@ $(document).ready(function(){
 
   //camera flight
   function cameraflight(){
-      // position = {x: 100, y: 0};
-      // console.log("jupp")
-      // var testTween = new Tween.Tween(position);
-      // testTween.to({x:200}, 1000);
-      // testTween.onUpdate(function() {
-      //     console.log(this.x);
-      // });
-      // testTween.start();
+    
       var camera = world.camera.camera;
       var current = {x: 0.5};
       var target = {x: 1.5};

@@ -99,11 +99,15 @@ function drawMap(){
             });
         }
     });
+    setTimeout(function() {
+        map.invalidateSize();
+    }, 300);
+    
 }
 
-$(document).ready(function() {
-    setTimeout(function() {
-        drawMap();
-        window.map.invalidateSize();
-    }, 100);
-});
+// $(document).ready(function() {
+//     setTimeout(function() {
+//         drawMap();
+//         window.map.invalidateSize();
+//     }, 100);
+// });

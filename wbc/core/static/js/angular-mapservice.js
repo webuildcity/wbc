@@ -42,9 +42,6 @@ app.factory('MapService',['$http',function($http) {
         },
 
         fitPoly: function(poly, maxZoom) {
-            // if (poly === undefined){
-            //     poly = focusedPoly;
-            // }
             var setViewOptions = {
                 padding: [15, 15],
                 maxZoom: 20,
@@ -58,11 +55,8 @@ app.factory('MapService',['$http',function($http) {
                 }
             };
             if (maxZoom){
-                console.log(maxZoom)
                 setViewOptions.maxZoom = maxZoom;
             }
-            // console.log(setViewOptions);
-            // console.log(setViewOptions.maxZoom);
             map.fitBounds(poly.getBounds(), setViewOptions);
         },
 
@@ -71,17 +65,12 @@ app.factory('MapService',['$http',function($http) {
         },
 
         loadPoly: function(poly, id, highlight) {
-            // var cssPolyRule = getRuleForSelector('.poly');
-            // if(cssPolyRule) {
-            //     polygonColor = cssPolyRule.style.color;
-            // }
 
             if (typeof(poly) !== 'undefined') {
                 var polygonOptions = {
                     className: 'wbc-poly poly-'+id,
                     weight: 3,
                     fill: true
-
                 };
 
                 var polygon = L.multiPolygon(poly).setStyle(polygonOptions);
@@ -95,7 +84,6 @@ app.factory('MapService',['$http',function($http) {
                 });
                 polygon.on('mouseout', function() {
                     $('.poly-'+id).attr('class', 'leaflet-clickable wbc-poly poly-'+id);
-                    // polygon.setStyle({className: 'poly-'+id});
                     if (highlight)
                         highlight(id);
                     focusedPoly = null;

@@ -86,9 +86,74 @@ $(document).ready(function(){
         } else {
             $('.main-content-nav .nav-tabs a:first').tab('show');
         }
-        // setTimeout(function() {
-        //     window.scrollTo(0, 0);
-        // }, 1);
     });
+
+
+    // MODAL
+    $(".project-admin").click(function(ev) { // for each edit contact url
+        ev.preventDefault(); // prevent navigation
+        var url = $(this).data("form"); 
+        $("#edit-modal .modal-content").load(url, function() {
+            $('#edit-modal').modal();
+            $('#edit-modal').modal('show'); // display the modal on url load
+            drawMap();
+            $('#edit-modal').on('submit', 'form', function(e){
+                e.preventDefault();
+                $.ajax({ 
+                    type: $(this).attr('method'), 
+                    url: url, 
+                    data: $(this).serialize(),
+                    context: this,
+                    success: function(data, status) {
+                        if (data.redirect){
+                            window.location.href = data.redirect;
+                        }
+                        else {
+                            // console.log(data);
+                            $('#edit-modal .modal-content').html(data);
+                            drawMap();
+                        }
+                        // $('#edit-modal').modal('hide');
+                    }
+                });
+            });
+        });
+        return false; // prevent the click propagation
+    
+
+    });
+
+    $(".event-admin").click(function(ev) { // for each edit contact url
+        $(".nav-pills").find(".active").removeClass("active");
+        $(this).parent().addClass("active");
+        ev.preventDefault(); // prevent navigation
+        var url = $(this).data("form"); 
+
+        $("#event-modal .custom-content").load(url, function() {
+            $('#event-modal').on('submit', 'form', function(e){
+                e.preventDefault();
+                $.ajax({ 
+                    type: $(this).attr('method'), 
+                    url: url, 
+                    data: $(this).serialize(),
+                    context: this,
+                    success: function(data, status) {
+                        console.log(data);
+                        if (data.redirect){
+                            window.location.href = data.redirect;
+                        }
+                        else {
+                            console.log(data);
+                            $('#event-modal .custom-content').html(data);
+                        }
+                        // $('#edit-modal').modal('hide');
+                    }
+                });
+            });            
+        });
+        return false; // prevent the click propagation
+    });
+
+
 
 });

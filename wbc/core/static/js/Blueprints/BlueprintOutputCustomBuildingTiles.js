@@ -168,7 +168,6 @@
     // Load buildings in a Web Worker
     buildings.forEach(function(building){
       self.worker(self.world.origin, self.world.originZoom, self.options, building).then(function(result) {
-        // console.log(result);
         var offset = result.offset;
         var geom = new THREE.BufferGeometry();
         geom.addAttribute('position', new THREE.BufferAttribute(result.position, 3));
@@ -178,13 +177,9 @@
         var material = new THREE['MeshLambertMaterial'](self.options.materialOptions);
 
         var mesh = new THREE.Mesh(geom, material);
-        // console.log(mesh.geometry)
-        // Use previously calculated offset to return merged mesh to correct position
-        // This allows frustum culling to work correctly
         mesh.position.x = -1 * offset.x;
         mesh.position.y = -1 * offset.y;
         mesh.position.z = -1 * offset.z;
-        // mesh.position.needsUpdate = true;
 
         gridHash.meshes[tileKey] = mesh;
 
@@ -368,33 +363,26 @@
     });
 
     // Move merged geom to 0,0 and return offset
-      if(combinedGeom.vertices.length > 0){
-          var offset = combinedGeom.center();
+    if(combinedGeom.vertices.length > 0){
+      var offset = combinedGeom.center();
 
-          //TODO: save a more compact model using indices. Requires replacing fromGeometry with custom code
-          var exportedGeom = new THREE.BufferGeometry();
-          exportedGeom.fromGeometry(combinedGeom);
+      //TODO: save a more compact model using indices. Requires replacing fromGeometry with custom code
+      var exportedGeom = new THREE.BufferGeometry();
+      exportedGeom.fromGeometry(combinedGeom);
 
-          // Store geom typed array as Three.js model object
-          var model = {
-            offset: offset
-          };
-          var model2 = {};
+      // Store geom typed array as Three.js model object
+      var model = {
+        offset: offset
+      };
+      var model2 = {};
 
-          var transfers = [];
-          exportedGeom.attributesKeys.forEach(function (key) {
-            model[key] = exportedGeom.attributes[key].array;
-            transfers.push(model[key].buffer);
-          });
-          deferred.transferResolve(model, transfers);
-      }
-
-      // meshList.forEach(function (mesh, key) {
-      //   model2[key] = mesh;
-      //   // transfers.push(model2[key].buffer);
-      // });
-      // deferred.transferResolve(model2, []);
-
+      var transfers = [];
+      exportedGeom.attributesKeys.forEach(function (key) {
+        model[key] = exportedGeom.attributes[key].array;
+        transfers.push(model[key].buffer);
+      });
+      deferred.transferResolve(model, transfers);
+    }
   };
 
   VIZI.BlueprintOutputCustomBuildingTiles.prototype.onAdd = function(world) {
