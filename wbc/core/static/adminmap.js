@@ -8,7 +8,7 @@ function drawMap(){
     html += '<div id="adminmap"></div>';
     html += '<p class="help help-block">Bewegen Sie den Marker mit der Maus um den Ort anzupassen</p>';
     html += '</div>';
-    $('.field-entities').after(html);
+    $('.field-lon').after(html);
 
     // add the map layer
     map = new L.Map("adminmap");

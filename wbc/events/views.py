@@ -85,18 +85,20 @@ class EventCreate(ProtectedCreateView):
     def form_valid(self, form):
         self.object = form.save()
         url = self.object.projects_events.all()[0].get_absolute_url()
-        return JsonResponse({'redirect':  url})
+        return JsonResponse({'redirect': url})
 
     def form_invalid(self, form):
         response = super(EventCreate, self).form_invalid(form)
         return response
 
-class EventUpdate(ProtectedCreateView):
+class EventUpdate(ProtectedUpdateView):
     model = Event
     form_class = EventForm
-
+    # fields = '__all__'
+    
     def get_initial(self):
-        initial_data = super(EventCreate, self).get_initial()
+        initial_data = super(EventUpdate, self).get_initial()
+        print self.initial
         try:
             initial_data['projects']= [Project.objects.get(pk=self.request.GET.get('project_id'))]
         except Project.DoesNotExist:
@@ -106,14 +108,18 @@ class EventUpdate(ProtectedCreateView):
     def form_valid(self, form):
         self.object = form.save()
         url = self.object.projects_events.all()[0].get_absolute_url()
-        return JsonResponse({'redirect':  url})
+        return JsonResponse({'redirect': url})
 
     def form_invalid(self, form):
-        response = super(EventCreate, self).form_invalid(form)
+        response = super(EventUpdate, self).form_invalid(form)
         return response
 
 class EventDelete(ProtectedDeleteView):
     model = Event
+
+    def get_success_url(self):
+        return self.object.projects_events.all()[0].get_absolute_url()
+
 
 
 class DateCreate(EventCreate):

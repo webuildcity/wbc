@@ -94,6 +94,7 @@ $(document).ready(function(){
         ev.preventDefault(); // prevent navigation
         var url = $(this).data("form"); 
         $("#edit-modal .modal-content").load(url, function() {
+            console.log(url);
             $('#edit-modal').modal();
             $('#edit-modal').modal('show'); // display the modal on url load
             drawMap();
