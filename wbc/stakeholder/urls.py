@@ -10,4 +10,8 @@ router.register(r'departments', DepartmentViewSet, base_name='department')
 
 urlpatterns = patterns('',
     url(r'^', include(router.urls)),
+    url(r'^neu/$', StakeholderCreate.as_view(), name='stakeholder_create'),
+    url(r'^(?P<pk>[0-9]+)/bearbeiten/$', StakeholderUpdate.as_view(), name='stakeholder_update'),
+    url(r'^(?P<pk>[0-9]+)/entfernen/$', StakeholderDelete.as_view(), name='stakeholder_delete'),
+
 )

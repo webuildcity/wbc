@@ -25,5 +25,4 @@ urlpatterns = patterns('',
     url(r'^pub/neu/$', PubCreate.as_view(), name='pub_create'),
     url(r'^pub/(?P<pk>[0-9]+)/bearbeiten/$', PubUpdate.as_view(), name='pub_update'),
     url(r'^pub/(?P<pk>[0-9]+)/entfernen/$', PubDelete.as_view(), name='pub_delete'),
-
 )

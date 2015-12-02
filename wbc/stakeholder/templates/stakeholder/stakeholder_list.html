@@ -1,20 +1,35 @@
 {% load staticfiles %}
-{% for stakeholder in stakeholders %}
+<div class="stakeholder-container">
+    {% for stakeholder in stakeholders %}
+    <a href="{{stakeholder.get_absolute_url }}">
+        <div class="stakeholder-widget col-md-3">
+            {% if stakeholder.picture %}
+            <img class="stakeholder_img" src="{{ stakeholder.picture.get_stakeholder_url }}" />
+            {% else %}
+            <img class="stakeholder_img" src="{% static 'img/person_placeholder.png' %}" />
+            {% endif %}
+            <h4> {{stakeholder.name}}</h4>
+            <p>
+            {% for role in stakeholder.roles.all %}
+                 {{role}}
+            {% endfor %}
+            </p>
+            {% if user.is_authenticated %}
+            <ul class="admin-panel">
+                <li><a data-toggle="modal" data-target="#edit-modal" class="admin-link project-admin" data-form="{% url 'stakeholder_update' stakeholder.pk %}" href="#"><i class="fa fa-pencil"></i></a></li>
+                <li><a data-toggle="modal" data-target="#edit-modal" class="admin-link project-admin" data-form="{% url 'stakeholder_delete' stakeholder.pk %}" href="#"><i class="fa fa-trash"></i></a></li>
+            </ul>
+            {% endif %}
+        </div>
+    </a>
 
-<a href="{{stakeholder.get_absolute_url }}">
-<div class="stakeholder-widget col-md-3">
-    {% if stakeholder.picture %}
-    <img class="stakeholder_img" src="{{ stakeholder.picture.get_stakeholder_url }}" />
-    {% else %}
-    <img class="stakeholder_img" src="{% static 'img/person_placeholder.png' %}" />
-    {% endif %}
-    <h4> {{stakeholder.name}}</h4>
-    <p>
-    {% for role in stakeholder.roles.all %}
-         {{role}}
     {% endfor %}
-    </p>
-</div>
-</a>
 
-{% endfor %}
+    {% if user.is_authenticated %}
+
+    <ul class="admin-panel">
+        <li><a data-toggle="modal" data-target="#edit-modal" class="admin-link project-admin" data-form="{% url 'stakeholder_create'%}?project_id={{project.pk}}" href="#"><i class="fa fa-plus"></i></a></li>
+    </ul>
+
+    {% endif %}
+</div>

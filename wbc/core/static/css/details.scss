@@ -133,8 +133,14 @@ body {
         float: left;
     }
     .fa {
-        color: red !important;
+        color: #e58833 !important;
         
+    }
+
+}
+.form-required {
+    label::before {
+        content: "*";
     }
 }
 
@@ -252,6 +258,9 @@ body {
 
 /* STAKEHOLDER WIDGET */
 
+.stakeholder-container {
+    overflow: auto;
+}
 .stakeholder-widget {
     background-color: white;
     border-radius: 5px;
