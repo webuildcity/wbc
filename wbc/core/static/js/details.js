@@ -139,7 +139,6 @@ $(document).ready(function(){
                     data: $(this).serialize(),
                     context: this,
                     success: function(data, status) {
-                        console.log(data);
                         if (data.redirect){
                             window.location.href = data.redirect;
                         }
