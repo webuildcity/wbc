@@ -6,6 +6,8 @@ from django.utils.feedgenerator import Rss201rev2Feed
 from django.contrib.syndication.views import Feed
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404, JsonResponse
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 from rest_framework import viewsets
 
@@ -116,9 +118,19 @@ class EventUpdate(ProtectedUpdateView):
 class EventDelete(ProtectedDeleteView):
     model = Event
 
-    def get_success_url(self):
-        return self.object.projects_events.all()[0].get_absolute_url()
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        # maybe do some checks here for permissions ...
 
+        resp = super(EventDelete, self).post(request, args, **kwargs)
+        if self.request.is_ajax():
+            response_data = {"redirect": '/'}
+            return JsonResponse(response_data)
+        else:
+            return resp
+
+    def get_success_url(self):
+        return "/"
 
 
 class DateCreate(EventCreate):
