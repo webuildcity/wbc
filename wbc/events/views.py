@@ -120,14 +120,13 @@ class EventDelete(ProtectedDeleteView):
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        # maybe do some checks here for permissions ...
 
-        resp = super(EventDelete, self).post(request, args, **kwargs)
+        response = super(EventDelete, self).post(request, args, **kwargs)
         if self.request.is_ajax():
             response_data = {"redirect": '/'}
             return JsonResponse(response_data)
         else:
-            return resp
+            return response
 
     def get_success_url(self):
         return "/"
