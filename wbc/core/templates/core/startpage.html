@@ -1,3 +1,7 @@
+<!-- Startpage.html is the container of the the We-Build.City Startpage -->
+<!-- For Editing please change the city.html in your city repository -->
+<!-- Header and Meta Data of the Startpage - no editing required --> 
+
 {% extends 'core/layout.html' %}
 {% load staticfiles compress %}
 
@@ -17,98 +21,88 @@
 StartpageController
 {% endblock %}
 {% block content %}
+
+            {% block test1 %}
+            {% endblock %}
+
 <div id="startpage-content">
-    <div id="top-container">
-        <div class="container">
-            <div class="top-overlay text-center">
-                <h1>Informiere dich über Bauvorhaben in deinem Stadtteil.</h1>
-                <div class="search-container">
-                    <wbc-search text="Suche nach Themen, Bauprojekten oder Stadtteilen"></wbc-search>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
+<!-- Top of the startpage with headline, search bar and background image -->
+ 
+            {% block top %}
+            {% endblock %}
+
+
+<!-- Bottom Container -->
 
     <div id="bottom-container">
-  <!--     <ul class="nav nav-tabs" data-tabs="tabs">
-        <li class="active"><a href="#start-tab" data-toggle="tab">Startseite</a></li>
-        <li><a href="#news-tab" data-toggle="tab">Aktuelles</a></li>
-        <li><a href="#" data-toggle="tab">Impressum</a></li>
-      </ul> -->
-        <div class="bottom-block">
-            <h2 class="wbc-headline"> Was können Sie hier tun? </h2>
-            <div class="wbc-divider"></div>
-            <div class="container">
-                {% block description %}
 
-                {% endblock %}
-            </div>
-            <div id="navigation-boxes" class="container">
 
-                <div class="col-md-4">
-                    <a href="{% url 'search' %}">
-                        <div class="teaser">
-                            <i class='fa fa-search'></i>
-                            <p>Suche nach Themen, Bauprojekten oder Stadtteilen.</p>
+<!-- Optional Navigation Menu at the bottom of the  -->
+
+<!--        {% block nav-tabs %}
+            {% endblock %}      -->
+                            
+
+<!-- Bottom Blocks of various content -->
+
+
+<!-- Block of Navigation Boxes -->
+            
+            {% block nav-boxes %}
+
+            {% endblock %}
+
+  
+<!-- Block Questions -->
+      
+            {% block questions %}
+            
+            {% endblock %}
+   
+<!-- Upcomming Events -->
+
+<!--        {% if upcoming %}
+            {% endif %}  -->
+
+            {% if upcoming %}
+                    <div class="bottom-block">
+                        <h2 class="wbc-headline">Aktuelle Veranstaltungen &amp; Projekte mit Bürgerbeteiligung</h2>
+                        <div class="wbc-divider"></div>
+                        <div class="upcoming container">
+                                {% for project in upcoming %}
+                                <a href="{{project.get_absolute_url}}">
+                                    <div class="project-description col-md-4">
+                                        {% if project.gallery %}
+                                        <img class="description_img" src="{{project.gallery.photos.all.0.get_description_url}}" />
+                                        {% else %}
+                                        <img class="description_img" src="{% static 'img/person_placeholder.png' %}" />
+                                        {% endif %}
+                                        <div>
+                                            <h3>{{project.name}} {% if project.identifier %} ({{project.identifier}}) {% endif %}</h3>
+                                            {% if project.address_obj %}
+                                            <p >{{project.address_obj.street}}  {{ project.address_obj.streetnumber }}</p>
+                                            <p>{{project.get_teaser}}</p>
+                                            {% endif %}
+                                        </div>
+                                        {% if project.get_next_date %}
+                                        <div class="next-date">
+                                            <p title="Nächste Veranstaltung"><i class="fa fa-calendar"> </i>
+                                            {{project.get_next_date.title}}</p>
+                                            <p  class="date text-muted">{{project.get_next_date.begin}}</p>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </a>
+                                {% endfor %}
                         </div>
-                    </a>
-                </div>
-                <div class="col-md-4">
-                    <a href="{% url 'process' %}">
-                        <div class="teaser">
-                            <i class='fa fa-book'></i>
-                            <p>Lexikon: Informiere dich über die Gesetzeslage in deiner Stadt</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-4">
-                    <a href="{% url 'map' %}">
-                        <div class="teaser">
-                            <i class='fa fa-bell-o'></i>
-                            <p>Erhalte Benachrichtigungen zu Bauprojekten deiner Wahl.</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        
-        {% block questions %}
-        
-        {% endblock %}
-        
-        {% if upcoming %}
-        <div class="bottom-block">
-            <h2 class="wbc-headline">Aktuelle Veranstaltungen &amp; Projekte mit Bürgerbeteiligung</h2>
-            <div class="wbc-divider"></div>
-            <div class="upcoming container">
-                    {% for project in upcoming %}
-                    <a href="{{project.get_absolute_url}}">
-                        <div class="project-description col-md-4">
-                            {% if project.gallery %}
-                            <img class="description_img" src="{{project.gallery.photos.all.0.get_description_url}}" />
-                            {% else %}
-                            <img class="description_img" src="{% static 'img/person_placeholder.png' %}" />
-                            {% endif %}
-                            <div>
-                                <h3>{{project.name}} {% if project.identifier %} ({{project.identifier}}) {% endif %}</h3>
-                                {% if project.address_obj %}
-                                <p >{{project.address_obj.street}}  {{ project.address_obj.streetnumber }}</p>
-                                <p>{{project.get_teaser}}</p>
-                                {% endif %}
-                            </div>
-                            {% if project.get_next_date %}
-                            <div class="next-date">
-                                <p title="Nächste Veranstaltung"><i class="fa fa-calendar"> </i>
-                                {{project.get_next_date.title}}</p>
-                                <p  class="date text-muted">{{project.get_next_date.begin}}</p>
-                            </div>
-                            {% endif %}
-                        </div>
-                    </a>
-                    {% endfor %}
-            </div>
-        </div>
-        {% endif %}
+                    </div>
+                    {% endif %}
+
+
+<!-- Div-Close of startpage-content & bottom-container -->
+   
     </div>
 </div>
 {% endblock %}
