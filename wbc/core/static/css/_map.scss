@@ -3,8 +3,8 @@
     z-index: 1000;
 }
 .leaflet-popup-content {
-    font-family: dejavu;
-    font-size: 14px;
+    font: $font-body-copy;
+    font-size: 0.85em;
     color: #333;
 }
 .leaflet-popup-content-wrapper,

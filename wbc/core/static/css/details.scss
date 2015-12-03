@@ -24,7 +24,7 @@ body {
 
 #project_map {
     height: 100%;
-    
+
     #map {
         height: 100%;
         position: relative;
@@ -77,7 +77,7 @@ body {
         padding-top: 0.3em;
         padding-left: 1em;
     }
-    
+
     #participate-widget {
         float: right;
         margin-top: 10px;
@@ -111,7 +111,7 @@ body {
             color: $headline-color;
             z-index: 5;
             position: relative;
-        } 
+        }
         p {
             padding-left: 1em;
         }
@@ -122,8 +122,8 @@ body {
         //     background: white;
         //     border: 1px solid $primary-color-light;
         // }
-    } 
-    
+    }
+
 }
 
 .admin-panel {
@@ -152,7 +152,7 @@ body {
         .not-active {
             pointer-events: none;
             a {
-                color: #ccc !important;    
+                color: #ccc !important;
             }
             .fa {
                 color: #ccc;
@@ -316,7 +316,7 @@ body {
     float: left;
     height: 100px;
     width: 200px;
-} 
+}
 
 .stakeholder-descriptions {
     clear: both;
@@ -332,21 +332,21 @@ body {
     position: relative;
     /*margin: 0px 5px 5px 0px; */
     /*float: left; */
-    top: 0px; 
-    left: 0px; 
+    top: 0px;
+    left: 0px;
     width: 800px;
-    height: 400px; 
+    height: 400px;
     overflow: hidden;
     background: #191919;
 }
 
 .slides {
-    cursor: move; 
-    position: absolute; 
-    overflow: hidden; 
-    left: 0px; 
-    top: 0px; 
-    width: 800px; 
+    cursor: move;
+    position: absolute;
+    overflow: hidden;
+    left: 0px;
+    top: 0px;
+    width: 800px;
     height: 400px;
 }
 
@@ -483,16 +483,16 @@ body {
 }
 
 .wbc-button {
-    font-family: dejavu;
+    font: $font-body-copy;
     font-weight: bold;
-    font-size: 14px;
+    font-size: .875em;
     color: $icon-color;
     line-height: 20px;
     text-align: center;
     // width: 100%;
     box-shadow: 2px 2px 5px #ccc;
-    border:1px solid $primary-color; 
-    -webkit-border-radius: 3px; 
+    border:1px solid $primary-color-dark;
+    -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
     /* font-size:12px; */
@@ -503,16 +503,16 @@ body {
     /* text-shadow: -1px -1px 0 rgba(0,0,0,0.3); */
     /* font-weight: bold;
     /* color: #FFFFFF; */
-    background-color: $primary-color-light; background-image: -webkit-gradient(linear, left top, left bottom, from($primary-color-light), to($primary-color));
-    background-image: -webkit-linear-gradient(top, $primary-color-light, $primary-color);
-    background-image: -moz-linear-gradient(top, $primary-color-light, $primary-color);
-    background-image: -ms-linear-gradient(top, $primary-color-light, $primary-color);
-    background-image: -o-linear-gradient(top, $primary-color-light, $primary-color);
-    background-image: linear-gradient(to bottom, $primary-color-light, $primary-color);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=$primary-color-light, endColorstr=$primary-color);
+    background-color: $primary-color; background-image: -webkit-gradient(linear, left top, left bottom, from($primary-color), to($primary-color-dark));
+    background-image: -webkit-linear-gradient(top, $primary-color, $primary-color-dark);
+    background-image: -moz-linear-gradient(top, $primary-color, $primary-color-dark);
+    background-image: -ms-linear-gradient(top, $primary-color, $primary-color-dark);
+    background-image: -o-linear-gradient(top, $primary-color, $primary-color-dark);
+    background-image: linear-gradient(to bottom, $primary-color, $primary-color-dark);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#F2C399, endColorstr=$primary-color-dark);
 
     span.fa-stack {
         i {
-            color: $icon-color;    
+            color: $icon-color;
         }
     }
 
@@ -521,10 +521,10 @@ body {
 .wbc-button:hover {
     color: $icon-color;
     border:1px solid $primary-color;
-    background-color: $primary-color; background-image: -webkit-gradient(linear, left top, left bottom, from($primary-color), to($primary-color-dark));
-    background-image: -webkit-linear-gradient(top, $primary-color, $primary-color-dark);
-    background-image: -moz-linear-gradient(top, $primary-color, $primary-color-dark);
-    background-image: -ms-linear-gradient(top, $primary-color, $primary-color-dark);
-    background-image: -o-linear-gradient(top, $primary-color, $primary-color-dark);
-    background-image: linear-gradient(to bottom, $primary-color, $primary-color-dark);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#F2C399, endColorstr=$primary-color-dark);
-}
+    background-color: $primary-color-dark; background-image: -webkit-gradient(linear, left top, left bottom, from($primary-color-dark), to($primary-color));
+    background-image: -webkit-linear-gradient(top, $primary-color-dark, $primary-color);
+    background-image: -moz-linear-gradient(top, $primary-color-dark, $primary-color);
+    background-image: -ms-linear-gradient(top, $primary-color-dark, $primary-color);
+    background-image: -o-linear-gradient(top, $primary-color-dark, $primary-color);
+    background-image: linear-gradient(to bottom, $primary-color-dark, $primary-color);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=$primary-color-dark, endColorstr=$primary-color);
+    }
