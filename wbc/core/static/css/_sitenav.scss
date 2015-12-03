@@ -2,7 +2,7 @@
 
 #brand {
     padding-top: 3px;
-    
+
     img {
         height: 40px;
     }
@@ -14,10 +14,10 @@
 }*/
 #header {
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba($background-color,0.8);
     position: relative;
     z-index: 2;
-    
+
     #header-left {
         float: left;
         padding-left: 20px;
@@ -29,13 +29,12 @@
         padding-right: 20px;
 
         .sitenav {
-            font-family: titillium;
-            font-size: 16px;
-            color: #646464;
+            font: $font-nav;
+            color: $primary-color;
             padding: 0;
             float: left;
             margin-top: 12px;
-            
+
             li {
                 display: inline;
                 list-style: none;
@@ -70,17 +69,17 @@
             position: absolute;
             top: 39px;
             // min-height: 40px;
-            background-color:rgba(255,255,255,0.5);
-        
+            background-color:rgba($background-color,0.5);
+
             .search-result {
                 border: 1px solid #ddd;
                 // min-height: 40px;
-                background-color:rgba(255,255,255,0.5);
+                background-color:rgba($background-color,0.5);
             }
 
             .search-result:hover {
-                border: 1px solid $primary-color-light;
-                background-color:rgba(255,255,255,0.8);
+                border: 1px solid $primary-color;
+                background-color:rgba($background-color,0.8);
             }
         }
 
@@ -110,6 +109,6 @@
         color: $primary-color;
     }
     .fa:hover {
-        color: $primary-color-light;
+        color: $primary-color;
     }
 }
