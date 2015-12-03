@@ -36,10 +36,15 @@ h1, h2 {
   font-weight: bold;
 }*/
 
+
 #timeline {
-  height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    .new-event {
+        overflow: auto;
+        padding-right: 20px;
+    }
 }
 
 /* -------------------------------- 

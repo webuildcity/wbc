@@ -106,66 +106,6 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
         }
     };
 
-    /*
-    $scope.focusResult = function(result) {
-
-        $scope.data.currentIdx = $scope.data.results.indexOf(result);
-        $scope.data.search = result.name;
-
-        var searchInput = angular.element('#search input');
-        searchInput.select();
-
-        if($scope.data.currentPoly !== null) {
-            MapService.map.removeLayer($scope.data.currentPoly);
-        }
-
-        if(result.polygon){
-            var polygonOptions = {
-                weight: 3,
-                color: '#de6a00',
-                opacity: 1,
-                fill: true,
-                fillColor: '#de6a00',
-                fillOpacity: 0.05
-            };
-            $scope.data.currentPoly = L.multiPolygon(result.polygon)
-                .setStyle(polygonOptions)
-                .addTo(MapService.map);
-
-            MapService.fitPoly($scope.data.currentPoly);
-        }
-
-    };
-
-    $scope.onKeyDown = function(evt) {
-        if($scope.data.results.length > 0) {
-            if (evt.keyCode == '40') {
-                // down arrow
-                if($scope.data.currentIdx  < $scope.data.results.length) {
-                    $scope.data.currentIdx += 1;
-                } else {
-                    $scope.data.currentIdx = 0;
-                }
-
-
-            } else if (evt.keyCode == '38') {
-                    // up arrow
-                if($scope.data.currentIdx !== 0) {
-                    $scope.data.currentIdx -= 1;
-                }
-            }
-
-            var selectedResult = $scope.data.results[$scope.data.currentIdx];
-            $scope.focusResult(selectedResult);
-        }
-
-
-    };
-
-    */
-
-
-
 }]);
 
 /** SHOW IF SCROLLED **/    

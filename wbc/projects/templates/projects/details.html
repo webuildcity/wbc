@@ -3,6 +3,7 @@
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static "css/vizi.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "adminmap.css" %}" />
     {% compress css %}
     {{block.super}}
     <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
@@ -22,6 +23,7 @@
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintInputPolygon.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintOutputCustomBuildingTiles.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/3d.js' %}"  ></script>
+    <script type="text/javascript" src="{% static 'adminmap.js' %}"  ></script>
     
 
     <script type="text/javascript">
@@ -49,11 +51,12 @@ DetailsController
 {% endblock %}
 
 {% block side_content %}
-
 <div id="project_sidebar">
     <div class="anchor">
         <div class="details-headline content-container">
             <h1> {{project.name}} </h1>
+
+           
             {% if project.address_obj %}
 
             <a class="map-link" data-toggle="tab" href="#project_map">
@@ -63,6 +66,14 @@ DetailsController
             </a>
             {% endif %}
         </div>
+        {% if user.is_authenticated %}
+        <ul class="admin-panel">
+            <li><a class="admin-link project-admin" data-toggle="modal" data-target="#edit-modal" data-form="{% url 'project_create' %}" href="#"><i class="fa fa-plus"></i></a></li>
+            <li><a class="admin-link project-admin" data-form="{% url 'project_update' project.pk %}" href="#"><i class="fa fa-pencil"></i></a></li>
+            <li><a class="admin-link project-admin" data-form="{% url 'project_delete' project.pk %}" href="#"><i class="fa fa-trash"></i></a></li>
+         <!--    <li><a class="admin-link" href="{{new_publication_link}}?project_id={{project.pk}}"><i class="fa fa-newspaper"></i></a></li> -->
+        </ul>
+        {% endif %}
         <div id="participate-widget" class="widget">
         {% if processSteps %}
             {% for pub in processSteps %}
@@ -137,6 +148,12 @@ DetailsController
         <div id="next-date-widget" class="widget">
             <div class="content-container">
                 <h3><i class="fa fa-calendar"> </i>Nächster Termin</h3>
+                {% if user.is_authenticated %}
+                <ul class="admin-panel">
+                    <li><a class="admin-link" data-toggle="modal" data-target="#event-modal" href="#"><i class="fa fa-plus"></i></a></li>
+                </ul>
+                {% endif %}
+
                 <p>{{nextDate.title}}</p>
                 <p>{{nextDate.begin}}</p>
                 <p>{{nextDate.address}}</p>
@@ -174,6 +191,34 @@ DetailsController
 
 
 {% block main_content %}
+
+    <div id="edit-modal" class="modal fade" role="dialog" tabindex="-1">
+        <div class="well modal-dialog modal-content modal-lg" role="document">
+             <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3> hinzufügen </h3>
+            </div>
+            <div class="custom-content">
+            </div>
+        </div>
+    </div>
+    <div id="event-modal" class="modal fade" role="dialog" tabindex="-1">
+        <div class="well modal-dialog modal-content modal-lg" role="document">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3> Event hinzufügen </h3>
+                <ul class="nav nav-pills">
+                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'date_create' %}?project_id={{project.pk}}" href="#">Veranstaltung</a></li>
+                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'media_create' %}?project_id={{project.pk}}" href="#">Nachricht</a></li>
+                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'pub_create' %}?project_id={{project.pk}}" href="#">Veröffentlichung</a></li>
+                </ul>
+            </div>
+            <div class="custom-content">
+
+            </div>
+        </div>
+    </div>
+
     <ul class="wbc-nav main-content-nav nav nav-tabs" data-tabs="tabs">
         <li class="active"><a data-toggle="tab" href="#info"><i class="fa fa-info"></i>Info</a></li>
         <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Karte</a></li>
@@ -185,7 +230,8 @@ DetailsController
             <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Beteiligte</a> 
         </li>
         <li><a class="3d-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>3D</a></li>
-    </ul>
+    </ul>   
+
     <div id="tab-content" class="tab-content">
         <div id="info" class="tab-pane active">
             <div class="content-container">
@@ -248,38 +294,9 @@ DetailsController
                 </div>
             </div>
         </div>
-
-        </div>
     </div>
+</div>
 {% endblock %}
-
-
-
-
-    <!--     {% if gallery != true %}
-        <div class="col-md-9">
-            <div class="content-container">
-                <div id="project-map"></div>
-            </div>
-        </div>
-        {% endif %} -->
-
-
-
-
-        <!-- {% if user.is_authenticated %}
-        <div class="col-md-3">
-            <ul class="list-unstyled admin-area" style="margin-top: 50px;">
-                <li><a class="admin-link" href="{{ project.get_update_url }}">Projekt bearbeiten</a></li>
-                <li><a class="admin-link" href="{{ project.get_delete_url }}">Projekt entfernen</a></li>
-                <li><a class="admin-link" href="{{new_publication_link}}?project_id={{project.pk}}">
-                        Neue Veröffentlichung
-                </a></li>
-            </ul>
-        </div>
-        {% endif %}
- -->
-
 
 <!--     <div class="comments-wrapper">
         <div class="container">

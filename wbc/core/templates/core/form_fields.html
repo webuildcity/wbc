@@ -2,9 +2,9 @@
 {% load i18n %}
 
 {% for field in form %}
-<div class="wbc-form-{{ field|field_type }}-group form-group{% if field.errors %} has-error{% endif %} field-{{field.html_name}}">
+<div class="wbc-form-{{ field|field_type }}-group form-group{% if field.errors %} has-error{% endif %} field-{{field.html_name}} {% if field.field.required %} form-required{% endif %}">
     {{ field.label_tag }}
-
+    
     {% if field.field.required %}
     {% render_field field class="form-control"  %}
     {% else %}

@@ -6,9 +6,10 @@ from django.core.urlresolvers import reverse,reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.db.models import Q
 from django.utils.timezone import now
+
 
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -81,15 +82,34 @@ class ProjectCreate(ProtectedCreateView):
     model = Project
     fields = '__all__'
 
+    def form_valid(self, form):
+        self.object = form.save()
+        url = self.object.get_absolute_url()
+        return JsonResponse({'redirect':  url})
+
+    def form_invalid(self, form):
+        response = super(ProjectCreate, self).form_invalid(form)
+        return response
+
 
 class ProjectUpdate(ProtectedUpdateView):
     model = Project
+    # template_name = "projects/project_modal.html"
     fields = '__all__'
+
+    def form_valid(self, form):
+        self.object = form.save()
+        url = self.object.get_absolute_url()
+        return JsonResponse({'redirect':  url})
+
+    def form_invalid(self, form):
+        response = super(ProjectUpdate, self).form_invalid(form)
+        return response
 
 
 class ProjectDelete(ProtectedDeleteView):
     model = Project
-    success_url = reverse_lazy('projects')
+    success_url = reverse_lazy('start')
 
 def projects(request):
     return render(request,'projects/list.html',{'new_project_link': reverse('project_create')})

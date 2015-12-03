@@ -35,9 +35,6 @@ app.controller('MapController', ['$scope', '$document', '$http', '$window', 'Map
                 if(multipoly != []) {
                    MapService.map.removeLayer(multipoly);
                 }
-                console.log(response);
-                console.log($scope.formData);
-                // $scope.showDetails = false;
                 $scope.resultLength = response.length
                 $scope.facets = response.facets.fields.tags;
                 $scope.entitiesFacets = response.facets.fields.entities;
@@ -54,12 +51,6 @@ app.controller('MapController', ['$scope', '$document', '$http', '$window', 'Map
                     multipoly = L.multiPolygon(multipoly)
                         .setStyle(polygonOptions)
                         .addTo(MapService.map);
-                    console.log(multipoly)
-                    // MapService.map.fitBounds(multipoly.getBounds(), {
-                    //     padding: [30, 30]
-                    // });
-
-                    // $scope.showLanding = false;
                 } else {
                     $scope.results = [];
                     $scope.suggestion = response.suggestion;
@@ -82,9 +73,6 @@ app.controller('MapController', ['$scope', '$document', '$http', '$window', 'Map
                 if(multipoly != []) {
                    MapService.map.removeLayer(multipoly);
                 }
-                console.log(response);
-                console.log($scope.formData);
-                // $scope.showDetails = false;
                 $scope.resultLength = response.length
                 $scope.facets = response.facets.fields.tags;
                 $scope.entitiesFacets = response.facets.fields.entities;
@@ -119,10 +107,6 @@ app.controller('MapController', ['$scope', '$document', '$http', '$window', 'Map
         // }
     };
 
-    // $scope.selectTerm = function(term) {
-    //     $scope.formData.currentSearchTerm = term;
-    //     $scope.onSearchChanged();
-    // };
     var focusedPoly = null;
     $scope.focusPoly = function(poly) {
         if(focusedPoly) {

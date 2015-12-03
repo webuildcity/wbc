@@ -1,0 +1,10 @@
+<div class="modal-body">
+    <p>
+        Willst Du den Beteiligten <strong>{{ object }}</strong> wirklich entfernen? Dieser Vorgang kann nicht Rückgängig gemacht werden.
+    </p>
+
+    <form action="{% url 'stakeholder_delete' object.pk %}" method="post" class="form wbc-delete-form" role="form">
+        {% csrf_token %}
+        <input class="btn btn-danger" type="submit" value="Beteiligten entfernen" />
+    </form>
+</div>

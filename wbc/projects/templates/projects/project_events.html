@@ -1,5 +1,11 @@
 <div class="row events">
-
+    {% if user.is_authenticated %}
+    <div class="new-event">
+        <ul class="admin-panel">
+            <li><a class="admin-link" data-toggle="modal" data-target="#event-modal" href="#"><i class="fa fa-plus"></i></a></li>
+        </ul>
+    </div>
+    {% endif %}
     {% if events %}
 
     <section id="cd-timeline" class="cd-container">
@@ -28,11 +34,17 @@
 
             <div class="cd-timeline-content">
                 <h2> {{ event.title }} </h2>
+                {% if user.is_authenticated %}
+                <ul class="admin-panel">
+                    <li><a data-toggle="modal" data-target="#edit-modal" class="admin-link project-admin" data-form="{% url 'event_update' event.pk %}" href="#"><i class="fa fa-pencil"></i></a></li>
+                    <li><a data-toggle="modal" data-target="#edit-modal" class="admin-link project-admin" data-form="{% url 'event_delete' event.pk %}" href="#"><i class="fa fa-trash"></i></a></li>
+                </ul>
+                {% endif %}
                 <p class="timeline-text"> {{ event.description }} </p>
                 <a href="{{event.link}}" class="cd-read-more">Read more</a>
                 <span class="cd-date">{{event.begin}}</span>
-            </div> <!-- cd-timeline-content -->
-        </div> <!-- cd-timeline-block -->
+            </div>
+        </div>
 
     {% endfor %}
     </section>
