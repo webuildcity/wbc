@@ -121,7 +121,7 @@ SearchController
             <div class="result-list in wbc-dropdown-container">
 
                 <div class="clearfix"
-                    ng-repeat="result in results"
+                    ng-repeat="result in results | orderBy:'name'"
                     ng-mouseover="focusResult(result)"
                     ng-mouseout="defocusResult(result)"
                     ng-click="selectResult(result)">
