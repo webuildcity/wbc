@@ -131,7 +131,6 @@ class EventDelete(ProtectedDeleteView):
     def get_success_url(self):
         return "/"
 
-
 class DateCreate(EventCreate):
     model = Date
     form_class = DateForm

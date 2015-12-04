@@ -131,6 +131,7 @@ $(document).ready(function(){
         var url = $(this).data("form"); 
 
         $("#event-modal .custom-content").load(url, function() {
+            $('.wbc-form-datefield-group input').datepicker({ dateFormat: 'dd.mm.yy' });
             $('#event-modal').on('submit', 'form', function(e){
                 e.preventDefault();
                 $.ajax({ 

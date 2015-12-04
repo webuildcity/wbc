@@ -4,6 +4,8 @@
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static "css/vizi.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "adminmap.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "lib/jquery-ui/jquery-ui.theme.min.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "lib/jquery-ui/jquery-ui.min.css" %}" />
     {% compress css %}
     {{block.super}}
     <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
@@ -19,6 +21,7 @@
     <script type="text/javascript" src="{% static 'lib/vertical-timeline.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/vizicities/vizi.min.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/vizicities/tween.min.js' %}"  ></script>
+    <script type="text/javascript" src="{% static 'lib/jquery-ui/jquery-ui.min.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintOutputPolygon.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintInputPolygon.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintOutputCustomBuildingTiles.js' %}"  ></script>

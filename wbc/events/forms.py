@@ -10,17 +10,6 @@ class EventForm(forms.ModelForm):
     projects = forms.ModelMultipleChoiceField(queryset=Project.objects.all())
 
     def __init__(self, *args, **kwargs):
-    # Only in case we build the form from an instance
-    # (otherwise, 'toppings' list should be empty)
-        # print kwargs
-        # if 'instance' != None:
-        #     # We get the 'initial' keyword argument or initialize it
-        #     # as a dict if it didn't exist.                
-        #     initial = kwargs.setdefault('initial', {})
-        #     # The widget for a ModelMultipleChoiceField expects
-        #     # a list of primary key for the selected data.
-        #     initial['projects'] = [t.pk for t in kwargs['instance'].project_set.all()]
-
         forms.ModelForm.__init__(self, *args, **kwargs)
 
     def save(self):
