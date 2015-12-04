@@ -1,11 +1,7 @@
 /* brand */
 
 #brand {
-    padding-top: 3px;
-
-    img {
-        height: 40px;
-    }
+    @include branding();
 }
 /*@media screen and (max-width: 992px) {
     #brand img {
