@@ -1,16 +1,16 @@
 {% extends 'core/page.html' %}
-{% load staticfiles %}
 
 {% block page %}
+
+<h2>Benutzerkonto registrieren</h2>
 
 <form method="post" action="">
     {% csrf_token %}
 
     {% include 'core/form_fields.html' %}
 
-    <input type="submit" value="Benutzerkonto anlegen" class="btn btn-primary" />
+    <input type="submit" value="Registrieren" class="btn btn-primary" />
     <input type="hidden" name="next" value="{{ next }}" />
-
 </form>
 
 {% endblock %}
