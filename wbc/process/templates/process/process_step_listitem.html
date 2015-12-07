@@ -1,0 +1,14 @@
+{% for process_step in this_process_steps %}
+    <ul>
+        <div class="panel panel-default process-item">
+            <li>
+                <a href="{% url 'process_step' pk=process_step.pk %}">{{ process_step.name }}</a>
+            </li>
+        </div>
+        {% if process_step.sub_process_steps %}
+            {% with this_process_steps=process_step.sub_process_steps.all %}
+                {% include "process/process_step_listitem.html" %}
+            {% endwith %}
+        {% endif %}
+    </ul>
+{% endfor %}

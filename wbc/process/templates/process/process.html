@@ -24,16 +24,15 @@ DefaultController
         <h2>Lexikon</h2>
         {% for process_type in process_types %}
             <div class="panel-group">
+                <ul>
                 <h3>{{process_type.name}}</h3>
-                {% for process_step in process_type.process_steps.all %}
-                <div class="panel panel-default process-item">
-                    <a href="{% url 'process_step' pk=process_step.pk %}">{{ process_step.name }}</a>
-                </div>
-                {% endfor %}
+                    {% with this_process_steps=process_type.process_steps.all %}
+                        {% include "process/process_step_listitem.html" %}
+                    {% endwith %}
+                </ul>
             </div>
         {% endfor %}
     </div>
-
 {% endblock %}
 
 
@@ -43,15 +42,17 @@ DefaultController
         <p>{{process_step.process_type.description}}</p>
 
         <h3>{{process_step.name}}</h3>
-        {% if process_step.participation %}
-            <div class="participation"><img class="participation" src="/static/img/participation.png"> Beteiligung möglich</div>
-        {% else %}
-            <div class="participation"><img class="no-participation" src="/static/img/no-participation.png"> Beteiligung nicht möglich</div>
+        {% if process_step.participation_form %}
+            {% if process_step.participation_form.participation %}
+                <div class="participation"><img class="participation" src="/static/img/participation.png"> Beteiligung möglich</div>
+            {% else %}
+                <div class="participation"><img class="no-participation" src="/static/img/no-participation.png"> Beteiligung nicht möglich</div>
+            {% endif %}
         {% endif %}
         <p>{{process_step.description}}</p>
 
     {% else %}
-        <h2> Informieren Sie sich über die Gesetzeslage, Beteiligungsmöglichkeiten und Prozesse in ihrer Stadt. </h2>
+        <h4> Informieren Sie sich über die Gesetzeslage, Beteiligungsmöglichkeiten und Prozesse in ihrer Stadt. </h4>
     {% endif %}
 
 {% endblock %}
