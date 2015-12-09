@@ -31,4 +31,18 @@ class ParticipationFormSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ParticipationForm
-        fields = ('id', 'name', 'description', 'icon', 'hover_icon', 'participation')
+        fields = ('id', 'name', 'description', 'icon', 'hover_icon',
+                  'participation')
+
+class ArticleTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ArticleType
+        fields = ('id', 'name')
+
+class ArticleSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Article
+        fields = ('id', 'title', 'gist', 'body_text', 'created_at',
+                  'modified_at', 'article_type')

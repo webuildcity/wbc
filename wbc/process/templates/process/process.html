@@ -39,17 +39,17 @@ DefaultController
 {% block main_content %}
     {% if process_step %}
         <h2>{{process_step.process_type.name}}</h2>
-        <p>{{process_step.process_type.description}}</p>
+        <p>{{process_step.process_type.article.body_text}}</p>
 
         <h3>{{process_step.name}}</h3>
         {% if process_step.participation_form %}
+        <p>{{process_step.article.gist}}</p>
             {% if process_step.participation_form.participation %}
                 <div class="participation"><img class="participation" src="/static/img/participation.png"> Beteiligung möglich</div>
             {% else %}
                 <div class="participation"><img class="no-participation" src="/static/img/no-participation.png"> Beteiligung nicht möglich</div>
             {% endif %}
         {% endif %}
-        <p>{{process_step.description}}</p>
 
     {% else %}
         <h4> Informieren Sie sich über die Gesetzeslage, Beteiligungsmöglichkeiten und Prozesse in ihrer Stadt. </h4>

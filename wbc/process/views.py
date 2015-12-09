@@ -30,6 +30,14 @@ class ParticipationFormViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ParticipationFormSerializer
     queryset = ParticipationForm.objects.all()
 
+class ArticleTypeViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = ArticleTypeSerializer
+    queryset = ArticleType.objects.all()
+
+class ArticleViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = ArticleSerializer
+    queryset = Article.objects.all()
+
 def process(request, pk=None):
     process_types = ProcessType.objects.all()
     if pk:

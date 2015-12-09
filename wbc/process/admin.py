@@ -15,10 +15,22 @@ class ProcessTypeAdmin(admin.ModelAdmin):
     ordering = ['id']
 
 class ParticipationFormAdmin(admin.ModelAdmin):
-    list_display = ('id','name','description','participation')
-    list_display_links = ('id','name','description','participation')
+    list_display = ('id','name','participation')
+    list_display_links = ('id','name','participation')
+    ordering = ['id']
+
+class ArticleTypeAdmin(admin.ModelAdmin):
+    list_display = ('id','name')
+    list_display_links = ('id','name')
+    ordering = ['id']
+
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ('id','title', 'article_type', 'created_at', 'modified_at')
+    list_display_links = ('id','title')
     ordering = ['id']
 
 admin.site.register(ProcessStep, ProcessStepAdmin)
 admin.site.register(ProcessType, ProcessTypeAdmin)
 admin.site.register(ParticipationForm, ParticipationFormAdmin)
+admin.site.register(ArticleType, ArticleTypeAdmin)
+admin.site.register(Article, ArticleAdmin)

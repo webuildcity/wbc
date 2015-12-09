@@ -7,7 +7,8 @@ from wbc.region.models import Entity
 
 class ProcessStep(Model):
     name         = models.CharField(max_length=256, verbose_name="Name")
-    description  = models.TextField(verbose_name="Beschreibung")
+    # description  = models.TextField(verbose_name="Beschreibung")
+    article      = models.ForeignKey('Article', null=True, verbose_name="Beschreibung")
     icon         = models.CharField(max_length=256, verbose_name="Icon auf der Karte")
     hover_icon   = models.CharField(max_length=256, verbose_name="Icon auf der Karte bei Hovereffekt")
     order        = models.IntegerField(verbose_name="Reihenfolge", help_text="Nummer in der Reihenfolge")
@@ -28,7 +29,8 @@ class ProcessStep(Model):
 
 class ProcessType(Model):
     name         = models.CharField(max_length=256, verbose_name="Name")
-    description  = models.TextField(verbose_name="Beschreibung")
+    # description  = models.TextField(verbose_name="Beschreibung")
+    article      = models.ForeignKey('Article', null=True, verbose_name="Beschreibung")
 
     def __unicode__(self):
         return self.name
@@ -39,7 +41,8 @@ class ProcessType(Model):
 
 class ParticipationForm(Model):
     name         = models.CharField(max_length=256, verbose_name="Name")
-    description  = models.TextField(verbose_name="Beschreibung")
+    # description  = models.TextField(verbose_name="Beschreibung")
+    article      = models.ForeignKey('Article', null=True, verbose_name="Beschreibung")
     icon         = models.CharField(max_length=256, verbose_name="Icon auf der Karte")
     hover_icon   = models.CharField(max_length=256, verbose_name="Icon auf der Karte bei Hovereffekt")
     participation= models.BooleanField(default=False)
@@ -50,3 +53,32 @@ class ParticipationForm(Model):
     class Meta:
         verbose_name        = "Form der Bürgerbeteiligung"
         verbose_name_plural = "Formen der Bürgerbeteiligung"
+
+
+class ArticleType(Model):
+    name         = models.CharField(max_length=256, verbose_name="Name")
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name        = "Artikelart"
+        verbose_name_plural = "Artikelarten"
+
+class Article(Model):
+    title         = models.CharField(max_length=256, verbose_name="Titel")
+    gist          = models.CharField(max_length=512, verbose_name="Kurztext")
+    body_text     = models.TextField(verbose_name="Text")
+    # author: User
+    created_at    = models.DateField(auto_now_add=True, verbose_name="erstellt am")
+    modified_at   = models.DateField(auto_now=True, verbose_name="zuletzt geändert am")
+    # modified_by: User
+    article_type  = models.ForeignKey('ArticleType', related_name="articles", verbose_name="Artikelart")
+    # tags
+
+    def __unicode__(self):
+        return self.title
+
+    class Meta:
+        verbose_name        = "Artikel"
+        verbose_name_plural = "Artikel"
