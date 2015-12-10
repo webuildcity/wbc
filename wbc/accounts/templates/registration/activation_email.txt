@@ -1,0 +1,7 @@
+Liebe(r) {{ user.profile.full_name }},
+
+Sie erhalten diese Mail weil Sie ein Benutzerkonto auf {{ site.domain }} angelegt haben. Wenn Sie dies nicht selber getan haben, ignorieren Sie bitte diese Mail. (Wir werden dann Ihre Email Adresse in Kürze aus unserer Datenbank löschen).
+
+Um Ihr Benutzerkonto zu aktivieren, klicken sie bitte auf den untenstehenden Link, bzw. kopieren sie ihn und fügen sie ihn anschließend in die Adresszeile Ihres Browsers ein.
+
+    http://{{ site.domain }}{% url 'registration_activate' activation_key %}
