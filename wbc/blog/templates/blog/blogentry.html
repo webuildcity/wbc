@@ -36,6 +36,7 @@ BlogController
     {% endif %}
 
     <h1> {{b.title}} </h1>
+    <p class="text-muted">{{b.created}}</p>
     {{b.content| markdown}}
 
 </div>

@@ -19,7 +19,7 @@ class BlogView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(BlogView, self).get_context_data(**kwargs)
-        blogEntries = BlogEntry.objects.all()
+        blogEntries = BlogEntry.objects.all().order_by('-created')
         context['blogentries'] = blogEntries
         return context
 

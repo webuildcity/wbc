@@ -16,12 +16,9 @@ app.controller('BlogController', ['$scope', '$document', '$http', '$window',
 // MODAL
 $(document).ready(function() {
 
-
     $(".blog-admin").click(function(ev) {
-        console.log("yo")
         ev.preventDefault(); // prevent navigation
         var url = $(this).data("form"); 
-        console.log(url)
         $('#edit-modal .modal-header h3').html(url); // display the modal on url load
         $("#edit-modal .custom-content").load(url, function() {
             $('#edit-modal').modal();
@@ -41,13 +38,10 @@ $(document).ready(function() {
                         else {
                             $('#edit-modal .custom-content').html(data);
                         }
-                        // $('#edit-modal').modal('hide');
                     }
                 });
             });
         });
         return false; // prevent the click propagation
-
-
     });
 });
