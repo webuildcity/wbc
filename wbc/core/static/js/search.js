@@ -16,6 +16,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
     $scope.formData = {};
     $scope.selectedResult = null;
+    $scope.listView = false;
 
     var allResultPoly = null;
     var maxZoom = null;
@@ -24,12 +25,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     // var polygonLayer = null;
 
     var highlightFunction = function(id){
-        // console.log(id);
         var resultDiv = $('#result-'+id);
         var $parentDiv = $('#search_sidebar');
         resultDiv.toggleClass('selected');
         $parentDiv.scrollTop($parentDiv.scrollTop() + resultDiv.position().top - $parentDiv.height()/2 + resultDiv.height()/2);
-
         // return null;
     }
 
@@ -228,8 +227,11 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
 
 /** NON ANGULAR **/
-$(document).ready(function(){
-    moveScroller('.search-anchor', '#search_sidebar');
-    // moveScroller('#type-anchor', '#search_sidebar');
-});
+// $(document).ready(function(){
+//     moveScroller('.search-anchor', '#search_sidebar');
+//     // moveScroller('#type-anchor', '#search_sidebar');
+//     $('#map-list-switch').click(function(){
+//         $('.result-content').toggleClass('hidden');
+//     });
+// });
 

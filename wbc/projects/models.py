@@ -48,7 +48,7 @@ class Project(Model):
     active               = models.BooleanField()
     link                 = models.URLField(blank=True)
     slug                 = models.SlugField(unique=True, editable=False)
-    address_obj           = models.ForeignKey(Address, blank=True, null=True, verbose_name="Adresse")
+    address_obj          = models.ForeignKey(Address, blank=True, null=True, verbose_name="Adresse")
     gallery              = models.OneToOneField(Gallery, related_name='gallery', blank=True, null=True)
     tags                 = TaggableManager(through=TaggedItems, blank=True, verbose_name="Schlagworte")
     stakeholders         = models.ManyToManyField(Stakeholder, blank=True, verbose_name="Akteure")

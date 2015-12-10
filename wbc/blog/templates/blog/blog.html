@@ -1,0 +1,44 @@
+{% extends 'core/layout.html' %}
+{% load  django_markdown staticfiles compress %}
+
+{% block css %}
+    {% compress css %}
+    {{block.super}}
+    <link rel="stylesheet" type="text/x-scss" href="{% static "css/blog.scss" %}" />
+    {% endcompress %}
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/blog.js' %}"></script>
+{% endblock %}
+
+{% block controller %}
+BlogController
+{% endblock %}
+
+{% block content %}
+<div id="edit-modal" class="modal fade" role="dialog" tabindex="-1">
+    <div class="well modal-dialog modal-content modal-lg" role="document">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3> hinzufügen </h3>
+        </div>
+        <div class="custom-content">
+        </div>
+    </div>
+</div>
+<div id="blog">
+
+    {% if user.is_authenticated %}
+    <ul class="admin-panel">
+        <li><a class="blog-admin admin-link" data-toggle="modal" data-target="#edit-modal" data-form="{% url 'blogentry_create' %}" href="#"><i class="fa fa-plus"></i></a></li>
+    </ul>
+    {% endif %}
+
+    {% for entry in blogentries %}
+        <h2> {{entry.name}}</h2>
+        {{entry.content| markdown}}
+    {% endfor %}
+
+</div>
+{% endblock %}
