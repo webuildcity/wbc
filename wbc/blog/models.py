@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.core.urlresolvers import reverse
+
 from wbc.core.models import Model
-
 from wbc.projects.slug import unique_slugify
-
 from wbc.tags.models import TaggedItems
 from taggit.managers import TaggableManager
 
@@ -15,7 +15,7 @@ class BlogEntry(Model):
     tags    = TaggableManager(through=TaggedItems, blank=True, verbose_name="Schlagworte")
 
     def get_absolute_url(self):
-        return reverse('blog', kwargs={'slug': self.slug})
+        return reverse('blogentry', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         unique_slugify(self,self.title)

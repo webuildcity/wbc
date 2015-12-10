@@ -2,7 +2,7 @@
 from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import render,get_object_or_404
-
+from django.http import JsonResponse
 from wbc.core.views import ProtectedCreateView, ProtectedUpdateView, ProtectedDeleteView
 from wbc.blog.models import BlogEntry
 from models import *

@@ -36,7 +36,7 @@ BlogController
     {% endif %}
 
     {% for entry in blogentries %}
-        <h2> {{entry.name}}</h2>
+        <a href="{{entry.get_absolute_url}}"><h2> {{entry.title}}</h2></a>
         {{entry.content| markdown}}
     {% endfor %}
 
