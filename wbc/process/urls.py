@@ -4,6 +4,7 @@ from rest_framework import routers
 
 from .views import *
 
+# required for REST-API
 router = routers.DefaultRouter()
 
 router.register(r'processsteps', ProcessStepViewSet, base_name='processstep')
