@@ -8,6 +8,8 @@ router = routers.DefaultRouter()
 
 router.register(r'processsteps', ProcessStepViewSet, base_name='processstep')
 router.register(r'processtypes', ProcessTypeViewSet, base_name='processtype')
+router.register(r'participationtypes', ParticipationTypeViewSet, base_name='participationtype')
+
 
 urlpatterns = patterns('',
     url(r'^', include(router.urls)),

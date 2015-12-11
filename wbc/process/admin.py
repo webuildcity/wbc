@@ -14,5 +14,11 @@ class ProcessTypeAdmin(admin.ModelAdmin):
     list_display_links = ('id','name')
     ordering = ['id']
 
+class ParticipationTypeAdmin(admin.ModelAdmin):
+    list_display = ('id','name', 'participation')
+    list_display_links = ('id','name', 'participation')
+    ordering = ['id']
+
 admin.site.register(ProcessStep, ProcessStepAdmin)
 admin.site.register(ProcessType, ProcessTypeAdmin)
+admin.site.register(ParticipationType, ParticipationTypeAdmin)

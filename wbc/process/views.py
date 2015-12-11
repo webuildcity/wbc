@@ -32,10 +32,12 @@ def process(request, pk=None):
     if pk:
         process_step = get_object_or_404(ProcessStep, pk=int(pk))
         return render(request, 'process/process.html', {
-                'process_types': process_types, 
+                'process_types': process_types,
                 'process_step': process_step
         })
 
     return render(request,'process/process.html',{'process_types': process_types})
 
-
+class ParticipationTypeViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = ParticipationTypeSerializer
+    queryset = ParticipationType.objects.all()
