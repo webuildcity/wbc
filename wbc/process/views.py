@@ -28,15 +28,16 @@ class ProcessTypeViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = ProcessType.objects.all()
 
 def process(request, pk=None):
-    process_types = ProcessType.objects.all()
+    entries = ProcessType.encyclopedia_entry.objects.all()
     if pk:
         process_step = get_object_or_404(ProcessStep, pk=int(pk))
-        return render(request, 'process/process.html', {
-                'process_types': process_types,
-                'process_step': process_step
+        entry = process_step.encyclopedia_entry
+        return render(request, 'encyclopedia/encyclopedia.html', {
+                'entries': entries,
+                'entry': entry
         })
 
-    return render(request,'process/process.html',{'process_types': process_types})
+    return render(request,'encyclopedia/encyclopedia.html',{'entries': entries})
 
 class ParticipationTypeViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ParticipationTypeSerializer

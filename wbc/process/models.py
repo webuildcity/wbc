@@ -8,6 +8,7 @@ from wbc.region.models import Entity
 class ProcessType(Model):
     name         = models.CharField(max_length=256, verbose_name="Name")
     description  = models.TextField(verbose_name="Beschreibung")
+    encyclopedia_entry = models.ForeignKey('encyclopedia.EncyclopediaEntry', null=True, blank=True, verbose_name="Lexikoneintrag")
 
     def __unicode__(self):
         return self.name
@@ -19,6 +20,7 @@ class ProcessType(Model):
 class ParticipationType(Model):
     name         = models.CharField(max_length=256, verbose_name="Name")
     description  = models.TextField(verbose_name="Beschreibung", blank=True)
+    encyclopedia_entry = models.ForeignKey('encyclopedia.EncyclopediaEntry', null=True, blank=True, verbose_name="Lexikoneintrag")
     participation= models.BooleanField(default=False, verbose_name="Partizipation möglich")
     icon         = models.CharField(max_length=256, verbose_name="Icon")
 
@@ -35,6 +37,7 @@ class ParticipationType(Model):
 class ProcessStep(Model):
     name         = models.CharField(max_length=256, verbose_name="Name")
     description  = models.TextField(verbose_name="Beschreibung")
+    encyclopedia_entry = models.ForeignKey('encyclopedia.EncyclopediaEntry', null=True, blank=True, verbose_name="Lexikoneintrag")
     icon         = models.CharField(max_length=256, verbose_name="Icon auf der Karte")
     hover_icon   = models.CharField(max_length=256, verbose_name="Icon auf der Karte bei Hovereffekt")
     order        = models.IntegerField(verbose_name="Reihenfolge", help_text="Nummer in der Reihenfolge")

@@ -11,13 +11,13 @@ class ProcessTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProcessType
-        fields = ('id', 'name', 'description')
+        fields = ('id', 'name', 'encyclopedia_entry', 'description')
 
 class ParticipationTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ParticipationType
-        fields = ('id', 'name', 'description', 'participation', 'icon')
+        fields = ('id', 'name', 'description', 'encyclopedia_entry', 'participation', 'icon')
 
 class ProcessStepSerializer(serializers.ModelSerializer):
     internal_link = serializers.SerializerMethodField(
@@ -29,6 +29,6 @@ class ProcessStepSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProcessStep
-        fields = ('id', 'name', 'description', 'icon', 'hover_icon',
+        fields = ('id', 'name', 'description', 'encyclopedia_entry', 'icon', 'hover_icon',
                   'order', 'process_type', 'participation_type', 'parent_step',
                   'internal_link')
