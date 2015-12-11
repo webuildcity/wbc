@@ -24,12 +24,10 @@ DefaultController
         <h2>Neues Lexikon</h2>
         {% for entry in entries %}
             <div class="panel-group">
-                <h3>{{entry.title}}</h3>
-                {% for sub_entry in entry.sub_entries.all %}
-                <div class="panel panel-default process-item">
-                    Subentry: <a href="{% url 'encyclopedia_entry' pk=sub_entry.pk %}">{{ sub_entry.title }}</a >
-                </div>
-                {% endfor %}
+                <h3><a href="{% url 'encyclopedia_entry' pk=entry.pk %}">{{entry.title}}</a></h3>
+                {% with sub_entries=entry.sub_entries.all %}
+                    {% include "encyclopedia/entries.html" %}
+                {% endwith %}
             </div>
         {% endfor %}
     </div>
@@ -39,6 +37,9 @@ DefaultController
 {% block main_content %}
     {% if selected_entry %}
         <h3>{{selected_entry.title}}</h3>
+        {% if selected_entry.gist %}
+            <p>{{selected_entry.gist}}</p>
+        {% endif %}
         <p>{{selected_entry.body_text}}</p>
     {% endif %}
 {% endblock %}

@@ -1,0 +1,15 @@
+
+{% for sub_entry in sub_entries.all %}
+    <ul>
+        <div class="panel panel-default process-item">
+            <li>
+                <a href="{% url 'encyclopedia_entry' pk=sub_entry.pk %}">{{sub_entry.title}}</a>
+            </li>
+        </div>
+        {% if sub_entry.sub_entries %}
+            {% with sub_entries=sub_entry.sub_entries %}
+                {% include "encyclopedia/entries.html" %}
+            {% endwith %}
+        {% endif %}
+    </ul>
+{% endfor %}

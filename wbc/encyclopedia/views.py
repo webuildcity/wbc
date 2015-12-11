@@ -23,7 +23,7 @@ class EncyclopediaEntryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = EncyclopediaEntry.objects.filter()
 
 def encyclopedia(request, pk=None):
-    entries = EncyclopediaEntry.objects.all()
+    entries = EncyclopediaEntry.objects.filter(parent_entry__isnull=True)
     if pk:
         entry = get_object_or_404(EncyclopediaEntry, pk=int(pk))
         return render(request, 'encyclopedia/encyclopedia.html', {
