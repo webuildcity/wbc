@@ -30,4 +30,5 @@ class ProcessStepSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProcessStep
         fields = ('id', 'name', 'description', 'icon', 'hover_icon',
-                  'order', 'process_type', 'participation_type', 'internal_link')
+                  'order', 'process_type', 'participation_type', 'parent_step',
+                  'internal_link')

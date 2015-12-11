@@ -18,7 +18,7 @@ class ProcessType(Model):
 
 class ParticipationType(Model):
     name         = models.CharField(max_length=256, verbose_name="Name")
-    description  = models.TextField(verbose_name="Beschreibung")
+    description  = models.TextField(verbose_name="Beschreibung", blank=True)
     participation= models.BooleanField(default=False, verbose_name="Partizipation möglich")
     icon         = models.CharField(max_length=256, verbose_name="Icon")
 
@@ -40,6 +40,7 @@ class ProcessStep(Model):
     order        = models.IntegerField(verbose_name="Reihenfolge", help_text="Nummer in der Reihenfolge")
     process_type = models.ForeignKey(ProcessType, related_name='process_steps', verbose_name="Verfahren")
     participation_type = models.ForeignKey(ParticipationType, related_name='process_steps', verbose_name="Partizipation")
+    parent_step  = models.ForeignKey('self', null=True, blank=True, related_name="sub_process_steps", verbose_name="übergeordneter Verfahrensschritt")
 
     def __str__(self):
         return str(self.process_type) + ', ' + self.name
