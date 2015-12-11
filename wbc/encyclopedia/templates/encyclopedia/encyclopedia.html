@@ -1,0 +1,45 @@
+{% extends 'core/layout_split.html' %}
+{% load staticfiles compress %}
+
+{% block css %}
+    {% compress css %}
+    {{block.super}}
+
+    <link rel="stylesheet" type="text/x-scss" href="{% static "css/process.scss" %}" />
+
+    {% endcompress %}
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}
+
+{% block controller %}
+DefaultController
+{% endblock %}
+
+
+{% block side_content %}
+    <div id="process_sidebar">
+        <h2>Neues Lexikon</h2>
+        {% for entry in entries %}
+            <div class="panel-group">
+                <h3><a href="{% url 'encyclopedia_entry' pk=entry.pk %}">{{entry.title}}</a></h3>
+                {% with sub_entries=entry.sub_entries.all %}
+                    {% include "encyclopedia/entries.html" %}
+                {% endwith %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+
+{% block main_content %}
+    {% if selected_entry %}
+        <h3>{{selected_entry.title}}</h3>
+        {% if selected_entry.gist %}
+            <p>{{selected_entry.gist}}</p>
+        {% endif %}
+        <p>{{selected_entry.body_text}}</p>
+    {% endif %}
+{% endblock %}

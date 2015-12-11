@@ -18,27 +18,17 @@ from .serializers import *
 from .forms import *
 
 
-class ProcessStepViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = ProcessStepSerializer
-    queryset = ProcessStep.objects.all()
+class EncyclopediaEntryViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = EncyclopediaEntrySerializer
+    queryset = EncyclopediaEntry.objects.filter()
 
-
-class ProcessTypeViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = ProcessTypeSerializer
-    queryset = ProcessType.objects.all()
-
-def process(request, pk=None):
-    entries = ProcessType.encyclopedia_entry.objects.all()
+def encyclopedia(request, pk=None):
+    entries = EncyclopediaEntry.objects.filter(parent_entry__isnull=True)
     if pk:
-        process_step = get_object_or_404(ProcessStep, pk=int(pk))
-        entry = process_step.encyclopedia_entry
+        entry = get_object_or_404(EncyclopediaEntry, pk=int(pk))
         return render(request, 'encyclopedia/encyclopedia.html', {
                 'entries': entries,
-                'entry': entry
+                'selected_entry': entry
         })
 
     return render(request,'encyclopedia/encyclopedia.html',{'entries': entries})
-
-class ParticipationTypeViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = ParticipationTypeSerializer
-    queryset = ParticipationType.objects.all()
