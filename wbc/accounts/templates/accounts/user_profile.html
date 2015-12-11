@@ -1,0 +1,49 @@
+{% extends 'core/layout.html' %}
+{% load staticfiles compress %}
+
+{% block css %}
+    {% compress css %}
+    {{block.super}}
+    <link rel="stylesheet" type="text/x-scss" href="{% static "css/blog.scss" %}" />
+    {% endcompress %}
+{% endblock %}
+
+{% block js %}
+   <!--  // <script type="text/javascript" src="{% static 'js/blog.js' %}"></script> -->
+{% endblock %}
+
+{% block controller %}
+WbcController
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <h1> {{profile.user.first_name}} {{profile.user.last_name}} </h1>
+        {% if tags %}
+            {% include "tags/tag_list.html" %}
+        {% endif %}
+    
+        {% if profile.picture %}
+        <img class="profile_img profile_page_img" src="{{ profile.picture.get_profile_url }}" />
+        {% else %}
+        <img class="profile_img profile_page_img" src="{% static 'img/person_placeholder.png' %}" />
+        {% endif %}
+        {% if profile.roles %}
+        <p><b>Funktionen:</b>
+        {% for role in profile.roles.all %}
+             {{role}}
+        {% endfor %}
+        </p>
+        {% endif %}
+        <p> {{profile.info}}</p>
+        {% if projects %}
+        <div class="project-descriptions col-md-12">
+            <h2> Projekte: </h2>
+            {% include "projects/project_list.html" %}
+        </div>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

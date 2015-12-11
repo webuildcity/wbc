@@ -1,6 +1,6 @@
-{% extends 'core/page.html' %}
+{% extends 'core/layout.html' %}
 
-{% block page %}
+{% block content %}
 
 <h2>Benutzerkonto aktualisieren</h2>
 <p>
@@ -18,6 +18,9 @@
     {% include 'core/form_fields.html' %}
     {% endwith %}
 
+    {% with stakeholder_form as form %}
+    {% include 'core/form_fields.html' %}
+    {% endwith %}
     <input type="submit" value="Speichern" class="btn btn-primary" />
     <input type="hidden" name="next" value="{{ next }}" />
 </form>

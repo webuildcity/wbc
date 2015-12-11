@@ -35,14 +35,19 @@
             float: left;
             margin-top: 12px;
 
-            li {
+            >li {
                 display: inline;
                 list-style: none;
                 margin-right: 20px;
             }
 
-            li:last-child {
+            >li:last-child {
                 margin-right: 0;
+            }
+
+            .stakeholder_img {
+                height: 1.5em;
+                padding-right: 0.4em;
             }
         }
 
