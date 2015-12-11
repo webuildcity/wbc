@@ -6,6 +6,8 @@ from django.core.urlresolvers import reverse,reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
+from django.utils.decorators import method_decorator
+
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.db.models import Q
 from django.utils.timezone import now
@@ -94,7 +96,6 @@ class ProjectCreate(ProtectedCreateView):
 
 class ProjectUpdate(ProtectedUpdateView):
     model = Project
-    # template_name = "projects/project_modal.html"
     fields = '__all__'
 
     def form_valid(self, form):
@@ -109,7 +110,19 @@ class ProjectUpdate(ProtectedUpdateView):
 
 class ProjectDelete(ProtectedDeleteView):
     model = Project
-    success_url = reverse_lazy('start')
+
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+
+        response = super(ProjectDelete, self).post(request, args, **kwargs)
+        if self.request.is_ajax():
+            response_data = {"redirect": '/'}
+            return JsonResponse(response_data)
+        else:
+            return response
+
+    def get_success_url(self):
+        return "/"
 
 def projects(request):
     return render(request,'projects/list.html',{'new_project_link': reverse('project_create')})

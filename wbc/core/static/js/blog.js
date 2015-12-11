@@ -12,7 +12,6 @@ app.controller('BlogController', ['$scope', '$document', '$http', '$window',
 
 }]);
 
-
 // MODAL
 $(document).ready(function() {
 
@@ -23,7 +22,7 @@ $(document).ready(function() {
         $("#edit-modal .custom-content").load(url, function() {
             $('#edit-modal').modal();
             $('#edit-modal').modal('show'); // display the modal on url load
-            $( "#edit-modal").unbind( "submit" );
+            $('#edit-modal').unbind( "submit" );
             $('#edit-modal').on('submit', 'form', function(e){
                 e.preventDefault();
                 $.ajax({ 

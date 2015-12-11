@@ -37,7 +37,7 @@ BlogController
 
     {% for entry in blogentries %}
         <a href="{{entry.get_absolute_url}}"><h2> {{entry.title}}</h2></a>
-        <p class="text-muted">{{entry.created}}</p>
+        <p class="text-muted">{{entry.created}} - {{entry.get_created_by}}</p>
         {{entry.content| markdown}}
     {% endfor %}
 

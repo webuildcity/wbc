@@ -36,7 +36,8 @@ BlogController
     {% endif %}
 
     <h1> {{b.title}} </h1>
-    <p class="text-muted">{{b.created}}</p>
+    <p class="text-muted">Erstellt von {{b.get_created_by}} am {{b.created}}</p>
+    <p class="text-muted">Zuletzt editiert von {{b.get_changed_by}} am {{b.updated}}</p>
     {{b.content| markdown}}
 
 </div>

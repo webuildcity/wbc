@@ -90,7 +90,7 @@ $(document).ready(function(){
 
 
     // MODAL
-    $(".project-admin").click(function(ev) { // for each edit contact url
+    $(".big-page").on('click', '.project-admin', function(ev) { // for each edit contact url
         ev.preventDefault(); // prevent navigation
         var url = $(this).data("form"); 
         $('#edit-modal .modal-header h3').html(url); // display the modal on url load

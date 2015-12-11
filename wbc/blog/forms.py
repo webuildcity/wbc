@@ -9,7 +9,7 @@ class BlogEntryForm(forms.ModelForm):
         model = BlogEntry
         fields = '__all__'
 
-    content = forms.CharField(widget=MarkdownWidget())
+    # content = forms.CharField(widget=MarkdownWidget())
 
     def __init__(self, *args, **kwargs):
         forms.ModelForm.__init__(self, *args, **kwargs)
