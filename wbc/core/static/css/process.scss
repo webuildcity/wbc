@@ -12,10 +12,32 @@
         overflow-y: auto;
         padding: 0 1em;
 
+        h2 {
+            margin: 1rem inherit;
+        }
+
+        h3 {
+            margin-bottom: .1em;
+        }
+
         .process-item {
           border-style: none;
         }
 
+        .panel-group > .encyclopedia-entries {
+            margin: .25em 0;
+            padding: 0;
+
+        }
+        .encyclopedia-entries .encyclopedia-entries {
+            padding-left: 1em;
+            font-size: .9rem;
+        }
+
+        .encyclopedia-entry {
+            margin: 0;
+            padding: .1em 0;
+        }
         /*
         .search-field {
             padding: 2em 1em;
@@ -31,6 +53,12 @@
 
 #main_content {
     padding: 0 1em 1em 1em;
+
+    h3 {
+        margin: 1rem inherit;
+        padding-top: .7rem;
+        height: 2rem;
+    }
 
     .participation {
         margin-bottom: 5px;
