@@ -82,14 +82,15 @@ body {
         float: right;
         margin-top: 10px;
         margin-left: 5px;
+
+
         .participation {
-            width: 3.5em;
-        }
-        .participation span {
             color: green;
+            max-width: 3.5em;
         }
-        .no-participation span {
+        .no-participation {
             color: red;
+            max-width: 3.5em;
         }
     }
     .current-step  {
