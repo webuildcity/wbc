@@ -21,7 +21,7 @@ DefaultController
 
 {% block side_content %}
     <div id="process_sidebar">
-        <h2>Neues Lexikon</h2>
+        <h2>Lexikon</h2>
         {% for entry in entries %}
             <div class="panel-group">
                 <h3><a href="{% url 'encyclopedia_entry' pk=entry.pk %}">{{entry.title}}</a></h3>
@@ -35,6 +35,7 @@ DefaultController
 
 
 {% block main_content %}
+    <!--h2 class="spacer">&nbsp;</h2-->
     {% if selected_entry %}
         <h3>{{selected_entry.title}}</h3>
         {% if selected_entry.gist %}

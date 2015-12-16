@@ -1,8 +1,8 @@
 
 {% for sub_entry in sub_entries.all %}
-    <ul>
+    <ul class="encyclopedia-entries">
         <div class="panel panel-default process-item">
-            <li>
+            <li class="encyclopedia-entry">
                 <a href="{% url 'encyclopedia_entry' pk=sub_entry.pk %}">{{sub_entry.title}}</a>
             </li>
         </div>
