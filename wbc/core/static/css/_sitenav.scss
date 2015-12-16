@@ -1,17 +1,9 @@
 /* brand */
 
 #brand {
-    padding-top: 3px;
-
-    img {
-        height: 40px;
-    }
+    @include branding();
 }
-/*@media screen and (max-width: 992px) {
-    #brand img {
-        height: 40px;
-    }
-}*/
+
 #header {
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
     background-color: rgba($background-color,0.8);

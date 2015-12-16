@@ -115,15 +115,7 @@ body {
         p {
             padding-left: 1em;
         }
-        // p {
-        //     position: relative;
-        //     padding: 1em;
-        //     z-index: 4;
-        //     background: white;
-        //     border: 1px solid $primary-color-light;
-        // }
     }
-
 }
 
 .admin-panel {
@@ -133,8 +125,9 @@ body {
         float: left;
     }
     .fa {
-        color: #e58833 !important;
-        
+        color: $icon-admin-edit-color !important;
+        padding: 2px;
+
     }
 
 }
