@@ -119,8 +119,8 @@ class EventUpdate(ProtectedUpdateView):
     
     def dispatch(self, request, *args, **kwargs):
         modelString = '%s.%s' % (self.model._meta.app_label, self.model._meta.model_name)
-        # @permission_required('%s.change__%s' % (self.model._meta.app_label, self.model._meta.model_name), (modelString, 'pk', 'pk'), accept_global_perms=True)
-        # @permission_required_or_403('%s.change_%s' % ('projects', 'project'), ('projects.project', 'pk', 'project_pk'), accept_global_perms=True)
+        @permission_required('%s.change_%s' % (self.model._meta.app_label, self.model._meta.model_name), (modelString, 'pk', 'pk'), accept_global_perms=True)
+        @permission_required_or_403('%s.change_%s' % ('projects', 'project'), ('projects.project', 'pk', 'project_pk'), accept_global_perms=True)
         def wrapper(request, *args, **kwargs):
             return super(EventUpdate, self).dispatch(request, *args, **kwargs)
         return wrapper(request, *args, **kwargs)
