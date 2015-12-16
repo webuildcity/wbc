@@ -2,23 +2,24 @@
 from django.contrib import admin
 
 from models import *
+from guardian.admin import GuardedModelAdmin
 
-class EventAdmin(admin.ModelAdmin):
+class EventAdmin(GuardedModelAdmin):
     list_display = ('id', 'title','begin')
     list_display_links = ('id', 'title','begin')
     ordering = ['id']
 
-class DateAdmin(admin.ModelAdmin):
+class DateAdmin(GuardedModelAdmin):
     list_display = ('id', 'title','begin', 'address')
     list_display_links = ('id', 'title','begin', 'address')
     ordering = ['id']
 
-class MediaAdmin(admin.ModelAdmin):
+class MediaAdmin(GuardedModelAdmin):
     list_display = ('id', 'title', 'creator', 'indentifier')
     list_display_links = ('id', 'title', 'creator', 'indentifier')
     ordering = ['id']
 
-class PublicationAdmin(admin.ModelAdmin):
+class PublicationAdmin(GuardedModelAdmin):
     list_display = ('id', 'project', 'begin')
     list_display_links = ('id', 'project', 'begin')
     ordering = ['id']

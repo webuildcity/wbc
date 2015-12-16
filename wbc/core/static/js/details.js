@@ -94,7 +94,10 @@ $(document).ready(function(){
         ev.preventDefault(); // prevent navigation
         var url = $(this).data("form"); 
         $('#edit-modal .modal-header h3').html(url); // display the modal on url load
-        $("#edit-modal .custom-content").load(url, function() {
+        $("#edit-modal .custom-content").load(url, function(response, status) {
+            if ( status == "error" ) {
+                $('#edit-modal .custom-content').html("Keine Berechtigungen für diese Aktion.");
+            }
             $('#edit-modal').modal();
             $('#edit-modal').modal('show'); // display the modal on url load
             drawMap();
@@ -115,6 +118,11 @@ $(document).ready(function(){
                             drawMap();
                         }
                         // $('#edit-modal').modal('hide');
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        if(xhr.status==403) {
+                            $('#edit-modal .custom-content').html("Keine Berechtigungen für diese Aktion.");
+                        }
                     }
                 });
             });

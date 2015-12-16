@@ -1,5 +1,6 @@
 {% extends 'core/layout_split.html' %}
-{% load staticfiles compress %}
+{% load staticfiles compress guardian_tags %}
+
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static "css/vizi.css" %}" />
@@ -54,6 +55,7 @@ DetailsController
 {% endblock %}
 
 {% block side_content %}
+{% get_obj_perms user for project as "project_perms" %}
 <div id="project_sidebar">
     <div class="anchor">
         <div class="details-headline content-container">
@@ -72,7 +74,9 @@ DetailsController
         {% if user.is_authenticated %}
         <ul class="admin-panel">
             <li><a class="admin-link project-admin" data-toggle="modal" data-target="#edit-modal" data-form="{% url 'project_create' %}" href="#"><i class="fa fa-plus"></i></a></li>
+            {% if 'change_project' in project_perms %}
             <li><a class="admin-link project-admin" data-form="{% url 'project_update' project.pk %}" href="#"><i class="fa fa-pencil"></i></a></li>
+            {% endif %}
          <!--    <li><a class="admin-link" href="{{new_publication_link}}?project_id={{project.pk}}"><i class="fa fa-newspaper"></i></a></li> -->
         </ul>
         {% endif %}
@@ -150,7 +154,7 @@ DetailsController
         <div id="next-date-widget" class="widget">
             <div class="content-container">
                 <h3><i class="fa fa-calendar"> </i>Nächster Termin</h3>
-                {% if user.is_authenticated %}
+                {% if 'change_project' in project_perms %}
                 <ul class="admin-panel">
                     <li><a class="admin-link" data-toggle="modal" data-target="#event-modal" href="#"><i class="fa fa-plus"></i></a></li>
                 </ul>
@@ -210,9 +214,9 @@ DetailsController
                 <button type="button" class="close" data-dismiss="modal">×</button>
                 <h3> Event hinzufügen </h3>
                 <ul class="nav nav-pills">
-                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'date_create' %}?project_id={{project.pk}}" href="#">Veranstaltung</a></li>
-                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'media_create' %}?project_id={{project.pk}}" href="#">Nachricht</a></li>
-                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'pub_create' %}?project_id={{project.pk}}" href="#">Veröffentlichung</a></li>
+                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'date_create' project.pk %}" href="#">Veranstaltung</a></li>
+                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'media_create' project.pk %}" href="#">Nachricht</a></li>
+                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'pub_create' project.pk %}" href="#">Veröffentlichung</a></li>
                 </ul>
             </div>
             <div class="custom-content">

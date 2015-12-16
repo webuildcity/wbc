@@ -3,7 +3,8 @@ import datetime
 from django.conf import settings
 from django.shortcuts import render,get_object_or_404
 from django.core.urlresolvers import reverse,reverse_lazy
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.models import User
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.utils.decorators import method_decorator
@@ -24,8 +25,10 @@ from wbc.events.models import Event, Date, Media, Publication
 from wbc.process.models import ProcessType, ProcessStep
 from models import *
 from serializers import *
-# from forms import *
 
+from guardian.shortcuts import assign_perm, get_perms
+
+# from forms import *
 
 class ProjectViewSet(viewsets.ViewSet):
 
@@ -86,6 +89,11 @@ class ProjectCreate(ProtectedCreateView):
 
     def form_valid(self, form):
         self.object = form.save()
+
+        user = User.objects.get(username=self.request.user)
+        assign_perm('change_project', user, self.object) 
+        assign_perm('delete_project', user, self.object) 
+
         url = self.object.get_absolute_url()
         return JsonResponse({'redirect':  url})
 
@@ -93,8 +101,8 @@ class ProjectCreate(ProtectedCreateView):
         response = super(ProjectCreate, self).form_invalid(form)
         return response
 
-
 class ProjectUpdate(ProtectedUpdateView):
+
     model = Project
     fields = '__all__'
 

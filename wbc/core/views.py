@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 import json
 from datetime import datetime
 
@@ -8,6 +7,7 @@ from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+
 from django.template import RequestContext
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -21,6 +21,9 @@ from wbc.region.models import District
 from haystack.query import SearchQuerySet
 from haystack.inputs import AutoQuery, Exact, Clean
 from haystack.utils.geo import Point
+
+from guardian.decorators import permission_required_or_403, permission_required
+from guardian.mixins import PermissionRequiredMixin
 
 def feeds(request):
     entities = District.objects.all()
@@ -161,20 +164,27 @@ def map(request):
 
 class ProtectedCreateView(CreateView):
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(ProtectedCreateView, self).dispatch(*args, **kwargs)
-
+    def dispatch(self, request, *args, **kwargs):
+        @permission_required('%s.add_%s' % (self.model._meta.app_label, self.model._meta.model_name), accept_global_perms=True)
+        def wrapper(request, *args, **kwargs):
+            return super(ProtectedCreateView, self).dispatch(request, *args, **kwargs)
+        return wrapper(request, *args, **kwargs)
 
 class ProtectedUpdateView(UpdateView):
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(ProtectedUpdateView, self).dispatch(*args, **kwargs)
-
+    def dispatch(self, request, *args, **kwargs):
+        modelString = '%s.%s' % (self.model._meta.app_label, self.model._meta.model_name)
+        print modelString
+        @permission_required_or_403('%s.change_%s' % (self.model._meta.app_label, self.model._meta.model_name), (modelString, 'pk', 'pk'), accept_global_perms=True)
+        def wrapper(request, *args, **kwargs):
+            return super(ProtectedUpdateView, self).dispatch(request, *args, **kwargs)
+        return wrapper(request, *args, **kwargs)
 
 class ProtectedDeleteView(DeleteView):
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(ProtectedDeleteView, self).dispatch(*args, **kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        modelString = '%s.%s' % (self.model._meta.app_label, self.model._meta.model_name)
+        # @permission_required_or_403('%s.delete_%s' % (self.model._meta.app_label, self.model._meta.model_name), (modelString, 'pk', 'pk'), accept_global_perms=True)
+        def wrapper(request, *args, **kwargs):
+            return super(ProtectedDeleteView, self).dispatch(request, *args, **kwargs)
+        return wrapper(request, *args, **kwargs)
