@@ -8,8 +8,6 @@ class Model(models.Model):
     created = models.DateTimeField(editable=False)
     updated = models.DateTimeField(editable=False)   
     history = HistoricalRecords()
-    # changed_by = models.ForeignKey(User, editable=False, null=True, blank=True, related_name='editor_%(class)s')
-    # created_by = models.ForeignKey(User, editable=False, null=True, blank=True, related_name='creator_%(class)s')
 
     def get_changed_by(self):
         if(self.history.last()):

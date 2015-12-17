@@ -232,7 +232,7 @@ DetailsController
         <li>
             <a data-toggle="tab" href="#timeline"><i class="fa fa-calendar"></i>Ereignisse</a>
         </li>
-        <li {{stakeholders|yesno:' ,class=not-active'}}>
+        <li>
             <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Beteiligte</a> 
         </li>
         <li><a class="3d-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>3D</a></li>
@@ -282,11 +282,9 @@ DetailsController
             {% include "projects/project_events.html" %}
         </div>
              
-        {% if stakeholders %}   
         <div id="stakeholder" class="tab-pane">
             {% include "projects/project_stakeholder.html" %}
         </div>
-        {% endif %}
         
         <div id="3d" class="tab-pane">
             <div id="vizicities-viewport">

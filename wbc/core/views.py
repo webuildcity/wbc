@@ -174,7 +174,6 @@ class ProtectedUpdateView(UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         modelString = '%s.%s' % (self.model._meta.app_label, self.model._meta.model_name)
-        print modelString
         @permission_required_or_403('%s.change_%s' % (self.model._meta.app_label, self.model._meta.model_name), (modelString, 'pk', 'pk'), accept_global_perms=True)
         def wrapper(request, *args, **kwargs):
             return super(ProtectedUpdateView, self).dispatch(request, *args, **kwargs)
@@ -184,7 +183,7 @@ class ProtectedDeleteView(DeleteView):
 
     def dispatch(self, request, *args, **kwargs):
         modelString = '%s.%s' % (self.model._meta.app_label, self.model._meta.model_name)
-        # @permission_required_or_403('%s.delete_%s' % (self.model._meta.app_label, self.model._meta.model_name), (modelString, 'pk', 'pk'), accept_global_perms=True)
+        @permission_required_or_403('%s.delete_%s' % (self.model._meta.app_label, self.model._meta.model_name), (modelString, 'pk', 'pk'), accept_global_perms=True)
         def wrapper(request, *args, **kwargs):
             return super(ProtectedDeleteView, self).dispatch(request, *args, **kwargs)
         return wrapper(request, *args, **kwargs)

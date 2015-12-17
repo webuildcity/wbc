@@ -96,7 +96,7 @@ $(document).ready(function(){
         $('#edit-modal .modal-header h3').html(url); // display the modal on url load
         $("#edit-modal .custom-content").load(url, function(response, status) {
             if ( status == "error" ) {
-                $('#edit-modal .custom-content').html("Keine Berechtigungen für diese Aktion.");
+                $('#edit-modal .custom-content').html("Fehler!");
             }
             $('#edit-modal').modal();
             $('#edit-modal').modal('show'); // display the modal on url load
@@ -152,7 +152,6 @@ $(document).ready(function(){
                             window.location.href = data.redirect;
                         }
                         else {
-                            console.log(data);
                             $('#event-modal .custom-content').html(data);
                         }
                         // $('#edit-modal').modal('hide');
@@ -163,6 +162,14 @@ $(document).ready(function(){
         return false; // prevent the click propagation
     });
 
+    $('.follow-button').on('click', function(){
+        $.get($(this).data('url'), function(data) {
+            if (data.redirect){
+                window.location.href = data.redirect;
+                window.location.reload();
+            }
+        });
+    })
 
 
 });
