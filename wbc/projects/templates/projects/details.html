@@ -55,7 +55,9 @@ DetailsController
 {% endblock %}
 
 {% block side_content %}
+{% if user.is_authenticated %}
 {% get_obj_perms user for project as "project_perms" %}
+{% endif %}
 <div id="project_sidebar">
     <div class="anchor">
         <div class="details-headline content-container">

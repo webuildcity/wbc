@@ -161,6 +161,10 @@ def project_request(request, p):
     processTypeList = None
     publications = p.publication_set.all()
 
+    following = None
+    print request.user
+    if request.user.is_authenticated():
+        following = p.stakeholders.filter(pk=request.user.profile.stakeholder.pk).exists()
     if publications:
         processTypeList = {}
         processTypes = ProcessType.objects.filter(process_steps__publication__project = p).distinct()
@@ -185,7 +189,7 @@ def project_request(request, p):
         # 'publications' : p.publication_set.all().order_by('process_step__process_type__name','process_step__order'),
         #'processSteps' : ProcessStep.objects.filter(publication_processsteps),
         'processTypes' : processTypeList,
-        'following': p.stakeholders.filter(pk=request.user.profile.stakeholder.pk).exists()
+        'following': following
     })
 
 

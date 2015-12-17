@@ -1,7 +1,7 @@
 {% load guardian_tags %}
-
-{% get_obj_perms user for project as "project_perms" %}
-
+{% if user.is_authenticated %}
+    {% get_obj_perms user for project as "project_perms" %}
+{% endif %}
 <div class="row events">
     {% if 'change_project' in project_perms %}
     <div class="new-event">
