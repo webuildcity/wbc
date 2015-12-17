@@ -1,4 +1,10 @@
 {% extends 'core/page.html' %}
+{% load compress %}
+{% block css %}
+    {% compress css %}
+    {{block.super}}
+    {% endcompress %}
+{% endblock %}
 
 {% block page %}
 
