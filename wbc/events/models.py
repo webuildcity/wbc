@@ -45,18 +45,18 @@ class Date(Event):
         verbose_name_plural = 'Veranstaltungen'
 
 class Media(Event):
-    teaser           = models.CharField(blank=True, max_length=110, verbose_name="Teaser-Text", help_text="Teaser / Vorschau-Text") 
-    indentifier      = models.CharField(blank=True, max_length=128, verbose_name="Identifier (ID) des Dokuments", help_text="ISBN/ISSN, URL/PURL, URN oder DOI") 
-    mediatype        = models.CharField(blank=True, max_length=128, verbose_name="Typ des des Dokuments", help_text="Text, Dataset, Event, Interactive Resource, Service") 
+    teaser           = models.CharField(blank=True, max_length=110, verbose_name="Teaser-Text", help_text="Teaser / Vorschau-Text")
+    indentifier      = models.CharField(blank=True, max_length=128, verbose_name="Identifier (ID) des Dokuments", help_text="ISBN/ISSN, URL/PURL, URN oder DOI")
+    mediatype        = models.CharField(blank=True, max_length=128, verbose_name="Typ des des Dokuments", help_text="Text, Dataset, Event, Interactive Resource, Service")
     language         = models.CharField(blank=True, max_length=128, verbose_name="Sprache des Dokuments", help_text="ISO_639-1; en, de, fr")
     creator          = models.CharField(blank=True, max_length=128, verbose_name="Verantwortliche Person oder Organisation", help_text="Wenn Stakeholder nicht bereits vorhanden, hier vorrangig verantwortliche Person oder Organisation")
     publisher        = models.CharField(blank=True, max_length=128, verbose_name="Verlag", help_text="Verlag oder Herausgeber, die veröffentlichende Instanz")
     contributor      = models.CharField(blank=True, max_length=128, verbose_name="Contributor", help_text="Namen von weiteren Autoren/Mitarbeitern an dem Inhalt")
     rightsHolder     = models.CharField(blank=True, max_length=128, verbose_name="Rechteinhaber", help_text="Name der Person oder Organisation, die Eigner oder Verwerter der Rechte an diesem Dokument ist.")
-    rights           = models.CharField(blank=True, max_length=128, verbose_name="Rechteinhaber", help_text="Information zur Klarstellung der Rechte, die an dem Dokument gehalten werden (Lizenzbedingungen)") 
+    rights           = models.CharField(blank=True, max_length=128, verbose_name="Rechteinhaber", help_text="Information zur Klarstellung der Rechte, die an dem Dokument gehalten werden (Lizenzbedingungen)")
     provenanceactive = models.BooleanField(verbose_name="Echtheit des Dokuments geprüft")
-    provenance       = models.CharField(blank=True, max_length=128, verbose_name="Echtheit des Dokuments", help_text="Welche Zweifel oder Probleme gibt es mit dem Dokument?") 
-    source           = models.CharField(blank=False, max_length=128, verbose_name="Quelle des Dokuments (Source)", help_text="URL, Freie Angabe wo das Dokument herkommt") 
+    provenance       = models.CharField(blank=True, max_length=128, verbose_name="Echtheit des Dokuments", help_text="Welche Zweifel oder Probleme gibt es mit dem Dokument?")
+    source           = models.CharField(blank=False, max_length=128, verbose_name="Quelle des Dokuments (Source)", help_text="URL, Freie Angabe wo das Dokument herkommt")
     dateCopyrighted  = models.DateField(null=True, blank=True, verbose_name="Copyright Datum")
     other_date       = models.DateField(null=True, blank=True, verbose_name="Offenes Datum Feld")
     media_created    = models.DateField(null=True, blank=True, verbose_name="Medieneintrag erstellt am")
@@ -104,7 +104,7 @@ class Publication(Model):
         return reverse('publication_delete', kwargs={'pk': self.pk})
 
     def is_in_past(self):
-        if date.today() > self.end:
+        if not self.end or date.today() > self.end:
             return True
         return False
 
