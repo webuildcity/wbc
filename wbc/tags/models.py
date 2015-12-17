@@ -19,10 +19,9 @@ class WbcTag(TagBase):
         return reverse('tag', kwargs={'slug': self.slug})
 
     class Meta:
-        verbose_name        = "Schlagwort (Tag)"
-        verbose_name_plural = "Schlagwörter (Tags)"
+        verbose_name        = "Stichwort (Tag)"
+        verbose_name_plural = "Stichwörter (Tags)"
 
 
 class TaggedItems(GenericTaggedItemBase):
     tag = models.ForeignKey(WbcTag, related_name="taggeditems")
-

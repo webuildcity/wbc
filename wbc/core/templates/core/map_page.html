@@ -31,15 +31,15 @@ MapController
 {% block side_content %}
 <div>
     <form id="search" class="search-form">
-        {% csrf_token %}                
+        {% csrf_token %}
         <div>
-            <div>  
+            <div>
                 <div ng-if="facets.length > 0" class="facet-container">
-                    <h3 class="collapse-heading collapsed" data-toggle="collapse" data-target="#tag-facets">Nach Schlagwörtern filtern</h3>
+                    <h3 class="collapse-heading collapsed" data-toggle="collapse" data-target="#tag-facets">Nach Stichwörtern filtern</h3>
                     <div id='tag-facets' class="collapse">
                         <div ng-repeat="facet in facets">
                             <label>
-                                <input type="checkbox" checklist-model="formData.tags" checklist-value="facet[0]" checklist-change="onSearchChanged()"> 
+                                <input type="checkbox" checklist-model="formData.tags" checklist-value="facet[0]" checklist-change="onSearchChanged()">
                                     {[{facet[0]}]} ({[{facet[1]}]})
                             </label>
                         </div>
@@ -50,7 +50,7 @@ MapController
                     <div id='region-facets' class='collapse'>
                         <div ng-repeat="facet in entitiesFacets">
                             <label>
-                                <input type="checkbox" checklist-model="formData.entities" checklist-value="facet[0]" checklist-change="onSearchChanged()"> 
+                                <input type="checkbox" checklist-model="formData.entities" checklist-value="facet[0]" checklist-change="onSearchChanged()">
                                     {[{facet[0]}]} ({[{facet[1]}]})
                             </label>
                         </div>
