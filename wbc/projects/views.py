@@ -184,8 +184,8 @@ def project_request(request, p):
         'processSteps': p.publication_set.filter(begin__lte=today, end__gte=today),
         # 'publications' : p.publication_set.all().order_by('process_step__process_type__name','process_step__order'),
         #'processSteps' : ProcessStep.objects.filter(publication_processsteps),
-         'processTypes' : processTypeList,
-         'following': p.stakeholders.filter(pk=request.user.profile.stakeholder.pk).exists()
+        'processTypes' : processTypeList,
+        'following': p.stakeholders.filter(pk=request.user.profile.stakeholder.pk).exists()
     })
 
 
