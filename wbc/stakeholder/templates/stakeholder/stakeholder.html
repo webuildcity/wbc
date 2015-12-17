@@ -1,19 +1,15 @@
-{% extends 'core/layout.html' %}
-{% load staticfiles %}
+{% extends 'core/page.html' %}
+{% load staticfiles compress %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'page.css' %}" />
-
+    {% compress css %}
+    {{block.super}}
+    <link rel="stylesheet" type="text/x-scss" href="{% static "css/blog.scss" %}" />
+    {% endcompress %}
 {% endblock %}
 
-{% block js %}
 
-    <script type="text/javascript">
-        var _static_url = {% static '' %}
-    </script>
-{% endblock %}
-
-{% block content %}
+{% block page %}
 
     <div class="container">
         <h1> {{stakeholder.name}} </h1>
