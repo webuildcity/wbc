@@ -162,9 +162,9 @@ def project_request(request, p):
     publications = p.publication_set.all()
 
     following = None
-    print request.user
     if request.user.is_authenticated():
         following = p.stakeholders.filter(pk=request.user.profile.stakeholder.pk).exists()
+    
     if publications:
         processTypeList = {}
         processTypes = ProcessType.objects.filter(process_steps__publication__project = p).distinct()
@@ -175,7 +175,6 @@ def project_request(request, p):
                 for pub in publications.filter(process_step = step):
                     step.publication = pub
 
-    print p.publication_set.filter(begin__lte=today, end__gte=today)
     return render(request,'projects/details.html',{
         'project' : p,
         'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
