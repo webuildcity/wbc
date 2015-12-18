@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'css/process_bar.css' %}" />
-<!-- <p>{{process}}</p> --> 
+<!-- <p>{{process}}</p> -->
 
 {% for process in processTypes %}
 <div class="content-container">
@@ -8,10 +8,10 @@
     <ol class="process-bar" data-process-bar-steps="{{process.process_steps.all|length}}">
     {% for step in process.process_steps2 %}
         {% if step.publication %}
-            {% if step.publication.is_in_past %}
-                <li class="process-step process-done">{{step.name}}</li>
-            {% elif step.publication.is_started %}
+            {% if step.publication.is_started %}
                 <li class="process-step process-running">{{step.name}}</li>
+            {% elif step.publication.is_in_past %}
+                <li class="process-step process-done">{{step.name}}</li>
             {% endif %}
             {% else %}
                 <li class="process-step process-todo">{{step.name}}</li>
@@ -20,5 +20,5 @@
     {% endfor %}
     </ol>
 </div>
-  
+
 {% endfor %}

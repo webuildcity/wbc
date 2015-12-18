@@ -109,7 +109,7 @@ class Publication(Model):
         return False
 
     def is_started(self):
-        if date.today() >= self.begin:
+        if (not self.end or date.today() <= self.end) and date.today() >= self.begin:
             return True
         return False
 
