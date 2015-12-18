@@ -85,7 +85,7 @@ class StartView(TemplateView):
         now = datetime.now()
         context = super(StartView, self).get_context_data(**kwargs)
         # context['latest'] = 
-        projects = Project.objects.filter(events__begin__gte=now)
+        projects = Project.objects.filter(events__begin__gte=now)[:3]
         context['upcoming'] = projects
         return context
         

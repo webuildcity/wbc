@@ -1,12 +1,4 @@
-{% extends 'core/page.html' %}
-{% load compress %}
-{% block css %}
-    {% compress css %}
-    {{block.super}}
-    {% endcompress %}
-{% endblock %}
 
-{% block page %}
 <h2>Benutzerkonto registrieren</h2>
 
 <form method="post" action="#">
@@ -18,4 +10,3 @@
     <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
-{% endblock %}

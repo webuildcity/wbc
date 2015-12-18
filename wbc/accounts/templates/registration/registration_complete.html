@@ -1,12 +1,3 @@
-{% extends 'core/page.html' %}
-{% load compress %}
-{% block css %}
-    {% compress css %}
-    {{block.super}}
-    {% endcompress %}
-{% endblock %}
-
-{% block page %}
 <h2>Benutzerkonto registrieren</h2>
 
 <p>
@@ -16,4 +7,3 @@
     Bitte schauen Sie in Ihren Emails nach um den Registrierungsprozess fortzusetzen.
 </p>
 
-{% endblock %}

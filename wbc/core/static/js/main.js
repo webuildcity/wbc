@@ -8,3 +8,8 @@ app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $in
 
 app.controller('DefaultController', function() {
 });
+
+
+$(document).ready(function(){
+    loadModal('#modal', '.modal-button')
+}); 
