@@ -25,6 +25,8 @@ from haystack.utils.geo import Point
 from guardian.decorators import permission_required_or_403, permission_required
 from guardian.mixins import PermissionRequiredMixin
 
+from django_comments.views.comments import post_comment
+
 def feeds(request):
     entities = District.objects.all()
     return render(request, 'core/feeds.html', {
@@ -150,7 +152,10 @@ class SearchView(TemplateView):
         return data
 
     def get(self, request):
+        query =  request.GET.urlencode()
+        print query
         searchTerm = request.GET.get('searchTerm', '')
+        # print request.META['QUERY_STRING']
         return render(request, 'core/search.html',  context={'searchTerm': searchTerm})
 
     def post(self, request):
@@ -187,3 +192,12 @@ class ProtectedDeleteView(DeleteView):
         def wrapper(request, *args, **kwargs):
             return super(ProtectedDeleteView, self).dispatch(request, *args, **kwargs)
         return wrapper(request, *args, **kwargs)
+
+def comment_post_wrapper(request):
+    # Clean the request to prevent form spoofing
+    if request.user.is_authenticated():
+        if not (request.user.get_full_name() == request.POST['name'] or \
+               request.user.email == request.POST['email']):
+            return HttpResponse("You registered user...trying to spoof a form...eh?")
+        return post_comment(request)
+    return HttpResponse("Nice try!")

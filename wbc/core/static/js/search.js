@@ -1,12 +1,5 @@
-
-app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $interpolateProvider) {
-    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-    $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-}]);
-
-app.controller('SearchController', ['$scope', '$document', '$http', '$window', '$timeout', 'MapService',
-    function($scope, $document, $http, $window, $timeout, MapService) {
+app.controller('SearchController', ['$scope', '$document', '$http', '$window', '$timeout', '$location', 'MapService',
+    function($scope, $document, $http, $window, $timeout, $location, MapService) {
 
 
     $scope.models = {
@@ -14,7 +7,13 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         'stakeholder': 'Akteure'
     };
 
-    $scope.formData = {};
+    //SET SEARCH ACCORFING TO URL PARAMS
+    if (window.location.hash != ' '){
+        $scope.formData = {};
+    } else {
+        $scope.formData = {};
+        $scope.formData = window.location.hash;
+    }
     $scope.selectedResult = null;
     $scope.listView = false;
 
@@ -33,6 +32,15 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     }
 
     var search = function(data){
+        var params = $.param($scope.formData);
+        window.location.hash = params;
+
+//         console.log($location.absUrl());
+//         console.log(params)
+//         $location.url(params);
+//         $location.replace();
+// // $       window.history.pushState(null, 'any', $location.absUrl());
+//         window.history.pushState(null, 'Title', $location.absUrl());
         $http({
             method: 'POST',
             url:  '/suche/',
@@ -96,6 +104,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 //     //     }
                 //     // });
                 // }, 100);
+            
 
 
             } else {
@@ -108,8 +117,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     // var multipoly = [];
     $scope.onSearchChanged = function() {
         $scope.noResults = false;
+        // window.location.href = $.param($scope.formData)
         search($scope.formData);
-        // console.log($.param($scope.formData));
         // if($scope.searchTerm) {
 
         // } else {

@@ -1,5 +1,5 @@
 {% extends 'core/layout_split.html' %}
-{% load staticfiles compress guardian_tags %}
+{% load staticfiles compress guardian_tags threadedcomments_tags %}
 
 
 {% block css %}
@@ -226,7 +226,7 @@ DetailsController
             </div>
         </div>
     </div>
-
+    
     <ul class="wbc-nav main-content-nav nav nav-tabs" data-tabs="tabs">
         <li class="active"><a data-toggle="tab" href="#info"><i class="fa fa-info"></i>Info</a></li>
         <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Karte</a></li>
@@ -238,6 +238,7 @@ DetailsController
             <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Beteiligte</a> 
         </li>
         <li><a class="3d-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>3D</a></li>
+        <li><a data-toggle="tab" href="#discussion"><i class="fa fa-comment"></i>Diskussion ({% get_comment_count for project as count %}{{count}})</a></li>
     </ul>   
 
     <div id="tab-content" class="tab-content">
@@ -300,21 +301,15 @@ DetailsController
                 </div>
             </div>
         </div>
+        <div id="discussion" class="tab-pane">
+            {% if user.is_authenticated %}
+                {% render_comment_form for project %}
+            {% else %}
+                <a class="dropdown-toggle" data-toggle="dropdown" data-target=".dropdown" href="#" >Melden</a> Sie sich an um ein Kommentar zu hinterlassen.
+            {% endif %}
+            
+            {% render_comment_list for project %}
+        </div>
     </div>
 </div>
 {% endblock %}
-
-<!--     <div class="comments-wrapper">
-        <div class="container">
-            <a class="comments-create" href="" data-toggle="modal" data-target="#comment-form">
-                Eigenen Kommentar hinzufügen
-            </a>
-
-            <h3>Kommentare</h3>
-
-            {% include "comments/list.html" %}
-
-            {% include "comments/form.html" %}
-        </div>
-    </div>
- -->

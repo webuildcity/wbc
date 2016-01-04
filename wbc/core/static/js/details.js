@@ -166,5 +166,25 @@ $(document).ready(function(){
         });
     })
 
+    //comments
+
+    $('.comment_reply_link').click(show_reply_form);
+    $('#cancel-reply').click(cancel_reply_form);
+    $('#div_id_comment textarea').attr('required', true)
 
 });
+
+function show_reply_form(event) {
+    var $this = $(this);
+    var comment_id = $this.data('comment-id');
+
+    $('#id_parent').val(comment_id);
+    $('#comment-form').insertAfter($this.closest('.comment'));
+};
+
+function cancel_reply_form(event) {
+    console.log("yo")
+    $('#id_comment').val('');
+    $('#id_parent').val('');
+    $('#comment-form').appendTo($('#comment-form-wrapper'));
+}

@@ -1,0 +1,59 @@
+{% load staticfiles widget_tweaks comments crispy_forms_tags %}
+<script>
+    function disableReqdInputs(){
+        console.log("{{ user.get_full_name }}")
+        var nameInput = document.getElementById('id_name');
+        if (nameInput){
+            nameInput.value = "{{ user.get_full_name }}";
+            nameInput.readOnly=true;
+        }
+        var emailInput = document.getElementById('id_email');
+        if (emailInput){
+            emailInput.value = "{{ user.email }}";
+            emailInput.readOnly=true;
+         }
+    }
+    $(document).ready(function(){
+        disableReqdInputs();
+    });
+</script>
+{% if user.is_authenticated %}
+<div id="comment-form-wrapper">
+    <div id='comment-form'>
+        <form role="form" method="post" action="{% comment_form_target %}">
+            {% get_comment_form for project as form %}
+            {% csrf_token %}
+            {{form | crispy}}
+           <!--  {% for field in form %}
+            <div class="wbc-form-{{ field|field_type }}-group form-group{% if field.errors %} has-error{% endif %} field-{{field.html_name}} {% if field.field.required %} form-required{% endif %}">
+                {{ field.label_tag }}
+                {% if field.field.required %}
+                {% render_field field class="form-control"  %}
+                {% else %}
+                {% render_field field class="form-control " %}
+                {% endif %}
+                {% if field.errors %}
+                <div class="help-block error">
+                    <p class="text-danger">{{ field.errors.as_text}}</p>
+                </div>
+                {% endif %}
+                <div class="help-block info">
+                    {{ field.help_text }}
+                    {{ helptext }}
+                    {% block helptext %}{% endblock %}
+                </div>
+            </div>
+            {% endfor %} -->
+            <input type="hidden" name="next" value="{% url 'project' project.pk %}" />
+            <div class="modal-footer">
+                <input class="btn btn-primary" type="submit" value="Save" />
+                <input id="cancel-reply" name="cancel" class="btn btn-default" value="Cancel" data-dismiss="modal"/>
+            </div>
+        </form>
+    </div>
+</div>
+{% else %}
+
+<a class="dropdown-toggle" data-toggle="dropdown" data-target=".dropdown" href="#" >Melden</a> Sie sich an um ein Kommentar zu hinterlassen.
+
+{% endif %}

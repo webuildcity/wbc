@@ -19,8 +19,8 @@ from rest_framework.response import Response
 
 from wbc.core.views import ProtectedCreateView, ProtectedUpdateView, ProtectedDeleteView
 from wbc.region.models import District
-from wbc.comments.models import Comment
-from wbc.comments.forms import CommentForm
+# from wbc.comments.models import Comment
+# from wbc.comments.forms import CommentForm
 from wbc.events.models import Event, Date, Media, Publication
 from wbc.process.models import ProcessType, ProcessStep
 from models import *
@@ -144,14 +144,14 @@ def projectslug(request, slug):
     return project_request(request, p)
 
 def project_request(request, p):
-    if request.method == 'POST':
-        if len(request.POST["author_email1"]) == 0:
-            form = CommentForm(request.POST)
-            if form.is_valid():
-                comment = form.save(commit=False)
-                comment.enabled = True;
-                comment.project = p
-                comment.save()
+    # if request.method == 'POST':
+    #     if len(request.POST["author_email1"]) == 0:
+    #         form = CommentForm(request.POST)
+    #         if form.is_valid():
+    #             comment = form.save(commit=False)
+    #             comment.enabled = True;
+    #             comment.project = p
+    #             comment.save()
 
     today = datetime.datetime.today()
     gallery = None
@@ -177,7 +177,7 @@ def project_request(request, p):
 
     return render(request,'projects/details.html',{
         'project' : p,
-        'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
+        # 'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
         'events'  : p.events.order_by('-begin'),
         'gallery' : gallery,
         'nextDate': p.events.filter(begin__gte=today, date__isnull=False).order_by('begin').first(),
