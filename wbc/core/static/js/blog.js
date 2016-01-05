@@ -1,11 +1,5 @@
 // var app = angular.module('wbc', []);
 
-app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $interpolateProvider) {
-    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-    $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-}]);
-
 app.controller('BlogController', ['$scope', '$document', '$http', '$window',
     function($scope, $document, $http, $window) {
 

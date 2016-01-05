@@ -7,18 +7,19 @@ class EventForm(forms.ModelForm):
         model = Event
         fields = '__all__'
 
-    projects = forms.ModelMultipleChoiceField(queryset=Project.objects.all())
+    # projects = forms.ModelMultipleChoiceField(queryset=Project.objects.all())
 
     def __init__(self, *args, **kwargs):
         forms.ModelForm.__init__(self, *args, **kwargs)
 
-    def save(self):
-        instance = forms.ModelForm.save(self)
-        instance.projects_events.clear()
-        for project in self.cleaned_data['projects']:
-            instance.projects_events.add(project)
+    # def save(self):
+    #     print self
+    #     instance = forms.ModelForm.save(self)
+    #     instance.projects_events.clear()
+    #     for project in self.cleaned_data['projects']:
+    #         instance.projects_events.add(project)
 
-        return instance
+    #     return instance
 
 class DateForm(EventForm):
     class Meta:

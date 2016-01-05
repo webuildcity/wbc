@@ -8,6 +8,8 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 
+from registration.backends.default.views import RegistrationView, ActivationView
+
 from .forms import ProfileForm, UserForm
 from wbc.stakeholder.forms import StakeholderProfileForm
 
@@ -65,3 +67,8 @@ def profile_update(request):
 
 
     return render(request, 'accounts/profile_form.html', {'user_form': user_form, 'profile_form': profile_form, 'stakeholder_form': stakeholder_form, 'next': next})
+
+
+class WbcRegistrationView(RegistrationView):
+    def get_success_url(self, request, user):
+        return reverse('profile', user.pk)

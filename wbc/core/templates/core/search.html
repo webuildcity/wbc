@@ -145,6 +145,11 @@ SearchController
     </div>
 {% endblock %}
 {% block main_content %}
+    <ul class="nav-tabs nav">
+        <li><button class="btn btn-default" id="map-list-switch"><i class='fa fa-map'></i></button></li>
+        <li><button class="btn btn-default" id="map-list-switch"><i class='fa fa-list'></i></button></li>
+        <li><button class="btn btn-default" id="map-list-switch"><i class='fa fa-book'></i></button></li>
+    </ul>
     <button class="btn btn-default" id="map-list-switch" ng-click="listView=!listView">Listen-/Kartenansicht</button>
     <div ng-hide="listView" class="result-content" id="map"></div>
     <div ng-if="listView" class="result-content" id="list">

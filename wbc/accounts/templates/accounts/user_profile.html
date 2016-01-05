@@ -1,4 +1,4 @@
-{% extends 'core/layout.html' %}
+{% extends 'core/page.html' %}
 {% load staticfiles compress %}
 
 {% block css %}
@@ -13,10 +13,10 @@
 {% endblock %}
 
 {% block controller %}
-WbcController
+DefaultController
 {% endblock %}
 
-{% block content %}
+{% block page %}
 
     <div class="container">
         <h1> {{profile.user.first_name}} {{profile.user.last_name}} </h1>

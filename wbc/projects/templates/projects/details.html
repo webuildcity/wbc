@@ -1,5 +1,6 @@
 {% extends 'core/layout_split.html' %}
-{% load staticfiles compress %}
+{% load staticfiles compress guardian_tags threadedcomments_tags %}
+
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static "css/vizi.css" %}" />
@@ -54,6 +55,9 @@ DetailsController
 {% endblock %}
 
 {% block side_content %}
+{% if user.is_authenticated %}
+{% get_obj_perms user for project as "project_perms" %}
+{% endif %}
 <div id="project_sidebar">
     <div class="anchor">
         <div class="details-headline content-container">
@@ -72,7 +76,9 @@ DetailsController
         {% if user.is_authenticated %}
         <ul class="admin-panel">
             <li><a class="admin-link project-admin" data-toggle="modal" data-target="#edit-modal" data-form="{% url 'project_create' %}" href="#"><i class="fa fa-plus"></i></a></li>
+            {% if 'change_project' in project_perms %}
             <li><a class="admin-link project-admin" data-form="{% url 'project_update' project.pk %}" href="#"><i class="fa fa-pencil"></i></a></li>
+            {% endif %}
          <!--    <li><a class="admin-link" href="{{new_publication_link}}?project_id={{project.pk}}"><i class="fa fa-newspaper"></i></a></li> -->
         </ul>
         {% endif %}
@@ -150,7 +156,7 @@ DetailsController
         <div id="next-date-widget" class="widget">
             <div class="content-container">
                 <h3><i class="fa fa-calendar"> </i>Nächster Termin</h3>
-                {% if user.is_authenticated %}
+                {% if 'change_project' in project_perms %}
                 <ul class="admin-panel">
                     <li><a class="admin-link" data-toggle="modal" data-target="#event-modal" href="#"><i class="fa fa-plus"></i></a></li>
                 </ul>
@@ -210,9 +216,9 @@ DetailsController
                 <button type="button" class="close" data-dismiss="modal">×</button>
                 <h3> Event hinzufügen </h3>
                 <ul class="nav nav-pills">
-                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'date_create' %}?project_id={{project.pk}}" href="#">Veranstaltung</a></li>
-                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'media_create' %}?project_id={{project.pk}}" href="#">Nachricht</a></li>
-                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'pub_create' %}?project_id={{project.pk}}" href="#">Veröffentlichung</a></li>
+                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'date_create' project.pk %}" href="#">Veranstaltung</a></li>
+                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'media_create' project.pk %}" href="#">Nachricht</a></li>
+                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'pub_create' project.pk %}" href="#">Veröffentlichung</a></li>
                 </ul>
             </div>
             <div class="custom-content">
@@ -220,7 +226,7 @@ DetailsController
             </div>
         </div>
     </div>
-
+    
     <ul class="wbc-nav main-content-nav nav nav-tabs" data-tabs="tabs">
         <li class="active"><a data-toggle="tab" href="#info"><i class="fa fa-info"></i>Info</a></li>
         <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Karte</a></li>
@@ -228,10 +234,11 @@ DetailsController
         <li>
             <a data-toggle="tab" href="#timeline"><i class="fa fa-calendar"></i>Ereignisse</a>
         </li>
-        <li {{stakeholders|yesno:' ,class=not-active'}}>
+        <li>
             <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Beteiligte</a> 
         </li>
         <li><a class="3d-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>3D</a></li>
+        <li><a data-toggle="tab" href="#discussion"><i class="fa fa-comment"></i>Diskussion ({% get_comment_count for project as count %}{{count}})</a></li>
     </ul>   
 
     <div id="tab-content" class="tab-content">
@@ -278,11 +285,9 @@ DetailsController
             {% include "projects/project_events.html" %}
         </div>
              
-        {% if stakeholders %}   
         <div id="stakeholder" class="tab-pane">
             {% include "projects/project_stakeholder.html" %}
         </div>
-        {% endif %}
         
         <div id="3d" class="tab-pane">
             <div id="vizicities-viewport">
@@ -296,21 +301,15 @@ DetailsController
                 </div>
             </div>
         </div>
+        <div id="discussion" class="tab-pane">
+            {% if user.is_authenticated %}
+                {% render_comment_form for project %}
+            {% else %}
+                <a class="dropdown-toggle" data-toggle="dropdown" data-target=".dropdown" href="#" >Melden</a> Sie sich an um ein Kommentar zu hinterlassen.
+            {% endif %}
+            
+            {% render_comment_list for project %}
+        </div>
     </div>
 </div>
 {% endblock %}
-
-<!--     <div class="comments-wrapper">
-        <div class="container">
-            <a class="comments-create" href="" data-toggle="modal" data-target="#comment-form">
-                Eigenen Kommentar hinzufügen
-            </a>
-
-            <h3>Kommentare</h3>
-
-            {% include "comments/list.html" %}
-
-            {% include "comments/form.html" %}
-        </div>
-    </div>
- -->

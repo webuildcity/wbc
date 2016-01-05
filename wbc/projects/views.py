@@ -3,7 +3,8 @@ import datetime
 from django.conf import settings
 from django.shortcuts import render,get_object_or_404
 from django.core.urlresolvers import reverse,reverse_lazy
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.models import User
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.utils.decorators import method_decorator
@@ -18,14 +19,16 @@ from rest_framework.response import Response
 
 from wbc.core.views import ProtectedCreateView, ProtectedUpdateView, ProtectedDeleteView
 from wbc.region.models import District
-from wbc.comments.models import Comment
-from wbc.comments.forms import CommentForm
+# from wbc.comments.models import Comment
+# from wbc.comments.forms import CommentForm
 from wbc.events.models import Event, Date, Media, Publication
 from wbc.process.models import ProcessType, ProcessStep
 from models import *
 from serializers import *
-# from forms import *
 
+from guardian.shortcuts import assign_perm, get_perms
+
+# from forms import *
 
 class ProjectViewSet(viewsets.ViewSet):
 
@@ -86,6 +89,11 @@ class ProjectCreate(ProtectedCreateView):
 
     def form_valid(self, form):
         self.object = form.save()
+
+        user = User.objects.get(username=self.request.user)
+        assign_perm('change_project', user, self.object) 
+        assign_perm('delete_project', user, self.object) 
+
         url = self.object.get_absolute_url()
         return JsonResponse({'redirect':  url})
 
@@ -93,8 +101,8 @@ class ProjectCreate(ProtectedCreateView):
         response = super(ProjectCreate, self).form_invalid(form)
         return response
 
-
 class ProjectUpdate(ProtectedUpdateView):
+
     model = Project
     fields = '__all__'
 
@@ -136,14 +144,14 @@ def projectslug(request, slug):
     return project_request(request, p)
 
 def project_request(request, p):
-    if request.method == 'POST':
-        if len(request.POST["author_email1"]) == 0:
-            form = CommentForm(request.POST)
-            if form.is_valid():
-                comment = form.save(commit=False)
-                comment.enabled = True;
-                comment.project = p
-                comment.save()
+    # if request.method == 'POST':
+    #     if len(request.POST["author_email1"]) == 0:
+    #         form = CommentForm(request.POST)
+    #         if form.is_valid():
+    #             comment = form.save(commit=False)
+    #             comment.enabled = True;
+    #             comment.project = p
+    #             comment.save()
 
     today = datetime.datetime.today()
     gallery = None
@@ -153,6 +161,10 @@ def project_request(request, p):
     processTypeList = None
     publications = p.publication_set.all()
 
+    following = None
+    if request.user.is_authenticated():
+        following = p.stakeholders.filter(pk=request.user.profile.stakeholder.pk).exists()
+    
     if publications:
         processTypeList = {}
         processTypes = ProcessType.objects.filter(process_steps__publication__project = p).distinct()
@@ -163,10 +175,9 @@ def project_request(request, p):
                 for pub in publications.filter(process_step = step):
                     step.publication = pub
 
-    print p.publication_set.filter(begin__lte=today, end__gte=today)
     return render(request,'projects/details.html',{
         'project' : p,
-        'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
+        # 'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
         'events'  : p.events.order_by('-begin'),
         'gallery' : gallery,
         'nextDate': p.events.filter(begin__gte=today, date__isnull=False).order_by('begin').first(),
@@ -176,40 +187,15 @@ def project_request(request, p):
         'processSteps': p.publication_set.filter(begin__lte=today, end__gte=today),
         # 'publications' : p.publication_set.all().order_by('process_step__process_type__name','process_step__order'),
         #'processSteps' : ProcessStep.objects.filter(publication_processsteps),
-         'processTypes' : processTypeList
+        'processTypes' : processTypeList,
+        'following': following
     })
 
 
-# def project_for_map(request,pk):
-#     p = Project.objects.get(id=int(pk))
-#     today = datetime.datetime.today()
-#     gallery = None
-#     if p.gallery:
-#         gallery = Gallery.objects.filter(slug = p.gallery.slug)
-
-#     processTypeList = None
-#     publications = p.publication_set.all()
-
-#     if publications:
-#         processTypeList = {}
-#         processTypes = ProcessType.objects.filter(process_steps__publication__project = p).distinct()
-#         processTypeList = list(processTypes)
-#         for proType in processTypeList:
-#             proType.process_steps2 = list(proType.process_steps.all())
-#             for step in proType.process_steps2:
-#                 for pub in publications.filter(process_step = step):
-#                     step.publication = pub
-
-#     return HttpResponse({
-#         'project' : p,
-#         'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
-#         'events'  : p.events.order_by('-begin'),
-#         'gallery' : gallery,
-#         'nextDate': p.events.filter(begin__gte=today, date__isnull=False).order_by('begin').first(),
-#         'lastNews': p.events.filter(media__isnull=False).order_by('begin').first(),
-#         'tags'    : p.tags.all(),
-#         'stakeholders' : p.stakeholders.all(),
-#         # 'publications' : p.publication_set.all().order_by('process_step__process_type__name','process_step__order'),
-#         #'processSteps' : ProcessStep.objects.filter(publication_processsteps),
-#          'processTypes' : processTypeList
-#     }, content_type='application/json')
+def follow(request, pk):
+    p = get_object_or_404(Project, id = int(pk))
+    if p.stakeholders.filter(pk=request.user.profile.stakeholder.pk).exists():
+        p.stakeholders.remove(request.user.profile.stakeholder)
+    else:
+        p.stakeholders.add(request.user.profile.stakeholder)
+    return JsonResponse({'redirect' : p.get_absolute_url()})

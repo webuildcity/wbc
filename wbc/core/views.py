@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 import json
 from datetime import datetime
 
@@ -8,6 +7,7 @@ from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+
 from django.template import RequestContext
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -21,6 +21,11 @@ from wbc.region.models import District
 from haystack.query import SearchQuerySet
 from haystack.inputs import AutoQuery, Exact, Clean
 from haystack.utils.geo import Point
+
+from guardian.decorators import permission_required_or_403, permission_required
+from guardian.mixins import PermissionRequiredMixin
+
+from django_comments.views.comments import post_comment
 
 def feeds(request):
     entities = District.objects.all()
@@ -82,7 +87,7 @@ class StartView(TemplateView):
         now = datetime.now()
         context = super(StartView, self).get_context_data(**kwargs)
         # context['latest'] = 
-        projects = Project.objects.filter(events__begin__gte=now)
+        projects = Project.objects.filter(events__begin__gte=now)[:3]
         context['upcoming'] = projects
         return context
         
@@ -147,7 +152,10 @@ class SearchView(TemplateView):
         return data
 
     def get(self, request):
+        query =  request.GET.urlencode()
+        print query
         searchTerm = request.GET.get('searchTerm', '')
+        # print request.META['QUERY_STRING']
         return render(request, 'core/search.html',  context={'searchTerm': searchTerm})
 
     def post(self, request):
@@ -161,20 +169,35 @@ def map(request):
 
 class ProtectedCreateView(CreateView):
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(ProtectedCreateView, self).dispatch(*args, **kwargs)
-
+    def dispatch(self, request, *args, **kwargs):
+        @permission_required('%s.add_%s' % (self.model._meta.app_label, self.model._meta.model_name), accept_global_perms=True)
+        def wrapper(request, *args, **kwargs):
+            return super(ProtectedCreateView, self).dispatch(request, *args, **kwargs)
+        return wrapper(request, *args, **kwargs)
 
 class ProtectedUpdateView(UpdateView):
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(ProtectedUpdateView, self).dispatch(*args, **kwargs)
-
+    def dispatch(self, request, *args, **kwargs):
+        modelString = '%s.%s' % (self.model._meta.app_label, self.model._meta.model_name)
+        @permission_required_or_403('%s.change_%s' % (self.model._meta.app_label, self.model._meta.model_name), (modelString, 'pk', 'pk'), accept_global_perms=True)
+        def wrapper(request, *args, **kwargs):
+            return super(ProtectedUpdateView, self).dispatch(request, *args, **kwargs)
+        return wrapper(request, *args, **kwargs)
 
 class ProtectedDeleteView(DeleteView):
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(ProtectedDeleteView, self).dispatch(*args, **kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        modelString = '%s.%s' % (self.model._meta.app_label, self.model._meta.model_name)
+        @permission_required_or_403('%s.delete_%s' % (self.model._meta.app_label, self.model._meta.model_name), (modelString, 'pk', 'pk'), accept_global_perms=True)
+        def wrapper(request, *args, **kwargs):
+            return super(ProtectedDeleteView, self).dispatch(request, *args, **kwargs)
+        return wrapper(request, *args, **kwargs)
+
+def comment_post_wrapper(request):
+    # Clean the request to prevent form spoofing
+    if request.user.is_authenticated():
+        if not (request.user.get_full_name() == request.POST['name'] or \
+               request.user.email == request.POST['email']):
+            return HttpResponse("You registered user...trying to spoof a form...eh?")
+        return post_comment(request)
+    return HttpResponse("Nice try!")

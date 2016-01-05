@@ -207,6 +207,24 @@ body {
         }
     }
 
+    #discussion {
+        overflow-y: auto;
+        #comment-form {
+            #div_id_name {
+                display: none;
+            }
+            #div_id_email {
+                display: none;
+            }
+            #div_id_url {
+                display: none;
+            }
+            #div_id_honeypot {
+                display: none;
+            }
+        }
+    }
+
 }
 
 /**  MODAL **/

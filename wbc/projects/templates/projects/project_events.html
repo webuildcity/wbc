@@ -1,7 +1,9 @@
-{% load  django_markdown %}
-
+{% load guardian_tags %}
+{% if user.is_authenticated %}
+    {% get_obj_perms user for project as "project_perms" %}
+{% endif %}
 <div class="row events">
-    {% if user.is_authenticated %}
+    {% if 'change_project' in project_perms %}
     <div class="new-event">
         <ul class="admin-panel">
             <li><a class="admin-link" data-toggle="modal" data-target="#event-modal" href="#"><i class="fa fa-plus"></i></a></li>
@@ -36,10 +38,22 @@
 
             <div class="cd-timeline-content">
                 <h2> {{ event.title }} </h2>
-                {% if user.is_authenticated %}
+                {% if 'change_project' in project_perms %}
                 <ul class="admin-panel">
-                    <li><a data-toggle="modal" data-target="#edit-modal" class="admin-link project-admin" data-form="{% url 'event_update' event.pk %}" href="#"><i class="fa fa-pencil"></i></a></li>
-                    <li><a data-toggle="modal" data-target="#edit-modal" class="admin-link project-admin" data-form="{% url 'event_delete' event.pk %}" href="#"><i class="fa fa-trash"></i></a></li>
+                {% if event.date %}
+                    <li><a data-toggle="modal" data-target="#edit-modal" class="admin-link project-admin" data-form="{% url 'date_update' event.pk project.pk %}" href="#"><i class="fa fa-pencil"></i></a></li>
+                    <li><a data-toggle="modal" data-target="#edit-modal" class="admin-link project-admin" data-form="{% url 'date_delete' event.pk project.pk %}" href="#"><i class="fa fa-trash"></i></a></li>
+                    {% elif event.publication %}    
+                    <li><a data-toggle="modal" data-target="#edit-modal" class="admin-link project-admin" data-form="{% url 'pub_update' event.pk project.pk %}" href="#"><i class="fa fa-pencil"></i></a></li>
+                    <li><a data-toggle="modal" data-target="#edit-modal" class="admin-link project-admin" data-form="{% url 'pub_delete' event.pk project.pk %}" href="#"><i class="fa fa-trash"></i></a></li>
+                    {% elif event.media %}  
+                    <li><a data-toggle="modal" data-target="#edit-modal" class="admin-link project-admin" data-form="{% url 'media_update' event.pk project.pk %}" href="#"><i class="fa fa-pencil"></i></a></li>
+                    <li><a data-toggle="modal" data-target="#edit-modal" class="admin-link project-admin" data-form="{% url 'media_delete' event.pk project.pk %}" href="#"><i class="fa fa-trash"></i></a></li>                    
+                    {% else %}  
+                    <li><a data-toggle="modal" data-target="#edit-modal" class="admin-link project-admin" data-form="{% url 'event_update' event.pk project.pk %}" href="#"><i class="fa fa-pencil"></i></a></li>
+                    <li><a data-toggle="modal" data-target="#edit-modal" class="admin-link project-admin" data-form="{% url 'event_delete' event.pk project.pk %}" href="#"><i class="fa fa-trash"></i></a></li>                
+                    {% endif %}
+                  
                 </ul>
                 {% endif %}
                 <p class="timeline-text"> {{ event.description }} </p>

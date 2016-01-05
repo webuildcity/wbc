@@ -7,7 +7,7 @@ from photologue.models import Gallery
 from models import *
 
 from simple_history.admin import SimpleHistoryAdmin
-
+from guardian.admin import GuardedModelAdmin
 
 
 class ProjectInline(admin.StackedInline):
@@ -17,7 +17,7 @@ class ProjectInline(admin.StackedInline):
 class GalleryAdmin(GalleryAdminDefault):
     inlines = [ProjectInline]
 
-class ProjectAdmin(SimpleHistoryAdmin):
+class ProjectAdmin(GuardedModelAdmin, SimpleHistoryAdmin):
     # inlines = [GalleryInline]
 
     list_display = ('id','name','address','active')

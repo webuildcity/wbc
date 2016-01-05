@@ -7,6 +7,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('projects', '0009_historicalproject'),
     ]
 
     operations = [
@@ -21,6 +22,7 @@ class Migration(migrations.Migration):
                 ('author_url', models.CharField(max_length=256, verbose_name=b'Url', blank=True)),
                 ('enabled', models.BooleanField(verbose_name=b'Freigeschaltet')),
                 ('content', models.TextField(verbose_name=b'Inhalt')),
+                ('project', models.ForeignKey(verbose_name=b'Ort', to='projects.Project')),
             ],
             options={
                 'ordering': ('created',),
