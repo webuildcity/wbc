@@ -14,9 +14,12 @@
             </div>
         {% endif %}
 
-        {% if next %}
-        <input type="hidden" name="next" value="{{ next }}" />
+        {% if request.path != '/logout/' %}
+        <input type="hidden" name="next" value="{{ request.build_absolute_uri }}" />
         {% endif %}
+  <!--       {% if next %}
+        <input type="hidden" name="next" value="{{ next }}" />
+        {% endif %} -->
 
         <div class="form-group">
             <label class="control-label" for="username">Username</label>
