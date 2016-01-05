@@ -7,7 +7,7 @@
         Willst Du das Ereignis <strong>{{ object }}</strong> wirklich entfernen? Dieser Vorgang kann nicht Rückgängig gemacht werden.
     </p>
 
-    <form action="{% url 'event_delete' object.pk %}" method="post" class="form wbc-delete-form" role="form">
+    <form  method="post" class="form wbc-delete-form" role="form">
         {% csrf_token %}
         <input class="btn btn-danger" type="submit" value="Ereignis entfernen" />
     </form>

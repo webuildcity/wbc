@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 import datetime
 
 from wbc.core.models import Model
@@ -13,6 +14,7 @@ from wbc.tags.models import TaggedItems
 
 from photologue.models import Gallery
 from taggit.managers import TaggableManager
+from simple_history.models import HistoricalRecords
 
 
 class Address(Model):
@@ -48,11 +50,23 @@ class Project(Model):
     active               = models.BooleanField()
     link                 = models.URLField(blank=True)
     slug                 = models.SlugField(unique=True, editable=False)
-    address_obj           = models.ForeignKey(Address, blank=True, null=True, verbose_name="Adresse")
+    address_obj          = models.ForeignKey(Address, blank=True, null=True, verbose_name="Adresse")
     gallery              = models.OneToOneField(Gallery, related_name='gallery', blank=True, null=True)
     tags                 = TaggableManager(through=TaggedItems, blank=True, verbose_name="Schlagworte")
     stakeholders         = models.ManyToManyField(Stakeholder, blank=True, verbose_name="Akteure")
+    history              = HistoricalRecords()
 
+    def get_changed_by(self):
+        if(self.history.last()):
+            user = User.objects.get(pk=self.history.last().history_user_id)
+            return user
+        return None
+
+    def get_created_by(self):
+        if(self.history.first()):
+            user = User.objects.get(pk=self.history.first().history_user_id)
+            return user
+        return None
     def get_absolute_url(self):
         return reverse('project', kwargs={'pk': self.pk})
 

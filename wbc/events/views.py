@@ -4,6 +4,7 @@ from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.contrib.syndication.views import Feed
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404, JsonResponse
 from django.utils.decorators import method_decorator
@@ -19,6 +20,9 @@ from wbc.core.views import ProtectedCreateView, ProtectedUpdateView, ProtectedDe
 from wbc.region.models import District
 from wbc.events.models import Publication
 from wbc.projects.models import Project
+
+from guardian.decorators import permission_required_or_403, permission_required
+from guardian.shortcuts import assign_perm, get_perms
 
 
 class EventViewSet(viewsets.ReadOnlyModelViewSet):
@@ -76,17 +80,32 @@ class EventCreate(ProtectedCreateView):
     model = Event
     form_class = EventForm
 
-    def get_initial(self):
-        initial_data = super(EventCreate, self).get_initial()
-        try:
-            initial_data['projects']= [Project.objects.get(pk=self.request.GET.get('project_id'))]
-        except Project.DoesNotExist:
-            initial_data['projects'] = []
-        return initial_data
+    def dispatch(self, request, *args, **kwargs):
+        @permission_required('%s.add_%s' % (self.model._meta.app_label, self.model._meta.model_name), accept_global_perms=True)
+        @permission_required_or_403('%s.change_%s' % ('projects', 'project'), ('projects.project', 'pk', 'project_pk'), accept_global_perms=True)
+        def wrapper(request, *args, **kwargs):
+            return super(EventCreate, self).dispatch(request, *args, **kwargs)
+        return wrapper(request, *args, **kwargs)
+
+
+    # def get_initial(self):
+    #     initial_data = super(EventCreate, self).get_initial()
+    #     try:
+    #         initial_data['projects']= [Project.objects.get(pk=self.kwargs['pk'])]
+    #     except Project.DoesNotExist:
+    #         initial_data['projects'] = []
+    #     return initial_data
 
     def form_valid(self, form):
         self.object = form.save()
-        url = self.object.projects_events.all()[0].get_absolute_url()
+        project = Project.objects.get(pk=self.kwargs['project_pk'])
+        self.object.projects_events.add(project)
+
+        user = User.objects.get(username=self.request.user)
+        assign_perm('change_%s' % (self.model._meta.model_name), user, self.object) 
+        assign_perm('delete_%s' % (self.model._meta.model_name), user, self.object) 
+
+        url = project.get_absolute_url()
         return JsonResponse({'redirect': url})
 
     def form_invalid(self, form):
@@ -98,13 +117,23 @@ class EventUpdate(ProtectedUpdateView):
     form_class = EventForm
     # fields = '__all__'
     
-    def get_initial(self):
-        initial_data = super(EventUpdate, self).get_initial()
-        try:
-            initial_data['projects']= self.object.projects_events.all()
-        except Project.DoesNotExist:
-            initial_data['projects'] = []
-        return initial_data
+    def dispatch(self, request, *args, **kwargs):
+        modelString = '%s.%s' % (self.model._meta.app_label, self.model._meta.model_name)
+        @permission_required('%s.change_%s' % (self.model._meta.app_label, self.model._meta.model_name), (modelString, 'pk', 'pk'), accept_global_perms=True)
+        @permission_required_or_403('%s.change_%s' % ('projects', 'project'), ('projects.project', 'pk', 'project_pk'), accept_global_perms=True)
+        def wrapper(request, *args, **kwargs):
+            return super(EventUpdate, self).dispatch(request, *args, **kwargs)
+        return wrapper(request, *args, **kwargs)
+
+
+
+    # def get_initial(self):
+    #     initial_data = super(EventUpdate, self).get_initial()
+    #     # try:
+    #     #     initial_data['projects']= self.object.projects_events.all()
+    #     # except Project.DoesNotExist:
+    #     #     initial_data['projects'] = []
+    #     return initial_data
     
     def form_valid(self, form):
         self.object = form.save()
@@ -117,6 +146,16 @@ class EventUpdate(ProtectedUpdateView):
 
 class EventDelete(ProtectedDeleteView):
     model = Event
+    template_name = "events/event_confirm_delete.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        modelString = '%s.%s' % (self.model._meta.app_label, self.model._meta.model_name)
+        # @permission_required('%s.delete_%s' % (self.model._meta.app_label, self.model._meta.model_name), (modelString, 'pk', 'pk'), accept_global_perms=True)
+        @permission_required_or_403('%s.change_%s' % ('projects', 'project'), ('projects.project', 'pk', 'project_pk'), accept_global_perms=True)
+        def wrapper(request, *args, **kwargs):
+            return super(EventDelete, self).dispatch(request, *args, **kwargs)
+        return wrapper(request, *args, **kwargs)
+
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):

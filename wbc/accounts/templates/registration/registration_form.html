@@ -1,0 +1,12 @@
+
+<h2>Benutzerkonto registrieren</h2>
+
+<form method="post" action="#">
+    {% csrf_token %}
+
+    {% include 'core/form_fields.html' %}
+
+    <button type="submit" class="btn btn-primary">Registrieren</button>
+    <input type="hidden" name="next" value="{{ next }}" />
+</form>
+

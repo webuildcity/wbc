@@ -1,0 +1,16 @@
+{% extends 'core/page.html' %}
+{% load compress %}
+{% block css %}
+    {% compress css %}
+    {{block.super}}
+    {% endcompress %}
+{% endblock %}
+
+{% block page %}
+
+<h2>Aktivierung gescheitert</h2>
+<p>
+    Ihr Benutzerkonto konnte nicht aktiviert werden, da der verwendete Link ungültig ist.
+</p>
+
+{% endblock %}

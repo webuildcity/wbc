@@ -1,0 +1,11 @@
+<form class="blog-form" method="post">
+    {{ form.media }}
+    <div class="modal-body">
+        {% csrf_token %}
+        {% include 'core/form_fields.html' %}
+    </div>
+    <div class="modal-footer">
+         <input class="btn btn-primary" type="submit" value="Save" />
+         <input name="cancel" class="btn" type="submit" value="Cancel" data-dismiss="modal"/>
+    </div>
+</form>

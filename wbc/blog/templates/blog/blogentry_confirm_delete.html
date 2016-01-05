@@ -1,0 +1,15 @@
+{% load widget_tweaks %}
+{% load i18n %}
+{% load staticfiles %}
+
+<div class="modal-body">
+    <p>
+        Willst Du das Ereignis <strong>{{ object }}</strong> wirklich entfernen? Dieser Vorgang kann nicht Rückgängig gemacht werden.
+    </p>
+
+    <form action="{% url 'blogentry_delete' object.pk %}" method="post" class="form wbc-delete-form" role="form">
+        {% csrf_token %}
+        <input class="btn btn-danger" type="submit" value="Ereignis entfernen" />
+    </form>
+</div>
+

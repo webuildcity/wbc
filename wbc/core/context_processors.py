@@ -13,5 +13,6 @@ def settings(request):
         'tiles_url': django_settings.TILES_URL,
         'tiles_opt': django_settings.TILES_OPT,
         'default_view': django_settings.DEFAULT_VIEW,
-        'facebook_apikey': facebookapikey
+        'facebook_apikey': facebookapikey,
+        'info_email': django_settings.INFO_EMAIL,
     }

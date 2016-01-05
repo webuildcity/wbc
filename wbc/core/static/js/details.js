@@ -1,11 +1,5 @@
 // var app = angular.module('wbc', []);
 
-app.config(['$httpProvider', '$interpolateProvider', function($httpProvider, $interpolateProvider) {
-    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-    $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-}]);
-
 app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 'MapService',
     function($scope, $document, $http, $window, MapService) {
       
@@ -90,11 +84,14 @@ $(document).ready(function(){
 
 
     // MODAL
-    $(".project-admin").click(function(ev) { // for each edit contact url
+    $(".big-page").on('click', '.project-admin', function(ev) { // for each edit contact url
         ev.preventDefault(); // prevent navigation
         var url = $(this).data("form"); 
         $('#edit-modal .modal-header h3').html(url); // display the modal on url load
-        $("#edit-modal .custom-content").load(url, function() {
+        $("#edit-modal .custom-content").load(url, function(response, status) {
+            if ( status == "error" ) {
+                $('#edit-modal .custom-content').html("Fehler!");
+            }
             $('#edit-modal').modal();
             $('#edit-modal').modal('show'); // display the modal on url load
             drawMap();
@@ -115,6 +112,11 @@ $(document).ready(function(){
                             drawMap();
                         }
                         // $('#edit-modal').modal('hide');
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        if(xhr.status==403) {
+                            $('#edit-modal .custom-content').html("Keine Berechtigungen für diese Aktion.");
+                        }
                     }
                 });
             });
@@ -132,6 +134,7 @@ $(document).ready(function(){
 
         $("#event-modal .custom-content").load(url, function() {
             $('.wbc-form-datefield-group input').datepicker({ dateFormat: 'dd.mm.yy' });
+            $('#event-modal').unbind("submit");
             $('#event-modal').on('submit', 'form', function(e){
                 e.preventDefault();
                 $.ajax({ 
@@ -144,7 +147,6 @@ $(document).ready(function(){
                             window.location.href = data.redirect;
                         }
                         else {
-                            console.log(data);
                             $('#event-modal .custom-content').html(data);
                         }
                         // $('#edit-modal').modal('hide');
@@ -155,6 +157,34 @@ $(document).ready(function(){
         return false; // prevent the click propagation
     });
 
+    $('.follow-button').on('click', function(){
+        $.get($(this).data('url'), function(data) {
+            if (data.redirect){
+                window.location.href = data.redirect;
+                window.location.reload();
+            }
+        });
+    })
 
+    //comments
+
+    $('.comment_reply_link').click(show_reply_form);
+    $('#cancel-reply').click(cancel_reply_form);
+    $('#div_id_comment textarea').attr('required', true)
 
 });
+
+function show_reply_form(event) {
+    var $this = $(this);
+    var comment_id = $this.data('comment-id');
+
+    $('#id_parent').val(comment_id);
+    $('#comment-form').insertAfter($this.closest('.comment'));
+};
+
+function cancel_reply_form(event) {
+    console.log("yo")
+    $('#id_comment').val('');
+    $('#id_parent').val('');
+    $('#comment-form').appendTo($('#comment-form-wrapper'));
+}

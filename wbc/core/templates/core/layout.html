@@ -73,7 +73,7 @@
     {% endblock %}
 </head>
 
-<body ng-controller="{% block controller %}WbcController{% endblock %}">
+<body ng-controller="{% block controller %}DefaultController{% endblock %}">
     <nav class="navbar navbar-default visible-xs" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
@@ -116,6 +116,16 @@
         </div>
     </div>
     <div class="big-page">
+         <div id="modal" class="modal fade" role="dialog" tabindex="-1">
+            <div class="well modal-dialog modal-content modal-lg" role="document">
+                 <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3> hinzufügen </h3>
+                </div>
+                <div class="custom-content">
+                </div>
+            </div>
+        </div>
         {% block content %}{% endblock %}
     </div>
     {% if not debug %}

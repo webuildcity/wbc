@@ -42,13 +42,18 @@ class Stakeholder(Model):
     def get_absolute_url(self):
         return reverse('stakeholder', kwargs={'slug': self.slug})
 
-
     class Meta:
         verbose_name        = 'Akteur'
         verbose_name_plural = 'Akteure'
 
     def __unicode__(self):
         return unicode(self.name)
+
+    def get_fields(self):
+        return [field.name for field in self._meta.fields if field.name not in ['id', 'created', 'created_by', 'updated', 'updated_by', 'slug']]
+
+    def as_dict(self):
+        return {field: getattr(self, field) for field in self.get_fields()}
 
     def save(self, *args, **kwargs):
         unique_slugify(self,self.name)

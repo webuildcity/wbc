@@ -4,8 +4,11 @@
         {% include 'core/form_fields.html' %}
     </div>
     <div class="modal-footer">
-         <input class="btn btn-primary" type="submit" value="Save" />
-         <input name="cancel" class="btn" type="submit" value="Cancel" data-dismiss="modal"/>
+        {% if project.pk %}
+        <input class="project-admin btn btn-primary btn-danger pull-left" type="delete" value="Löschen" class="" data-toggle="modal" data-target="#edit-modal" data-form="{% url 'project_delete' project.pk %}" href="#"/>
+        {% endif %}
+        <input class="btn btn-primary" type="submit" value="Save" />
+        <input name="cancel" class="btn" type="submit" value="Cancel" data-dismiss="modal"/>
     </div>
 </form>
 

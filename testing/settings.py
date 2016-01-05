@@ -80,6 +80,8 @@ STATIC_URL = '/static/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_FROM = 'info@example.com'
 
+INFO_EMAIL = "info@we-build.city"
+
 FEED_TITLE = "Test Feed"
 FEED_DESCRIPTION = "Test Feed Description"
 

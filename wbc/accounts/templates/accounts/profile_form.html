@@ -1,0 +1,36 @@
+{% extends 'core/page.html' %}
+{% load staticfiles compress %}
+
+{% block css %}
+    {% compress css %}
+    {{block.super}}
+        <link rel="stylesheet" type="text/x-scss" href="{% static "css/profile_form.scss" %}" />
+    {% endcompress %}
+{% endblock %}
+
+{% block page %}
+
+<h2>Benutzerkonto aktualisieren</h2>
+<p>
+    Hier können sie Ihr Benutzerkonto aktualisieren. Alle Angaben sind optional.
+</p>
+
+<form method="post" action="#">
+    {% csrf_token %}
+
+    {% with user_form as form %}
+    {% include 'core/form_fields.html' %}
+    {% endwith %}
+
+    {% with profile_form as form %}
+    {% include 'core/form_fields.html' %}
+    {% endwith %}
+
+    {% with stakeholder_form as form %}
+    {% include 'core/form_fields.html' %}
+    {% endwith %}
+    <input type="submit" value="Speichern" class="btn btn-primary" />
+    <input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+{% endblock %}
