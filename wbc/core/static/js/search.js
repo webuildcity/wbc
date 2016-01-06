@@ -32,14 +32,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     }
 
     var search = function(data){
-        // window.location.hash = params;
 
-//         console.log($location.absUrl());
-//         console.log(params)
-//         $location.url(params);
-//         $location.replace();
-// // $       window.history.pushState(null, 'any', $location.absUrl());
-//         window.history.pushState(null, 'Title', $location.absUrl());
         $http({
             method: 'POST',
             url:  '/suche/',
@@ -240,8 +233,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
     // popstate event listener
     window.addEventListener('popstate', function(e) {
-        console.log("yo")
-        console.log(e.state)
         $scope.formData = e.state;// e.state is equal to the data-attribute of the last image we clicked
         search($scope.formData);
         // $scope.onSearchChanged();
