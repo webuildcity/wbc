@@ -27,7 +27,11 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'Partizipationsformen',
             },
         ),
-        migrations.AlterField(
+        migrations.RemoveField(
+            model_name='processstep',
+            name='participation',
+        ),
+        migrations.AddField(
             model_name='processstep',
             name='participation',
             field=models.ForeignKey(related_name='process_steps', verbose_name=b'Partizipation', to='process.ParticipationType'),
