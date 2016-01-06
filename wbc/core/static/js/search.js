@@ -15,7 +15,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $scope.formData = window.location.hash;
     }
     $scope.selectedResult = null;
-    $scope.listView = false;
+    $scope.listView = true;
 
     var allResultPoly = null;
     var maxZoom = null;
@@ -32,8 +32,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     }
 
     var search = function(data){
-        var params = $.param($scope.formData);
-        window.location.hash = params;
+        // window.location.hash = params;
 
 //         console.log($location.absUrl());
 //         console.log(params)
@@ -104,7 +103,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 //     //     }
                 //     // });
                 // }, 100);
-            
+                // window.history.pushState(null, null, 'params')
+
 
 
             } else {
@@ -114,23 +114,29 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         });
     }
 
+    // $scope.$watch('formData', function () { 
+    // }, true);
     // var multipoly = [];
-    $scope.onSearchChanged = function() {
-        $scope.noResults = false;
-        // window.location.href = $.param($scope.formData)
-        search($scope.formData);
-        // if($scope.searchTerm) {
 
-        // } else {
-        //     // $scope.results = [];
-        //     // $scope.showLanding = true;
-        //     // MapService.resetToDefaults();
-        // }
+    $scope.onKeyDown = function(key){
+        if(key.keyCode == '13'){
+            $scope.onSearchChanged($scope.formData)
+        }
+    }
+    $scope.onSearchChanged = function() {
+        var params = $.param($scope.formData);
+        $scope.noResults = false;
+        //hack to make angular work with pushState (maybe find nicer solution)
+        $location.url(params);
+        $location.replace();
+        $window.history.pushState($scope.formData, $scope.searchTerm, $location.absUrl());
+
+        search($scope.formData);
     };
 
     $scope.selectTerm = function(term) {
         $scope.formData.searchTerm = term;
-        $scope.onSearchChanged();
+        // $scope.onSearchChanged();
     };
     var focusedPoly = null;
 
@@ -231,6 +237,16 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.toggleSelectedItems = function(event){
         $(event.target).siblings('.active-facets').toggleClass('hidden');
     }
+
+    // popstate event listener
+    window.addEventListener('popstate', function(e) {
+        console.log("yo")
+        console.log(e.state)
+        $scope.formData = e.state;// e.state is equal to the data-attribute of the last image we clicked
+        search($scope.formData);
+        // $scope.onSearchChanged();
+    });
+
     search($scope.formData);
 }]);
 
