@@ -53,7 +53,7 @@ SearchController
             </div>
             <div ng-if="entitiesFacets.length > 0" class="facet-container">
                 <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target=".region-facets">
-                    <i class="region-anchor anchor fa fa-image"></i>Stadtteile
+                    <i class="region-anchor anchor fa fa-image"></i>Disctricts
                 </div>
                 <div class="active-facets wbc-dropdown-container">
                      <div class="facet-item" ng-repeat="entity in formData.entities">
@@ -75,7 +75,7 @@ SearchController
 
             <div ng-if="tagFacets.length > 0" class="facet-container">
                 <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target="#tag-facets">
-                    <i class="tag-anchor anchor fa fa-tags"></i>Stichwörter
+                    <i class="tag-anchor anchor fa fa-tags"></i>Tags
                 </div>
                 <div class="active-facets wbc-dropdown-container">
                     <div class="facet-item" ng-repeat="tag in formData.tags">

@@ -21,7 +21,7 @@ DefaultController
 
 {% block side_content %}
     <div id="process_sidebar">
-        <h2>Lexikon</h2>
+        <h2>Encyclopedia</h2>
         {% for entry in entries %}
             <div class="panel-group">
                 <h3><a href="{% url 'encyclopedia_entry' pk=entry.pk %}">{{entry.title}}</a></h3>
