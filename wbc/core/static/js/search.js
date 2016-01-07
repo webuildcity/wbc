@@ -122,13 +122,13 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         //hack to make angular work with pushState (maybe find nicer solution)
         $location.url(params);
         $location.replace();
-        $window.history.pushState($scope.formData, $scope.searchTerm, $location.absUrl());
+        $window.history.pushState($scope.formData, $scope.q, $location.absUrl());
 
         search($scope.formData);
     };
 
     $scope.selectTerm = function(term) {
-        $scope.formData.searchTerm = term;
+        $scope.formData.q = term;
         // $scope.onSearchChanged();
     };
     var focusedPoly = null;
