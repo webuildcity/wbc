@@ -13,13 +13,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         'stakeholder': 'Akteure'
     };
 
-    //SET SEARCH ACCORFING TO URL PARAMS
-    if (window.location.hash != ' '){
-        $scope.formData = {};
-    } else {
-        $scope.formData = {};
-        $scope.formData = window.location.hash;
-    }
+    $scope.formData = {};
+
     $scope.selectedResult = null;
     $scope.listView = true;
 
@@ -38,7 +33,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     }
 
     var search = function(data){
-
+        console.log('search')
+        console.log(data)
         $http({
             method: 'POST',
             url:  '/suche/',
@@ -123,6 +119,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         }
     }
     $scope.onSearchChanged = function() {
+        console.log($scope.formData);
         var params = $.param($scope.formData);
         $scope.noResults = false;
         //hack to make angular work with pushState (maybe find nicer solution)
@@ -245,6 +242,19 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         search($scope.formData);
         // $scope.onSearchChanged();
     });
+        //SET SEARCH ACCORFING TO URL PARAMS
+    if (window.location.pathname.split('/')[2]){
+        var result = window.location.pathname.split('/')[2];
+        // var result = window.location.pathname.substring(n + 1);
+
+        console.log(result);
+        $scope.formData = JSON.parse('{"' + decodeURI(result.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}')
+        // $scope.formData = searchQuery;
+        console.log($scope.formData)
+        $scope.q = 'test'
+        // search($scope.formData);
+    }
+    console.log($scope.formData);
 
     search($scope.formData);
 }]);
