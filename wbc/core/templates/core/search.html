@@ -27,6 +27,8 @@ SearchController
 {% endblock %}
 
 {% block side_content %}
+<!-- base for html5 mode angular -->
+<base href="/suche/">
     <div id="search_sidebar">
         <form id="search">
             {% csrf_token %}

@@ -1,3 +1,9 @@
+app.config(['$locationProvider', function($locationProvider) {
+    $locationProvider.html5Mode({
+        enabled: true,
+      });
+}]);
+
 app.controller('SearchController', ['$scope', '$document', '$http', '$window', '$timeout', '$location', 'MapService',
     function($scope, $document, $http, $window, $timeout, $location, MapService) {
 
@@ -120,9 +126,11 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         var params = $.param($scope.formData);
         $scope.noResults = false;
         //hack to make angular work with pushState (maybe find nicer solution)
-        $location.url(params);
-        $location.replace();
-        $window.history.pushState($scope.formData, $scope.q, $location.absUrl());
+        // $location.url(params);
+        // $location.replace();
+        // $window.history.pushState($scope.formData, $scope.q, $location.absUrl());
+
+        $window.history.pushState($scope.formData, $scope.q, params);
 
         search($scope.formData);
     };
