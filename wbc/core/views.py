@@ -170,12 +170,13 @@ def map(request):
 class ProtectedCreateView(CreateView):
 
     def dispatch(self, request, *args, **kwargs):
-        @permission_required('%s.add_%s' % (self.model._meta.app_label, self.model._meta.model_name), accept_global_perms=True)
+      #  print '%s.1add_%s' % (self.model._meta.app_label, self.model._meta.model_name)
+        @permission_required_or_403('%s.add_%s' % (self.model._meta.app_label, self.model._meta.model_name), accept_global_perms=True)
         def wrapper(request, *args, **kwargs):
             return super(ProtectedCreateView, self).dispatch(request, *args, **kwargs)
         return wrapper(request, *args, **kwargs)
 
-class ProtectedUpdateView(UpdateView):
+class ProtectedUpdateView(UpdateView):      
 
     def dispatch(self, request, *args, **kwargs):
         modelString = '%s.%s' % (self.model._meta.app_label, self.model._meta.model_name)

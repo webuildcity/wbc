@@ -4,7 +4,7 @@ from django.conf import settings
 from django.shortcuts import render,get_object_or_404
 from django.core.urlresolvers import reverse,reverse_lazy
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.utils.decorators import method_decorator
@@ -27,6 +27,7 @@ from models import *
 from serializers import *
 
 from guardian.shortcuts import assign_perm, get_perms
+from guardian.decorators import permission_required_or_403
 
 # from forms import *
 
@@ -86,6 +87,16 @@ class MapViewSet(viewsets.ReadOnlyModelViewSet):
 class ProjectCreate(ProtectedCreateView):
     model = Project
     fields = '__all__'
+
+    def dispatch(self, request, *args, **kwargs):
+      #  print '%s.1add_%s' % (self.model._meta.app_label, self.model._meta.model_name)
+        print request.user.groups.all()[0].permissions.all()
+        print request.user.has_perm('projects.add_project')
+        print Permission.objects.filter(group__user=request.user)
+        @login_required
+        def wrapper(request, *args, **kwargs):
+            return super(ProtectedCreateView, self).dispatch(request, *args, **kwargs)
+        return wrapper(request, *args, **kwargs)
 
     def form_valid(self, form):
         self.object = form.save()

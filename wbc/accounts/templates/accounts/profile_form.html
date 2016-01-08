@@ -19,6 +19,10 @@
     {% csrf_token %}
 
     {% with user_form as form %}
+    <div class="wbc-form">
+        <label for='username'> Benutzername: </label>
+        <div id="username"> {{request.user.username}}</div>
+    </div>
     {% include 'core/form_fields.html' %}
     {% endwith %}
 
@@ -27,7 +31,10 @@
     {% endwith %}
 
     {% with stakeholder_form as form %}
-    {% include 'core/form_fields.html' %}
+    <div class="public-profile">
+        <h3> Öffentliches Profil </h3>
+        {% include 'core/form_fields.html' %}
+    </div>
     {% endwith %}
     <input type="submit" value="Speichern" class="btn btn-primary" />
     <input type="hidden" name="next" value="{{ next }}" />

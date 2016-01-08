@@ -24,7 +24,9 @@ def profile(request, pk):
 
 @login_required
 def profile_update(request):
-    next = request.META.get('HTTP_REFERER', '')
+    # next = request.META.get('HTTP_REFERER', '')
+    #always redirect to user profile after save
+    next = reverse('profile', kwargs={'pk':request.user.profile.pk})
 
     if request.method == 'POST':
         user_form = UserForm(request.POST)
