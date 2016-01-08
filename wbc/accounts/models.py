@@ -15,7 +15,6 @@ from wbc.projects.slug import unique_slugify
 class Profile(models.Model):
     user = models.OneToOneField(User)
 
-    info        = models.TextField(blank=True, help_text=_('Say something about yourself'))
     twitter     = models.CharField(max_length=256, blank=True, help_text=_('Your twitter nick'))
     stakeholder = models.OneToOneField(Stakeholder, blank=True, null=True, help_text="Öffentliches Profil", editable=False)
 

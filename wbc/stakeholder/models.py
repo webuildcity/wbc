@@ -30,9 +30,9 @@ class Stakeholder(Model):
     name        = models.CharField(blank=False, max_length=64, verbose_name="Name", help_text="Name des Akteurs")
     address     = models.CharField(max_length=256, blank=True, verbose_name="Adresse", help_text="Eine genaue Adresse des Akteur")
     description = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Beschreibung des Stakeholders")
-    active      = models.BooleanField(default=True)
+    active      = models.BooleanField(default=True, verbose_name="Aktivieren/deaktivieren", help_text="Hiermit können Sie das Benutzerkonto deaktivieren oder aktivieren. Das Benutzerkonto wird nicht gelöscht")
     link        = models.URLField(blank=True)
-    tags        = TaggableManager(through=TaggedItems, blank=True)
+    tags        = TaggableManager(through=TaggedItems, verbose_name="Stichwörter", blank=True, help_text='Beschreibung mit Stichworten, z.B. "Architekt, Schüler, Verwaltung, Verkehr, Gesundheit" etc.')
     entities    = models.ManyToManyField(Entity, blank=True, verbose_name="Region", related_name='places_%(class)s')
     slug        = models.SlugField(unique=True,editable=False)
     roles       = models.ManyToManyField(StakeholderRole, blank=True, related_name='roles_%(class)s', verbose_name='Rollen')
@@ -50,7 +50,7 @@ class Stakeholder(Model):
         return unicode(self.name)
 
     def get_fields(self):
-        return [field.name for field in self._meta.fields if field.name not in ['id', 'created', 'created_by', 'updated', 'updated_by', 'slug']]
+        return [field.name for field in self._meta.fields if field.name not in ['id', 'created', 'created_by', 'updated', 'updated_by', 'slug', 'address', 'name']]
 
     def as_dict(self):
         return {field: getattr(self, field) for field in self.get_fields()}
