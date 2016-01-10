@@ -89,13 +89,17 @@ def photo_upload(request, pk):
     View for uploading photos via AJAX.
     """
     stakeholder = get_object_or_404(Stakeholder, id= int(pk))
-    uploaded_file = request.FILES['file']
-    # Photo.objects.create(album=album, file=uploaded_file)
-    print uploaded_file
-    stakeholder.picture = uploaded_file
-    stakeholder.save()
-    response_dict = {
-        'message': 'File uploaded successfully!',
-    }
+    if request.user.has_perm('stakeholder.change_stakeholder', stakeholder):
+        uploaded_file = request.FILES['file']
+        # Photo.objects.create(album=album, file=uploaded_file)
+        print uploaded_file
+        stakeholder.picture = uploaded_file
+        stakeholder.save()
+        response_dict = {
+            'message': 'File uploaded successfully!',
+        }
 
-    return HttpResponse(response_dict, content_type='application/json')
+        return HttpResponse(response_dict, content_type='application/json')
+    else:
+        response_dict = {'message': 'No Permission!',}
+        return HttpResponse(response_dict, content_type='application/json')
