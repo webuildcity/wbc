@@ -27,6 +27,8 @@ SearchController
 {% endblock %}
 
 {% block side_content %}
+<!-- base for html5 mode angular -->
+<base href="/suche/">
     <div id="search_sidebar">
         <form id="search">
             {% csrf_token %}
@@ -35,9 +37,9 @@ SearchController
                     <input
                     placeholder="Bauprojekte, Akteure und Projekte durchsuchen"
                     type="text" class="form-control"
-                    ng-model="formData.searchTerm"
+                    ng-model="formData.q"
                     ng-keydown="onKeyDown($event)"
-                    ng-init="formData.searchTerm = '{{searchTerm}}'">
+                    ng-init="formData.q = '{{q}}'">
 
                     <a href="" class="input-group-addon" ng-click="onSearchChanged()">
                         <span class="glyphicon glyphicon-search"></span>
@@ -64,7 +66,7 @@ SearchController
                 <div id='region-facets' class='region-facets collapse wbc-dropdown-container'>
                     <div class="facet-select" ng-repeat="facet in entitiesFacets">
                         <label>
-                            <input type="checkbox" checklist-model="formData.entities" checklist-value="facet[0]">
+                            <input type="checkbox" checklist-model="formData.entities" checklist-value="facet[0]" ng-click="onSearchChanged()">
                                 {[{facet[0]}]} ({[{facet[1]}]})
                         </label>
                     </div>

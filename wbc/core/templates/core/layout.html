@@ -30,13 +30,13 @@
     <script type="text/javascript" src="{% static 'js/main.js' %}" ></script>
 
     <script type="text/ng-template" id="/wbc-searchdirective.html">
-        <form id="nav-search" class="search-form" ng-submit="submit(formData.searchTerm)">
+        <form id="nav-search" class="search-form" ng-submit="submit(formData.q)">
             <div>
                 <div class="input-group search-field">
                     <input
                     placeholder="{[{text}]}"
                     type="text" class="form-control"
-                    ng-model="formData.searchTerm"
+                    ng-model="formData.q"
                     ng-change="onSearchChanged()"
                     ng-keydown="onKeyDown($event)"
                     ng-model-options="{ debounce: 1200 }"/>

@@ -113,9 +113,9 @@ class SearchView(TemplateView):
         if 'offset' in data:
             offset = data['offset'] 
         
-        if 'searchTerm' in data:
-            if data['searchTerm'] != "":
-                sqs = sqs.filter(content=AutoQuery(data['searchTerm']))
+        if 'q' in data:
+            if data['q'] != "":
+                sqs = sqs.filter(content=AutoQuery(data['q']))
         
         suggestions = sqs.spelling_suggestion()
         # print suggestions
@@ -156,9 +156,9 @@ class SearchView(TemplateView):
     def get(self, request):
         query =  request.GET.urlencode()
         print query
-        searchTerm = request.GET.get('searchTerm', '')
+        q = request.GET.get('q', '')
         # print request.META['QUERY_STRING']
-        return render(request, 'core/search.html',  context={'searchTerm': searchTerm})
+        return render(request, 'core/search.html',  context={'q': q})
 
     def post(self, request):
         data = json.loads(request.body)
