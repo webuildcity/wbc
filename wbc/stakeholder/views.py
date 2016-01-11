@@ -92,7 +92,6 @@ def photo_upload(request, pk):
     if request.user.has_perm('stakeholder.change_stakeholder', stakeholder):
         uploaded_file = request.FILES['file']
         # Photo.objects.create(album=album, file=uploaded_file)
-        print uploaded_file
         stakeholder.picture = uploaded_file
         stakeholder.save()
         response_dict = {
