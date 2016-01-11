@@ -3,8 +3,10 @@
 {% load staticfiles %}
 
 <div class="modal-body">
+
+    <title>{% trans "This is the title." %}</title>
     <p>
-        Willst Du das Ereignis <strong>{{ object }}</strong> wirklich entfernen? Dieser Vorgang kann nicht Rückgängig gemacht werden.
+        {% blocktrans %} Willst Du das Ereignis <strong>{{ object }}</strong> wirklich entfernen? Dieser Vorgang kann nicht Rückgängig gemacht werden.{% endblocktrans %}
     </p>
 
     <form action="{% url 'blogentry_delete' object.pk %}" method="post" class="form wbc-delete-form" role="form">
