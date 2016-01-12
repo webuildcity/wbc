@@ -151,8 +151,7 @@ SearchController
         <li><button class="btn btn-default" id="map-list-switch"><i class='fa fa-book'></i></button></li>
     </ul> -->
     <button class="btn btn-default" id="map-list-switch" ng-click="listView=!listView">Listen-/Kartenansicht</button>
-    <div ng-hide="listView" class="result-content" id="map"></div>
-    <div ng-if="listView" class="result-content" id="list">
+    <div ng-class="{'active-result': listView}" class="result-content active-result" id="list">
         <h2>{[{resultLength}]} Treffer</h2>
         <div class="clearfix" 
             ng-repeat="result in results">
@@ -171,4 +170,5 @@ SearchController
             </div>
         </div>
     </div>
+    <div ng-class="{'active-result': !listView}" class="result-content" id="map"></div>
 {% endblock %}

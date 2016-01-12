@@ -1,5 +1,5 @@
 {% extends 'core/layout_split.html' %}
-{% load staticfiles compress guardian_tags threadedcomments_tags %}
+{% load staticfiles compress guardian_tags threadedcomments_tags imagekit %}
 
 
 {% block css %}
@@ -36,8 +36,6 @@
         var _tiles_opt = {{tiles_opt|safe}};
         var _default_view = {{default_view|safe}};
 
-        var _lon = {{ project.lon|stringformat:"F" }};
-        var _lat = {{ project.lat|stringformat:"F" }};
         var _address = "{{ project.address|safe }}";
         var _polygon = {% if project.polygon %}{{project.polygon|safe}}{% else %}[]{% endif %};
         if (!window.wbc3d) {
@@ -129,7 +127,8 @@ DetailsController
 
 
     {% if gallery %}
-    <img class="project-image" u="image" src="{{ gallery.0.latest.0.get_description_url }}" />
+   
+     {% generateimage 'wbc:profile' source=project.gallery.cover_photo.file %}
         
     {% endif %}
 
@@ -199,7 +198,6 @@ DetailsController
 
 
 {% block main_content %}
-
     <div id="edit-modal" class="modal fade" role="dialog" tabindex="-1">
         <div class="well modal-dialog modal-content modal-lg" role="document">
              <div class="modal-header">

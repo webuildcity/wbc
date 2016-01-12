@@ -12,4 +12,6 @@ router.register(r'projects', ProjectViewSet, base_name='projects')
 
 urlpatterns = patterns('',
     url(r'^', include(router.urls)),
+    url(r'^(?P<pk>[0-9]+)/photo_upload/', 'wbc.projects.views.photo_upload', name="project_photo_upload"),
+
 )

@@ -195,6 +195,10 @@
 
 .result-content {
     overflow-y:auto;
+    display: none;
+}
+.active-result {
+    display: block;
 }
 
 .search-result {

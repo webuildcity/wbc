@@ -166,9 +166,10 @@ def project_request(request, p):
 
     today = datetime.datetime.today()
     gallery = None
+    print p.gallery.pk
     if p.gallery:
-        gallery = Gallery.objects.filter(slug = p.gallery.slug)
-
+        gallery = Photo.objects.filter(gallery= p.gallery)
+    print gallery
     processTypeList = None
     publications = p.publication_set.all()
 
@@ -210,3 +211,35 @@ def follow(request, pk):
     else:
         p.stakeholders.add(request.user.profile.stakeholder)
     return JsonResponse({'redirect' : p.get_absolute_url()})
+
+
+def photo_upload(request, pk):
+
+    project = get_object_or_404(Project, id= int(pk))
+    if request.user.has_perm('projects.change_project', project):
+        try:
+            gallery = Gallery.objects.get(pk=project.gallery.pk)
+        except Gallery.DoesNotExist:
+            error_dict = {'message': 'Gallery not found.'}
+            return HttpResponse(error_dict, content_type='application/json')
+
+        uploaded_file = request.FILES['file']
+        Photo.objects.create(gallery=gallery, file=uploaded_file)
+
+        response_dict = {
+            'message': 'File uploaded successfully!',
+        }
+
+        # return self.render_json_response(response_dict, status=200)
+        # uploaded_file = request.FILES['file']
+        # # Photo.objects.create(album=album, file=uploaded_file)
+        # stakeholder.picture = uploaded_file
+        # stakeholder.save()
+        # response_dict = {
+        #     'message': 'File uploaded successfully!',
+        # }
+
+        return HttpResponse(response_dict, content_type='application/json')
+    else:
+        response_dict = {'message': 'No Permission!',}
+        return HttpResponse(response_dict, content_type='application/json')

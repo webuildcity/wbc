@@ -40,6 +40,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             url:  '/suche/',
             data: data
         }).success(function(response) {
+            console.log(response);
             MapService.clearPolys();
             // if(polygonLayer != null) {
             //    MapService.map.removeLayer(multipoly);

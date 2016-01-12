@@ -1,0 +1,23 @@
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'lib/dropzone.js' %}" ></script>
+
+<link rel="stylesheet" href="{% static "lib/dropzone.css" %}" />
+
+
+<div id="photo-upload">
+    <form id="photoUploadForm" action="{% url 'project_photo_upload' project.pk %}" class="dropzone" enctype="multipart/form-data" drop-zone>
+        {% csrf_token %}
+    </form>
+</div>
+
+<script>
+Dropzone.options.photoUploadForm = {
+    maxFilesize: 3,
+    addRemoveLinks: true,
+    acceptedFiles: 'image/*',
+    dictDefaultMessage: 'Sie können auch Bilder von Ihrem Computer per "drag & drop hochladen',
+    dictRemoveFile: 'Löschen',
+} 
+</script>
+
+
