@@ -20,8 +20,8 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     address_obj = indexes.CharField()
     thumbnail = indexes.CharField()
     content_auto = indexes.NgramField(use_template=True)
-    num_stakeholder = indexes.CharField()
-    created = indexes.CharField()
+    num_stakeholder = indexes.IntegerField()
+    created = indexes.DateField()
     created_by = indexes.CharField()
     teaser = indexes.CharField()
 
