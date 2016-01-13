@@ -90,9 +90,6 @@ class ProjectCreate(ProtectedCreateView):
 
     def dispatch(self, request, *args, **kwargs):
       #  print '%s.1add_%s' % (self.model._meta.app_label, self.model._meta.model_name)
-        print request.user.groups.all()[0].permissions.all()
-        print request.user.has_perm('projects.add_project')
-        print Permission.objects.filter(group__user=request.user)
         @login_required
         def wrapper(request, *args, **kwargs):
             return super(ProtectedCreateView, self).dispatch(request, *args, **kwargs)
@@ -166,7 +163,6 @@ def project_request(request, p):
 
     today = datetime.datetime.today()
     gallery = None
-    print p.gallery.pk
     if p.gallery:
         gallery = Photo.objects.filter(gallery= p.gallery)
     print gallery
@@ -216,18 +212,19 @@ def follow(request, pk):
 def photo_upload(request, pk):
 
     project = get_object_or_404(Project, id= int(pk))
-    if request.user.has_perm('projects.change_project', project):
+    if request.user.has_perm('projects.change_project', project) or request.user.has_perm('projects.change_project'):
         try:
-            gallery = Gallery.objects.get(pk=project.gallery.pk)
+            gallery = project.gallery
         except Gallery.DoesNotExist:
             error_dict = {'message': 'Gallery not found.'}
-            return HttpResponse(error_dict, content_type='application/json')
+            return JsonResponse(error_dict)
 
         uploaded_file = request.FILES['file']
-        Photo.objects.create(gallery=gallery, file=uploaded_file)
-
+        photo = Photo.objects.create(gallery=gallery, file=uploaded_file)
+        photo.save()
         response_dict = {
             'message': 'File uploaded successfully!',
+            'thumbnail'     : photo.thumbnail.url
         }
 
         # return self.render_json_response(response_dict, status=200)
@@ -239,7 +236,16 @@ def photo_upload(request, pk):
         #     'message': 'File uploaded successfully!',
         # }
 
-        return HttpResponse(response_dict, content_type='application/json')
+        return JsonResponse(response_dict)
     else:
         response_dict = {'message': 'No Permission!',}
-        return HttpResponse(response_dict, content_type='application/json')
+        return JsonResponse(response_dict)
+
+def photo_delete(request, pk, photo):
+    project = get_object_or_404(Project, id= int(pk))
+    print request.user.get_all_permissions()
+    if request.user.has_perm('projects.change_project', project) or request.user.has_perm('projects.change_project'):
+        photo = Photo.objects.filter(pk=photo, gallery=project.gallery)
+        photo.delete()
+        return JsonResponse({'message': 'deleted'})
+    return JsonResponse({'message' : 'Error'})

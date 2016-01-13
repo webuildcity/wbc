@@ -28,6 +28,14 @@ class Gallery(Model):
             return self.name
         else:
             return 'Gallery Obj'
+    
+    def save(self, *args, **kwargs):
+        if not self.cover_photo:
+            result = Photo.objects.filter(gallery=self)
+            if len(result) >0:
+                self.cover_photo = result.first()
+        super(Gallery, self).save(*args, **kwargs)
+
 
 class Photo(Model):
     gallery     = models.ForeignKey(Gallery)
@@ -85,6 +93,7 @@ class Project(Model):
             user = User.objects.get(pk=self.history.first().history_user_id)
             return user
         return None
+
     def get_absolute_url(self):
         return reverse('project', kwargs={'pk': self.pk})
 
@@ -107,11 +116,14 @@ class Project(Model):
         else:
             return ' '.join(self.description[:150+1].split(' ')[0:-1]) + '...'
 
-    def get_thumbnail(self):
+    def get_thumbnail_url(self):
         if self.gallery:
-            return self.gallery.cover_photo.thumbnail.url
-        else:
-            return 'no image'
+            if self.gallery.cover_photo:
+                return self.gallery.cover_photo.thumbnail.url
+        return None
+
+    def get_number_stakeholder(self):
+        return len(self.stakeholders.all())
 
     def __unicode__(self):
         strings = []

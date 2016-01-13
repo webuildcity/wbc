@@ -14,6 +14,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     };
 
     $scope.formData = {};
+    $scope.formData.order = '';
 
     $scope.selectedResult = null;
     $scope.listView = true;
@@ -51,6 +52,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
             if (response.results.length>0) {
                 $scope.results = response.results;
+                console.log($scope.results)
                 $scope.suggestion = null;
                 var multipoly = [];
 
@@ -257,9 +259,12 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     }
     console.log($scope.formData);
 
+    $('.order-btn').click(function(){
+        $scope.formData.order = this.value;
+        search($scope.formData);
+    })
     search($scope.formData);
 }]);
-
 
 /** NON ANGULAR **/
 // $(document).ready(function(){

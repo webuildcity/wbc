@@ -40,6 +40,7 @@ class Date(Event):
     lon         = models.FloatField(null=True,blank=True)
     other       = models.CharField(max_length=256, blank=True, verbose_name="Sonstiges", help_text="sonstiges")
     modelType   = models.CharField(default="date", editable=False, max_length=20)
+   
     class Meta:
         verbose_name        = 'Veranstaltung'
         verbose_name_plural = 'Veranstaltungen'

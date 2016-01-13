@@ -59,6 +59,12 @@ class Stakeholder(Model):
     def as_dict(self):
         return {field: getattr(self, field) for field in self.get_fields()}
 
+    def get_thumbnail_url(self):
+        if self.picture:
+            return self.thumbnail.url
+        else:
+            return None
+
     def save(self, *args, **kwargs):
         unique_slugify(self,self.name)
         super(Stakeholder, self).save(*args, **kwargs)

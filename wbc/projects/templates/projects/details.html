@@ -10,7 +10,9 @@
     {% compress css %}
     {{block.super}}
     <link rel="stylesheet" href="{% static "lib/leaflet/leaflet.css" %}" />
-    <link rel="stylesheet" type="text/x-scss" href="{% static "css/details.scss" %}" />
+    <link rel="stylesheet" type="text/x-scss" href="{% static "css/details.scss" %}" />de
+    <link rel="stylesheet" href="{% static "lib/dropzone.css" %}" />    
+
     {% endcompress %}
 {% endblock %}
 
@@ -28,7 +30,8 @@
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintOutputCustomBuildingTiles.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/3d.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'adminmap.js' %}"  ></script>
-    
+    <script type="text/javascript" src="{% static 'lib/dropzone.js' %}" ></script>
+
 
     <script type="text/javascript">
         var _static_url = {% static '' %}
@@ -74,8 +77,9 @@ DetailsController
         {% if user.is_authenticated %}
         <ul class="admin-panel">
             <li><a class="admin-link project-admin" data-toggle="modal" data-target="#edit-modal" data-form="{% url 'project_create' %}" href="#"><i class="fa fa-plus"></i></a></li>
-            {% if 'change_project' in project_perms %}
+            {% if 'change_project' in project_perms or perms.projects.change_project %}
             <li><a class="admin-link project-admin" data-form="{% url 'project_update' project.pk %}" href="#"><i class="fa fa-pencil"></i></a></li>
+            <li><a class="admin-link photo-admin" data-form="{% url 'project_update' project.pk %}" data-toggle="modal" data-target="#photo-modal" href="#"><i class="fa fa-image"></i></a></li>
             {% endif %}
          <!--    <li><a class="admin-link" href="{{new_publication_link}}?project_id={{project.pk}}"><i class="fa fa-newspaper"></i></a></li> -->
         </ul>
@@ -309,5 +313,20 @@ DetailsController
             {% render_comment_list for project %}
         </div>
     </div>
+</div>
+
+<div id="photo-modal" class="modal fade" role="dialog" tabindex="-1">
+    <div class="well modal-dialog modal-content modal-lg" role="document">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3> hinzufügen </h3>
+        </div>
+        <div class="custom-content">
+            {% if project.pk %}
+            {% include 'projects/photo_upload.html' %}
+            {% endif %}
+        </div>
+    </div>
+
 </div>
 {% endblock %}

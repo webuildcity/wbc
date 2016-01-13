@@ -131,11 +131,15 @@ class SearchView(TemplateView):
         if 'entities' in data:
             if len(data['entities']) >0:
                 sqs = sqs.filter(entities__name__in=data['entities'])
-            
+        
+        if 'order' in data:
+            if data['order'] != '':
+                order = data['order']
+                sqs = sqs.order_by(order)
         results = []
 
         for result in sqs:
-            resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link, address_obj=result.address_obj)
+            resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link, address_obj=result.address_obj, thumbnail=result.thumbnail, num_stakeholder=result.num_stakeholder, created=result.created, created_by=result.created_by, teaser=result.teaser)
             if result.location:
                 resultdict['location'] = [result.location[0], result.location[1]]
 

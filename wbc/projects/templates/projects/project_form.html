@@ -1,6 +1,3 @@
-{% if project.pk %}
-{% include 'projects/photo_upload.html' %}
-{% endif %}
 <form class="project-form" method="post">
     <div class="modal-body">
         {% csrf_token %}

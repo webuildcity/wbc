@@ -18,8 +18,12 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     internal_link = indexes.CharField()
     type = indexes.CharField()
     address_obj = indexes.CharField()
-
+    thumbnail = indexes.CharField()
     content_auto = indexes.NgramField(use_template=True)
+    num_stakeholder = indexes.CharField()
+    created = indexes.CharField()
+    created_by = indexes.CharField()
+    teaser = indexes.CharField()
 
     def get_model(self):
         return Project
@@ -37,13 +41,32 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_location(self, obj):
         # If you're just storing the floats...
-        return "%s,%s" % (obj.lon, obj.lat)
+        if obj.lat:
+            return "%s,%s" % (obj.lon, obj.lat)
 
     def prepare_type(self, obj):
         return 'project'
 
     def prepare_internal_link(self, obj):
         return obj.get_absolute_url()
+
+    def prepare_thumbnail(self, obj):
+        return obj.get_thumbnail_url()
+
+    def prepare_num_stakeholder(self, obj):
+        return obj.get_number_stakeholder()
+    
+    def prepare_created(self, obj):
+        return obj.created
+
+    def prepare_created_by(self, obj):
+        if obj.get_created_by():
+            return obj.get_created_by().profile.full_name
+        else:
+            return None
+
+    def prepare_teaser(self, obj):
+        return obj.get_teaser()
 
     def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""

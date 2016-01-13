@@ -1,11 +1,15 @@
 {% load staticfiles %}
-<script type="text/javascript" src="{% static 'lib/dropzone.js' %}" ></script>
-
-<link rel="stylesheet" href="{% static "lib/dropzone.css" %}" />
-
-
+<div id="current-photos">
+    {% for photo in gallery %}
+        <div class="thumbnail pull-left">
+            <img src="{{ photo.thumbnail.url }}" />
+            <a class="delete-photo" data-url="{% url 'project_photo_delete' project.id photo.id %} href='#">Löschen
+            </a>
+        </div>
+    {% endfor %}
+</div>
 <div id="photo-upload">
-    <form id="photoUploadForm" action="{% url 'project_photo_upload' project.pk %}" class="dropzone" enctype="multipart/form-data" drop-zone>
+    <form id="photoUploadForm" method="POST" action="{% url 'project_photo_upload' project.pk %}" class="dropzone" enctype="multipart/form-data" drop-zone>
         {% csrf_token %}
     </form>
 </div>
@@ -17,7 +21,10 @@ Dropzone.options.photoUploadForm = {
     acceptedFiles: 'image/*',
     dictDefaultMessage: 'Sie können auch Bilder von Ihrem Computer per "drag & drop hochladen',
     dictRemoveFile: 'Löschen',
-} 
+    success: function(a, b) {
+        $('#current-photos').append('<div class="thumbnail pull-left"><img src="'+b.thumbnail+'"> <a class="delete-photo" data-id='+b.id+' href="#">Löschen</a</div>')
+    }
+}
 </script>
 
 

@@ -150,12 +150,19 @@ SearchController
         <li><button class="btn btn-default" id="map-list-switch"><i class='fa fa-list'></i></button></li>
         <li><button class="btn btn-default" id="map-list-switch"><i class='fa fa-book'></i></button></li>
     </ul> -->
+    <ul class="tabs">
+        <button value="" class="order-btn active btn btn-default">Relevanz</button>
+        <button value="name" class="order-btn btn btn-default">Name</button>
+        <button value="-created" class="order-btn btn btn-default">Erstellt am</button>
+        <button value="-num_stakeholder" class="order-btn btn btn-default"># Beteiligte</button>
+    </ul>
     <button class="btn btn-default" id="map-list-switch" ng-click="listView=!listView">Listen-/Kartenansicht</button>
     <div ng-class="{'active-result': listView}" class="result-content active-result" id="list">
         <h2>{[{resultLength}]} Treffer</h2>
         <div class="clearfix" 
             ng-repeat="result in results">
             <div id="result-{[{result.pk}]}" class="search-result">
+                <img ng-if="result.thumbnail" class="search-thumbnail" src={[{result.thumbnail}]}>
                 <div class="result-type" ng-switch on="result.type">
                     <i ng-switch-when="project" class="fa fa-home fa-2x"></i>
                     <i ng-switch-when="stakeholder" class="fa fa-user fa-2x"></i>
@@ -166,6 +173,10 @@ SearchController
                     </a>
                     <p ng-if="result.address_obj">{[{ result.address_obj }]}</p>
                     <p ng-if="!result.address_obj">Keine Adresse</p>
+                    <p ng-if="result.num_stakeholder">Beteiligte: {[{result.num_stakeholder}]}</p>
+                    <p ng-if="result.created">Erstellt am: {[{result.created}]}</p>
+                    <p ng-if="result.created_by">Erstellt von: {[{result.created_by}]}</p>
+                    <p ng-if="result.teaser">{[{result.teaser}]}</p>
                 </div>
             </div>
         </div>
