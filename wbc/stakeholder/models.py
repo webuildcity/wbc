@@ -4,11 +4,14 @@ from django.core.urlresolvers import reverse
 
 from wbc.core.models import Model
 from wbc.region.models import Entity
-from photologue.models import Photo
+# from photologue.models import Photo
 from wbc.projects.slug import unique_slugify
 from wbc.tags.models import TaggedItems
 
 from taggit.managers import TaggableManager
+
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 class StakeholderRole(Model):
     role        = models.CharField(blank=False, max_length=64, verbose_name="Rolle", help_text="Art der Rolle")
@@ -36,8 +39,9 @@ class Stakeholder(Model):
     entities    = models.ManyToManyField(Entity, blank=True, verbose_name="Region", related_name='places_%(class)s')
     slug        = models.SlugField(unique=True,editable=False)
     roles       = models.ManyToManyField(StakeholderRole, blank=True, related_name='roles_%(class)s', verbose_name='Rollen')
-    picture     = models.OneToOneField(Photo, blank=True, null=True, verbose_name='Bild')
-
+    # picture     = models.OneToOneField(Photo, blank=True, null=True, verbose_name='Bild')
+    picture       = models.ImageField(upload_to='profile_pictures', blank=True, null=True)
+    thumbnail   = ImageSpecField(source='picture', processors=[ResizeToFill(50,50)], format='JPEG', options={'quality':60})
 
     def get_absolute_url(self):
         return reverse('stakeholder', kwargs={'slug': self.slug})
@@ -50,7 +54,7 @@ class Stakeholder(Model):
         return unicode(self.name)
 
     def get_fields(self):
-        return [field.name for field in self._meta.fields if field.name not in ['id', 'created', 'created_by', 'updated', 'updated_by', 'slug', 'address', 'name']]
+        return [field.name for field in self._meta.fields if field.name not in ['id', 'created', 'created_by', 'updated', 'updated_by', 'slug', 'address', 'name', 'picture']]
 
     def as_dict(self):
         return {field: getattr(self, field) for field in self.get_fields()}

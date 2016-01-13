@@ -1,5 +1,5 @@
 {% extends 'core/page.html' %}
-{% load staticfiles compress %}
+{% load staticfiles compress imagekit %}
 
 {% block css %}
     {% compress css %}
@@ -24,8 +24,10 @@ DefaultController
             {% include "tags/tag_list.html" %}
         {% endif %}
     
-        {% if profile.picture %}
-        <img class="profile_img profile_page_img" src="{{ profile.picture.get_profile_url }}" />
+        {% if profile.stakeholder.picture %}
+
+        {% generateimage 'wbc:profile' source=profile.stakeholder.picture %}
+
         {% else %}
         <img class="profile_img profile_page_img" src="{% static 'img/person_placeholder.png' %}" />
         {% endif %}

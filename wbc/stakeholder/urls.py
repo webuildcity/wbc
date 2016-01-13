@@ -13,5 +13,6 @@ urlpatterns = patterns('',
     url(r'^neu/$', StakeholderCreate.as_view(), name='stakeholder_create'),
     url(r'^(?P<pk>[0-9]+)/bearbeiten/$', StakeholderUpdate.as_view(), name='stakeholder_update'),
     url(r'^(?P<pk>[0-9]+)/entfernen/$', StakeholderDelete.as_view(), name='stakeholder_delete'),
+    url(r'^(?P<pk>[0-9]+)/photo_upload/', 'wbc.stakeholder.views.photo_upload', name="stakeholder_photo_upload"),
 
 )

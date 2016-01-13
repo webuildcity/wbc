@@ -23,7 +23,7 @@ class StakeholderForm(forms.ModelForm):
 class StakeholderProfileForm(forms.ModelForm):
     class Meta:
         model = Stakeholder
-        fields = ('active', 'description', 'tags', 'link', 'picture',)
+        fields = ('active', 'description', 'tags', 'link',)
 
     # projects = forms.ModelMultipleChoiceField(queryset=Project.objects.all())
 

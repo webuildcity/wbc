@@ -2,8 +2,9 @@
 from django.contrib import admin
 
 from models import *
+from guardian.admin import GuardedModelAdmin
 
-class StakeholderAdmin(admin.ModelAdmin):
+class StakeholderAdmin(GuardedModelAdmin):
     list_display = ('id','name', 'address')
     list_display_links = ('id','name', 'address')
     ordering = ['id']
@@ -14,7 +15,7 @@ class StakeholderRoleAdmin(admin.ModelAdmin):
     ordering = ['id']
 
 
-class DepartmentAdmin(admin.ModelAdmin):
+class DepartmentAdmin(GuardedModelAdmin):
     list_display = ('id','name')
     list_display_links = ('id','name')
     ordering = ['id']

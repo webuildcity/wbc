@@ -1,0 +1,35 @@
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'lib/dropzone.js' %}" ></script>
+
+{% if stakeholder.thumbnail %}
+Aktuelles Profilbild:
+<img id="current-picture" src="{{stakeholder.thumbnail.url}}"/>
+{% endif %}
+<div id="photo-upload">
+    <form id="photoUploadForm" action="{% url 'stakeholder_photo_upload' stakeholder.pk %}" class="dropzone" enctype="multipart/form-data" drop-zone>
+        {% csrf_token %}
+    </form>
+</div>
+
+<script>
+Dropzone.options.photoUploadForm = {
+    maxFilesize: 3,
+    addRemoveLinks: true,
+    acceptedFiles: 'image/*',
+    dictDefaultMessage: 'Sie können auch ein Bild von Ihrem Computer per "drag & drop hochladen',
+    dictRemoveFile: 'Löschen',
+
+    accept: function(file, done) {
+        done();
+    },
+    init: function() {
+        this.on("addedfile", function() {
+          if (this.files[1]!=null){
+            this.removeFile(this.files[0]);
+          }
+        });
+    }
+} 
+</script>
+
+

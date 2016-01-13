@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from rest_framework import viewsets
-from django.shortcuts import render
-from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse, HttpResponse
+
 
 from wbc.core.views import ProtectedCreateView, ProtectedUpdateView, ProtectedDeleteView
 from wbc.projects.models import Project
@@ -81,3 +82,24 @@ class StakeholderDelete(ProtectedDeleteView):
 
     def get_success_url(self):
         return self.object.project_set.all()[0].get_absolute_url()
+
+
+def photo_upload(request, pk):
+    """
+    View for uploading photos via AJAX.
+    """
+    stakeholder = get_object_or_404(Stakeholder, id= int(pk))
+    if request.user.has_perm('stakeholder.change_stakeholder', stakeholder):
+        uploaded_file = request.FILES['file']
+        # Photo.objects.create(album=album, file=uploaded_file)
+        print uploaded_file
+        stakeholder.picture = uploaded_file
+        stakeholder.save()
+        response_dict = {
+            'message': 'File uploaded successfully!',
+        }
+
+        return HttpResponse(response_dict, content_type='application/json')
+    else:
+        response_dict = {'message': 'No Permission!',}
+        return HttpResponse(response_dict, content_type='application/json')

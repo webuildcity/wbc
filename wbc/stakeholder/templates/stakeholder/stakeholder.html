@@ -18,7 +18,7 @@
         {% endif %}
     
         {% if stakeholder.picture %}
-        <img class="stakeholder_img stakeholder_page_img" src="{{ stakeholder.picture.get_stakeholder_url }}" />
+        <img class="stakeholder_img stakeholder_page_img" src="{{ stakeholder.picture.url }}" />
         {% else %}
         <img class="stakeholder_img stakeholder_page_img" src="{% static 'img/person_placeholder.png' %}" />
         {% endif %}

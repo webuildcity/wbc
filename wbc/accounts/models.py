@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from wbc.stakeholder.models import Stakeholder
 from wbc.projects.slug import unique_slugify
 
+from guardian.models import UserObjectPermission
 
 @python_2_unicode_compatible
 class Profile(models.Model):
@@ -48,8 +49,9 @@ def create_profile_for_user(sender, **kwargs):
         profile = Profile()
         profile.user = user
         profile.save()
-        stakeholder = Stakeholder(name=profile.full_name)    
+        stakeholder = Stakeholder(name=profile.full_name)
         stakeholder.save()
+        UserObjectPermission.objects.assign_perm('change_stakeholder', user=user, obj=stakeholder)
         profile.stakeholder = stakeholder
         profile.save()
 
