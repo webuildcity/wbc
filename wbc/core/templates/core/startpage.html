@@ -35,14 +35,7 @@ StartpageController
 
 <!-- Bottom Container -->
 
-    <div id="bottom-container">
-
-
-<!-- Optional Navigation Menu at the bottom of the  -->
-
-       {% block nav-tabs %}
-            {% endblock %}      
-                            
+    <div id="bottom-container">                         
 
 <!-- Bottom Blocks of various content -->
 
@@ -54,6 +47,11 @@ StartpageController
             {% endblock %}
 
   
+            {% block topic-boxes %}
+
+            {% endblock %}
+
+
 <!-- Block Questions -->
       
             {% block questions %}
@@ -67,7 +65,7 @@ StartpageController
 
             {% if upcoming %}
                     <div class="bottom-block">
-                        <h2 class="wbc-headline">Aktuelle Veranstaltungen &amp; Projekte mit Bürgerbeteiligung</h2>
+                        <h2 class="wbc-headline">Aktuelle Ideen & Projekte &amp; Projekte:</h2>
                         <div class="wbc-divider"></div>
                         <div class="upcoming container">
                                 {% for project in upcoming %}

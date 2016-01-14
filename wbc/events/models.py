@@ -13,9 +13,11 @@ from photologue.models import Gallery
 from taggit.managers import TaggableManager
 
 
+# Bei dem Event(Model) handelt sich um das eigentliche Model mit den modelTypes Date, Media und Publication. 
+
 class Event(Model):
-    title       = models.CharField(max_length=256, blank=False, verbose_name="Titel", help_text="Der Titel eines Events")
-    description = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Beschreibungstext eines Events")
+    title       = models.CharField(max_length=256, blank=False, verbose_name="Titel", help_text="Titel")
+    description = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Beschreibungstext")
     link        = models.URLField(blank=True)
     tags        = TaggableManager(through=TaggedItems, blank=True)
     stakeholder = models.ManyToManyField(Stakeholder, blank=True, verbose_name="stakeholders", related_name='stakeholders_%(class)s', help_text="Lorem_ipsum_Test_Help_Text")
@@ -38,11 +40,11 @@ class Date(Event):
     address     = models.CharField(max_length=256, blank=True, verbose_name="Veranstaltungsort", help_text="Die genaue Adresse wo die Veranstaltung stattfindet.")
     lat         = models.FloatField(null=True,blank=True)
     lon         = models.FloatField(null=True,blank=True)
-    other       = models.CharField(max_length=256, blank=True, verbose_name="Sonstiges", help_text="sonstiges")
+    other       = models.CharField(max_length=256, blank=True, verbose_name="Sonstiges", help_text="Sonstige Angaben zu dieser Veranstaltung")
     modelType   = models.CharField(default="date", editable=False, max_length=20)
     class Meta:
-        verbose_name        = 'Veranstaltung'
-        verbose_name_plural = 'Veranstaltungen'
+        verbose_name        = 'Veranstaltung (Event)'
+        verbose_name_plural = 'Veranstaltungen (Events)'
 
 class Media(Event):
     teaser           = models.CharField(blank=True, max_length=110, verbose_name="Teaser-Text", help_text="Teaser / Vorschau-Text")
@@ -76,20 +78,19 @@ class Media(Event):
 #   MUSS NACHGEPFLEGT WERDEN...
 
     class Meta:
-        verbose_name        = 'Medienbeitrag'
-        verbose_name_plural = 'Medienbeiträge'
+        verbose_name        = 'Informationsbeitrag'
+        verbose_name_plural = 'Informationsbeiträge'
 
 class Publication(Model):
-    process_step = models.ForeignKey('process.ProcessStep', verbose_name="Verfahrensschritt")
-    office       = models.TextField(blank=True, verbose_name="Auslegungsstelle")
-    office_hours = models.TextField(blank=True, verbose_name="Öffnungszeiten der Auslegungsstelle")
-    department   = models.ForeignKey(Stakeholder, verbose_name="Verantwortliche Behörde")
-    project      = models.ForeignKey('projects.Project', verbose_name="Projekt")
-    begin        = models.DateField(verbose_name="Anfang Timeline")
-    end          = models.DateField(verbose_name="Ende Timeline",blank=True, null=True)
-    link         = models.URLField(blank=True)
+    process_step = models.ForeignKey('process.ProcessStep', verbose_name="Prozessschritt", help_text="z.B. Demografiewerkstatt, Öffentliche Auslegung, eine Wahl, etc.")
+    #office       = models.TextField(blank=True, verbose_name="Auslegungsstelle")
+    #office_hours = models.TextField(blank=True, verbose_name="Öffnungszeiten der Auslegungsstelle")
+    department   = models.ForeignKey(Stakeholder, verbose_name="Verantwortliche Organisation")
+    project      = models.ForeignKey('projects.Project', verbose_name="Betreffendes Projekt")
+    begin        = models.DateField(verbose_name="Anfang", help_text="z.B. eines Verfahrens, Bürgerbeiteiligung, Veranstaltung,etc.")
+    end          = models.DateField(verbose_name="Ende",  help_text="z.B. eines Verfahrens, Bürgerbeiteiligung, Veranstaltung,etc.", blank=True, null=True)
+    link         = models.URLField(blank=True, verbose_name="Link", help_text="Weiterführender Link (optional)")
     description  = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Beschreibungstext eines Events")
-
 
     def __unicode__(self):
         return unicode(self.project) + ', ' + self.process_step.name
@@ -115,5 +116,5 @@ class Publication(Model):
 
     class Meta:
         ordering            = ("-end",)
-        verbose_name        = "Veröffentlichung"
-        verbose_name_plural = "Veröffentlichungen"
+        verbose_name        = "Prozessschritt"
+        verbose_name_plural = "Prozesschritte"
