@@ -132,7 +132,7 @@ DetailsController
 
     {% if album %}
    
-     {% generateimage 'wbc:profile' source=project.album.get_cover_photo.file %}
+     {% generateimage 'wbc:details' source=project.album.get_cover_photo.file %}
         
     {% endif %}
 
@@ -159,7 +159,7 @@ DetailsController
         <div id="next-date-widget" class="widget">
             <div class="content-container">
                 <h3><i class="fa fa-calendar"> </i>Nächster Termin</h3>
-                {% if 'change_project' in project_perms %}
+                {% if 'change_project' in project_perms or perms.projects.change_project %}
                 <ul class="admin-panel">
                     <li><a class="admin-link" data-toggle="modal" data-target="#event-modal" href="#"><i class="fa fa-plus"></i></a></li>
                 </ul>

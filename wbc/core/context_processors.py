@@ -27,6 +27,13 @@ class ProfilePicture(ImageSpec):
 
 register.generator('wbc:profile', ProfilePicture)
 
+class DetailsPicture(ImageSpec):
+    processors = [ResizeToFill(400, 300)]
+    format = 'JPEG'
+    options = {'quality': 60}
+
+register.generator('wbc:details', DetailsPicture)
+
 
 class GalleryPicture(ImageSpec):
     processors = [ResizeToFill(800, 400)]
