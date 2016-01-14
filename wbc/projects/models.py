@@ -39,7 +39,7 @@ class Album(Model):
 class Photo(Model):
     album       = models.ForeignKey(Album)
     file        = models.ImageField(upload_to='project_images')
-    thumbnail   = ImageSpecField(source="file", processors=[ResizeToFill(50,50)], format='JPEG', options={'quality':60})
+    thumbnail   = ImageSpecField(source="file", processors=[ResizeToFill(100,100)], format='JPEG', options={'quality':60})
 
 
 class Address(Model):
@@ -117,8 +117,7 @@ class Project(Model):
 
     def get_thumbnail_url(self):
         if self.album:
-            if self.album.cover_photo:
-                return self.album.cover_photo.thumbnail.url
+            return self.album.get_cover_photo().thumbnail.url
         return None
 
     def get_number_stakeholder(self):

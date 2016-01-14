@@ -133,7 +133,7 @@ class SearchView(TemplateView):
                 sqs = sqs.filter(entities__name__in=data['entities'])
         
         if 'order' in data:
-            if data['order'] != '':
+            if data['order'] != '' and data['order'] != '-':
                 order = data['order']
                 sqs = sqs.order_by(order)
         results = []

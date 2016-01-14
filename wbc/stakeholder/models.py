@@ -41,7 +41,7 @@ class Stakeholder(Model):
     roles       = models.ManyToManyField(StakeholderRole, blank=True, related_name='roles_%(class)s', verbose_name='Rollen')
     # picture     = models.OneToOneField(Photo, blank=True, null=True, verbose_name='Bild')
     picture       = models.ImageField(upload_to='profile_pictures', blank=True, null=True)
-    thumbnail   = ImageSpecField(source='picture', processors=[ResizeToFill(50,50)], format='JPEG', options={'quality':60})
+    thumbnail   = ImageSpecField(source='picture', processors=[ResizeToFill(100,100)], format='JPEG', options={'quality':60})
 
     def get_absolute_url(self):
         return reverse('stakeholder', kwargs={'slug': self.slug})
