@@ -15,7 +15,7 @@ class PhotoAdmin(GuardedModelAdmin, SimpleHistoryAdmin):
     # change_form_template = 'projects/admin/change_form.html'
     # add_form_template = 'projects/admin/change_form.html'
 
-class GalleryAdmin(GuardedModelAdmin, SimpleHistoryAdmin):
+class AlbumAdmin(GuardedModelAdmin, SimpleHistoryAdmin):
     # inlines = [GalleryInline]
 
     list_display = ('id','name')
@@ -55,4 +55,4 @@ class AddressAdmin(admin.ModelAdmin):
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Address, AddressAdmin)
 admin.site.register(Photo, PhotoAdmin)
-admin.site.register(Gallery, GalleryAdmin)
+admin.site.register(Album, AlbumAdmin)

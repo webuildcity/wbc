@@ -162,10 +162,10 @@ def project_request(request, p):
     #             comment.save()
 
     today = datetime.datetime.today()
-    gallery = None
-    if p.gallery:
-        gallery = Photo.objects.filter(gallery= p.gallery)
-    print gallery
+    album = None
+    if p.album:
+        album = Photo.objects.filter(album= p.album)
+    print album
     processTypeList = None
     publications = p.publication_set.all()
 
@@ -187,7 +187,7 @@ def project_request(request, p):
         'project' : p,
         # 'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
         'events'  : p.events.order_by('-begin'),
-        'gallery' : gallery,
+        'album' : album,
         'nextDate': p.events.filter(begin__gte=today, date__isnull=False).order_by('begin').first(),
         'lastNews': p.events.filter(media__isnull=False).order_by('begin').first(),
         'tags'    : p.tags.all(),
@@ -213,14 +213,19 @@ def photo_upload(request, pk):
 
     project = get_object_or_404(Project, id= int(pk))
     if request.user.has_perm('projects.change_project', project) or request.user.has_perm('projects.change_project'):
-        try:
-            gallery = project.gallery
-        except Gallery.DoesNotExist:
-            error_dict = {'message': 'Gallery not found.'}
-            return JsonResponse(error_dict)
+        if project.album:
+            album = project.album
+            print album
+        else:
+            album = Album.objects.create()
+            print "yoo"
+            print album
+            album.save()
+            project.album = album
+            project.save()
 
         uploaded_file = request.FILES['file']
-        photo = Photo.objects.create(gallery=gallery, file=uploaded_file)
+        photo = Photo.objects.create(album=album, file=uploaded_file)
         photo.save()
         response_dict = {
             'message': 'File uploaded successfully!',
@@ -245,7 +250,7 @@ def photo_delete(request, pk, photo):
     project = get_object_or_404(Project, id= int(pk))
     print request.user.get_all_permissions()
     if request.user.has_perm('projects.change_project', project) or request.user.has_perm('projects.change_project'):
-        photo = Photo.objects.filter(pk=photo, gallery=project.gallery)
+        photo = Photo.objects.filter(pk=photo, album=project.album)
         photo.delete()
         return JsonResponse({'message': 'deleted'})
     return JsonResponse({'message' : 'Error'})

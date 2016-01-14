@@ -261,6 +261,11 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
     $('.order-btn').click(function(){
         $scope.formData.order = this.value;
+        if(this.value[0] != '-') {
+            this.value = '-'+this.value;
+        } else {
+            this.value = this.value.split('-')[1];
+        }
         search($scope.formData);
     })
     search($scope.formData);

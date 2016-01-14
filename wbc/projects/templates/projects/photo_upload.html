@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <div id="current-photos">
-    {% for photo in gallery %}
+    {% for photo in album %}
         <div class="thumbnail pull-left">
             <img src="{{ photo.thumbnail.url }}" />
             <a class="delete-photo" data-url="{% url 'project_photo_delete' project.id photo.id %} href='#">Löschen
@@ -17,10 +17,8 @@
 <script>
 Dropzone.options.photoUploadForm = {
     maxFilesize: 3,
-    addRemoveLinks: true,
     acceptedFiles: 'image/*',
     dictDefaultMessage: 'Sie können auch Bilder von Ihrem Computer per "drag & drop hochladen',
-    dictRemoveFile: 'Löschen',
     success: function(a, b) {
         $('#current-photos').append('<div class="thumbnail pull-left"><img src="'+b.thumbnail+'"> <a class="delete-photo" data-id='+b.id+' href="#">Löschen</a</div>')
     }

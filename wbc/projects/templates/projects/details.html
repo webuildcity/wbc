@@ -130,9 +130,9 @@ DetailsController
     </div> -->
 
 
-    {% if gallery %}
+    {% if album %}
    
-     {% generateimage 'wbc:profile' source=project.gallery.cover_photo.file %}
+     {% generateimage 'wbc:profile' source=project.album.get_cover_photo.file %}
         
     {% endif %}
 
@@ -232,7 +232,7 @@ DetailsController
     <ul class="wbc-nav main-content-nav nav nav-tabs" data-tabs="tabs">
         <li class="active"><a data-toggle="tab" href="#info"><i class="fa fa-info"></i>Info</a></li>
         <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Karte</a></li>
-        <li  {{gallery|yesno:' ,class=not-active'}}><a data-toggle="tab" href="#gallery"><i class="fa fa-image"></i>Bilder</a></li>
+        <li  {{album|yesno:' ,class=not-active'}}><a data-toggle="tab" href="#gallery"><i class="fa fa-image"></i>Bilder</a></li>
         <li>
             <a data-toggle="tab" href="#timeline"><i class="fa fa-calendar"></i>Ereignisse</a>
         </li>
@@ -278,7 +278,7 @@ DetailsController
         </div>
 
         <div id="gallery" class="tab-pane">
-        {% if gallery %}
+        {% if album %}
            {% include "projects/project_gallery.html" %}
         {% endif %}
         </div>

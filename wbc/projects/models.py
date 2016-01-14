@@ -19,7 +19,7 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
 
-class Gallery(Model):
+class Album(Model):
     name        = models.CharField(blank=False, null=True, max_length=64, verbose_name="Name")
     cover_photo = models.ForeignKey('Photo', related_name='cover', blank=True, null=True)
 
@@ -27,18 +27,17 @@ class Gallery(Model):
         if self.name:
             return self.name
         else:
-            return 'Gallery Obj'
+            return 'Album Obj'
     
-    def save(self, *args, **kwargs):
-        if not self.cover_photo:
-            result = Photo.objects.filter(gallery=self)
-            if len(result) >0:
-                self.cover_photo = result.first()
-        super(Gallery, self).save(*args, **kwargs)
+    def get_cover_photo(self):
+        if self.cover_photo:
+            return self.cover_photo
+        else:
+            return Photo.objects.filter(album=self).first()
 
 
 class Photo(Model):
-    gallery     = models.ForeignKey(Gallery)
+    album       = models.ForeignKey(Album)
     file        = models.ImageField(upload_to='project_images')
     thumbnail   = ImageSpecField(source="file", processors=[ResizeToFill(50,50)], format='JPEG', options={'quality':60})
 
@@ -77,7 +76,7 @@ class Project(Model):
     link                 = models.URLField(blank=True)
     slug                 = models.SlugField(unique=True, editable=False)
     address_obj          = models.ForeignKey(Address, blank=True, null=True, verbose_name="Adresse")
-    gallery              = models.OneToOneField(Gallery, blank=True, null=True)
+    album                = models.OneToOneField(Album, blank=True, null=True)
     tags                 = TaggableManager(through=TaggedItems, blank=True, verbose_name="Schlagworte")
     stakeholders         = models.ManyToManyField(Stakeholder, blank=True, verbose_name="Akteure")
     history              = HistoricalRecords()
@@ -117,9 +116,9 @@ class Project(Model):
             return ' '.join(self.description[:150+1].split(' ')[0:-1]) + '...'
 
     def get_thumbnail_url(self):
-        if self.gallery:
-            if self.gallery.cover_photo:
-                return self.gallery.cover_photo.thumbnail.url
+        if self.album:
+            if self.album.cover_photo:
+                return self.album.cover_photo.thumbnail.url
         return None
 
     def get_number_stakeholder(self):
@@ -141,8 +140,4 @@ class Project(Model):
 
     def save(self, *args, **kwargs):
         unique_slugify(self,self.name)
-        if not self.gallery:
-            gallery = Gallery(name=self.slug)
-            gallery.save()
-            self.gallery = gallery
         super(Project, self).save(*args, **kwargs)
