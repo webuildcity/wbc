@@ -80,6 +80,7 @@ class Project(Model):
     tags                 = TaggableManager(through=TaggedItems, blank=True, verbose_name="Schlagworte")
     stakeholders         = models.ManyToManyField(Stakeholder, blank=True, verbose_name="Akteure")
     history              = HistoricalRecords()
+    owner                = models.ForeignKey(User, blank=True, null=True, verbose_name="Besitzer")
 
     def get_changed_by(self):
         if(self.history.last()):
@@ -139,4 +140,6 @@ class Project(Model):
 
     def save(self, *args, **kwargs):
         unique_slugify(self,self.name)
+        if not self.owner:
+            self.owner = self.get_created_by()
         super(Project, self).save(*args, **kwargs)
