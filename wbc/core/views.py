@@ -159,7 +159,6 @@ class SearchView(TemplateView):
 
     def get(self, request):
         query =  request.GET.urlencode()
-        print query
         q = request.GET.get('q', '')
         # print request.META['QUERY_STRING']
         return render(request, 'core/search.html',  context={'q': q})

@@ -30,12 +30,24 @@
         </p>
         {% endif %}
         <p> {{stakeholder.description}}</p>
+        
+        {% if own_projects %}
+        {% with own_projects as projects %}
+        <div class="project-descriptions col-md-12">
+            <h2> Eingereichte Projekte </h2>
+            {% include "projects/project_list.html" %}
+        </div>
+        {% endwith %}
+        {% endif %}
+
         {% if projects %}
         <div class="project-descriptions col-md-12">
-            <h2> Projekte: </h2>
+            <h2> Projekte </h2>
             {% include "projects/project_list.html" %}
         </div>
         {% endif %}
+
+
     </div>
 
 

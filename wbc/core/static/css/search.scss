@@ -203,6 +203,7 @@
         h2 {
             margin: 0.3em 0em;
             text-align: center;
+            margin-bottom: 0.1em;
         }
 
         p {
@@ -229,6 +230,7 @@
         .result-block {
             margin: 0.3em 0.45em;
             white-space: nowrap;
+            min-width: 150px;
         }
         .teaser {
             // padding-left: 2em;
