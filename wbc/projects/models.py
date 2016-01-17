@@ -12,9 +12,34 @@ from wbc.events.models import Event
 from wbc.stakeholder.models import Stakeholder
 from wbc.tags.models import TaggedItems
 
-from photologue.models import Gallery
 from taggit.managers import TaggableManager
 from simple_history.models import HistoricalRecords
+
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
+
+
+class Album(Model):
+    name        = models.CharField(blank=False, null=True, max_length=64, verbose_name="Name")
+    cover_photo = models.ForeignKey('Photo', related_name='cover', blank=True, null=True)
+
+    def __unicode__(self):
+        if self.name:
+            return self.name
+        else:
+            return 'Album Obj'
+    
+    def get_cover_photo(self):
+        if self.cover_photo:
+            return self.cover_photo
+        else:
+            return Photo.objects.filter(album=self).first()
+
+
+class Photo(Model):
+    album       = models.ForeignKey(Album)
+    file        = models.ImageField(upload_to='project_images')
+    thumbnail   = ImageSpecField(source="file", processors=[ResizeToFill(100,100)], format='JPEG', options={'quality':60})
 
 
 class Address(Model):
@@ -45,13 +70,15 @@ class Project(Model):
     #description_official = models.TextField(blank=True, verbose_name="Beschreibung (Amtsblatt)", help_text="Örtliche Beschreibung aus dem Amtsblatt")
     entities             = models.ManyToManyField(Entity, blank=True, verbose_name="Verwaltungseinheit", related_name='project_places')
     events               = models.ManyToManyField(Event, blank=True, verbose_name="Events", related_name='projects_events')
-    lat                  = models.FloatField(blank=True, verbose_name="Breitengrad")
-    lon                  = models.FloatField(blank=True, verbose_name="Längengrad")
+    lat                  = models.FloatField(verbose_name="Breitengrad", null=True, blank=True)
+    lon                  = models.FloatField(verbose_name="Längengrad", null=True, blank=True)
     polygon              = models.TextField(null=True, blank=True, help_text="Zur Angabe und Darstellung einer Fläche z.B. auf einer Karte")
+    active               = models.BooleanField()
     link                 = models.URLField(blank=True)
     slug                 = models.SlugField(unique=True, editable=False)
     address_obj          = models.ForeignKey(Address, blank=True, null=True, verbose_name="Adresse")
-    gallery              = models.OneToOneField(Gallery, related_name='gallery', blank=True, null=True) 
+    album                = models.OneToOneField(Album, blank=True, null=True)
+    tags                 = TaggableManager(through=TaggedItems, blank=True, verbose_name="Schlagworte")
     stakeholders         = models.ManyToManyField(Stakeholder, blank=True, verbose_name="Akteure")
     address              = models.CharField(max_length=256, blank=True, verbose_name="Adresse (Statisch)", help_text="Altes, statisches Adress-Feld")
     history              = HistoricalRecords()
@@ -67,6 +94,7 @@ class Project(Model):
             user = User.objects.get(pk=self.history.first().history_user_id)
             return user
         return None
+
     def get_absolute_url(self):
         return reverse('project', kwargs={'pk': self.pk})
 
@@ -89,6 +117,13 @@ class Project(Model):
         else:
             return ' '.join(self.description[:150+1].split(' ')[0:-1]) + '...'
 
+    def get_thumbnail_url(self):
+        if self.album:
+            return self.album.get_cover_photo().thumbnail.url
+        return None
+
+    def get_number_stakeholder(self):
+        return len(self.stakeholders.all())
 
     def __unicode__(self):
         strings = []

@@ -1,7 +1,6 @@
 {% load staticfiles widget_tweaks comments crispy_forms_tags %}
 <script>
     function disableReqdInputs(){
-        console.log("{{ user.get_full_name }}")
         var nameInput = document.getElementById('id_name');
         if (nameInput){
             nameInput.value = "{{ user.get_full_name }}";

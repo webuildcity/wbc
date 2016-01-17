@@ -89,11 +89,13 @@ $(document).ready(function(){
         var url = $(this).data("form"); 
         $('#edit-modal .modal-header h3').html(url); // display the modal on url load
         $("#edit-modal .custom-content").load(url, function(response, status) {
+ 
             if ( status == "error" ) {
                 $('#edit-modal .custom-content').html("Fehler!");
             }
             $('#edit-modal').modal();
             $('#edit-modal').modal('show'); // display the modal on url load
+
             drawMap();
             $( "#edit-modal").unbind( "submit" );
             $('#edit-modal').on('submit', 'form', function(e){
@@ -172,6 +174,46 @@ $(document).ready(function(){
     $('#cancel-reply').click(cancel_reply_form);
     $('#div_id_comment textarea').attr('required', true)
 
+
+    //PHOTO 
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+    $('#current-photos').on('click', '.delete-photo', function(){
+        var parent = $(this).parent();
+        $.ajax({
+            type: 'POST',
+            url: $(this).data('url'),
+            success: function(){
+                parent.remove();
+            }
+        })
+    })
 });
 
 function show_reply_form(event) {
@@ -183,7 +225,6 @@ function show_reply_form(event) {
 };
 
 function cancel_reply_form(event) {
-    console.log("yo")
     $('#id_comment').val('');
     $('#id_parent').val('');
     $('#comment-form').appendTo($('#comment-form-wrapper'));

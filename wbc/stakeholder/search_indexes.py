@@ -13,7 +13,9 @@ class StakeholderIndex(indexes.SearchIndex, indexes.Indexable):
     tags = indexes.MultiValueField(faceted=True)
     roles = indexes.MultiValueField()
     internal_link = indexes.CharField()
+    thumbnail = indexes.CharField()
     type = indexes.CharField()
+    created = indexes.DateField()
 
 #    content_auto = indexes.NgramField(use_template=True)
 
@@ -32,6 +34,12 @@ class StakeholderIndex(indexes.SearchIndex, indexes.Indexable):
     def prepare_internal_link(self, obj):
         return obj.get_absolute_url()
 
+    def prepare_thumbnail(self, obj):
+        return obj.get_thumbnail_url()
+
+    def prepare_created(self, obj):
+        return obj.created
+   
     def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""
         return self.get_model().objects.all()

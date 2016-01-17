@@ -9,7 +9,6 @@ from wbc.region.models import Entity
 from wbc.stakeholder.models import Stakeholder
 from wbc.tags.models import TaggedItems
 
-from photologue.models import Gallery
 from taggit.managers import TaggableManager
 
 
@@ -26,7 +25,7 @@ class Event(Model):
     begin       = models.DateField(verbose_name="Anfang Timeline")
     end         = models.DateField(verbose_name="Ende Timeline",blank=True, null=True)
     # projects    = models.ForeignKey(Project, blank=True, related_name='projects__%(class)s', verbose_name="Projekt")
-    gallery     = models.OneToOneField(Gallery, blank=True, null=True)
+    # gallery     = models.OneToOneField(Gallery, blank=True, null=True)
 
     def __unicode__(self):
         return unicode(self.title)
@@ -42,6 +41,7 @@ class Date(Event):
     lon         = models.FloatField(null=True,blank=True)
     other       = models.CharField(max_length=256, blank=True, verbose_name="Sonstiges", help_text="Sonstige Angaben zu dieser Veranstaltung")
     modelType   = models.CharField(default="date", editable=False, max_length=20)
+   
     class Meta:
         verbose_name        = 'Veranstaltung (Event)'
         verbose_name_plural = 'Veranstaltungen (Events)'
