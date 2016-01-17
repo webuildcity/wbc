@@ -245,12 +245,30 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         var result = window.location.pathname.split('/')[2];
         // var result = window.location.pathname.substring(n + 1);
 
-        $scope.formData = JSON.parse('{"' + decodeURI(result.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}')
+        param_json= JSON.parse('{"' + decodeURI(result.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}')
+        console.log(param_json)
         // $scope.formData = searchQuery;
-        $scope.q = 'test'
+        // $scope.formData = "KADLSJDKLAS"
+        if(param_json['order']){
+            $(".order-btn").removeClass("active");
+            // TODO: Filter by value and select right button
+            // $('.order-btn').value
+
+        }
+        $scope.formData.order = param_json['order']
+        // TODO PARSE TAGS AND ENTITIES
+        $scope.formData['tags[]'] = param_json['tags[]']
+        // $scope.formData.entities = param_json['entities[]']
+        $scope.formData.q = param_json['q']
         // search($scope.formData);
     }
 
+    $scope.changeView = function() {
+        $scope.listView = !$scope.listView;
+        if(!$scope.ListView){
+            MapService.map.invalidateSize();
+        }
+    }
     $('.order-btn').click(function(){
         $(".order-btn").siblings(".active").removeClass("active");
         $(this).addClass("active");
@@ -261,8 +279,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         } else {
             this.value = this.value.split('-')[1];
         }
-        search($scope.formData);
-    })
+        $scope.onSearchChanged();
+    });
+
+
     search($scope.formData);
     moveScroller($('#search-list-header'), $('.result-content'));
 }]);
