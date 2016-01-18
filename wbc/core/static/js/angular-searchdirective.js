@@ -43,7 +43,7 @@ app.directive('wbcSearch', function() {
             };
 
             $scope.submit = function(term){
-                window.location = "/suche/?q="+ term;
+                window.location = "/suche/q="+ term;
             };
 
             $scope.loadDetails = function(result) {

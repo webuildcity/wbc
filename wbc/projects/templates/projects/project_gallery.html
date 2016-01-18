@@ -1,5 +1,5 @@
 {% load i18n %}
-{% load staticfiles %}
+{% load staticfiles imagekit %}
 
 <script type="text/javascript" src="{% static 'lib/jssor.slider.mini.js' %}"  ></script>
 <script type="text/javascript" src="{% static 'slideshow.js' %}"  ></script>
@@ -18,7 +18,7 @@
         <div class="slides" u="slides">
             {% for photo in album %}
                 <div>
-                    <img u="image" src="{{ photo.file.url }}" />
+                   {% generateimage 'wbc:gallery' source=photo.file -- u="image" %}
                     <img u="thumb" src="{{ photo.thumbnail.url }}" />
                 </div>
             {% endfor %}
