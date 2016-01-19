@@ -45,7 +45,10 @@ class Profile(models.Model):
 def create_profile_for_user(sender, **kwargs):
     user = kwargs['instance']
     if kwargs['created']:
-        user.groups.add(Group.objects.get(name='user'))
+        try:
+            user.groups.add(Group.objects.get(name='user'))
+        except:
+            print "NO USER GROUP"
         profile = Profile()
         profile.user = user
         profile.save()

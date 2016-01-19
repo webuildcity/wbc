@@ -20,7 +20,10 @@
 body {
     background: $background-image-light;
 }
-
+.big-page {
+    overflow-y: hidden;
+    // overflow-x: hidden;
+}
 
 #project_map {
     height: 100%;
@@ -305,7 +308,6 @@ body {
 
 .taglink {
     background-color: $primary-color-light ;
-    color: white !important;
     padding: 1px 2px;
     /*margin: 3px;*/
     border-radius: 2px;

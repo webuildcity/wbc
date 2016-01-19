@@ -1,6 +1,11 @@
 @import 'css/_variables.scss';
 /** AB HIER TEST NEUE SEITE **/
 
+.big-page {
+    overflow-y: hidden;
+    // overflow-x: hidden;
+}
+
 #header {
     .search-field {
         display: none;
