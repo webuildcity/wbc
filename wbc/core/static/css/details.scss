@@ -225,17 +225,17 @@ body {
             }
 
             ul {
-                clear: both;
-                display: block;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                padding: 1rem;
-                margin-top: 1rem;
-
                 list-style-type: none;
                 background-color: $background-color-comments;
+                padding: 0;
 
                 li {
+                    clear: both;
+                    display: block;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    padding: 1rem;
+                    margin-top: 1rem;
 
                 }
             }
@@ -255,7 +255,7 @@ body {
             }
 
             .comment_text {
-                margin: 1em 0;
+                margin-bottom: 1em;
             }
         }
 
