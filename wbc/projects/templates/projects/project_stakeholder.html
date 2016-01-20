@@ -6,12 +6,12 @@
         <h3> Erstellt von </h3>
         <a href="{{project.get_created_by.get_absolute_url }}">
             <div class="stakeholder-widget col-md-3">
-                {% if project.get_created_by.picture %}
-                <img class="stakeholder_img" src="{{ project.get_created_by.picture.get_stakeholder_url }}" />
+                {% if project.get_created_by.profile.stakeholder.picture %}
+                <img class="stakeholder_img" src="{{ project.get_created_by.profile.stakeholder.picture.url }}" />
                 {% else %}
                 <img class="stakeholder_img" src="{% static 'img/person_placeholder.png' %}" />
                 {% endif %}
-                <h4> {{project.get_created_by.name}}</h4>
+                <h4> {{project.get_created_by.profile.full_name}}</h4>
             </div>
         </a>
     </div>
@@ -24,7 +24,7 @@
         {% if not following %}
         Projekt beitreten
         {% else %}
-        Nicht mehr folgen
+        Projekt verlassen
         {% endif %}
     </button>
     {% endif %}

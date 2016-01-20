@@ -20,7 +20,10 @@
 body {
     background: $background-image-light;
 }
-
+.big-page {
+    overflow-y: hidden;
+    // overflow-x: hidden;
+}
 
 #project_map {
     height: 100%;
@@ -297,7 +300,7 @@ body {
 
 /* TAGS */
 
-a.taglink {
+/* a.taglink {
     overflow:auto;
     padding: .4em .7em .3em;
     margin: .1em .1em;
@@ -306,7 +309,16 @@ a.taglink {
     color: white;
     background-color: $primary-color;
     font-weight: bold;
-    float: left;
+    float: left; 
+    */
+
+.taglink {
+    background-color: $primary-color-light ;
+    padding: 1px 2px;
+    /*margin: 3px;*/
+    border-radius: 2px;
+    white-space: pre;
+
 }
 
 /* TAG PAGE */

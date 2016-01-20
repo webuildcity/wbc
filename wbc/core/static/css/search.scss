@@ -1,6 +1,11 @@
 @import 'css/_variables.scss';
 /** AB HIER TEST NEUE SEITE **/
 
+.big-page {
+    overflow-y: hidden;
+    // overflow-x: hidden;
+}
+
 #header {
     .search-field {
         display: none;
@@ -226,7 +231,21 @@
     }
 
     #result-list {
+
         clear: both;
+        
+        .search-result {
+            margin: 0.6em;
+            padding: 0.3em;
+            background: #fcfcfc;
+            border-bottom: 0px;
+            border-radius: 4px;
+            
+        }
+        .search-result:hover {
+            background: white;
+            // border: 1px solid $primary-color;
+        }
         .result-block {
             margin: 0.3em 0.45em;
             white-space: nowrap;
@@ -234,6 +253,8 @@
         }
         .teaser {
             // padding-left: 2em;
+            clear: both;
+            margin: 0.3em 0.45em;
         }
 
         .result-mash {

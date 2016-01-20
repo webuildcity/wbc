@@ -82,6 +82,7 @@ class Project(Model):
     stakeholders         = models.ManyToManyField(Stakeholder, blank=True, verbose_name="Akteure")
     address              = models.CharField(max_length=256, blank=True, verbose_name="Adresse (Statisch)", help_text="Altes, statisches Adress-Feld")
     history              = HistoricalRecords()
+    owner                = models.ForeignKey(User, blank=True, null=True, verbose_name="Besitzer")
 
     def get_changed_by(self):
         if(self.history.last()):
@@ -141,4 +142,6 @@ class Project(Model):
 
     def save(self, *args, **kwargs):
         unique_slugify(self,self.name)
+        if not self.owner:
+            self.owner = self.get_created_by()
         super(Project, self).save(*args, **kwargs)
