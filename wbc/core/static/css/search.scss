@@ -233,14 +233,14 @@
     #result-list {
 
         clear: both;
-        
+
         .search-result {
             margin: 0.6em;
             padding: 0.3em;
             background: #fcfcfc;
             border-bottom: 0px;
             border-radius: 4px;
-            
+
         }
         .search-result:hover {
             background: white;
@@ -260,6 +260,7 @@
         .result-mash {
             position: relative;
             overflow: auto;
+            padding-left: .5em;
         }
     }
 }
