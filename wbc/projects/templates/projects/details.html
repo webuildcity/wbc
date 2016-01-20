@@ -11,7 +11,7 @@
     {{block.super}}
     <link rel="stylesheet" href="{% static "lib/leaflet/leaflet.css" %}" />
     <link rel="stylesheet" type="text/x-scss" href="{% static "css/details.scss" %}" />de
-    <link rel="stylesheet" href="{% static "lib/dropzone.css" %}" />    
+    <link rel="stylesheet" href="{% static "lib/dropzone.css" %}" />
 
     {% endcompress %}
 {% endblock %}
@@ -64,7 +64,7 @@ DetailsController
         <div class="details-headline content-container">
             <h1> {{project.name}} </h1>
 
-           
+
             {% if project.address_obj %}
 
             <a class="map-link" data-toggle="tab" href="#project_map">
@@ -131,9 +131,9 @@ DetailsController
 
 
     {% if album %}
-   
+
      {% generateimage 'wbc:details' source=project.album.get_cover_photo.file %}
-        
+
     {% endif %}
 
     {% if project.description %}
@@ -172,11 +172,11 @@ DetailsController
         </div>
     </a>
     {% endif %}
-    
+
     {% if lastNews %}
     <a class="event-item" data-toggle="tab" href="#timeline">
         <div id="last-news-widget" class="widget">
-            <div class="content-container"> 
+            <div class="content-container">
                 <h3><i class="fa fa-newspaper-o"> </i>Letzte Neuigkeiten</h3>
                 <p>{{lastNews.title}}</p>
                 <p>{{lastNews.teaser}}</p>
@@ -228,7 +228,7 @@ DetailsController
             </div>
         </div>
     </div>
-    
+
     <ul class="wbc-nav main-content-nav nav nav-tabs" data-tabs="tabs">
         <li class="active"><a data-toggle="tab" href="#info"><i class="fa fa-info"></i>Info</a></li>
         <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Karte</a></li>
@@ -237,11 +237,11 @@ DetailsController
             <a data-toggle="tab" href="#timeline"><i class="fa fa-calendar"></i>Ereignisse</a>
         </li>
         <li>
-            <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Beteiligte</a> 
+            <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Beteiligte</a>
         </li>
         <li><a class="3d-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>3D</a></li>
         <li><a data-toggle="tab" href="#discussion"><i class="fa fa-comment"></i>Diskussion ({% get_comment_count for project as count %}{{count}})</a></li>
-    </ul>   
+    </ul>
 
     <div id="tab-content" class="tab-content">
         <div id="info" class="tab-pane active">
@@ -286,11 +286,11 @@ DetailsController
         <div id="timeline" class="tab-pane">
             {% include "projects/project_events.html" %}
         </div>
-             
+
         <div id="stakeholder" class="tab-pane">
             {% include "projects/project_stakeholder.html" %}
         </div>
-        
+
         <div id="3d" class="tab-pane">
             <div id="vizicities-viewport">
                 <div class="vizicities-ui-item" id="vizi-menu">
@@ -304,13 +304,15 @@ DetailsController
             </div>
         </div>
         <div id="discussion" class="tab-pane">
+
+            {% render_comment_list for project %}
+            
             {% if user.is_authenticated %}
                 {% render_comment_form for project %}
             {% else %}
                 <a class="dropdown-toggle" data-toggle="dropdown" data-target=".dropdown" href="#" >Melden</a> Sie sich an um ein Kommentar zu hinterlassen.
             {% endif %}
-            
-            {% render_comment_list for project %}
+
         </div>
     </div>
 </div>

@@ -17,7 +17,7 @@
     });
 </script>
 {% if user.is_authenticated %}
-<div id="comment-form-wrapper">
+<div id="comment-form-wrapper" class="content-container">
     <div id='comment-form'>
         <form role="form" method="post" action="{% comment_form_target %}">
             {% get_comment_form for project as form %}

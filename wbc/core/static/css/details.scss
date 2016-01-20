@@ -124,7 +124,7 @@ body {
 
 .admin-panel {
     float: right;
-    list-style: none;
+    list-style-type: none;
     li {
         float: left;
     }
@@ -212,6 +212,53 @@ body {
 
     #discussion {
         overflow-y: auto;
+
+        .content-container {
+            margin-top: 1em;
+        }
+
+        .comments {
+
+            h3 {
+                color: $primary-text;
+                margin-top: 0;
+            }
+
+            ul {
+                clear: both;
+                display: block;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                padding: 1rem;
+                margin-top: 1rem;
+
+                list-style-type: none;
+                background-color: $background-color-comments;
+
+                li {
+
+                }
+            }
+
+            .comment_info {
+                display: block;
+                overflow-y: auto;
+            }
+
+            .comment_user {
+                float: left;
+                margin-right: .5em;
+            }
+
+            .comment_data {
+                float: left;
+            }
+
+            .comment_text {
+                margin: 1em 0;
+            }
+        }
+
         #comment-form {
             #div_id_name {
                 display: none;
@@ -309,7 +356,7 @@ body {
     color: white;
     background-color: $primary-color;
     font-weight: bold;
-    float: left; 
+    float: left;
     */
 
 .taglink {

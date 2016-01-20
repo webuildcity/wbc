@@ -9,7 +9,7 @@ html {
 body {
     height: 100%;
     overflow: auto;
-    color: $primary-text; 
+    color: $primary-text;
     background-color: $background-color;
 }
 html, body {
@@ -250,7 +250,7 @@ a:hover,
 /* ort */
 
 
-/* comments */
+/* comments //
 .comments-wrapper {
     background: rgba(0, 0, 0, 0.1);
     padding-top: 10px;
@@ -269,7 +269,7 @@ a:hover,
     float: left;
 }
 .comment-author-name {
-    /*margin-top: 6px;*/
+    /*margin-top: 6px;
     margin-left: 42px;
 }
 .comment-author-time {
@@ -284,7 +284,7 @@ a:hover,
     margin-top: 20px;
     margin-bottom: 10px;
 }
-
+*/
 
 
 header > a:link,

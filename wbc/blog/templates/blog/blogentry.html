@@ -28,17 +28,21 @@ BlogController
     </div>
 </div>
 <div id="blog">
+    <div class="container">
 
-    {% if user.is_authenticated %}
-    <ul class="admin-panel">
-        <li><a class="blog-admin admin-link" data-toggle="modal" data-target="#edit-modal" data-form="{% url 'blogentry_update' b.slug %}" href="#"><i class="fa fa-pencil"></i></a></li>
-    </ul>
-    {% endif %}
+        {% if user.is_authenticated %}
+        <ul class="admin-panel">
+            <li><a class="blog-admin admin-link" data-toggle="modal" data-target="#edit-modal" data-form="{% url 'blogentry_update' b.slug %}" href="#"><i class="fa fa-pencil"></i></a></li>
+        </ul>
+        {% endif %}
 
-    <h1> {{b.title}} </h1>
-    <p class="text-muted">Erstellt von {{b.get_created_by}} am {{b.created}}</p>
-    <p class="text-muted">Zuletzt editiert von {{b.get_changed_by}} am {{b.updated}}</p>
-    {{b.content| markdown}}
-
+        <article>
+            <h1> {{b.title}} </h1>
+            <p class="text-muted">Erstellt von {{b.get_created_by}} am {{b.created}}</p>
+            <p class="text-muted">Zuletzt editiert von {{b.get_changed_by}} am {{b.updated}}</p>
+            {{b.content| markdown}}
+        </article>
+    
+    </div>
 </div>
 {% endblock %}
