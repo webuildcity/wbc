@@ -152,6 +152,22 @@ DetailsController
         </button>
     </div>
 
+    {% if user.is_authenticated %}
+    <div id="subscribe-widget" class="widget">
+        <button data-url="{% url 'project_follow' project.pk %}"class="btn btn-default follow-button wbc-button">
+            <span class="fa-stack">
+                <i class="fa fa-circle-thin fa-stack-2x"></i>
+                <i class="fa fa-bell fa-stack-1x fa-lg"></i>
+            </span>
+            {% if not following %}
+            Projekt beitreten
+            {% else %}
+            Projekt verlassen
+            {% endif %}
+        </button>
+    </div>
+    {% endif %}
+
 
 
     {% if nextDate %}
