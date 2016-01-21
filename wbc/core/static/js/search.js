@@ -231,7 +231,11 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.changeView = function() {
         $scope.listView = !$scope.listView;
         if(!$scope.listView){
-            MapService.map.invalidateSize();
+
+            console.log("yo")
+            setTimeout(function() {
+                MapService.map.invalidateSize();
+            }, 50);
         }
     }
     $('.order-btn').click(function(){
