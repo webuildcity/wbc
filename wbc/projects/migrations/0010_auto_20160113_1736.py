@@ -12,22 +12,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='historicalproject',
-            name='description_official',
-        ),
-        migrations.RemoveField(
-            model_name='historicalproject',
-            name='identifier',
-        ),
-        migrations.RemoveField(
-            model_name='project',
-            name='description_official',
-        ),
-        migrations.RemoveField(
-            model_name='project',
-            name='identifier',
-        ),
         migrations.AlterField(
             model_name='historicalproject',
             name='active',
