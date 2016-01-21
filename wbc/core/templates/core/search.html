@@ -154,7 +154,7 @@ SearchController
     <div ng-class="{'active-result': listView}" class="result-content active-result" id="list">
         <div id='search-list-header'>
             <div class="pull-left result-number">
-                <h2>{[{resultLength}]}</h2> 
+                <h2>{[{resultLength}]}</h2>
                 <p>Ergebnisse</p>
             </div>
             <div class="sort-control pull-left">
@@ -178,7 +178,7 @@ SearchController
                         <div class="result-mash">
                             <div class="pull-left result-block">
                                 <div class="result-type" ng-switch on="result.type">
-                                    <i ng-switch-when="project" class="fa fa-home fa-2x"></i>
+                                    <i ng-switch-when="project" class="fa fa-lightbulb-o fa-2x"></i>
                                     <i ng-switch-when="stakeholder" class="fa fa-user fa-2x"></i>
                                 </div>
                                 <a ng-href="{[{result.internal_link}]}">

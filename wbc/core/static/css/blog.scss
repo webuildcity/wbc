@@ -1,2 +1,27 @@
 @import 'css/_variables.scss';
 
+.big-page {
+    overflow-y: auto;
+    // overflow-x: hidden;
+}
+
+.admin-panel {
+    float: right;
+    list-style-type: none;
+    padding: .5em .5em 0 0;
+    li {
+        float: left;
+    }
+    .fa {
+        color: $icon-admin-edit-color !important;
+        padding: 2px;
+
+    }
+
+}
+
+#blog {
+    img {
+        max-width: 100%;
+    }
+}
