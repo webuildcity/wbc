@@ -125,8 +125,10 @@ class SearchView(TemplateView):
                 sqs = sqs.models(model_dict[model])
 
         if 'tags' in data:
+            # see ff string or array is parsed
             if len(data['tags']) >0:
-                sqs = sqs.filter(tags__name__in=data['tags'])
+                for tag in data['tags']:
+                    sqs = sqs.filter(tags__name__in=[tag])
 
         if 'entities' in data:
             if len(data['entities']) >0:

@@ -15,7 +15,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
     $scope.formData = {};
     $scope.formData.order = '';
-
+    $scope.formData.tags = [];
     $scope.selectedResult = null;
     $scope.listView = true;
 
@@ -54,7 +54,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
                 response.results.forEach(function(result){
                     if(result.polygon)  {
-                        // console.log(result);
                         result.polygon.id = result.pk;
                         myPoly = MapService.loadPoly(result.polygon, result.pk, highlightFunction);
                         myPoly.on('click', function() {
@@ -64,15 +63,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                     }
                 });
                 allResultPoly = L.multiPolygon(multipoly);
-                //     .setStyle(polygonOptions)
-                //     .addTo(MapService.map);
-
-                // var highlightFeature = function(){
-                //     console.log("yo")
-                // }
-                // multipoly.on({
-                //     mouseover: highlightFeature,
-                // });
+            
 
 
                 MapService.map.fitBounds(allResultPoly.getBounds(), {
@@ -97,7 +88,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 //     //     }
                 //     // });
                 // }, 100);
-                // window.history.pushState(null, null, 'params')
 
 
 
@@ -108,23 +98,18 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         });
     }
 
-    // $scope.$watch('formData', function () { 
-    // }, true);
-    // var multipoly = [];
-
     $scope.onKeyDown = function(key){
         if(key.keyCode == '13'){
             $scope.onSearchChanged($scope.formData)
         }
     }
     $scope.onSearchChanged = function() {
-        var params = $.param($scope.formData);
-        $scope.noResults = false;
-        //hack to make angular work with pushState (maybe find nicer solution)
-        // $location.url(params);
-        // $location.replace();
-        // $window.history.pushState($scope.formData, $scope.q, $location.absUrl());
+        var paramData = angular.copy($scope.formData);
+        paramData.tags = paramData.tags.toString();
+        var params = $.param(paramData);
 
+        $scope.noResults = false;
+     
         $window.history.pushState($scope.formData, $scope.q, params);
 
         search($scope.formData);
@@ -137,7 +122,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     var focusedPoly = null;
 
     $scope.focusPoly = function(poly) {
-        // console.log($('.poly-'+poly.pk));
 
         $('.poly-'+poly.pk).attr('class', 'leaflet-clickable wbc-poly focused-poly poly-'+poly.pk);
         var tempPoly = L.multiPolygon(poly.polygon);
@@ -187,41 +171,19 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 return;
             }
         }, 400);
-
-        // nothing to focus
-        // MapService.resetToDefaults();
-
-        // if poly still focused remove it too
     };
 
     $scope.defocusResult = function(result) {
         $timeout.cancel(animationTimer);
 
         if(result.polygon !== undefined) {
-            // $scope.focusPoly(result);
             $('.poly-'+result.pk).attr('class', 'leaflet-clickable wbc-poly poly-'+result.pk);
-            // MapService.map.fitBounds(allResultPoly.getBounds(), {
-            //     padding: [30, 30]
-            // });
-            // MapService.fitPoly(allResultPoly);
-
             return;
         }
-
-        // if(result.location !== undefined) {
-        //     $scope.focusLocation(result.location);
-        //     return;
-        // }
-
-        // nothing to focus
-        // MapService.resetToDefaults();
-
-        // if poly still focused remove it too
     };
 
     $scope.selectResult = function(result) {
         $scope.selectedResult = result;
-        // $('.poly-'+result.pk).attr('class', 'leaflet-clickable poly-'+result.pk);
         
         if (result.polygon){
             var tempPoly = L.multiPolygon(result.polygon);
@@ -240,32 +202,35 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         search($scope.formData);
         // $scope.onSearchChanged();
     });
-        //SET SEARCH ACCORFING TO URL PARAMS
+    //SET SEARCH ACCORFING TO URL PARAMS, DIRTY SELECT OF PATH
     if (window.location.pathname.split('/')[2]){
         var result = window.location.pathname.split('/')[2];
         // var result = window.location.pathname.substring(n + 1);
 
-        param_json= JSON.parse('{"' + decodeURI(result.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}')
-        console.log(param_json)
-        // $scope.formData = searchQuery;
-        // $scope.formData = "KADLSJDKLAS"
+        var param_json= JSON.parse('{"' + decodeURI(result.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}')
+        
         if(param_json['order']){
             $(".order-btn").removeClass("active");
             // TODO: Filter by value and select right button
             // $('.order-btn').value
 
         }
-        $scope.formData.order = param_json['order']
+        $scope.formData.order = param_json['order'];
+
+        if (param_json['tags']){
+            var split = param_json['tags'].split(',');
+            split.forEach(function(item){
+                $scope.formData.tags.push(item);
+            });
+        }
         // TODO PARSE TAGS AND ENTITIES
-        $scope.formData['tags[]'] = param_json['tags[]']
         // $scope.formData.entities = param_json['entities[]']
         $scope.formData.q = param_json['q']
-        // search($scope.formData);
     }
 
     $scope.changeView = function() {
         $scope.listView = !$scope.listView;
-        if(!$scope.ListView){
+        if(!$scope.listView){
             MapService.map.invalidateSize();
         }
     }
@@ -284,11 +249,12 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
 
     search($scope.formData);
+
     moveScroller($('#search-list-header'), $('.result-content'));
 }]);
 
 /** NON ANGULAR **/
-// $(document).ready(function(){
+// $(document).resady(function(){
 //     moveScroller('.search-anchor', '#search_sidebar');
 //     // moveScroller('#type-anchor', '#search_sidebar');
 //     $('#map-list-switch').click(function()'result-content'{
