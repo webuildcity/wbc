@@ -206,6 +206,6 @@ def comment_post_wrapper(request):
     if request.user.is_authenticated():
         if not (request.user.get_full_name() == request.POST['name'] or \
                request.user.email == request.POST['email']):
-            return HttpResponse("You registered user...trying to spoof a form...eh?")
+            return HttpResponse("Nice try!")
         return post_comment(request)
     return HttpResponse("Nice try!")

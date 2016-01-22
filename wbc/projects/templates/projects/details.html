@@ -143,18 +143,22 @@ DetailsController
     {% endif %}
 
     <div id="subscribe-widget" class="widget">
-        <button class="btn default wbc-button">
+        <button data-url="{% url 'project_subscribe' project.pk %}" class="btn default wbc-button subscribe-button">
             <span class="fa-stack">
               <i class="fa fa-circle-thin fa-stack-2x"></i>
               <i class="fa fa-bell fa-stack-1x fa-lg"></i>
             </span>
+            {% if subscribed %}
+            Abbestellen
+            {% else %}
             Benachrichtigungen
+            {% endif %} 
         </button>
     </div>
 
     {% if user.is_authenticated %}
     <div id="subscribe-widget" class="widget">
-        <button data-url="{% url 'project_follow' project.pk %}"class="btn btn-default follow-button wbc-button">
+        <button data-url="{% url 'project_follow' project.pk %}" class="btn btn-default follow-button wbc-button">
             <span class="fa-stack">
                 <i class="fa fa-circle-thin fa-stack-2x"></i>
                 <i class="fa fa-bell fa-stack-1x fa-lg"></i>

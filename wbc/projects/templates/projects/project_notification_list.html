@@ -1,0 +1,13 @@
+{% load staticfiles %}
+
+{% for project in projects %}
+<div class="container-fluid">
+    <a href="{{project.get_absolute_url}}">
+        <p class="pull-left">{{project.name}}</p>
+    </a>
+    <button data-url="{% url 'project_subscribe' project.pk %}" class="btn btn-default subscribe-button">            
+        Abbestellen
+    </button>
+
+</div>
+{% endfor %}
