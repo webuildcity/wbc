@@ -28,12 +28,12 @@ class Validation(Model):
 
 
 class Subscriber(Model):
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, null=True, blank=True)
     entities = models.ManyToManyField(Entity, related_name='subscribers')
     projects = models.ManyToManyField(Project)
 
     def __unicode__(self):
-        return self.email
+        return "subscriber"
 
     class Meta:
         verbose_name = "Abonnent"

@@ -168,6 +168,7 @@ $(document).ready(function(){
         });
     })
 
+
     //comments
 
     $('.comment_reply_link').click(show_reply_form);

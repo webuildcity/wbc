@@ -125,8 +125,10 @@ class SearchView(TemplateView):
                 sqs = sqs.models(model_dict[model])
 
         if 'tags' in data:
+            # see ff string or array is parsed
             if len(data['tags']) >0:
-                sqs = sqs.filter(tags__name__in=data['tags'])
+                for tag in data['tags']:
+                    sqs = sqs.filter(tags__name__in=[tag])
 
         if 'entities' in data:
             if len(data['entities']) >0:
@@ -204,6 +206,6 @@ def comment_post_wrapper(request):
     if request.user.is_authenticated():
         if not (request.user.get_full_name() == request.POST['name'] or \
                request.user.email == request.POST['email']):
-            return HttpResponse("You registered user...trying to spoof a form...eh?")
+            return HttpResponse("Nice try!")
         return post_comment(request)
     return HttpResponse("Nice try!")

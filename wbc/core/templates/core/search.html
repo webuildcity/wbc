@@ -57,7 +57,7 @@ SearchController
                 <div class="active-facets wbc-dropdown-container">
                      <div class="facet-item" ng-repeat="entity in formData.entities">
                         <span>{[{entity}]}</span>
-                        <a ng-click="formData.entities.splice(formData.entities.indexOf(entity), 1)" class="close-button">
+                        <a ng-click="formData.entities.splice(formData.entities.indexOf(entity), 1); onSearchChanged(formData);" class="close-button">
                             <i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i>
                         </a>
                     </div>
@@ -79,7 +79,7 @@ SearchController
                 <div class="active-facets wbc-dropdown-container">
                     <div class="facet-item" ng-repeat="tag in formData.tags">
                         <span>{[{tag}]}</span>
-                        <a class="close-button" ng-click="formData.tags.splice(formData.tags.indexOf(tag), 1)"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                        <a class="close-button" ng-click="formData.tags.splice(formData.tags.indexOf(tag), 1); onSearchChanged(formData);"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
                     </div>
                 </div>
                 <div id='tag-facets' class="collapse wbc-dropdown-container">
