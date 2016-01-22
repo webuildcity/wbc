@@ -7,24 +7,6 @@ from models import *
 from simple_history.admin import SimpleHistoryAdmin
 from guardian.admin import GuardedModelAdmin
 
-class PhotoAdmin(GuardedModelAdmin, SimpleHistoryAdmin):
-    # inlines = [GalleryInline]
-
-    # fields = ['active','address','entities','lat','lon','description','identifier','link','polygon']
-    ordering = ['id']
-    # change_form_template = 'projects/admin/change_form.html'
-    # add_form_template = 'projects/admin/change_form.html'
-
-class AlbumAdmin(GuardedModelAdmin, SimpleHistoryAdmin):
-    # inlines = [GalleryInline]
-
-    list_display = ('id','name')
-    list_display_links = ('id','name')
-    # fields = ['active','address','entities','lat','lon','description','identifier','link','polygon']
-    ordering = ['id']
-    # change_form_template = 'projects/admin/change_form.html'
-    # add_form_template = 'projects/admin/change_form.html'
-
 
 class ProjectInline(admin.StackedInline):
     model = Project
@@ -54,5 +36,3 @@ class AddressAdmin(admin.ModelAdmin):
 
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Address, AddressAdmin)
-admin.site.register(Photo, PhotoAdmin)
-admin.site.register(Album, AlbumAdmin)
