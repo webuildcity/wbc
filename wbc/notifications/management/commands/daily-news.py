@@ -41,11 +41,9 @@ class Command(BaseCommand):
                     if entity in event.project.entities.all():
                         notifications_items.append(event)
             for project in subscriber.projects.all():
-                print(project)
                 for event in events:
                     if project in event.projects_events.all():
                         notifications_items.append(event)
-                        print(event)
 
             # Doubletten ausfiltern
             notifications_items = list(set(notifications_items))
@@ -57,11 +55,9 @@ class Command(BaseCommand):
 
         i = 0
         for email in notifications:
-            print(notifications[email])
             if len(notifications[email]) >0:
                 # Mail abschicken
                 if email:
-                    print(email) 
                     i += 1
                     send_mail(email, 'notifications/mail/newsletter.html', {
                         'events': notifications[email],
