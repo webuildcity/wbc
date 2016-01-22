@@ -1,59 +1,68 @@
-{% extends 'core/page.html' %}
+{% extends 'core/layout_split.html' %}
 {% load staticfiles compress imagekit %}
 
 {% block css %}
     {% compress css %}
     {{block.super}}
-    <link rel="stylesheet" type="text/x-scss" href="{% static "css/blog.scss" %}" />
+    <link rel="stylesheet" type="text/x-scss" href="{% static "css/stakeholder.scss" %}" />
     {% endcompress %}
 {% endblock %}
 
 
-{% block page %}
+{% block side_content %}
 
-    <div class="container">
-        {% if stakeholder.profile %}
-        <h1> {{stakeholder.profile.full_name}}</h1>
-        {% else %}
-        <h1> {{stakeholder.name}} </h1>
-        {% endif %}
+    {% if stakeholder.profile %}
+    <h1> {{stakeholder.profile.full_name}}</h1>
+    {% else %}
+    <h1> {{stakeholder.name}} </h1>
+    {% endif %}
 
-        {% if tags %}
-            {% include "tags/tag_list.html" %}
-        {% endif %}
-    
-        {% if stakeholder.picture %}
-        {% generateimage 'wbc:profile' source=stakeholder.picture %}
-        {% else %}
-        <img class="stakeholder_img stakeholder_page_img" src="{% static 'img/person_placeholder.png' %}" />
-        {% endif %}
-        {% if stakeholder.roles %}
-        <p><b>Funktionen:</b>
-        {% for role in stakeholder.roles.all %}
-             {{role}}
-        {% endfor %}
-        </p>
-        {% endif %}
-        <p> {{stakeholder.description}}</p>
+    {% if tags %}
+        {% include "tags/tag_list.html" %}
+    {% endif %}
+
+    {% if stakeholder.picture %}
+    {% generateimage 'wbc:profile' source=stakeholder.picture -- class='profil-picture' %}
+    {% else %}
+    <img class="stakeholder_img stakeholder_page_img" src="{% static 'img/person_placeholder.png' %}" />
+    {% endif %}
+    {% if stakeholder.roles %}
+    <p><b>Funktionen:</b>
+    {% for role in stakeholder.roles.all %}
+         {{role}}
+    {% endfor %}
+    </p>
+    {% endif %}
+    <p> {{stakeholder.description}}</p>
+
+{% endblock %}
+
+{% block main_content %}
         
-        {% if own_projects %}
-        {% with own_projects as projects %}
-        <div class="project-descriptions col-md-12">
-            <h2> Eingereichte Projekte </h2>
-            {% include "projects/project_list.html" %}
-        </div>
-        {% endwith %}
-        {% endif %}
-
-        {% if projects %}
-        <div class="project-descriptions col-md-12">
-            <h2>Projekte </h2>
-            {% include "projects/project_list.html" %}
-        </div>
-        {% endif %}
-
-
+    {% if own_projects %}
+    {% with own_projects as projects %}
+    <div class="project-descriptions col-md-12">
+        <h2> Eigene Projekte </h2>
+        {% include "projects/project_list.html" %}
     </div>
+    {% endwith %}
+    {% endif %}
+
+    {% if projects %}
+    <div class="project-descriptions col-md-12">
+        <h2>Beigetretene Projekte </h2>
+        {% include "projects/project_list.html" %}
+    </div>
+    {% endif %}
+
+    {% if notifications %}
+    {% with notifications as projects %}
+    <div class="project-descriptions notifications col-md-12">
+        <h2>Meine Benachrichtigungen</h2>
+        {% include "projects/project_notification_list.html" %}
+    </div>
+    {% endwith %}
+    {% endif %}
 
 
 {% endblock %}

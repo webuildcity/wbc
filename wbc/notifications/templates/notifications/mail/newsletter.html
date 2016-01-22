@@ -4,16 +4,14 @@ Neue Veröffentlichungen
 
 Hallo,
 
-zu Bauvorhaben in den von Dir angegebenen Bezirken gibt es neue Veröffentlichungen:
+Es gibt einige neue Ereignisse die dich interessieren könnten:
 
-{% for publication in publications %}
-    Verfahren:          {{publication.process_step.process_type.name}}
-    Verfahrensschritt:  {{publication.process_step.name}}
-    Betrifft:           {{publication.place.identifier}}
-    {% if publication.place.description %}Gegend:             {{publication.place.description}}{% endif %}
-    Bezirk:             {{publication.place.entities.all|join:", "}}
-    Link zum Projekt:   {{place_link}}{{publication.place.pk}}
-    {% if publication.begin == publication.end  %}Zeitpunkt:          {{ publication.end }}{% else %}
-    Auslegungszeitraum: von {{ publication.begin}} bis {{ publication.end }}
+{% for event in events %}
+    Title:          {{event.title}}
+    Beschreibung:  {{event.description}}
+    Betrifft:           {{event.projects_events.all.0}}
+    Link zum Projekt:   {{project_link}}{{event.projects_events.all.0.pk}}
+    {% if not event.end  %}Zeitpunkt:          {{ event.begin }}{% else %}
+    Auslegungszeitraum: von {{ event.begin}} bis {{ event.end }}
     {% endif %}
 {% endfor %}

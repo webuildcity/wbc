@@ -2,6 +2,8 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+
 import datetime
 
 from wbc.core.models import Model
@@ -142,6 +144,11 @@ class Project(Model):
 
     def save(self, *args, **kwargs):
         unique_slugify(self,self.name)
-        if not self.owner:
-            self.owner = self.get_created_by()
         super(Project, self).save(*args, **kwargs)
+
+def set_owner(sender, instance, **kwargs):
+    if kwargs['created']:
+        instance.owner = instance.get_created_by()
+        instance.save()
+
+post_save.connect(set_owner, sender=Project)
