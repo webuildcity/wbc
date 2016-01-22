@@ -348,26 +348,23 @@ body {
 }
 
 /* TAGS */
+#tags-widget  {
 
-/* a.taglink {
-    overflow:auto;
-    padding: .4em .7em .3em;
-    margin: .1em .1em;
-    font-size: .85em;
-    border-radius: .25em;
-    color: white;
-    background-color: $primary-color;
-    font-weight: bold;
-    float: left;
-    */
+    a.taglink {
+        padding: .4em .7em .3em;
+        margin: .1em .1em;
+        font-size: .85em;
+        border-radius: .25em;
+        color: white;
+        background-color: $primary-color;
+        font-weight: bold;
+        float: left;
 
-.taglink {
-    background-color: $primary-color-light ;
-    padding: 1px 2px;
-    /*margin: 3px;*/
-    border-radius: 2px;
-    white-space: pre;
-
+        :hover {
+            color: white;
+            opacity: 0.6;
+        }
+    }
 }
 
 /* TAG PAGE */
@@ -547,7 +544,7 @@ body {
 .content-container {
     padding: 0em 1em 1em 1em;
     border-bottom: 1px solid #eee;
-    // overflow: auto;
+    overflow-y: auto;
 }
 
 .content-container:hover {
