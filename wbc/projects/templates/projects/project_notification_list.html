@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 {% for project in projects %}
-<div class="container-fluid">
+<div class="container-fluid notification">
     <a href="{{project.get_absolute_url}}">
         <p class="pull-left">{{project.name}}</p>
     </a>
