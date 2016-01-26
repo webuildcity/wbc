@@ -27,8 +27,6 @@ from guardian.mixins import PermissionRequiredMixin
 
 from django_comments.views.comments import post_comment
 
-from photologue.models import Photo
-
 def feeds(request):
     entities = District.objects.all()
     return render(request, 'core/feeds.html', {
