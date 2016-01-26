@@ -12,4 +12,13 @@ app.controller('DefaultController', function() {
 
 $(document).ready(function(){
     loadModal('#modal', '.modal-button')
+
+    $('.subscribe-button').on('click', function(){
+        $.get($(this).data('url'), function(data) {
+            if (data.redirect){
+                window.location.href = data.redirect;
+                window.location.reload();
+            }
+        });
+    })
 }); 

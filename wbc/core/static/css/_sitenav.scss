@@ -1,4 +1,12 @@
 /* brand */
+.mobile-menu {
+    z-index: 100;
+
+    .user_img {
+        height: 40px;
+        width : 40px;
+    }
+}
 
 #brand {
     @include branding();

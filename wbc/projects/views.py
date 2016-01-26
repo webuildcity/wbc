@@ -23,7 +23,10 @@ from wbc.region.models import District
 # from wbc.comments.forms import CommentForm
 from wbc.events.models import Event, Date, Media, Publication
 from wbc.process.models import ProcessType, ProcessStep
+from wbc.notifications.models import Subscriber
+from wbc.images.models import Photo, Album
 from models import *
+
 from serializers import *
 
 from guardian.shortcuts import assign_perm, get_perms
@@ -163,16 +166,22 @@ def project_request(request, p):
 
     today = datetime.datetime.today()
     album = None
-    if p.album:
-        album = Photo.objects.filter(album= p.album)
-    print album
+    try:
+        if p.album:
+            album = Photo.objects.filter(album= p.album)
+    except:
+        album = None
     processTypeList = None
     publications = p.publication_set.all()
 
     following = None
     if request.user.is_authenticated():
         following = p.stakeholders.filter(pk=request.user.profile.stakeholder.pk).exists()
-    
+    subscribed = None
+    if request.user.is_authenticated() and request.user.profile.subscriber:
+        subscribed = request.user.profile.subscriber.projects.filter(pk=p.pk).exists()
+
+
     if publications:
         processTypeList = {}
         processTypes = ProcessType.objects.filter(process_steps__publication__project = p).distinct()
@@ -196,10 +205,11 @@ def project_request(request, p):
         # 'publications' : p.publication_set.all().order_by('process_step__process_type__name','process_step__order'),
         #'processSteps' : ProcessStep.objects.filter(publication_processsteps),
         'processTypes' : processTypeList,
-        'following': following
+        'following': following,
+        'subscribed': subscribed
     })
 
-
+@login_required
 def follow(request, pk):
     p = get_object_or_404(Project, id = int(pk))
     if p.stakeholders.filter(pk=request.user.profile.stakeholder.pk).exists():
@@ -208,6 +218,22 @@ def follow(request, pk):
         p.stakeholders.add(request.user.profile.stakeholder)
     return JsonResponse({'redirect' : p.get_absolute_url()})
 
+@login_required
+def subscribe(request, pk):
+    p = get_object_or_404(Project, id = int(pk))
+    if not request.user.profile.subscriber:
+        subscriber = Subscriber()
+        subscriber.save()
+        request.user.profile.subscriber = subscriber
+        request.user.profile.save()
+    if request.user.profile.subscriber.projects.filter(pk=int(pk)):
+        request.user.profile.subscriber.projects.remove(p)
+    else:
+        request.user.profile.subscriber.projects.add(p)
+    return JsonResponse({'redirect' : p.get_absolute_url()})
+
+
+
 
 def photo_upload(request, pk):
 
@@ -215,11 +241,8 @@ def photo_upload(request, pk):
     if request.user.has_perm('projects.change_project', project) or request.user.has_perm('projects.change_project'):
         if project.album:
             album = project.album
-            print album
         else:
             album = Album.objects.create()
-            print "yoo"
-            print album
             album.save()
             project.album = album
             project.save()
@@ -232,15 +255,6 @@ def photo_upload(request, pk):
             'thumbnail'     : photo.thumbnail.url
         }
 
-        # return self.render_json_response(response_dict, status=200)
-        # uploaded_file = request.FILES['file']
-        # # Photo.objects.create(album=album, file=uploaded_file)
-        # stakeholder.picture = uploaded_file
-        # stakeholder.save()
-        # response_dict = {
-        #     'message': 'File uploaded successfully!',
-        # }
-
         return JsonResponse(response_dict)
     else:
         response_dict = {'message': 'No Permission!',}
@@ -248,9 +262,9 @@ def photo_upload(request, pk):
 
 def photo_delete(request, pk, photo):
     project = get_object_or_404(Project, id= int(pk))
-    print request.user.get_all_permissions()
     if request.user.has_perm('projects.change_project', project) or request.user.has_perm('projects.change_project'):
         photo = Photo.objects.filter(pk=photo, album=project.album)
         photo.delete()
         return JsonResponse({'message': 'deleted'})
     return JsonResponse({'message' : 'Error'})
+

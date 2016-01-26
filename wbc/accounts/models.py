@@ -9,6 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from wbc.stakeholder.models import Stakeholder
 from wbc.projects.slug import unique_slugify
+from wbc.notifications.models import Subscriber
 
 from guardian.models import UserObjectPermission
 
@@ -18,6 +19,7 @@ class Profile(models.Model):
 
     twitter     = models.CharField(max_length=256, blank=True, help_text=_('Your twitter nick'))
     stakeholder = models.OneToOneField(Stakeholder, blank=True, null=True, help_text="Öffentliches Profil", editable=False)
+    subscriber  = models.OneToOneField(Subscriber,  blank=True, null=True)
 
     @property
     def full_name(self):

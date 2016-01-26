@@ -11,7 +11,7 @@ app.directive('wbcSearch', function() {
             $scope.data = { suggestions: [] };
             $scope.isLoading = false;
             $scope.formData = {};
-
+            $scope.formData.q = '';
             $scope.selectedSuggestion = null;
             $scope.selectedSuggestionIdx = -1;
 
@@ -42,8 +42,8 @@ app.directive('wbcSearch', function() {
                 }
             };
 
-            $scope.submit = function(term){
-                window.location = "/suche/q="+ term;
+            $scope.submit = function(){
+                window.location = "/suche/q="+ $scope.formData.q;
             };
 
             $scope.loadDetails = function(result) {

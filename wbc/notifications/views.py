@@ -2,7 +2,7 @@
 from json import loads, dumps
 
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 
 from wbc.region.models import District
@@ -12,6 +12,7 @@ from .forms import SubscribeForm, UnsubscribeForm
 from .models import Validation, Subscriber
 from .lib import send_mail
 
+from django.contrib.auth.decorators import login_required
 
 def subscribe(request):
     entities = District.objects.all().values()

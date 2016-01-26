@@ -21,7 +21,7 @@ def settings(request):
 
 
 class ProfilePicture(ImageSpec):
-    processors = [ResizeToFill(300, 400)]
+    processors = [ResizeToFill(600, 400)]
     format = 'JPEG'
     options = {'quality': 60}
 

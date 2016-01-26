@@ -43,7 +43,7 @@
 
                     <i ng-show="isLoading" class="spinner-icon fa fa-spinner fa-spin"></i>
 
-                    <a href="" class="input-group-addon" ng-click="search()">
+                    <a href="" class="input-group-addon" ng-click="submit()">
                         <span class="glyphicon glyphicon-search">
                         </span>
                     </a>
@@ -74,7 +74,7 @@
 </head>
 
 <body ng-controller="{% block controller %}DefaultController{% endblock %}">
-    <nav class="navbar navbar-default visible-xs" role="navigation">
+    <nav class="navbar navbar-default visible-xs mobile-menu" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
