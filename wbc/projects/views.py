@@ -24,8 +24,9 @@ from wbc.region.models import District
 from wbc.events.models import Event, Date, Media, Publication
 from wbc.process.models import ProcessType, ProcessStep
 from wbc.notifications.models import Subscriber
-
+from wbc.images.models import Photo, Album
 from models import *
+
 from serializers import *
 
 from guardian.shortcuts import assign_perm, get_perms
@@ -165,8 +166,11 @@ def project_request(request, p):
 
     today = datetime.datetime.today()
     album = None
-    if p.album:
-        album = Photo.objects.filter(album= p.album)
+    try:
+        if p.album:
+            album = Photo.objects.filter(album= p.album)
+    except:
+        album = None
     processTypeList = None
     publications = p.publication_set.all()
 
