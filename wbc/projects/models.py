@@ -67,9 +67,10 @@ class Project(Model):
         return None
 
     def get_created_by(self):
-        if(self.history.first()):
-            user = User.objects.get(pk=self.history.first().history_user_id)
-            return user
+        if self.history.first():
+            if self.history.first().history_user_id != None:
+                user = User.objects.get(pk=self.history.first().history_user_id)
+                return user
         return None
 
     def get_absolute_url(self):
