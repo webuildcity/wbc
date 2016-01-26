@@ -1,5 +1,5 @@
 {% extends 'core/layout_split.html' %}
-{% load staticfiles compress guardian_tags threadedcomments_tags %}
+{% load staticfiles compress guardian_tags threadedcomments_tags imagekit %}
 
 
 {% block css %}
@@ -10,7 +10,9 @@
     {% compress css %}
     {{block.super}}
     <link rel="stylesheet" href="{% static "lib/leaflet/leaflet.css" %}" />
-    <link rel="stylesheet" type="text/x-scss" href="{% static "css/details.scss" %}" />
+    <link rel="stylesheet" type="text/x-scss" href="{% static "css/details.scss" %}" />de
+    <link rel="stylesheet" href="{% static "lib/dropzone.css" %}" />
+
     {% endcompress %}
 {% endblock %}
 
@@ -28,7 +30,8 @@
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintOutputCustomBuildingTiles.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/3d.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'adminmap.js' %}"  ></script>
-    
+    <script type="text/javascript" src="{% static 'lib/dropzone.js' %}" ></script>
+
 
     <script type="text/javascript">
         var _static_url = {% static '' %}
@@ -36,8 +39,6 @@
         var _tiles_opt = {{tiles_opt|safe}};
         var _default_view = {{default_view|safe}};
 
-        var _lon = {{ project.lon|stringformat:"F" }};
-        var _lat = {{ project.lat|stringformat:"F" }};
         var _address = "{{ project.address|safe }}";
         var _polygon = {% if project.polygon %}{{project.polygon|safe}}{% else %}[]{% endif %};
         if (!window.wbc3d) {
@@ -63,7 +64,7 @@ DetailsController
         <div class="details-headline content-container">
             <h1> {{project.name}} </h1>
 
-           
+
             {% if project.address_obj %}
 
             <a class="map-link" data-toggle="tab" href="#project_map">
@@ -76,8 +77,9 @@ DetailsController
         {% if user.is_authenticated %}
         <ul class="admin-panel">
             <li><a class="admin-link project-admin" data-toggle="modal" data-target="#edit-modal" data-form="{% url 'project_create' %}" href="#"><i class="fa fa-plus"></i></a></li>
-            {% if 'change_project' in project_perms %}
+            {% if 'change_project' in project_perms or perms.projects.change_project %}
             <li><a class="admin-link project-admin" data-form="{% url 'project_update' project.pk %}" href="#"><i class="fa fa-pencil"></i></a></li>
+            <li><a class="admin-link photo-admin" data-form="{% url 'project_update' project.pk %}" data-toggle="modal" data-target="#photo-modal" href="#"><i class="fa fa-image"></i></a></li>
             {% endif %}
          <!--    <li><a class="admin-link" href="{{new_publication_link}}?project_id={{project.pk}}"><i class="fa fa-newspaper"></i></a></li> -->
         </ul>
@@ -128,9 +130,10 @@ DetailsController
     </div> -->
 
 
-    {% if gallery %}
-    <img class="project-image" u="image" src="{{ gallery.0.latest.0.get_description_url }}" />
-        
+    {% if album %}
+
+     {% generateimage 'wbc:details' source=project.album.get_cover_photo.file %}
+
     {% endif %}
 
     {% if project.description %}
@@ -156,7 +159,7 @@ DetailsController
         <div id="next-date-widget" class="widget">
             <div class="content-container">
                 <h3><i class="fa fa-calendar"> </i>Nächster Termin</h3>
-                {% if 'change_project' in project_perms %}
+                {% if 'change_project' in project_perms or perms.projects.change_project %}
                 <ul class="admin-panel">
                     <li><a class="admin-link" data-toggle="modal" data-target="#event-modal" href="#"><i class="fa fa-plus"></i></a></li>
                 </ul>
@@ -169,11 +172,11 @@ DetailsController
         </div>
     </a>
     {% endif %}
-    
+
     {% if lastNews %}
     <a class="event-item" data-toggle="tab" href="#timeline">
         <div id="last-news-widget" class="widget">
-            <div class="content-container"> 
+            <div class="content-container">
                 <h3><i class="fa fa-newspaper-o"> </i>Letzte Neuigkeiten</h3>
                 <p>{{lastNews.title}}</p>
                 <p>{{lastNews.teaser}}</p>
@@ -199,7 +202,6 @@ DetailsController
 
 
 {% block main_content %}
-
     <div id="edit-modal" class="modal fade" role="dialog" tabindex="-1">
         <div class="well modal-dialog modal-content modal-lg" role="document">
              <div class="modal-header">
@@ -226,20 +228,20 @@ DetailsController
             </div>
         </div>
     </div>
-    
+
     <ul class="wbc-nav main-content-nav nav nav-tabs" data-tabs="tabs">
         <li class="active"><a data-toggle="tab" href="#info"><i class="fa fa-info"></i>Info</a></li>
         <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Karte</a></li>
-        <li  {{gallery|yesno:' ,class=not-active'}}><a data-toggle="tab" href="#gallery"><i class="fa fa-image"></i>Bilder</a></li>
+        <li  {{album|yesno:' ,class=not-active'}}><a data-toggle="tab" href="#gallery"><i class="fa fa-image"></i>Bilder</a></li>
         <li>
             <a data-toggle="tab" href="#timeline"><i class="fa fa-calendar"></i>Ereignisse</a>
         </li>
         <li>
-            <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Beteiligte</a> 
+            <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Beteiligte</a>
         </li>
         <li><a class="3d-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>3D</a></li>
         <li><a data-toggle="tab" href="#discussion"><i class="fa fa-comment"></i>Diskussion ({% get_comment_count for project as count %}{{count}})</a></li>
-    </ul>   
+    </ul>
 
     <div id="tab-content" class="tab-content">
         <div id="info" class="tab-pane active">
@@ -276,7 +278,7 @@ DetailsController
         </div>
 
         <div id="gallery" class="tab-pane">
-        {% if gallery %}
+        {% if album %}
            {% include "projects/project_gallery.html" %}
         {% endif %}
         </div>
@@ -284,11 +286,11 @@ DetailsController
         <div id="timeline" class="tab-pane">
             {% include "projects/project_events.html" %}
         </div>
-             
+
         <div id="stakeholder" class="tab-pane">
             {% include "projects/project_stakeholder.html" %}
         </div>
-        
+
         <div id="3d" class="tab-pane">
             <div id="vizicities-viewport">
                 <div class="vizicities-ui-item" id="vizi-menu">
@@ -302,14 +304,31 @@ DetailsController
             </div>
         </div>
         <div id="discussion" class="tab-pane">
+
+            {% render_comment_list for project %}
+            
             {% if user.is_authenticated %}
                 {% render_comment_form for project %}
             {% else %}
                 <a class="dropdown-toggle" data-toggle="dropdown" data-target=".dropdown" href="#" >Melden</a> Sie sich an um ein Kommentar zu hinterlassen.
             {% endif %}
-            
-            {% render_comment_list for project %}
+
         </div>
     </div>
+</div>
+
+<div id="photo-modal" class="modal fade" role="dialog" tabindex="-1">
+    <div class="well modal-dialog modal-content modal-lg" role="document">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3> hinzufügen </h3>
+        </div>
+        <div class="custom-content">
+            {% if project.pk %}
+            {% include 'projects/photo_upload.html' %}
+            {% endif %}
+        </div>
+    </div>
+
 </div>
 {% endblock %}

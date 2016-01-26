@@ -1,3 +1,9 @@
+app.config(['$locationProvider', function($locationProvider) {
+    $locationProvider.html5Mode({
+        enabled: true,
+      });
+}]);
+
 app.controller('SearchController', ['$scope', '$document', '$http', '$window', '$timeout', '$location', 'MapService',
     function($scope, $document, $http, $window, $timeout, $location, MapService) {
 
@@ -7,13 +13,9 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         'stakeholder': 'Akteure'
     };
 
-    //SET SEARCH ACCORFING TO URL PARAMS
-    if (window.location.hash != ' '){
-        $scope.formData = {};
-    } else {
-        $scope.formData = {};
-        $scope.formData = window.location.hash;
-    }
+    $scope.formData = {};
+    $scope.formData.order = '';
+
     $scope.selectedResult = null;
     $scope.listView = true;
 
@@ -32,7 +34,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     }
 
     var search = function(data){
-
         $http({
             method: 'POST',
             url:  '/suche/',
@@ -120,15 +121,17 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         var params = $.param($scope.formData);
         $scope.noResults = false;
         //hack to make angular work with pushState (maybe find nicer solution)
-        $location.url(params);
-        $location.replace();
-        $window.history.pushState($scope.formData, $scope.searchTerm, $location.absUrl());
+        // $location.url(params);
+        // $location.replace();
+        // $window.history.pushState($scope.formData, $scope.q, $location.absUrl());
+
+        $window.history.pushState($scope.formData, $scope.q, params);
 
         search($scope.formData);
     };
 
     $scope.selectTerm = function(term) {
-        $scope.formData.searchTerm = term;
+        $scope.formData.q = term;
         // $scope.onSearchChanged();
     };
     var focusedPoly = null;
@@ -237,16 +240,58 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         search($scope.formData);
         // $scope.onSearchChanged();
     });
+        //SET SEARCH ACCORFING TO URL PARAMS
+    if (window.location.pathname.split('/')[2]){
+        var result = window.location.pathname.split('/')[2];
+        // var result = window.location.pathname.substring(n + 1);
+
+        param_json= JSON.parse('{"' + decodeURI(result.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}')
+        console.log(param_json)
+        // $scope.formData = searchQuery;
+        // $scope.formData = "KADLSJDKLAS"
+        if(param_json['order']){
+            $(".order-btn").removeClass("active");
+            // TODO: Filter by value and select right button
+            // $('.order-btn').value
+
+        }
+        $scope.formData.order = param_json['order']
+        // TODO PARSE TAGS AND ENTITIES
+        $scope.formData['tags[]'] = param_json['tags[]']
+        // $scope.formData.entities = param_json['entities[]']
+        $scope.formData.q = param_json['q']
+        // search($scope.formData);
+    }
+
+    $scope.changeView = function() {
+        $scope.listView = !$scope.listView;
+        if(!$scope.ListView){
+            MapService.map.invalidateSize();
+        }
+    }
+    $('.order-btn').click(function(){
+        $(".order-btn").siblings(".active").removeClass("active");
+        $(this).addClass("active");
+
+        $scope.formData.order = this.value;
+        if(this.value[0] != '-') {
+            this.value = '-'+this.value;
+        } else {
+            this.value = this.value.split('-')[1];
+        }
+        $scope.onSearchChanged();
+    });
+
 
     search($scope.formData);
+    moveScroller($('#search-list-header'), $('.result-content'));
 }]);
-
 
 /** NON ANGULAR **/
 // $(document).ready(function(){
 //     moveScroller('.search-anchor', '#search_sidebar');
 //     // moveScroller('#type-anchor', '#search_sidebar');
-//     $('#map-list-switch').click(function(){
+//     $('#map-list-switch').click(function()'result-content'{
 //         $('.result-content').toggleClass('hidden');
 //     });
 // });

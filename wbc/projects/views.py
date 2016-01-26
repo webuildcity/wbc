@@ -90,9 +90,6 @@ class ProjectCreate(ProtectedCreateView):
 
     def dispatch(self, request, *args, **kwargs):
       #  print '%s.1add_%s' % (self.model._meta.app_label, self.model._meta.model_name)
-        print request.user.groups.all()[0].permissions.all()
-        print request.user.has_perm('projects.add_project')
-        print Permission.objects.filter(group__user=request.user)
         @login_required
         def wrapper(request, *args, **kwargs):
             return super(ProtectedCreateView, self).dispatch(request, *args, **kwargs)
@@ -165,10 +162,10 @@ def project_request(request, p):
     #             comment.save()
 
     today = datetime.datetime.today()
-    gallery = None
-    if p.gallery:
-        gallery = Gallery.objects.filter(slug = p.gallery.slug)
-
+    album = None
+    if p.album:
+        album = Photo.objects.filter(album= p.album)
+    print album
     processTypeList = None
     publications = p.publication_set.all()
 
@@ -190,7 +187,7 @@ def project_request(request, p):
         'project' : p,
         # 'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
         'events'  : p.events.order_by('-begin'),
-        'gallery' : gallery,
+        'album' : album,
         'nextDate': p.events.filter(begin__gte=today, date__isnull=False).order_by('begin').first(),
         'lastNews': p.events.filter(media__isnull=False).order_by('begin').first(),
         'tags'    : p.tags.all(),
@@ -210,3 +207,50 @@ def follow(request, pk):
     else:
         p.stakeholders.add(request.user.profile.stakeholder)
     return JsonResponse({'redirect' : p.get_absolute_url()})
+
+
+def photo_upload(request, pk):
+
+    project = get_object_or_404(Project, id= int(pk))
+    if request.user.has_perm('projects.change_project', project) or request.user.has_perm('projects.change_project'):
+        if project.album:
+            album = project.album
+            print album
+        else:
+            album = Album.objects.create()
+            print "yoo"
+            print album
+            album.save()
+            project.album = album
+            project.save()
+
+        uploaded_file = request.FILES['file']
+        photo = Photo.objects.create(album=album, file=uploaded_file)
+        photo.save()
+        response_dict = {
+            'message': 'File uploaded successfully!',
+            'thumbnail'     : photo.thumbnail.url
+        }
+
+        # return self.render_json_response(response_dict, status=200)
+        # uploaded_file = request.FILES['file']
+        # # Photo.objects.create(album=album, file=uploaded_file)
+        # stakeholder.picture = uploaded_file
+        # stakeholder.save()
+        # response_dict = {
+        #     'message': 'File uploaded successfully!',
+        # }
+
+        return JsonResponse(response_dict)
+    else:
+        response_dict = {'message': 'No Permission!',}
+        return JsonResponse(response_dict)
+
+def photo_delete(request, pk, photo):
+    project = get_object_or_404(Project, id= int(pk))
+    print request.user.get_all_permissions()
+    if request.user.has_perm('projects.change_project', project) or request.user.has_perm('projects.change_project'):
+        photo = Photo.objects.filter(pk=photo, album=project.album)
+        photo.delete()
+        return JsonResponse({'message': 'deleted'})
+    return JsonResponse({'message' : 'Error'})

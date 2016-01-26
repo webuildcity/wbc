@@ -2,7 +2,7 @@ app.directive('wbcSearch', function() {
     return {
         restrict: 'E',
         scope: {
-            searchTerm: '&',
+            q: '&',
             text: '@text'
         },
         templateUrl: '/wbc-searchdirective.html',
@@ -17,13 +17,13 @@ app.directive('wbcSearch', function() {
 
 
             $scope.onSearchChanged = function() {
-                if($scope.formData.searchTerm) {
+                if($scope.formData.q) {
                     $scope.isLoading = true;
                     $http({
                         method: 'GET',
                         url:  '/autocomplete',
                         params: {
-                            q: $scope.formData.searchTerm
+                            q: $scope.formData.q
                         }
                     }).success(function(response) {
                         console.log(response)
@@ -43,7 +43,7 @@ app.directive('wbcSearch', function() {
             };
 
             $scope.submit = function(term){
-                window.location = "/suche/?searchTerm="+ term;
+                window.location = "/suche/q="+ term;
             };
 
             $scope.loadDetails = function(result) {
@@ -56,7 +56,7 @@ app.directive('wbcSearch', function() {
 
                 // tab and enter
                 if(evt.keyCode == '9' || evt.keyCode == '13') {
-                    console.log($scope.formData.searchTerm)
+                    console.log($scope.formData.q)
                     if($scope.selectedSuggestionIdx !== -1) {
                         evt.preventDefault();
                         $scope.loadDetails($scope.data.suggestions[$scope.selectedSuggestionIdx].internal_link);

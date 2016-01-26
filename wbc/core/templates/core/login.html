@@ -22,15 +22,15 @@
         {% endif %} -->
 
         <div class="form-group">
-            <label class="control-label" for="username">Username</label>
+            <label class="control-label" for="username">Benutzername</label>
             <div>
-                <input class="form-control" type="text" id="username" name="username"  placeholder="Username">
+                <input class="form-control" type="text" id="username" name="username"  placeholder="Benutzername eingeben">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="password">Password</label>
+            <label class="control-label" for="password">Passwort</label>
             <div>
-                <input class="form-control" type="password" name="password" id="password" placeholder="Password">
+                <input class="form-control" type="password" name="password" id="password" placeholder="Passwort eingeben">
             </div>
         </div>
         <div class="form-group">
@@ -39,7 +39,16 @@
             </div>
         </div>
     </form>
-    <a class="modal-button" data-toggle="modal" data-target="#modal" data-form="{% url 'registration_register' %}" href="#">Jetzt Registrieren</a>
+        
+        <p><a class="modal-button" data-toggle="modal" data-target="#modal" data-form="{% url 'registration_register' %}" href="#"><br>Noch nicht registriert?</a></p>
+
+        <div class="form-group">
+            <div class="">
+                <button class="modal-button" data-toggle="modal" data-target="#modal" data-form="{% url 'registration_register' %}" href="#">Hier Registrieren!</a></button>
+            </div>
+        </div>
+ 
+    
  </div>
 {% else %}
 Sie sind bereits angemeldet

@@ -1,6 +1,11 @@
 @import 'css/_variables.scss';
 /** AB HIER TEST NEUE SEITE **/
 
+.big-page {
+    overflow-y: hidden;
+    // overflow-x: hidden;
+}
+
 #header {
     .search-field {
         display: none;
@@ -191,10 +196,81 @@
 
 #list {
     height: 100%;
+
+    #search-list-header {
+        // position: relative;
+        width: 100%;
+        background: white;
+        border-bottom: 2px solid #eee;
+        z-index: 1;
+        // box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.44);
+
+        h2 {
+            margin: 0.3em 0em;
+            text-align: center;
+            margin-bottom: 0.1em;
+        }
+
+        p {
+            font-weight: bold;
+        }
+        .result-number {
+            padding-left: 0.7em;
+        }
+        .sort-control {
+            p {
+                margin: 0.4em 2em;
+                padding-top: 0.3em;
+            }
+            .tabs {
+                margin: 0.2em 2em;
+                padding-left: 0px;
+            }
+        }
+
+    }
+
+    #result-list {
+
+        clear: both;
+
+        .search-result {
+            margin: 0.6em;
+            padding: 0.3em;
+            background: #fcfcfc;
+            border-bottom: 0px;
+            border-radius: 4px;
+
+        }
+        .search-result:hover {
+            background: white;
+            // border: 1px solid $primary-color;
+        }
+        .result-block {
+            margin: 0.3em 0.45em;
+            white-space: nowrap;
+            min-width: 150px;
+        }
+        .teaser {
+            // padding-left: 2em;
+            clear: both;
+            margin: 0.3em 0.45em;
+        }
+
+        .result-mash {
+            position: relative;
+            overflow: auto;
+            padding-left: .5em;
+        }
+    }
 }
 
 .result-content {
     overflow-y:auto;
+    display: none;
+}
+.active-result {
+    display: block;
 }
 
 .search-result {

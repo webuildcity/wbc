@@ -1,10 +1,10 @@
 {% load i18n %}
-{% load staticfiles %}
+{% load staticfiles imagekit %}
 
 <script type="text/javascript" src="{% static 'lib/jssor.slider.mini.js' %}"  ></script>
 <script type="text/javascript" src="{% static 'slideshow.js' %}"  ></script>
 
-{% for galleryItem in gallery %}
+
     <div id="slider1_container" style="position: relative; top: 0px; left: 0px; width: 800px; height: 400px; overflow: hidden;">
     <!-- Slides Container -->
       <!--   <div u="loading" style="position: absolute; top: 0px; left: 0px;">
@@ -16,10 +16,10 @@
             </div>
         </div> -->
         <div class="slides" u="slides">
-            {% for photo in galleryItem.latest %}
+            {% for photo in album %}
                 <div>
-                    <img u="image" src="{{ photo.get_gallery_url }}" />
-                    <img u="thumb" src="{{ photo.get_thumbnail_url }}" />
+                   {% generateimage 'wbc:gallery' source=photo.file -- u="image" %}
+                    <img u="thumb" src="{{ photo.thumbnail.url }}" />
                 </div>
             {% endfor %}
         </div>
@@ -36,14 +36,13 @@
             <!-- Thumbnail Item Skin Begin -->
             <div u="slides" style="cursor: default;">
                 <div u="prototype" class="p">
-                    <div class=w>
+                    <div class='w'>
                         <div u="thumbnailtemplate" class="t"></div>
                     </div>
-                    <div class=c></div>
+                    <div class='c'></div>
                 </div>
             </div>
             <!-- Thumbnail Item Skin End -->
         </div>
         <!--#endregion Thumbnail Navigator Skin End -->
     </div>
-{% endfor %}

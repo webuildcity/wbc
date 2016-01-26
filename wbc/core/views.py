@@ -113,9 +113,9 @@ class SearchView(TemplateView):
         if 'offset' in data:
             offset = data['offset'] 
         
-        if 'searchTerm' in data:
-            if data['searchTerm'] != "":
-                sqs = sqs.filter(content=AutoQuery(data['searchTerm']))
+        if 'q' in data:
+            if data['q'] != "":
+                sqs = sqs.filter(content=AutoQuery(data['q']))
         
         suggestions = sqs.spelling_suggestion()
         # print suggestions
@@ -131,11 +131,15 @@ class SearchView(TemplateView):
         if 'entities' in data:
             if len(data['entities']) >0:
                 sqs = sqs.filter(entities__name__in=data['entities'])
-            
+        
+        if 'order' in data:
+            if data['order'] != '' and data['order'] != '-':
+                order = data['order']
+                sqs = sqs.order_by(order)
         results = []
 
         for result in sqs:
-            resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link, address_obj=result.address_obj)
+            resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link, address_obj=result.address_obj, thumbnail=result.thumbnail, num_stakeholder=result.num_stakeholder, created=result.created.strftime("%d.%m.%y"), created_by=result.created_by, teaser=result.teaser)
             if result.location:
                 resultdict['location'] = [result.location[0], result.location[1]]
 
@@ -155,10 +159,9 @@ class SearchView(TemplateView):
 
     def get(self, request):
         query =  request.GET.urlencode()
-        print query
-        searchTerm = request.GET.get('searchTerm', '')
+        q = request.GET.get('q', '')
         # print request.META['QUERY_STRING']
-        return render(request, 'core/search.html',  context={'searchTerm': searchTerm})
+        return render(request, 'core/search.html',  context={'q': q})
 
     def post(self, request):
         data = json.loads(request.body)

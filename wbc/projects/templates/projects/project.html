@@ -22,8 +22,6 @@
         var _tiles_opt = {{tiles_opt|safe}};
         var _default_view = {{default_view|safe}};
 
-        var _lon = {{ project.lon|stringformat:"F" }};
-        var _lat = {{ project.lat|stringformat:"F" }};
         var _address = "{{ project.address|safe }}";
         var _polygon = {% if project.polygon %}{{project.polygon|safe}}{% else %}[]{% endif %};
     </script>

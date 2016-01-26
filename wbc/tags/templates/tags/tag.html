@@ -1,9 +1,10 @@
 {% extends 'core/layout.html' %}
-{% load staticfiles %}
+{% load staticfiles compress %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'page.css' %}" />
-
+    {% compress css %}
+    {{block.super}}
+    {% endcompress %}
 {% endblock %}
 
 {% block js %}

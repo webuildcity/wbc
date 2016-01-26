@@ -3,7 +3,7 @@
     {% get_obj_perms user for project as "project_perms" %}
 {% endif %}
 <div class="row events">
-    {% if 'change_project' in project_perms %}
+    {% if 'change_project' in project_perms or perms.projects.change_project %}
     <div class="new-event">
         <ul class="admin-panel">
             <li><a class="admin-link" data-toggle="modal" data-target="#event-modal" href="#"><i class="fa fa-plus"></i></a></li>

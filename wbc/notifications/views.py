@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 
 from wbc.region.models import District
+from wbc.projects.models import Project
 
 from .forms import SubscribeForm, UnsubscribeForm
 from .models import Validation, Subscriber
@@ -14,13 +15,14 @@ from .lib import send_mail
 
 def subscribe(request):
     entities = District.objects.all().values()
+    projects = Project.objects.all().values()
 
     unsubscribe_path = reverse(
         'wbc.notifications.views.unsubscribe', args=['.']).strip('.')
     validate_path = reverse('wbc.notifications.views.validate', args=['.']).strip('.')
 
     if request.method == 'POST':
-        form = SubscribeForm(request.POST, entities=entities)
+        form = SubscribeForm(request.POST, entities=entities, projects=projects)
         if form.is_valid():
             email = form.cleaned_data.pop('email')
             entitiesJson = dumps(form.cleaned_data)
@@ -44,12 +46,13 @@ def subscribe(request):
                 'unsubscribe_link': settings.SITE_URL + unsubscribe_path + email
             })
     else:
-        form = SubscribeForm(entities=entities)
+        form = SubscribeForm(entities=entities, projects=projects)
 
     return render(request, 'notifications/subscribe.html', {
         'form': form,
         'unsubscribe_link': settings.SITE_URL + unsubscribe_path,
-        'entities': entities
+        'entities': entities,
+        'projects': projects
     })
 
 

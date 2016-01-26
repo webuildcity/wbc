@@ -24,9 +24,9 @@ class DepartmentViewSet(viewsets.ReadOnlyModelViewSet):
 
 def stakeholderview(request, slug):
     s = Stakeholder.objects.get(slug__iexact=slug)
-
     return render(request,'stakeholder/stakeholder.html',{
         'stakeholder'       : s,
+        'own_projects'      : Project.objects.filter(owner=s.profile.user),
         'projects'          : Project.objects.filter(stakeholders=s.id).distinct(),
         'tags'              : s.tags.all()
         # 'events'         : Event.objects.filter(tags__name__in=[slug]).distinct(),   
@@ -92,7 +92,6 @@ def photo_upload(request, pk):
     if request.user.has_perm('stakeholder.change_stakeholder', stakeholder):
         uploaded_file = request.FILES['file']
         # Photo.objects.create(album=album, file=uploaded_file)
-        print uploaded_file
         stakeholder.picture = uploaded_file
         stakeholder.save()
         response_dict = {

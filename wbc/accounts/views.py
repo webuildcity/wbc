@@ -26,7 +26,7 @@ def profile(request, pk):
 def profile_update(request):
     # next = request.META.get('HTTP_REFERER', '')
     #always redirect to user profile after save
-    next = reverse('profile', kwargs={'pk':request.user.profile.pk})
+    next = reverse('stakeholder', kwargs={'slug':request.user.profile.stakeholder.slug})
 
     if request.method == 'POST':
         user_form = UserForm(request.POST)

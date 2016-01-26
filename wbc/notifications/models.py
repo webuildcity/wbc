@@ -5,6 +5,7 @@ from django.db import models
 
 from wbc.core.models import Model
 from wbc.process.models import Entity
+from wbc.projects.models import Project
 
 
 class Validation(Model):
@@ -29,6 +30,7 @@ class Validation(Model):
 class Subscriber(Model):
     email = models.EmailField(unique=True)
     entities = models.ManyToManyField(Entity, related_name='subscribers')
+    projects = models.ManyToManyField(Project)
 
     def __unicode__(self):
         return self.email

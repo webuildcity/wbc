@@ -24,7 +24,7 @@ class PublicationAdmin(GuardedModelAdmin):
     list_display_links = ('id', 'project', 'begin')
     ordering = ['id']
 
-admin.site.register(Event, EventAdmin)
+#admin.site.register(Event, EventAdmin)
 admin.site.register(Date, DateAdmin)
 admin.site.register(Media, MediaAdmin)
 admin.site.register(Publication, PublicationAdmin)

@@ -2,20 +2,36 @@
 from django import forms
 from django.contrib import admin
 
-from photologue.admin import GalleryAdmin as GalleryAdminDefault
-from photologue.models import Gallery
 from models import *
 
 from simple_history.admin import SimpleHistoryAdmin
 from guardian.admin import GuardedModelAdmin
+
+class PhotoAdmin(GuardedModelAdmin, SimpleHistoryAdmin):
+    # inlines = [GalleryInline]
+
+    # fields = ['active','address','entities','lat','lon','description','identifier','link','polygon']
+    ordering = ['id']
+    # change_form_template = 'projects/admin/change_form.html'
+    # add_form_template = 'projects/admin/change_form.html'
+
+class AlbumAdmin(GuardedModelAdmin, SimpleHistoryAdmin):
+    # inlines = [GalleryInline]
+
+    list_display = ('id','name')
+    list_display_links = ('id','name')
+    # fields = ['active','address','entities','lat','lon','description','identifier','link','polygon']
+    ordering = ['id']
+    # change_form_template = 'projects/admin/change_form.html'
+    # add_form_template = 'projects/admin/change_form.html'
 
 
 class ProjectInline(admin.StackedInline):
     model = Project
     can_delete = False
 
-class GalleryAdmin(GalleryAdminDefault):
-    inlines = [ProjectInline]
+# class GalleryAdmin(GalleryAdminDefault):
+#     inlines = [ProjectInline]
 
 class ProjectAdmin(GuardedModelAdmin, SimpleHistoryAdmin):
     # inlines = [GalleryInline]
@@ -33,8 +49,10 @@ class AddressAdmin(admin.ModelAdmin):
     # fields = ['active','address','entities','lat','lon','description','identifier','link','polygon']
     ordering = ['id']
 
-admin.site.unregister(Gallery)
-admin.site.register(Gallery, GalleryAdmin)
+# admin.site.unregister(Gallery)
+# admin.site.register(Gallery, GalleryAdmin)
 
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Address, AddressAdmin)
+admin.site.register(Photo, PhotoAdmin)
+admin.site.register(Album, AlbumAdmin)

@@ -1,5 +1,5 @@
 {% extends 'core/page.html' %}
-{% load staticfiles compress %}
+{% load staticfiles compress imagekit %}
 
 {% block css %}
     {% compress css %}
@@ -12,13 +12,18 @@
 {% block page %}
 
     <div class="container">
+        {% if stakeholder.profile %}
+        <h1> {{stakeholder.profile.full_name}}</h1>
+        {% else %}
         <h1> {{stakeholder.name}} </h1>
+        {% endif %}
+
         {% if tags %}
             {% include "tags/tag_list.html" %}
         {% endif %}
     
         {% if stakeholder.picture %}
-        <img class="stakeholder_img stakeholder_page_img" src="{{ stakeholder.picture.url }}" />
+        {% generateimage 'wbc:profile' source=stakeholder.picture %}
         {% else %}
         <img class="stakeholder_img stakeholder_page_img" src="{% static 'img/person_placeholder.png' %}" />
         {% endif %}
@@ -30,12 +35,24 @@
         </p>
         {% endif %}
         <p> {{stakeholder.description}}</p>
+        
+        {% if own_projects %}
+        {% with own_projects as projects %}
+        <div class="project-descriptions col-md-12">
+            <h2> Eingereichte Projekte </h2>
+            {% include "projects/project_list.html" %}
+        </div>
+        {% endwith %}
+        {% endif %}
+
         {% if projects %}
         <div class="project-descriptions col-md-12">
-            <h2> Projekte: </h2>
+            <h2>Projekte </h2>
             {% include "projects/project_list.html" %}
         </div>
         {% endif %}
+
+
     </div>
 
 

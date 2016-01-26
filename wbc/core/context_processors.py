@@ -2,7 +2,7 @@
 from django.conf import settings as django_settings
 
 from imagekit import ImageSpec, register
-from imagekit.processors import ResizeToFill
+from imagekit.processors import Crop, ResizeToFill, ResizeToFit, SmartResize, Adjust, ResizeCanvas
 
 def settings(request):
     try:
@@ -26,3 +26,18 @@ class ProfilePicture(ImageSpec):
     options = {'quality': 60}
 
 register.generator('wbc:profile', ProfilePicture)
+
+class DetailsPicture(ImageSpec):
+    processors = [ResizeToFill(400, 300)]
+    format = 'JPEG'
+    options = {'quality': 60}
+
+register.generator('wbc:details', DetailsPicture)
+
+
+class GalleryPicture(ImageSpec):
+    processors = [ResizeToFit(800, 400)]
+    format = 'JPEG'
+    options = {'quality': 60}
+
+register.generator('wbc:gallery', GalleryPicture)

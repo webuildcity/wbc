@@ -20,7 +20,10 @@
 body {
     background: $background-image-light;
 }
-
+.big-page {
+    overflow-y: hidden;
+    // overflow-x: hidden;
+}
 
 #project_map {
     height: 100%;
@@ -121,7 +124,8 @@ body {
 
 .admin-panel {
     float: right;
-    list-style: none;
+    list-style-type: none;
+    padding: .5em .5em 0 0;
     li {
         float: left;
     }
@@ -132,6 +136,7 @@ body {
     }
 
 }
+
 .form-required {
     label::before {
         content: "*";
@@ -209,6 +214,53 @@ body {
 
     #discussion {
         overflow-y: auto;
+
+        .content-container {
+            margin-top: 1em;
+        }
+
+        .comments {
+
+            h3 {
+                color: $primary-text;
+                margin-top: 0;
+            }
+
+            ul {
+                list-style-type: none;
+                background-color: $background-color-comments;
+                padding: 0;
+
+                li {
+                    clear: both;
+                    display: block;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    padding: 1rem;
+                    margin-top: 1rem;
+
+                }
+            }
+
+            .comment_info {
+                display: block;
+                overflow-y: auto;
+            }
+
+            .comment_user {
+                float: left;
+                margin-right: .5em;
+            }
+
+            .comment_data {
+                float: left;
+            }
+
+            .comment_text {
+                margin-bottom: 1em;
+            }
+        }
+
         #comment-form {
             #div_id_name {
                 display: none;
@@ -261,6 +313,11 @@ body {
     }
 }
 
+
+//IMAGE ADMIN
+#photo-upload {
+    clear: both;
+}
 /*WIDGETS */
 
 .widget .fa {
@@ -292,7 +349,7 @@ body {
 
 /* TAGS */
 
-a.taglink {
+/* a.taglink {
     overflow:auto;
     padding: .4em .7em .3em;
     margin: .1em .1em;
@@ -302,6 +359,15 @@ a.taglink {
     background-color: $primary-color;
     font-weight: bold;
     float: left;
+    */
+
+.taglink {
+    background-color: $primary-color-light ;
+    padding: 1px 2px;
+    /*margin: 3px;*/
+    border-radius: 2px;
+    white-space: pre;
+
 }
 
 /* TAG PAGE */

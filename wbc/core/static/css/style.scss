@@ -1,5 +1,6 @@
 @import 'css/_variables.scss';
 @import 'sitenav';
+@import 'project_list';
 
 html {
     height: 100%;
@@ -8,7 +9,7 @@ html {
 body {
     height: 100%;
     overflow: auto;
-    color: $primary-text; 
+    color: $primary-text;
     background-color: $background-color;
 }
 html, body {
@@ -38,7 +39,7 @@ h4 {
     position: absolute;
     top: 45px;  // von zuvor 50px - sollte relativ zu height navbar sein!
     bottom: 0px;
-    // overflow: hidden;
+    overflow-y: auto;
     width: 100%;
 }
 
@@ -249,7 +250,7 @@ a:hover,
 /* ort */
 
 
-/* comments */
+/* comments //
 .comments-wrapper {
     background: rgba(0, 0, 0, 0.1);
     padding-top: 10px;
@@ -268,7 +269,7 @@ a:hover,
     float: left;
 }
 .comment-author-name {
-    /*margin-top: 6px;*/
+    /*margin-top: 6px;
     margin-left: 42px;
 }
 .comment-author-time {
@@ -283,7 +284,7 @@ a:hover,
     margin-top: 20px;
     margin-bottom: 10px;
 }
-
+*/
 
 
 header > a:link,
