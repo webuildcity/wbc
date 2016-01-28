@@ -7,3 +7,4 @@ django_wbc.egg-info/*
 testing/local.py
 env
 htmlcov
+**/migrations/**
