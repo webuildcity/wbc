@@ -1,12 +1,12 @@
 
-<h2>Benutzerkonto registrieren</h2>
+<h2>Register</h2>
 
 <form method="post" action="#">
     {% csrf_token %}
 
     {% include 'core/form_fields.html' %}
 
-    <button type="submit" class="btn btn-primary">Registrieren</button>
+    <button type="submit" class="btn btn-primary">Register</button>
     <input type="hidden" name="next" value="{{ next }}" />
 </form>
 

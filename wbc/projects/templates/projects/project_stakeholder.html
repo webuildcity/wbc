@@ -2,8 +2,12 @@
 {% load staticfiles %}
 
 <div class="stakeholders">
+    <div class="content-container">
+        <h3> Follower of the project </h3>
+        {% include "stakeholder/stakeholder_list.html" %}
+    </div>
     <div id='project_creator' class="clearfix">
-        <h3> Erstellt von </h3>
+        <h3> Created by </h3>
         <a href="{{project.get_created_by.get_absolute_url }}">
             <div class="stakeholder-widget col-md-3">
                 {% if project.get_created_by.profile.stakeholder.picture %}
@@ -14,22 +18,5 @@
                 <h4> {{project.get_created_by.profile.full_name}}</h4>
             </div>
         </a>
-    </div>
-    {% if user.is_authenticated %}
-    <button data-url="{% url 'project_follow' project.pk %}"class="btn btn-default follow-button">
-        <span class="fa-stack">
-            <i class="fa fa-circle-thin fa-stack-2x"></i>
-            <i class="fa fa-bell fa-stack-1x fa-lg"></i>
-        </span>
-        {% if not following %}
-        Projekt beitreten
-        {% else %}
-        Projekt verlassen
-        {% endif %}
-    </button>
-    {% endif %}
-    <div class="content-container">
-        <h3> Projektbeteiligte </h3>
-        {% include "stakeholder/stakeholder_list.html" %}
     </div>
 </div>

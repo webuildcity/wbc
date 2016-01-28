@@ -14,6 +14,7 @@
 
     <link rel="stylesheet" href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" />
     <link rel="stylesheet" href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'lib/material-icons.css' %}" />
 
     {% block css %}
     <link rel="stylesheet" type="text/x-scss" href="{% static "css/style.scss" %}" />
@@ -84,7 +85,7 @@
             </button>
             <div id="brand">
                 <a href="/">
-                    <img src="{% static 'img/title.png' %}" alt="Bürger baut Stadt">
+                    <img src="{% static 'img/title.png' %}" alt="We-Build.City">
                 </a>
             </div>
         </div>
@@ -100,13 +101,13 @@
             <div id="header-left">
                 <div id="brand">
                     <a href="/">
-                        <img src="{% static 'img/title.png' %}" alt="Bürger baut Stadt">
+                        <img src="{% static 'img/title.png' %}" alt="We-Build.City">
                     </a>
                 </div>
             </div>
 
             <div id="header-right">
-                <wbc-search text="Suche">
+                <wbc-search text="Search">
                 </wbc-search>
                 <ul class="sitenav wbc-nav">
                     {% include "core/layout_navigation.html" %}
@@ -120,7 +121,7 @@
             <div class="well modal-dialog modal-content modal-lg" role="document">
                  <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h3> hinzufügen </h3>
+                    <h3> Add </h3>
                 </div>
                 <div class="custom-content">
                 </div>

@@ -149,9 +149,9 @@ DetailsController
               <i class="fa fa-bell fa-stack-1x fa-lg"></i>
             </span>
             {% if subscribed %}
-            Abbestellen
+            Unsubscribe
             {% else %}
-            Benachrichtigungen
+            Subscribe to news
             {% endif %} 
         </button>
     </div>
@@ -164,9 +164,9 @@ DetailsController
                 <i class="fa fa-bell fa-stack-1x fa-lg"></i>
             </span>
             {% if not following %}
-            Projekt beitreten
+            Follow project
             {% else %}
-            Projekt verlassen
+            Unfollow project
             {% endif %}
         </button>
     </div>
@@ -178,7 +178,7 @@ DetailsController
     <a class="event-item" data-toggle="tab" href="#timeline">
         <div id="next-date-widget" class="widget">
             <div class="content-container">
-                <h3><i class="fa fa-calendar"> </i>Nächster Termin</h3>
+                <h3><i class="fa fa-calendar"> </i>Next event</h3>
                 {% if 'change_project' in project_perms or perms.projects.change_project %}
                 <ul class="admin-panel">
                     <li><a class="admin-link" data-toggle="modal" data-target="#event-modal" href="#"><i class="fa fa-plus"></i></a></li>
@@ -197,7 +197,7 @@ DetailsController
     <a class="event-item" data-toggle="tab" href="#timeline">
         <div id="last-news-widget" class="widget">
             <div class="content-container">
-                <h3><i class="fa fa-newspaper-o"> </i>Letzte Neuigkeiten</h3>
+                <h3><i class="fa fa-newspaper-o"> </i>Latest news</h3>
                 <p>{{lastNews.title}}</p>
                 <p>{{lastNews.teaser}}</p>
                 <p>{{lastNews.begin}}</p>
@@ -209,7 +209,7 @@ DetailsController
     {% if tags %}
     <div id="tags-widget" class="widget">
         <div class="content-container">
-            <h3><i class="fa fa-tags"> </i>Stichwörter</h3>
+            <h3><i class="fa fa-tags"> </i>Tags</h3>
             {% for tag in tags %}
                 <a class="taglink" href="{{tag.get_absolute_url}}">{{tag.name}}</a>
             {% endfor %}
@@ -251,22 +251,23 @@ DetailsController
 
     <ul class="wbc-nav main-content-nav nav nav-tabs" data-tabs="tabs">
         <li class="active"><a data-toggle="tab" href="#info"><i class="fa fa-info"></i>Info</a></li>
-        <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Karte</a></li>
-        <li  {{album|yesno:' ,class=not-active'}}><a data-toggle="tab" href="#gallery"><i class="fa fa-image"></i>Bilder</a></li>
+        <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Map</a></li>
+        <li  {{album|yesno:' ,class=not-active'}}><a data-toggle="tab" href="#gallery"><i class="fa fa-image"></i>Images</a></li>
         <li>
-            <a data-toggle="tab" href="#timeline"><i class="fa fa-calendar"></i>Ereignisse</a>
+            <a data-toggle="tab" href="#timeline"><i class="fa fa-calendar"></i>Timeline</a>
         </li>
         <li>
-            <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Beteiligte</a>
+            <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Follower</a>
         </li>
-        <li><a class="3d-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>3D</a></li>
-        <li><a data-toggle="tab" href="#discussion"><i class="fa fa-comment"></i>Diskussion ({% get_comment_count for project as count %}{{count}})</a></li>
+<!--         <li><a class="3d-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>3D</a></li> -->
+
+        <li><a data-toggle="tab" href="#discussion"><i class="fa fa-comment"></i>Comments ({% get_comment_count for project as count %}{{count}})</a></li>
     </ul>
 
     <div id="tab-content" class="tab-content">
         <div id="info" class="tab-pane active">
             <div class="content-container">
-                <h3>Beschreibung</h3>
+                <h3>Description</h3>
                 <p>
                     {{ project.description | linebreaks }}
                 </p>
@@ -278,7 +279,7 @@ DetailsController
                 {% endif %}
 
                 <p>
-                    <strong>im Bezirk/in den Bezirken:</strong> {{ project.entities.all|join:", "}}
+                    <strong></strong> {{ project.entities.all|join:", "}}
                 </p>
             </div>
 
@@ -311,7 +312,7 @@ DetailsController
             {% include "projects/project_stakeholder.html" %}
         </div>
 
-        <div id="3d" class="tab-pane">
+<!--         <div id="3d" class="tab-pane">
             <div id="vizicities-viewport">
                 <div class="vizicities-ui-item" id="vizi-menu">
                     <button class="btn btn-default" id="citygml-switch"> old/new </button>
@@ -322,7 +323,8 @@ DetailsController
                     <button class="btn btn-default" id="south"> S </button>
                 </div>
             </div>
-        </div>
+        </div> -->
+
         <div id="discussion" class="tab-pane">
 
             {% render_comment_list for project %}

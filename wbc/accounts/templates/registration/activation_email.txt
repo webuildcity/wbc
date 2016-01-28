@@ -1,7 +1,8 @@
-Liebe(r) {{ user.profile.full_name }},
+Dear(r) {{ user.profile.full_name }},
 
-Sie erhalten diese Mail weil Sie ein Benutzerkonto auf {{ site.domain }} angelegt haben. Wenn Sie dies nicht selber getan haben, ignorieren Sie bitte diese Mail. (Wir werden dann Ihre Email Adresse in Kürze aus unserer Datenbank löschen).
-
-Um Ihr Benutzerkonto zu aktivieren, klicken sie bitte auf den untenstehenden Link, bzw. kopieren sie ihn und fügen sie ihn anschließend in die Adresszeile Ihres Browsers ein.
+please click on the link to activate your project account on {{ site.domain }}:
 
     http://{{ site.domain }}{% url 'registration_activate' activation_key %}
+
+Best regards,
+Google DNI Innovation Fund Project Team 

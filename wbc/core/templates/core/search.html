@@ -35,7 +35,7 @@ SearchController
             <div class="search-anchor anchor">
                 <div class="input-group search-field">
                     <input
-                    placeholder="Suche nach Ideen, Ansprechpartnern und Projekten in deinem Landkreis..."
+                    placeholder="Search for Projects, Participants, Topics, etc."
                     type="text" class="form-control"
                     ng-model="formData.q"
                     ng-keydown="onKeyDown($event)">
@@ -45,14 +45,14 @@ SearchController
                     </a>
                 </div>
                 <div ng-if="suggestion" class="suggestion-container">
-                    Meinten Sie: <a href="" ng-click="selectTerm(suggestion)">
+                    Did you mean: <a href="" ng-click="selectTerm(suggestion)">
                         {[{suggestion}]}
                     </a>
                 </div>
             </div>
             <div ng-if="entitiesFacets.length > 0" class="facet-container">
                 <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target=".region-facets">
-                    <i class="region-anchor anchor fa fa-image"></i>Stadtteile
+                    <i class="region-anchor anchor fa fa-image"></i>Countries
                 </div>
                 <div class="active-facets wbc-dropdown-container">
                      <div class="facet-item" ng-repeat="entity in formData.entities">
@@ -74,7 +74,7 @@ SearchController
 
             <div ng-if="tagFacets.length > 0" class="facet-container">
                 <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target="#tag-facets">
-                    <i class="tag-anchor anchor fa fa-tags"></i>Stichwörter
+                    <i class="tag-anchor anchor fa fa-tags"></i>Tags
                 </div>
                 <div class="active-facets wbc-dropdown-container">
                     <div class="facet-item" ng-repeat="tag in formData.tags">
@@ -115,8 +115,8 @@ SearchController
 
         </form>
         <div ng-hide="listView" ng-if="resultLength">
-            <div class="collapse-heading" data-toggle="collapse" data-target=".result-list"><i class="result-anchor anchor fa fa-list-ul"> </i>Ergebnisse</div>
-            <p id="result-number" class="wbc-dropdown-container text-muted" ng-if="resultLength">{[{resultLength}]} Einträge gefunden</p>
+            <div class="collapse-heading" data-toggle="collapse" data-target=".result-list"><i class="result-anchor anchor fa fa-list-ul"> </i>Results</div>
+            <p id="result-number" class="wbc-dropdown-container text-muted" ng-if="resultLength">{[{resultLength}]} Search resultes gefunden</p>
             <div class="result-list in wbc-dropdown-container">
 
                 <div class="clearfix"
@@ -150,20 +150,20 @@ SearchController
         <li><button class="btn btn-default" id="map-list-switch"><i class='fa fa-book'></i></button></li>
     </ul> -->
 
-    <button class="btn btn-default" id="map-list-switch" ng-click="changeView()">Listen-/Kartenansicht</button>
+    <button class="btn btn-default" id="map-list-switch" ng-click="changeView()">List / Map</button>
     <div ng-class="{'active-result': listView}" class="result-content active-result" id="list">
         <div id='search-list-header'>
             <div class="pull-left result-number">
                 <h2>{[{resultLength}]}</h2>
-                <p>Ergebnisse</p>
+                <p>Results</p>
             </div>
             <div class="sort-control pull-left">
-                <p>Sortieren nach:</p>
+                <p>Sort by:</p>
                 <ul class="tabs">
-                    <button value="" class="order-btn active btn btn-default">Relevanz</button>
+                    <button value="" class="order-btn active btn btn-default">Relevance</button>
                     <button value="name" class="order-btn btn btn-default">Name</button>
-                    <button value="-created" class="order-btn btn btn-default">Datum</button>
-                    <button value="-num_stakeholder" class="order-btn btn btn-default"># Beteiligte</button>
+                    <button value="-created" class="order-btn btn btn-default">Date</button>
+                    <button value="-num_stakeholder" class="order-btn btn btn-default">Team members</button>
                 </ul>
             </div>
         </div>
@@ -184,15 +184,13 @@ SearchController
                                 <a ng-href="{[{result.internal_link}]}">
                                     <b>{[{ result.name }]}</b>
                                 </a>
-                                <p ng-if="result.address_obj">{[{ result.address_obj }]}</p>
-                                <p ng-if="!result.address_obj">Keine Adresse</p>
                             </div>
                             <div class="pull-left result-block">
-                                <p ng-if="result.num_stakeholder">Beteiligte: {[{result.num_stakeholder}]}</p>
+                                <p ng-if="result.num_stakeholder">Stakeholder: {[{result.num_stakeholder}]}</p>
                             </div>
                             <div class="pull-right result-block">
-                                <p ng-if="result.created">Erstellt am: {[{result.created}]}</p>
-                                <p ng-if="result.created_by">Erstellt von: {[{result.created_by}]}</p>
+                                <p ng-if="result.created">Created: {[{result.created}]}</p>
+                                <p ng-if="result.created_by">Created by: {[{result.created_by}]}</p>
                             </div>
                             <p class="teaser" ng-if="result.teaser">{[{result.teaser}]}</p>
                         </div>

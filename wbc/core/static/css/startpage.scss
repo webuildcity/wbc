@@ -40,6 +40,22 @@ body {
     text-align: center;
 }
 
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+
 #startpage-content {
     height: 100%;
     position: relative;
@@ -151,11 +167,16 @@ body {
             margin-top: 1em;
             padding-bottom: 2em;
         }
-
+    
+        .block-grey {
+            background: $highlight-color;
+            margin-top: 1em;
+            padding-bottom: 2em;
+        }
         .teaser {
             text-align: center;
             color: $primary-text;
-            background-color: $background-color;
+            background-color: #f6f6f6;
             border-radius: 2px;
             border: 1px solid #ddd;
             padding: 3px;

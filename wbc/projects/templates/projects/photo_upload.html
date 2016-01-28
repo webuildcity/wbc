@@ -3,7 +3,7 @@
     {% for photo in album %}
         <div class="thumbnail pull-left">
             <img src="{{ photo.thumbnail.url }}" />
-            <a class="delete-photo" data-url="{% url 'project_photo_delete' project.id photo.id %} href='#">Löschen
+            <a class="delete-photo" data-url="{% url 'project_photo_delete' project.id photo.id %} href='#">Delete
             </a>
         </div>
     {% endfor %}

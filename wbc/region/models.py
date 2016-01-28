@@ -15,15 +15,15 @@ class Entity(Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Einheit'
-        verbose_name_plural = 'Einheiten'
+        verbose_name = 'Entity'
+        verbose_name_plural = 'Entities'
 
 
 class Muncipality(Entity):
 
     class Meta:
-        verbose_name = 'Gemeinde'
-        verbose_name_plural = 'Gemeinden'
+        verbose_name = 'Country'
+        verbose_name_plural = 'Countries'
 
 
 class District(Entity):

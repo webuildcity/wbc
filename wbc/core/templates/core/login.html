@@ -1,4 +1,4 @@
-<h2>Anmeldung</h2>
+<h2>Login</h2>
 
 {% if not request.user.is_authenticated %}
 
@@ -22,34 +22,34 @@
         {% endif %} -->
 
         <div class="form-group">
-            <label class="control-label" for="username">Benutzername</label>
+            <label class="control-label" for="username">Username</label>
             <div>
-                <input class="form-control" type="text" id="username" name="username"  placeholder="Benutzername eingeben">
+                <input class="form-control" type="text" id="username" name="username"  placeholder="Insert username">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="password">Passwort</label>
+            <label class="control-label" for="password">Password</label>
             <div>
-                <input class="form-control" type="password" name="password" id="password" placeholder="Passwort eingeben">
+                <input class="form-control" type="password" name="password" id="password" placeholder="Insert password">
             </div>
         </div>
         <div class="form-group">
             <div class="">
-                <button type="submit" value="Login" class="btn btn-primary">Anmelden</button>
+                <button type="submit" value="Login" class="btn btn-primary">Login</button>
             </div>
         </div>
     </form>
         
-        <p><a class="modal-button" data-toggle="modal" data-target="#modal" data-form="{% url 'registration_register' %}" href="#"><br>Noch nicht registriert?</a></p>
+        <p><a class="modal-button" data-toggle="modal" data-target="#modal" data-form="{% url 'registration_register' %}" href="#"><br>Not registered?</a></p>
 
         <div class="form-group">
             <div class="">
-                <button class="modal-button" data-toggle="modal" data-target="#modal" data-form="{% url 'registration_register' %}" href="#">Hier Registrieren!</a></button>
+                <button class="modal-button" data-toggle="modal" data-target="#modal" data-form="{% url 'registration_register' %}" href="#">Register here!</a></button>
             </div>
         </div>
  
     
  </div>
 {% else %}
-Sie sind bereits angemeldet
+You are already logged in.
 {% endif %}
