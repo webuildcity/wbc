@@ -39,8 +39,10 @@
         var _tiles_opt = {{tiles_opt|safe}};
         var _default_view = {{default_view|safe}};
 
-        var _address = "{{ project.address|safe }}";
         var _polygon = {% if project.polygon %}{{project.polygon|safe}}{% else %}[]{% endif %};
+        var _lat = {% if project.lat %}{{project.lat|stringformat:"F"}}{% else %}undefined{% endif %};
+        var _lon = {% if project.lon %}{{project.lon|stringformat:"F"}}{% else %}undefined{% endif %};
+    
         if (!window.wbc3d) {
             window.wbc3d_conf = {};
             // wbc3d_conf.DATADIR = "{% static 'lib/wbc3d/data/' %}";
