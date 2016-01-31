@@ -24,6 +24,8 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     created = indexes.DateField()
     created_by = indexes.CharField()
     teaser = indexes.CharField()
+    ratings_avg = indexes.DecimalField()
+    ratings_count = indexes.IntegerField()
 
     def get_model(self):
         return Project
@@ -64,6 +66,16 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
             return obj.get_created_by().profile.full_name
         else:
             return None
+
+    def prepare_ratings_avg(self, obj):
+        if obj.ratings.values():
+            return obj.ratings.values()[0]['average']
+        return None
+
+    def prepare_ratings_count(self, obj):
+        if obj.ratings.values():
+            return obj.ratings.values()[0]['count']
+        return None
 
     def prepare_teaser(self, obj):
         return obj.get_teaser()
