@@ -7,14 +7,7 @@ from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from wbc.stakeholder.serializers import DepartmentSerializer
 from models import *
 from wbc.events.serializers import EventSerializer
-from photologue.models import Gallery
 
-
-
-class GallerySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Gallery
-        fields = ('title','description','sample', 'date_added')
 
 class ProjectSerializer(serializers.ModelSerializer):
     point = serializers.SerializerMethodField('point_serializer_method')
@@ -45,7 +38,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Project
-        fields = ('id','point', 'events','identifier','address','description','entities','link','internal_link', 'gallery', 'last_news', 'next_date')
+        fields = ('id','point', 'events','identifier','address','description','entities','link','internal_link', 'album', 'last_news', 'next_date')
         depth = 1
 
 class ProjectPointSerializer(GeoFeatureModelSerializer):

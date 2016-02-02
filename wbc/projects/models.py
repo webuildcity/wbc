@@ -16,6 +16,8 @@ from wbc.tags.models import TaggedItems
 from wbc.images.models import Photo, Album
 from taggit.managers import TaggableManager
 from simple_history.models import HistoricalRecords
+from django.contrib.contenttypes.fields import GenericRelation
+from star_ratings.models import Rating
 
 
 class Address(Model):
@@ -59,6 +61,7 @@ class Project(Model):
     address              = models.CharField(max_length=256, blank=True, verbose_name="Adresse (Statisch)", help_text="Altes, statisches Adress-Feld")
     history              = HistoricalRecords()
     owner                = models.ForeignKey(User, blank=True, null=True, verbose_name="Besitzer")
+    ratings              = GenericRelation(Rating, related_query_name='project_ratings')
 
     def get_changed_by(self):
         if(self.history.last()):
