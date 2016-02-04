@@ -129,4 +129,9 @@ def set_owner(sender, instance, **kwargs):
         instance.owner = instance.get_created_by()
         instance.save()
 
+def trigger_rebuild_index(sender, instance, **kwargs):
+    project = Project.objects.get(pk=instance.object_id)
+    project.save()
+    
 post_save.connect(set_owner, sender=Project)
+post_save.connect(trigger_rebuild_index, sender=Rating)

@@ -53,7 +53,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 var multipoly = [];
 
                 response.results.forEach(function(result){
-                    console.log(result)
                     if(result.polygon)  {
                         result.polygon.id = result.pk;
                         myPoly = MapService.loadPoly(result.polygon, result.pk, highlightFunction);
@@ -233,7 +232,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $scope.listView = !$scope.listView;
         if(!$scope.listView){
 
-            console.log("yo")
             setTimeout(function() {
                 MapService.map.invalidateSize();
             }, 50);
