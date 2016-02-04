@@ -51,6 +51,7 @@ class Project(Model):
     lat                  = models.FloatField(verbose_name="Breitengrad", null=True, blank=True)
     lon                  = models.FloatField(verbose_name="Längengrad", null=True, blank=True)
     polygon              = models.TextField(null=True, blank=True, help_text="Zur Angabe und Darstellung einer Fläche z.B. auf einer Karte")
+    polygon_alter        = models.TextField(null=True, blank=True, verbose_name="Ausgleichsfläche", help_text="Ausgleichsfläche nach Bundesumweltgesetz")
     active               = models.BooleanField()
     link                 = models.URLField(blank=True)
     slug                 = models.SlugField(unique=True, editable=False)
