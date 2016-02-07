@@ -1,5 +1,5 @@
 {% extends 'core/layout_split.html' %}
-{% load staticfiles compress %}
+{% load staticfiles compress i18n %}
 
 {% block css %}
     {% compress css %}
@@ -35,7 +35,7 @@ SearchController
             <div class="search-anchor anchor">
                 <div class="input-group search-field">
                     <input
-                    placeholder="Suche nach Ideen, Ansprechpartnern und Projekten in deinem Landkreis..."
+                    placeholder="{% trans 'PLACEHOLDER:Suche nach Ideen, Ansprechpartnern und Projekten in deinem Landkreis...' %}"
                     type="text" class="form-control"
                     ng-model="formData.q"
                     ng-keydown="onKeyDown($event)">
@@ -45,14 +45,14 @@ SearchController
                     </a>
                 </div>
                 <div ng-if="suggestion" class="suggestion-container">
-                    Meinten Sie: <a href="" ng-click="selectTerm(suggestion)">
+                    {% trans 'SPELLING SUGGESTION:Meinten Sie:' %} <a href="" ng-click="selectTerm(suggestion)">
                         {[{suggestion}]}
                     </a>
                 </div>
             </div>
             <div ng-if="entitiesFacets.length > 0" class="facet-container">
                 <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target=".region-facets">
-                    <i class="region-anchor anchor fa fa-image"></i>Stadtteile
+                    <i class="region-anchor anchor fa fa-image"></i>{% trans 'ENTITY-FILTER: Stadtteile' %}
                 </div>
                 <div class="active-facets wbc-dropdown-container">
                      <div class="facet-item" ng-repeat="entity in formData.entities">
@@ -74,7 +74,7 @@ SearchController
 
             <div ng-if="tagFacets.length > 0" class="facet-container">
                 <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target="#tag-facets">
-                    <i class="tag-anchor anchor fa fa-tags"></i>Stichwörter
+                    <i class="tag-anchor anchor fa fa-tags"></i>{% trans 'TAG-FILTER:Stichwörter' %}
                 </div>
                 <div class="active-facets wbc-dropdown-container">
                     <div class="facet-item" ng-repeat="tag in formData.tags">
@@ -115,8 +115,8 @@ SearchController
 
         </form>
         <div ng-hide="listView" ng-if="resultLength">
-            <div class="collapse-heading" data-toggle="collapse" data-target=".result-list"><i class="result-anchor anchor fa fa-list-ul"> </i>Ergebnisse</div>
-            <p id="result-number" class="wbc-dropdown-container text-muted" ng-if="resultLength">{[{resultLength}]} Einträge gefunden</p>
+            <div class="collapse-heading" data-toggle="collapse" data-target=".result-list"><i class="result-anchor anchor fa fa-list-ul"> </i>{% trans '#ERGEBNISSE:Ergebnisse' %}</div>
+            <p id="result-number" class="wbc-dropdown-container text-muted" ng-if="resultLength">{[{resultLength}]} {% trans 'Einträge gefunden' %}</p>
             <div class="result-list in wbc-dropdown-container">
 
                 <div class="clearfix"
@@ -135,7 +135,6 @@ SearchController
                                 <b>{[{ result.name }]}</b>
                             </a>
                             <p ng-if="result.address_obj">{[{ result.address_obj }]}</p>
-                            <p ng-if="!result.address_obj">Keine Adresse</p>
                         </div>
                     </div>
                 </div>
@@ -150,22 +149,22 @@ SearchController
         <li><button class="btn btn-default" id="map-list-switch"><i class='fa fa-book'></i></button></li>
     </ul> -->
 
-    <button class="btn btn-default" id="map-list-switch" ng-click="changeView()">Listen-/Kartenansicht</button>
+    <button class="btn btn-default" id="map-list-switch" ng-click="changeView()">{% trans 'Button:Listen-/Kartenansicht' %}</button>
     <div ng-class="{'active-result': listView}" class="result-content active-result" id="list">
         <div id='search-list-header'>
             <div class="pull-left result-number">
                 <h2>{[{resultLength}]}</h2>
-                <p>Ergebnisse</p>
+                <p>{% trans '#ERGEBNISSE:Ergebnisse' %}</p>
             </div>
             <div class="sort-control pull-left">
-                <p>Sortieren nach:</p>
+                <p>{% trans 'Sortieren nach:' %}</p>
                 <ul class="tabs">
-                    <button value="" class="order-btn active btn btn-default">Relevanz</button>
-                    <button value="name" class="order-btn btn btn-default">Name</button>
-                    <button value="-created" class="order-btn btn btn-default">Datum</button>
-                    <button value="-num_stakeholder" class="order-btn btn btn-default"># Beteiligte</button>
-                    <button value="-ratings_avg" class="order-btn btn btn-default">Bewertung</button>
-                    <button value="-ratings_count" class="order-btn btn btn-default"># Bewertungen</button>
+                    <button value="" class="order-btn active btn btn-default">{% trans 'BUTTON:Relevanz' %}</button>
+                    <button value="name" class="order-btn btn btn-default">{% trans 'BUTTON:Name' %}</button>
+                    <button value="-created" class="order-btn btn btn-default">{% trans 'BUTTON:Datum' %}</button>
+                    <button value="-num_stakeholder" class="order-btn btn btn-default">{% trans 'BUTTON:# Beteiligte' %}</button>
+                    <button value="-ratings_avg" class="order-btn btn btn-default">{% trans 'BUTTON:Bewertung' %}</button>
+                    <button value="-ratings_count" class="order-btn btn btn-default">{% trans 'BUTTON:# Bewertungen' %}</button>
                 </ul>
             </div>
         </div>
@@ -187,15 +186,14 @@ SearchController
                                     <b>{[{ result.name }]}</b>
                                 </a>
                                 <p ng-if="result.address_obj">{[{ result.address_obj }]}</p>
-                                <p ng-if="!result.address_obj">Keine Adresse</p>
                             </div>
                             <div class="pull-left result-block">
-                                <p ng-if="result.num_stakeholder">Beteiligte: {[{result.num_stakeholder}]}</p>
+                                <p ng-if="result.num_stakeholder">{% trans '#FOLLOWER:Beteiligte:' %}' {[{result.num_stakeholder}]}</p>
                             </div>
                             <div class="pull-right result-block">
-                                <p ng-if="result.created">Erstellt am: {[{result.created}]}</p>
-                                <p ng-if="result.created_by">Erstellt von: {[{result.created_by}]}</p>
-                                <p ng-if="result.ratings_avg">Bewertung: {[{result.ratings_avg}]} ({[{result.ratings_count}]})</p>
+                                <p ng-if="result.created">{% trans 'Erstellt am:' %} {[{result.created}]}</p>
+                                <p ng-if="result.created_by">{% trans 'Erstellt von:' %}' {[{result.created_by}]}</p>
+                                <p ng-if="result.ratings_avg">{% trans 'Bewertung: &Oslash;' %}' {[{result.ratings_avg}]} ({[{result.ratings_count}]})</p>
                             </div>
                             <p class="teaser" ng-if="result.teaser">{[{result.teaser}]}</p>
                         </div>
