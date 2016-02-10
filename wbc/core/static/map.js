@@ -12,7 +12,7 @@ app.factory('MapService',['$http',function($http) {
         'scrollWheelZoom': false
     });
 
-    map.addLayer(new L.TileLayer(_tiles_url + '/{z}/{x}/{y}.png',_tiles_opt));
+    map.addLayer(new L.TileLayer(_tiles_url + '/{z}/{x}/{y}.png' + _tiles_url_opt,_tiles_opt));
     map.setView(new L.LatLng(_default_view.lat,_default_view.lon),_default_view.zoom);
 
     var markerLayer = L.layerGroup().addTo(map);
