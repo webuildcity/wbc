@@ -134,8 +134,8 @@ SearchController
                             <a ng-href="{[{result.internal_link}]}">
                                 <b>{[{ result.name }]}</b>
                             </a>
-                            <p ng-if="result.address_obj">{[{ result.address_obj }]}</p>
-                            <p ng-if="!result.address_obj">Keine Adresse</p>
+                       <!-- <p ng-if="result.address_obj">{[{ result.address_obj }]}</p> -->
+                       <!-- <p ng-if="!result.address_obj">Keine Adresse</p> -->
                         </div>
                     </div>
                 </div>
@@ -163,9 +163,9 @@ SearchController
                     <button value="" class="order-btn active btn btn-default">Relevanz</button>
                     <button value="name" class="order-btn btn btn-default">Name</button>
                     <button value="-created" class="order-btn btn btn-default">Datum</button>
-                    <button value="-num_stakeholder" class="order-btn btn btn-default"># Beteiligte</button>
+                    <button value="-num_stakeholder" class="order-btn btn btn-default">Anzahl Beteiligte</button>
                     <button value="-ratings_avg" class="order-btn btn btn-default">Bewertung</button>
-                    <button value="-ratings_count" class="order-btn btn btn-default"># Bewertungen</button>
+                    <button value="-ratings_count" class="order-btn btn btn-default">Anzahl Bewertungen</button>
                 </ul>
             </div>
         </div>
