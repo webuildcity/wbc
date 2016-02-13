@@ -8,7 +8,7 @@ import taggit.managers
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('projects', '0017_merge'),
+        ('projects', '0003_auto_20160130_2117'),
     ]
 
     operations = [
