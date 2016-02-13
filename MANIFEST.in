@@ -1,4 +1,4 @@
 include LICENSE
 include README.md
 
-recursive-include wbc *.html *.txt *.png *.jpg *.svg *.js *.js.map *.scss *.css *.ttf *.otf *.eot *.woff *.woff2
+recursive-include wbc *.html *.txt *.png *.jpg *.svg *.js *.js.map *.scss *.css *.ttf *.otf *.eot *.woff *.woff2 *.mo *.po
