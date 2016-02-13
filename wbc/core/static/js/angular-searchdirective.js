@@ -26,7 +26,6 @@ app.directive('wbcSearch', function() {
                             q: $scope.formData.q
                         }
                     }).success(function(response) {
-                        console.log(response)
                         $scope.isLoading = false;
                         if (response.results.length) {
                             $scope.data.suggestions = response.results;
@@ -56,7 +55,6 @@ app.directive('wbcSearch', function() {
 
                 // tab and enter
                 if(evt.keyCode == '9' || evt.keyCode == '13') {
-                    console.log($scope.formData.q)
                     if($scope.selectedSuggestionIdx !== -1) {
                         evt.preventDefault();
                         $scope.loadDetails($scope.data.suggestions[$scope.selectedSuggestionIdx].internal_link);
