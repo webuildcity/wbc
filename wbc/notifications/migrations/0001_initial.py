@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('created', models.DateTimeField(editable=False)),
                 ('updated', models.DateTimeField(editable=False)),
-                ('email', models.EmailField(unique=True, max_length=254)),
+                ('email', models.EmailField(max_length=254, unique=True, null=True, blank=True)),
                 ('entities', models.ManyToManyField(related_name='subscribers', to='region.Entity')),
             ],
             options={

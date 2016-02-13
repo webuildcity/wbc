@@ -8,7 +8,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('region', '0001_initial'),
-        ('photologue', '0008_auto_20150509_1557'),
     ]
 
     operations = [
@@ -21,9 +20,10 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(help_text=b'Name des Akteurs', max_length=64, verbose_name=b'Name')),
                 ('address', models.CharField(help_text=b'Eine genaue Adresse des Akteur', max_length=256, verbose_name=b'Adresse', blank=True)),
                 ('description', models.TextField(help_text=b'Beschreibung des Stakeholders', verbose_name=b'Beschreibung', blank=True)),
-                ('active', models.BooleanField(default=True)),
+                ('active', models.BooleanField(default=True, help_text=b'Hiermit k\xc3\xb6nnen Sie das Benutzerkonto deaktivieren oder aktivieren. Das Benutzerkonto wird nicht gel\xc3\xb6scht', verbose_name=b'Aktivieren/deaktivieren')),
                 ('link', models.URLField(blank=True)),
                 ('slug', models.SlugField(unique=True, editable=False)),
+                ('picture', models.ImageField(null=True, upload_to=b'profile_pictures', blank=True)),
             ],
             options={
                 'verbose_name': 'Akteur',
@@ -49,6 +49,7 @@ class Migration(migrations.Migration):
             name='Department',
             fields=[
                 ('stakeholder_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='stakeholder.Stakeholder')),
+                ('polygon', models.TextField(null=True, blank=True)),
             ],
             options={
                 'verbose_name': 'Beh\xf6rde',
@@ -60,11 +61,6 @@ class Migration(migrations.Migration):
             model_name='stakeholder',
             name='entities',
             field=models.ManyToManyField(related_name='places_stakeholder', verbose_name=b'Region', to='region.Entity', blank=True),
-        ),
-        migrations.AddField(
-            model_name='stakeholder',
-            name='picture',
-            field=models.OneToOneField(null=True, blank=True, to='photologue.Photo', verbose_name=b'Bild'),
         ),
         migrations.AddField(
             model_name='stakeholder',

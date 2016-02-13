@@ -164,6 +164,8 @@ SearchController
                     <button value="name" class="order-btn btn btn-default">Name</button>
                     <button value="-created" class="order-btn btn btn-default">Datum</button>
                     <button value="-num_stakeholder" class="order-btn btn btn-default"># Beteiligte</button>
+                    <button value="-ratings_avg" class="order-btn btn btn-default">Bewertung</button>
+                    <button value="-ratings_count" class="order-btn btn btn-default"># Bewertungen</button>
                 </ul>
             </div>
         </div>
@@ -193,6 +195,7 @@ SearchController
                             <div class="pull-right result-block">
                                 <p ng-if="result.created">Erstellt am: {[{result.created}]}</p>
                                 <p ng-if="result.created_by">Erstellt von: {[{result.created_by}]}</p>
+                                <p ng-if="result.ratings_avg">Bewertung: {[{result.ratings_avg}]} ({[{result.ratings_count}]})</p>
                             </div>
                             <p class="teaser" ng-if="result.teaser">{[{result.teaser}]}</p>
                         </div>

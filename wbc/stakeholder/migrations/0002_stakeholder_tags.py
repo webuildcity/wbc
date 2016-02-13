@@ -16,6 +16,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='stakeholder',
             name='tags',
-            field=taggit.managers.TaggableManager(to='tags.WbcTag', through='tags.TaggedItems', blank=True, help_text='A comma-separated list of tags.', verbose_name='Tags'),
+            field=taggit.managers.TaggableManager(to='tags.WbcTag', through='tags.TaggedItems', blank=True, help_text=b'Beschreibung mit Stichworten, z.B. "Architekt, Sch\xc3\xbcler, Verwaltung, Verkehr, Gesundheit" etc.', verbose_name=b'Stichw\xc3\xb6rter'),
         ),
     ]

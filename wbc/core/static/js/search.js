@@ -232,7 +232,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $scope.listView = !$scope.listView;
         if(!$scope.listView){
 
-            console.log("yo")
             setTimeout(function() {
                 MapService.map.invalidateSize();
             }, 50);
