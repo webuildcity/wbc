@@ -173,7 +173,8 @@ SearchController
                 <div id="result-{[{result.pk}]}" class="search-result  container-fluid">
                     <div class="left-block pull-left">
                         <img ng-if="result.thumbnail" class="search-thumbnail" src={[{result.thumbnail}]}>
-                        <img ng-if="!result.thumbnail" class="search-thumbnail" style="width:100px;height:100px;">
+                        <!-- <i ng-if="!result.thumbnail" class="fa fa-lightbulb-o fa-5x"></i> -->
+                        <img ng-if="!result.thumbnail" class="search-thumbnail" src="/static/img/project_placeholder100.png">
                     </div>
                     <div class="right-block">
                         <div class="result-mash">
