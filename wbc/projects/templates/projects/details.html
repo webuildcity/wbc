@@ -1,5 +1,5 @@
 {% extends 'core/layout_split.html' %}
-{% load staticfiles compress guardian_tags threadedcomments_tags imagekit ratings %}
+{% load staticfiles compress guardian_tags threadedcomments_tags imagekit ratings i18n %}
 
 
 {% block css %}
@@ -95,9 +95,9 @@ DetailsController
         {% if processSteps %}
             {% for pub in processSteps %}
                 {% if pub.process_step.participation %}
-                    <div><img class="participation" src="/static/img/participation.png" title="Bürgerbeteiligung möglich"></div>
+                    <div><img class="participation" src="/static/img/participation.png" title="{% trans 'Bürgerbeteiligung möglich' %}"></div>
                 {% else %}
-                    <div><img class="no-participation" src="/static/img/no-participation.png" title="Beteiligung zur Zeit nicht möglich"></div>
+                    <div><img class="no-participation" src="/static/img/no-participation.png" title="{%  trans 'Beteiligung zur Zeit nicht möglich' %}"></div>
                 {% endif %}
            <!--  <div class="current-step tooltip-container">
                  <span class="fa-stack fa-2x">
@@ -156,9 +156,9 @@ DetailsController
               <i class="fa fa-bell fa-stack-1x fa-lg"></i>
             </span>
             {% if subscribed %}
-            Abbestellen
+            {% trans 'Button:Abbestellen' %}
             {% else %}
-            Benachrichtigungen
+            {% trans 'Button:Benachrichtigungen' %}
             {% endif %} 
         </button>
     </div>
@@ -171,9 +171,9 @@ DetailsController
                 <i class="fa fa-bell fa-stack-1x fa-lg"></i>
             </span>
             {% if not following %}
-            Projekt beitreten
+            {% trans 'Button:Projekt beitreten' %}
             {% else %}
-            Projekt verlassen
+            {% trans 'Button:Projekt verlassen' %}
             {% endif %}
         </button>
     </div>
@@ -185,7 +185,7 @@ DetailsController
     <a class="event-item" data-toggle="tab" href="#timeline">
         <div id="next-date-widget" class="widget">
             <div class="content-container">
-                <h3><i class="fa fa-calendar"> </i>Nächster Termin</h3>
+                <h3><i class="fa fa-calendar"> </i>{% trans 'Nächster Termin' %}</h3>
                 {% if 'change_project' in project_perms or perms.projects.change_project %}
                 <ul class="admin-panel">
                     <li><a class="admin-link" data-toggle="modal" data-target="#event-modal" href="#"><i class="fa fa-plus"></i></a></li>
@@ -204,7 +204,7 @@ DetailsController
     <a class="event-item" data-toggle="tab" href="#timeline">
         <div id="last-news-widget" class="widget">
             <div class="content-container">
-                <h3><i class="fa fa-newspaper-o"> </i>Letzte Neuigkeiten</h3>
+                <h3><i class="fa fa-newspaper-o"> </i>{% trans 'Letzte Neuigkeiten' %}</h3>
                 <p>{{lastNews.title}}</p>
                 <p>{{lastNews.teaser}}</p>
                 <p>{{lastNews.begin}}</p>
@@ -216,7 +216,7 @@ DetailsController
     {% if tags %}
     <div id="tags-widget" class="widget">
         <div class="content-container">
-            <h3><i class="fa fa-tags"> </i>Stichwörter</h3>
+            <h3><i class="fa fa-tags"> </i>{% trans 'h3:Stichwörter' %}</h3>
             {% for tag in tags %}
                 <a class="taglink" href="{{tag.get_absolute_url}}">{{tag.name}}</a>
             {% endfor %}
@@ -243,11 +243,11 @@ DetailsController
         <div class="well modal-dialog modal-content modal-lg" role="document">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">×</button>
-                <h3> Event hinzufügen </h3>
+                <h3> {% trans 'h3:Event hinzufügen' %} </h3>
                 <ul class="nav nav-pills">
-                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'date_create' project.pk %}" href="#">Veranstaltung</a></li>
-                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'media_create' project.pk %}" href="#">Nachricht</a></li>
-                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'pub_create' project.pk %}" href="#">Veröffentlichung</a></li>
+                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'date_create' project.pk %}" href="#">{% trans 'Veranstaltung' %}</a></li>
+                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'media_create' project.pk %}" href="#">{% trans 'Nachricht' %}</a></li>
+                    <li role="presentation"><a class="admin-link event-admin btn" data-form="{% url 'pub_create' project.pk %}" href="#">{% trans 'Veröffentlichung' %}</a></li>
                 </ul>
             </div>
             <div class="custom-content">
@@ -257,35 +257,35 @@ DetailsController
     </div>
 
     <ul class="wbc-nav main-content-nav nav nav-tabs" data-tabs="tabs">
-        <li class="active"><a data-toggle="tab" href="#info"><i class="fa fa-info"></i>Info</a></li>
-        <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Karte</a></li>
-        <li  {{album|yesno:' ,class=not-active'}}><a data-toggle="tab" href="#gallery"><i class="fa fa-image"></i>Bilder</a></li>
+        <li class="active"><a data-toggle="tab" href="#info"><i class="fa fa-info"></i>{% trans 'tab:Info' %}</a></li>
+        <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>{% trans 'tab:Karte' %}</a></li>
+        <li  {{album|yesno:' ,class=not-active'}}><a data-toggle="tab" href="#gallery"><i class="fa fa-image"></i>{% trans 'tab:Bilder' %}</a></li>
         <li>
-            <a data-toggle="tab" href="#timeline"><i class="fa fa-calendar"></i>Ereignisse</a>
+            <a data-toggle="tab" href="#timeline"><i class="fa fa-calendar"></i>{% trans 'tab:Ereignisse' %}</a>
         </li>
         <li>
-            <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Beteiligte</a>
+            <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>{% trans 'tab:Beteiligte' %}</a>
         </li>
-        <li><a class="3d-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>3D</a></li>
-        <li><a data-toggle="tab" href="#discussion"><i class="fa fa-comment"></i>Diskussion ({% get_comment_count for project as count %}{{count}})</a></li>
+        <li><a class="3d-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>{% trans 'tab:3D' %}</a></li>
+        <li><a data-toggle="tab" href="#discussion"><i class="fa fa-comment"></i>{% trans 'tab:Diskussion' %} ({% get_comment_count for project as count %}{{count}})</a></li>
     </ul>
 
     <div id="tab-content" class="tab-content">
         <div id="info" class="tab-pane active">
             <div class="content-container">
-                <h3>Beschreibung</h3>
+                <h3>{% trans 'h3:Beschreibung' %}</h3>
                 <p>
                     {{ project.description | linebreaks }}
                 </p>
 
                 {% if project.description_official %}
                  <p>
-                    <strong>Genaue örtliche Beschreibung (Amtsblatt):</strong> {{ project.description_official }}
+                    <strong>{% trans 'Genaue örtliche Beschreibung (Amtsblatt):' %}</strong> {{ project.description_official }}
                  </p>
                 {% endif %}
 
                 <p>
-                    <strong>im Bezirk/in den Bezirken:</strong> {{ project.entities.all|join:", "}}
+                    <strong>{% trans 'im Bezirk/in den Bezirken:' %}</strong> {{ project.entities.all|join:", "}}
                 </p>
             </div>
 
@@ -321,8 +321,8 @@ DetailsController
         <div id="3d" class="tab-pane">
             <div id="vizicities-viewport">
                 <div class="vizicities-ui-item" id="vizi-menu">
-                    <button class="btn btn-default" id="citygml-switch"> old/new </button>
-                    <button class="btn btn-default" id="camera-flight"> Kameraflug </button>
+                    <button class="btn btn-default" id="citygml-switch"> {% trans 'Button:old/new' %} </button>
+                    <button class="btn btn-default" id="camera-flight"> {% trans 'Button:Kameraflug' %} </button>
                     <button class="btn btn-default" id="north"> N </button>
                     <button class="btn btn-default" id="west"> W </button>
                     <button class="btn btn-default" id="east"> E </button>
