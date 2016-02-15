@@ -32,8 +32,8 @@ class Migration(migrations.Migration):
                 ('visible', models.BooleanField(default=True, help_text=b'Ist das Tag sichtbar.', verbose_name=b'Sichtbar')),
             ],
             options={
-                'verbose_name': 'Schlagwort (Tag)',
-                'verbose_name_plural': 'Schlagw\xf6rter (Tags)',
+                'verbose_name': 'Stichwort (Tag)',
+                'verbose_name_plural': 'Stichw\xf6rter (Tags)',
             },
         ),
         migrations.AddField(

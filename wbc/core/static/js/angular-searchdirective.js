@@ -11,7 +11,7 @@ app.directive('wbcSearch', function() {
             $scope.data = { suggestions: [] };
             $scope.isLoading = false;
             $scope.formData = {};
-
+            $scope.formData.q = '';
             $scope.selectedSuggestion = null;
             $scope.selectedSuggestionIdx = -1;
 
@@ -26,7 +26,6 @@ app.directive('wbcSearch', function() {
                             q: $scope.formData.q
                         }
                     }).success(function(response) {
-                        console.log(response)
                         $scope.isLoading = false;
                         if (response.results.length) {
                             $scope.data.suggestions = response.results;
@@ -42,8 +41,8 @@ app.directive('wbcSearch', function() {
                 }
             };
 
-            $scope.submit = function(term){
-                window.location = "/suche/q="+ term;
+            $scope.submit = function(){
+                window.location = "/suche/q="+ $scope.formData.q;
             };
 
             $scope.loadDetails = function(result) {
@@ -56,7 +55,6 @@ app.directive('wbcSearch', function() {
 
                 // tab and enter
                 if(evt.keyCode == '9' || evt.keyCode == '13') {
-                    console.log($scope.formData.q)
                     if($scope.selectedSuggestionIdx !== -1) {
                         evt.preventDefault();
                         $scope.loadDetails($scope.data.suggestions[$scope.selectedSuggestionIdx].internal_link);

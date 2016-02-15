@@ -27,8 +27,6 @@ from guardian.mixins import PermissionRequiredMixin
 
 from django_comments.views.comments import post_comment
 
-from photologue.models import Photo
-
 def feeds(request):
     entities = District.objects.all()
     return render(request, 'core/feeds.html', {
@@ -141,7 +139,7 @@ class SearchView(TemplateView):
         results = []
 
         for result in sqs:
-            resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link, address_obj=result.address_obj, thumbnail=result.thumbnail, num_stakeholder=result.num_stakeholder, created=result.created.strftime("%d.%m.%y"), created_by=result.created_by, teaser=result.teaser)
+            resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link, address_obj=result.address_obj, thumbnail=result.thumbnail, num_stakeholder=result.num_stakeholder, created=result.created.strftime("%d.%m.%y"), created_by=result.created_by, teaser=result.teaser, ratings_count=result.ratings_count, ratings_avg=result.ratings_avg)
             if result.location:
                 resultdict['location'] = [result.location[0], result.location[1]]
 

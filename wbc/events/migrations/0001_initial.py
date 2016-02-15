@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import datetime
 
 
 class Migration(migrations.Migration):
@@ -17,8 +16,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('created', models.DateTimeField(editable=False)),
                 ('updated', models.DateTimeField(editable=False)),
-                ('title', models.CharField(help_text=b'Der Titel eines Events', max_length=256, verbose_name=b'Titel')),
-                ('description', models.TextField(help_text=b'Beschreibungstext eines Events', verbose_name=b'Beschreibung', blank=True)),
+                ('title', models.CharField(help_text=b'Titel', max_length=256, verbose_name=b'Titel')),
+                ('description', models.TextField(help_text=b'Beschreibungstext', verbose_name=b'Beschreibung', blank=True)),
                 ('link', models.URLField(blank=True)),
                 ('active', models.BooleanField(default=True)),
                 ('begin', models.DateField(verbose_name=b'Anfang Timeline')),
@@ -35,17 +34,15 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('created', models.DateTimeField(editable=False)),
                 ('updated', models.DateTimeField(editable=False)),
-                ('office', models.TextField(verbose_name=b'Auslegungsstelle', blank=True)),
-                ('office_hours', models.TextField(verbose_name=b'\xc3\x96ffnungszeiten der Auslegungsstelle', blank=True)),
-                ('begin', models.DateField(default=datetime.datetime.now, verbose_name=b'Anfang Timeline')),
-                ('end', models.DateField(null=True, verbose_name=b'Ende Timeline', blank=True)),
-                ('link', models.URLField(blank=True)),
+                ('begin', models.DateField(help_text=b'z.B. eines Verfahrens, B\xc3\xbcrgerbeiteiligung, Veranstaltung,etc.', verbose_name=b'Anfang')),
+                ('end', models.DateField(help_text=b'z.B. eines Verfahrens, B\xc3\xbcrgerbeiteiligung, Veranstaltung,etc.', null=True, verbose_name=b'Ende', blank=True)),
+                ('link', models.URLField(help_text=b'Weiterf\xc3\xbchrender Link (optional)', verbose_name=b'Link', blank=True)),
                 ('description', models.TextField(help_text=b'Beschreibungstext eines Events', verbose_name=b'Beschreibung', blank=True)),
             ],
             options={
                 'ordering': ('-end',),
-                'verbose_name': 'Ver\xf6ffentlichung',
-                'verbose_name_plural': 'Ver\xf6ffentlichungen',
+                'verbose_name': 'Prozessschritt',
+                'verbose_name_plural': 'Prozesschritte',
             },
         ),
         migrations.CreateModel(
@@ -56,12 +53,12 @@ class Migration(migrations.Migration):
                 ('address', models.CharField(help_text=b'Die genaue Adresse wo die Veranstaltung stattfindet.', max_length=256, verbose_name=b'Veranstaltungsort', blank=True)),
                 ('lat', models.FloatField(null=True, blank=True)),
                 ('lon', models.FloatField(null=True, blank=True)),
-                ('other', models.CharField(help_text=b'sonstiges', max_length=256, verbose_name=b'Sonstiges', blank=True)),
+                ('other', models.CharField(help_text=b'Sonstige Angaben zu dieser Veranstaltung', max_length=256, verbose_name=b'Sonstiges', blank=True)),
                 ('modelType', models.CharField(default=b'date', max_length=20, editable=False)),
             ],
             options={
-                'verbose_name': 'Veranstaltung',
-                'verbose_name_plural': 'Veranstaltungen',
+                'verbose_name': 'Veranstaltung (Event)',
+                'verbose_name_plural': 'Veranstaltungen (Events)',
             },
             bases=('events.event',),
         ),
@@ -92,8 +89,8 @@ class Migration(migrations.Migration):
                 ('modelType', models.CharField(default=b'media', max_length=20, editable=False)),
             ],
             options={
-                'verbose_name': 'Medienbeitrag',
-                'verbose_name_plural': 'Medienbeitr\xe4ge',
+                'verbose_name': 'Informationsbeitrag',
+                'verbose_name_plural': 'Informationsbeitr\xe4ge',
             },
             bases=('events.event',),
         ),

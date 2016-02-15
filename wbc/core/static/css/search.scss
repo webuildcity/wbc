@@ -237,14 +237,14 @@
         .search-result {
             margin: 0.6em;
             padding: 0.3em;
-            background: #fcfcfc;
+            background: $background-color-search-result;
             border-bottom: 0px;
             border-radius: 4px;
 
         }
         .search-result:hover {
-            background: white;
-            // border: 1px solid $primary-color;
+            background: $background-color;
+            border: 1px solid $highlight-color;
         }
         .result-block {
             margin: 0.3em 0.45em;
