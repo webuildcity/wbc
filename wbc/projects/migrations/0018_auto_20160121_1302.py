@@ -7,6 +7,10 @@ import taggit.managers
 
 class Migration(migrations.Migration):
 
+    dependencies = [
+        ('projects', '0003_auto_20160130_2117'),
+    ]
+
     operations = [
         migrations.AlterField(
             model_name='historicalproject',
