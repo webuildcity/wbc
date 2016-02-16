@@ -2,20 +2,7 @@
 {% load staticfiles %}
 
 <div class="stakeholders">
-    <div id='project_creator' class="clearfix">
-        <h3> Erstellt von </h3>
-        <a href="{{project.get_created_by.get_absolute_url }}">
-            <div class="stakeholder-widget col-md-3">
-                {% if project.get_created_by.profile.stakeholder.picture %}
-                <img class="stakeholder_img" src="{{ project.get_created_by.profile.stakeholder.picture.url }}" />
-                {% else %}
-                <img class="stakeholder_img" src="{% static 'img/person_placeholder.png' %}" />
-                {% endif %}
-                <h4> {{project.get_created_by.profile.full_name}}</h4>
-            </div>
-        </a>
-    </div>
-    {% if user.is_authenticated %}
+<!--    {% if user.is_authenticated %}
     <button data-url="{% url 'project_follow' project.pk %}"class="btn btn-default follow-button">
         <span class="fa-stack">
             <i class="fa fa-circle-thin fa-stack-2x"></i>
@@ -27,9 +14,24 @@
         Projekt verlassen
         {% endif %}
     </button>
-    {% endif %}
+    {% endif %} -->
+
     <div class="content-container">
-        <h3> Projektbeteiligte </h3>
+        <h3> Projektunterst&uuml;tzer:</h3>
         {% include "stakeholder/stakeholder_list.html" %}
+    
+        <div id='project_creator' class="clearfix">
+            <h3> Erstellt von </h3>
+            <a href="{{project.get_created_by.get_absolute_url }}">
+                <div class="stakeholder-widget col-md-3">
+                    {% if project.get_created_by.profile.stakeholder.picture %}
+                    <img class="stakeholder_img" src="{{ project.get_created_by.profile.stakeholder.picture.url }}" />
+                    {% else %}
+                    <img class="stakeholder_img" src="{% static 'img/person_placeholder.png' %}" />
+                    {% endif %}
+                    <h4> {{project.get_created_by.profile.full_name}}</h4>
+                </div>
+            </a>
+        </div>
     </div>
 </div>

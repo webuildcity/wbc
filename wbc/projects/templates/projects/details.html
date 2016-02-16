@@ -89,8 +89,11 @@ DetailsController
          <!--    <li><a class="admin-link" href="{{new_publication_link}}?project_id={{project.pk}}"><i class="fa fa-newspaper"></i></a></li> -->
         </ul>
         {% endif %}
-
+        
+        <div class="teaser-text"> 
         {% ratings project %}
+        </div>
+
         <div id="participate-widget" class="widget">
         {% if processSteps %}
             {% for pub in processSteps %}
@@ -136,12 +139,14 @@ DetailsController
         {% endif %}
     </div> -->
 
-
+    
     {% if album %}
-
-     {% generateimage 'wbc:details' source=project.album.get_cover_photo.file %}
-
+    <div class="teaser-text">
+        {% generateimage 'wbc:details' source=project.album.get_cover_photo.file %}
+    </div>
     {% endif %}
+
+    
 
     {% if project.description %}
     <div class="teaser-text">
@@ -149,7 +154,7 @@ DetailsController
     </div>
     {% endif %}
 
-    <div id="subscribe-widget" class="widget">
+ <!--    <div id="subscribe-widget" class="widget">
         <button data-url="{% url 'project_subscribe' project.pk %}" class="btn default wbc-button subscribe-button">
             <span class="fa-stack">
               <i class="fa fa-circle-thin fa-stack-2x"></i>
@@ -161,7 +166,7 @@ DetailsController
             Benachrichtigungen
             {% endif %} 
         </button>
-    </div>
+    </div> -->
 
     {% if user.is_authenticated %}
     <div id="subscribe-widget" class="widget">
@@ -171,7 +176,7 @@ DetailsController
                 <i class="fa fa-bell fa-stack-1x fa-lg"></i>
             </span>
             {% if not following %}
-            Projekt beitreten
+            Projekt unterstützen
             {% else %}
             Projekt verlassen
             {% endif %}
@@ -264,9 +269,9 @@ DetailsController
             <a data-toggle="tab" href="#timeline"><i class="fa fa-calendar"></i>Ereignisse</a>
         </li>
         <li>
-            <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Beteiligte</a>
+            <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Unterst&uuml;tzer</a>
         </li>
-        <li><a class="3d-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>3D</a></li>
+<!--    <li><a class="3d-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>3D</a></li> -->
         <li><a data-toggle="tab" href="#discussion"><i class="fa fa-comment"></i>Diskussion ({% get_comment_count for project as count %}{{count}})</a></li>
     </ul>
 
@@ -280,13 +285,13 @@ DetailsController
 
                 {% if project.description_official %}
                  <p>
-                    <strong>Genaue örtliche Beschreibung (Amtsblatt):</strong> {{ project.description_official }}
+                    <strong>Weitere Informationen:</strong> {{ project.description_official }}
                  </p>
                 {% endif %}
 
-                <p>
+<!--                 <p>
                     <strong>im Bezirk/in den Bezirken:</strong> {{ project.entities.all|join:", "}}
-                </p>
+                </p> -->
             </div>
 
             {% if processTypes %}

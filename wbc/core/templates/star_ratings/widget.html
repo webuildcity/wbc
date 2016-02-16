@@ -2,15 +2,15 @@
 {% load i18n %}
 {% block rating_detail %}
 {% block rating_average %}
-<div class="star-ratings-rating-average">{% trans 'Average: ' %} <span class='star-ratings-rating-value'>{{ rating.average|floatformat:"-2" }}</span></div>
+<div class="star-ratings-rating-average">Durchschnitt: <span class='star-ratings-rating-value'>{{ rating.average|floatformat:"-2" }}</span></div>
 {% endblock rating_average %}
 {% block rating_count %}
-<div class="star-ratings-rating-count">{% trans 'Rating Count: ' %} <span class='star-ratings-rating-value'>{{ rating.count }}</span></div>
+<div class="star-ratings-rating-count">Anzahl der Bewertungen: <span class='star-ratings-rating-value'>{{ rating.count }}</span></div>
 {% endblock rating_count %}
 {% block rating_user %}
-<div class="star-ratings-rating-user">{% trans 'You Rated: ' %} <span class='star-ratings-rating-value'>{% if user_rating %}{{ user_rating.score }}{% else %}{% trans 'Not rated' %}{% endif %}</span></div>
+<div class="star-ratings-rating-user">Deine Bewertung:<span class='star-ratings-rating-value'>{% if user_rating %}{{ user_rating.score }}{% else %}{% trans 'Noch keine Bewertung' %}{% endif %}</span></div>
 {% if not user.is_authenticated %}
-    <p>{% trans 'Einloggen um abzustimmen.' %}</p>
+    <p>Einloggen um abzustimmen.</p>
 {% endif %}
 {% endblock rating_user %}
 <div class="star-ratings-errors"></div>
