@@ -1,8 +1,0 @@
-{% extends "core/page.html" %}
-
-{% block page %}
-<form action="" method="post" class="form" role="form">{% csrf_token %}
-    {% include 'core/form_fields.html' %}
-    <input class="btn btn-primary" type="submit" value="Speichern" />
-</form>
-{% endblock%}

@@ -1,0 +1,240 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-02-15 11:32-0600\n"
+"PO-Revision-Date: 2016-02-15 18:29+0053\n"
+"Last-Translator:   <>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.7.8\n"
+
+#: accounts/models.py:20
+msgid "Your twitter nick"
+msgstr ""
+
+#: accounts/models.py:43
+msgid "Profile"
+msgstr ""
+
+#: accounts/models.py:44
+msgid "Profiles"
+msgstr ""
+
+#: core/templates/core/search.html:38
+msgid ""
+"PLACEHOLDER:Suche nach Ideen, Ansprechpartnern und Projekten in deinem "
+"Landkreis..."
+msgstr ""
+
+#: core/templates/core/search.html:48
+msgid "SPELLING SUGGESTION:Meinten Sie:"
+msgstr "Meinten Sie:"
+
+#: core/templates/core/search.html:55
+msgid "ENTITY-FILTER: Stadtteile"
+msgstr ""
+
+#: core/templates/core/search.html:77
+msgid "TAG-FILTER:Stichwörter"
+msgstr ""
+
+#: core/templates/core/search.html:118 core/templates/core/search.html:157
+msgid "#ERGEBNISSE:Ergebnisse"
+msgstr ""
+
+#: core/templates/core/search.html:119
+msgid "Einträge gefunden"
+msgstr ""
+
+#: core/templates/core/search.html:152
+msgid "Button:Listen-/Kartenansicht"
+msgstr ""
+
+#: core/templates/core/search.html:160
+msgid "Sortieren nach:"
+msgstr ""
+
+#: core/templates/core/search.html:162
+msgid "BUTTON:Relevanz"
+msgstr ""
+
+#: core/templates/core/search.html:163
+msgid "BUTTON:Name"
+msgstr ""
+
+#: core/templates/core/search.html:164
+msgid "BUTTON:Datum"
+msgstr ""
+
+#: core/templates/core/search.html:165
+msgid "BUTTON:# Beteiligte"
+msgstr ""
+
+#: core/templates/core/search.html:166
+msgid "BUTTON:Bewertung"
+msgstr ""
+
+#: core/templates/core/search.html:167
+msgid "BUTTON:# Bewertungen"
+msgstr ""
+
+#: core/templates/core/search.html:191
+msgid "#FOLLOWER:Beteiligte:"
+msgstr ""
+
+#: core/templates/core/search.html:194
+msgid "Erstellt am:"
+msgstr ""
+
+#: core/templates/core/search.html:195
+msgid "Erstellt von:"
+msgstr ""
+
+#: core/templates/core/search.html:196
+msgid "Bewertung: &Oslash;"
+msgstr ""
+
+#: core/templates/star_ratings/widget.html:5
+msgid "Average: "
+msgstr ""
+
+#: core/templates/star_ratings/widget.html:8
+msgid "Rating Count: "
+msgstr ""
+
+#: core/templates/star_ratings/widget.html:11
+msgid "You Rated: "
+msgstr ""
+
+#: core/templates/star_ratings/widget.html:11
+msgid "Not rated"
+msgstr ""
+
+#: core/templates/star_ratings/widget.html:13
+msgid "Einloggen um abzustimmen."
+msgstr ""
+
+#: projects/templates/projects/details.html:98
+msgid "Bürgerbeteiligung möglich"
+msgstr ""
+
+#: projects/templates/projects/details.html:100
+msgid "Beteiligung zur Zeit nicht möglich"
+msgstr ""
+
+#: projects/templates/projects/details.html:159
+msgid "Button:Abbestellen"
+msgstr ""
+
+#: projects/templates/projects/details.html:161
+msgid "Button:Benachrichtigungen"
+msgstr ""
+
+#: projects/templates/projects/details.html:174
+#: projects/templates/projects/project_stakeholder.html:25
+msgid "Button:Projekt beitreten"
+msgstr ""
+
+#: projects/templates/projects/details.html:176
+#: projects/templates/projects/project_stakeholder.html:27
+msgid "Button:Projekt verlassen"
+msgstr ""
+
+#: projects/templates/projects/details.html:188
+msgid "Nächster Termin"
+msgstr ""
+
+#: projects/templates/projects/details.html:207
+msgid "Letzte Neuigkeiten"
+msgstr ""
+
+#: projects/templates/projects/details.html:219
+msgid "h3:Stichwörter"
+msgstr ""
+
+#: projects/templates/projects/details.html:236
+msgid "placeholder:hinzufügen"
+msgstr ""
+
+#: projects/templates/projects/details.html:246
+msgid "h3:Event hinzufügen"
+msgstr ""
+
+#: projects/templates/projects/details.html:248
+msgid "Veranstaltung"
+msgstr ""
+
+#: projects/templates/projects/details.html:249
+msgid "Nachricht"
+msgstr ""
+
+#: projects/templates/projects/details.html:250
+msgid "Veröffentlichung"
+msgstr ""
+
+#: projects/templates/projects/details.html:260
+msgid "tab:Info"
+msgstr ""
+
+#: projects/templates/projects/details.html:261
+msgid "tab:Karte"
+msgstr ""
+
+#: projects/templates/projects/details.html:262
+msgid "tab:Bilder"
+msgstr ""
+
+#: projects/templates/projects/details.html:264
+msgid "tab:Ereignisse"
+msgstr ""
+
+#: projects/templates/projects/details.html:267
+msgid "tab:Beteiligte"
+msgstr ""
+
+#: projects/templates/projects/details.html:269
+msgid "tab:3D"
+msgstr ""
+
+#: projects/templates/projects/details.html:270
+msgid "tab:Diskussion"
+msgstr ""
+
+#: projects/templates/projects/details.html:276
+msgid "h3:Beschreibung"
+msgstr ""
+
+#: projects/templates/projects/details.html:283
+msgid "Genaue örtliche Beschreibung (Amtsblatt):"
+msgstr ""
+
+#: projects/templates/projects/details.html:288
+msgid "im Bezirk/in den Bezirken:"
+msgstr ""
+
+#: projects/templates/projects/details.html:324
+msgid "Button:old/new"
+msgstr ""
+
+#: projects/templates/projects/details.html:325
+msgid "Button:Kameraflug"
+msgstr ""
+
+#: projects/templates/projects/project_stakeholder.html:6
+msgid "h3:Erstellt von"
+msgstr ""
+
+#: projects/templates/projects/project_stakeholder.html:32
+msgid "h3:Projektbeteiligte"
+msgstr ""
