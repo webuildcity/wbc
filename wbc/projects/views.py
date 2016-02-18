@@ -246,10 +246,11 @@ def photo_upload(request, pk):
             album.save()
             project.album = album
             project.save()
-
+            
         uploaded_file = request.FILES['file']
         photo = Photo.objects.create(album=album, file=uploaded_file)
         photo.save()
+        project.save()
         response_dict = {
             'message': 'File uploaded successfully!',
             'thumbnail'     : photo.thumbnail.url
