@@ -21,15 +21,20 @@
 {% block js %}
 
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
-    <script type="text/javascript" src="{% static 'lib/OSMBuildings-Leaflet.js' %}"  ></script>
+    <!-- <script type="text/javascript" src="{% static 'lib/OSMBuildings-Leaflet.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/modernizr.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/vertical-timeline.js' %}"  ></script>
+    <!--
     <script type="text/javascript" src="{% static 'lib/vizicities/vizi.min.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/vizicities/tween.min.js' %}"  ></script>
+    -->
     <script type="text/javascript" src="{% static 'lib/jquery-ui/jquery-ui.min.js' %}"  ></script>
+
+    <!--
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintOutputPolygon.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintInputPolygon.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintOutputCustomBuildingTiles.js' %}"  ></script>
+    -->
     <script type="text/javascript" src="{% static 'js/3d.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'adminmap.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/dropzone.js' %}" ></script>
@@ -148,11 +153,11 @@ DetailsController
 
     
 
-    {% if project.description %}
+<!--    {% if project.description %}
     <div class="teaser-text">
         {{project.get_teaser}}
     </div>
-    {% endif %}
+    {% endif %} -->
 
  <!--    <div id="subscribe-widget" class="widget">
         <button data-url="{% url 'project_subscribe' project.pk %}" class="btn default wbc-button subscribe-button">
@@ -263,16 +268,16 @@ DetailsController
 
     <ul class="wbc-nav main-content-nav nav nav-tabs" data-tabs="tabs">
         <li class="active"><a data-toggle="tab" href="#info"><i class="fa fa-info"></i>Info</a></li>
-        <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Karte</a></li>
-        <li  {{album|yesno:' ,class=not-active'}}><a data-toggle="tab" href="#gallery"><i class="fa fa-image"></i>Bilder</a></li>
-        <li>
-            <a data-toggle="tab" href="#timeline"><i class="fa fa-calendar"></i>Ereignisse</a>
-        </li>
+        <li><a data-toggle="tab" href="#discussion"><i class="fa fa-comment"></i>Diskussion ({% get_comment_count for project as count %}{{count}})</a></li>
         <li>
             <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Unterst&uuml;tzer</a>
         </li>
+<!--        <li  {{album|yesno:' ,class=not-active'}}><a data-toggle="tab" href="#gallery"><i class="fa fa-image"></i>Bilder</a></li> -->
+        <li>
+            <a data-toggle="tab" href="#timeline"><i class="fa fa-calendar"></i>Veranstaltungen</a>
+        </li>
+        <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Karte</a></li>
 <!--    <li><a class="3d-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>3D</a></li> -->
-        <li><a data-toggle="tab" href="#discussion"><i class="fa fa-comment"></i>Diskussion ({% get_comment_count for project as count %}{{count}})</a></li>
     </ul>
 
     <div id="tab-content" class="tab-content">
@@ -323,7 +328,7 @@ DetailsController
             {% include "projects/project_stakeholder.html" %}
         </div>
 
-        <div id="3d" class="tab-pane">
+<!--        <div id="3d" class="tab-pane">
             <div id="vizicities-viewport">
                 <div class="vizicities-ui-item" id="vizi-menu">
                     <button class="btn btn-default" id="citygml-switch"> old/new </button>
@@ -334,7 +339,7 @@ DetailsController
                     <button class="btn btn-default" id="south"> S </button>
                 </div>
             </div>
-        </div>
+            </div> -->
         <div id="discussion" class="tab-pane">
 
             {% render_comment_list for project %}

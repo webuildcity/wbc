@@ -11,11 +11,6 @@
         {% else %}
         <img class="description_img" src="{% static 'img/person_placeholder.png' %}" />
         {% endif %}
-        <div>
-            <p >{{project.get_teaser}}</p>
-
-
-        </div>
     </div>
     </a>
     {% if forloop.counter|divisibleby:3 %}

@@ -149,7 +149,8 @@ SearchController
         <li><button class="btn btn-default" id="map-list-switch"><i class='fa fa-book'></i></button></li>
     </ul> -->
 
-    <button class="btn btn-default" id="map-list-switch" ng-click="changeView()">Listen-/Kartenansicht</button>
+<!-- **** MAP BUTTON DEACTIVATED **** -->
+<!--     <button class="btn btn-default" id="map-list-switch" ng-click="changeView()">Listen-/Kartenansicht</button> -->
     <div ng-class="{'active-result': listView}" class="result-content active-result" id="list">
         <div id='search-list-header'>
             <div class="pull-left result-number">
@@ -159,12 +160,12 @@ SearchController
             <div class="sort-control pull-left">
                 <p>Sortieren nach:</p>
                 <ul class="tabs">
-                    <button value="" class="order-btn active btn btn-default">Relevanz</button>
+                    <button value="" class="order-btn active btn btn-default">Aktuelles</button>
                     <button value="name" class="order-btn btn btn-default">Name</button>
                     <button value="-created" class="order-btn btn btn-default">Datum</button>
-                    <button value="-num_stakeholder" class="order-btn btn btn-default">Anzahl der Beteiligten</button>
+                    <!-- <button value="-num_stakeholder" class="order-btn btn btn-default">Anzahl der Beteiligten</button> -->
                     <button value="-ratings_avg" class="order-btn btn btn-default">Bewertung</button>
-                    <button value="-ratings_count" class="order-btn btn btn-default">Anzahl an Bewertungen</button>
+                    <!-- <button value="-ratings_count" class="order-btn btn btn-default">Anzahl an Bewertungen</button> -->
                 </ul>
             </div>
         </div>
@@ -193,7 +194,7 @@ SearchController
                             </div>
                             <div class="pull-right result-block">
                                 <p ng-if="result.created">Erstellt am: {[{result.created}]}</p>
-                                <p ng-if="result.created_by">Erstellt von: {[{result.created_by}]}</p>
+                                <!-- <p ng-if="result.created_by">Erstellt von: {[{result.created_by}]}</p> -->
                                 <p ng-if="result.ratings_avg">Bewertung: &Oslash; {[{result.ratings_avg}]} ({[{result.ratings_count}]})</p>
                             </div>
                             <p class="teaser" ng-if="result.teaser">{[{result.teaser}]}</p>

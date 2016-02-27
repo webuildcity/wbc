@@ -19,7 +19,6 @@
     <link rel="stylesheet" type="text/x-scss" href="{% static "css/style.scss" %}" />
     {% endblock %}
 
-
     <script type="text/javascript" src="{% static 'lib/jquery.min.js' %}" ></script>
     
     <script type="text/javascript" src="{% static 'lib/angular/angular.min.js' %}" ></script>
@@ -28,6 +27,13 @@
     <script type="text/javascript" src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}" ></script>
 
     <script type="text/javascript" src="{% static 'js/main.js' %}" ></script>
+
+     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+     
+    <script type="text/javascript" src="{% static 'js/chart.js' %}" ></script>
+
+
+
 
     <script type="text/ng-template" id="/wbc-searchdirective.html">
         <form id="nav-search" class="search-form" ng-submit="submit(formData.q)">
@@ -84,7 +90,7 @@
             </button>
             <div id="brand">
                 <a href="/">
-                    <img src="{% static 'img/title.png' %}" alt="Bürger baut Stadt">
+                    <img src="{% static 'img/title.png' %}" alt="Jugend-Demografie-Dialog.de Logo">
                 </a>
             </div>
         </div>
@@ -100,7 +106,7 @@
             <div id="header-left">
                 <div id="brand">
                     <a href="/">
-                        <img src="{% static 'img/title.png' %}" alt="Bürger baut Stadt">
+                        <img src="{% static 'img/title.png' %}" alt="Jugend-Demografie-Dialog.de Logo">
                     </a>
                 </div>
             </div>
