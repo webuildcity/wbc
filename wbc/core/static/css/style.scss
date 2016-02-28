@@ -141,12 +141,12 @@ a,
 a:visited,
 .leaflet-container a,
 .leaflet-container a:visited {
-    color: $primary-color;
+    color: $link-color;
     text-decoration: none;
 }
 a:hover,
 .leaflet-container a:hover {
-    color: $primary-color-dark;
+    color: $link-color-dark;
     text-decoration: none;
 }
 .btn.btn-primary {
