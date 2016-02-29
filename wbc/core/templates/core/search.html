@@ -173,9 +173,13 @@ SearchController
             <div ng-repeat="result in results">
                 <div id="result-{[{result.pk}]}" class="search-result  container-fluid">
                     <div class="left-block pull-left">
-                        <img ng-if="result.thumbnail" class="search-thumbnail" src={[{result.thumbnail}]}>
+                        <a ng-href="{[{result.internal_link}]}">
+                            <img ng-if="result.thumbnail" class="search-thumbnail" src={[{result.thumbnail}]}>
+                        </a>
                         <!-- <i ng-if="!result.thumbnail" class="fa fa-lightbulb-o fa-5x"></i> -->
-                        <img ng-if="!result.thumbnail" class="search-thumbnail" src="/static/img/project_placeholder100.png">
+                        <a ng-href="{[{result.internal_link}]}">
+                            <img ng-if="!result.thumbnail" class="search-thumbnail" src="/static/img/project_placeholder100.png">
+                        </a>
                     </div>
                     <div class="right-block">
                         <div class="result-mash">
