@@ -52,7 +52,7 @@ SearchController
             </div>
             <div ng-if="entitiesFacets.length > 0" class="facet-container">
                 <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target=".region-facets">
-                    <i class="region-anchor anchor fa fa-image"></i>Städte
+                    <i class="region-anchor anchor fa fa-lightbulb-o"></i>Lösungsansätze
                 </div>
                 <div class="active-facets wbc-dropdown-container">
                      <div class="facet-item" ng-repeat="entity in formData.entities">
@@ -127,7 +127,7 @@ SearchController
 
                     <div id="result-{[{result.pk}]}" class="search-result">
                         <div class="result-type" ng-switch on="result.type">
-                            <i ng-switch-when="project" class="fa fa-lightbulb-o fa-2x"></i>
+                            <!-- <i ng-switch-when="project" class="fa fa-lightbulb-o fa-2x"></i> -->
                             <i ng-switch-when="stakeholder" class="fa fa-user fa-2x"></i>
                         </div>
                         <div class="result-details">
@@ -181,8 +181,8 @@ SearchController
                         <div class="result-mash">
                             <div class="pull-left result-block">
                                 <div class="result-type" ng-switch on="result.type">
-                                    <i ng-switch-when="project" class="fa fa-lightbulb-o fa-2x"></i>
-                                    <i ng-switch-when="stakeholder" class="fa fa-user fa-2x"></i>
+                                    <!-- <i ng-switch-when="project" class="fa fa-lightbulb-o fa-2x"></i> -->
+                                    <!-- <i ng-switch-when="stakeholder" class="fa fa-user fa-2x"></i> -->
                                 </div>
                                 <a ng-href="{[{result.internal_link}]}">
                                     <b>{[{ result.name }]}</b>
