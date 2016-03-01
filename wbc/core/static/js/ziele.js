@@ -3,12 +3,16 @@ google.setOnLoadCallback(drawChart1);
 function drawChart1() {
   var data = google.visualization.arrayToDataTable([
     ['Thema', 'Stimmen', { role: 'style' }],
-    ['Bier-, Gasthaus und Brauereikultur',  75, 'color: #444' ],
-    ['Tourist. Sehenswürdigkeiten und Landschaft',  58, 'color: #444' ],
-    ['gutes Freizeitangebot und Veranstaltungen',  57, 'color: #444' ],
-    ['Starke Wirtschaft',  18, 'color: #444'],
-    ['gutes Angebot an Bildungseinrichtungen',  13, 'color: #444' ],
-    ['Freizeitangebote für Jugendliche',  10, 'color: #444' ],
+    ['Es gibt mehr (jugendgerechte) Freizeitangebote',  69, 'color: #ffff00' ],
+    ['Der Landkreis verfügt über eine gute Infrastruktur',  68, 'color: #ffff00' ],
+    ['Die Schul- und Unterrichtssituation ist verbessert',  24, 'color: #ffff00' ],
+    ['Die öffentlichen Verkehrsmittel sind ausgebaut',  22, 'color: #ffff00'],
+    ['Es stehen bessere Aus- und Weiterbildungsmöglichkeiten zur Verfügung',  21, 'color: #ffff00' ],
+    ['Die Innenstädte sind belebt mit einer Vielfalt von Geschäften',  17, 'color: #ffff00' ],
+    ['Der Landkreis ist familienfreundlich',  16, 'color: #ffff00' ],
+    ['Es gibt ausreichend attraktive Arbeitsplätze',  15, 'color: #ffff00' ],
+    ['Der Landkreis ist attraktiv für die BewohnerInnen',  9, 'color: #ffff00' ],
+    ['Die Kinderbetreuungsangebote sind ausgebaut',  8, 'color: #ffff00' ],
 
   ]);
 

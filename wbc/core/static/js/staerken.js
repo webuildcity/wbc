@@ -3,12 +3,12 @@ google.setOnLoadCallback(drawChart1);
 function drawChart1() {
   var data = google.visualization.arrayToDataTable([
     ['Thema', 'Stimmen', { role: 'style' }],
-    ['Bier-, Gasthaus und Brauereikultur',  75, 'color: #264ec4' ],
-    ['Tourist. Sehenswürdigkeiten und Landschaft',  58, 'color: #264ec4' ],
-    ['gutes Freizeitangebot und Veranstaltungen',  57, 'color: #264ec4' ],
-    ['Starke Wirtschaft',  18, 'color: #264ec4'],
-    ['gutes Angebot an Bildungseinrichtungen',  13, 'color: #264ec4' ],
-    ['Freizeitangebote für Jugendliche',  10, 'color: #264ec4' ],
+    ['Bier-, Gasthaus und Brauereikultur',  75, 'color: #33cc33' ],
+    ['Tourist. Sehenswürdigkeiten und Landschaft',  58, 'color: #33cc33' ],
+    ['gutes Freizeitangebot und Veranstaltungen',  57, 'color: #33cc33' ],
+    ['Starke Wirtschaft',  18, 'color: #33cc33'],
+    ['gutes Angebot an Bildungseinrichtungen',  13, 'color: #33cc33' ],
+    ['Freizeitangebote für Jugendliche',  10, 'color: #33cc33' ],
 
 /*    
     ['ÖPNV und Zuganbindung',  10],
