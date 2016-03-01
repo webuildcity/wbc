@@ -47,6 +47,7 @@ $pad: 20px;
   }
 }
 .chart {
-  width: 100%; 
+  width: 90%; 
   height: 600px;
+  padding: 0px 20px 50px 4px; 
 }
