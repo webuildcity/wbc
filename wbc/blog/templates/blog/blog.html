@@ -32,7 +32,7 @@ BlogController
 
             {% if user.is_authenticated %}
             <ul class="admin-panel">
-                <li><a class="blog-admin admin-link" data-toggle="modal" data-target="#edit-modal" data-form="{% url 'blogentry_create' %}" href="#"><i class="fa fa-plus"></i></a></li>
+                <li><a class="blog-admin admin-link" data-toggle="modal" data-title="{% trans 'Blogeintrag hinzufügen' %}" data-target="#edit-modal" data-form="{% url 'blogentry_create' %}" href="#"><i class="fa fa-plus"></i></a></li>
             </ul>
             {% endif %}
 
