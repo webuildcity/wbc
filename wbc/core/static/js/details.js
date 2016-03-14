@@ -87,7 +87,8 @@ $(document).ready(function(){
     $(".big-page").on('click', '.project-admin', function(ev) { // for each edit contact url
         ev.preventDefault(); // prevent navigation
         var url = $(this).data("form"); 
-        $('#edit-modal .modal-header h3').html(url); // display the modal on url load
+        var title = $(this).data('title');
+        $('#edit-modal .modal-header h3').html(title); // display the modal on url load
         $("#edit-modal .custom-content").load(url, function(response, status) {
  
             if ( status == "error" ) {

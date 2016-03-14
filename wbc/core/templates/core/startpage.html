@@ -29,8 +29,8 @@ StartpageController
 
 <!-- Top of the startpage with headline, search bar and background image -->
  
-            {% block top %}
-            {% endblock %}
+{% block top %}
+{% endblock %}
 
 
 <!-- Bottom Container -->
@@ -42,69 +42,67 @@ StartpageController
 
 <!-- Block of Navigation Boxes -->
             
-            {% block nav-boxes %}
+        {% block nav-boxes %}
 
-            {% endblock %}
+        {% endblock %}
 
-  
-            {% block topic-boxes %}
 
-            {% endblock %}
+        {% block topic-boxes %}
+
+        {% endblock %}
 
 
 <!-- Block Questions -->
       
-            {% block questions %}
-            
-            {% endblock %}
+        {% block questions %}
+        
+        {% endblock %}
    
 <!-- Upcomming Events -->
 
 <!--        {% if upcoming %}
             {% endif %}  -->
 
-            {% if upcoming %}
-                    <div class="bottom-block">
-                        <h2 class="wbc-headline">Aktuelle Ideen & Projekte &amp; Projekte:</h2>
-                        <div class="wbc-divider"></div>
-                        <div class="upcoming container">
-                                {% for project in upcoming %}
-                                <a href="{{project.get_absolute_url}}">
-                                    <div class="project-description col-md-4">
-                                        {% if project.gallery %}
-                                        <img class="description_img" src="{{project.gallery.photos.all.0.get_description_url}}" />
-                                        {% else %}
-                                        <img class="description_img" src="{% static 'img/person_placeholder.png' %}" />
-                                        {% endif %}
-                                        <div>
-                                            <h3>{{project.name}} {% if project.identifier %} ({{project.identifier}}) {% endif %}</h3>
-                                            {% if project.address_obj %}
-                                            <p >{{project.address_obj.street}}  {{ project.address_obj.streetnumber }}</p>
-                                            <p>{{project.get_teaser}}</p>
-                                            {% endif %}
-                                        </div>
-                                        {% if project.get_next_date %}
-                                        <div class="next-date">
-                                            <p title="Nächste Veranstaltung"><i class="fa fa-calendar"> </i>
-                                            {{project.get_next_date.title}}</p>
-                                            <p  class="date text-muted">{{project.get_next_date.begin}}</p>
-                                        </div>
-                                        {% endif %}
-                                    </div>
-                                </a>
-                                {% endfor %}
+        {% if upcoming %}
+        <div class="bottom-block">
+            <h2 class="wbc-headline">Aktuelle Ideen & Projekte &amp; Projekte:</h2>
+            <div class="wbc-divider"></div>
+            <div class="upcoming container">
+                {% for project in upcoming %}
+                <a href="{{project.get_absolute_url}}">
+                    <div class="project-description col-md-4">
+                        {% if project.gallery %}
+                        <img class="description_img" src="{{project.gallery.photos.all.0.get_description_url}}" />
+                        {% else %}
+                        <img class="description_img" src="{% static 'img/person_placeholder.png' %}" />
+                        {% endif %}
+                        <div>
+                            <h3>{{project.name}} {% if project.identifier %} ({{project.identifier}}) {% endif %}</h3>
+                            {% if project.address_obj %}
+                            <p >{{project.address_obj.street}}  {{ project.address_obj.streetnumber }}</p>
+                            <p>{{project.get_teaser}}</p>
+                            {% endif %}
                         </div>
+                        {% if project.get_next_date %}
+                        <div class="next-date">
+                            <p title="Nächste Veranstaltung"><i class="fa fa-calendar"> </i>
+                            {{project.get_next_date.title}}</p>
+                            <p  class="date text-muted">{{project.get_next_date.begin}}</p>
+                        </div>
+                        {% endif %}
                     </div>
-                    {% endif %}
-
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
 
 <!-- Div-Close of startpage-content & bottom-container -->
    
     </div>
 </div>
 
-    {% block footer %}
-
-    {% endblock %}
+{% block footer %}
+{% endblock %}
 
 {% endblock %}

@@ -1,16 +1,16 @@
 {% extends 'core/layout_split.html' %}
-{% load staticfiles compress guardian_tags threadedcomments_tags imagekit ratings %}
+{% load staticfiles compress guardian_tags threadedcomments_tags imagekit ratings i18n %}
 
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static "css/vizi.css" %}" />
-    <link rel="stylesheet" type="text/css" href="{% static "adminmap.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "css/adminmap.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "lib/jquery-ui/jquery-ui.theme.min.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "lib/jquery-ui/jquery-ui.min.css" %}" />
     {% compress css %}
     {{block.super}}
     <link rel="stylesheet" href="{% static "lib/leaflet/leaflet.css" %}" />
-    <link rel="stylesheet" type="text/x-scss" href="{% static "css/details.scss" %}" />de
+    <link rel="stylesheet" type="text/x-scss" href="{% static "css/details.scss" %}" />
     <link rel="stylesheet" href="{% static "lib/dropzone.css" %}" />
 
     <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
@@ -31,7 +31,7 @@
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintInputPolygon.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintOutputCustomBuildingTiles.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/3d.js' %}"  ></script>
-    <script type="text/javascript" src="{% static 'adminmap.js' %}"  ></script>
+    <script type="text/javascript" src="{% static 'js/adminmap.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/dropzone.js' %}" ></script>
 
     <script type="text/javascript" src="{%static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
@@ -81,10 +81,10 @@ DetailsController
         </div>
         {% if user.is_authenticated %}
         <ul class="admin-panel">
-            <li><a class="admin-link project-admin" data-toggle="modal" data-target="#edit-modal" data-form="{% url 'project_create' %}" href="#"><i class="fa fa-plus"></i></a></li>
+            <li><a class="admin-link project-admin" data-toggle="modal" data-target="#edit-modal" data-form="{% url 'project_create' %}" data-title="{% trans 'Projekt hinzufügen' %}" href="#"><i class="fa fa-plus"></i></a></li>
             {% if 'change_project' in project_perms or perms.projects.change_project %}
-            <li><a class="admin-link project-admin" data-form="{% url 'project_update' project.pk %}" href="#"><i class="fa fa-pencil"></i></a></li>
-            <li><a class="admin-link photo-admin" data-form="{% url 'project_update' project.pk %}" data-toggle="modal" data-target="#photo-modal" href="#"><i class="fa fa-image"></i></a></li>
+            <li><a class="admin-link project-admin" data-form="{% url 'project_update' project.pk %}" data-title="{% trans 'Projekt bearbeiten' %}" href="#"><i class="fa fa-pencil"></i></a></li>
+            <li><a class="admin-link photo-admin" data-form="{% url 'project_update' project.pk %}" data-toggle="modal" data-target="#photo-modal" data-title="{% trans 'Bilder hochladen' %}" href="#"><i class="fa fa-image"></i></a></li>
             {% endif %}
          <!--    <li><a class="admin-link" href="{{new_publication_link}}?project_id={{project.pk}}"><i class="fa fa-newspaper"></i></a></li> -->
         </ul>
