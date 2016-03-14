@@ -1,3 +1,4 @@
+{% load i18n %}
 <h2>Anmeldung</h2>
 
 {% if not request.user.is_authenticated %}
@@ -44,11 +45,10 @@
 
         <div class="form-group">
             <div class="">
-                <button class="modal-button" data-toggle="modal" data-target="#modal" data-form="{% url 'registration_register' %}" data-title="{% trans 'Registrieren' %}" href="#">Hier Registrieren!</a></button>
+                <button class="modal-button" data-toggle="modal" data-target="#modal" data-form="{% url 'registration_register' %}" data-title="{% trans 'Benutzerkonto registrieren' %}" href="#">Hier Registrieren!</a></button>
             </div>
         </div>
  
-    
  </div>
 {% else %}
 Sie sind bereits angemeldet
