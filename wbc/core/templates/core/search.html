@@ -38,7 +38,9 @@ SearchController
                     placeholder="{% trans 'PLACEHOLDER:Suche nach Ideen, Ansprechpartnern und Projekten in deinem Landkreis...' %}"
                     type="text" class="form-control"
                     ng-model="formData.q"
-                    ng-keydown="onKeyDown($event)">
+                    ng-keydown="onKeyDown($event)" 
+                    ng-focus="searchFocus=true"
+                    ng-blur="searchfocus=false">
 
                     <a href="" class="input-group-addon" ng-click="onSearchChanged()">
                         <span class="glyphicon glyphicon-search"></span>
@@ -152,9 +154,15 @@ SearchController
     <button class="btn btn-default" id="map-list-switch" ng-click="changeView()">{% trans 'Button:Listen-/Kartenansicht' %}</button>
     <div ng-class="{'active-result': listView}" class="result-content active-result" id="list">
         <div id='search-list-header'>
-            <div class="pull-left result-number">
-                <h2>{[{resultLength}]}</h2>
-                <p>{% trans '#ERGEBNISSE:Ergebnisse' %}</p>
+            <div class="pull-left result-number text-center">
+                <div ng-show="resultLength >0">
+                    <h2>{[{resultLength}]}</h2>
+                    <p>{% trans '#ERGEBNISSE:Ergebnisse' %}</p>
+                </div>
+                <div ng-hide="resultLength >0">
+                    <i class="spinner-icon fa fa-spinner fa-spin"></i>
+                    <div class="loading-text"> {% trans 'Suche' %}</div>
+                </div>
             </div>
             <div class="sort-control pull-left">
                 <p>{% trans 'Sortieren nach:' %}</p>

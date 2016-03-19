@@ -39,7 +39,9 @@
                     ng-model="formData.q"
                     ng-change="onSearchChanged()"
                     ng-keydown="onKeyDown($event)"
-                    ng-model-options="{ debounce: 1200 }"/>
+                    ng-model-options="{ debounce: 1200 }"
+                    ng-focus="searchFocus=true" 
+                    ng-blur="searchFocus=false"/>
 
                     <i ng-show="isLoading" class="spinner-icon fa fa-spinner fa-spin"></i>
 
@@ -50,7 +52,7 @@
                 </div>
             </div>
         </form>
-        <div ng-show="data.suggestions.length >0"class="search-results">
+        <div ng-show="data.suggestions.length >0 && searchFocus" class="search-results">
             <div ng-repeat="result in data.suggestions">
                 <div class="search-result"
                      ng-click="loadDetails(result.internal_link)"

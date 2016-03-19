@@ -214,9 +214,35 @@
         p {
             font-weight: bold;
         }
+
         .result-number {
             padding-left: 0.7em;
+            width: 120px;
+
+
+            .loading-text:after {
+                overflow: hidden;
+                display: inline-block;
+                vertical-align: bottom;
+                -webkit-animation: ellipsis steps(4,end) 2200ms infinite;      
+                animation: ellipsis steps(4,end) 2200ms infinite;
+                content: "\2026"; /* ascii code for the ellipsis character */
+                width: 0px;
+            }
+
+            @keyframes ellipsis {
+                to {
+                    width: 20px;    
+                }
+            }
+
+            @-webkit-keyframes ellipsis {
+                to {
+                    width: 20px;    
+                }
+            }
         }
+
         .sort-control {
             p {
                 margin: 0.4em 2em;
@@ -226,8 +252,7 @@
                 margin: 0.2em 2em;
                 padding-left: 0px;
             }
-        }
-
+        }     
     }
 
     #result-list {

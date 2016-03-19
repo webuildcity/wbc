@@ -34,6 +34,9 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     }
 
     var search = function(data){
+        
+        $scope.resultLength = 0;
+
         $http({
             method: 'POST',
             url:  '/suche/',
