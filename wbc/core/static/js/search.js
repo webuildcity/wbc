@@ -18,6 +18,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.formData.tags = [];
     $scope.selectedResult = null;
     $scope.listView = true;
+    $scope.searching = false;
+    $scope.offset = 0;
 
     var allResultPoly = null;
     var maxZoom = null;
@@ -33,9 +35,12 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         // return null;
     }
 
-    var search = function(data){
+    var search = function(data, offset){
         
         $scope.resultLength = 0;
+        $scope.searching = true;
+        if(offset)
+            data.offset = offset;
 
         $http({
             method: 'POST',
@@ -49,9 +54,15 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             $scope.resultLength = response.length
             $scope.tagFacets = response.facets.fields.tags;
             $scope.entitiesFacets = response.facets.fields.entities;
+            $scope.searching = false;
+            $scope.offset += 50;
 
             if (response.results.length>0) {
-                $scope.results = response.results;
+                if (offset){
+                    $scope.results.push.apply($scope.results, response.results);
+                } else {
+                    $scope.results = response.results;
+                }
                 $scope.suggestion = null;
                 var multipoly = [];
 
@@ -74,7 +85,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 });
                 maxZoom = MapService.map.getZoom();
 
-
+                $('.result-content').scroll(resultListScrollHandler);
                 // //scroll things
                 // setTimeout(function() {
                 //     moveScroller('.tag-anchor', '#search_sidebar');
@@ -103,19 +114,55 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
     $scope.onKeyDown = function(key){
         if(key.keyCode == '13'){
-            $scope.onSearchChanged($scope.formData)
+            $scope.startSearch($scope.formData)
         }
     }
+
+
     $scope.onSearchChanged = function() {
+
+        // if($scope.formData.q) {
+        //     $scope.isLoading = true;
+        //     $http({
+        //         method: 'GET',
+        //         url:  '/autocomplete',
+        //         params: {
+        //             q: $scope.formData.q
+        //         }
+        //     }).success(function(response) {
+        //         $scope.isLoading = false;
+        //         if (response.results.length) {
+        //             $scope.data.suggestions = response.results;
+        //         } else {
+        //             $scope.data.suggestions = [];
+        //             $scope.noResults = true;
+        //         }
+        //     }).error(function(e){
+        //         $scope.isLoading = false;
+        //     });
+        // } else {
+        //     $scope.data.suggestions = [];
+        // }
+
+    };
+
+    $scope.startSearch = function(offset) {
+
         var paramData = angular.copy($scope.formData);
         paramData.tags = paramData.tags.toString();
         var params = $.param(paramData);
 
         $scope.noResults = false;
-     
+        $scope.offset = offset || 0;
+        
+        
         $window.history.pushState($scope.formData, $scope.q, params);
 
-        search($scope.formData);
+        if(offset){
+            search($scope.formData, offset);
+        } else {
+            search($scope.formData);
+        }
     };
 
     $scope.selectTerm = function(term) {
@@ -240,6 +287,16 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             }, 50);
         }
     }
+
+    var resultListScrollHandler = function (){
+        if($('#result-list').height() < $('.result-content').scrollTop() + $('.result-content').height()+100)  {
+               $scope.startSearch($scope.offset);
+               $('.result-content').off('scroll', resultListScrollHandler);
+        }  
+    }
+    
+
+
     $('.order-btn').click(function(){
         $(".order-btn").siblings(".active").removeClass("active");
         $(this).addClass("active");
@@ -250,7 +307,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         } else {
             this.value = this.value.split('-')[1];
         }
-        $scope.onSearchChanged();
+        $scope.startSearch();
     });
 
 

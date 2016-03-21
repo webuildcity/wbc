@@ -108,9 +108,6 @@ class SearchView(TemplateView):
             tr = Point(data['bounds']['_northEast']['lat'], data['bounds']['_northEast']['lng'])
             sqs = sqs.within('location', bl, tr)
               
-        if 'offset' in data:
-            offset = data['offset'] 
-        
         if 'q' in data:
             if data['q'] != "":
                 sqs = sqs.filter(content=AutoQuery(data['q']))
@@ -136,9 +133,12 @@ class SearchView(TemplateView):
             if data['order'] != '' and data['order'] != '-':
                 order = data['order']
                 sqs = sqs.order_by(order)
-        results = []
 
-        for result in sqs:
+        if 'offset' in data:
+            offset = data['offset']
+
+        results = []
+        for result in sqs[offset:offset+50]:
             resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link, address_obj=result.address_obj, thumbnail=result.thumbnail, num_stakeholder=result.num_stakeholder, created=result.created.strftime("%d.%m.%y"), created_by=result.created_by, teaser=result.teaser, ratings_count=result.ratings_count, ratings_avg=result.ratings_avg)
             if result.location:
                 resultdict['location'] = [result.location[0], result.location[1]]
@@ -160,7 +160,6 @@ class SearchView(TemplateView):
     def get(self, request):
         query =  request.GET.urlencode()
         q = request.GET.get('q', '')
-        # print request.META['QUERY_STRING']
         return render(request, 'core/search.html',  context={'q': q})
 
     def post(self, request):

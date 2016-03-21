@@ -52,7 +52,6 @@ app.directive('wbcSearch', function() {
 
             $scope.onKeyDown = function(evt) {
 
-
                 // tab and enter
                 if(evt.keyCode == '9' || evt.keyCode == '13') {
                     if($scope.selectedSuggestionIdx !== -1) {

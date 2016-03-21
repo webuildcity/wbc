@@ -30,7 +30,7 @@ SearchController
 <!-- base for html5 mode angular -->
 <base href="/suche/">
     <div id="search_sidebar">
-        <form id="search">
+        <form id="search" ng-submit="$event.preventDefault(); startSearch($scope.formData)">
             {% csrf_token %}
             <div class="search-anchor anchor">
                 <div class="input-group search-field">
@@ -38,11 +38,13 @@ SearchController
                     placeholder="{% trans 'PLACEHOLDER:Suche nach Ideen, Ansprechpartnern und Projekten in deinem Landkreis...' %}"
                     type="text" class="form-control"
                     ng-model="formData.q"
+                    ng-change="onSearchChanged()"
                     ng-keydown="onKeyDown($event)" 
                     ng-focus="searchFocus=true"
-                    ng-blur="searchfocus=false">
+                    ng-blur="searchfocus=false"
+                    >
 
-                    <a href="" class="input-group-addon" ng-click="onSearchChanged()">
+                    <a href="" class="input-group-addon" onclick="$('#search').submit()">
                         <span class="glyphicon glyphicon-search"></span>
                     </a>
                 </div>
@@ -59,7 +61,7 @@ SearchController
                 <div class="active-facets wbc-dropdown-container">
                      <div class="facet-item" ng-repeat="entity in formData.entities">
                         <span>{[{entity}]}</span>
-                        <a ng-click="formData.entities.splice(formData.entities.indexOf(entity), 1); onSearchChanged(formData);" class="close-button">
+                        <a ng-click="formData.entities.splice(formData.entities.indexOf(entity), 1); startSearch()" class="close-button">
                             <i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i>
                         </a>
                     </div>
@@ -67,7 +69,7 @@ SearchController
                 <div id='region-facets' class='region-facets collapse wbc-dropdown-container'>
                     <div class="facet-select" ng-repeat="facet in entitiesFacets">
                         <label>
-                            <input type="checkbox" checklist-model="formData.entities" checklist-value="facet[0]" ng-click="onSearchChanged()">
+                            <input type="checkbox" checklist-model="formData.entities" checklist-value="facet[0]" ng-click="startSearch()">
                                 {[{facet[0]}]} ({[{facet[1]}]})
                         </label>
                     </div>
@@ -81,41 +83,20 @@ SearchController
                 <div class="active-facets wbc-dropdown-container">
                     <div class="facet-item" ng-repeat="tag in formData.tags">
                         <span>{[{tag}]}</span>
-                        <a class="close-button" ng-click="formData.tags.splice(formData.tags.indexOf(tag), 1); onSearchChanged(formData);"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                        <a class="close-button" ng-click="formData.tags.splice(formData.tags.indexOf(tag), 1); startSearch();"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
                     </div>
                 </div>
                 <div id='tag-facets' class="collapse wbc-dropdown-container">
                     <div class="facet-select" ng-repeat="facet in tagFacets">
                         <label>
-                            <input type="checkbox" checklist-model="formData.tags" checklist-value="facet[0]" ng-click="onSearchChanged()">
+                            <input type="checkbox" checklist-model="formData.tags" checklist-value="facet[0]" ng-click="startSearch()">
                                 {[{facet[0]}]} ({[{facet[1]}]})
                         </label>
                     </div>
                 </div>
             </div>
-
-
-            <!--
-            <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target="#type-facets">
-                <i id="type-anchor" class="anchor fa fa-circle-o"> </i> Typen
-            </div>
-            <div class="active-facets wbc-dropdown-container">
-                <div class="facet-item" ng-repeat="model in formData.models">
-                    <span>{[{models[model]}]}</span>
-                    <a class="close-button" ng-click="formData.models.splice(formData.models.indexOf(model), 1)"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
-                </div>
-            </div>
-            <div id="type-facets" class="collapse wbc-dropdown-container" >
-                <div ng-repeat="(key, text) in models"  class="facet-select">
-                    <label>
-                        <input type="checkbox" checklist-model="formData.models" checklist-value="key" checklist-change="onSearchChanged()">
-                        {[{text}]}
-                    </label>
-                </div>
-            </div>
-            -->
-
         </form>
+
         <div ng-hide="listView" ng-if="resultLength">
             <div class="collapse-heading" data-toggle="collapse" data-target=".result-list"><i class="result-anchor anchor fa fa-list-ul"> </i>{% trans '#ERGEBNISSE:Ergebnisse' %}</div>
             <p id="result-number" class="wbc-dropdown-container text-muted" ng-if="resultLength">{[{resultLength}]} {% trans 'Einträge gefunden' %}</p>
@@ -155,11 +136,11 @@ SearchController
     <div ng-class="{'active-result': listView}" class="result-content active-result" id="list">
         <div id='search-list-header'>
             <div class="pull-left result-number text-center">
-                <div ng-show="resultLength >0">
+                <div ng-show="resultLength >=0 && !searching">
                     <h2>{[{resultLength}]}</h2>
                     <p>{% trans '#ERGEBNISSE:Ergebnisse' %}</p>
                 </div>
-                <div ng-hide="resultLength >0">
+                <div ng-show="searching">
                     <i class="spinner-icon fa fa-spinner fa-spin"></i>
                     <div class="loading-text"> {% trans 'Suche' %}</div>
                 </div>
@@ -209,6 +190,7 @@ SearchController
                     </div>
                 </div>
             </div>
+            <button ng-if='results.length < resultLength' class="load-more-results btn btn-default">{% trans 'Mehr Ergebnisse laden' %}</button>
         </div>
     </div>
     <div ng-class="{'active-result': !listView}" class="result-content" id="map"></div>
