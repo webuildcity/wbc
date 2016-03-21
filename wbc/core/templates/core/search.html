@@ -30,7 +30,7 @@ SearchController
 <!-- base for html5 mode angular -->
 <base href="/suche/">
     <div id="search_sidebar">
-        <form id="search" ng-submit="$event.preventDefault(); startSearch($scope.formData)">
+        <form id="search" ng-submit="$event.preventDefault(); startSearch(false)">
             {% csrf_token %}
             <div class="search-anchor anchor">
                 <div class="input-group search-field">

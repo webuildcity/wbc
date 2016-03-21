@@ -39,8 +39,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         
         $scope.resultLength = 0;
         $scope.searching = true;
-        if(offset)
-            data.offset = offset;
 
         $http({
             method: 'POST',
@@ -114,7 +112,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
     $scope.onKeyDown = function(key){
         if(key.keyCode == '13'){
-            $scope.startSearch($scope.formData)
+            $scope.startSearch(false)
         }
     }
 
@@ -148,20 +146,28 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
     $scope.startSearch = function(offset) {
 
+        if(offset){
+            $scope.formData.offset = $scope.offset
+        } else {
+            console.log("yo")
+            $scope.offset = 0;
+            $scope.formData.offset = 0;
+        }
         var paramData = angular.copy($scope.formData);
         paramData.tags = paramData.tags.toString();
         var params = $.param(paramData);
 
         $scope.noResults = false;
-        $scope.offset = offset || 0;
+        // $scope.offset = offset || 0;
         
         
         $window.history.pushState($scope.formData, $scope.q, params);
 
         if(offset){
-            search($scope.formData, offset);
+            // $scope.formData.offset= offset;
+            search($scope.formData, true);
         } else {
-            search($scope.formData);
+            search($scope.formData, false);
         }
     };
 
@@ -289,9 +295,9 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     }
 
     var resultListScrollHandler = function (){
-        if($('#result-list').height() < $('.result-content').scrollTop() + $('.result-content').height()+100)  {
-               $scope.startSearch($scope.offset);
+        if($('#result-list').height() < $('.result-content').scrollTop() + $('.result-content').height()+100 && $('.load-more-results').length >0)  {
                $('.result-content').off('scroll', resultListScrollHandler);
+               $scope.startSearch($scope.offset);
         }  
     }
     
@@ -307,7 +313,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         } else {
             this.value = this.value.split('-')[1];
         }
-        $scope.startSearch();
+        $scope.startSearch(false);
     });
 
 
