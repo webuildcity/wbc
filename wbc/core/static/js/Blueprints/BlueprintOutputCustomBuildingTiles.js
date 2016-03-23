@@ -193,7 +193,7 @@
 
                 for ( var i = 0; i < vertexPositions.length; i++ )
                 {
-                vertices.push(new THREE.Vector3(vertexPositions[ i*3 + 0 ], vertexPositions[ i*3 + 1 ], vertexPositions[ i*3 + 2 ]));
+                    vertices.push(new THREE.Vector3(vertexPositions[ i*3 + 0 ], vertexPositions[ i*3 + 1 ], vertexPositions[ i*3 + 2 ]));
                 }
 
                 for (var vertexIndex = 0; vertexIndex < vertices.length; vertexIndex++)

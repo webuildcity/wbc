@@ -20,6 +20,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.listView = true;
     $scope.searching = false;
     $scope.offset = 0;
+    $scope.multipoly = [];
 
     var allResultPoly = null;
     var maxZoom = null;
@@ -39,13 +40,13 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         
         $scope.resultLength = 0;
         $scope.searching = true;
+        
 
         $http({
             method: 'POST',
             url:  '/suche/',
             data: data
         }).success(function(response) {
-            MapService.clearPolys();
             // if(polygonLayer != null) {
             //    MapService.map.removeLayer(multipoly);
             // }
@@ -59,10 +60,11 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 if (offset){
                     $scope.results.push.apply($scope.results, response.results);
                 } else {
+                    MapService.clearPolys();
                     $scope.results = response.results;
+                    $scope.multipoly = [];
                 }
                 $scope.suggestion = null;
-                var multipoly = [];
 
                 response.results.forEach(function(result){
                     if(result.polygon)  {
@@ -71,10 +73,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                         myPoly.on('click', function() {
                             $scope.selectResult(result);
                         });
-                        multipoly.push(result.polygon[0]);
+                        $scope.multipoly.push(result.polygon[0]);
                     }
                 });
-                allResultPoly = L.multiPolygon(multipoly);
+                allResultPoly = L.multiPolygon($scope.multipoly);
             
 
 
@@ -149,7 +151,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         if(offset){
             $scope.formData.offset = $scope.offset
         } else {
-            console.log("yo")
             $scope.offset = 0;
             $scope.formData.offset = 0;
         }
@@ -295,7 +296,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     }
 
     var resultListScrollHandler = function (){
-        if($('#result-list').height() < $('.result-content').scrollTop() + $('.result-content').height()+100 && $('.load-more-results').length >0)  {
+        if($('#result-list').height() < $('.result-content').scrollTop() + $('.result-content').height()+20 && $('.load-more-results').length >0)  {
                $('.result-content').off('scroll', resultListScrollHandler);
                $scope.startSearch($scope.offset);
         }  

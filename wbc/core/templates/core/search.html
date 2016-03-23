@@ -99,7 +99,9 @@ SearchController
 
         <div ng-hide="listView" ng-if="resultLength">
             <div class="collapse-heading" data-toggle="collapse" data-target=".result-list"><i class="result-anchor anchor fa fa-list-ul"> </i>{% trans '#ERGEBNISSE:Ergebnisse' %}</div>
-            <p id="result-number" class="wbc-dropdown-container text-muted" ng-if="resultLength">{[{resultLength}]} {% trans 'Einträge gefunden' %}</p>
+            <p id="result-number" class="wbc-dropdown-container text-muted" ng-if="resultLength">{[{results.length}]} von {[{resultLength}]} {% trans 'Einträgen' %}
+            <a href="#" ng-if="results.length < resultLength"ng-click="startSearch(offset)">{% trans 'more' %}</a>
+            </p>
             <div class="result-list in wbc-dropdown-container">
 
                 <div class="clearfix"
@@ -121,6 +123,7 @@ SearchController
                         </div>
                     </div>
                 </div>
+                <a href="#" ng-if="results.length < resultLength"ng-click="startSearch(offset)">{% trans 'more' %}</a>
             </div>
         </div>
     </div>
@@ -137,7 +140,7 @@ SearchController
         <div id='search-list-header'>
             <div class="pull-left result-number text-center">
                 <div ng-show="resultLength >=0 && !searching">
-                    <h2>{[{resultLength}]}</h2>
+                    <h3>{[{results.length}]} von {[{resultLength}]}</h3>
                     <p>{% trans '#ERGEBNISSE:Ergebnisse' %}</p>
                 </div>
                 <div ng-show="searching">
@@ -148,12 +151,12 @@ SearchController
             <div class="sort-control pull-left">
                 <p>{% trans 'Sortieren nach:' %}</p>
                 <ul class="tabs">
-                    <button value="" class="order-btn active btn btn-default">{% trans 'BUTTON:Relevanz' %}</button>
+                    <!-- <button value="" class="order-btn active btn btn-default">{% trans 'BUTTON:Relevanz' %}</button> -->
                     <button value="name" class="order-btn btn btn-default">{% trans 'BUTTON:Name' %}</button>
                     <button value="-created" class="order-btn btn btn-default">{% trans 'BUTTON:Datum' %}</button>
-                    <button value="-num_stakeholder" class="order-btn btn btn-default">{% trans 'BUTTON:# Beteiligte' %}</button>
+                    <!-- <button value="-num_stakeholder" class="order-btn btn btn-default">{% trans 'BUTTON:# Beteiligte' %}</button> -->
                     <button value="-ratings_avg" class="order-btn btn btn-default">{% trans 'BUTTON:Bewertung' %}</button>
-                    <button value="-ratings_count" class="order-btn btn btn-default">{% trans 'BUTTON:# Bewertungen' %}</button>
+                    <!-- <button value="-ratings_count" class="order-btn btn btn-default">{% trans 'BUTTON:# Bewertungen' %}</button> -->
                 </ul>
             </div>
         </div>
