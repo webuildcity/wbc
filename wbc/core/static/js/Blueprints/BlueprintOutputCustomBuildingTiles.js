@@ -188,13 +188,13 @@
             var bbox_poly = new THREE.Box3().setFromObject(mesh);
 
             if(bbox.isIntersectionBox(bbox_poly)){
-              var vertexPositions = mesh.geometry.attributes.position.array;
-              var vertices = [] // 
+                var vertexPositions = mesh.geometry.attributes.position.array;
+                var vertices = [] // 
 
-              for ( var i = 0; i < vertexPositions.length; i++ )
-              {
+                for ( var i = 0; i < vertexPositions.length; i++ )
+                {
                 vertices.push(new THREE.Vector3(vertexPositions[ i*3 + 0 ], vertexPositions[ i*3 + 1 ], vertexPositions[ i*3 + 2 ]));
-              }
+                }
 
                 for (var vertexIndex = 0; vertexIndex < vertices.length; vertexIndex++)
                 {
