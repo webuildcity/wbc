@@ -21,6 +21,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.searching = false;
     $scope.offset = 0;
     $scope.multipoly = [];
+    // $scope.data = { suggestions: [] };
 
     var allResultPoly = null;
     var maxZoom = null;
@@ -301,8 +302,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                $scope.startSearch($scope.offset);
         }  
     }
-    
-
 
     $('.order-btn').click(function(){
         $(".order-btn").siblings(".active").removeClass("active");
@@ -317,18 +316,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $scope.startSearch(false);
     });
 
-
     search($scope.formData);
 
     moveScroller($('#search-list-header'), $('.result-content'));
-}]);
+    moveScroller($('.search-anchor'), $('#search_sidebar'));
 
-/** NON ANGULAR **/
-// $(document).resady(function(){
-//     moveScroller('.search-anchor', '#search_sidebar');
-//     // moveScroller('#type-anchor', '#search_sidebar');
-//     $('#map-list-switch').click(function()'result-content'{
-//         $('.result-content').toggleClass('hidden');
-//     });
-// });
+}]);
 
