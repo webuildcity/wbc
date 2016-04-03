@@ -114,6 +114,7 @@ SearchController
             <div class="collapse-heading" data-toggle="collapse" data-target=".result-list"><i class="result-anchor anchor fa fa-list-ul"> </i>{% trans '#ERGEBNISSE:Ergebnisse' %}</div>
             <p id="result-number" class="wbc-dropdown-container text-muted" ng-if="resultLength">{[{results.length}]} von {[{resultLength}]} {% trans 'Einträgen' %}
             <a href="#" ng-if="results.length < resultLength"ng-click="startSearch(offset)">{% trans 'more' %}</a>
+            <a href="#" ng-if="results.length < resultLength"ng-click="startSearch(1)">{% trans 'all' %}</a>
             </p>
             <div class="result-list in wbc-dropdown-container">
 

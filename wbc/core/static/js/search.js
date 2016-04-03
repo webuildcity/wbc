@@ -171,6 +171,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
         if(offset){
             $scope.formData.offset = $scope.offset
+            if(offset === 1)
+                $scope.formData.offset  =1;
         } else {
             $scope.offset = 0;
             $scope.formData.offset = 0;

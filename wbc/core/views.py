@@ -135,10 +135,17 @@ class SearchView(TemplateView):
                 sqs = sqs.order_by(order)
 
         if 'offset' in data:
+            print data['offset']
             offset = data['offset']
+            if data['offset'] == 1:
+                sqs_copy = sqs
+            else:
+                sqs_copy = sqs[offset:offset+50]
+        else:
+            sqs_copy = sqs[offset:offset+50]
 
         results = []
-        for result in sqs[offset:offset+50]:
+        for result in sqs_copy:
             resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link, address_obj=result.address_obj, thumbnail=result.thumbnail, num_stakeholder=result.num_stakeholder, created=result.created.strftime("%d.%m.%y"), created_by=result.created_by, teaser=result.teaser, ratings_count=result.ratings_count, ratings_avg=result.ratings_avg, buffer_areas=result.buffer_areas)
             if result.location:
                 resultdict['location'] = [result.location[0], result.location[1]]
