@@ -124,6 +124,31 @@ class Project(Model):
         unique_slugify(self,self.name)
         super(Project, self).save(*args, **kwargs)
 
+class BufferArea(Model):
+    name                 = models.CharField(blank=False, max_length=64, verbose_name="Name", help_text="Name")
+    active               = models.BooleanField(verbose_name="Veröffentlichen (aktivieren)", help_text="Aktiv")
+    tags                 = TaggableManager(through=TaggedItems, blank=True, verbose_name="Stichworte")
+    identifier           = models.CharField(blank=True, max_length=64, verbose_name="Bezeichner", help_text="ggf. Bezeichner der Ausgleichsfläche")
+    gml_id               = models.CharField(blank=True, max_length=64, verbose_name="gml id", help_text="gml id")
+    description          = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Beschreibung der Ausgleichsfläche")
+    entities             = models.ManyToManyField(Entity, blank=True, verbose_name="Verwaltungseinheit", related_name='bufferarea_places')
+    lat                  = models.FloatField(verbose_name="Breitengrad", null=True, blank=True)
+    lon                  = models.FloatField(verbose_name="Längengrad", null=True, blank=True)
+    polygon              = models.TextField(null=True, blank=True, help_text="Zur Angabe und Darstellung einer Fläche z.B. auf einer Karte")
+    slug                 = models.SlugField(unique=True, editable=False)
+    arrangment           = models.CharField(blank=True, max_length=180, verbose_name="Kompensationsmassnahme", help_text="Kompensationsmassnahme")
+    area                 = models.FloatField(verbose_name="Flaeche", help_text="Fläche in m²",  null=True, blank=True)
+    project              = models.ForeignKey(Project, blank=True, null=True, verbose_name="Projekt")
+   
+    # def __unicode__(self):
+    #     strings = []
+    #     if self.name:
+    #         strings.append(self.name)
+
+    def save(self, *args, **kwargs):
+        unique_slugify(self,self.name)
+        super(BufferArea, self).save(*args, **kwargs)
+
 def set_owner(sender, instance, **kwargs):
     if kwargs['created']:
         instance.owner = instance.get_created_by()

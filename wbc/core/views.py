@@ -139,7 +139,7 @@ class SearchView(TemplateView):
 
         results = []
         for result in sqs[offset:offset+50]:
-            resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link, address_obj=result.address_obj, thumbnail=result.thumbnail, num_stakeholder=result.num_stakeholder, created=result.created.strftime("%d.%m.%y"), created_by=result.created_by, teaser=result.teaser, ratings_count=result.ratings_count, ratings_avg=result.ratings_avg)
+            resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link, address_obj=result.address_obj, thumbnail=result.thumbnail, num_stakeholder=result.num_stakeholder, created=result.created.strftime("%d.%m.%y"), created_by=result.created_by, teaser=result.teaser, ratings_count=result.ratings_count, ratings_avg=result.ratings_avg, buffer_areas=result.buffer_areas)
             if result.location:
                 resultdict['location'] = [result.location[0], result.location[1]]
 

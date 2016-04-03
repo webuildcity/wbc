@@ -192,6 +192,10 @@
         fill: $highlight-color;
         stroke: $highlight-color;
     }
+    .buffer-area.focused-poly {
+        fill: red;
+        stroke: red;
+    }
 }
 
 #list {

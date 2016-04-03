@@ -64,11 +64,13 @@ app.factory('MapService',['$http',function($http) {
             map.setView(defaultLocation, defaultZoom,  setViewOptions);
         },
 
-        loadPoly: function(poly, id, highlight) {
+        loadPoly: function(poly, id, highlight, className) {
+            if (className === undefined)
+                className = ""
 
             if (typeof(poly) !== 'undefined') {
                 var polygonOptions = {
-                    className: 'wbc-poly poly-'+id,
+                    className: 'wbc-poly poly-'+id + ' '+ className,
                     weight: 3,
                     fill: true
                 };
@@ -77,15 +79,19 @@ app.factory('MapService',['$http',function($http) {
                 polygonLayer.addLayer(polygon);
 
                 polygon.on('mouseover', function() {
-                    $('.poly-'+id).attr('class', 'leaflet-clickable wbc-poly focused-poly poly-'+id);
+                    $('.poly-'+id).each(function(i){
+                        $(this).attr('class', $(this).attr('class') + ' focused-poly');
+                    })
                     if (highlight)
-                        highlight(id);
+                        highlight(id.replace('-buffer', ''));
                     focusedPoly = polygon;
                 });
                 polygon.on('mouseout', function() {
-                    $('.poly-'+id).attr('class', 'leaflet-clickable wbc-poly poly-'+id);
+                    $('.poly-'+id).each(function(i){
+                        $(this).attr('class', $(this).attr('class').replace('focused-poly',''));
+                    })
                     if (highlight)
-                        highlight(id);
+                        highlight(id.replace('-buffer', ''));
                     focusedPoly = null;
                 });
             }

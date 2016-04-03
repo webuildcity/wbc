@@ -21,6 +21,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.searching = false;
     $scope.offset = 0;
     $scope.multipoly = [];
+    $scope.alternatepoly = [];
     // $scope.data = { suggestions: [] };
 
     var allResultPoly = null;
@@ -66,18 +67,37 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                     $scope.multipoly = [];
                 }
                 $scope.suggestion = null;
-
+                var poly;
                 response.results.forEach(function(result){
                     if(result.polygon)  {
                         result.polygon.id = result.pk;
-                        myPoly = MapService.loadPoly(result.polygon, result.pk, highlightFunction);
-                        myPoly.on('click', function() {
+                        poly = MapService.loadPoly(result.polygon, result.pk, highlightFunction);
+                        poly.on('click', function() {
                             $scope.selectResult(result);
                         });
                         $scope.multipoly.push(result.polygon[0]);
                     }
+
+                    if(result.buffer_areas) {
+                        result.buffer_areas.forEach(function(area){
+                            // console.log(area)
+                            $scope.alternatepoly.push(area);
+                            poly = MapService.loadPoly(area, result.pk, highlightFunction, 'buffer-area');
+                            poly.on('click', function() {
+                                $scope.selectResult(result);
+                            });
+                            $scope.multipoly.push(area[0]);
+                        });
+                        // console.log(result.buffer_areas);
+                        
+                    }
                 });
                 allResultPoly = L.multiPolygon($scope.multipoly);
+                if ( $scope.alternatepoly.length > 0) {
+
+                // console.log($scope.alternatepoly) 
+                // altPoly = L.multiPolygon($scope.alternatepoly);
+                }
             
 
 
