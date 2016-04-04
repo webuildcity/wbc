@@ -17,7 +17,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.formData.order = '';
     $scope.formData.tags = [];
     $scope.selectedResult = null;
-    $scope.listView = true;
+    $scope.listView = false;
     $scope.searching = false;
     $scope.offset = 0;
     $scope.multipoly = [];
@@ -101,7 +101,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 }
             
 
-
+                setTimeout(function() {
+                    MapService.map.invalidateSize();
+                }, 200);
+                
                 MapService.map.fitBounds(allResultPoly.getBounds(), {
                     padding: [30, 30]
                 });
@@ -365,8 +368,9 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         }
         $scope.startSearch(false);
     });
-
     search($scope.formData);
+    // globmap = MapService.map;
+    
 
     moveScroller($('#search-list-header'), $('.result-content'));
     moveScroller($('.search-anchor'), $('#search_sidebar'));

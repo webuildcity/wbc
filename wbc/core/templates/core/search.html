@@ -151,7 +151,13 @@ SearchController
     </ul> -->
 
     <button class="btn btn-default" id="map-list-switch" ng-click="changeView()">{% trans 'Button:Listen-/Kartenansicht' %}</button>
-    <div ng-class="{'active-result': listView}" class="result-content active-result" id="list">
+    <div ng-class="{'active-result': !listView}" class="result-content" id="map">
+        <div ng-if="selectedResult != null" id="map-info-box">
+            <h2>{[{selectedResult.name}]}</h2>
+            <a ng-href="{[{selectedResult.internal_link}]}">Details</a>
+        </div>
+    </div>
+    <div ng-class="{'active-result': listView}" class="result-content" id="list">
         <div id='search-list-header'>
             <div class="pull-left result-number text-center">
                 <div ng-show="resultLength >=0 && !searching">
@@ -211,11 +217,5 @@ SearchController
             <button ng-if='results.length < resultLength' class="load-more-results btn btn-default">{% trans 'Mehr Ergebnisse laden' %}</button>
         </div>
     </div>
-    <div ng-class="{'active-result': !listView}" class="result-content" id="map">
-        <div ng-if="selectedResult != null" id="map-info-box">
-            <h2>{[{selectedResult.name}]}</h2>
-            <a ng-href="{[{selectedResult.internal_link}]}">Details</a>
-        </div>
-        
-    </div>
+    
 {% endblock %}
