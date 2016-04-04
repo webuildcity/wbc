@@ -53,6 +53,7 @@ SearchController
                         {[{suggestion}]}
                     </a>
                 </div>
+                <a href="" class="scroll-top-link" onclick="$('#search_sidebar').scrollTop(0)"> << Filter</a>
            <!--      <div ng-show="data.suggestions.length >0 && searchFocus" class="search-results">
                     <div ng-repeat="result in data.suggestions">
                         <div class="search-result"
@@ -210,5 +211,11 @@ SearchController
             <button ng-if='results.length < resultLength' class="load-more-results btn btn-default">{% trans 'Mehr Ergebnisse laden' %}</button>
         </div>
     </div>
-    <div ng-class="{'active-result': !listView}" class="result-content" id="map"></div>
+    <div ng-class="{'active-result': !listView}" class="result-content" id="map">
+        <div ng-if="selectedResult != null" id="map-info-box">
+            <h2>{[{selectedResult.name}]}</h2>
+            <a ng-href="{[{selectedResult.internal_link}]}">Details</a>
+        </div>
+        
+    </div>
 {% endblock %}

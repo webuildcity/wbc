@@ -42,6 +42,16 @@
                     width: 100%; // 95%;
                 }
         }
+        .scroll-top-link {
+            background: rgba(255,255,255,1);
+            display: none;
+            float: left;
+            padding: 0.3em;
+        }
+        .fixed-top .scroll-top-link {
+            display: block;
+        }
+
         .collapse-heading {
             // border: 1px solid #E5E5E5;
             clear:both;
@@ -192,9 +202,20 @@
         fill: $highlight-color;
         stroke: $highlight-color;
     }
+
     .buffer-area.focused-poly {
         fill: red;
         stroke: red;
+    }
+
+    #map-info-box {
+        position: absolute;
+        top: 20px;
+        left: 50px;
+        padding: 1em 2em;
+        z-index: 20;
+        border: 1px solid #ccc;
+        background: white;
     }
 }
 

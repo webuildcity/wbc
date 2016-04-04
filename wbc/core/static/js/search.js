@@ -42,7 +42,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         
         $scope.resultLength = 0;
         $scope.searching = true;
-        
+        $scope.selectedResult = null;
+
 
         $http({
             method: 'POST',
@@ -201,10 +202,22 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     };
     var focusedPoly = null;
 
-    $scope.focusPoly = function(poly) {
+    $scope.focusPoly = function(result) {
 
-        $('.poly-'+poly.pk).attr('class', 'leaflet-clickable wbc-poly focused-poly poly-'+poly.pk);
-        var tempPoly = L.multiPolygon(poly.polygon);
+        // $('.poly-'+pk).attr('class', 'leaflet-clickable wbc-poly focused-poly poly-'+poly.pk);
+        $('.poly-'+result.pk).each(function(i){
+            $(this).attr('class', $(this).attr('class') + ' focused-poly');
+        })
+        var multipoly = [];
+        if(result.buffer_areas) {
+            result.buffer_areas.forEach(function(area){
+                multipoly.push(area[0]);
+            });
+            // console.log(result.buffer_areas);
+        }
+        multipoly.push(result.polygon[0]);
+
+        var tempPoly = L.multiPolygon(multipoly);
         // if (maxZoom < 10){
         //     MapService.fitPoly(tempPoly, maxZoom);
         // } else {
@@ -240,8 +253,9 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
     $scope.focusResult = function(result) {
         animationTimer = $timeout(function () {
-
+            var multipoly = [];
             if(result.polygon !== undefined) {
+
                 $scope.focusPoly(result);
                 return;
             }
@@ -257,17 +271,31 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $timeout.cancel(animationTimer);
 
         if(result.polygon !== undefined) {
-            $('.poly-'+result.pk).attr('class', 'leaflet-clickable wbc-poly poly-'+result.pk);
+             $('.poly-'+result.pk).each(function(i){
+                $(this).attr('class', $(this).attr('class').replace('focused-poly',''));
+            })
+            // $('.poly-'+result.pk).attr('class', 'leaflet-clickable wbc-poly poly-'+result.pk);
             return;
         }
     };
 
     $scope.selectResult = function(result) {
+
         $scope.selectedResult = result;
-        
+        $scope.$apply();
+
         if (result.polygon){
-            var tempPoly = L.multiPolygon(result.polygon);
+            // var tempPoly = L.multiPolygon(result.polygon);
             // ZOOM  TO POLY
+            var multipoly = [];
+            if(result.buffer_areas) {
+                result.buffer_areas.forEach(function(area){
+                    multipoly.push(area[0]);
+                });
+            }
+            multipoly.push(result.polygon[0]);
+
+            var tempPoly = L.multiPolygon(multipoly);
             MapService.fitPoly(tempPoly);
         }
     }
