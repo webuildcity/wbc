@@ -77,7 +77,7 @@ class Project(Model):
         return None
 
     def get_absolute_url(self):
-        return reverse('project', kwargs={'pk': self.pk})
+        return reverse('projectslug', kwargs={'slug': self.slug})
 
     def get_update_url(self):
         return reverse('project_update', kwargs={'pk': self.pk})
