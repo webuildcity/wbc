@@ -14,7 +14,7 @@ $(document).ready(function(){
     // VIZI.DEBUG = true;
     world = new VIZI.World({
       viewport: document.querySelector(div),
-      // layersUI: true,
+      layersUI: false,
       center: centerLatLon,
     });
 
@@ -26,6 +26,7 @@ $(document).ready(function(){
       input: {
         type: "BlueprintInputMapTiles",
         options: {
+          // tilePath: _tiles_url,
           tilePath: "http://tiles.we-build.city/hamburg/{z}/{x}/{y}.png"
           // tilePath: "http://b.tile.openstreetmap.org/{z}/{x}/{y}.png"
         }

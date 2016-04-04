@@ -135,7 +135,6 @@ class SearchView(TemplateView):
                 sqs = sqs.order_by(order)
 
         if 'offset' in data:
-            print data['offset']
             offset = data['offset']
             if data['offset'] == 1:
                 sqs_copy = sqs
