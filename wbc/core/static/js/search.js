@@ -24,6 +24,13 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.scrolltrigger = false;
     // $scope.data = { suggestions: [] };
     $scope.showFilter = false;
+    $scope.$watch('showFilter', function(){
+        if (!$scope.showFilter)
+            $('#filter-container').slideUp();
+        else
+            $('#filter-container').slideDown();
+
+    })
 
     var allResultPoly = null;
     var maxZoom = null;
@@ -362,7 +369,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         var target = e.target;
         if (!$(target).is('#side_content') && !$(target).parents().is('#side_content')) {
             $scope.showFilter = false;
-            $scope.$apply();
+            $scope.$apply()
         }
     });
 }]);

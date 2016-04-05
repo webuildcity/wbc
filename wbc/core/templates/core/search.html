@@ -72,9 +72,9 @@ SearchController
                         </div>
                     </div>
                 </div> -->
-                <a href="" class="scroll-top-link" onclick="$('#search_sidebar').scrollTop(0)"> <i class="fa-angle-double-up fa"></i> FILTER</a>
+                <a href="" class="scroll-top-link hidden-xs" onclick="$('#search_sidebar').scrollTop(0)"> <i class="fa-angle-double-up fa"></i> FILTER</a>
             </div>
-            <div id="filter-container" ng-class="{ 'show' : showFilter }">
+            <div id="filter-container">
                 <div ng-if="entitiesFacets.length > 0" class="facet-container">
                     <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target=".region-facets">
                         <i class="region-anchor anchor fa fa-image"></i>{% trans 'ENTITY-FILTER: Stadtteile' %}
