@@ -41,6 +41,11 @@
         var _tiles_url = "{{tiles_url}}";
         var _tiles_opt = {{tiles_opt|safe}};
         var _default_view = {{default_view|safe}};
+       
+        var _bufferAreas = [];
+        {% for area in bufferAreas %}
+            _bufferAreas.push({{area.polygon}});
+        {% endfor %}
 
         var _polygon = {% if project.polygon %}{{project.polygon|safe}}{% else %}[]{% endif %};
         var _lat = {% if project.lat %}{{project.lat|stringformat:"F"}}{% else %}undefined{% endif %};
@@ -296,6 +301,14 @@ DetailsController
                     <h4>{{processSteps.0.process_step.name}}</h4>
                     <p>{{processSteps.0.process_step.description}}</p>
                 </div>
+            </div>
+            {% endif %}
+            {% if project.bufferarea_set.all %}
+            <div class="content-container">
+                <h4>Ausgleichsflächen</h4>
+                {% for area in project.bufferarea_set.all %}
+                    <a class="map-link" data-toggle="tab" href="#project_map">{{area.name}} {{area.area}} m²</a>
+                {% endfor %}
             </div>
             {% endif %}
 

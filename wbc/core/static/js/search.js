@@ -21,7 +21,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.searching = false;
     $scope.offset = 0;
     $scope.multipoly = [];
-    $scope.alternatepoly = [];
+    $scope.scrolltrigger = false;
     // $scope.data = { suggestions: [] };
 
     var allResultPoly = null;
@@ -36,6 +36,25 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         resultDiv.toggleClass('selected');
         $parentDiv.scrollTop($parentDiv.scrollTop() + resultDiv.position().top - $parentDiv.height()/2 + resultDiv.height()/2);
         // return null;
+    };
+
+    var addMouseListener = function(poly, result){
+        var delay = 300;
+        var timer = null;
+
+        poly.on('click', function() {
+            $scope.selectResult(result);
+        });
+
+        $(poly).on('mouseover', function() {
+            timer = setTimeout(function(){
+                $scope.selectedResult = result;
+                $scope.$apply();
+                
+            }, delay);
+        }).on('mouseleave', function(){
+            clearTimeout(timer);
+        });
     }
 
     var search = function(data, offset){
@@ -50,9 +69,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             url:  '/suche/',
             data: data
         }).success(function(response) {
-            // if(polygonLayer != null) {
-            //    MapService.map.removeLayer(multipoly);
-            // }
+       
             $scope.resultLength = response.length
             $scope.tagFacets = response.facets.fields.tags;
             $scope.entitiesFacets = response.facets.fields.entities;
@@ -69,36 +86,27 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 }
                 $scope.suggestion = null;
                 var poly;
+             
                 response.results.forEach(function(result){
                     if(result.polygon)  {
                         result.polygon.id = result.pk;
                         poly = MapService.loadPoly(result.polygon, result.pk, highlightFunction);
-                        poly.on('click', function() {
-                            $scope.selectResult(result);
-                        });
+                        
+                        addMouseListener(poly, result);
                         $scope.multipoly.push(result.polygon[0]);
                     }
 
                     if(result.buffer_areas) {
                         result.buffer_areas.forEach(function(area){
-                            // console.log(area)
-                            $scope.alternatepoly.push(area);
+
                             poly = MapService.loadPoly(area, result.pk, highlightFunction, 'buffer-area');
-                            poly.on('click', function() {
-                                $scope.selectResult(result);
-                            });
+                            addMouseListener(poly, result);
+
                             $scope.multipoly.push(area[0]);
-                        });
-                        // console.log(result.buffer_areas);
-                        
+                        });                        
                     }
                 });
                 allResultPoly = L.multiPolygon($scope.multipoly);
-                if ( $scope.alternatepoly.length > 0) {
-
-                // console.log($scope.alternatepoly) 
-                // altPoly = L.multiPolygon($scope.alternatepoly);
-                }
             
 
                 setTimeout(function() {
@@ -111,24 +119,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 maxZoom = MapService.map.getZoom();
 
                 $('.result-content').scroll(resultListScrollHandler);
-                // //scroll things
-                // setTimeout(function() {
-                //     moveScroller('.tag-anchor', '#search_sidebar');
-                //     moveScroller('.region-anchor', '#search_sidebar');
-                //     moveScroller('.result-anchor', '#search_sidebar');
-                //     // $('.collapse-heading .anchor').click(function(){
-                //     //     if($(this).hasClass('fixed-top')){
-
-                //     //         var container = $('#search_sidebar')
-                //     //         var scrollTo = $(this).parent();
-                //     //         container.animate({
-                //     //             scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop() -70
-                //     //         });
-                //     //     }
-                //     // });
-                // }, 100);
-
-
 
             } else {
                 $scope.results = [];
@@ -144,6 +134,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     }
 
 
+    //AUTOCOMPLETE HERE?
     $scope.onSearchChanged = function() {
 
         // if($scope.formData.q) {
@@ -186,13 +177,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         var params = $.param(paramData);
 
         $scope.noResults = false;
-        // $scope.offset = offset || 0;
-        
         
         $window.history.pushState($scope.formData, $scope.q, params);
 
         if(offset){
-            // $scope.formData.offset= offset;
             search($scope.formData, true);
         } else {
             search($scope.formData, false);
@@ -207,50 +195,21 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
     $scope.focusPoly = function(result) {
 
-        // $('.poly-'+pk).attr('class', 'leaflet-clickable wbc-poly focused-poly poly-'+poly.pk);
         $('.poly-'+result.pk).each(function(i){
             $(this).attr('class', $(this).attr('class') + ' focused-poly');
-        })
+        });
+
         var multipoly = [];
         if(result.buffer_areas) {
             result.buffer_areas.forEach(function(area){
                 multipoly.push(area[0]);
             });
-            // console.log(result.buffer_areas);
         }
         multipoly.push(result.polygon[0]);
 
         var tempPoly = L.multiPolygon(multipoly);
-        // if (maxZoom < 10){
-        //     MapService.fitPoly(tempPoly, maxZoom);
-        // } else {
+
         MapService.fitPoly(tempPoly, maxZoom+1);
-        // }
-        // ZOOM  TO POLY
-        // MapService.map.fitBounds(tempPoly.getBounds(), {
-        //     padding: [30, 30]
-        // });
-
-        // if(focusedPoly) {
-        //     MapService.map.removeLayer(focusedPoly);
-        // }
-        // var polygonOptions = {
-        //     weight: 3,
-        //     color: '#de6a00',
-        //     opacity: 1,
-        //     fill: true,
-        //     fillColor: '#de6a00',
-        //     fillOpacity: 0.05
-        // };
-
-        // focusedPoly = L.multiPolygon(poly)
-        //     .setStyle(polygonOptions)
-        //     .addTo(MapService.map);
-        // MapService.map.fitBounds(focusedPoly.getBounds(), {
-        //     padding: [30, 30]
-        // });
-
-        // focusedPoly.setStyle({color: '#3E445C', fillColor: '#70D9E8'});
     };
 
 
@@ -258,7 +217,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         animationTimer = $timeout(function () {
             var multipoly = [];
             if(result.polygon !== undefined) {
-
                 $scope.focusPoly(result);
                 return;
             }
@@ -305,7 +263,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
     $scope.toggleSelectedItems = function(event){
         $(event.target).siblings('.active-facets').toggleClass('hidden');
-    }
+    };
 
     // popstate event listener
     window.addEventListener('popstate', function(e) {
@@ -337,7 +295,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         // TODO PARSE TAGS AND ENTITIES
         // $scope.formData.entities = param_json['entities[]']
         $scope.formData.q = param_json['q']
-    }
+    };
 
     $scope.changeView = function() {
         $scope.listView = !$scope.listView;
@@ -347,14 +305,14 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 MapService.map.invalidateSize();
             }, 50);
         }
-    }
+    };
 
     var resultListScrollHandler = function (){
         if($('#result-list').height() < $('.result-content').scrollTop() + $('.result-content').height()+20 && $('.load-more-results').length >0)  {
-               $('.result-content').off('scroll', resultListScrollHandler);
-               $scope.startSearch($scope.offset);
+            $('.result-content').off('scroll', resultListScrollHandler);
+            $scope.startSearch($scope.offset);
         }  
-    }
+    };
 
     $('.order-btn').click(function(){
         $(".order-btn").siblings(".active").removeClass("active");
@@ -369,11 +327,34 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $scope.startSearch(false);
     });
     search($scope.formData);
-    // globmap = MapService.map;
-    
 
-    moveScroller($('#search-list-header'), $('.result-content'));
+    // moveScroller($('#search-list-header'), $('.result-content'));
     moveScroller($('.search-anchor'), $('#search_sidebar'));
+
+    // function moveScroller2(anchorSelector, scrollerSelector) {
+    //     var move = function() {
+    //         var scrollTop = $(scrollerSelector).scrollTop();
+    //         var offset = $(anchorSelector).offset();
+    //         var offsetTop = 0;
+    //         if(offset !== undefined) {
+    //             offsetTop = offset.top;
+    //         }
+
+    //         var anchor = $(anchorSelector);
+    //         if(scrollTop > offsetTop) {
+    //             anchor.addClass('fixed-top');
+    //             $scope.scrolltrigger = true;
+    //         } else {
+    //             anchor.removeClass('fixed-top');
+    //             $scope.scrolltrigger = false;
+
+    //         }
+    //     };
+
+    //     $(scrollerSelector).scroll(move);
+    //     move();
+    // }
+    // moveScroller2($('.search-anchor'), $('#search_sidebar'));
 
 }]);
 

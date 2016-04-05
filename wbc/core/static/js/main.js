@@ -1,4 +1,4 @@
-var app = angular.module('wbc', ['checklist-model']);
+var app = angular.module('wbc', ['checklist-model', 'ngAnimate']);
 
 app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', function($httpProvider, $interpolateProvider, $locationProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';

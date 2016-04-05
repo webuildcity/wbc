@@ -24,6 +24,7 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
     };
 
     $scope.loadDetails = function(result) {
+        console.log(result);
         window.location.href = result.internal_link;
     };
 

@@ -24,6 +24,7 @@
     
     <script type="text/javascript" src="{% static 'lib/angular/angular.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/angular/checklist-model.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/angular/angular-animate.min.js' %}"></script>
 
     <script type="text/javascript" src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}" ></script>
 
@@ -60,8 +61,7 @@
                      ng-switch="result.type">
                         <i ng-switch-when="project" class="fa fa-home"></i>
                         <i ng-switch-when="stakeholder" class="fa fa-user"></i>
-                        <b>{[{ result.name }]}</b>
-                        
+                        <b>{[{ result.name }]}</b>      
                 </div>
             </div>
         </div>
@@ -89,11 +89,17 @@
                     <img src="{% static 'img/title.png' %}" alt="Bürger baut Stadt">
                 </a>
             </div>
+            <button class="btn-default btn search-field-button" ng-init="searchField=false" ng-click="searchField = !searchField">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav">
                 {% include "core/layout_navigation.html" %}
             </ul>
+        </div>
+        <div ng-show="searchField" class="move-down drop-down-search-container">
+            <wbc-search text="Suche"></wbc-search>
         </div>
     </nav>
 

@@ -206,7 +206,8 @@ def project_request(request, p):
         #'processSteps' : ProcessStep.objects.filter(publication_processsteps),
         'processTypes' : processTypeList,
         'following': following,
-        'subscribed': subscribed
+        'subscribed': subscribed,
+        'bufferAreas' : p.bufferarea_set.all()
     })
 
 @login_required

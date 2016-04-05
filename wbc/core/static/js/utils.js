@@ -41,7 +41,7 @@ function scrollCheck(element, scroller){
     var move = function() {
         var st = $(scroller).scrollTop();
         var ot = $(element).offset().top+300;
-        var el = $('#nav-search');
+        var el = $('#header-right #nav-search');
         if (st> ot){
             el.addClass('fade-in');
         } else {

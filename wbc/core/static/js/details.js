@@ -6,12 +6,21 @@ app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 
     var is3d = false;
 
     var poly;
+    var polyArray = [_polygon[0]];
+
     if (_polygon.length >0) {  
-        poly = L.multiPolygon(_polygon);;
-        MapService.loadPoly(_polygon, undefined, undefined, true);
+        MapService.loadPoly(_polygon, undefined, undefined);
+    
+        _bufferAreas.forEach(function(area){
+            MapService.loadPoly(area, undefined, undefined, 'buffer-area')
+            polyArray.push(area[0]);
+        });
+        poly = L.multiPolygon(polyArray);
+        
     } else {
         poly = undefined;
     }
+
 
     $('.map-link').on('click',function(){
          setTimeout(function(){

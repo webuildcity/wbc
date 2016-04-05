@@ -41,31 +41,49 @@ h4 {
     bottom: 0px;
     overflow-y: auto;
     width: 100%;
-}
-
-.max-height {
-    height: 100%;
-}
-
-@media (max-width: 880px) {
-    .max-height {
-        height: 50%;
+    @media (max-width:768px) {
+        overflow-y: auto !important;
     }
 }
+
+
 
 .fixed-top {
     position: fixed;
 }
+
 #side_content {
     padding: 0px;
     border-right: 2px solid #ccc;
-
+    width: 33%;
+    float: left;
+    @media (min-width:768px) {
+        height: 100%;
+    }
     // overflow-y: scroll;
     // overflow-x: hidden;
 }
 
 #main_content {
     padding: 0px;
+    width: 67%;
+    float: left;
+    height: 100%;
+}
+
+// MEDIA QUERY FOR THE LAYOUT
+@media (max-width:768px) {
+    #side_content {
+        position: absolute;
+        max-height: 100%;
+        z-index: 1001;
+        background-color: white;
+        width: 100%;
+    }
+    #main_content {
+        width: 100%;
+        // padding-top: 150px;
+    }
 }
 
 .tab-content {

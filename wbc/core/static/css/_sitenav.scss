@@ -1,22 +1,101 @@
 /* brand */
+
+.navbar-toggle {
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
 .mobile-menu {
     z-index: 100;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+    background-color: #FAF5F5;
+    position: relative;
+    z-index: 1002;
 
     .user_img {
         height: 40px;
         width : 40px;
     }
+
+    .drop-down-search-container {
+        transition: 0.5s linear all;
+        // padding: 1em;
+        // height: auto;
+        max-height: 85px;
+        
+
+        .search-field {
+            padding: 0.5em;
+        }
+        .spinner-icon {
+            position: absolute;
+            right: 60px;
+            top: 18px;
+            z-index: 10;
+        }
+        .selected-result {
+            border: 1px solid $primary-color !important;
+        }
+
+        .search-results {
+            border: 1px solid #ddd;
+            position: relative;
+            padding: 0em 0.5em;
+            top: -0.5em;
+            background-color:rgba($background-color,0.5);
+
+            .search-result {
+                border: 1px solid #ddd;
+                // min-height: 40px;
+                background-color:rgba($background-color,0.5);
+            }
+
+            .search-result:hover {
+                border: 1px solid $primary-color;
+                background-color:rgba($background-color,0.8);
+            }
+        }
+
+    }
+    .drop-down-search-container.ng-hide {
+        max-height: 0;
+    }
+    .drop-down-search-container.ng-hide-add, .drop-down-search-container.ng-hide-remove {
+        display: block !important; /* yes, important */
+        overflow: hidden;
+        // .search-field {
+        //     opacity: 0;
+        // }
+    }
 }
 
 #brand {
     @include branding();
+    float: left;
+}
+
+.search-field-button {
+    float: right;
+    margin-top: 8px;
+}
+
+// ANIMATION FOR SEARCH RESULTS
+.search-results.ng-hide-add, .search-results.ng-hide-remove {
+    display: block !important; /* yes, important */
+}
+.search-results {
+    transition: .5s linear all;
+    height: auto;
+    opacity: 1;
+}
+.search-results.ng-hide {
+    opacity: 0;
 }
 
 #header {
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
     background-color: $background-color-header;
     position: relative;
-    z-index: 5;
+    z-index: 1003;
 
     #header-left {
         float: left;
@@ -121,4 +200,9 @@
     .fa {
         padding-right: 0.6em;
     }
+}
+
+// make loading spinner disappear instantly
+.spinner-icon.ng-hide-add {
+    display: none !important; /* yes, important */
 }

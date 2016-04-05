@@ -12,6 +12,10 @@
     }
 }
 
+.search-field-button {
+    display: none;
+}
+
 #side_content {
     background-image: $background-image-light;
 
@@ -20,36 +24,85 @@
         height: 100%;
         overflow-y: auto;
         // padding: 0px 10px;
+        #search {
+            background-color: $background-color;
+        }
+        #sidebar-results {
+            @media (max-width:768px){
+                display: none;
+            }
+        }
+        .loading-container {
+            padding-top: 1em;
+            font-size: 1.5em;
 
+            .loading-text:after {
+                overflow: hidden;
+                display: inline-block;
+                vertical-align: bottom;
+                -webkit-animation: ellipsis steps(4,end) 2200ms infinite;      
+                animation: ellipsis steps(4,end) 2200ms infinite;
+                content: "\2026"; /* ascii code for the ellipsis character */
+                width: 0px;
+            }
+
+            @keyframes ellipsis {
+                to {
+                    width: 20px;    
+                }
+            }
+
+            @-webkit-keyframes ellipsis {
+                to {
+                    width: 20px;    
+                }
+            }
+        }
         .search-field {
             padding: .7em 1em;
             // border aus .collapse-heading
-            border-bottom: 1px solid #eee;
-            box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.44);
             margin-bottom: 0.2em;
         }
         .search-anchor {
             width: 100%;
-            height: 55px;
             float: left;
             z-index: 1;
+            border-bottom: 1px solid #eee;
+            box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.44);
+            background: white;
+            &.fixed-top {
+                width: 33%;
+                @media (max-width:768px){
+                    width: 100%;
+                }
+            }
         }
         .fixed-top .search-field {
             background: white;
             padding: .7em 1em;
-            width: 33.2%;
-                @media (max-width: 880px){
-                    width: 100%; // 95%;
-                }
         }
         .scroll-top-link {
             background: rgba(255,255,255,1);
             display: none;
             float: left;
             padding: 0.3em;
+            position: absolute;
+            margin-top: 0.3em;
         }
         .fixed-top .scroll-top-link {
             display: block;
+        }
+        #filter-container {
+            @media(max-width: 768px){
+                transition: 0.5s linear all;
+                display: none;
+                width: 100%;
+            }
+            &.show {
+                display: block;
+            }
+        
+           
         }
 
         .collapse-heading {
@@ -178,6 +231,7 @@
         text-align: right;
         padding-right: 5px;
         margin-bottom: 1px;
+        width: 100%;
     }
 
 }
@@ -191,7 +245,7 @@
 
 #map {
     height: 100%;
-    @media (max-width: 880px){
+    @media (max-width: 768px){
       border-top-style: solid;
       border-width: thin;
       border-color: $primary-color;
@@ -208,14 +262,36 @@
         stroke: red;
     }
 
-    #map-info-box {
-        position: absolute;
-        top: 20px;
-        left: 50px;
-        padding: 1em 2em;
+    .map-overlay {
+        padding: 0em 2em 1em 2em;
         z-index: 20;
         border: 1px solid #ccc;
         background: white;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        border-radius: 5px;
+        position: absolute;
+    }
+    #map-info-box {
+        // top: 1em;
+        left: 50px;
+        @media (max-width: 768px){
+            bottom: 2em;
+        } 
+        @media (min-width: 768px){
+            top: 1em;
+        }
+
+    }
+    #legend {
+        bottom: 2em;
+        right: 1em;
+        padding-top: 1.3em;
+
+        span {
+            position: relative;
+            top: -3px;
+            padding-left: 0.3em;
+        }
     }
 }
 
@@ -280,7 +356,7 @@
     }
 
     #result-list {
-
+        padding-top: 80px;
         clear: both;
 
         .search-result {
