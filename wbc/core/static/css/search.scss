@@ -97,6 +97,12 @@
                 // transition: 0.5s linear all;
                 width: 100%;
             }
+            @media(min-width: 768px){
+                height: auto !important;
+                display: block !important;
+                overflow: auto !important;
+                width: 100%;
+            }
         }
 
         .collapse-heading {
@@ -193,7 +199,8 @@
                     opacity: 0.6;
                     margin: 0px 0px 0px 0.3em;
                     position: relative;
-                    bottom: -1px;
+                    border-left: 1px solid #ccc;
+                    padding-left: 0.2em;
                 }
                 a:hover {
                     opacity: 1.0;
