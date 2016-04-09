@@ -119,11 +119,16 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
                 setTimeout(function() {
                     MapService.map.invalidateSize();
-                }, 200);
+                },0);
                 
-                MapService.map.fitBounds(allResultPoly.getBounds(), {
-                    padding: [30, 30]
-                });
+                if ($scope.multipoly.length > 0) {
+                    setTimeout(function() {
+                        MapService.map.fitBounds(allResultPoly.getBounds(), {
+                            padding: [30, 30]
+                        });
+                    },100);
+                    
+                }
                 maxZoom = MapService.map.getZoom();
 
                 $('.result-content').scroll(resultListScrollHandler);

@@ -69,6 +69,7 @@ h4 {
     width: 67%;
     float: left;
     height: 100%;
+    position: relative;
 }
 
 // MEDIA QUERY FOR THE LAYOUT
@@ -105,7 +106,7 @@ h4 {
     stroke: $primary-color;
     stroke-opacity: 1;
     stroke-width:  1;
-    fill-opactity: 0.10;
+    fill-opacity: 0.2;
     // color: $primary-color;
     // opacity: 1;
     // fill: true;
