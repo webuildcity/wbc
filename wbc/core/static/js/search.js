@@ -131,7 +131,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 }
                 maxZoom = MapService.map.getZoom();
 
-                $('.result-content').scroll(resultListScrollHandler);
+                // $('.result-content').scroll(resultListScrollHandler);
 
             } else {
                 $scope.results = [];
@@ -320,13 +320,17 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         }
     };
 
+
+    //infinite scroll for resultlist
     var resultListScrollHandler = function (){
-        if($('#result-list').height() < $('.result-content').scrollTop() + $('.result-content').height()+20 && $('.load-more-results').length >0)  {
-            $('.result-content').off('scroll', resultListScrollHandler);
-            $scope.startSearch($scope.offset);
+        if($('#result-list').height() < $('#list').scrollTop() + $('#list').height()+20 && $('.load-more-results').length >0)  {
+            // $('#list').off('scroll', resultListScrollHandler);
+            if (!$scope.searching)
+                $scope.startSearch($scope.offset);
         }  
     };
-
+    $('#list').scroll(resultListScrollHandler);
+    
     $('.order-btn').click(function(){
         $(".order-btn").siblings(".active").removeClass("active");
         $(this).addClass("active");
