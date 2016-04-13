@@ -22,13 +22,14 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.offset = 0;
     $scope.multipoly = [];
     $scope.scrolltrigger = false;
+    $scope.activeSearch = false;
     // $scope.data = { suggestions: [] };
     $scope.showFilter = false;
     $scope.$watch('showFilter', function(){
         if (!$scope.showFilter)
-            $('#filter-container').slideUp();
+            $('#filter-container').slideUp(200);
         else
-            $('#filter-container').slideDown();
+            $('#filter-container').slideDown(200);
 
     })
 
@@ -83,6 +84,13 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             $scope.entitiesFacets = response.facets.fields.entities;
             $scope.searching = false;
             $scope.offset += 50;
+
+            // Set activeSearch for clear search button, TODO: automatic for all filters
+            if($scope.formData.q || $scope.formData.tags.length > 0){
+                $scope.activeSearch = true;
+            } else {
+                $scope.activeSearch = false;
+            }
 
             if (response.results.length>0) {
                 if (offset){
@@ -272,6 +280,14 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             var tempPoly = L.multiPolygon(multipoly);
             MapService.fitPoly(tempPoly);
         }
+    }
+
+    $scope.clearSearch = function(){
+        $scope.formData = {};
+        $scope.formData.order = '';
+        $scope.formData.tags = [];
+        $scope.offset = 0;
+        $scope.startSearch(false);
     }
 
     $scope.toggleSelectedItems = function(event){

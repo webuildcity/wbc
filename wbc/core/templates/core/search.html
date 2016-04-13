@@ -43,6 +43,10 @@ SearchController
                     ng-focus="searchFocus=true"
                     ng-blur="searchfocus=false"
                     >
+                    
+                    <a ng-if="activeSearch" ng-click="clearSearch()" class="text-muted clear-search" href="#" title="{% trans 'Suche zurücksetzen' %}">
+                        <i class="fa fa-times"></i>
+                    </a>
 
                     <a href="" class="input-group-addon" onclick="$('#search').submit()">
                         <span class="glyphicon glyphicon-search"></span>
@@ -73,6 +77,8 @@ SearchController
                     </div>
                 </div> -->
                 <a href="" class="scroll-top-link hidden-xs" onclick="$('#search_sidebar').scrollTop(0)"> <i class="fa-angle-double-up fa"></i> FILTER</a>
+                <a href="" class="scroll-top-link-bottom" onclick="$('#search_sidebar').scrollTop(0)"> <i class="fa-angle-double-up fa fa-2x"></i></a>
+
             </div>
             <div id="filter-container">
                 <div ng-if="entitiesFacets.length > 0" class="facet-container">
@@ -152,6 +158,7 @@ SearchController
                 <a href="#" ng-if="results.length < resultLength"ng-click="startSearch(offset)">{% trans 'more' %}</a>
             </div>
         </div>
+
     </div>
 {% endblock %}
 {% block main_content %}

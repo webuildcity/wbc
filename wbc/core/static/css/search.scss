@@ -19,8 +19,8 @@
 #side_content {
     background-image: $background-image-light;
 
-
     #search_sidebar {
+        position: relative;
         height: 100%;
         overflow-y: auto;
         // padding: 0px 10px;
@@ -62,13 +62,21 @@
             padding: .7em 1em;
             // border aus .collapse-heading
             margin-bottom: 0.2em;
+
+            .clear-search {
+                position: absolute;
+                right: 60px;
+                top: 18px;
+                z-index: 10;
+
+            }
         }
         .search-anchor {
             width: 100%;
             float: left;
             z-index: 1;
             border-bottom: 1px solid #eee;
-            box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.44);
+            // box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.44);
             background: white;
             &.fixed-top {
                 width: 33%;
@@ -83,14 +91,31 @@
         }
         .scroll-top-link {
             background: rgba(255,255,255,1);
-            display: none;
+            // display: none;
             float: left;
             padding: 0.3em;
             position: absolute;
             margin-top: 0.3em;
+            opacity: 0;
+            pointer-events: none;
         }
-        .fixed-top .scroll-top-link {
-            display: block;
+        .scroll-top-link-bottom {
+            position: fixed;
+            color: $highlight-color;
+            bottom: 1em;
+            // display: block;
+            left: 27%;
+            opacity: 0;
+            pointer-events: none;
+            @media(max-width: 768px){
+                left: 92%;
+            }
+        }
+        .fixed-top .scroll-top-link, .fixed-top .scroll-top-link-bottom {
+            // display: block;
+            transition: 0.4s linear all;
+            opacity: 1;
+            pointer-events: auto;
         }
         #filter-container {
             @media(max-width: 768px){
@@ -115,8 +140,8 @@
             padding: 8px 15px;
             font: $font-nav;
             border-bottom: 1px solid #eee;
-            box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.44);
-            margin-bottom: 0.2em;
+            // box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.44);
+            // margin-bottom: 0.2em;
 
             .fa {
                 padding-right: 1em;
@@ -151,9 +176,11 @@
             // box-shadow: none !important;
         }
         .collapse-heading:hover {
-            background-color: #eee;
+            // background-color: #eee;
+            background-color: rgba($highlight-color,0.1);
+
             color: $primary-color;
-            border-bottom: 1px solid #ccc;
+            border-bottom: 1px solid $highlight-color;
         }
 
         .collapse-heading:after {
@@ -216,7 +243,7 @@
                 padding-left: 10px;
             }
             .facet-select:hover {
-                background-color: #eee;
+                background-color: rgba($highlight-color,0.2);
                 color: $primary-color;
             }
             label input[type="checkbox"] {
