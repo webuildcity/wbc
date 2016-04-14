@@ -59,11 +59,8 @@ def autocomplete(request):
     sqs = SearchQuerySet().autocomplete(content_auto=request.GET.get('q', ''))
     suggestions = []
 
-    # spell_suggestions = sqs.spelling_suggestion()
-    # print spell_suggestions
-
-
-    for result in sqs:
+    # return first 10 results
+    for result in sqs[:10]:
         resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link)
         if result.location:
             resultdict['location'] = [result.location[0], result.location[1]]

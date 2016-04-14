@@ -29,7 +29,7 @@ SearchController
 {% block side_content %}
 <!-- base for html5 mode angular -->
 <base href="/suche/">
-    <div id="search_sidebar">
+    <div id="search_sidebar" ng-class="{'show-overflow' : searchFocus}">
         <form id="search" ng-submit="$event.preventDefault(); startSearch(false)">
             {% csrf_token %}
             <div class="search-anchor anchor">
@@ -41,7 +41,8 @@ SearchController
                     ng-change="onSearchChanged()"
                     ng-keydown="onKeyDown($event)" 
                     ng-focus="searchFocus=true"
-                    ng-blur="searchfocus=false"
+                    ng-blur="searchFocus=false"
+
                     >
                     
                     <a ng-if="activeSearch" ng-click="clearSearch()" class="text-muted clear-search" href="#" title="{% trans 'Suche zurücksetzen' %}">
@@ -51,6 +52,17 @@ SearchController
                     <a href="" class="input-group-addon" onclick="$('#search').submit()">
                         <span class="glyphicon glyphicon-search"></span>
                     </a>
+                </div>
+                <div ng-show="suggestions.length >0 && searchFocus" class="search-results-autocomplete">
+                    <div ng-repeat="result in suggestions">
+                        <div class="search-result-autocomplete"
+                             ng-click="console.log('ASD');selectTerm(result.name);startSearch(false);"
+                              ng-class="{'selected-result': $index == selectedSuggestionIdx}"
+                              ng-mouseover="setIndex($index)"
+                             >
+                                <b>{[{ result.name }]}</b>
+                        </div>
+                    </div>
                 </div>
                 <a class="pull-left visible-xs" href="" ng-click="showFilter = !showFilter"> Erweiterte Suche</a>
 
@@ -64,19 +76,7 @@ SearchController
                     </a>
                 </div>
                 
-           <!--      <div ng-show="data.suggestions.length >0 && searchFocus" class="search-results">
-                    <div ng-repeat="result in data.suggestions">
-                        <div class="search-result"
-                             ng-click="loadDetails(result.internal_link)"
-                             ng-class="{'selected-result': $index == selectedSuggestionIdx, 'search-result-type-project':  result.type == 'project', 'search-result-type-stakeholder':  result.type == 'stakeholder'}"
-                             ng-switch="result.type">
-                                <i ng-switch-when="project" class="fa fa-home"></i>
-                                <i ng-switch-when="stakeholder" class="fa fa-user"></i>
-                                <b>{[{ result.name }]}</b>
-                        </div>
-                    </div>
-                </div> -->
-                <a href="" class="scroll-top-link hidden-xs" onclick="$('#search_sidebar').scrollTop(0)"> <i class="fa-angle-double-up fa"></i> FILTER</a>
+              <!--   <a href="" class="scroll-top-link hidden-xs" onclick="$('#search_sidebar').scrollTop(0)"> <i class="fa-angle-double-up fa"></i> FILTER</a> -->
                 <a href="" class="scroll-top-link-bottom" onclick="$('#search_sidebar').scrollTop(0)"> <i class="fa-angle-double-up fa fa-2x"></i></a>
 
             </div>

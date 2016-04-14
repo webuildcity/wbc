@@ -23,20 +23,24 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.multipoly = [];
     $scope.scrolltrigger = false;
     $scope.activeSearch = false;
+    $scope.searchFocus = false;
+    $scope.suggestions = [];
+    $scope.selectedSuggestionIdx = -1;
     // $scope.data = { suggestions: [] };
+    
+    //expand filter for mobile search-menu
     $scope.showFilter = false;
     $scope.$watch('showFilter', function(){
         if (!$scope.showFilter)
             $('#filter-container').slideUp(200);
         else
             $('#filter-container').slideDown(200);
-
-    })
+    });
 
     var allResultPoly = null;
     var maxZoom = null;
     var animationTimer;
-
+    var changeDelay = 300;
     // var polygonLayer = null;
 
     var highlightFunction = function(id){
@@ -71,8 +75,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $scope.resultLength = 0;
         $scope.searching = true;
         $scope.selectedResult = null;
-
-
+        $scope.suggestions = [];
+        $scope.selectedSuggestionIdx = -1;
         $http({
             method: 'POST',
             url:  '/suche/',
@@ -150,36 +154,76 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
     $scope.onKeyDown = function(key){
         if(key.keyCode == '13'){
+            if($scope.selectedSuggestionIdx !== -1 && $scope.suggestions.length > 0) {
+                key.preventDefault();
+                $scope.selectTerm($scope.suggestions[$scope.selectedSuggestionIdx].name);
+            }
             $scope.startSearch(false)
+            $scope.suggestions = [];
+            $scope.selectedSuggestionIdx = -1;
+        }
+
+        // arrow down
+        if (key.keyCode == '40') {
+            $scope.selectedSuggestionIdx++;
+        }
+
+        // arrow up
+        else if (key.keyCode == '38') {
+            $scope.selectedSuggestionIdx--;
+            key.preventDefault();
+        }
+
+        if ($scope.selectedSuggestionIdx >= $scope.suggestions.length) {
+            $scope.selectedSuggestionIdx = 0;
+        }
+
+        if($scope.selectedSuggestionIdx == -1) {
+            $scope.selectedSuggestionIdx = $scope.suggestions.length-1;
+        }
+
+        if($scope.selectedSuggestionIdx !== -1) {
+            var selectedSuggestion = $scope.suggestions[$scope.selectedSuggestionIdx];
+            if(selectedSuggestion) {
+                // focusAutoCompletionResult(selectedSuggestion);
+                $scope.selectedSuggestion = selectedSuggestion;
+            } else {
+                $scope.selectedSuggestion = null;
+            }
         }
     }
 
+    $scope.setIndex = function(index){
+        $scope.selectedSuggestionIdx = index;
+    }
 
     //AUTOCOMPLETE HERE?
     $scope.onSearchChanged = function() {
 
-        // if($scope.formData.q) {
-        //     $scope.isLoading = true;
-        //     $http({
-        //         method: 'GET',
-        //         url:  '/autocomplete',
-        //         params: {
-        //             q: $scope.formData.q
-        //         }
-        //     }).success(function(response) {
-        //         $scope.isLoading = false;
-        //         if (response.results.length) {
-        //             $scope.data.suggestions = response.results;
-        //         } else {
-        //             $scope.data.suggestions = [];
-        //             $scope.noResults = true;
-        //         }
-        //     }).error(function(e){
-        //         $scope.isLoading = false;
-        //     });
-        // } else {
-        //     $scope.data.suggestions = [];
-        // }
+        setTimeout(function() {}, 10);
+        if($scope.formData.q) {
+            $scope.isLoading = true;
+            $http({
+                method: 'GET',
+                url:  '/autocomplete',
+                params: {
+                    q: $scope.formData.q
+                }
+            }).success(function(response) {
+                $scope.isLoading = false;
+                if (response.results.length) {
+                    $scope.suggestions = response.results;
+                } else {
+                    $scope.suggestions = [];
+                    $scope.noResults = true;
+                }
+            }).error(function(e){
+                $scope.isLoading = false;
+            });
+        } else {
+            $scope.suggestions = [];
+            $scope.selectedSuggestionIdx = -1;
+        }
 
     };
 

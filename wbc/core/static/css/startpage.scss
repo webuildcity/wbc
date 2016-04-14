@@ -1,4 +1,6 @@
 @import 'css/_variables.scss';
+@import 'css/_mixins.scss';
+
 
 body {
     background-position: center;
@@ -31,23 +33,15 @@ html {
 
     height: 100px;
     background-color: rgba(255,255,255,0.0);
-    transition: 0.3s linear all;
+    @include transition(0.3s linear all);
 
     #nav-search {
         opacity: 0;
-         -webkit-transition: opacity 0.2s ease-in;
-        -moz-transition: opacity 0.2s ease-in;
-        -o-transition: opacity 0.2s ease-in;
-        -ms-transition: opacity 0.2s ease-in;
-        transition: opacity 0.2s ease-in;
+        @include transition(0.2s ease-in all);
     }
     #nav-search.fade-in {
         opacity: 1;
-        -webkit-transition: opacity 1s ease-in;
-        -moz-transition: opacity 1s ease-in;
-        -o-transition: opacity 1s ease-in;
-        -ms-transition: opacity 1s ease-in;
-        transition: opacity 1s ease-in;
+        @include transition(0.8s ease-in all);
     }
 
     &.fixed-header {
@@ -57,7 +51,7 @@ html {
         background-color: rgba(255,255,255,1);
     }
     &:not(.fixed-header) {
-        box-shadow: none;
+        @include box-shadow(none);
         // font-size: 1.3em;
         #brand img {
             height: 80px;
@@ -80,7 +74,7 @@ html {
         }
     }
     .sitenav {
-        transition: 0.3s linear all;
+        @include transition(0.3s linear all);    
     }
 }
 
@@ -98,7 +92,8 @@ html {
         height: 500px;
         background: $startpage-image  no-repeat center center;
         background-size: cover;
-        box-shadow: inset 0 -5px 7px rgba(0, 0, 0, .1);
+        // box-shadow: inset 0 -5px 7px rgba(0, 0, 0, .1);
+        @include box-shadow(inset 0 -5px 7px rgba(0, 0, 0, .1));
 
         @media (max-width: 760px) {
             height: 350px;
@@ -174,7 +169,8 @@ html {
             background-color: #EC972F;
             z-index: 10;
             color: white;
-            box-shadow: 2px 2px #ccc;
+            @include box-shadow(2px 2px #ccc);
+
         }
         #map-button:hover {
             border: 2px solid $highlight-color;
@@ -200,7 +196,7 @@ html {
             padding-left: 2em;
             background-color: $secondary-text;
             color: $primary-text;
-            box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.3);
+            @include box-shadow(0 1px 7px 0 rgba(0, 0, 0, 0.3));
         }
         .wbc-divider {
             @include gradient();
@@ -234,7 +230,7 @@ html {
             // max-width: 320px;
             height: 120px;
             position: relative;
-            box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.3);
+            @include box-shadow(0 1px 7px 0 rgba(0, 0, 0, 0.3));
             
             p {
               bottom: 0px;
@@ -265,7 +261,7 @@ html {
 
             height: 100%;
             opacity: 0;
-            transition: 0.3s linear all;
+            @include transition(0.3s linear all);
             color: $background-color;
             width: 100%;
             background-color: rgba(0,0,0, 0);
@@ -279,7 +275,7 @@ html {
                 color: $background-color;
                 text-align: center;
                 position: relative;
-                transition: 0.4s linear all;
+                @include transition(0.4s linear all);
                 top: 3em;
             }
             

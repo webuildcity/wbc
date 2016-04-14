@@ -1,0 +1,25 @@
+ @mixin box-shadow ($string) {
+    -webkit-box-shadow: $string;
+    -moz-box-shadow: $string;
+    box-shadow: $string;
+ }
+
+ @mixin transition ($transition) {
+    -webkit-transition: $transition;  
+    -moz-transition: $transition;
+    -ms-transition: $transition; 
+    -o-transition: $transition;  
+    transition: $transition;
+ }
+
+@mixin opacity ($opacity) {
+    -webkit-opacity: $opacity;
+    -moz-opacity: $opacity;
+    opacity: $opacity;
+}
+
+@mixin animation ($animation) {
+    -webkit-animation: $animation;
+    -moz-animation: $animation;
+    -ms-animation: $animation;
+}
