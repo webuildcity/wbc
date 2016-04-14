@@ -206,7 +206,8 @@ def project_request(request, p):
         #'processSteps' : ProcessStep.objects.filter(publication_processsteps),
         'processTypes' : processTypeList,
         'following': following,
-        'subscribed': subscribed
+        'subscribed': subscribed,
+        'bufferAreas' : p.bufferarea_set.all()
     })
 
 @login_required
@@ -246,10 +247,11 @@ def photo_upload(request, pk):
             album.save()
             project.album = album
             project.save()
-
+            
         uploaded_file = request.FILES['file']
         photo = Photo.objects.create(album=album, file=uploaded_file)
         photo.save()
+        project.save()
         response_dict = {
             'message': 'File uploaded successfully!',
             'thumbnail'     : photo.thumbnail.url

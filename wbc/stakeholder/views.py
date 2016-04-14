@@ -25,13 +25,18 @@ class DepartmentViewSet(viewsets.ReadOnlyModelViewSet):
 def stakeholderview(request, slug):
     s = Stakeholder.objects.get(slug__iexact=slug)
     notifications = None
-    if request.user == s.profile.user:
-        if s.profile.subscriber:
-            notifications = s.profile.subscriber.projects.all()
-    
+    ownprojects = None
+    try:
+        if request.user == s.profile.user:
+            if s.profile.subscriber:
+                notifications = s.profile.subscriber.projects.all()
+        ownprojects = Project.objects.filter(owner=s.profile.user)
+    except:
+        print 'no profile'
+
     return render(request,'stakeholder/stakeholder.html',{
         'stakeholder'       : s,
-        'own_projects'      : Project.objects.filter(owner=s.profile.user),
+        'own_projects'      : ownprojects,
         'projects'          : Project.objects.filter(stakeholders=s.id).distinct(),
         'tags'              : s.tags.all(),
         'notifications'     : notifications

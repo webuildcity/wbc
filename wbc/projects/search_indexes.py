@@ -4,6 +4,8 @@ from rest_framework.reverse import reverse
 from haystack import indexes
 from models import Project
 
+import json
+
 
 class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
 
@@ -26,6 +28,7 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     teaser = indexes.CharField()
     ratings_avg = indexes.DecimalField()
     ratings_count = indexes.IntegerField()
+    buffer_areas = indexes.MultiValueField()
 
     def get_model(self):
         return Project
@@ -35,6 +38,9 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_entities(self, obj):
         return [ent.name for ent in obj.entities.all()]
+
+    def prepare_buffer_areas(self, obj):
+        return [json.loads(area.polygon) for area in obj.bufferarea_set.all()]
     
     def prepare_address_obj(self, obj):
         if obj.address_obj:

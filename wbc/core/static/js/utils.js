@@ -41,7 +41,7 @@ function scrollCheck(element, scroller){
     var move = function() {
         var st = $(scroller).scrollTop();
         var ot = $(element).offset().top+300;
-        var el = $('#nav-search');
+        var el = $('#header-right #nav-search');
         if (st> ot){
             el.addClass('fade-in');
         } else {
@@ -53,41 +53,42 @@ function scrollCheck(element, scroller){
 }
 
 function loadModal(modal, button) {
-        modal = $(modal)
-        $(button).on('click', function(ev) { // for each edit contact url
-            ev.preventDefault(); // prevent navigation
-            var url = $(this).data("form"); 
-            modal.find('.modal-header h3').html(url); // display the modal on url load
-            modal.find('.custom-content').load(url, function(response, status) {
-                if ( status == "error" ) {
-                    $modal.find('.custom-content').html("Fehler!");
-                }
-                modal.modal();
-                modal.modal('show'); // display the modal on url load
-                modal.unbind( "submit" );
-                modal.on('submit', 'form', function(e){
-                    e.preventDefault();
-                    $.ajax({ 
-                        type: $(this).attr('method'), 
-                        url: url, 
-                        data: $(this).serialize(),
-                        context: this,
-                        success: function(data, status) {
-                            if (data.redirect){
-                                window.location.href = data.redirect;
-                            }
-                            else {
-                                modal.find('.custom-content').html(data);
-                            }
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            if(xhr.status==403) {
-                                modal.find('.custom-content').html("Keine Berechtigungen für diese Aktion.");
-                            }
+    modal = $(modal)
+    $(button).on('click', function(ev) { // for each edit contact url
+        ev.preventDefault(); // prevent navigation
+        var url = $(this).data('form');
+        var title = $(this).data('title') 
+        modal.find('.modal-header h3').html(title); // display the modal on url load
+        modal.find('.custom-content').load(url, function(response, status) {
+            if ( status == "error" ) {
+                $modal.find('.custom-content').html("Fehler!");
+            }
+            modal.modal();
+            modal.modal('show'); // display the modal on url load
+            modal.unbind( "submit" );
+            modal.on('submit', 'form', function(e){
+                e.preventDefault();
+                $.ajax({ 
+                    type: $(this).attr('method'), 
+                    url: url, 
+                    data: $(this).serialize(),
+                    context: this,
+                    success: function(data, status) {
+                        if (data.redirect){
+                            window.location.href = data.redirect;
                         }
-                    });
+                        else {
+                            modal.find('.custom-content').html(data);
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        if(xhr.status==403) {
+                            modal.find('.custom-content').html("Keine Berechtigungen für diese Aktion.");
+                        }
+                    }
                 });
             });
-            return false; // prevent the click propagation
         });
-    }
+        return false; // prevent the click propagation
+    });
+}

@@ -1,3 +1,4 @@
+{% load i18n %}
 <form class="project-form" method="post">
     <div class="modal-body">
         {% csrf_token %}
@@ -5,7 +6,7 @@
     </div>
     <div class="modal-footer">
         {% if project.pk %}
-        <input class="project-admin btn btn-primary btn-danger pull-left" type="delete" value="Löschen" class="" data-toggle="modal" data-target="#edit-modal" data-form="{% url 'project_delete' project.pk %}" href="#"/>
+        <input class="project-admin btn btn-primary btn-danger pull-left" type="delete" value="Löschen" class="" data-toggle="modal" data-target="#edit-modal" data-form="{% url 'project_delete' project.pk %}" data-title="{% trans 'Projekt löschen' %}" href="#"/>
         {% endif %}
         <input class="btn btn-primary" type="submit" value="Save" />
         <input name="cancel" class="btn" type="submit" value="Cancel" data-dismiss="modal"/>

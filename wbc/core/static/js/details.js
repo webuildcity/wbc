@@ -6,12 +6,21 @@ app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 
     var is3d = false;
 
     var poly;
+    var polyArray = [_polygon[0]];
+
     if (_polygon.length >0) {  
-        poly = L.multiPolygon(_polygon);;
-        MapService.loadPoly(_polygon, undefined, undefined, true);
+        MapService.loadPoly(_polygon, undefined, undefined);
+    
+        _bufferAreas.forEach(function(area){
+            MapService.loadPoly(area, undefined, undefined, 'buffer-area')
+            polyArray.push(area[0]);
+        });
+        poly = L.multiPolygon(polyArray);
+        
     } else {
         poly = undefined;
     }
+
 
     $('.map-link').on('click',function(){
          setTimeout(function(){
@@ -87,7 +96,8 @@ $(document).ready(function(){
     $(".big-page").on('click', '.project-admin', function(ev) { // for each edit contact url
         ev.preventDefault(); // prevent navigation
         var url = $(this).data("form"); 
-        $('#edit-modal .modal-header h3').html(url); // display the modal on url load
+        var title = $(this).data('title');
+        $('#edit-modal .modal-header h3').html(title); // display the modal on url load
         $("#edit-modal .custom-content").load(url, function(response, status) {
  
             if ( status == "error" ) {
@@ -135,7 +145,7 @@ $(document).ready(function(){
         var url = $(this).data("form"); 
 
         $("#event-modal .custom-content").load(url, function() {
-            $('.wbc-form-datefield-group input').datepicker({ dateFormat: 'dd.mm.yy' });
+            $('.wbc-form-datefield-group input').datepicker();
             $('#event-modal').unbind("submit");
             $('#event-modal').on('submit', 'form', function(e){
                 e.preventDefault();

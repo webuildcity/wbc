@@ -1,4 +1,4 @@
-{% load staticfiles compress %}
+{% load staticfiles compress i18n %}
 <!DOCTYPE html>
 <html ng-app="wbc">
 <head>
@@ -24,6 +24,7 @@
     
     <script type="text/javascript" src="{% static 'lib/angular/angular.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/angular/checklist-model.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/angular/angular-animate.min.js' %}"></script>
 
     <script type="text/javascript" src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}" ></script>
 
@@ -39,7 +40,9 @@
                     ng-model="formData.q"
                     ng-change="onSearchChanged()"
                     ng-keydown="onKeyDown($event)"
-                    ng-model-options="{ debounce: 1200 }"/>
+                    ng-model-options="{ debounce: 1200 }"
+                    ng-focus="searchFocus=true" 
+                    ng-blur="searchFocus=false"/>
 
                     <i ng-show="isLoading" class="spinner-icon fa fa-spinner fa-spin"></i>
 
@@ -50,7 +53,7 @@
                 </div>
             </div>
         </form>
-        <div ng-show="data.suggestions.length >0"class="search-results">
+        <div ng-show="data.suggestions.length >0 && searchFocus" class="search-results">
             <div ng-repeat="result in data.suggestions">
                 <div class="search-result"
                      ng-click="loadDetails(result.internal_link)"
@@ -58,8 +61,7 @@
                      ng-switch="result.type">
                         <i ng-switch-when="project" class="fa fa-home"></i>
                         <i ng-switch-when="stakeholder" class="fa fa-user"></i>
-                        <b>{[{ result.name }]}</b>
-                        
+                        <b>{[{ result.name }]}</b>      
                 </div>
             </div>
         </div>
@@ -87,11 +89,17 @@
                     <img src="{% static 'img/title.png' %}" alt="Bürger baut Stadt">
                 </a>
             </div>
+            <button class="btn-default btn search-field-button" ng-init="searchField=false" ng-click="searchField = !searchField">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav">
                 {% include "core/layout_navigation.html" %}
             </ul>
+        </div>
+        <div ng-show="searchField" class="move-down drop-down-search-container">
+            <wbc-search text="Suche"></wbc-search>
         </div>
     </nav>
 

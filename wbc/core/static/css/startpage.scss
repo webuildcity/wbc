@@ -1,4 +1,6 @@
 @import 'css/_variables.scss';
+@import 'css/_mixins.scss';
+
 
 body {
     background-position: center;
@@ -6,33 +8,73 @@ body {
 
 @mixin gradient(){
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#3f51b5+0,ffffff+100 */
-    background: rgb(63,81,181); /* Old browsers */
-    background: -moz-linear-gradient(left,  rgba(63,81,181,1) 0%, rgba(255,255,255,1) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(63,81,181,1)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(left,  rgba(63,81,181,1) 0%,rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(left,  rgba(63,81,181,1) 0%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(left,  rgba(63,81,181,1) 0%,rgba(255,255,255,1) 100%); /* IE10+ */
-    background: linear-gradient(to right,  rgba(63,81,181,1) 0%,rgba(255,255,255,1) 100%); /* W3C */
+    background: $primary-color; /* Old browsers */
+    background: -moz-linear-gradient(left,  rgba($primary-color,1) 0%, rgba(255,255,255,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba($primary-color,1)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left,  rgba($primary-color,1) 0%,rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  rgba($primary-color,1) 0%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  rgba($primary-color,1) 0%,rgba(255,255,255,1) 100%); /* IE10+ */
+    background: linear-gradient(to right,  rgba($primary-color,1) 0%,rgba(255,255,255,1) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f51b5', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 */
 }
 
+// override layout style for startpage
+.big-page {
+    top: 0px;
+    bottom: auto;
+}
+html {
+    overflow: auto;
+}
+
+
 
 #header {
+
+    height: 100px;
+    background-color: rgba(255,255,255,0.0);
+    @include transition(0.3s linear all);
+
     #nav-search {
         opacity: 0;
-         -webkit-transition: opacity 0.2s ease-in;
-        -moz-transition: opacity 0.2s ease-in;
-        -o-transition: opacity 0.2s ease-in;
-        -ms-transition: opacity 0.2s ease-in;
-        transition: opacity 0.2s ease-in;
+        @include transition(0.2s ease-in all);
     }
     #nav-search.fade-in {
         opacity: 1;
-        -webkit-transition: opacity 1s ease-in;
-        -moz-transition: opacity 1s ease-in;
-        -o-transition: opacity 1s ease-in;
-        -ms-transition: opacity 1s ease-in;
-        transition: opacity 1s ease-in;
+        @include transition(0.8s ease-in all);
+    }
+
+    &.fixed-header {
+        position: fixed;
+        width: 100%;
+        height: 46px;
+        background-color: rgba(255,255,255,1);
+    }
+    &:not(.fixed-header) {
+        @include box-shadow(none);
+        // font-size: 1.3em;
+        #brand img {
+            height: 80px;
+        }
+        #header-right {
+            padding-right: 0px;
+            .sitenav {
+                margin-top: 35px;
+                font-size: 1.3em;
+                li {
+                    margin-right: 40px;
+                    a {
+                        color: #f2f2f2;
+                    }
+                }
+            }
+            #nav-search {
+                display: none;
+            }
+        }
+    }
+    .sitenav {
+        @include transition(0.3s linear all);    
     }
 }
 
@@ -47,19 +89,32 @@ body {
 
     #top-container {
         position: relative;
-        height: 300px;
-        background-image: $startpage-image;
+        height: 500px;
+        background: $startpage-image  no-repeat center center;
         background-size: cover;
-        box-shadow: inset 0 -5px 7px rgba(0, 0, 0, .1);
-        @media (max-width: 760px) {
-            height: 200px;
-        }
+        // box-shadow: inset 0 -5px 7px rgba(0, 0, 0, .1);
+        @include box-shadow(inset 0 -5px 7px rgba(0, 0, 0, .1));
 
+        @media (max-width: 760px) {
+            height: 350px;
+        }
+        .top-container-tint {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background-color: black;
+            opacity: 0.3;
+            top: 0px;   
+        }
+        .text-on-image {
+            color: #f2f2f2 !important;
+        }
         .top-overlay {
             position: relative;
-            padding-top: 40px;
+            padding-top: 150px;
+
             @media (max-width: 760px) {
-                padding-top: 10px;
+                padding-top: 90px;
 
                 h1 {
                     margin-top: 0px;
@@ -114,7 +169,8 @@ body {
             background-color: #EC972F;
             z-index: 10;
             color: white;
-            box-shadow: 2px 2px #ccc;
+            @include box-shadow(2px 2px #ccc);
+
         }
         #map-button:hover {
             border: 2px solid $highlight-color;
@@ -127,7 +183,7 @@ body {
         // background: rgba(255,255,255,0.8);
 
         p {
-          padding: 2em 15px 0 15px;
+          padding: 1em 15px 0 15px;
         }
 
         a {
@@ -135,11 +191,12 @@ body {
         }
 
         .wbc-headline {
-            margin: 0px;
-            padding: 0.2em;
+            margin: 0em;
+            padding: 0.5em;
             padding-left: 2em;
             background-color: $secondary-text;
             color: $primary-text;
+            @include box-shadow(0 1px 7px 0 rgba(0, 0, 0, 0.3));
         }
         .wbc-divider {
             @include gradient();
@@ -147,31 +204,81 @@ body {
         }
 
         .bottom-block {
-            background:rgba(255,255,255,0.8);
-            margin-top: 1em;
             padding-bottom: 2em;
         }
-
+        .wbc-teaser-container {
+            height: 100%;
+            position: relative;
+            padding: 0px;
+            .wrapper {
+                position: relative;
+                margin: 1em;
+                // border-radius: 4px;
+            }
+        }
         .teaser {
             text-align: center;
             color: $primary-text;
-            background-color: $background-color;
+            background-color: white;
             border-radius: 2px;
-            border: 1px solid #ddd;
-            padding: 3px;
-            margin-top: 20px;
-            height: 100px;
+            // border: 1px solid #ddd;
+            padding: 1.5em 1em;
+            // margin-top: 1em;
+            // margin-bottom: 1em;
+            margin-right: auto;
+            margin-left: auto;
+            // max-width: 320px;
+            height: 120px;
+            position: relative;
+            @include box-shadow(0 1px 7px 0 rgba(0, 0, 0, 0.3));
+            
             p {
+              bottom: 0px;
               padding: .25em;
+              margin-bottom: 0;
             }
         }
 
         .teaser:hover {
-            border: 1px solid $highlight-color;
+
+            ~.wbc-overlay {
+                height: 100%;
+                background-color: rgba(0,0,0,0.7);
+                opacity: 1;
+
+                h2 {
+                    // position: relative;
+                    top: 0em;
+                }
+            }
         }
 
         .teaser i {
             font-size: 42px;
+        }
+        
+        .wbc-overlay {
+
+            height: 100%;
+            opacity: 0;
+            @include transition(0.3s linear all);
+            color: $background-color;
+            width: 100%;
+            background-color: rgba(0,0,0, 0);
+            position: absolute;
+            bottom: 0px;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: 2px;
+
+            h2 {
+                color: $background-color;
+                text-align: center;
+                position: relative;
+                @include transition(0.4s linear all);
+                top: 3em;
+            }
+            
         }
 
         .upcoming {

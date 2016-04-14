@@ -24,6 +24,7 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
     };
 
     $scope.loadDetails = function(result) {
+        console.log(result);
         window.location.href = result.internal_link;
     };
 
@@ -110,5 +111,13 @@ app.controller('StartpageController', ['$scope', '$document', '$http', '$window'
 
 /** SHOW IF SCROLLED **/    
 $(document).ready(function(){
-    scrollCheck('.top-overlay', '#startpage-content');
+    scrollCheck('.top-overlay', window);
+
+    $(window).scroll(function(){
+        if($(window).scrollTop()) {
+            $('#header').addClass('fixed-header');
+        } else {
+            $('#header').removeClass('fixed-header');
+        }
+    })
 })

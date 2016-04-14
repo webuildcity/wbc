@@ -1,5 +1,5 @@
 {% extends 'core/layout.html' %}
-{% load  django_markdown staticfiles compress %}
+{% load  django_markdown staticfiles compress i18n %}
 
 {% block css %}
     {% compress css %}
@@ -32,7 +32,7 @@ BlogController
 
         {% if user.is_authenticated %}
         <ul class="admin-panel">
-            <li><a class="blog-admin admin-link" data-toggle="modal" data-target="#edit-modal" data-form="{% url 'blogentry_update' b.slug %}" href="#"><i class="fa fa-pencil"></i></a></li>
+            <li><a class="blog-admin admin-link" data-toggle="modal" data-target="#edit-modal" data-form="{% url 'blogentry_update' b.slug %}" data-title="{% trans 'Eintrag bearbeiten' %}" href="#"><i class="fa fa-pencil"></i></a></li>
         </ul>
         {% endif %}
 

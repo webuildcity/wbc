@@ -44,6 +44,7 @@ class Profile(models.Model):
         verbose_name_plural = _('Profiles')
 
 
+# creates a profile and stakeholder for each new user und assigns permissions
 def create_profile_for_user(sender, **kwargs):
     user = kwargs['instance']
     if kwargs['created']:
