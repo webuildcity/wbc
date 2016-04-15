@@ -1,6 +1,10 @@
 {% extends 'core/layout_split.html' %}
 {% load staticfiles compress i18n %}
 
+
+<!-- The Searchpage. Includes two views map and list views -->
+<!-- Filter on the left in the sidebar, results in the mainframe -->
+
 {% block css %}
     {% compress css %}
     {{block.super}}
@@ -42,7 +46,6 @@ SearchController
                     ng-keydown="onKeyDown($event)" 
                     ng-focus="searchFocus=true"
                     ng-blur="searchFocus=false"
-
                     >
                     
                     <a ng-if="activeSearch" ng-click="clearSearch()" class="text-muted clear-search" href="#" title="{% trans 'Suche zurücksetzen' %}">
@@ -124,6 +127,8 @@ SearchController
                 </div>
             </div>
         </form>
+
+        <!-- Spinner to show that side is searching/loading -->
          <div ng-show="searching" class="text-center loading-container">
             <i class="spinner-icon fa fa-spinner fa-spin"></i>
             <div class="loading-text"> {% trans 'Suche' %}</div>
@@ -131,9 +136,11 @@ SearchController
         
         <!-- Result list in sidebar -->
         <div id="sidebar-results" ng-hide="listView" ng-if="resultLength">
-           
+            
+            <!-- header to expand/collapse results -->
             <div class="collapse-heading" data-toggle="collapse" data-target=".result-list"><i class="result-anchor anchor fa fa-list-ul"> </i>{% trans '#ERGEBNISSE:Ergebnisse' %}</div>
-           
+            
+            <!-- Results -->
             <div class="result-list in wbc-dropdown-container">
 
                 <div class="clearfix"
@@ -143,13 +150,15 @@ SearchController
                     ng-click="selectResult(result)">
 
                     <div id="result-{[{result.pk}]}" class="search-result">
+
+                        <!-- switch for each possible resulttype, TODO: make this automatic for all possible results -->
                         <div class="result-type" ng-switch on="result.type">
                             <i ng-switch-when="project" class="fa fa-home fa-2x"></i>
                             <i ng-switch-when="stakeholder" class="fa fa-user fa-2x"></i>
                         </div>
                         <div class="result-details">
                             <a ng-href="{[{result.internal_link}]}">
-                                <b>{[{ result.name }]}</b>
+                                {[{ result.name }]}
                             </a>
                             <p ng-if="result.address_obj">{[{ result.address_obj }]}</p>
                         </div>

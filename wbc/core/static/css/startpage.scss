@@ -52,6 +52,17 @@ html {
     }
     &:not(.fixed-header) {
         @include box-shadow(none);
+        .headline-span {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #f2f2f2;
+        }
+        .dropdown-menu li {
+            margin-right: 0px !important;
+            a {
+                color: #333 !important;
+            }
+        }
         // font-size: 1.3em;
         #brand img {
             height: 80px;
