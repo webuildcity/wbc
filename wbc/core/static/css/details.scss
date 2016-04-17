@@ -23,6 +23,17 @@ body {
 .big-page {
     overflow-y: hidden;
     // overflow-x: hidden;
+
+    @media(max-width: 768px){
+        #side_content {
+            position: relative;
+            height: 35%;
+            border-right: none;
+        }
+        #main_content {
+            height: 65%;
+        }
+    }
 }
 
 #project_map {
@@ -147,6 +158,35 @@ body {
     .main-content-nav {
         height:  42px;
         // float: left;
+        @media(max-width: 768px){
+            position: absolute;
+            z-index: 10;   
+            background: white;
+            height: auto; 
+            li {
+                float: none;
+                height: 0px;
+                transition: 0.3s linear all;
+                overflow: hidden;
+                &.active {
+                    height: auto;
+                    
+                    a::after {
+                        float: right;
+                        font-family: 'Glyphicons Halflings';
+                        content: "\e114";
+                    }
+                }
+            }
+            &.wbc-expanded {
+                li {
+                    height: 40px;
+                    a::after {
+                        content: none;
+                    }
+                }
+            }
+        }
 
         .not-active {
             pointer-events: none;

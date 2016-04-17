@@ -98,6 +98,7 @@
             background: white;
             &.fixed-top {
                 width: 33%;
+                border-right: 2px solid #ccc;   
                 @media (max-width:768px){
                     width: 100%;
                 }

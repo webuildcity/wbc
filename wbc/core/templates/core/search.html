@@ -2,13 +2,13 @@
 {% load staticfiles compress i18n %}
 
 
-<!-- The Searchpage. Includes two views map and list views -->
+<!-- The Searchpage. Includes two views: map and list views -->
 <!-- Filter on the left in the sidebar, results in the mainframe -->
 
 {% block css %}
     {% compress css %}
     {{block.super}}
-    <link rel="stylesheet" type="text/x-scss" href="{% static "css/search.scss" %}" />
+    <link rel="stylesheet" type="text/x-scss" href="{% static 'css/search.scss' %}" />
     <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
     {% endcompress %}
 {% endblock %}
@@ -33,9 +33,11 @@ SearchController
 {% block side_content %}
 <!-- base for html5 mode angular -->
 <base href="/suche/">
+    <!-- sidebar with form, searchFocus to show autocomplete results correctly -->
     <div id="search_sidebar" ng-class="{'show-overflow' : searchFocus}">
         <form id="search" ng-submit="$event.preventDefault(); startSearch(false)">
             {% csrf_token %}
+            <!-- Search anchor, stays on top while scrolling -->
             <div class="search-anchor anchor">
                 <div class="input-group search-field">
                     <input
@@ -48,6 +50,7 @@ SearchController
                     ng-blur="searchFocus=false"
                     >
                     
+                    <!-- Clear Search Button -->
                     <a ng-if="activeSearch" ng-click="clearSearch()" class="text-muted clear-search" href="#" title="{% trans 'Suche zurücksetzen' %}">
                         <i class="fa fa-times"></i>
                     </a>
@@ -56,38 +59,49 @@ SearchController
                         <span class="glyphicon glyphicon-search"></span>
                     </a>
                 </div>
+
+                <!-- Autocomplete results -->
                 <div ng-show="suggestions.length >0 && searchFocus" class="search-results-autocomplete">
                     <div ng-repeat="result in suggestions">
                         <div class="search-result-autocomplete"
                              ng-click="console.log('ASD');selectTerm(result.name);startSearch(false);"
-                              ng-class="{'selected-result': $index == selectedSuggestionIdx}"
-                              ng-mouseover="setIndex($index)"
+                             ng-class="{'selected-result': $index == selectedSuggestionIdx}"
+                             ng-mouseover="setIndex($index)"
                              >
                                 <b>{[{ result.name }]}</b>
                         </div>
                     </div>
                 </div>
-                <a class="pull-left visible-xs" href="" ng-click="showFilter = !showFilter"> Erweiterte Suche</a>
 
+                <!-- Advanced Search for mobile view -->
+                <a class="pull-left visible-xs" href="" ng-click="showFilter = !showFilter"> {% trans 'Erweiterte Suche' %}</a>
+
+                <!-- Shows the number of displayed results and Buttons to load more -->
                 <p id="result-number" class="text-muted" ng-if="resultLength">{[{results.length}]} von {[{resultLength}]} {% trans 'Einträgen' %}
                     <a href="#" ng-if="results.length < resultLength"ng-click="startSearch(offset)">{% trans 'more' %}</a>
                     <a href="#" ng-if="results.length < resultLength"ng-click="startSearch(1)">{% trans 'all' %}</a>
                 </p>
-                <div ng-if="suggestion" class="suggestion-container">
+                <!-- Spelling suggestions -->
+                <!-- <div ng-if="suggestion" class="suggestion-container">
                     {% trans 'SPELLING SUGGESTION:Meinten Sie:' %} <a href="" ng-click="selectTerm(suggestion)">
                         {[{suggestion}]}
                     </a>
-                </div>
+                </div> -->
                 
               <!--   <a href="" class="scroll-top-link hidden-xs" onclick="$('#search_sidebar').scrollTop(0)"> <i class="fa-angle-double-up fa"></i> FILTER</a> -->
+
+                <!-- Scroll back to Top arrow -->
                 <a href="" class="scroll-top-link-bottom" onclick="$('#search_sidebar').scrollTop(0)"> <i class="fa-angle-double-up fa fa-2x"></i></a>
 
             </div>
+
+            <!-- Additional Filters, TODO: Automatic -->
             <div id="filter-container">
                 <div ng-if="entitiesFacets.length > 0" class="facet-container">
                     <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target=".region-facets">
                         <i class="region-anchor anchor fa fa-image"></i>{% trans 'ENTITY-FILTER: Stadtteile' %}
                     </div>
+                    <!-- Active facets when menu folded in -->
                     <div class="active-facets wbc-dropdown-container">
                          <div class="facet-item" ng-repeat="entity in formData.entities">
                             <span>{[{entity}]}</span>
@@ -170,20 +184,18 @@ SearchController
 
     </div>
 {% endblock %}
-{% block main_content %}
-    <!-- <ul class="nav-tabs nav">
-        <li><button class="btn btn-default" id="map-list-switch"><i class='fa fa-map'></i></button></li>
-        <li><button class="btn btn-default" id="map-list-switch"><i class='fa fa-list'></i></button></li>
-        <li><button class="btn btn-default" id="map-list-switch"><i class='fa fa-book'></i></button></li>
-    </ul> -->
 
+{% block main_content %}
+    <!-- Switches Views between map and list -->
     <button class="btn btn-default" id="map-list-switch" ng-click="changeView()">{% trans 'Button:Listen-/Kartenansicht' %}</button>
+
+    <!-- MAPVIEW -->
     <div ng-class="{'active-result': !listView}" class="result-content" id="map">
 
         <!-- INFO BOX ON MAP, shows selected Result -->
         <div ng-if="selectedResult != null" class="map-overlay" id="map-info-box">
             <h2>{[{selectedResult.name}]}</h2>
-            <a ng-href="{[{selectedResult.internal_link}]}">Details</a>
+            <a ng-href="{[{selectedResult.internal_link}]}">{% trans 'Details' %}</a>
         </div>
 
         <!-- LEGEND -->
@@ -203,13 +215,19 @@ SearchController
         </div>
 
     </div>
+
+    <!-- LISTVIEW -->
     <div ng-class="{'active-result': listView}" class="result-content" id="list">
+        
+        <!-- Search Header with filters and sorting, fixed top -->
         <div id='search-list-header' class="fixed-top">
             <div class="pull-left result-number text-center">
                 <div ng-show="resultLength >=0 && !searching">
                     <h3>{[{results.length}]} von {[{resultLength}]}</h3>
                     <p>{% trans '#ERGEBNISSE:Ergebnisse' %}</p>
                 </div>
+
+                <!-- Spinner that shows if searching or loading results -->
                 <div ng-show="searching">
                     <i class="spinner-icon fa fa-spinner fa-spin"></i>
                     <div class="loading-text"> {% trans 'Suche' %}</div>
@@ -227,9 +245,11 @@ SearchController
                 </ul>
             </div>
         </div>
+
+        <!-- Result list for listview -->
         <div id="result-list">
             <div ng-repeat="result in results">
-                <div id="result-{[{result.pk}]}" class="search-result  container-fluid">
+                <div id="result-{[{result.pk}]}" class="search-result container-fluid">
                     <div class="left-block pull-left">
                         <a ng-href="{[{result.internal_link}]}">
                             <img ng-if="result.thumbnail" class="search-thumbnail" src={[{result.thumbnail}]}>

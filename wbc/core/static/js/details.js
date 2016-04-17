@@ -4,6 +4,7 @@ app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 
     function($scope, $document, $http, $window, MapService) {
       
     var is3d = false;
+    $scope.expanded = false;            //mobile view main frame menu
 
     var poly;
     var polyArray = [_polygon[0]];
@@ -21,6 +22,11 @@ app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 
         poly = undefined;
     }
 
+    $scope.ifSmallExpand = function(){
+        if(window.matchMedia("(max-width: 768px)").matches){
+            $scope.expanded = !$scope.expanded;
+        }
+    }
 
     $('.map-link').on('click',function(){
          setTimeout(function(){
@@ -74,7 +80,17 @@ $(document).ready(function(){
         $('.main-content-nav .nav-tabs a:first').tab('show');
     }
 
+    // TOGGLE TAB IN MAINFRAME
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+        //IF MOBILE VIEW move item to the top (hacky)
+        // if(window.matchMedia("(max-width: 768px)").matches){
+        //     var $this = $(e.currentTarget).parent(),
+        //         callback = function() {
+        //             $this.insertBefore($this.siblings(':eq(0)'));
+        //     };
+        //     // $this.slideUp(500, callback).slideDown(500);
+        // }
         e.preventDefault();
         var target = this.href.split('#');
         $('.nav a').filter('.main-content-nav a[href="#'+target[1]+'"]').tab('show');

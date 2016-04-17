@@ -4,6 +4,8 @@ app.config(['$locationProvider', function($locationProvider) {
       });
 }]);
 
+// Searchcontroller to handle everything on the search page, including requests to the server
+
 app.controller('SearchController', ['$scope', '$document', '$http', '$window', '$timeout', '$location', 'MapService',
     function($scope, $document, $http, $window, $timeout, $location, MapService) {
 
@@ -13,23 +15,24 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         'stakeholder': 'Akteure'
     };
 
-    $scope.formData = {};
-    $scope.formData.order = '';
-    $scope.formData.tags = [];
-    $scope.selectedResult = null;
-    $scope.listView = false;
-    $scope.searching = false;
-    $scope.offset = 0;
-    $scope.multipoly = [];
-    $scope.scrolltrigger = false;
-    $scope.activeSearch = false;
-    $scope.searchFocus = false;
-    $scope.suggestions = [];
-    $scope.selectedSuggestionIdx = -1;
-    // $scope.data = { suggestions: [] };
+    $scope.formData = {};               //Search Form parameters
+    $scope.formData.order = '';         //Order of search results
+    $scope.formData.tags = [];          //list of tags
+    $scope.selectedResult = null;       //currently selected result
+    $scope.listView = false;            //switch between views
+    $scope.searching = false;           //currently searching?
+    $scope.offset = 0;                  //current offset
+    $scope.multipoly = [];              //polygon to draw on the map
+    $scope.scrolltrigger = false;       
+    $scope.activeSearch = false;        
+    $scope.searchFocus = false;         //if searchfield is focussed
+    $scope.suggestions = [];            //autocomplete suggestions
+    $scope.selectedSuggestionIdx = -1;  //selected autocomplete element
     
     //expand filter for mobile search-menu
     $scope.showFilter = false;
+
+    //showFilter for mobile view
     $scope.$watch('showFilter', function(){
         if (!$scope.showFilter)
             $('#filter-container').slideUp(200);
@@ -43,6 +46,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     var changeDelay = 300;
     // var polygonLayer = null;
 
+    //Highlightfunction when mouseover polygon
     var highlightFunction = function(id){
         var resultDiv = $('#result-'+id);
         var $parentDiv = $('#search_sidebar');
@@ -51,6 +55,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         // return null;
     };
 
+    //Mouselistener for polygons
     var addMouseListener = function(poly, result){
         var delay = 300;
         var timer = null;
@@ -70,6 +75,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         });
     }
 
+    //Search method sends ajax request to server and handles results
     var search = function(data, offset){
         
         $scope.resultLength = 0;
@@ -150,8 +156,9 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 $scope.suggestion = response.suggestion;
             }
         });
-    }
+    };
 
+    //onkeydown method of searchfield
     $scope.onKeyDown = function(key){
         if(key.keyCode == '13'){
             if($scope.selectedSuggestionIdx !== -1 && $scope.suggestions.length > 0) {
@@ -197,7 +204,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $scope.selectedSuggestionIdx = index;
     }
 
-    //AUTOCOMPLETE HERE?
+    //AUTOCOMPLETE on input in search field, TODO: timer
     $scope.onSearchChanged = function() {
 
         setTimeout(function() {}, 10);
@@ -227,6 +234,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
     };
 
+    //starts the search. handles the offset
     $scope.startSearch = function(offset) {
 
         if(offset){
