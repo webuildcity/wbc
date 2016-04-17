@@ -158,10 +158,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         });
     };
 
-    //onkeydown method of searchfield
+    //onkeydown method of searchfield, arrows for autocomplete results
     $scope.onKeyDown = function(key){
         if(key.keyCode == '13'){
-            if($scope.selectedSuggestionIdx !== -1 && $scope.suggestions.length > 0) {
+            if($scope.selectedSuggestionIdx != -1 && $scope.suggestions.length > 0) {
                 key.preventDefault();
                 $scope.selectTerm($scope.suggestions[$scope.selectedSuggestionIdx].name);
             }
@@ -185,7 +185,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             $scope.selectedSuggestionIdx = 0;
         }
 
-        if($scope.selectedSuggestionIdx == -1) {
+        //return to bottom of list
+        if($scope.selectedSuggestionIdx == -2) {
             $scope.selectedSuggestionIdx = $scope.suggestions.length-1;
         }
 
@@ -205,33 +206,38 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     }
 
     //AUTOCOMPLETE on input in search field, TODO: timer
+    var timeoutHandle;
     $scope.onSearchChanged = function() {
 
-        setTimeout(function() {}, 10);
-        if($scope.formData.q) {
-            $scope.isLoading = true;
-            $http({
-                method: 'GET',
-                url:  '/autocomplete',
-                params: {
-                    q: $scope.formData.q
-                }
-            }).success(function(response) {
-                $scope.isLoading = false;
-                if (response.results.length) {
-                    $scope.suggestions = response.results;
-                } else {
-                    $scope.suggestions = [];
-                    $scope.noResults = true;
-                }
-            }).error(function(e){
-                $scope.isLoading = false;
-            });
-        } else {
-            $scope.suggestions = [];
-            $scope.selectedSuggestionIdx = -1;
-        }
+        window.clearTimeout(timeoutHandle);
 
+        //Timeout so this only gets fired if no new input in 400ms
+        timeoutHandle = window.setTimeout(function() {
+            if($scope.formData.q) {
+                $scope.isLoading = true;
+                $http({
+                    method: 'GET',
+                    url:  '/autocomplete',
+                    params: {
+                        q: $scope.formData.q
+                    }
+                }).success(function(response) {
+                    $scope.isLoading = false;
+                    if (response.results.length) {
+                        $scope.suggestions = response.results;
+                    } else {
+                        $scope.suggestions = [];
+                        $scope.noResults = true;
+                    }
+                }).error(function(e){
+                    $scope.isLoading = false;
+                });
+            } else {
+                $scope.suggestions = [];
+                $scope.selectedSuggestionIdx = -1;
+            }            
+        }, 400);
+        
     };
 
     //starts the search. handles the offset
