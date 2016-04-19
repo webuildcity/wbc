@@ -41,6 +41,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         else
             $('#filter-container').slideDown(200);
     });
+    // $scope.$watch('selectedResult');
 
     var allResultPoly = null;
     var maxZoom = null;
@@ -69,7 +70,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $(poly).on('mouseover', function() {
             timer = setTimeout(function(){
                 $scope.selectedResult = result;
-                $scope.$apply();
+                $scope.$digest();
                 
             }, delay);
         }).on('mouseleave', function(){
@@ -347,8 +348,9 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     //when clicked on resultlist entry
     $scope.selectResult = function(result) {
 
+        //DOESNT WORK FOR SOME REASON, TODO: FIX
         $scope.selectedResult = result;
-        $scope.$apply();
+        // $scope.$digest();
 
         if (result.polygon){
             // var tempPoly = L.multiPolygon(result.polygon);
@@ -459,7 +461,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         var target = e.target;
         if (!$(target).is('#side_content') && !$(target).parents().is('#side_content')) {
             $scope.showFilter = false;
-            $scope.$apply()
+            $scope.$digest();
         }
     });
 }]);

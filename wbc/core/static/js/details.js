@@ -82,15 +82,6 @@ $(document).ready(function(){
 
     // TOGGLE TAB IN MAINFRAME
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-
-        //IF MOBILE VIEW move item to the top (hacky)
-        // if(window.matchMedia("(max-width: 768px)").matches){
-        //     var $this = $(e.currentTarget).parent(),
-        //         callback = function() {
-        //             $this.insertBefore($this.siblings(':eq(0)'));
-        //     };
-        //     // $this.slideUp(500, callback).slideDown(500);
-        // }
         e.preventDefault();
         var target = this.href.split('#');
         $('.nav a').filter('.main-content-nav a[href="#'+target[1]+'"]').tab('show');

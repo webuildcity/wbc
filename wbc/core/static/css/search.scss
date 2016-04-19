@@ -187,17 +187,14 @@
             }
         }
         .collapse-heading.collapsed {
-            //color: #333;
             background-color: white;
             color: $primary-color;
-            // box-shadow: none !important;
         }
         .collapse-heading:hover {
             // background-color: #eee;
             // background-color: rgba($highlight-color,0.1);
 
             color: $primary-color;
-            // border-bottom: 1px solid $highlight-color;     
         }
 
         .collapse-heading:after {
@@ -205,26 +202,12 @@
             font-family: 'Glyphicons Halflings';
             content: "\e114";
             float: right;
-            /*color: grey;    */
+            // color: grey;    
         }
         .collapse-heading.collapsed:after {
             /* symbol for "collapsed" panels */
             content: "\e080";
         }
-
-        // .sliding-u-l-r {
-        //     // text-decoration: none;
-        //     // display: inline-block;
-        //     border-bottom: 3px solid transparent;    
-        //     width: 0px;
-        //     transition: 0.5s ease;
-        //     white-space: nowrap;
-        //     // height: 25px;
-        // }
-        // .sliding-u-l-r:hover {
-        //     border-bottom: 3px solid $highlight-color;
-        //     width: 100%;
-        // }
 
         .facet-container {
             overflow: auto;
@@ -236,7 +219,7 @@
             }
             .underline-lr {
                 position: absolute;
-                bottom: 0px;
+                top: 34px;
                 height: 0px;
                 width: 0px;
                 border-bottom: 2px solid transparent;
