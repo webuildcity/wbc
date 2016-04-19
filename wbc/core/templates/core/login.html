@@ -1,7 +1,9 @@
 {% load i18n %}
 {% if not request.user.is_authenticated %}
 
-<div id="login">
+<!-- The Loginform, button for registration TODO: password forgotten-->
+
+<div id="login" class="container-fluid">
     <form class="form-horizontal" role="form" name="LoginForm" action="{% url 'login' %}" method="post" >
         {% csrf_token %}
 
