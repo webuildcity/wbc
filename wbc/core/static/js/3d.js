@@ -5,6 +5,8 @@
 //     wbc3d_conf.WORKERPATH = '../lib/vizicities/vizi-worker.min.js';
 // }
 
+// This file generated the 3d building display on the details page
+
 $(document).ready(function(){
 
   wbc3d =function(div, coord, poly) {
@@ -235,6 +237,8 @@ $(document).ready(function(){
   };
 
   update();
+
+  // Controls for camera flight and compass
 
   //camera flight
   function cameraflight(){

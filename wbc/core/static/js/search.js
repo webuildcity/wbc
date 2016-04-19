@@ -1,4 +1,5 @@
 app.config(['$locationProvider', function($locationProvider) {
+    //html5mode to work with push/pop state in angular
     $locationProvider.html5Mode({
         enabled: true,
       });
@@ -10,6 +11,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     function($scope, $document, $http, $window, $timeout, $location, MapService) {
 
 
+    //models to search through
     $scope.models = {
         'project': 'Projekte',
         'stakeholder': 'Akteure'
@@ -46,7 +48,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     var changeDelay = 300;
     // var polygonLayer = null;
 
-    //Highlightfunction when mouseover polygon
+    //Highlightfunction when mouseover polygon on map
     var highlightFunction = function(id){
         var resultDiv = $('#result-'+id);
         var $parentDiv = $('#search_sidebar');
@@ -79,10 +81,15 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     var search = function(data, offset){
         
         $scope.resultLength = 0;
-        $scope.searching = true;
-        $scope.selectedResult = null;
+        $scope.searching = true; //currently searching, set to false in succes function
+        
+        $scope.selectedResult = null; //reset currently selected result
+
+        //reset autocomplete on new search 
         $scope.suggestions = [];
         $scope.selectedSuggestionIdx = -1;
+        
+        //ajac request to search api
         $http({
             method: 'POST',
             url:  '/suche/',
@@ -103,6 +110,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             }
 
             if (response.results.length>0) {
+
+                // if offset append results, else clear map and make new resultset
                 if (offset){
                     $scope.results.push.apply($scope.results, response.results);
                 } else {
@@ -114,6 +123,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 var poly;
              
                 response.results.forEach(function(result){
+
+                    // add polygon to map if result has one
                     if(result.polygon)  {
                         result.polygon.id = result.pk;
                         poly = MapService.loadPoly(result.polygon, result.pk, highlightFunction);
@@ -122,6 +133,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                         $scope.multipoly.push(result.polygon[0]);
                     }
 
+                    //add buffer areas if project has any
                     if(result.buffer_areas) {
                         result.buffer_areas.forEach(function(area){
 
@@ -132,13 +144,15 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                         });                        
                     }
                 });
+                //add the allResultsPoly to map (contains all polygons of all results)
                 allResultPoly = L.multiPolygon($scope.multipoly);
             
 
                 setTimeout(function() {
                     MapService.map.invalidateSize();
-                },0);
+                },10);
                 
+                //zoom to right extend after polygons are drawn (hacky timeout, make this callback)
                 if ($scope.multipoly.length > 0) {
                     setTimeout(function() {
                         MapService.map.fitBounds(allResultPoly.getBounds(), {
@@ -147,6 +161,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                     },100);
                     
                 }
+
+                //set the maxzoom, used to pan the map correctly when scrolling thought resultlist
                 maxZoom = MapService.map.getZoom();
 
                 // $('.result-content').scroll(resultListScrollHandler);
@@ -185,7 +201,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             $scope.selectedSuggestionIdx = 0;
         }
 
-        //return to bottom of list
+        //return to bottom of list if at -2 (-1 is nothing)
         if($scope.selectedSuggestionIdx == -2) {
             $scope.selectedSuggestionIdx = $scope.suggestions.length-1;
         }
@@ -205,7 +221,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $scope.selectedSuggestionIdx = index;
     }
 
-    //AUTOCOMPLETE on input in search field, TODO: timer
+    //AUTOCOMPLETE on input in search field
     var timeoutHandle;
     $scope.onSearchChanged = function() {
 
@@ -270,8 +286,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $scope.formData.q = term;
         // $scope.onSearchChanged();
     };
-    var focusedPoly = null;
 
+
+    //Focusses a polygon, zoominh the map to the extend of the polygon and its buffer areas
+    var focusedPoly = null;
     $scope.focusPoly = function(result) {
 
         $('.poly-'+result.pk).each(function(i){
@@ -292,7 +310,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     };
 
 
+    // focus result when hovering result in resultlist
     $scope.focusResult = function(result) {
+
+        //timer so only triggers when hovering for more than 400ms
         animationTimer = $timeout(function () {
             var multipoly = [];
             if(result.polygon !== undefined) {
@@ -307,7 +328,11 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         }, 400);
     };
 
+
+    // mouseout for result in resultlist
     $scope.defocusResult = function(result) {
+
+        //reset timer for the animation
         $timeout.cancel(animationTimer);
 
         if(result.polygon !== undefined) {
@@ -319,6 +344,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         }
     };
 
+    //when clicked on resultlist entry
     $scope.selectResult = function(result) {
 
         $scope.selectedResult = result;
@@ -340,6 +366,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         }
     }
 
+    //clears the search, TODO: automatic for all fiters
     $scope.clearSearch = function(){
         $scope.formData = {};
         $scope.formData.order = '';
@@ -347,6 +374,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $scope.offset = 0;
         $scope.startSearch(false);
     }
+
 
     $scope.toggleSelectedItems = function(event){
         $(event.target).siblings('.active-facets').toggleClass('hidden');
@@ -384,6 +412,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $scope.formData.q = param_json['q']
     };
 
+    //changes view between list and map view
     $scope.changeView = function() {
         $scope.listView = !$scope.listView;
         if(!$scope.listView){
@@ -405,6 +434,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     };
     $('#list').scroll(resultListScrollHandler);
     
+    //reorder, value aligns with name for search api
     $('.order-btn').click(function(){
         $(".order-btn").siblings(".active").removeClass("active");
         $(this).addClass("active");
@@ -417,37 +447,14 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         }
         $scope.startSearch(false);
     });
+
+    //start standard search when page is loaded
     search($scope.formData);
 
     // moveScroller($('#search-list-header'), $('.result-content'));
     moveScroller($('.search-anchor'), $('#search_sidebar'));
 
-    // function moveScroller2(anchorSelector, scrollerSelector) {
-    //     var move = function() {
-    //         var scrollTop = $(scrollerSelector).scrollTop();
-    //         var offset = $(anchorSelector).offset();
-    //         var offsetTop = 0;
-    //         if(offset !== undefined) {
-    //             offsetTop = offset.top;
-    //         }
-
-    //         var anchor = $(anchorSelector);
-    //         if(scrollTop > offsetTop) {
-    //             anchor.addClass('fixed-top');
-    //             $scope.scrolltrigger = true;
-    //         } else {
-    //             anchor.removeClass('fixed-top');
-    //             $scope.scrolltrigger = false;
-
-    //         }
-    //     };
-
-    //     $(scrollerSelector).scroll(move);
-    //     move();
-    // }
-    // moveScroller2($('.search-anchor'), $('#search_sidebar'));
-
-
+    //close menu for mobile view on click anywhere else
     $document.on('click', function(e) {
         var target = e.target;
         if (!$(target).is('#side_content') && !$(target).parents().is('#side_content')) {

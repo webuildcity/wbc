@@ -109,6 +109,10 @@
     #header-left {
         float: left;
         padding-left: 20px;
+        .headline-span {
+            font-weight: bold;
+            margin-left: 1em;
+        }
     }
 
     #header-right {

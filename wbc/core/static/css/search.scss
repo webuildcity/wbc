@@ -148,7 +148,7 @@
         }
 
         .collapse-heading {
-            // border: 1px solid #E5E5E5;
+            position: relative;
             clear:both;
             font-size: 15px;
             color: $primary-color;
@@ -194,10 +194,10 @@
         }
         .collapse-heading:hover {
             // background-color: #eee;
-            background-color: rgba($highlight-color,0.1);
+            // background-color: rgba($highlight-color,0.1);
 
             color: $primary-color;
-            border-bottom: 1px solid $highlight-color;
+            // border-bottom: 1px solid $highlight-color;     
         }
 
         .collapse-heading:after {
@@ -212,14 +212,45 @@
             content: "\e080";
         }
 
+        // .sliding-u-l-r {
+        //     // text-decoration: none;
+        //     // display: inline-block;
+        //     border-bottom: 3px solid transparent;    
+        //     width: 0px;
+        //     transition: 0.5s ease;
+        //     white-space: nowrap;
+        //     // height: 25px;
+        // }
+        // .sliding-u-l-r:hover {
+        //     border-bottom: 3px solid $highlight-color;
+        //     width: 100%;
+        // }
+
         .facet-container {
             overflow: auto;
             clear: both;
+            position: relative;
 
             label {
               font-size: .85em;
             }
+            .underline-lr {
+                position: absolute;
+                bottom: 0px;
+                height: 0px;
+                width: 0px;
+                border-bottom: 2px solid transparent;
+                @include transition(0.3s linear all);
+            }
         }
+        .facet-container:hover {
+            .underline-lr {
+                // position: absolute;
+                width: 100%;
+                border-bottom: 2px solid $highlight-color;
+            }
+        }
+
         .active-facets {
             padding-bottom: .1em;
             overflow:auto;

@@ -98,7 +98,7 @@ SearchController
             <!-- Additional Filters, TODO: Automatic -->
             <div id="filter-container">
                 <div ng-if="entitiesFacets.length > 0" class="facet-container">
-                    <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target=".region-facets">
+                    <div ng-click="toggleSelectedItems($event)" class="collapse-heading" data-toggle="collapse" data-target=".region-facets">
                         <i class="region-anchor anchor fa fa-image"></i>{% trans 'ENTITY-FILTER: Stadtteile' %}
                     </div>
                     <!-- Active facets when menu folded in -->
@@ -116,8 +116,10 @@ SearchController
                                 <input type="checkbox" checklist-model="formData.entities" checklist-value="facet[0]" ng-click="startSearch()">
                                     {[{facet[0]}]} ({[{facet[1]}]})
                             </label>
-                        </div>
+                        </div>    
                     </div>
+                    <!-- line under the gui elements that grows on hover -->
+                    <div class="underline-lr"></div>
                 </div>
 
                 <div ng-if="tagFacets.length > 0" class="facet-container">
@@ -138,6 +140,8 @@ SearchController
                             </label>
                         </div>
                     </div>
+                    <!-- line under the gui elements that grows on hover -->
+                    <div class="underline-lr"></div>
                 </div>
             </div>
         </form>
@@ -149,7 +153,7 @@ SearchController
         </div>
         
         <!-- Result list in sidebar -->
-        <div id="sidebar-results" ng-hide="listView" ng-if="resultLength">
+        <div id="sidebar-results" class="facet-container" ng-hide="listView" ng-if="resultLength">
             
             <!-- header to expand/collapse results -->
             <div class="collapse-heading" data-toggle="collapse" data-target=".result-list"><i class="result-anchor anchor fa fa-list-ul"> </i>{% trans '#ERGEBNISSE:Ergebnisse' %}</div>
@@ -180,6 +184,8 @@ SearchController
                 </div>
                 <a href="#" ng-if="results.length < resultLength"ng-click="startSearch(offset)">{% trans 'more' %}</a>
             </div>
+            <!-- line under the gui elements that grows on hover -->
+            <div class="underline-lr"></div>
         </div>
 
     </div>
