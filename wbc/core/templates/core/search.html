@@ -77,7 +77,9 @@ SearchController
                 <a class="pull-left visible-xs" href="" ng-click="showFilter = !showFilter"> {% trans 'Erweiterte Suche' %}</a>
 
                 <!-- Shows the number of displayed results and Buttons to load more -->
-                <p id="result-number" class="text-muted" ng-if="resultLength">{[{results.length}]} von {[{resultLength}]} {% trans 'Einträgen' %}
+                <p id="result-number" class="text-muted" ng-if="resultLength && !listView">
+                    <span ng-if="results.length < resultLength">{[{results.length}]} von {[{resultLength}]} {% trans 'Einträgen' %}</span>
+                    <span ng-if="results.length >= resultLength"> {[{resultLength}]} {% trans 'Einträge' %}</span>
                     <a href="#" ng-if="results.length < resultLength"ng-click="startSearch(offset)">{% trans 'more' %}</a>
                     <a href="#" ng-if="results.length < resultLength"ng-click="startSearch(1)">{% trans 'all' %}</a>
                 </p>
@@ -229,7 +231,8 @@ SearchController
         <div id='search-list-header' class="fixed-top">
             <div class="pull-left result-number text-center">
                 <div ng-show="resultLength >=0 && !searching">
-                    <h3>{[{results.length}]} von {[{resultLength}]}</h3>
+                    <h3 ng-if="results.length < resultLength">{[{results.length}]} von {[{resultLength}]}</h3>
+                    <h3 ng-if="results.length >= resultLength">{[{resultLength}]}</h3>
                     <p>{% trans '#ERGEBNISSE:Ergebnisse' %}</p>
                 </div>
 

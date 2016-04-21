@@ -23,7 +23,6 @@
 {% block js %}
 
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
-    <script type="text/javascript" src="{% static 'lib/OSMBuildings-Leaflet.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/modernizr.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/vertical-timeline.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/vizicities/vizi.min.js' %}"  ></script>
@@ -99,7 +98,7 @@ DetailsController
         </ul>
         {% endif %}
 
-        {% ratings project %}
+        {% ratings project icon_height=20 icon_width=20 %}
         <div id="participate-widget" class="widget">
         {% if processSteps %}
             {% for pub in processSteps %}
