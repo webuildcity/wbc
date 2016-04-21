@@ -81,6 +81,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     //Search method sends ajax request to server and handles results
     var search = function(data, offset){
         
+
         $scope.resultLength = 0;
         $scope.searching = true; //currently searching, set to false in succes function
         
@@ -89,6 +90,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         //reset autocomplete on new search 
         $scope.suggestions = [];
         $scope.selectedSuggestionIdx = -1;
+        window.clearTimeout(timeoutHandle);
         
         //ajac request to search api
         $http({
@@ -112,8 +114,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
             if (response.results.length>0) {
 
-                // if offset append results, else clear map and make new resultset
-                if (offset){
+                // if offset append results, else clear map and make new resultset (1 = all)
+                if (offset && offset != 1){
                     $scope.results.push.apply($scope.results, response.results);
                 } else {
                     MapService.clearPolys();
