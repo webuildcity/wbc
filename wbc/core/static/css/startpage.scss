@@ -211,6 +211,12 @@ html {
         .wbc-divider {
             @include gradient();
             height: 1px;
+            margin-bottom: 1em;
+        }
+
+        #navigation-boxes {
+            padding-bottom: 2em;
+            padding-top: 1em;
         }
 
         .bottom-block {
