@@ -100,7 +100,8 @@ class Project(Model):
 
     def get_thumbnail_url(self):
         if self.album:
-            return self.album.get_cover_photo().thumbnail.url
+            if self.album.get_cover_photo():
+                return self.album.get_cover_photo().thumbnail.url
         return None
 
     def get_number_stakeholder(self):

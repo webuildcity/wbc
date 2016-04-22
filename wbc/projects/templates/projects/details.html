@@ -73,8 +73,8 @@ DetailsController
 {% get_obj_perms user for project as "project_perms" %}
 {% endif %}
 <div id="project_sidebar">
-    <div class="anchor">
-        <div class="details-headline content-container">
+    <!-- <div class="anchor"> -->
+        <div class="details-headline">
             <h1> {{project.name}} </h1>
 
 
@@ -97,10 +97,8 @@ DetailsController
          <!--    <li><a class="admin-link" href="{{new_publication_link}}?project_id={{project.pk}}"><i class="fa fa-newspaper"></i></a></li> -->
         </ul>
         {% endif %}
-
-        {% ratings project icon_height=20 icon_width=20 %}
-        <div id="participate-widget" class="widget">
         {% if processSteps %}
+        <div id="participate-widget" class="widget">
             {% for pub in processSteps %}
                 {% if pub.process_step.participation %}
                     <div><img class="participation" src="/static/img/participation.png" title="Bürgerbeteiligung möglich"></div>
@@ -121,10 +119,10 @@ DetailsController
                 </div>
             </div> -->
             {% endfor %}
-        {% endif %}
         </div>
+        {% endif %}
 
-    </div>
+    <!-- </div> -->
 
   <!--   <div class="availability-icons">
         {% if gallery %}
@@ -145,45 +143,59 @@ DetailsController
     </div> -->
 
 
+    <!-- if the project has an album display the cover photo -->
     {% if album %}
-
+    <div class="hidden-xs">
      {% generateimage 'wbc:details' source=project.album.get_cover_photo.file %}
-
+    </div>
     {% endif %}
 
+    <!-- rating widget, uses django-star-rating -->
+    <div id="rating-widget">
+        {% ratings project icon_height=20       icon_width=20 %}
+    </div>
+
+    <!-- Display a teaser text fro the description -->
     {% if project.description %}
     <div class="teaser-text">
         {{project.get_teaser}}
     </div>
     {% endif %}
 
-    <div id="subscribe-widget" class="widget">
-        <button data-url="{% url 'project_subscribe' project.pk %}" class="btn default wbc-button subscribe-button">
-            <span class="fa-stack">
-              <i class="fa fa-circle-thin fa-stack-2x"></i>
-              <i class="fa fa-bell fa-stack-1x fa-lg"></i>
-            </span>
-            {% if subscribed %}
-            Abbestellen
-            {% else %}
-            Benachrichtigungen
-            {% endif %} 
-        </button>
-    </div>
-
+    <!-- Buttons to follow or subscribe the projects -->
     {% if user.is_authenticated %}
-    <div id="subscribe-widget" class="widget">
-        <button data-url="{% url 'project_follow' project.pk %}" class="btn btn-default follow-button wbc-button">
-            <span class="fa-stack">
-                <i class="fa fa-circle-thin fa-stack-2x"></i>
-                <i class="fa fa-bell fa-stack-1x fa-lg"></i>
-            </span>
-            {% if not following %}
-            Projekt beitreten
-            {% else %}
-            Projekt verlassen
-            {% endif %}
-        </button>
+    <div class="logged-in-user-buttons">
+        <div id="subscribe-widget" class="widget">
+            <button data-url="{% url 'project_subscribe' project.pk %}" class="btn default wbc-button subscribe-button">
+                <span class="fa-stack">
+                  <i class="fa fa-circle-thin fa-stack-2x"></i>
+                  <i class="fa fa-bell fa-stack-1x fa-lg"></i>
+                </span>
+                <span class="hidden-xs">
+                {% if subscribed %}
+                Abbestellen
+                {% else %}
+                Benachrichtigungen
+                {% endif %} 
+                </span>
+            </button>
+        </div>
+
+        <div id="follow-widget" class="widget">
+            <button data-url="{% url 'project_follow' project.pk %}" class="btn btn-default follow-button wbc-button">
+                <span class="fa-stack">
+                    <i class="fa fa-circle-thin fa-stack-2x"></i>
+                    <i class="fa fa-sign-in fa-stack-1x fa-lg"></i>
+                </span>
+                <span class="hidden-xs">
+                {% if not following %}
+                Projekt beitreten
+                {% else %}
+                Projekt verlassen
+                {% endif %}
+                </span>
+            </button>
+        </div>
     </div>
     {% endif %}
 

@@ -1,3 +1,5 @@
+<!-- photo upload view using dropzone.js -->
+
 {% load staticfiles %}
 <div id="current-photos">
     {% for photo in album %}
@@ -15,12 +17,19 @@
 </div>
 
 <script>
+// handles the form to upload the image, adds thumbnail to the view if image uploaded
 Dropzone.options.photoUploadForm = {
-    maxFilesize: 3,
+    maxFilesize: 5,
     acceptedFiles: 'image/*',
     dictDefaultMessage: 'Sie können auch Bilder von Ihrem Computer per "drag & drop hochladen',
+    accept: function(file, done) {
+        done();
+    },
     success: function(a, b) {
-        $('#current-photos').append('<div class="thumbnail pull-left"><img src="'+b.thumbnail+'"> <a class="delete-photo" data-id='+b.id+' href="#">Löschen</a</div>')
+        $('#current-photos').append('<div class="thumbnail pull-left"><img src="'+b.thumbnail+'"> <a class="delete-photo" data-id='+b.id+' href="#">Löschen</a</div>');
+    },
+    error: function(a) {
+        console.log(a);
     }
 }
 </script>

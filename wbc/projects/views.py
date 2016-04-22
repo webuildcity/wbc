@@ -235,10 +235,11 @@ def subscribe(request, pk):
 
 
 
-
+#uploads a photo to a project, handles the creation of albums
 def photo_upload(request, pk):
 
     project = get_object_or_404(Project, id= int(pk))
+    # permission check, object and global permission needs to be checked seperated
     if request.user.has_perm('projects.change_project', project) or request.user.has_perm('projects.change_project'):
         if project.album:
             album = project.album
@@ -247,7 +248,6 @@ def photo_upload(request, pk):
             album.save()
             project.album = album
             project.save()
-            
         uploaded_file = request.FILES['file']
         photo = Photo.objects.create(album=album, file=uploaded_file)
         photo.save()
@@ -262,6 +262,7 @@ def photo_upload(request, pk):
         response_dict = {'message': 'No Permission!',}
         return JsonResponse(response_dict)
 
+#deletes a photo from a project
 def photo_delete(request, pk, photo):
     project = get_object_or_404(Project, id= int(pk))
     if request.user.has_perm('projects.change_project', project) or request.user.has_perm('projects.change_project'):

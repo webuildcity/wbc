@@ -23,10 +23,17 @@
     #search_sidebar {
         position: relative;
         height: 100%;
-        overflow-y: auto;
-        // padding: 0px 10px;
+        
+
+        // overflow-y: hidden;
+        // &:hover {
+        //     overflow-y: auto;
+        // }
+        // needed so mobile view auto complete results are visible
         &.show-overflow {
-            overflow-y: visible;
+            @media(max-width: 768px){
+                overflow-y: visible;
+            }
         }
         #search {
             background-color: $background-color;

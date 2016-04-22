@@ -27,11 +27,11 @@ body {
     @media(max-width: 768px){
         #side_content {
             position: relative;
-            height: 35%;
+            // height: 35%;
             border-right: none;
         }
         #main_content {
-            height: 65%;
+            // height: 65%;
         }
     }
 }
@@ -55,12 +55,34 @@ body {
     .details-headline {
         float: left;
     }
-    #subscribe-widget {
-        // float: right;
-        // width: 100%;
-        margin: 2em 1em;
+    #rating-widget {
+        clear: both;
+        @media(max-width: 768px){
+            float: left;
+        }
     }
-
+    #participate-widget {
+        // clear: both;
+    }
+    .logged-in-user-buttons {
+        float: left;
+        @media(max-width: 768px){
+            float: right;
+        }
+        div {
+            padding: 0.3em;
+            @media(max-width:768px){
+                float: left;
+            }
+        }
+        #subscribe-widget {
+            // float: right;
+            // width: 100%;
+            // margin: 2em 1em;
+        }
+        
+    }
+    
     .availability-icons {
         .fa{
             color: $headline-color;
@@ -163,6 +185,7 @@ body {
             z-index: 10;   
             background: white;
             height: auto; 
+            width: 100%;
             li {
                 float: none;
                 height: 0px;
