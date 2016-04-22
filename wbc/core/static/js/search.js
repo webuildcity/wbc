@@ -440,7 +440,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     
     //reorder, value aligns with name for search api
     $('.order-btn').click(function(){
-        $(".order-btn").siblings(".active").removeClass("active");
+        $(this).siblings(".active").removeClass("active");
         $(this).addClass("active");
 
         $scope.formData.order = this.value;
