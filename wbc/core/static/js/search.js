@@ -318,6 +318,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
         //timer so only triggers when hovering for more than 400ms
         animationTimer = $timeout(function () {
+            $scope.selectedResult = result;
+            if(!$scope.$$phase) { //this is used to prevent an overlap of scope digestion
+                $scope.$apply(); //this will kickstart angular to recognize the change
+            }
             var multipoly = [];
             if(result.polygon !== undefined) {
                 $scope.focusPoly(result);
