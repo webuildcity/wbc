@@ -7,6 +7,8 @@ from simple_history.admin import SimpleHistoryAdmin
 from guardian.admin import GuardedModelAdmin
 
 class PhotoAdmin(GuardedModelAdmin, SimpleHistoryAdmin):
+    list_display = ('id', 'file')
+    list_display_links = ('id', 'file')
     ordering = ['id']
 
 class AlbumAdmin(GuardedModelAdmin, SimpleHistoryAdmin):

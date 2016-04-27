@@ -145,7 +145,7 @@ DetailsController
 
     <!-- if the project has an album display the cover photo -->
     {% if album %}
-    <div class="hidden-xs">
+    <div class="hidden-xs sidebar-image">
      {% generateimage 'wbc:details' source=project.album.get_cover_photo.file %}
     </div>
     {% endif %}

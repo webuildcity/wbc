@@ -1,11 +1,11 @@
 <!-- photo upload view using dropzone.js -->
+{% load staticfiles i18n %}
 
-{% load staticfiles %}
 <div id="current-photos">
     {% for photo in album %}
         <div class="thumbnail pull-left">
             <img src="{{ photo.thumbnail.url }}" />
-            <a class="delete-photo" data-url="{% url 'project_photo_delete' project.id photo.id %} href='#">Löschen
+            <a class="delete-photo" data-url="{% url 'project_photo_delete' project.id photo.id %} href='#">{% trans 'Löschen' %}
             </a>
         </div>
     {% endfor %}
@@ -21,7 +21,7 @@
 Dropzone.options.photoUploadForm = {
     maxFilesize: 5,
     acceptedFiles: 'image/*',
-    dictDefaultMessage: 'Sie können auch Bilder von Ihrem Computer per "drag & drop hochladen',
+    dictDefaultMessage: "{% trans 'Sie können auch Bilder von Ihrem Computer per drag & drop hochladen' %}",
     accept: function(file, done) {
         done();
     },

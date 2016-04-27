@@ -1,6 +1,11 @@
+{% load i18n %}
+<!-- Delete project modal dialog -->
+
 <div class="modal-body">
     <p>
+        {% blocktrans %}
         Willst Du das Projekt <strong>{{ object }}</strong> wirklich entfernen? Dieser Vorgang kann nicht Rückgängig gemacht werden.
+        {% endblocktrans %}
     </p>
 
     <form action="{% url 'project_delete' project.pk %}" method="post" class="form wbc-delete-form" role="form">

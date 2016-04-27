@@ -129,6 +129,15 @@ body {
             max-width: 3.5em;
         }
     }
+
+    .sidebar-image {
+        img {
+            width: 100%;
+            height: auto;
+            padding: 0.6em;           
+        }
+    }
+
     .current-step  {
         background: $background-color;
         // margin: 1em;
@@ -397,6 +406,12 @@ body {
     background-color: $background-color;
     border-radius: 5px;
     border: #fafafa 2px solid;
+    .creator_image {
+        width: 20%;
+        @media(max-width:768px){
+            width: 100%;
+        }
+    }
 }
 
 .stakeholder-widget p{
@@ -409,6 +424,7 @@ body {
     height: 140px;
     border-radius: 70px;
 }
+
 
 /* TAGS */
 
