@@ -53,7 +53,7 @@
                 </div>
             </div>
         </form>
-        <div ng-show="data.suggestions.length >0" class="search-results">
+        <div ng-show="data.suggestions.length >0 && searchFocus" class="search-results">
             <div ng-repeat="result in data.suggestions">
                 <div class="search-result"
                      ng-click="loadDetails(result.internal_link)"
