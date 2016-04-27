@@ -114,14 +114,15 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
             if (response.results.length>0) {
 
-                // if offset append results, else clear map and make new resultset (1 = all)
-                if (offset && offset != 1){
+                // if offset append results, else clear and make new resultset (1 = all)
+                if (offset && offset != -1){
                     $scope.results.push.apply($scope.results, response.results);
                 } else {
                     MapService.clearPolys();
                     $scope.results = response.results;
                     $scope.multipoly = [];
                 }
+                
                 $scope.suggestion = null;
                 var poly;
              
@@ -263,9 +264,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.startSearch = function(offset) {
 
         if(offset){
-            $scope.formData.offset = $scope.offset
-            if(offset === 1)
-                $scope.formData.offset  =1;
+            $scope.formData.offset = $scope.offset;
+
+            if(offset === -1)
+                $scope.formData.offset  =-1;
         } else {
             $scope.offset = 0;
             $scope.formData.offset = 0;
@@ -437,7 +439,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         if($('#result-list').height() < $('#list').scrollTop() + $('#list').height()+20 && $('.load-more-results').length >0)  {
             // $('#list').off('scroll', resultListScrollHandler);
             if (!$scope.searching)
-                $scope.startSearch($scope.offset);
+                $scope.startSearch($scope.formData, true);
         }  
     };
     $('#list').scroll(resultListScrollHandler);
