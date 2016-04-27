@@ -64,7 +64,7 @@ SearchController
                 <div ng-show="suggestions.length >0 && searchFocus" class="search-results-autocomplete">
                     <div ng-repeat="result in suggestions">
                         <div class="search-result-autocomplete"
-                             ng-click="console.log('ASD');selectTerm(result.name);startSearch(false);"
+                             ng-click="selectTerm(result.name);startSearch(false);"
                              ng-class="{'selected-result': $index == selectedSuggestionIdx}"
                              ng-mouseover="setIndex($index)"
                              >

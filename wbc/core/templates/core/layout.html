@@ -56,7 +56,7 @@
         <div ng-show="data.suggestions.length >0 && searchFocus" class="search-results">
             <div ng-repeat="result in data.suggestions">
                 <div class="search-result"
-                     ng-click="loadDetails(result.internal_link)"
+                     ng-click="selectTerm(result.name); loadDetails(result.internal_link)"
                      ng-class="{'selected-result': $index == selectedSuggestionIdx, 'search-result-type-project':  result.type == 'project', 'search-result-type-stakeholder':  result.type == 'stakeholder'}"
                      ng-switch="result.type">
                         <i ng-switch-when="project" class="fa fa-home pull-left"></i>
