@@ -1,4 +1,7 @@
-{% load staticfiles %}
+{% load staticfiles i18n %}
+
+<!-- Lists stakeholders, used 'in several subpages (needs to bin stakeholder list to the 'stakeholders' variable)  -->
+
 <div class="stakeholder-container">
     {% for stakeholder in stakeholders %}
     <a href="{{stakeholder.get_absolute_url }}">
@@ -8,10 +11,10 @@
             {% else %}
             <img class="stakeholder_img" src="{% static 'img/person_placeholder.png' %}" />
             {% endif %}
-            <h4> {{stakeholder.name}}</h4>
+            <h2> {{stakeholder.name}}</h2>
             <p>
             {% for role in stakeholder.roles.all %}
-                 {{role}}
+                {{role}}
             {% endfor %}
             </p>
           <!--   {% if user.is_authenticated %}

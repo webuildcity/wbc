@@ -23,15 +23,18 @@ body {
 .big-page {
     overflow-y: hidden;
     // overflow-x: hidden;
-
+    #main_content {
+        overflow: hidden;
+    }
     @media(max-width: 768px){
         #side_content {
             position: relative;
-            height: 35%;
+            // height: 35%;
             border-right: none;
         }
         #main_content {
-            height: 65%;
+            // height: 65%;
+            overflow: auto;
         }
     }
 }
@@ -55,12 +58,34 @@ body {
     .details-headline {
         float: left;
     }
-    #subscribe-widget {
-        // float: right;
-        // width: 100%;
-        margin: 2em 1em;
+    #rating-widget {
+        clear: both;
+        @media(max-width: 768px){
+            float: left;
+        }
     }
-
+    #participate-widget {
+        // clear: both;
+    }
+    .logged-in-user-buttons {
+        float: left;
+        @media(max-width: 768px){
+            float: right;
+        }
+        div {
+            padding: 0.3em;
+            @media(max-width:768px){
+                float: left;
+            }
+        }
+        #subscribe-widget {
+            // float: right;
+            // width: 100%;
+            // margin: 2em 1em;
+        }
+        
+    }
+    
     .availability-icons {
         .fa{
             color: $headline-color;
@@ -107,6 +132,15 @@ body {
             max-width: 3.5em;
         }
     }
+
+    .sidebar-image {
+        img {
+            width: 100%;
+            height: auto;
+            padding: 0.6em;           
+        }
+    }
+
     .current-step  {
         background: $background-color;
         // margin: 1em;
@@ -163,6 +197,7 @@ body {
             z-index: 10;   
             background: white;
             height: auto; 
+            width: 100%;
             li {
                 float: none;
                 height: 0px;
@@ -374,6 +409,12 @@ body {
     background-color: $background-color;
     border-radius: 5px;
     border: #fafafa 2px solid;
+    .creator_image {
+        width: 20%;
+        @media(max-width:768px){
+            width: 100%;
+        }
+    }
 }
 
 .stakeholder-widget p{
@@ -386,6 +427,7 @@ body {
     height: 140px;
     border-radius: 70px;
 }
+
 
 /* TAGS */
 #tags-widget  {

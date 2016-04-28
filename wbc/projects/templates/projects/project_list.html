@@ -1,11 +1,13 @@
 {% load staticfiles imagekit %}
 
+<!-- Project list used in several templates-->
+
 <div class="project-row">
     {% for project in projects %}
     <a href="{{project.get_absolute_url}}">
     <div class="project-description col-md-4">
         <h2>{{project.name}} {% if project.identifier %} ({{project.identifier}}) {% endif %}</h2>
-        <p class="muted">{{project.created}} - {{project.get_created_by}}</p>
+        <p class="muted small">{{project.created|date:'d.m.Y'}} - {{project.get_created_by}}</p>
         {% if project.album.get_cover_photo %}
         {% thumbnail '150x150' project.album.get_cover_photo.file %}
         {% else %}

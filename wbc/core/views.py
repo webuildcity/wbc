@@ -133,7 +133,7 @@ class SearchView(TemplateView):
 
         if 'offset' in data:
             offset = data['offset']
-            if data['offset'] == 1:
+            if data['offset'] == -1:
                 sqs_copy = sqs
             else:
                 sqs_copy = sqs[offset:offset+50]

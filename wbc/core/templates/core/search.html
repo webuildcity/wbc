@@ -64,11 +64,11 @@ SearchController
                 <div ng-show="suggestions.length >0 && searchFocus" class="search-results-autocomplete">
                     <div ng-repeat="result in suggestions">
                         <div class="search-result-autocomplete"
-                             ng-click="console.log('ASD');selectTerm(result.name);startSearch(false);"
+                             ng-click="selectTerm(result.name);startSearch(false);"
                              ng-class="{'selected-result': $index == selectedSuggestionIdx}"
                              ng-mouseover="setIndex($index)"
                              >
-                                <b>{[{ result.name }]}</b>
+                            {[{ result.name }]}
                         </div>
                     </div>
                 </div>
@@ -99,6 +99,27 @@ SearchController
 
             <!-- Additional Filters, TODO: Automatic -->
             <div id="filter-container">
+                <div ng-show="listView" class="visible-xs facet-container">
+                    <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target=".sort-filter">
+                        <i class="region-anchor anchor fa fa-image"></i>{% trans 'Sortieren' %}
+                    </div>
+
+                    <div class='sort-filter collapse wbc-dropdown-container'>
+                        <div class="sort-control">
+                            <ul class="tabs">
+                                <!-- <button value="" class="order-btn active btn btn-default">{% trans 'BUTTON:Relevanz' %}</button> -->
+                                <button value="name" class="order-btn btn btn-default">{% trans 'BUTTON:Name' %}</button>
+                                <button value="-created" class="order-btn btn btn-default">{% trans 'BUTTON:Datum' %}</button>
+                                <!-- <button value="-num_stakeholder" class="order-btn btn btn-default">{% trans 'BUTTON:# Beteiligte' %}</button> -->
+                                <button value="-ratings_avg" class="order-btn btn btn-default">{% trans 'BUTTON:Bewertung' %}</button>
+                                <!-- <button value="-ratings_count" class="order-btn btn btn-default">{% trans 'BUTTON:# Bewertungen' %}</button> -->
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- line under the gui elements that grows on hover -->
+                    <div class="underline-lr"></div>
+                </div>
+
                 <div ng-if="entitiesFacets.length > 0" class="facet-container">
                     <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target=".region-facets">
                         <i class="region-anchor anchor fa fa-image"></i>{% trans 'ENTITY-FILTER: Stadtteile' %}
@@ -242,7 +263,7 @@ SearchController
                     <div class="loading-text"> {% trans 'Suche' %}</div>
                 </div>
             </div>
-            <div class="sort-control pull-left">
+            <div class="sort-control pull-left hidden-xs">
                 <p>{% trans 'Sortieren nach:' %}</p>
                 <ul class="tabs">
                     <!-- <button value="" class="order-btn active btn btn-default">{% trans 'BUTTON:Relevanz' %}</button> -->

@@ -16,6 +16,9 @@ app.directive('wbcSearch', function() {
             $scope.selectedSuggestionIdx = -1;
 
 
+            $scope.selectTerm = function(term) {
+                $scope.formData.q = term;
+            }
             $scope.onSearchChanged = function() {
                 if($scope.formData.q) {
                     $scope.isLoading = true;
@@ -56,6 +59,7 @@ app.directive('wbcSearch', function() {
                 if(evt.keyCode == '9' || evt.keyCode == '13') {
                     if($scope.selectedSuggestionIdx !== -1) {
                         evt.preventDefault();
+                        $scope.selectTerm($scope.data.suggestions[$scope.selectedSuggestionIdx].name);
                         $scope.loadDetails($scope.data.suggestions[$scope.selectedSuggestionIdx].internal_link);
                     }
                 }

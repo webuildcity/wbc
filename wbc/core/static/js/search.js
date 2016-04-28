@@ -114,14 +114,15 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
             if (response.results.length>0) {
 
-                // if offset append results, else clear map and make new resultset (1 = all)
-                if (offset && offset != 1){
+                // if offset append results, else clear and make new resultset (1 = all)
+                if (offset && offset != -1){
                     $scope.results.push.apply($scope.results, response.results);
                 } else {
                     MapService.clearPolys();
                     $scope.results = response.results;
                     $scope.multipoly = [];
                 }
+                
                 $scope.suggestion = null;
                 var poly;
              
@@ -263,9 +264,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.startSearch = function(offset) {
 
         if(offset){
-            $scope.formData.offset = $scope.offset
-            if(offset === 1)
-                $scope.formData.offset  =1;
+            $scope.formData.offset = $scope.offset;
+
+            if(offset === -1)
+                $scope.formData.offset  =-1;
         } else {
             $scope.offset = 0;
             $scope.formData.offset = 0;
@@ -318,6 +320,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
         //timer so only triggers when hovering for more than 400ms
         animationTimer = $timeout(function () {
+            $scope.selectedResult = result;
+            if(!$scope.$$phase) { //this is used to prevent an overlap of scope digestion
+                $scope.$apply(); //this will kickstart angular to recognize the change
+            }
             var multipoly = [];
             if(result.polygon !== undefined) {
                 $scope.focusPoly(result);
@@ -433,14 +439,14 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         if($('#result-list').height() < $('#list').scrollTop() + $('#list').height()+20 && $('.load-more-results').length >0)  {
             // $('#list').off('scroll', resultListScrollHandler);
             if (!$scope.searching)
-                $scope.startSearch($scope.offset);
+                $scope.startSearch($scope.formData, true);
         }  
     };
     $('#list').scroll(resultListScrollHandler);
     
     //reorder, value aligns with name for search api
     $('.order-btn').click(function(){
-        $(".order-btn").siblings(".active").removeClass("active");
+        $(this).siblings(".active").removeClass("active");
         $(this).addClass("active");
 
         $scope.formData.order = this.value;
