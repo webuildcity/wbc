@@ -6,7 +6,7 @@
     {% if project.get_created_by %}
     <div id='project_creator' class="clearfix">
         <h2> Verantwortlicher </h2>
-        <a href="{{project.get_created_by.get_absolute_url }}">
+        <a href="{{project.get_created_by.profile.stakeholder.get_absolute_url }}">
             <div class="stakeholder-widget">
                 {% if project.get_created_by.profile.stakeholder.picture %}
                 <img class="creator_image" src="{{ project.get_created_by.profile.stakeholder.picture.url }}" />

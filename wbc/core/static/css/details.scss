@@ -23,7 +23,9 @@ body {
 .big-page {
     overflow-y: hidden;
     // overflow-x: hidden;
-
+    #main_content {
+        overflow: hidden;
+    }
     @media(max-width: 768px){
         #side_content {
             position: relative;
@@ -32,6 +34,7 @@ body {
         }
         #main_content {
             // height: 65%;
+            overflow: auto;
         }
     }
 }

@@ -39,7 +39,7 @@ h1, h2 {
 
 #timeline {
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     .new-event {
         overflow: auto;
