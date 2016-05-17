@@ -34,10 +34,16 @@ class DetailsPicture(ImageSpec):
 
 register.generator('wbc:details', DetailsPicture)
 
-
 class GalleryPicture(ImageSpec):
     processors = [ResizeToFit(800, 400)]
     format = 'JPEG'
     options = {'quality': 60}
 
 register.generator('wbc:gallery', GalleryPicture)
+
+class PdfPreview(ImageSpec):
+    processors = [ResizeToFit(width=200)]
+    format = 'JPEG'
+    options = {'quality': 60}
+
+register.generator('wbc:pdfpreview', PdfPreview)

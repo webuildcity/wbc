@@ -207,7 +207,8 @@ def project_request(request, p):
         'processTypes' : processTypeList,
         'following': following,
         'subscribed': subscribed,
-        'bufferAreas' : p.bufferarea_set.all()
+        'bufferAreas' : p.bufferarea_set.all(),
+        'attachments' : p.projectattachment_set.all()
     })
 
 @login_required

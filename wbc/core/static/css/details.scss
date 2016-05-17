@@ -352,6 +352,17 @@ body {
         }
     }
 
+    #attachments {
+        .pdf-preview {
+            width: 210px;
+            float: left;
+            margin: 0.3em;
+            img {
+                max-height: 200px;
+            }
+        }
+    }
+
 }
 
 /**  MODAL **/

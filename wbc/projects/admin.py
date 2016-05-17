@@ -12,9 +12,6 @@ class ProjectInline(admin.StackedInline):
     model = Project
     can_delete = False
 
-# class GalleryAdmin(GalleryAdminDefault):
-#     inlines = [ProjectInline]
-
 class ProjectAdmin(GuardedModelAdmin, SimpleHistoryAdmin):
     # inlines = [GalleryInline]
 
@@ -41,9 +38,12 @@ class AddressAdmin(admin.ModelAdmin):
     # fields = ['active','address','entities','lat','lon','description','identifier','link','polygon']
     ordering = ['id']
 
-# admin.site.unregister(Gallery)
-# admin.site.register(Gallery, GalleryAdmin)
+class ProjectAttachmentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'attachment', 'project')
+    list_display_links = ('id', 'name', 'attachment', 'project')
+    ordering = ['id']
 
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Address, AddressAdmin)
 admin.site.register(BufferArea, BufferAreaAdmin)
+admin.site.register(ProjectAttachment, ProjectAttachmentAdmin)

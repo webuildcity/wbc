@@ -28,6 +28,17 @@ app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 
         }
     }
 
+    $scope.openPDF = function(pdf){
+        var pdf_viewer = document.getElementById('pdf-viewer');
+
+        // display style change for chrome
+        pdf_viewer.style.display = 'none';
+        pdf_viewer.data = pdf;
+        setTimeout(function() {
+            pdf_viewer.style.display = '';
+        }, 10);
+    }
+
     $('.map-link').on('click',function(){
          setTimeout(function(){
             MapService.map.invalidateSize();

@@ -18,6 +18,8 @@ from taggit.managers import TaggableManager
 from simple_history.models import HistoricalRecords
 from django.contrib.contenttypes.fields import GenericRelation
 from star_ratings.models import Rating
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 
 class Address(Model):
@@ -102,6 +104,10 @@ class Project(Model):
         if self.album:
             if self.album.get_cover_photo():
                 return self.album.get_cover_photo().thumbnail.url
+        else:
+            if self.projectattachment_set.all():
+                if self.projectattachment_set.all()[0].image:
+                    return self.projectattachment_set.all()[0].thumbnail.url
         return None
 
     def get_number_stakeholder(self):
@@ -149,6 +155,14 @@ class BufferArea(Model):
     def save(self, *args, **kwargs):
         unique_slugify(self,self.name)
         super(BufferArea, self).save(*args, **kwargs)
+
+class ProjectAttachment(Model):
+    name               = models.CharField(blank=True, null=True, max_length=64, verbose_name="Name", help_text="Name")
+    attachment         = models.FileField(upload_to='project_attachments')
+    project            = models.ForeignKey(Project, verbose_name="Projekt")
+    image              = models.ImageField(blank=True, upload_to='project_attachments/images')
+    thumbnail          = ImageSpecField(source="image", processors=[ResizeToFill(100,100)], format='JPEG', options={'quality':60})
+    source             = models.URLField(blank=True)
 
 def set_owner(sender, instance, **kwargs):
     if kwargs['created']:
