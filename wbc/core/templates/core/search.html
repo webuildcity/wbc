@@ -15,6 +15,7 @@
 
 {% block js %}
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'lib/d3.min.js' %}" ></script>
 
     <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/angular-mapservice.js' %}"></script>
@@ -81,7 +82,7 @@ SearchController
                     <span ng-if="results.length < resultLength">{[{results.length}]} von {[{resultLength}]} {% trans 'Einträgen' %}</span>
                     <span ng-if="results.length >= resultLength"> {[{resultLength}]} {% trans 'Einträge' %}</span>
                     <a href="#" ng-if="results.length < resultLength"ng-click="startSearch(offset)">{% trans 'more' %}</a>
-                    <a href="#" ng-if="results.length < resultLength"ng-click="startSearch(1)">{% trans 'all' %}</a>
+                    <a href="#" ng-if="results.length < resultLength"ng-click="startSearch(-1)">{% trans 'all' %}</a>
                 </p>
                 <!-- Spelling suggestions -->
                 <!-- <div ng-if="suggestion" class="suggestion-container">
@@ -119,7 +120,18 @@ SearchController
                     <!-- line under the gui elements that grows on hover -->
                     <div class="underline-lr"></div>
                 </div>
-
+                
+                <div class="facet-container">
+                    <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target=".general-options">
+                        <i class="anchor fa fa-gears"></i>{% trans 'FILTER: Optionen' %}
+                    </div>
+                    <div id='general-options' class='general-options collapse wbc-dropdown-container'>
+                        <label>
+                            <input type="checkbox" value="terminated" ng-model="formData.terminated" ng-click="startSearch()">
+                            Historische Bebauungspläne
+                        </label>
+                    </div>
+                </div>
                 <div ng-if="entitiesFacets.length > 0" class="facet-container">
                     <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target=".region-facets">
                         <i class="region-anchor anchor fa fa-image"></i>{% trans 'ENTITY-FILTER: Stadtteile' %}
@@ -229,20 +241,27 @@ SearchController
 
         <!-- LEGEND -->
         <div class="map-overlay" id="legend">
-            <!-- <h2>{% trans 'Legende' %}</h2> -->
+            <b>Bebauungspläne</b>
             <div>
                 <svg width="40" height="18" class="wbc-poly">
                     <rect width="40" height="18" />
-                </svg> <span>Bebauungspläne</span>
+                </svg> <span>im Verfahren</span>
             </div>
+            <div>
+                <svg width="40" height="18" class="wbc-poly terminated-poly">
+                    <rect width="40" height="18" />
+                </svg> <span>festgestellt</span>
+            </div>
+            <hr>            
             <div>
                 <svg width="40" height="18" class="buffer-area wbc-poly">
                     <rect width="40" height="18" />
                 </svg> <span>Ausgleichsflächen</span>
             </div>
-            
         </div>
 
+        <!-- TIMELINE -->
+        <svg id="timeline"></svg>
     </div>
 
     <!-- LISTVIEW -->

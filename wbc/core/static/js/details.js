@@ -28,6 +28,7 @@ app.controller('DetailsController', ['$scope', '$document', '$http', '$window', 
         }
     }
 
+    // switch between pdf files
     $scope.openPDF = function(pdf){
         var pdf_viewer = document.getElementById('pdf-viewer');
 

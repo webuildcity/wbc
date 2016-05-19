@@ -92,6 +92,7 @@ class SearchView(TemplateView):
 
     template_name = "core/search.html"
     
+    # terminated_process = ProcessStep.
     def search(self, data):
         sqs = SearchQuerySet().facet('tags').facet('entities')
         model_dict = {
@@ -99,6 +100,17 @@ class SearchView(TemplateView):
 #            'stakeholder': Stakeholder 
         }
         offset = 0
+        sqs = sqs.exclude(publications__isnull=True)
+        # sqs = sqs.exclude(publication__process_step__name="Feststellung")
+
+        # if 'terminated' in data:
+        #     print data['terminated']
+        #     if data['terminated']:
+        #         # sqs = sqs.filter(name="Hafencity7")
+        #         sqs = sqs.filter(publication__process_step__name="Feststellung")
+        #     else:
+
+        #     #     print 
         
         if 'bounds' in data:
             bl = Point(data['bounds']['_southWest']['lat'], data['bounds']['_southWest']['lng'])
@@ -142,7 +154,10 @@ class SearchView(TemplateView):
 
         results = []
         for result in sqs_copy:
-            resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link, address_obj=result.address_obj, thumbnail=result.thumbnail, num_stakeholder=result.num_stakeholder, created=result.created.strftime("%d.%m.%y"), created_by=result.created_by, teaser=result.teaser, ratings_count=result.ratings_count, ratings_avg=result.ratings_avg, buffer_areas=result.buffer_areas)
+            terminated = None
+            if result.terminated:
+                terminated = result.terminated.strftime("%d.%m.%y")
+            resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link, address_obj=result.address_obj, thumbnail=result.thumbnail, num_stakeholder=result.num_stakeholder, created=result.created.strftime("%d.%m.%y"), created_by=result.created_by, teaser=result.teaser, ratings_count=result.ratings_count, ratings_avg=result.ratings_avg, buffer_areas=result.buffer_areas, terminated=terminated)
             if result.location:
                 resultdict['location'] = [result.location[0], result.location[1]]
 

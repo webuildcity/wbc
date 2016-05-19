@@ -85,7 +85,7 @@ class Publication(Model):
     process_step = models.ForeignKey('process.ProcessStep', verbose_name="Prozessschritt", help_text="z.B. Demografiewerkstatt, Öffentliche Auslegung, eine Wahl, etc.")
     #office       = models.TextField(blank=True, verbose_name="Auslegungsstelle")
     #office_hours = models.TextField(blank=True, verbose_name="Öffnungszeiten der Auslegungsstelle")
-    department   = models.ForeignKey(Stakeholder, verbose_name="Verantwortliche Organisation")
+    department   = models.ForeignKey(Stakeholder, verbose_name="Verantwortliche Organisation", null=True, blank=True)
     project      = models.ForeignKey('projects.Project', verbose_name="Betreffendes Projekt")
     begin        = models.DateField(verbose_name="Anfang", help_text="z.B. eines Verfahrens, Bürgerbeiteiligung, Veranstaltung,etc.")
     end          = models.DateField(verbose_name="Ende",  help_text="z.B. eines Verfahrens, Bürgerbeiteiligung, Veranstaltung,etc.", blank=True, null=True)

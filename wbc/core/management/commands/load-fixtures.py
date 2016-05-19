@@ -11,8 +11,8 @@ fixtures = [
     'region/districts.json',
     'region/quarters.json',
     # process
-    #'process/processtypes.json',
-    #'process/processsteps.json',
+    'process/processtypes.json',
+    'process/processsteps.json',
     # projects
     'projects/projects.json',
     # comments

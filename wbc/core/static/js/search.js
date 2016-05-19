@@ -56,6 +56,20 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         resultDiv.toggleClass('selected');
         $parentDiv.scrollTop($parentDiv.scrollTop() + resultDiv.position().top - $parentDiv.height()/2 + resultDiv.height()/2);
         // return null;
+
+        var timelineCircle = $('.id-'+id)[0];
+        // console.log(timelineCircle)
+        if(timelineCircle){
+            timelineCircle = $(timelineCircle);
+            if(timelineCircle.attr('class').indexOf('highlight') == -1){
+                timelineCircle.attr('class', 'highlight id-'+id)
+                timelineCircle.attr('r', 6);
+                timelineCircle.parent().append(timelineCircle);
+            }  else {
+                timelineCircle.attr('class', 'id-'+id);               
+                timelineCircle.attr('r', 3.5);
+            }
+        }
     };
 
     //Mouselistener for polygons
@@ -98,7 +112,9 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             url:  '/suche/',
             data: data
         }).success(function(response) {
-       
+            
+            
+
             $scope.resultLength = response.length
             $scope.tagFacets = response.facets.fields.tags;
             $scope.entitiesFacets = response.facets.fields.entities;
@@ -125,14 +141,22 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 
                 $scope.suggestion = null;
                 var poly;
-             
+
+                // FIX TO TAKE ALL RESULTS
+                $scope.timeline(response.results);
+
                 response.results.forEach(function(result){
 
                     // add polygon to map if result has one
                     if(result.polygon)  {
                         result.polygon.id = result.pk;
-                        poly = MapService.loadPoly(result.polygon, result.pk, highlightFunction);
-                        
+
+                        if (result.terminated) {
+                            poly = MapService.loadPoly(result.polygon, result.pk, highlightFunction, 'terminated-poly');
+                        }
+                        else {
+                            poly = MapService.loadPoly(result.polygon, result.pk, highlightFunction);
+                        }
                         addMouseListener(poly, result);
                         $scope.multipoly.push(result.polygon[0]);
                     }
@@ -432,6 +456,99 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             }, 50);
         }
     };
+
+
+    // TIMELINE
+    $scope.timeline = function(result) {
+        // console.log(result)
+        // result = $scope.results;
+        var timeline = d3.select('#timeline');
+        // clear like this for now, later transitions
+        timeline.selectAll('*').remove();
+        var padding = 0;
+        var parseDate = d3.time.format("%d.%m.%y").parse;
+
+        var xTime = d3.time.scale()
+            .range([0, timeline[0][0].offsetWidth]);
+        var xAxis = d3.svg.axis()
+            .scale(xTime)
+            .orient("bottom");
+
+        var finalResult = [];
+        result.forEach(function(d) {
+            if (d.terminated) {
+                d.terminated = parseDate(d.terminated);
+                finalResult.push(d);
+            } else {
+                // d.splice(index, 1);
+            }
+        });
+
+        xTime.domain(d3.extent(finalResult, function(d) { return d.terminated; }));
+
+        timeline
+            .append("g")
+            .attr("class", "x axis")
+            // .attr("y", 100)
+            // .attr("transform", "translate(0," + '15px' + ")")
+            .call(xAxis);
+
+        var circle = timeline.selectAll('.dot')
+            .data(finalResult).enter()
+            .append('circle')
+            .attr('class', function(d){
+                return 'id-'+d.pk;
+            })
+            .attr('cx', function(d){return xTime(d.terminated)})
+            .attr('cy', 10)
+            .attr("r", 3.5);
+
+        var force = d3.layout.force()
+            .nodes(finalResult)
+            .on('tick', tick)
+            .start()
+
+        
+        function tick(d){
+            // console.log(d)
+            circle.each(collide(3.5))
+              .attr("cx", function(d) { return xTime(d.terminated); })
+              .attr("cy", function(d) { return d.y; });
+        }
+
+        function collide(alpha) {
+          var quadtree = d3.geom.quadtree(finalResult);
+          return function(d) {
+            var custD = 10;
+            var r = 3.5 + padding,
+                nx1 = xTime(d.terminated) - r,
+                nx2 = xTime(d.terminated) + r,
+                ny1 = custD - r,
+                ny2 = custD + r;
+            // console.log(xTime(d.terminated))
+            // console.log(d.y)
+            quadtree.visit(function(quad, x1, y1, x2, y2) {
+              if (quad.point && (quad.point !== d)) {
+                var x = xTime(d.terminated) - quad.point.x,
+                    // y = custD - quad.point.y,
+                    // y=0,
+                    l = Math.sqrt(x * x + y * y),
+                    r = 3.5;
+                if (l < r) {
+                  l = (l - r) / l * alpha;
+                  // d.x -= x *= l;
+                  custD -= y *= l;
+                  // quad.point.x += x;
+                  quad.point.y += y;
+                }
+              }
+              return x1 > nx2 || x2 < nx1;
+            });
+          };
+        }
+
+
+    }
 
 
     //infinite scroll for resultlist

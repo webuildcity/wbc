@@ -42,7 +42,7 @@ class ProcessStep(Model):
     hover_icon   = models.CharField(max_length=256, verbose_name="Icon auf der Karte bei Hovereffekt")
     order        = models.IntegerField(verbose_name="Reihenfolge", help_text="Nummer in der Reihenfolge")
     process_type = models.ForeignKey(ProcessType, related_name='process_steps', verbose_name="Verfahren")
-    participation_type = models.ForeignKey(ParticipationType, related_name='process_steps', verbose_name="Partizipation")
+    participation_type = models.ForeignKey(ParticipationType, related_name='process_steps', verbose_name="Partizipation", blank=True, null=True)
     parent_step  = models.ForeignKey('self', null=True, blank=True, related_name="sub_process_steps", verbose_name="übergeordneter Verfahrensschritt")
 
     def __str__(self):

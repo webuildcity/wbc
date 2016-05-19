@@ -107,7 +107,7 @@ h4 {
 }
 
 .wbc-poly {
-    fill: $primary-color-light;
+    fill: $highlight-color-dark;
     stroke: $primary-color;
     stroke-opacity: 1;
     stroke-width:  1;
@@ -116,17 +116,31 @@ h4 {
     // opacity: 1;
     // fill: true;
 }
+.terminated-poly {
+     fill: $primary-color-light;
+}
+
+.focused-poly {
+    stroke-width: 2px;
+    fill: $highlight-color;
+    stroke: $highlight-color;
+}
 
 .buffer-area {
-    fill: red;
-    stroke: red;
+    fill: #35943C;
+    stroke: #35943C;
     stroke-opacity: 1;
     stroke-width:  1;
     fill-opactity: 0.10;
     // color: $primary-color;
     // opacity: 1;
     // fill: true;
+    &.focused-poly {
+        fill: #FFF300;
+        stroke: #FFF300;
+    }
 }
+
 
 
 /** TOOLTIP **/

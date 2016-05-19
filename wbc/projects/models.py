@@ -64,6 +64,7 @@ class Project(Model):
     history              = HistoricalRecords()
     owner                = models.ForeignKey(User, blank=True, null=True, verbose_name="Besitzer")
     ratings              = GenericRelation(Rating, related_query_name='project_ratings')
+    finished             = models.DateField(null=True, blank=True, verbose_name="Festgestellt am")
 
     def get_changed_by(self):
         if(self.history.last()):
@@ -112,6 +113,14 @@ class Project(Model):
 
     def get_number_stakeholder(self):
         return len(self.stakeholders.all())
+
+    def terminated(self):
+        # pub = self.publication_set.get(process_step__name="Feststellung") 
+        if self.publication_set.all() >0:
+            if len(self.publication_set.filter(process_step__name="Feststellung"))> 0:
+                return self.publication_set.filter(process_step__name="Feststellung")[0].begin
+        else:
+            return None
 
     def __unicode__(self):
         strings = []

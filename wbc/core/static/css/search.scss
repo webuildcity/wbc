@@ -294,7 +294,6 @@
             }
             label input[type="checkbox"] {
                 position: relative;
-                bottom: 1px;
                 // z-index: -1;
             }
         }
@@ -336,17 +335,6 @@
       border-color: $primary-color;
     }
 
-    .focused-poly {
-        stroke-width: 2px;
-        fill: $highlight-color;
-        stroke: $highlight-color;
-    }
-
-    .buffer-area.focused-poly {
-        fill: red;
-        stroke: red;
-    }
-
     .map-overlay {
         padding: 0em 2em 1em 2em;
         z-index: 20;
@@ -377,6 +365,28 @@
             position: relative;
             top: -3px;
             padding-left: 0.3em;
+        }
+
+        hr {
+            margin-top: 0.3em;
+            margin-bottom: 0.4em;
+        }
+    }
+    #timeline {
+        bottom: 2em;
+        // padding: 1em;
+        width: 70%;
+        left: 1em;
+        height: 100px;
+        position: absolute;
+        fill: black;
+        z-index: 10;
+
+        circle.highlight {
+            fill: red;
+            stroke: yellow;
+            radius: 5px;
+            z-index: 20;
         }
     }
 }

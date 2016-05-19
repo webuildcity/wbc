@@ -51,6 +51,7 @@ body {
 #project_sidebar {
     overflow-y: auto;
     height: 100%;
+    padding-left: 1em;
 
     .anchor {
         overflow: auto;
@@ -73,7 +74,7 @@ body {
             float: right;
         }
         div {
-            padding: 0.3em;
+            padding: 0.3em 0;
             @media(max-width:768px){
                 float: left;
             }
@@ -357,8 +358,15 @@ body {
             width: 210px;
             float: left;
             margin: 0.3em;
+            border: 1px solid #eee;
+            cursor: pointer;
+
+            &:hover {
+                border-color: $highlight-color;
+            }
             img {
                 max-height: 200px;
+
             }
         }
     }
