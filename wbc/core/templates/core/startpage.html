@@ -74,7 +74,7 @@ StartpageController
                         {% if project.gallery %}
                         <img class="description_img" src="{{project.gallery.photos.all.0.get_description_url}}" />
                         {% else %}
-                        <img class="description_img" src="{% static 'img/person_placeholder.png' %}" />
+                        <i class="fa fa-building-o fa-5x"></i>
                         {% endif %}
                         <div>
                             <h3>{{project.name}} {% if project.identifier %} ({{project.identifier}}) {% endif %}</h3>

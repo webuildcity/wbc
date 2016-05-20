@@ -134,7 +134,7 @@ SearchController
                         </div>
                         <div class="facet-select">
                             <label>
-                                <input type="checkbox" ng-model="formData.buffer_areas" ng-click="startSearch()">
+                                <input type="checkbox" ng-model="formData.buffer_areas" ng-click="startSearch();activateBufferArea()">
                                 {% trans 'Bebauungspläne mit Ausgleichsflächen' %}
                             </label>
                         </div>
@@ -314,7 +314,7 @@ SearchController
                     <div class="left-block pull-left">
                         <a ng-href="{[{result.internal_link}]}">
                             <img ng-if="result.thumbnail" class="search-thumbnail" src={[{result.thumbnail}]}>
-                            <img ng-if="!result.thumbnail" class="search-thumbnail" src="/static/img/project_placeholder100.png">
+                            <i ng-if="!result.thumbnail" class="search-thumbnail fa-5x fa fa-building-o"></i>
                         </a>
                     </div>
                     <div class="right-block">

@@ -427,6 +427,12 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $(event.target).siblings('.active-facets').toggleClass('hidden');
     };
 
+    $scope.activateBufferArea = function(){
+        if($scope.formData.buffer_areas){
+            $scope.formData.terminated = true;
+        }
+    }
+
     // popstate event listener
     window.addEventListener('popstate', function(e) {
         $scope.formData = e.state;// e.state is equal to the data-attribute of the last image we clicked
