@@ -122,6 +122,9 @@ class Project(Model):
         else:
             return None
 
+    def has_buffer_area(self):
+        return self.buffer_area.set.all() > 0
+        
     def __unicode__(self):
         strings = []
         if self.name:
@@ -145,7 +148,7 @@ class BufferArea(Model):
     active               = models.BooleanField(verbose_name="Veröffentlichen (aktivieren)", help_text="Aktiv")
     tags                 = TaggableManager(through=TaggedItems, blank=True, verbose_name="Stichworte")
     identifier           = models.CharField(blank=True, max_length=64, verbose_name="Bezeichner", help_text="ggf. Bezeichner der Ausgleichsfläche")
-    gml_id               = models.CharField(blank=True, max_length=64, verbose_name="gml id", help_text="gml id")
+    gml_id               = models.CharField(blank=True, max_length=128, verbose_name="gml id", help_text="gml id")
     description          = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Beschreibung der Ausgleichsfläche")
     entities             = models.ManyToManyField(Entity, blank=True, verbose_name="Verwaltungseinheit", related_name='bufferarea_places')
     lat                  = models.FloatField(verbose_name="Breitengrad", null=True, blank=True)

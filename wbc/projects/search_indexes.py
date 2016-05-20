@@ -29,7 +29,7 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     ratings_avg = indexes.DecimalField()
     ratings_count = indexes.IntegerField()
     buffer_areas = indexes.MultiValueField()
-    terminated = indexes.DateField()
+    finished = indexes.DateField()
 
     def get_model(self):
         return Project
@@ -68,8 +68,8 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     def prepare_created(self, obj):
         return obj.created
 
-    def prepare_terminated(self, obj):
-        return obj.terminated()
+    def prepare_finished(self, obj):
+        return obj.finished
 
     def prepare_created_by(self, obj):
         if obj.get_created_by():

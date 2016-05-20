@@ -21,6 +21,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.formData.order = '';         //Order of search results
     $scope.formData.tags = [];          //list of tags
     $scope.formData.entities = [];          //list of entities
+    // $scope.formData.terminated = true;
     $scope.selectedResult = null;       //currently selected result
     $scope.listView = false;            //switch between views
     $scope.searching = false;           //currently searching?
@@ -125,8 +126,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             data: data
         }).success(function(response) {
             
-            
-
             $scope.resultLength = response.length
             $scope.tagFacets = response.facets.fields.tags;
             $scope.entitiesFacets = response.facets.fields.entities;
@@ -163,7 +162,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                     if(result.polygon)  {
                         result.polygon.id = result.pk;
 
-                        if (result.terminated) {
+                        if (result.finished) {
                             poly = MapService.loadPoly(result.polygon, result.pk, highlightFunction, 'terminated-poly');
                         }
                         else {
@@ -460,9 +459,9 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 $scope.formData.entities.push(item);
             });
         }
-        // TODO PARSE TAGS AND ENTITIES
         // $scope.formData.entities = param_json['entities[]']
-        $scope.formData.q = param_json['q']
+        $scope.formData.q = param_json['q'];
+        $scope.formData.terminated = param_json['terminated'];
     };
 
     //changes view between list and map view
@@ -498,12 +497,12 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
             var finalResult = [];
             result.forEach(function(d) {
-                if (d.terminated) {
-                    if (typeof d.terminated == "string")
-                        d.terminated = parseDate(d.terminated);
+                if (d.finished) {
+                    if (typeof d.finished == "string")
+                        d.finished = parseDate(d.finished);
                     d.y = 10;
-                    d.x = d.terminated;
-                    d.idealcx = d.terminated;
+                    d.x = d.finished;
+                    d.idealcx = d.finished;
                     d.idealcy = 10;
                     d.radius = radius;
                     finalResult.push(d);
@@ -512,10 +511,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 }
             });
 
-            xTime.domain(d3.extent(finalResult, function(d) { return d.terminated }));
+            xTime.domain(d3.extent(finalResult, function(d) { return d.finished }));
             finalResult.forEach(function(d) {
                 d.x = xTime(d.x);
-                d.idealcx = xTime(d.terminated);
+                d.idealcx = xTime(d.finished);
             });
 
             var force = d3.layout.force()
@@ -614,13 +613,32 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 .on('click', function(d){
                     $scope.selectResult(d);
                 });
+               
+                // d3.select(window).on('resize', resize);
+                // function resize(){
+                //     var container = $('#timeline-container');
+
+                //     xTime = d3.time.scale()
+                //         .range([0, container.width()-svgPadding]);
+                //     xAxis = d3.svg.axis()  
+                //         .scale(xTime);
+                //     timeline
+                //         .select(".x.axis")
+                //         .attr("transform", "translate(0," + (container.height()-20) + ")")
+                //         .call(xAxis);
+                //     timeline.selectAll('circle')
+                //         .attr("transform", "translate(0," + (container.height()-50) + ")")
+                // } 
 
             }
             // Use a timeout to allow the rest of the page to load first.
             if(finalResult.length > 0){
                 setTimeout(renderGraph, 10);
             }
+
+        
         }
+
     }
 
 

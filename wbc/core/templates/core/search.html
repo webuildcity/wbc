@@ -126,10 +126,18 @@ SearchController
                         <i class="anchor fa fa-gears"></i>{% trans 'FILTER: Optionen' %}
                     </div>
                     <div id='general-options' class='general-options collapse wbc-dropdown-container'>
-                        <label>
-                            <input type="checkbox" value="terminated" ng-model="formData.terminated" ng-click="startSearch()">
-                            Historische Bebauungspläne
-                        </label>
+                        <div class="facet-select">
+                            <label>
+                                <input type="checkbox" ng-model="formData.terminated" ng-click="startSearch()">
+                                {% trans 'Historische Bebauungspläne' %}
+                            </label>
+                        </div>
+                        <div class="facet-select">
+                            <label>
+                                <input type="checkbox" ng-model="formData.buffer_areas" ng-click="startSearch()">
+                                {% trans 'Bebauungspläne mit Ausgleichsflächen' %}
+                            </label>
+                        </div>
                     </div>
                     <div class="underline-lr"></div>
 
