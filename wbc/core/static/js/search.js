@@ -489,7 +489,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
         // clear like this for now, later transitions
         timeline.selectAll('*').remove();
-        if(result.length < 500 || ignore){
+        if(result.length < 201 || ignore){
             if(ignore)
                 result = $scope.results;
             var svgPadding = 20;
@@ -625,13 +625,13 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
                     tooltip.html(formatDate(d.finished))  
                         .style("left", (d3.event.pageX) + "px")     
-                        .style("top", (d3.event.pageY - 28) + "px");    
+                        .style("top", (d3.event.pageY - 30) + "px");    
                 })
                 .on('mouseout', function(d){
                     highlightFunction(d.pk);
 
                     tooltip.transition()        
-                        .duration(500)      
+                        .duration(400)      
                         .style("opacity", 0);   
                 })
                 .on('click', function(d){
