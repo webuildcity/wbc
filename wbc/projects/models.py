@@ -58,7 +58,7 @@ class Project(Model):
     slug                 = models.SlugField(unique=True, editable=False)
     address_obj          = models.ForeignKey(Address, blank=True, null=True, verbose_name="Adresse")
     album                = models.OneToOneField(Album, blank=True, null=True)
-    tags                 = TaggableManager(through=TaggedItems, blank=True, verbose_name="Schlagworte")
+    # tags                 = TaggableManager(through=TaggedItems, blank=True, verbose_name="Schlagworte")
     stakeholders         = models.ManyToManyField(Stakeholder, blank=True, verbose_name="Akteure")
     address              = models.CharField(max_length=256, blank=True, verbose_name="Adresse (Statisch)", help_text="Altes, statisches Adress-Feld")
     history              = HistoricalRecords()

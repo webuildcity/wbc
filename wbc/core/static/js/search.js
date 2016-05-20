@@ -20,6 +20,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.formData = {};               //Search Form parameters
     $scope.formData.order = '';         //Order of search results
     $scope.formData.tags = [];          //list of tags
+    $scope.formData.entities = [];          //list of entities
     $scope.selectedResult = null;       //currently selected result
     $scope.listView = false;            //switch between views
     $scope.searching = false;           //currently searching?
@@ -31,6 +32,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.suggestions = [];            //autocomplete suggestions
     $scope.selectedSuggestionIdx = -1;  //selected autocomplete element
     
+    var radius = 6;
+
     //expand filter for mobile search-menu
     $scope.showFilter = false;
 
@@ -63,11 +66,19 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             timelineCircle = $(timelineCircle);
             if(timelineCircle.attr('class').indexOf('highlight') == -1){
                 timelineCircle.attr('class', 'highlight id-'+id)
-                timelineCircle.attr('r', 6);
+                timelineCircle.attr('r', radius+2)
                 timelineCircle.parent().append(timelineCircle);
+                $('.poly-'+id).each(function(i){
+                    $(this).attr('class', $(this).attr('class') + ' focused-poly');
+                })
+
             }  else {
                 timelineCircle.attr('class', 'id-'+id);               
-                timelineCircle.attr('r', 3.5);
+                timelineCircle.attr('r', radius);
+
+                $('.poly-'+id).each(function(i){
+                    $(this).attr('class', $(this).attr('class').replace('focused-poly',''));
+                })
             }
         }
     };
@@ -104,9 +115,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         //reset autocomplete on new search 
         $scope.suggestions = [];
         $scope.selectedSuggestionIdx = -1;
+
         window.clearTimeout(timeoutHandle);
         
-        //ajac request to search api
+        //ajax request to search api
         $http({
             method: 'POST',
             url:  '/suche/',
@@ -298,6 +310,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         }
         var paramData = angular.copy($scope.formData);
         paramData.tags = paramData.tags.toString();
+        paramData.entities = paramData.entities.toString();
         var params = $.param(paramData);
 
         $scope.noResults = false;
@@ -405,6 +418,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $scope.formData = {};
         $scope.formData.order = '';
         $scope.formData.tags = [];
+        $scope.formData.entities = [];
         $scope.offset = 0;
         $scope.startSearch(false);
     }
@@ -426,7 +440,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         // var result = window.location.pathname.substring(n + 1);
 
         var param_json= JSON.parse('{"' + decodeURI(result.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}')
-        
         if(param_json['order']){
             $(".order-btn").removeClass("active");
             // TODO: Filter by value and select right button
@@ -439,6 +452,12 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             var split = param_json['tags'].split(',');
             split.forEach(function(item){
                 $scope.formData.tags.push(item);
+            });
+        }
+        if (param_json['entities']){
+            var split = param_json['entities'].split(',');
+            split.forEach(function(item){
+                $scope.formData.entities.push(item);
             });
         }
         // TODO PARSE TAGS AND ENTITIES
@@ -459,95 +478,149 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
 
     // TIMELINE
-    $scope.timeline = function(result) {
-        // console.log(result)
-        // result = $scope.results;
+    $scope.timeline = function(result, ignore) {
         var timeline = d3.select('#timeline');
+        var container = $('#timeline-container');
+
         // clear like this for now, later transitions
         timeline.selectAll('*').remove();
-        var padding = 0;
-        var parseDate = d3.time.format("%d.%m.%y").parse;
+        if(result.length < 500 || ignore){
+            if(ignore)
+                result = $scope.results;
+            var svgPadding = 20;
+            var padding = 1;
+            var maxRadius = 6;
 
-        var xTime = d3.time.scale()
-            .range([0, timeline[0][0].offsetWidth]);
-        var xAxis = d3.svg.axis()
-            .scale(xTime)
-            .orient("bottom");
+            var parseDate = d3.time.format("%d.%m.%y").parse;
+            var xTime = d3.time.scale()
+                .range([0, container.width()-svgPadding]);
 
-        var finalResult = [];
-        result.forEach(function(d) {
-            if (d.terminated) {
-                d.terminated = parseDate(d.terminated);
-                finalResult.push(d);
-            } else {
-                // d.splice(index, 1);
-            }
-        });
 
-        xTime.domain(d3.extent(finalResult, function(d) { return d.terminated; }));
-
-        timeline
-            .append("g")
-            .attr("class", "x axis")
-            // .attr("y", 100)
-            // .attr("transform", "translate(0," + '15px' + ")")
-            .call(xAxis);
-
-        var circle = timeline.selectAll('.dot')
-            .data(finalResult).enter()
-            .append('circle')
-            .attr('class', function(d){
-                return 'id-'+d.pk;
-            })
-            .attr('cx', function(d){return xTime(d.terminated)})
-            .attr('cy', 10)
-            .attr("r", 3.5);
-
-        var force = d3.layout.force()
-            .nodes(finalResult)
-            .on('tick', tick)
-            .start()
-
-        
-        function tick(d){
-            // console.log(d)
-            circle.each(collide(3.5))
-              .attr("cx", function(d) { return xTime(d.terminated); })
-              .attr("cy", function(d) { return d.y; });
-        }
-
-        function collide(alpha) {
-          var quadtree = d3.geom.quadtree(finalResult);
-          return function(d) {
-            var custD = 10;
-            var r = 3.5 + padding,
-                nx1 = xTime(d.terminated) - r,
-                nx2 = xTime(d.terminated) + r,
-                ny1 = custD - r,
-                ny2 = custD + r;
-            // console.log(xTime(d.terminated))
-            // console.log(d.y)
-            quadtree.visit(function(quad, x1, y1, x2, y2) {
-              if (quad.point && (quad.point !== d)) {
-                var x = xTime(d.terminated) - quad.point.x,
-                    // y = custD - quad.point.y,
-                    // y=0,
-                    l = Math.sqrt(x * x + y * y),
-                    r = 3.5;
-                if (l < r) {
-                  l = (l - r) / l * alpha;
-                  // d.x -= x *= l;
-                  custD -= y *= l;
-                  // quad.point.x += x;
-                  quad.point.y += y;
+            var finalResult = [];
+            result.forEach(function(d) {
+                if (d.terminated) {
+                    if (typeof d.terminated == "string")
+                        d.terminated = parseDate(d.terminated);
+                    d.y = 10;
+                    d.x = d.terminated;
+                    d.idealcx = d.terminated;
+                    d.idealcy = 10;
+                    d.radius = radius;
+                    finalResult.push(d);
+                } else {
+                    // d.splice(index, 1);
                 }
-              }
-              return x1 > nx2 || x2 < nx1;
             });
-          };
+
+            xTime.domain(d3.extent(finalResult, function(d) { return d.terminated }));
+            finalResult.forEach(function(d) {
+                d.x = xTime(d.x);
+                d.idealcx = xTime(d.terminated);
+            });
+
+            var force = d3.layout.force()
+              .nodes(finalResult)
+              .size([container.width()-svgPadding, container.height()])
+              .gravity(0)
+              .charge(0)
+              .on("tick", tick)
+              .start()
+
+            
+
+            function tick(e) {
+              for ( i = 0; i < finalResult.length; i++ ) {
+                var node = finalResult[i];
+
+                node = gravity(.2 * e.alpha)(node);
+                node = collide(.5)(node);
+                node.cx = node.x;
+                node.cy = node.y;
+              }
+            }
+
+            function gravity(alpha) {
+              return function(d) {
+                d.y += (d.idealcy - d.y) * alpha;
+                d.x += (d.idealcx - d.x) * alpha * 3;
+                return d;
+              };
+            }
+            function collide(alpha) {
+              var quadtree = d3.geom.quadtree(finalResult);
+              return function(d) {
+                // console.log(d)
+                var r = d.radius + maxRadius + padding,
+                    nx1 = d.x - r,
+                    nx2 = d.x + r,
+                    ny1 = d.y - r,
+                    ny2 = d.y + r;
+                quadtree.visit(function(quad, x1, y1, x2, y2) {
+                  if (quad.point && (quad.point !== d)) {
+                    var x = d.x - quad.point.x,
+                        y = d.y - quad.point.y,
+                        l = Math.sqrt(x * x + y * y),
+                        r = d.radius + quad.point.radius + padding;
+                    if (l < r) {
+                      l = (l - r) / l * alpha;
+                      d.x -= x *= l;
+                      d.y -= y *= l;
+                      quad.point.x += x;
+                      quad.point.y += y;
+                    }
+                  }
+                  return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+                });
+                return d;
+              };
+            }
+            function renderGraph() {
+              // Run the layout a fixed number of times.
+              // The ideal number of times scales with graph complexity.
+              // Of course, don't run too long—you'll hang the page!
+              force.start();
+              for (var i = 100; i > 0; --i) force.tick();
+              force.stop();
+
+              var xAxis = d3.svg.axis()  
+                .scale(xTime)
+                .orient("bottom")
+                .innerTickSize(-container.height()/2)
+                .outerTickSize(0)
+                .tickPadding(10);
+
+              timeline
+                .append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + (container.height()-20) + ")")
+                .call(xAxis);
+
+              var circle = timeline.selectAll("circle")
+                .data(finalResult)
+              .enter().append("circle")
+                .attr("transform", "translate(0," + (container.height()-50) + ")")
+                .attr("cx", function(d) { return d.x} )
+                .attr("cy", function(d) { return d.y} ) 
+                .attr('class', function(d){
+                    return 'id-'+d.pk;
+                })
+                .attr("r", radius )
+                .on('mouseover', function(d){
+                    highlightFunction(d.pk);
+                })
+                .on('mouseout', function(d){
+                    highlightFunction(d.pk);
+                })
+                .on('click', function(d){
+                    $scope.selectResult(d);
+                });
+
+            }
+            // Use a timeout to allow the rest of the page to load first.
+            if(finalResult.length > 0){
+                setTimeout(renderGraph, 10);
+            }
         }
-
-
     }
 
 

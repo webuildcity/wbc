@@ -131,6 +131,8 @@ SearchController
                             Historische Bebauungspläne
                         </label>
                     </div>
+                    <div class="underline-lr"></div>
+
                 </div>
                 <div ng-if="entitiesFacets.length > 0" class="facet-container">
                     <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target=".region-facets">
@@ -261,7 +263,9 @@ SearchController
         </div>
 
         <!-- TIMELINE -->
-        <svg id="timeline"></svg>
+        <div id="timeline-container">
+            <svg id="timeline"></svg>
+        </div>
     </div>
 
     <!-- LISTVIEW -->

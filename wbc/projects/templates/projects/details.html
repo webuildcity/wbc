@@ -235,12 +235,19 @@ DetailsController
 
     {% if tags %}
     <div id="tags-widget" class="widget">
-        <div class="content-container">
-            <h3><i class="fa fa-tags"> </i>Stichwörter</h3>
-            {% for tag in tags %}
-                <a class="taglink" href="{{tag.get_absolute_url}}">{{tag.name}}</a>
-            {% endfor %}
-        </div>
+        <h3><i class="fa fa-tags"> </i>Stichwörter</h3>
+        {% for tag in tags %}
+            <a class="taglink" href="{{tag.get_absolute_url}}">{{tag.name}}</a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if project.entities %}
+    <div id="tags-widget" class="widget">
+        <!-- <h3><i class="fa fa-tags"> </i>Stadtteile</h3> -->
+        {% for entity in project.entities.all %}
+            <a class="taglink" href="/suche/entities={{entity.name}}">{{entity.name}}</a>
+        {% endfor %}
     </div>
     {% endif %}
 
@@ -284,7 +291,7 @@ DetailsController
     <div class="main-content-nav-container">
         <ul class="wbc-nav main-content-nav nav nav-tabs" data-tabs="tabs" ng-click="ifSmallExpand()" ng-class="{'wbc-expanded' : expanded}">
             <li class="active"><a data-toggle="tab" href="#info"><i class="fa fa-info"></i>Info</a></li>
-            <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Karte</a></li>
+            <li><a class="3d-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>3D</a></li>
             <li  {{album|yesno:' ,class=not-active'}}><a data-toggle="tab" href="#gallery"><i class="fa fa-image"></i>Bilder</a></li>
             <li>
                 <a data-toggle="tab" href="#timeline"><i class="fa fa-calendar"></i>Ereignisse</a>
@@ -292,8 +299,8 @@ DetailsController
             <li>
                 <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Beteiligte</a>
             </li>
-            <li><a class="3d-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>3D</a></li>
             <li><a data-toggle="tab" href="#discussion"><i class="fa fa-comment"></i>Diskussion ({% get_comment_count for project as count %}{{count}})</a></li>
+            <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Karte</a></li>
         </ul>
     </div>
     
@@ -338,7 +345,12 @@ DetailsController
             {% if attachments %}
             <div id="attachments">
                 {% if attachments|length > 1 %}
+                <object id="pdf-viewer" data="{{attachments.0.attachment.url}}" type="application/pdf" width="100%" height="500px">
+                    <p>{% trans 'Ihr Browser kann keine PDFs anzeigen.' %} <a href="{{attachments.0.attachment.url}}">{% trans 'Hier herunterladen' %}</a></p>
+                </object>
+
                 <div id="attachment-nav">
+                    <h3>{% trans 'Weitere Dokumente' %}</h3>
                     <ul class="nav">
                     {% for attachment in attachments %}
                         <li class="pdf-preview" data-pdf="{{attachment.attachment.url}}" ng-click="openPDF('{{attachment.attachment.url}}')">
@@ -349,9 +361,6 @@ DetailsController
                     </ul>
                 </div>
                 {% endif %}
-                <object id="pdf-viewer" data="{{attachments.0.attachment.url}}" type="application/pdf" width="100%" height="500px">
-                    <p>{% trans 'Ihr Browser kann keine PDFs anzeigen.' %} <a href="{{attachments.0.attachment.url}}">{% trans 'Hier herunterladen' %}</a></p>
-                </object>
             </div>
             {% endif %}
 
