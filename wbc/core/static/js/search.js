@@ -154,7 +154,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 var poly;
 
                 // FIX TO TAKE ALL RESULTS
-                $scope.timeline(response.results);
+                $scope.timeline($scope.results);
 
                 response.results.forEach(function(result){
 
@@ -497,7 +497,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             var maxRadius = 6;
 
             var parseDate = d3.time.format("%d.%m.%y").parse;
-            var formatDate = d3.time.format('%d.%m.%y');
+            var formatDate = d3.time.format('%d.%m.%Y');
             var xTime = d3.time.scale()
                 .range([0, container.width()-svgPadding]);
 
