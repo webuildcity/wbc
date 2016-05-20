@@ -497,6 +497,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             var maxRadius = 6;
 
             var parseDate = d3.time.format("%d.%m.%y").parse;
+            var formatDate = d3.time.format('%d.%m.%y');
             var xTime = d3.time.scale()
                 .range([0, container.width()-svgPadding]);
 
@@ -530,6 +531,11 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
               .charge(0)
               .on("tick", tick)
               .start()
+
+            // Define the div for the tooltip
+            var tooltip = d3.select("body").append("div")   
+                .attr("class", "timeline-tooltip")               
+                .style("opacity", 0);
 
             
 
@@ -612,9 +618,21 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 .attr("r", radius )
                 .on('mouseover', function(d){
                     highlightFunction(d.pk);
+
+                    tooltip.transition()        
+                        .duration(200)      
+                        .style("opacity", .9);
+
+                    tooltip.html(formatDate(d.finished))  
+                        .style("left", (d3.event.pageX) + "px")     
+                        .style("top", (d3.event.pageY - 28) + "px");    
                 })
                 .on('mouseout', function(d){
                     highlightFunction(d.pk);
+
+                    tooltip.transition()        
+                        .duration(500)      
+                        .style("opacity", 0);   
                 })
                 .on('click', function(d){
                     $scope.selectResult(d);

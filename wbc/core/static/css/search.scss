@@ -561,3 +561,16 @@
 .search-result.selected {
     background-color: rgba($highlight-color,0.2);
 }
+
+.timeline-tooltip {   
+    position: absolute;         
+    text-align: center;  
+    color: white;
+    font-weight: bold;       
+    background: black; 
+    border: 0px;        
+    border-radius: 2px; 
+    padding: 0.2em;
+    z-index: 20;        
+    pointer-events: none;           
+}
