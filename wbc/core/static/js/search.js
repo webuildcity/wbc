@@ -486,7 +486,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.timeline = function(result, ignore) {
         var timeline = d3.select('#timeline');
         var container = $('#timeline-container');
-
+        console.log('timeline')
         // clear like this for now, later transitions
         timeline.selectAll('*').remove();
         if(result.length < 201 || ignore){
@@ -524,6 +524,17 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 d.idealcx = xTime(d.finished);
             });
 
+            function tick(e) {
+              for ( i = 0; i < finalResult.length; i++ ) {
+                var node = finalResult[i];
+
+                node = gravity(.2 * e.alpha)(node);
+                node = collide(.5)(node);
+                node.cx = node.x;
+                node.cy = node.y;
+              }
+            }
+            
             var force = d3.layout.force()
               .nodes(finalResult)
               .size([container.width()-svgPadding, container.height()])
@@ -539,16 +550,6 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
             
 
-            function tick(e) {
-              for ( i = 0; i < finalResult.length; i++ ) {
-                var node = finalResult[i];
-
-                node = gravity(.2 * e.alpha)(node);
-                node = collide(.5)(node);
-                node.cx = node.x;
-                node.cy = node.y;
-              }
-            }
 
             function gravity(alpha) {
               return function(d) {
@@ -641,17 +642,17 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 // d3.select(window).on('resize', resize);
                 // function resize(){
                 //     var container = $('#timeline-container');
-
-                //     xTime = d3.time.scale()
-                //         .range([0, container.width()-svgPadding]);
-                //     xAxis = d3.svg.axis()  
-                //         .scale(xTime);
-                //     timeline
-                //         .select(".x.axis")
-                //         .attr("transform", "translate(0," + (container.height()-20) + ")")
-                //         .call(xAxis);
-                //     timeline.selectAll('circle')
-                //         .attr("transform", "translate(0," + (container.height()-50) + ")")
+                //     timeline.
+                //     // xTime = d3.time.scale()
+                //     //     .range([0, container.width()-svgPadding]);
+                //     // xAxis = d3.svg.axis()  
+                //     //     .scale(xTime);
+                //     // timeline
+                //     //     .select(".x.axis")
+                //     //     .attr("transform", "translate(0," + (container.height()-20) + ")")
+                //     //     .call(xAxis);
+                //     // timeline.selectAll('circle')
+                //     //     .attr("transform", "translate(0," + (container.height()-50) + ")")
                 // } 
 
             }
