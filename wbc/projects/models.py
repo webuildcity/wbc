@@ -170,7 +170,7 @@ class BufferArea(Model):
         super(BufferArea, self).save(*args, **kwargs)
 
 class ProjectAttachment(Model):
-    name               = models.CharField(blank=True, null=True, max_length=64, verbose_name="Name", help_text="Name")
+    name               = models.CharField(blank=True, null=True, max_length=128, verbose_name="Name", help_text="Name")
     attachment         = models.FileField(upload_to='project_attachments')
     project            = models.ForeignKey(Project, verbose_name="Projekt")
     image              = models.ImageField(blank=True, upload_to='project_attachments/images')
