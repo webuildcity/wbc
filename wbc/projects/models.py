@@ -65,7 +65,7 @@ class Project(Model):
     owner                = models.ForeignKey(User, blank=True, null=True, verbose_name="Besitzer")
     ratings              = GenericRelation(Rating, related_query_name='project_ratings')
     finished             = models.DateField(null=True, blank=True, verbose_name="Festgestellt am")
-    isFinished           = models.BooleanField(default=True)
+    isFinished           = models.NullBooleanField(default=True, null=True, blank=True)
 
     def get_changed_by(self):
         if(self.history.last()):
