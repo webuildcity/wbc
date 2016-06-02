@@ -21,7 +21,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.formData.order = '';         //Order of search results
     $scope.formData.tags = [];          //list of tags
     $scope.formData.entities = [];          //list of entities
-    // $scope.formData.terminated = true;
+    $scope.formData.terminated = false;
     $scope.selectedResult = null;       //currently selected result
     $scope.listView = false;            //switch between views
     $scope.searching = false;           //currently searching?
@@ -34,6 +34,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.selectedSuggestionIdx = -1;  //selected autocomplete element
     
     var radius = 6;
+    var renderTimeline;
+    var parseDate = d3.time.format("%d.%m.%y").parse;
 
     //expand filter for mobile search-menu
     $scope.showFilter = false;
@@ -153,11 +155,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 $scope.suggestion = null;
                 var poly;
 
-                // FIX TO TAKE ALL RESULTS
-                $scope.timeline($scope.results);
-
                 response.results.forEach(function(result){
-
+                    if(result.finished){
+                        result.finished = parseDate(result.finished);
+                    }
                     // add polygon to map if result has one
                     if(result.polygon)  {
                         result.polygon.id = result.pk;
@@ -183,6 +184,9 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                         });                        
                     }
                 });
+
+                //render the timeline with the new results
+                renderTimeline();
                 //add the allResultsPoly to map (contains all polygons of all results)
                 allResultPoly = L.multiPolygon($scope.multipoly);
             
@@ -435,7 +439,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
     // popstate event listener
     window.addEventListener('popstate', function(e) {
-        $scope.formData = e.state;// e.state is equal to the data-attribute of the last image we clicked
+        $scope.formData = e.state;
         search($scope.formData);
         // $scope.onSearchChanged();
     });
@@ -467,7 +471,9 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         }
         // $scope.formData.entities = param_json['entities[]']
         $scope.formData.q = param_json['q'];
-        $scope.formData.terminated = param_json['terminated'];
+
+        if(param_json['terminated'] === 'true')
+            $scope.formData.terminated = true;
     };
 
     //changes view between list and map view
@@ -482,149 +488,169 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     };
 
 
-    // TIMELINE
-    $scope.timeline = function(result, ignore) {
+    // init TIMELINE
+    angular.element(document).ready(function () {
+
+        var timelineContainer = $('#timeline-container');
         var timeline = d3.select('#timeline');
-        var container = $('#timeline-container');
-        console.log('timeline')
-        // clear like this for now, later transitions
-        timeline.selectAll('*').remove();
-        if(result.length < 201 || ignore){
-            if(ignore)
-                result = $scope.results;
-            var svgPadding = 20;
-            var padding = 1;
-            var maxRadius = 6;
+        var svgPadding = 20;
+        var circlePadding = 0;
+        var parseDate = d3.time.format("%d.%m.%y").parse;
+        var formatDate = d3.time.format('%d.%m.%Y');
+        var xTime; //scale
+        var svg = d3.select('#timeline').append('svg');
+        var width = 0;
+        // Init the div for the tooltip
+        var tooltip = d3.select("body").append("div")   
+            .attr("class", "timeline-tooltip")               
+            .style("opacity", 0);
+        var tooltipText = '';
 
-            var parseDate = d3.time.format("%d.%m.%y").parse;
-            var formatDate = d3.time.format('%d.%m.%Y');
-            var xTime = d3.time.scale()
-                .range([0, container.width()-svgPadding]);
+        var transitionDuration = 1000;
 
+        //xAxis of the timeline
+        var xAxis = d3.svg.axis()  
+            // .scale(xTime)
+            .orient("bottom")
+            .innerTickSize(-timelineContainer.height()/2)
+            .outerTickSize(0)
+            .tickPadding(10);  
 
-            var finalResult = [];
-            result.forEach(function(d) {
-                if (d.finished) {
-                    if (typeof d.finished == "string")
-                        d.finished = parseDate(d.finished);
-                    d.y = 10;
-                    d.x = d.finished;
-                    d.idealcx = d.finished;
-                    d.idealcy = 10;
-                    d.radius = radius;
-                    finalResult.push(d);
-                } else {
-                    // d.splice(index, 1);
-                }
-            });
-
-            xTime.domain(d3.extent(finalResult, function(d) { return d.finished }));
-            finalResult.forEach(function(d) {
-                d.x = xTime(d.x);
-                d.idealcx = xTime(d.finished);
-            });
-
-            function tick(e) {
-              for ( i = 0; i < finalResult.length; i++ ) {
-                var node = finalResult[i];
-
-                node = gravity(.2 * e.alpha)(node);
-                node = collide(.5)(node);
-                node.cx = node.x;
-                node.cy = node.y;
-              }
-            }
-            
-            var force = d3.layout.force()
-              .nodes(finalResult)
-              .size([container.width()-svgPadding, container.height()])
-              .gravity(0)
-              .charge(0)
-              .on("tick", tick)
-              .start()
-
-            // Define the div for the tooltip
-            var tooltip = d3.select("body").append("div")   
-                .attr("class", "timeline-tooltip")               
-                .style("opacity", 0);
-
-            
-
-
-            function gravity(alpha) {
+        svg
+            .append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(20," + (timelineContainer.height()-20) + ")")
+            .call(xAxis);
+    
+        //gravity function for force layout    
+        function gravity(alpha) {
               return function(d) {
                 d.y += (d.idealcy - d.y) * alpha;
                 d.x += (d.idealcx - d.x) * alpha * 3;
                 return d;
               };
             }
-            function collide(alpha) {
-              var quadtree = d3.geom.quadtree(finalResult);
-              return function(d) {
-                // console.log(d)
-                var r = d.radius + maxRadius + padding,
-                    nx1 = d.x - r,
-                    nx2 = d.x + r,
-                    ny1 = d.y - r,
-                    ny2 = d.y + r;
-                quadtree.visit(function(quad, x1, y1, x2, y2) {
-                  if (quad.point && (quad.point !== d)) {
-                    var x = d.x - quad.point.x,
-                        y = d.y - quad.point.y,
-                        l = Math.sqrt(x * x + y * y),
-                        r = d.radius + quad.point.radius + padding;
-                    if (l < r) {
-                      l = (l - r) / l * alpha;
-                      d.x -= x *= l;
-                      d.y -= y *= l;
-                      quad.point.x += x;
-                      quad.point.y += y;
-                    }
-                  }
-                  return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
-                });
-                return d;
-              };
-            }
-            function renderGraph() {
-              // Run the layout a fixed number of times.
-              // The ideal number of times scales with graph complexity.
-              // Of course, don't run too long—you'll hang the page!
-              force.start();
-              for (var i = 100; i > 0; --i) force.tick();
-              force.stop();
 
-              var xAxis = d3.svg.axis()  
-                .scale(xTime)
-                .orient("bottom")
-                .innerTickSize(-container.height()/2)
-                .outerTickSize(0)
-                .tickPadding(10);
+        //collide function for force layout    
+        function collide(alpha) {
+          var quadtree = d3.geom.quadtree($scope.results);
+          return function(d) {
+            // console.log(d)
+            var r = d.radius*2 + circlePadding,
+                nx1 = d.x - r,
+                nx2 = d.x + r,
+                ny1 = d.y - r,
+                ny2 = d.y + r;
+            quadtree.visit(function(quad, x1, y1, x2, y2) {
+              if (quad.point && (quad.point !== d)) {
+                var x = d.x - quad.point.x,
+                    y = d.y - quad.point.y,
+                    l = Math.sqrt(x * x + y * y),
+                    r = d.radius + quad.point.radius + circlePadding;
+                if (l < r) {
+                  l = (l - r) / l * alpha;
+                  d.x -= x *= l;
+                  d.y -= y *= l;
+                  quad.point.x += x;
+                  quad.point.y += y;
+                }
+              }
+              return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+            });
+            return d;
+          };
+      }
 
-              timeline
-                .append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + (container.height()-20) + ")")
+
+
+        d3.select(window).on('resize', resize);
+        
+        function resize(){
+            renderTimeline();
+        }
+
+
+        renderTimeline = function(){
+
+            width = timelineContainer.width()-svgPadding*2;
+            xTime = d3.time.scale()
+                .range([0, width]);
+
+
+            //update the xAxes
+            xTime.domain(d3.extent($scope.results, function(d) { return d.finished }));
+            xAxis.scale(xTime);
+            svg.select('.x.axis')
+                .transition().duration(transitionDuration).ease("ease-in")  // https://github.com/mbostock/d3/wiki/Transitions#wiki-d3_ease
                 .call(xAxis);
 
-              var circle = timeline.selectAll("circle")
-                .data(finalResult)
-              .enter().append("circle")
-                .attr("transform", "translate(0," + (container.height()-50) + ")")
-                .attr("cx", function(d) { return d.x} )
-                .attr("cy", function(d) { return d.y} ) 
+
+            // $scope.results.forEach(function(d) {
+            //     d.x = xTime(d.x);
+            //     d.idealcx = xTime(d.finished);
+            // });
+            
+            $scope.results.forEach(function(d) {
+                d.y = 10;
+                d.idealcy = 10;
+                if (d.finished) {
+                    d.x = xTime(d.finished);                
+                    d.idealcx = xTime(d.finished);
+                } else {
+                    d.idealcx = timelineContainer.width()-svgPadding;
+                    d.x = timelineContainer.width()-svgPadding;
+                }
+            });
+
+
+            function tick(e) {
+                circle
+                    .each(gravity(.2 * e.alpha))
+                    .each(collide(.5))
+                    // .attr("cx", function(d) { return d.x; })
+                    .attr("cy", function(d) { return d.y; });
+              // for ( i = 0; i < $scope.results.length; i++ ) {
+              //   var node = $scope.results[i];
+              //   node = gravity(.2 * e.alpha)(node);
+              //   node = collide(.5)(node);
+              //   node.cx = node.x;
+              //   node.cy = node.y;
+              // }
+            }
+
+            var force = d3.layout.force()
+              .nodes($scope.results)
+              .size([timelineContainer.width()-svgPadding, timelineContainer.height()])
+              // .gravity(0)
+              // .charge(0)
+              .on("tick", tick)
+              .start();
+
+            // force.start();
+            var circle = svg.selectAll("circle")
+                .data($scope.results, function(d) { return d.pk});
+
+            circle
+                .transition()
+                .duration(transitionDuration) 
+                // .attr("cx", function(d) { return isNaN(d.x) ? 0 : xTime(d.x)  });
+
+            circle.enter().append("circle")
+                .attr("transform", "translate(10," + (timelineContainer.height()-50) + ")")
+                .attr("cx", function(d) { return isNaN(d.x) ? timelineContainer.width()-svgPadding : d.x  })
+                .attr("cy", function(d) { return d.y })
+                .attr("r",  function(d) { return radius })
                 .attr('class', function(d){
                     return 'id-'+d.pk;
-                })
-                .attr("r", radius )
+                })             
                 .on('mouseover', function(d){
                     highlightFunction(d.pk);
 
                     tooltip.transition()        
                         .duration(200)      
                         .style("opacity", .9);
-
-                    tooltip.html(formatDate(d.finished))  
+                    tooltipText =  d.finished ? formatDate(d.finished) : 'Im Verfahren';
+                    tooltip.html(tooltipText)  
                         .style("left", (d3.event.pageX) + "px")     
                         .style("top", (d3.event.pageY - 30) + "px");    
                 })
@@ -637,34 +663,198 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                 })
                 .on('click', function(d){
                     $scope.selectResult(d);
-                });
-               
-                // d3.select(window).on('resize', resize);
-                // function resize(){
-                //     var container = $('#timeline-container');
-                //     timeline.
-                //     // xTime = d3.time.scale()
-                //     //     .range([0, container.width()-svgPadding]);
-                //     // xAxis = d3.svg.axis()  
-                //     //     .scale(xTime);
-                //     // timeline
-                //     //     .select(".x.axis")
-                //     //     .attr("transform", "translate(0," + (container.height()-20) + ")")
-                //     //     .call(xAxis);
-                //     // timeline.selectAll('circle')
-                //     //     .attr("transform", "translate(0," + (container.height()-50) + ")")
-                // } 
+                })
+                .style('opacity', 0)
+                .transition()
+                .delay(transitionDuration)
+                .duration(transitionDuration)
+                .style('opacity', 1);
 
-            }
-            // Use a timeout to allow the rest of the page to load first.
-            if(finalResult.length > 0){
-                setTimeout(renderGraph, 10);
-            }
+            circle.exit().remove();
+        }
+    });
+    // var timeline = d3.select('#timeline');
+    // var container = $('#timeline-container');
+    // $scope.timeline = function(result, ignore) {
+    //     console.log('timeline')
+    //     // clear like this for now, later transitions
+    //     timeline.selectAll('*').remove();
+    //     if(result.length < 201 || ignore){
+    //         if(ignore)
+    //             result = $scope.results;
+    //         var svgPadding = 20;
+    //         var padding = 1;
+    //         var maxRadius = 6;
+
+    //         var parseDate = d3.time.format("%d.%m.%y").parse;
+    //         var formatDate = d3.time.format('%d.%m.%Y');
+    //         var xTime = d3.time.scale()
+    //             .range([0, container.width()-svgPadding]);
+
+
+    //         var finalResult = [];
+    //         result.forEach(function(d) {
+    //             if (d.finished) {
+    //                 if (typeof d.finished == "string")
+    //                     d.finished = parseDate(d.finished);
+    //                 d.y = 10;
+    //                 d.x = d.finished;
+    //                 d.idealcx = d.finished;
+    //                 d.idealcy = 10;
+    //                 d.radius = radius;
+    //                 finalResult.push(d);
+    //             } else {
+    //                 // d.splice(index, 1);
+    //             }
+    //         });
+
+    //         xTime.domain(d3.extent(finalResult, function(d) { return d.finished }));
+    //         finalResult.forEach(function(d) {
+    //             d.x = xTime(d.x);
+    //             d.idealcx = xTime(d.finished);
+    //         });
+
+    //         function tick(e) {
+    //           for ( i = 0; i < finalResult.length; i++ ) {
+    //             var node = finalResult[i];
+
+    //             node = gravity(.2 * e.alpha)(node);
+    //             node = collide(.5)(node);
+    //             node.cx = node.x;
+    //             node.cy = node.y;
+    //           }
+    //         }
+            
+    //         var force = d3.layout.force()
+    //           .nodes(finalResult)
+    //           .size([container.width()-svgPadding, container.height()])
+    //           .gravity(0)
+    //           .charge(0)
+    //           .on("tick", tick)
+    //           .start()
+
+    //         // Define the div for the tooltip
+    //         var tooltip = d3.select("body").append("div")   
+    //             .attr("class", "timeline-tooltip")               
+    //             .style("opacity", 0);
+
+            
+
+
+    //         function gravity(alpha) {
+    //           return function(d) {
+    //             d.y += (d.idealcy - d.y) * alpha;
+    //             d.x += (d.idealcx - d.x) * alpha * 3;
+    //             return d;
+    //           };
+    //         }
+    //         function collide(alpha) {
+    //           var quadtree = d3.geom.quadtree(finalResult);
+    //           return function(d) {
+    //             // console.log(d)
+    //             var r = d.radius + maxRadius + padding,
+    //                 nx1 = d.x - r,
+    //                 nx2 = d.x + r,
+    //                 ny1 = d.y - r,
+    //                 ny2 = d.y + r;
+    //             quadtree.visit(function(quad, x1, y1, x2, y2) {
+    //               if (quad.point && (quad.point !== d)) {
+    //                 var x = d.x - quad.point.x,
+    //                     y = d.y - quad.point.y,
+    //                     l = Math.sqrt(x * x + y * y),
+    //                     r = d.radius + quad.point.radius + padding;
+    //                 if (l < r) {
+    //                   l = (l - r) / l * alpha;
+    //                   d.x -= x *= l;
+    //                   d.y -= y *= l;
+    //                   quad.point.x += x;
+    //                   quad.point.y += y;
+    //                 }
+    //               }
+    //               return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+    //             });
+    //             return d;
+    //           };
+    //         }
+    //         function renderGraph() {
+    //           // Run the layout a fixed number of times.
+    //           // The ideal number of times scales with graph complexity.
+    //           // Of course, don't run too long—you'll hang the page!
+    //           force.start();
+    //           for (var i = 100; i > 0; --i) force.tick();
+    //           force.stop();
+
+    //           var xAxis = d3.svg.axis()  
+    //             .scale(xTime)
+    //             .orient("bottom")
+    //             .innerTickSize(-container.height()/2)
+    //             .outerTickSize(0)
+    //             .tickPadding(10);
+
+    //           timeline
+    //             .append("g")
+    //             .attr("class", "x axis")
+    //             .attr("transform", "translate(0," + (container.height()-20) + ")")
+    //             .call(xAxis);
+
+    //           var circle = timeline.selectAll("circle")
+    //             .data(finalResult)
+    //           .enter().append("circle")
+    //             .attr("transform", "translate(0," + (container.height()-50) + ")")
+    //             .attr("cx", function(d) { return d.x} )
+    //             .attr("cy", function(d) { return d.y} ) 
+    //             .attr('class', function(d){
+    //                 return 'id-'+d.pk;
+    //             })
+    //             .attr("r", radius )
+    //             .on('mouseover', function(d){
+    //                 highlightFunction(d.pk);
+
+    //                 tooltip.transition()        
+    //                     .duration(200)      
+    //                     .style("opacity", .9);
+
+    //                 tooltip.html(formatDate(d.finished))  
+    //                     .style("left", (d3.event.pageX) + "px")     
+    //                     .style("top", (d3.event.pageY - 30) + "px");    
+    //             })
+    //             .on('mouseout', function(d){
+    //                 highlightFunction(d.pk);
+
+    //                 tooltip.transition()        
+    //                     .duration(400)      
+    //                     .style("opacity", 0);   
+    //             })
+    //             .on('click', function(d){
+    //                 $scope.selectResult(d);
+    //             });
+               
+    //             // d3.select(window).on('resize', resize);
+    //             // function resize(){
+    //             //     var container = $('#timeline-container');
+    //             //     timeline.
+    //             //     // xTime = d3.time.scale()
+    //             //     //     .range([0, container.width()-svgPadding]);
+    //             //     // xAxis = d3.svg.axis()  
+    //             //     //     .scale(xTime);
+    //             //     // timeline
+    //             //     //     .select(".x.axis")
+    //             //     //     .attr("transform", "translate(0," + (container.height()-20) + ")")
+    //             //     //     .call(xAxis);
+    //             //     // timeline.selectAll('circle')
+    //             //     //     .attr("transform", "translate(0," + (container.height()-50) + ")")
+    //             // } 
+
+    //         }
+    //         // Use a timeout to allow the rest of the page to load first.
+    //         if(finalResult.length > 0){
+    //             setTimeout(renderGraph, 10);
+    //         }
 
         
-        }
+    //     }
 
-    }
+    // }
 
 
     //infinite scroll for resultlist
