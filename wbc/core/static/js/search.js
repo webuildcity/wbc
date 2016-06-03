@@ -493,12 +493,17 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
         var timelineContainer = $('#timeline-container');
         var timeline = d3.select('#timeline');
-        var svgPadding = 20;
+        var svgPadding = 30;
         var circlePadding = 0;
         var parseDate = d3.time.format("%d.%m.%y").parse;
         var formatDate = d3.time.format('%d.%m.%Y');
         var xTime; //scale
-        var svg = d3.select('#timeline').append('svg');
+        // var svg = d3.select('#timeline').append('svg');
+        var chartWrapper = d3.select('#timeline').append('g');
+        var startY = 50;
+
+        chartWrapper.attr('transform', 'translate(' + svgPadding + ',0)');
+
         var width = 0;
         // Init the div for the tooltip
         var tooltip = d3.select("body").append("div")   
@@ -516,10 +521,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             .outerTickSize(0)
             .tickPadding(10);  
 
-        svg
+        chartWrapper
             .append("g")
             .attr("class", "x axis")
-            .attr("transform", "translate(20," + (timelineContainer.height()-20) + ")")
+            .attr("transform", "translate(0," + (timelineContainer.height()-20) + ")")
             .call(xAxis);
     
         //gravity function for force layout    
@@ -580,7 +585,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             //update the xAxes
             xTime.domain(d3.extent($scope.results, function(d) { return d.finished }));
             xAxis.scale(xTime);
-            svg.select('.x.axis')
+            chartWrapper.select('.x.axis')
                 .transition().duration(transitionDuration).ease("ease-in")  // https://github.com/mbostock/d3/wiki/Transitions#wiki-d3_ease
                 .call(xAxis);
 
@@ -591,8 +596,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             // });
             
             $scope.results.forEach(function(d) {
-                d.y = 10;
-                d.idealcy = 10;
+                d.y = startY;
+                d.idealcy = startY;
                 if (d.finished) {
                     d.x = xTime(d.finished);                
                     d.idealcx = xTime(d.finished);
@@ -619,24 +624,24 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             }
 
             var force = d3.layout.force()
-              .nodes($scope.results)
-              .size([timelineContainer.width()-svgPadding, timelineContainer.height()])
-              // .gravity(0)
-              // .charge(0)
-              .on("tick", tick)
-              .start();
+                .nodes($scope.results)
+                .size([timelineContainer.width()-svgPadding, timelineContainer.height()])
+                // .gravity(0)
+                // .charge(0)
+                .on("tick", tick)
+                .start();
 
             // force.start();
-            var circle = svg.selectAll("circle")
+            var circle = chartWrapper.selectAll("circle")
                 .data($scope.results, function(d) { return d.pk});
 
             circle
                 .transition()
                 .duration(transitionDuration) 
-                // .attr("cx", function(d) { return isNaN(d.x) ? 0 : xTime(d.x)  });
+                .attr("cx", function(d) { return isNaN(d.x) ? 0 : d.x  });
 
             circle.enter().append("circle")
-                .attr("transform", "translate(10," + (timelineContainer.height()-50) + ")")
+                // .attr("transform", "translate(10," + (timelineContainer.height()-50) + ")")
                 .attr("cx", function(d) { return isNaN(d.x) ? timelineContainer.width()-svgPadding : d.x  })
                 .attr("cy", function(d) { return d.y })
                 .attr("r",  function(d) { return radius })
@@ -665,6 +670,8 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
                     $scope.selectResult(d);
                 })
                 .style('opacity', 0)
+                
+            circle
                 .transition()
                 .delay(transitionDuration)
                 .duration(transitionDuration)
