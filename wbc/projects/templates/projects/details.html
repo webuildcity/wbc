@@ -301,6 +301,7 @@ DetailsController
             </li>
             <li><a data-toggle="tab" href="#discussion"><i class="fa fa-comment"></i>Diskussion ({% get_comment_count for project as count %}{{count}})</a></li>
             <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Karte</a></li>
+            <li><a data-toggle="tab" href="#etherpad-tab">Etherpad</a></li>
         </ul>
     </div>
     
@@ -411,6 +412,14 @@ DetailsController
                 {% render_comment_form for project %}
             {% else %}
                 <a class="dropdown-toggle" data-toggle="dropdown" data-target=".dropdown" href="#" >Melden</a> Sie sich an um ein Kommentar zu hinterlassen.
+            {% endif %}
+
+        </div>
+        <!-- Discussion tab, read and write comments -->
+        <div id="etherpad-tab" class="tab-pane">
+            {% if project.padId %}
+            <iframe src='http://localhost:9001/p/{{project.padId}}' id='etherpad-iframe'>
+            }
             {% endif %}
 
         </div>
