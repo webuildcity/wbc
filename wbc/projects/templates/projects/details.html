@@ -355,8 +355,10 @@ DetailsController
                     <ul class="nav">
                     {% for attachment in attachments %}
                         <li class="pdf-preview" data-pdf="{{attachment.attachment.url}}" ng-click="openPDF('{{attachment.attachment.url}}')">
+                        {% if attachment.image %}
                             {% generateimage 'wbc:pdfpreview' source=attachment.image %}
                             {{attachment.name}}
+                        {% endif %}
                         </li>                    
                     {% endfor %}
                     </ul>
@@ -421,7 +423,9 @@ DetailsController
                 {% if following %}
                 <iframe src='http://localhost:9001/p/{{project.padId}}' id='etherpad-iframe'>
                 {% else %}
-                {% trans 'Folge dem Projekt um hier mitzuschreiben.' %}
+                <div class="overlay-message">
+                    {% trans 'Folge dem Projekt um hier mitzuschreiben.' %}
+                </div>
                 {{etherpadText | safe}}
                 {% endif %}
             {% endif %}
