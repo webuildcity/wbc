@@ -3,7 +3,7 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
-
+from django.conf import settings
 import datetime
 
 from wbc.core.models import Model
@@ -20,6 +20,8 @@ from django.contrib.contenttypes.fields import GenericRelation
 from star_ratings.models import Rating
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
+
+from etherpad_lite import EtherpadLiteClient
 
 
 class Address(Model):
@@ -66,6 +68,7 @@ class Project(Model):
     ratings              = GenericRelation(Rating, related_query_name='project_ratings')
     finished             = models.DateField(null=True, blank=True, verbose_name="Festgestellt am")
     isFinished           = models.NullBooleanField(default=True, null=True, blank=True)
+    padId                = models.CharField(blank=True, null=True, max_length=64)
 
     def get_changed_by(self):
         if(self.history.last()):
@@ -142,6 +145,12 @@ class Project(Model):
 
     def save(self, *args, **kwargs):
         unique_slugify(self,self.name)
+        if self.pk is None:
+            c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key']})
+            group = c.createGroupIfNotExistsFor(groupMapper=self.slug)
+            pad = c.createGroupPad(groupID=group['groupID'], padName=self.slug, text="Hallo")
+            self.padId = pad['padID']
+
         super(Project, self).save(*args, **kwargs)
 
 class BufferArea(Model):

@@ -290,21 +290,35 @@ DetailsController
     <!-- Navigation Menu for the main content -->
     <div class="main-content-nav-container">
         <ul class="wbc-nav main-content-nav nav nav-tabs" data-tabs="tabs" ng-click="ifSmallExpand()" ng-class="{'wbc-expanded' : expanded}">
+            {% if tab_settings.info %}
             <li class="active"><a data-toggle="tab" href="#info"><i class="fa fa-info"></i>Info</a></li>
+            {% endif %}
+            {% if tab_settings.3d %}
             <li><a class="3d-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>3D</a></li>
+            {% endif %}
+            {% if tab_settings.images %}
             <li  {{album|yesno:' ,class=not-active'}}><a data-toggle="tab" href="#gallery"><i class="fa fa-image"></i>Bilder</a></li>
-            <li>
-                <a data-toggle="tab" href="#timeline"><i class="fa fa-calendar"></i>Ereignisse</a>
-            </li>
-            <li>
-                <a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Beteiligte</a>
-            </li>
+            {% endif %}
+            {% if tab_settings.events %}
+            <li><a data-toggle="tab" href="#timeline"><i class="fa fa-calendar"></i>Ereignisse</a></li>
+            {% endif %}
+            {% if tab_settings.stakeholder %}
+            <li><a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Beteiligte</a></li>
+            {% endif %}
+            {% if tab_settings.discussion %}
             <li><a data-toggle="tab" href="#discussion"><i class="fa fa-comment"></i>Diskussion ({% get_comment_count for project as count %}{{count}})</a></li>
+            {% endif %}
+            {% if tab_settings.map %}
             <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Karte</a></li>
+            {% endif %}
+            {% if tab_settings.etherpad %}
+            <li><a data-toggle="tab" href="#etherpad-tab">Etherpad</a></li>
+            {% endif %}
         </ul>
     </div>
     
     <!-- INFO TAB, summarizes most important information about the project -->
+    {% if tab_settings.info %}
     <div id="tab-content" class="tab-content">
         <div id="info" class="tab-pane active">
             <!-- <div class="content-container">
@@ -354,8 +368,10 @@ DetailsController
                     <ul class="nav">
                     {% for attachment in attachments %}
                         <li class="pdf-preview" data-pdf="{{attachment.attachment.url}}" ng-click="openPDF('{{attachment.attachment.url}}')">
+                        {% if attachment.image %}
                             {% generateimage 'wbc:pdfpreview' source=attachment.image %}
                             {{attachment.name}}
+                        {% endif %}
                         </li>                    
                     {% endfor %}
                     </ul>
@@ -365,30 +381,40 @@ DetailsController
             {% endif %}
 
         </div>
+        {% endif %}
 
         <!-- Map, displaying the location and buffer areas if available  -->
+        {% if tab_settings.map %}
         <div id="project_map" class="tab-pane">
              <div id="map"></div>
         </div>
-
+        {% endif %}
         <!-- Gallery with all images uploaded to the project -->
+        
+        {% if tab_settings.images %}
         <div id="gallery" class="tab-pane">
         {% if album %}
            {% include "projects/project_gallery.html" %}
         {% endif %}
         </div>
+        {% endif %}
 
         <!-- Timeline with all the events -->
+        {% if tab_settings.events %}
         <div id="timeline" class="tab-pane">
             {% include "projects/project_events.html" %}
         </div>
+        {% endif %}
 
         <!-- Shows all the people/organizations involved in the project -->
+        {% if tab_settings.stakeholder %}
         <div id="stakeholder" class="tab-pane">
             {% include "projects/project_stakeholder.html" %}
         </div>
+        {% endif %}
 
         <!-- 3D display of the area, using vizicities -->
+        {% if tab_settings.3d %}
         <div id="3d" class="tab-pane">
             <div id="vizicities-viewport">
                 <div class="vizicities-ui-item" id="vizi-menu">
@@ -401,8 +427,10 @@ DetailsController
                 </div>
             </div>
         </div>
+        {% endif %}
 
         <!-- Discussion tab, read and write comments -->
+        {% if tab_settings.discussion %}
         <div id="discussion" class="tab-pane">
 
             {% render_comment_list for project %}
@@ -414,6 +442,24 @@ DetailsController
             {% endif %}
 
         </div>
+        {% endif %}
+
+        <!-- Discussion tab, read and write comments -->
+        {% if tab_settings.etherpad %}
+        <div id="etherpad-tab" class="tab-pane">
+            {% if project.padId %}
+                {% if following %}
+                <iframe src='http://localhost:9001/p/{{project.padId}}' id='etherpad-iframe'>
+                {% else %}
+                <div class="overlay-message">
+                    {% trans 'Folge dem Projekt um hier mitzuschreiben.' %}
+                </div>
+                {{etherpadText | safe}}
+                {% endif %}
+            {% endif %}
+
+        </div>
+        {% endif %}
     </div>
 </div>
 

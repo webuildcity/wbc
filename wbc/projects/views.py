@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+from datetime import timedelta
 from django.conf import settings
 from django.shortcuts import render,get_object_or_404
 from django.core.urlresolvers import reverse,reverse_lazy
@@ -31,6 +32,8 @@ from serializers import *
 
 from guardian.shortcuts import assign_perm, get_perms
 from guardian.decorators import permission_required_or_403
+
+from etherpad_lite import EtherpadLiteClient
 
 # from forms import *
 
@@ -177,10 +180,10 @@ def project_request(request, p):
     following = None
     if request.user.is_authenticated():
         following = p.stakeholders.filter(pk=request.user.profile.stakeholder.pk).exists()
+    
     subscribed = None
     if request.user.is_authenticated() and request.user.profile.subscriber:
         subscribed = request.user.profile.subscriber.projects.filter(pk=p.pk).exists()
-
 
     if publications:
         processTypeList = {}
@@ -192,7 +195,17 @@ def project_request(request, p):
                 for pub in publications.filter(process_step = step):
                     step.publication = pub
 
-    return render(request,'projects/details.html',{
+    etherpadText = ''
+    if p.padId:
+        c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key']})
+        if following:
+            group = c.createGroupIfNotExistsFor(groupMapper=p.slug)
+            author = c.createAuthorIfNotExistsFor(authorMapper='test')
+            validUntil = now() + datetime.timedelta(hours=3)
+            sessionID = c.createSession(groupID=unicode(group['groupID']), authorID=unicode(author['authorID']), validUntil=str(validUntil.strftime('%s')))
+        etherpadText = c.getHTML(padID=p.padId)['html']
+
+    response = render(request,'projects/details.html',{
         'project' : p,
         # 'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
         'events'  : p.events.order_by('-begin'),
@@ -208,8 +221,16 @@ def project_request(request, p):
         'following': following,
         'subscribed': subscribed,
         'bufferAreas' : p.bufferarea_set.all(),
-        'attachments' : p.projectattachment_set.all()
+        'attachments' : p.projectattachment_set.all(),
+        'etherpadText': etherpadText,
+        'tab_settings': settings.DETAILS_TABS,
     })
+
+    #create session id cookie for etherpad authentication
+    if following and p.padId:
+        response.set_cookie('sessionID', sessionID['sessionID'])
+
+    return response
 
 @login_required
 def follow(request, pk):
