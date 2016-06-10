@@ -204,7 +204,6 @@ def project_request(request, p):
             validUntil = now() + datetime.timedelta(hours=3)
             sessionID = c.createSession(groupID=unicode(group['groupID']), authorID=unicode(author['authorID']), validUntil=str(validUntil.strftime('%s')))
         etherpadText = c.getHTML(padID=p.padId)['html']
-    print p.projectattachment_set.all()
 
     response = render(request,'projects/details.html',{
         'project' : p,
@@ -223,7 +222,8 @@ def project_request(request, p):
         'subscribed': subscribed,
         'bufferAreas' : p.bufferarea_set.all(),
         'attachments' : p.projectattachment_set.all(),
-        'etherpadText': etherpadText
+        'etherpadText': etherpadText,
+        'tab_settings': settings.DETAILS_TABS,
     })
 
     #create session id cookie for etherpad authentication
