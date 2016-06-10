@@ -195,6 +195,16 @@ def project_request(request, p):
                 for pub in publications.filter(process_step = step):
                     step.publication = pub
 
+    etherpadText = ''
+    if p.padId:
+        c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key']})
+        if following:
+            group = c.createGroupIfNotExistsFor(groupMapper=p.slug)
+            author = c.createAuthorIfNotExistsFor(authorMapper='test')
+            validUntil = now() + datetime.timedelta(hours=3)
+            sessionID = c.createSession(groupID=unicode(group['groupID']), authorID=unicode(author['authorID']), validUntil=str(validUntil.strftime('%s')))
+        etherpadText = c.getHTML(padID=p.padId)['html']
+
     response = render(request,'projects/details.html',{
         'project' : p,
         # 'comments': Comment.objects.filter(project = int(p.pk), enabled = True),
@@ -211,17 +221,12 @@ def project_request(request, p):
         'following': following,
         'subscribed': subscribed,
         'bufferAreas' : p.bufferarea_set.all(),
-        'attachments' : p.projectattachment_set.all()
+        'attachments' : p.projectattachment_set.all(),
+        'etherpadText': etherpadText
     })
 
     #create session id cookie for etherpad authentication
     if following:
-        c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key']})
-        group = c.createGroupIfNotExistsFor(groupMapper=p.slug)
-        author = c.createAuthorIfNotExistsFor(authorMapper='test')
-        validUntil = now() + datetime.timedelta(hours=3)
-        print validUntil
-        sessionID = c.createSession(groupID=unicode(group['groupID']), authorID=unicode(author['authorID']), validUntil=str(validUntil.strftime('%s')))
         response.set_cookie('sessionID', sessionID['sessionID'])
 
     return response

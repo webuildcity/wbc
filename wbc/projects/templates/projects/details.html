@@ -418,8 +418,12 @@ DetailsController
         <!-- Discussion tab, read and write comments -->
         <div id="etherpad-tab" class="tab-pane">
             {% if project.padId %}
-            <iframe src='http://localhost:9001/p/{{project.padId}}' id='etherpad-iframe'>
-            }
+                {% if following %}
+                <iframe src='http://localhost:9001/p/{{project.padId}}' id='etherpad-iframe'>
+                {% else %}
+                {% trans 'Folge dem Projekt um hier mitzuschreiben.' %}
+                {{etherpadText | safe}}
+                {% endif %}
             {% endif %}
 
         </div>
