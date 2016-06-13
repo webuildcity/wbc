@@ -196,7 +196,7 @@ def project_request(request, p):
                     step.publication = pub
 
     etherpadText = ''
-    if p.padId:
+    if p.padId and settings.DETAILS_TABS['etherpad']:
         c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key']})
         if following:
             group = c.createGroupIfNotExistsFor(groupMapper=p.slug)
@@ -227,7 +227,7 @@ def project_request(request, p):
     })
 
     #create session id cookie for etherpad authentication
-    if following and p.padId:
+    if following and p.padId and settings.DETAILS_TABS['etherpad']:
         response.set_cookie('sessionID', sessionID['sessionID'])
 
     return response

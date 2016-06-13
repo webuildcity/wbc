@@ -2,6 +2,7 @@
 import json
 from datetime import datetime
 
+from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse
@@ -176,7 +177,7 @@ class SearchView(TemplateView):
     def get(self, request):
         query =  request.GET.urlencode()
         q = request.GET.get('q', '')
-        return render(request, 'core/search.html',  context={'q': q})
+        return render(request, 'core/search.html',  context={'q': q, 'order_btns' : settings.ORDER_BTNS})
 
     def post(self, request):
         data = json.loads(request.body)

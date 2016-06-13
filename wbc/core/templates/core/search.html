@@ -108,12 +108,9 @@ SearchController
                     <div class='sort-filter collapse wbc-dropdown-container'>
                         <div class="sort-control">
                             <ul class="tabs">
-                                <!-- <button value="" class="order-btn active btn btn-default">{% trans 'BUTTON:Relevanz' %}</button> -->
-                                <button value="name" class="order-btn btn btn-default">{% trans 'BUTTON:Name' %}</button>
-                                <button value="-created" class="order-btn btn btn-default">{% trans 'BUTTON:Datum' %}</button>
-                                <!-- <button value="-num_stakeholder" class="order-btn btn btn-default">{% trans 'BUTTON:# Beteiligte' %}</button> -->
-                                <button value="-ratings_avg" class="order-btn btn btn-default">{% trans 'BUTTON:Bewertung' %}</button>
-                                <!-- <button value="-ratings_count" class="order-btn btn btn-default">{% trans 'BUTTON:# Bewertungen' %}</button> -->
+                                {% for btn in order_btns %}
+                                <button value={{btn.value}} class="order-btn btn btn-default">{{btn.text}}</button>
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>
@@ -297,12 +294,9 @@ SearchController
             <div class="sort-control pull-left hidden-xs">
                 <p>{% trans 'Sortieren nach:' %}</p>
                 <ul class="tabs">
-                    <!-- <button value="" class="order-btn active btn btn-default">{% trans 'BUTTON:Relevanz' %}</button> -->
-                    <button value="name" class="order-btn btn btn-default">{% trans 'BUTTON:Name' %}</button>
-                    <button value="-created" class="order-btn btn btn-default">{% trans 'BUTTON:Datum' %}</button>
-                    <!-- <button value="-num_stakeholder" class="order-btn btn btn-default">{% trans 'BUTTON:# Beteiligte' %}</button> -->
-                    <button value="-ratings_avg" class="order-btn btn btn-default">{% trans 'BUTTON:Bewertung' %}</button>
-                    <!-- <button value="-ratings_count" class="order-btn btn btn-default">{% trans 'BUTTON:# Bewertungen' %}</button> -->
+                    {% for btn in order_btns %}
+                        <button value={{btn.value}} class="order-btn btn btn-default">{{btn.text}}</button>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
