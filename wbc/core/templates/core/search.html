@@ -243,7 +243,8 @@ SearchController
         <!-- INFO BOX ON MAP, shows selected Result -->
         <div ng-if="selectedResult != null" class="map-overlay" id="map-info-box">
             <h2>{[{selectedResult.name}]}</h2>
-            <a ng-href="{[{selectedResult.internal_link}]}">{% trans 'Details' %}</a>
+            <img ng-if="selectedResult.thumbnail" class="search-thumbnail" src={[{selectedResult.thumbnail}]}>
+            <a class="clearfix" ng-href="{[{selectedResult.internal_link}]}">{% trans 'Details' %}</a>
         </div>
 
         <!-- LEGEND -->
