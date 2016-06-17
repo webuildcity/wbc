@@ -23,7 +23,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.formData.entities = [];          //list of entities
     $scope.formData.terminated = false;
     $scope.selectedResult = null;       //currently selected result
-    $scope.listView = false;            //switch between views
+    $scope.listView = !_mapview;            //switch between views
     $scope.searching = false;           //currently searching?
     $scope.offset = 0;                  //current offset
     $scope.multipoly = [];              //polygon to draw on the map
