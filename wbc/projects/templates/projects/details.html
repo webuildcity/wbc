@@ -312,7 +312,7 @@ DetailsController
             <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Karte</a></li>
             {% endif %}
             {% if tab_settings.etherpad %}
-            <li {{project.padId|yesno:' ,class=not-active'}}><a data-toggle="tab" href="#etherpad-tab">Etherpad</a></li>
+            <li {{project.padId|yesno:' ,class=not-active'}}><a data-toggle="tab" href="#notes">Notizen</a></li>
             {% endif %}
         </ul>
     </div>
@@ -446,7 +446,7 @@ DetailsController
 
         <!-- Discussion tab, read and write comments -->
         {% if tab_settings.etherpad %}
-        <div id="etherpad-tab" class="tab-pane">
+        <div id="notes" class="tab-pane">
             {% if project.padId %}
                 {% if following %}
                 <iframe src='http://localhost:9001/p/{{project.padId}}' id='etherpad-iframe'>
