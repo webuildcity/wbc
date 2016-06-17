@@ -87,6 +87,8 @@ class StartView(TemplateView):
         # context['latest'] = 
         projects = Project.objects.filter(events__begin__gte=now)[:3]
         context['upcoming'] = projects
+        context['topIcons'] = settings.STARTPAGE_OVERVIEW_ICONS;
+        context['botIcons'] = settings.STARTPAGE_TOPIC_ICONS;
         return context
         
 class SearchView(TemplateView):
