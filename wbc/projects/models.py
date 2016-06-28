@@ -146,9 +146,10 @@ class Project(Model):
     def save(self, *args, **kwargs):
         unique_slugify(self,self.name)
         if self.pk is None:
+            unique_name = settings.PREFIX + self.slug
             c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key']})
-            group = c.createGroupIfNotExistsFor(groupMapper=self.slug)
-            pad = c.createGroupPad(groupID=group['groupID'], padName=self.slug, text="Hallo")
+            group = c.createGroupIfNotExistsFor(groupMapper=unique_name)
+            pad = c.createGroupPad(groupID=group['groupID'], padName=unique_name, text="Hallo")
             self.padId = pad['padID']
 
         super(Project, self).save(*args, **kwargs)
