@@ -43,7 +43,8 @@
     </form>
 
     <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Login with Facebook</a>
-        
+    <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">Login with Twitter</a>
+
     <div class="form-group">
         <a class="modal-button" data-toggle="modal" data-target="#modal" data-form="{% url 'registration_register' %}" data-title="{% trans 'Benutzerkonto registrieren' %}" href="#">Noch nicht registriert?</a>
         <p>
