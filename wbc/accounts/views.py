@@ -9,11 +9,13 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 
 from registration.backends.default.views import RegistrationView, ActivationView
+from registration.forms import RegistrationFormUniqueEmail
 
 from .forms import ProfileForm, UserForm
 from wbc.stakeholder.forms import StakeholderProfileForm
 
 from .models import *
+from .forms import WbcRegistrationForm
 
 def profile(request, pk):
     p = get_object_or_404(Profile, pk= int(pk))
@@ -72,5 +74,8 @@ def profile_update(request):
 
 
 class WbcRegistrationView(RegistrationView):
-    def get_success_url(self, request, user):
-        return reverse('profile', user.pk)
+    
+    form_class = RegistrationFormUniqueEmail
+
+    # def get_success_url(self, request, user):
+    #     return reverse('profile', user.pk)
