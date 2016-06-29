@@ -73,9 +73,12 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
         return obj.finished
 
     def prepare_created_by(self, obj):
-        if obj.get_created_by():
-            return obj.get_created_by().profile.full_name
-        else:
+        try:
+            if obj.get_created_by():
+                return obj.get_created_by().profile.full_name
+            else:
+                return None
+        except:
             return None
 
     def prepare_ratings_avg(self, obj):
