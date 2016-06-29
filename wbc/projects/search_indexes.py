@@ -30,7 +30,7 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     ratings_count = indexes.IntegerField()
     buffer_areas = indexes.MultiValueField()
     finished = indexes.DateField()
-    isFinished = indexes.BooleanField(model_attr='isFinished')
+    isFinished = indexes.BooleanField(model_attr='isFinished', default=False)
 
     def get_model(self):
         return Project
