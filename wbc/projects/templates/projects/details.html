@@ -44,6 +44,7 @@
         var _tiles_url = "{{tiles_url}}";
         var _tiles_opt = {{tiles_opt|safe}};
         var _default_view = {{default_view|safe}};
+        var _maps = {{tab_settings.map|yesno:"true,false"}};
 
         var _bufferAreas = [];
         {% for area in bufferAreas %}
@@ -318,8 +319,8 @@ DetailsController
     </div>
     
     <!-- INFO TAB, summarizes most important information about the project -->
-    {% if tab_settings.info %}
     <div id="tab-content" class="tab-content">
+        {% if tab_settings.info %}
         <div id="info" class="tab-pane active">
             <!-- <div class="content-container">
                 <h3>Beschreibung</h3>
@@ -384,10 +385,10 @@ DetailsController
         {% endif %}
 
         <!-- Map, displaying the location and buffer areas if available  -->
-        {% if tab_settings.map %}
-        <div id="project_map" class="tab-pane">
+        <div ng-show={{tab_settings.map|yesno:"true,false"}} id="project_map" class="tab-pane">
              <div id="map"></div>
         </div>
+        {% if tab_settings.map %}
         {% endif %}
         <!-- Gallery with all images uploaded to the project -->
         
