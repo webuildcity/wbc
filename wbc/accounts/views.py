@@ -77,5 +77,8 @@ class WbcRegistrationView(RegistrationView):
     
     form_class = RegistrationFormUniqueEmail
 
+    # def get(self, request):
+    #     print request.referer
+
     # def get_success_url(self, request, user):
     #     return reverse('profile', user.pk)
