@@ -197,7 +197,7 @@ def project_request(request, p):
 
     etherpadText = ''
     if p.padId and settings.DETAILS_TABS['etherpad']:
-        c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key']})
+        c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key'], 'baseUrl' : settings.ETHERPAD_SETTINGS['base-url'] + 'api'})
         if following:
             group = c.createGroupIfNotExistsFor(groupMapper=settings.PREFIX + p.slug)
             author = c.createAuthorIfNotExistsFor(authorMapper=settings.PREFIX + str(request.user))
@@ -225,6 +225,7 @@ def project_request(request, p):
         'attachments' : p.projectattachment_set.all(),
         'etherpadText': etherpadText,
         'tab_settings': settings.DETAILS_TABS,
+        'etherpad_url': settings.ETHERPAD_SETTINGS['base-url'] + 'p/',
     })
 
     #create session id cookie for etherpad authentication
