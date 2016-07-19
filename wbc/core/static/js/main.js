@@ -16,7 +16,7 @@ app.controller('DefaultController', function() {
 // load the modal and redirection hhandle for subscribe button
 $(document).ready(function(){
     loadModal('#modal', '.modal-button')
-
+    loadLoginModal('#login-modal', '.login-button')
     $('.subscribe-button').on('click', function(){
         $.get($(this).data('url'), function(data) {
             if (data.redirect){

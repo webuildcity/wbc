@@ -4,18 +4,20 @@ except ImportError:
     from urlparse import urlparse
 
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import FormView
+from django.contrib.auth.models import User
+
 
 from registration.backends.default.views import RegistrationView, ActivationView
 from registration.forms import RegistrationFormUniqueEmail
 
-from .forms import ProfileForm, UserForm
+from .forms import ProfileForm, UserForm, WbcRegistrationForm, EmailForm
 from wbc.stakeholder.forms import StakeholderProfileForm
 
 from .models import *
-from .forms import WbcRegistrationForm
 
 def profile(request, pk):
     p = get_object_or_404(Profile, pk= int(pk))
@@ -73,10 +75,31 @@ def profile_update(request):
     return render(request, 'accounts/profile_form.html', {'user_form': user_form, 'profile_form': profile_form, 'stakeholder_form': stakeholder_form, 'next': next})
 
 
+class RegisterMethodView(FormView):
+
+    template_name ="registration/register_method.html"
+    success_url = "/"
+    form_class = EmailForm
+
+    def form_valid(self, form):
+        exists = User.objects.filter(email=form.cleaned_data.get('email'))
+        if exists:
+            return HttpResponseRedirect(reverse('login') + '?email='+form.cleaned_data.get('email'))
+        else:
+            return HttpResponseRedirect(reverse('registration_register') + '?email='+form.cleaned_data.get('email'))
+
+
+
 class WbcRegistrationView(RegistrationView):
     
     form_class = RegistrationFormUniqueEmail
 
+    def get_initial(self):
+        initial = super(WbcRegistrationView, self).get_initial()
+        email = self.request.GET.get('email')
+        if email is not None:
+            initial['email'] = email
+        return initial
     # def get(self, request):
     #     print request.referer
 

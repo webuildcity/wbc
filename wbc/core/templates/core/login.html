@@ -16,38 +16,19 @@
         {% endif %}
 
         {% if request.path != '/logout/' %}
-        <input type="hidden" name="next" value="{{ request.build_absolute_uri }}" />
+        <input type="hidden" name="next" value="{{ request.META.HTTP_REFERER }}" />
         {% endif %}
-  <!--       {% if next %}
+  <!--  {% if next %}
         <input type="hidden" name="next" value="{{ next }}" />
         {% endif %} -->
-
-        <div class="form-group">
-            <label class="control-label" for="username">Benutzername</label>
-            <div>
-                <input class="form-control" type="text" id="username" name="username" placeholder="Benutzername">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="password">Passwort</label>
-            <div>
-                <input class="form-control" type="password" name="password" id="password" placeholder="Passwort">
-                <a href='{% url "password_reset" %}'>{% trans 'Passwort vergessen' %}</a>
-            </div>
-        </div>
+        {% include 'core/form_fields.html' %}
+        <a href='{% url "password_reset" %}'>{% trans 'Passwort vergessen' %}</a>
         <div class="form-group">
             <div class="">
                 <button type="submit" value="Login" class="btn btn-primary">Anmelden</button>
             </div>
         </div>
     </form>
-
-    <div class="form-group">
-        <a class="modal-button" data-toggle="modal" data-target="#modal" data-form="{% url 'registration_register' %}" data-title="{% trans 'Benutzerkonto registrieren' %}" href="#">Noch nicht registriert?</a>
-        <p>
-            <a class="modal-button" data-toggle="modal" data-target="#modal" data-form="{% url 'registration_register' %}" data-title="{% trans 'Benutzerkonto registrieren' %}" href="#">Hier Registrieren!</a> 
-        </p>
-    </div>
 
  </div>
 {% else %}

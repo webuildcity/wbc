@@ -1,11 +1,4 @@
 {% load i18n staticfiles %}
-<div>
-    <a href="{% url 'social:begin' 'facebook' %}?next={{ request.META.HTTP_REFERER }}" class="btn btn-default social-login"> <img src="{% static 'img/logos/fb.png' %}">{% trans 'Mit Facebook anmelden' %}
-    </a>
-    <a href= "{% url 'social:begin' 'twitter' %}?next={{ request.META.HTTP_REFERER }}" class="btn btn-default social-login"> <img src="{% static 'img/logos/twitter.png' %}">{% trans 'Mit Twitter anmelden' %}
-    </a>
-</div>
-<div class="divider-text"><h2>{% trans 'oder' %}<h2></div>
 <form method="post" action="#">
     {% csrf_token %}
 

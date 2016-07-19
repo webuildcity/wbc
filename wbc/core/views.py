@@ -37,7 +37,13 @@ def feeds(request):
 
 
 def login_user(request):
-    form = LoginForm(request.POST or None)
+
+    email = ''
+    if request.method == 'GET':
+        email = request.GET.get('email', '')
+    data = {'username' : email}
+    form = LoginForm(request.POST or None, initial=data)
+
     if request.method == 'POST':
         if form.is_valid():
             user = form.login(request)
@@ -53,7 +59,7 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return render_to_response('core/logout.html', context_instance=RequestContext(request))
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 def autocomplete(request):

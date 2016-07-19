@@ -201,7 +201,6 @@ def project_request(request, p):
         if following:
             group = c.createGroupIfNotExistsFor(groupMapper=settings.PREFIX + p.slug)
             author = c.createAuthorIfNotExistsFor(authorMapper=settings.PREFIX + str(request.user))
-            # print request.user
             validUntil = now() + datetime.timedelta(hours=3)
             sessionID = c.createSession(groupID=unicode(group['groupID']), authorID=unicode(author['authorID']), validUntil=str(validUntil.strftime('%s')))
         etherpadText = c.getHTML(padID=p.padId)['html']
