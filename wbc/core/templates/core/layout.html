@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/x-scss" href="{% static "css/style.scss" %}" />
     {% endblock %}
 
+    
 
     <script type="text/javascript" src="{% static 'lib/jquery.min.js' %}" ></script>
     
@@ -71,7 +72,11 @@
     <script type="text/javascript" src="{% static 'js/utils.js' %}" ></script>
 
     {% block js %}
-
+    <script type="text/javascript">
+        var _static_url = "{% static '' %}";
+        var _autocomplete_url = "{% url 'autocomplete' %}";
+        var _search_url = "{% url 'search' %}";
+    </script>
     {% endblock %}
 </head>
 

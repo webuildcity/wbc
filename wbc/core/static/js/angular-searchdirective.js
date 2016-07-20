@@ -24,7 +24,7 @@ app.directive('wbcSearch', function() {
                     $scope.isLoading = true;
                     $http({
                         method: 'GET',
-                        url:  '/autocomplete',
+                        url:  _autocomplete_url,
                         params: {
                             q: $scope.formData.q
                         }
@@ -45,7 +45,7 @@ app.directive('wbcSearch', function() {
             };
 
             $scope.submit = function(){
-                window.location = "/suche/q="+ $scope.formData.q;
+                window.location = _search_url + $scope.formData.q;
             };
 
             $scope.loadDetails = function(result) {
