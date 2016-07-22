@@ -107,7 +107,6 @@ function loadLoginModal(modal, button){
 //             modal.find('form').unbind( "submit" );
 
             modal.on('submit', 'form', function(e){
-                console.log(this)
                 e.preventDefault();
                 $.ajax({ 
                     type: $(this).attr('method'), 
