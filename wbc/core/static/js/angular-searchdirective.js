@@ -45,7 +45,7 @@ app.directive('wbcSearch', function() {
             };
 
             $scope.submit = function(){
-                window.location = _search_url + $scope.formData.q;
+                window.location = _search_url + 'q='+ $scope.formData.q;
             };
 
             $scope.loadDetails = function(result) {

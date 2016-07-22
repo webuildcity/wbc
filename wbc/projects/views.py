@@ -225,6 +225,7 @@ def project_request(request, p):
         'etherpadText': etherpadText,
         'tab_settings': settings.DETAILS_TABS,
         'etherpad_url': settings.ETHERPAD_SETTINGS['base-url'] + 'p/',
+        'session_id'  : sessionID['sessionID'],
     })
 
     #create session id cookie for etherpad authentication
