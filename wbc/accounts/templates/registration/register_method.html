@@ -6,7 +6,7 @@
     </a>
 </div>
 <div class="divider-text"><h2>{% trans 'oder' %}<h2></div>
-<form method="post" action="#">
+<form method="post"  action="{% url 'register_method' %}">
     {% csrf_token %}
 
     {% include 'core/form_fields.html' %}

@@ -1,5 +1,5 @@
 {% load i18n staticfiles %}
-<form method="post" action="#">
+<form method="post" action="{% url 'registration_register' %}" method="post" >
     {% csrf_token %}
 
     {% include 'core/form_fields.html' %}

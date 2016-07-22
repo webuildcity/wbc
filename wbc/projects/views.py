@@ -196,6 +196,7 @@ def project_request(request, p):
                     step.publication = pub
 
     etherpadText = ''
+    sessionIDText = ''
     if p.padId and settings.DETAILS_TABS['etherpad']:
         c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key'], 'baseUrl' : settings.ETHERPAD_SETTINGS['base-url'] + 'api'})
         if following:
@@ -203,6 +204,7 @@ def project_request(request, p):
             author = c.createAuthorIfNotExistsFor(authorMapper=settings.PREFIX + str(request.user))
             validUntil = now() + datetime.timedelta(hours=3)
             sessionID = c.createSession(groupID=unicode(group['groupID']), authorID=unicode(author['authorID']), validUntil=str(validUntil.strftime('%s')))
+            sessionIDText = sessionID['sessionID']
         etherpadText = c.getHTML(padID=p.padId)['html']
 
     response = render(request,'projects/details.html',{
@@ -225,12 +227,12 @@ def project_request(request, p):
         'etherpadText': etherpadText,
         'tab_settings': settings.DETAILS_TABS,
         'etherpad_url': settings.ETHERPAD_SETTINGS['base-url'] + 'p/',
-        'session_id'  : sessionID['sessionID'],
+        'session_id'  : sessionIDText,
     })
 
     #create session id cookie for etherpad authentication
     if following and p.padId and settings.DETAILS_TABS['etherpad']:
-        response.set_cookie('sessionID', sessionID['sessionID'])
+        response.set_cookie('sessionID', sessionIDText)
 
     return response
 

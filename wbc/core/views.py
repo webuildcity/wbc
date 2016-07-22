@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login, logout
@@ -50,9 +50,11 @@ def login_user(request):
             if user:
                 login(request, user)
                 if request.POST.get('next'):
-                    return HttpResponseRedirect(request.POST.get('next'))
+                    return JsonResponse({'redirect':  request.POST.get('next')})
+                    # return HttpResponseRedirect(request.POST.get('next'))
                 else:
-                    return HttpResponseRedirect('/')
+                    # return HttpResponseRedirect('/')
+                    return JsonResponse({'redirect':  '/'})
 
     return render(request, 'core/login.html', {'form': form})
 

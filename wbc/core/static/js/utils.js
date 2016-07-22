@@ -104,13 +104,14 @@ function loadLoginModal(modal, button){
             }
             modal.modal();
             modal.modal('show'); // display the modal on url load
-            modal.find('form').unbind( "submit" );
+//             modal.find('form').unbind( "submit" );
 
-            modal.find('form').on('submit', function(e){
+            modal.on('submit', 'form', function(e){
+                console.log(this)
                 e.preventDefault();
                 $.ajax({ 
                     type: $(this).attr('method'), 
-                    url: url, 
+                    url: $(this).attr("action"), 
                     data: $(this).serialize(),
                     context: this,
                     success: function(data, status) {

@@ -75,6 +75,7 @@ def profile_update(request):
     return render(request, 'accounts/profile_form.html', {'user_form': user_form, 'profile_form': profile_form, 'stakeholder_form': stakeholder_form, 'next': next})
 
 
+# view to choose login method. if email entered redirects accordingly
 class RegisterMethodView(FormView):
 
     template_name ="registration/register_method.html"
@@ -89,10 +90,10 @@ class RegisterMethodView(FormView):
             return HttpResponseRedirect(reverse('registration_register') + '?email='+form.cleaned_data.get('email'))
 
 
-
+# RegistrationView that required unique email
 class WbcRegistrationView(RegistrationView):
     
-    form_class = RegistrationFormUniqueEmail
+    form_class = WbcRegistrationForm
 
     def get_initial(self):
         initial = super(WbcRegistrationView, self).get_initial()
@@ -100,6 +101,10 @@ class WbcRegistrationView(RegistrationView):
         if email is not None:
             initial['email'] = email
         return initial
+
+    # def form_valid(self, form):
+    #     return HttpResponseRedirect(reverse('registration_complete'))
+
     # def get(self, request):
     #     print request.referer
 

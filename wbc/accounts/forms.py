@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm      
 
 from .models import Profile
-from .validators import validate_email_unique
+from .validators import validate_email_unique, validate_username_unique
 
 
 class UserForm(ModelForm):
@@ -23,6 +23,7 @@ class ProfileForm(ModelForm):
 
 
 class WbcRegistrationForm(UserCreationForm):
+    username = forms.CharField(required=True, validators=[validate_username_unique])
     email = forms.CharField(required=True, validators=[validate_email_unique])
 
     class Meta:
