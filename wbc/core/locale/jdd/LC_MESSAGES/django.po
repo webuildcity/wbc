@@ -24,7 +24,7 @@ msgstr "Landkreis Lichtenfels"
 
 #: templates/core/login.html:25
 msgid "Passwort vergessen"
-msgstr ""
+msgstr "Passwort vergessen"
 
 #: templates/core/search.html:46
 msgid ""
