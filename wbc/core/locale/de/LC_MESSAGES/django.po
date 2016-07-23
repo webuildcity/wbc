@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-19 19:48+0200\n"
+"POT-Creation-Date: 2016-07-23 19:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,117 +18,116 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/core/layout.html:113
+#: templates/core/layout.html:117
 msgid "We-Build-Polis"
-msgstr "Wir-Bauen-Hamburg"
+msgstr "Landkreis Lichtenfels"
 
-#: templates/core/login.html:48
-msgid "Benutzerkonto registrieren"
-msgstr "Benutzerkonto registrieren"
+#: templates/core/login.html:25
+msgid "Passwort vergessen"
+msgstr ""
 
-#: templates/core/search.html:44
+#: templates/core/search.html:46
 msgid ""
 "PLACEHOLDER:Suche nach Ideen, Ansprechpartnern und Projekten in deinem "
 "Landkreis..."
-msgstr "Suche: Bauvorhaben, 3D Modelle, Bebauungspläne, etc."
+msgstr ""
+"Suche nach Ideen, Ansprechpartnern und Projekten in deinem Landkreis..."
 
-#: templates/core/search.html:54
+#: templates/core/search.html:56
 msgid "Suche zurücksetzen"
 msgstr "Suche zurücksetzen"
 
-#: templates/core/search.html:77
+#: templates/core/search.html:79
 msgid "Erweiterte Suche"
 msgstr "Erweiterte Suche"
 
-#: templates/core/search.html:80
+#: templates/core/search.html:83
 msgid "Einträgen"
 msgstr "Einträgen"
 
-#: templates/core/search.html:81 templates/core/search.html.py:185
+#: templates/core/search.html:84
+#, fuzzy
+#| msgid "Einträgen"
+msgid "Einträge"
+msgstr "Einträgen"
+
+#: templates/core/search.html:85 templates/core/search.html.py:228
 msgid "more"
 msgstr "Mehr Ergebnisse"
 
-#: templates/core/search.html:82
+#: templates/core/search.html:86
 msgid "all"
 msgstr "Alle Ergebnisse"
 
-#: templates/core/search.html:86
+#: templates/core/search.html:90
 msgid "SPELLING SUGGESTION:Meinten Sie:"
 msgstr "Meinten Sie:"
 
-#: templates/core/search.html:102
+#: templates/core/search.html:106
+#, fuzzy
+#| msgid "Sortieren nach:"
+msgid "Sortieren"
+msgstr "Sortieren nach:"
+
+#: templates/core/search.html:124
+msgid "Filter"
+msgstr ""
+
+#: templates/core/search.html:130
+msgid "Historische Bebauungspläne"
+msgstr ""
+
+#: templates/core/search.html:136
+msgid "Bebauungspläne mit Ausgleichsflächen"
+msgstr ""
+
+#: templates/core/search.html:145
 msgid "ENTITY-FILTER: Stadtteile"
 msgstr "Stadtteile"
 
-#: templates/core/search.html:127
+#: templates/core/search.html:170
 msgid "TAG-FILTER:Stichwörter"
 msgstr "Stichwörter"
 
-#: templates/core/search.html:152 templates/core/search.html.py:239
+#: templates/core/search.html:195 templates/core/search.html.py:293
 msgid "Suche"
 msgstr "Suche"
 
-#: templates/core/search.html:159 templates/core/search.html.py:233
+#: templates/core/search.html:202 templates/core/search.html.py:287
 msgid "#ERGEBNISSE:Ergebnisse"
 msgstr "Ergebnisse"
 
-#: templates/core/search.html:196
+#: templates/core/search.html:239
 msgid "Button:Listen-/Kartenansicht"
 msgstr "Listen-/Kartenansicht"
 
-#: templates/core/search.html:204
+#: templates/core/search.html:248
 msgid "Details"
 msgstr "Details"
 
-#: templates/core/search.html:209
-msgid "Legende"
-msgstr "Legende"
-
-#: templates/core/search.html:243
+#: templates/core/search.html:297
 msgid "Sortieren nach:"
 msgstr "Sortieren nach:"
 
-#: templates/core/search.html:245
-msgid "BUTTON:Relevanz"
-msgstr "Relevanz"
-
-#: templates/core/search.html:246
-msgid "BUTTON:Name"
-msgstr "Name"
-
-#: templates/core/search.html:247
-msgid "BUTTON:Datum"
-msgstr "Datum"
-
-#: templates/core/search.html:248
-msgid "BUTTON:# Beteiligte"
+#: templates/core/search.html:325
+#, fuzzy
+#| msgid "BUTTON:# Beteiligte"
+msgid "#Beteiligte:"
 msgstr "Anzahl Projektbeteiligter"
 
-#: templates/core/search.html:249
-msgid "BUTTON:Bewertung"
-msgstr "Bewertung"
-
-#: templates/core/search.html:250
-msgid "BUTTON:# Bewertungen"
-msgstr "Bewertungen"
-
-#: templates/core/search.html:278
-msgid "#FOLLOWER:Beteiligte:"
-msgstr ""
-
-#: templates/core/search.html:281
+#: templates/core/search.html:328
 msgid "Erstellt am:"
 msgstr ""
 
-#: templates/core/search.html:282
+#: templates/core/search.html:329
 msgid "Erstellt von:"
 msgstr ""
 
-#: templates/core/search.html:283
+#: templates/core/search.html:330
 msgid "Bewertung: &Oslash;"
 msgstr ""
 
-#: templates/core/search.html:290
+#: templates/core/search.html:337
 msgid "Mehr Ergebnisse laden"
 msgstr ""
 
@@ -151,3 +150,27 @@ msgstr "Nicht bewertet"
 #: templates/star_ratings/widget.html:13
 msgid "Einloggen um abzustimmen."
 msgstr "Einloggen um abzustimmen."
+
+#~ msgid "Benutzerkonto registrieren"
+#~ msgstr "Benutzerkonto registrieren"
+
+#~ msgid "PLACEHOLDER:Suche: Bauvorhaben, 3D Modelle, Bebauungspläne, etc."
+#~ msgstr "Suche nach Ideen, Ansprechpartnern und Projekten"
+
+#~ msgid "Legende"
+#~ msgstr "Legende"
+
+#~ msgid "BUTTON:Relevanz"
+#~ msgstr "Relevanz"
+
+#~ msgid "BUTTON:Name"
+#~ msgstr "Name"
+
+#~ msgid "BUTTON:Datum"
+#~ msgstr "Datum"
+
+#~ msgid "BUTTON:Bewertung"
+#~ msgstr "Bewertung"
+
+#~ msgid "BUTTON:# Bewertungen"
+#~ msgstr "Bewertungen"
