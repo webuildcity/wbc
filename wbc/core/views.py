@@ -114,10 +114,11 @@ class SearchView(TemplateView):
 
         suggestions = sqs.spelling_suggestion()
         # Disable finished projects by default
-        if 'terminated' in data and data['terminated'] == True:
-            pass
-        else:
-            sqs = sqs.exclude(isFinished=True)
+        if settings.TERMINATED_PROJECTS:
+            if 'terminated' in data and data['terminated'] == True:
+                pass
+            else:
+                sqs = sqs.exclude(isFinished=True)
         
         if 'buffer_areas' in data and data['buffer_areas']:
             sqs = sqs.filter(_exists_="buffer_areas")
