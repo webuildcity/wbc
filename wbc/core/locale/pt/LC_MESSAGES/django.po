@@ -71,7 +71,7 @@ msgstr "Sortieren nach:"
 
 #: templates/core/search.html:124
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #: templates/core/search.html:130
 msgid "Historische Bebauungspläne"
