@@ -187,7 +187,7 @@ class SearchView(TemplateView):
     def get(self, request):
         query =  request.GET.urlencode()
         q = request.GET.get('q', '')
-        return render(request, 'core/search.html',  context={'q': q, 'order_btns' : settings.ORDER_BTNS, 'mapview' : settings.DEFAULT_VIEW_MAP})
+        return render(request, 'core/search.html',  context={'q': q, 'order_btns' : settings.ORDER_BTNS, 'mapview' : settings.DEFAULT_VIEW_MAP, 'add_filters' : settings.SHOW_ADDITIONAL_FILTER})
 
     def post(self, request):
         data = json.loads(request.body)

@@ -32,6 +32,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.searchFocus = false;         //if searchfield is focussed
     $scope.suggestions = [];            //autocomplete suggestions
     $scope.selectedSuggestionIdx = -1;  //selected autocomplete element
+    $scope.add_filters = $window._add_filters;     // show additional filters
     
     var radius = 6;
     var renderTimeline;

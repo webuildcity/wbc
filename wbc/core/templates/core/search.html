@@ -23,6 +23,7 @@
         var _tiles_opt = {{tiles_opt|safe}};
         var _default_view = {{default_view|safe}};
         var _mapview = {{mapview|yesno:"true,false"}};
+        var _add_filters = {{add_filters|yesno:"true,false"}};
     </script>
     <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/angular-mapservice.js' %}"></script>
@@ -119,7 +120,8 @@ SearchController
                     <div class="underline-lr"></div>
                 </div>
                 
-                <div class="facet-container">
+                <div ng-if="add_filters" class="facet-container">
+                    
                     <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target=".general-options">
                         <i class="anchor fa fa-gears"></i>{% trans 'Filter' %}
                     </div>
