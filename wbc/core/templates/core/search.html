@@ -168,7 +168,7 @@ SearchController
                 </div>
 
                 <div ng-if="tagFacets.length > 0" class="facet-container">
-                    <div ng-click="toggleSelectedItems($event)" class="collapse-heading collapsed" data-toggle="collapse" data-target="#tag-facets">
+                    <div ng-click="toggleSelectedItems($event)" class="collapse-heading" ng-class="{'collapsed' : !listView}" data-toggle="collapse" data-target="#tag-facets">
                         <i class="tag-anchor anchor fa fa-tags"></i>{% trans 'TAG-FILTER:Stichwörter' %}
                     </div>
                     <div class="active-facets wbc-dropdown-container">
@@ -177,7 +177,7 @@ SearchController
                             <a class="close-button" ng-click="formData.tags.splice(formData.tags.indexOf(tag), 1); startSearch();"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
                         </div>
                     </div>
-                    <div id='tag-facets' class="collapse wbc-dropdown-container">
+                    <div id='tag-facets' class="wbc-dropdown-container" ng-class="listView ? 'in' : 'collapse'">
                         <div class="facet-select" ng-repeat="facet in tagFacets">
                             <label>
                                 <input type="checkbox" checklist-model="formData.tags" checklist-value="facet[0]" ng-click="startSearch()">
