@@ -22,7 +22,7 @@
         <input type="hidden" name="next" value="{{ next }}" />
         {% endif %} -->
         {% include 'core/form_fields.html' %}
-        <a href='{% url "password_reset" %}'>{% trans 'Passwort vergessen' %}</a>
+        <a class="forgot-password" href='{% url "password_reset" %}'>{% trans 'Passwort vergessen' %}</a>
         <div class="form-group">
             <div class="">
                 <button type="submit" value="Login" class="btn btn-primary">Anmelden</button>

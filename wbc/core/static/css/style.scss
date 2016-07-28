@@ -202,6 +202,10 @@ a:hover,
     color: white !important;
 }
 
+.btn:hover {
+    background-color: $highlight-color-light;
+}
+
 .admin-area {
     background: rgba(0, 0, 0, 0.1);
     border-radius: 3px;
@@ -238,20 +242,70 @@ a:hover,
 
 
 /* REGISTRATION FORM */
-
-.social-login {
-    width: 100%;
-    font-size: 1.5em;
-    margin-bottom: 0.3em;
-    img{
-        height: 4em;
-        padding: 0 1em;
+#login-modal {
+    .modal-header {
+        border-bottom: 0px;
     }
+    .modal-content {
+        max-width: 450px;
+        
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+        }
+        .social-login {
+            color: #444;
+            width: 100%;
+            font-size: 1.5em;
+            margin-bottom: 0.3em;
+
+            img {
+                height: 3em;
+                padding-right: 1em;
+                position: relative;
+                left: 0px;
+            }
+        }
+        .divider-text {
+            text-align: center;
+        }
+        h2 {
+            color: #444;
+        }
+         .decorated{
+             overflow: hidden;
+             text-align: center;
+         }
+        .decorated > span{
+            position: relative;
+            display: inline-block;
+        }
+        .decorated > span:before, .decorated > span:after{
+            content: '';
+            position: absolute;
+            top: 50%;
+            border-bottom: 2px solid;
+            width: 592px; /* half of limiter */
+            margin: 0 20px;
+        }
+        .decorated > span:before{
+            right: 100%;
+        }
+        .decorated > span:after{
+            left: 100%;
+        }
+
+        .forgot-password {
+            float: right;
+            position: relative;
+            top: -10px;
+        }
+    }
+    
 }
 
-.divider-text {
-    text-align: center;
-}
 
 
 
