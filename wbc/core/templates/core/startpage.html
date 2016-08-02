@@ -5,6 +5,12 @@
 {% extends 'core/layout.html' %}
 {% load staticfiles compress i18n %}
 
+{% block meta_content %}
+    <meta property="og:title" content="{{site_title}}" />
+    <meta property="og:image" content="{{site_url}}/static/img/title.png"/>
+{% endblock %}
+
+
 {% block css %}
     {% compress css %}
     {{block.super}}

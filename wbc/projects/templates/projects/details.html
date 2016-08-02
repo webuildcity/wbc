@@ -1,6 +1,21 @@
 {% extends 'core/layout_split.html' %}
 {% load staticfiles compress guardian_tags threadedcomments_tags imagekit ratings i18n %}
 
+{% block meta_content %}
+    <meta property="og:title" content="{{project.name}}" />
+    <meta property="og:image" content="{{site_url}}/static/img/title.png"/>
+    <meta name="description" content="{{project.get_teaser}}" /> 
+
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" value="summary">
+
+    <!-- Open Graph data -->
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="{{project.get_teaser}}" /> 
+{% endblock %}
+
+
 <!-- This template shows the details for a project -->
 <!-- left sidebar side_content with static content, main_content with menu on top -->
 

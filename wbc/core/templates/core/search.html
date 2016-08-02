@@ -5,6 +5,20 @@
 <!-- The Searchpage. Includes two views: map and list views -->
 <!-- Filter on the left in the sidebar, results in the mainframe -->
 
+{% block meta_content %}
+    <meta property="og:title" content="{{site_title}} - Suche" />
+    <meta property="og:image" content="{{site_url}}/static/img/title.png"/>
+    <meta name="description" content="{% trans 'Finde spannende Projekte und Ideen.' %}" /> 
+
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" value="summary">
+
+    <!-- Open Graph data -->
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="{% trans 'Finde spannende Projekte und Ideen.' %}" /> 
+{% endblock %}
+
 {% block css %}
     {% compress css %}
     {{block.super}}

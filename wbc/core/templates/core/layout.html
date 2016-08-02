@@ -5,10 +5,11 @@
     <title>{{site_title}}</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}{{ object.get_absolute_url }}" />
+    
+    {% block meta_content %}
 
-    <meta property="og:title" content="{{site_title}}" />
-    <meta property="og:url" content="{{site_url}}" />
-    <meta property="og:image" content="{{site_url}}/static/img/karte.png"/>
+    {% endblock %}
 
     <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/x-icon" />
 

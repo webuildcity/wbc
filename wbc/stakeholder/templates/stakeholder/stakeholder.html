@@ -1,6 +1,22 @@
 {% extends 'core/layout_split.html' %}
 {% load staticfiles compress imagekit %}
 
+{% block meta_content %}
+    <meta property="og:title" content="{{stakeholder.profile.full_name}}" />
+    {% if stakeholder.picture %}
+    <meta property="og:image" content="{{stakeholder.picture.url}}"/>
+    {% endif %}
+    <meta name="description" content="{{stakeholder.description}}" /> 
+
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" value="summary">
+
+    <!-- Open Graph data -->
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="{{stakeholder.description}}" /> 
+{% endblock %}
+
 {% block css %}
     {% compress css %}
     {{block.super}}
