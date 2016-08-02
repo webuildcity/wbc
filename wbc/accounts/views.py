@@ -33,7 +33,7 @@ def profile_update(request):
     next = reverse('stakeholder', kwargs={'slug':request.user.profile.stakeholder.slug})
 
     if request.method == 'POST':
-        user_form = UserForm(request.POST)
+        user_form = UserForm(request.POST, user=request.user)
         profile_form = ProfileForm(request.POST)
         stakeholder_form = StakeholderProfileForm(request.POST)
 
@@ -83,11 +83,11 @@ class RegisterMethodView(FormView):
     form_class = EmailForm
 
     def form_valid(self, form):
-        exists = User.objects.filter(email=form.cleaned_data.get('email'))
+        exists = User.objects.filter(email=form.cleaned_data.get('email').lower())
         if exists:
-            return HttpResponseRedirect(reverse('login') + '?email='+form.cleaned_data.get('email'))
+            return HttpResponseRedirect(reverse('login') + '?email='+form.cleaned_data.get('email').lower())
         else:
-            return HttpResponseRedirect(reverse('registration_register') + '?email='+form.cleaned_data.get('email'))
+            return HttpResponseRedirect(reverse('registration_register') + '?email='+form.cleaned_data.get('email').lower())
 
 
 # RegistrationView that required unique email
