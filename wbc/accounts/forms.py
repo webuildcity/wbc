@@ -13,7 +13,6 @@ class UserForm(ModelForm):
     email = forms.EmailField(required=True)
 
     def clean_email(self):
-        print self.user
         email = self.cleaned_data['email'].lower()
         if User.objects.filter(email=email).exists() and User.objects.get(email=email) != self.user:
             raise ValidationError("E-Mail-Adresse wird bereits verwendet.")
