@@ -308,33 +308,31 @@ SearchController
         <!-- Result list for listview -->
         <div id="result-list">
             <div ng-repeat="result in results">
-                <div id="result-{[{result.pk}]}" class="search-result container-fluid">
-                    <div class="left-block pull-left">
-                        <a ng-href="{[{result.internal_link}]}">
+                <a ng-href="{[{result.internal_link}]}">
+                    <div id="result-{[{result.pk}]}" class="search-result container-fluid">
+                        <div class="left-block pull-left">
                             <img ng-if="result.thumbnail" class="search-thumbnail" src={[{result.thumbnail}]}>
-                            <i ng-if="!result.thumbnail" class="search-thumbnail fa-5x fa fa-building-o"></i>
-                        </a>
-                    </div>
-                    <div class="right-block">
-                        <div class="result-mash">
-                            <div class="pull-left result-block">
-                                <a ng-href="{[{result.internal_link}]}">
+                            <i ng-if="!result.thumbnail" class="search-thumbnail fa-5x fa fa-building-o"></i>    
+                        </div>
+                        <div class="right-block">
+                            <div class="result-mash">
+                                <div class="pull-left result-block">
                                     <b>{[{ result.name }]}</b>
-                                </a>
-                                <p ng-if="result.address_obj">{[{ result.address_obj }]}</p>
+                                    <p ng-if="result.address_obj">{[{ result.address_obj }]}</p>
+                                </div>
+                                <div class="pull-left result-block">
+                                    <p ng-if="result.num_stakeholder">{% trans '#Beteiligte:' %}' {[{result.num_stakeholder}]}</p>
+                                </div>
+                                <div class="pull-right result-block">
+                                    <p ng-if="result.created">{% trans 'Erstellt am:' %} {[{result.created}]}</p>
+                                    <p ng-if="result.created_by">{% trans 'Erstellt von:' %}' {[{result.created_by}]}</p>
+                                    <p ng-if="result.ratings_avg">{% trans 'Bewertung: &Oslash;' %}' {[{result.ratings_avg}]} ({[{result.ratings_count}]})</p>
+                                </div>
+                                <p class="teaser" ng-if="result.teaser">{[{result.teaser}]}</p>
                             </div>
-                            <div class="pull-left result-block">
-                                <p ng-if="result.num_stakeholder">{% trans '#Beteiligte:' %}' {[{result.num_stakeholder}]}</p>
-                            </div>
-                            <div class="pull-right result-block">
-                                <p ng-if="result.created">{% trans 'Erstellt am:' %} {[{result.created}]}</p>
-                                <p ng-if="result.created_by">{% trans 'Erstellt von:' %}' {[{result.created_by}]}</p>
-                                <p ng-if="result.ratings_avg">{% trans 'Bewertung: &Oslash;' %}' {[{result.ratings_avg}]} ({[{result.ratings_count}]})</p>
-                            </div>
-                            <p class="teaser" ng-if="result.teaser">{[{result.teaser}]}</p>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <button ng-if='results.length < resultLength' class="load-more-results btn btn-default">{% trans 'Mehr Ergebnisse laden' %}</button>
         </div>
