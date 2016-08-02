@@ -675,7 +675,7 @@ body {
     font: $font-body-copy;
     font-weight: bold;
     font-size: .875em;
-    color: $icon-color;
+    color: white;
     line-height: 20px;
     text-align: center;
     // width: 100%;
@@ -701,14 +701,14 @@ body {
 
     span.fa-stack {
         i {
-            color: $icon-color;
+            color: white;
         }
     }
 
 }
 
 .wbc-button:hover {
-    color: $icon-color;
+    color: white;
     border:1px solid $primary-color;
     background-color: $primary-color-dark; background-image: -webkit-gradient(linear, left top, left bottom, from($primary-color-dark), to($primary-color));
     background-image: -webkit-linear-gradient(top, $primary-color-dark, $primary-color);
