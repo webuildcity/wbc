@@ -2,7 +2,11 @@
 {% load staticfiles compress imagekit %}
 
 {% block meta_content %}
+    {% if stakeholder.profile %}
     <meta property="og:title" content="{{stakeholder.profile.full_name}}" />
+    {% else %}
+    <meta property="og:title" content="{{stakeholder.name}}" />
+    {% endif %}
     {% if stakeholder.picture %}
     <meta property="og:image" content="{{stakeholder.picture.url}}"/>
     {% endif %}
