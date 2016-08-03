@@ -198,13 +198,25 @@ a:hover,
     color: $primary-color-dark;
     text-decoration: none;
 }
-.btn.btn-primary {
-    color: white !important;
-}
 
-.btn:hover {
-    background-color: $highlight-color-light;
+/** BUTTON STYLES **/
+
+.wbc-secondary-button {
+    background-color: $primary-color;
+    border-color: $primary-color-dark;
+    color: $secondary-text;
+    &:hover {
+        background-color: $primary-color-light;
+        border-color: $primary-color;
+    }
 }
+// .btn.btn-primary {
+//     color: white !important;
+// }
+
+// .btn:hover {
+//     background-color: $highlight-color-light;
+// }
 
 .admin-area {
     background: rgba(0, 0, 0, 0.1);

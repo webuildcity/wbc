@@ -252,7 +252,7 @@ SearchController
 
 {% block main_content %}
     <!-- Switches Views between map and list -->
-    <button class="btn btn-default" id="map-list-switch" ng-click="changeView()">{% trans 'Button:Listen-/Kartenansicht' %}</button>
+    <button class="btn btn-default wbc-secondary-button" id="map-list-switch" ng-click="changeView()">{% trans 'Button:Listen-/Kartenansicht' %}</button>
 
     <!-- MAPVIEW -->
     <div ng-class="{'active-result': !listView}" class="result-content" id="map">
@@ -313,7 +313,7 @@ SearchController
                 <p>{% trans 'Sortieren nach:' %}</p>
                 <ul class="tabs">
                     {% for btn in order_btns %}
-                        <button value={{btn.value}} class="order-btn btn btn-default">{{btn.text}}</button>
+                        <button value={{btn.value}} class="order-btn btn btn-default wbc-secondary-button">{{btn.text}}</button>
                     {% endfor %}
                 </ul>
             </div>

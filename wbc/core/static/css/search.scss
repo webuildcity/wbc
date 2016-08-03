@@ -1,11 +1,8 @@
 @import 'css/_variables.scss';
 @import 'css/_mixins.scss';
-/** AB HIER TEST NEUE SEITE **/
 
-.big-page {
-    // overflow-y: hidden;
-    // overflow-y: hidden;
-    // overflow-x: hidden;
+body {
+    background-color: $background-color-light;
 }
 
 #header {
@@ -39,7 +36,7 @@
             }
         }
         #search {
-            background-color: $background-color;
+            // background-color: $background-color;
 
             .search-results-autocomplete {
                 position: absolute;
@@ -109,13 +106,17 @@
             z-index: 1;
             border-bottom: 1px solid #eee;
             // box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.44);
-            background: white;
+            background: $background-color;
             &.fixed-top {
                 width: 33%;
                 border-right: 2px solid #ccc;   
                 @media (max-width:768px){
                     width: 100%;
                 }
+            }
+            input {
+                background-color: $background-color-light;
+                color: $secondary-text;
             }
         }
         .fixed-top .search-field {
@@ -165,9 +166,9 @@
             position: relative;
             clear:both;
             font-size: 15px;
-            color: $primary-color;
+            color: $secondary-text;
             // background-color: $primary-color-lightest;
-            background: white;
+            background: $background-color;
             padding: 8px 15px;
             font: $font-nav;
             border-bottom: 1px solid #eee;
@@ -201,14 +202,14 @@
             }
         }
         .collapse-heading.collapsed {
-            background-color: white;
-            color: $primary-color;
+            // background-color: white;
+            // color: $primary-color;
         }
         .collapse-heading:hover {
             // background-color: #eee;
             // background-color: rgba($highlight-color,0.1);
-
-            color: $primary-color;
+            background-color: $primary-color;
+            // color: $primary-color;
         }
 
         .collapse-heading:after {
@@ -430,12 +431,17 @@
         background: white;
         border-bottom: 2px solid #eee;
         z-index: 1;
+        background-color: $background-color;
+        color: $secondary-text;
         // box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.44);
 
         h2 {
             margin: 0.3em 0em;
             text-align: center;
             margin-bottom: 0.1em;
+        }
+        h3 {
+            color: $primary-color;
         }
 
         p {
@@ -488,14 +494,14 @@
         .search-result {
             margin: 0.6em;
             padding: 0.3em;
-            background: $background-color-search-result;
-            border-bottom: 0px;
             border-radius: 4px;
-
+            color: $primary-text;
+            background: $primary-color-light;
+            border: 1px solid $primary-color;
         }
         .search-result:hover {
-            background: $background-color;
-            border: 1px solid $highlight-color;
+            border: 1px solid #ccc;
+            background: $primary-color;
         }
         .result-block {
             margin: 0.3em 0.45em;
