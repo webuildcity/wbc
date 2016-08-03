@@ -185,7 +185,7 @@ SearchController
                     <div ng-click="toggleSelectedItems($event)" class="collapse-heading" ng-class="{'collapsed' : !listView}" data-toggle="collapse" data-target="#tag-facets">
                         <i class="tag-anchor anchor fa fa-tags"></i>{% trans 'TAG-FILTER:Stichwörter' %}
                     </div>
-                    <div class="active-facets wbc-dropdown-container">
+                    <div class="active-facets wbc-dropdown-container" ng-class="{'hidden' : listView}">
                         <div class="facet-item" ng-repeat="tag in formData.tags">
                             <span>{[{tag}]}</span>
                             <a class="close-button" ng-click="formData.tags.splice(formData.tags.indexOf(tag), 1); startSearch();"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
