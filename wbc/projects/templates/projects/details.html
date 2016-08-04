@@ -337,22 +337,12 @@ DetailsController
     <div id="tab-content" class="tab-content">
         {% if tab_settings.info %}
         <div id="info" class="tab-pane active">
-            <!-- <div class="content-container">
-                <h3>Beschreibung</h3>
+            {% if project.description %}
+            <h3>Beschreibung</h3>
                 <p>
                     {{ project.description | linebreaks }}
                 </p>
-
-                {% if project.description_official %}
-                 <p>
-                    <strong>Genaue örtliche Beschreibung (Amtsblatt):</strong> {{ project.description_official }}
-                 </p>
-                {% endif %}
-
-                <p>
-                    <strong>im Bezirk/in den Bezirken:</strong> {{ project.entities.all|join:", "}}
-                </p>
-            </div> -->
+            {% endif %}
 
             {% if processTypes %}
             <div class="container-fluid">

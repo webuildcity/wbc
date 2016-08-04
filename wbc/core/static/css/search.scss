@@ -115,8 +115,8 @@ body {
                 }
             }
             input {
-                background-color: $background-color-light;
-                color: $secondary-text;
+                background-color: #eee;
+                // color: $secondary-text;
             }
         }
         .fixed-top .search-field {
@@ -171,7 +171,7 @@ body {
             background: $background-color;
             padding: 8px 15px;
             font: $font-nav;
-            border-bottom: 1px solid #eee;
+            // border-bottom: 1px solid #eee;
             // box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.44);
             // margin-bottom: 0.2em;
 
@@ -225,7 +225,7 @@ body {
         }
 
         .facet-container {
-            overflow: auto;
+            overflow: hidden;  //maybe causes problem in mobile? or somewhere else?
             clear: both;
             position: relative;
 
