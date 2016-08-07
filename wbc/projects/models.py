@@ -129,6 +129,12 @@ class Project(Model):
     def has_buffer_area(self):
         return self.buffer_area.set.all() > 0
         
+    def get_pad_id(self):
+        return self.padId.split('$')[1]
+
+    def get_group_id(self):
+        return self.padId.split('$')[0]
+
     def __unicode__(self):
         strings = []
         if self.name:
