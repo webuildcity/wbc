@@ -19,7 +19,10 @@
 
 body {
     background: $background-image-light;
-    background-color: $background-color-light;
+    background-color: $background-color;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    background-color: $background-color;
 }
 .big-page {
     overflow-y: hidden;

@@ -4,6 +4,7 @@
 
 body {
     background-position: center;
+    background-color: $background-color-header-lightest;
 }
 
 @mixin gradient(){
@@ -27,13 +28,24 @@ html {
     overflow: auto;
 }
 
-
+//do this for all form controls? or just on startpage?
+.form-control:focus {
+    border-color: $primary-color;
+    @include box-shadow(0 0 8px rgba($primary-color, 0.6));
+}
 
 #header {
 
     height: 100px;
     background-color: rgba(255,255,255,0.0);
     @include transition(0.3s linear all);
+    border-bottom: none;
+    a {
+        color: $primary-text;
+    }
+    a:hover {
+        color: black;
+    }
 
     #nav-search {
         opacity: 0;
@@ -102,6 +114,7 @@ html {
         height: 500px;
         background: $startpage-image  no-repeat center center;
         background-size: cover;
+        background-color: $background-color-header;
         // box-shadow: inset 0 -5px 7px rgba(0, 0, 0, .1);
         @include box-shadow(inset 0 -5px 7px rgba(0, 0, 0, .1));
 
@@ -205,31 +218,40 @@ html {
           padding: 1em 15px 0 15px;
         }
 
-        a {
-          font-weight: bold;
-        }
-
         .wbc-headline {
-            margin: 0em;
-            padding: 0.5em;
-            padding-left: 2em;
-            background-color: $secondary-text;
-            color: $primary-text;
-            @include box-shadow(0 1px 7px 0 rgba(0, 0, 0, 0.3));
+            margin-bottom: 1em;
+            // padding: 0.5em;
+            // padding-left: 2em;
+            background-color: $background-color-header;
+            // text-align: center;
+            border-bottom: 1px solid $primary-color;
+            // @include box-shadow(0 1px 7px 0 rgba(242, 152, 85, 1));
+            h2 {
+                color: $third-text;
+                margin-left: 1em;
+                padding-left: 15px;
+                margin-bottom: 20px;
+                font-weight: bold;
+            }
         }
         .wbc-divider {
             @include gradient();
             height: 1px;
             margin-bottom: 1em;
+            display: none;
         }
 
         #navigation-boxes {
             padding-bottom: 2em;
             padding-top: 1em;
+            margin: 0em 1em;
         }
 
         .bottom-block {
             padding-bottom: 2em;
+        }
+        .startpage-text {
+            margin: 0em 1em;
         }
         .wbc-teaser-container {
             height: 100%;
@@ -266,10 +288,15 @@ html {
 
         .teaser:hover {
 
+            // @include box-shadow(0 1px 7px 0 rgba(242, 152, 85, 1));
+            // border: 1px solid $primary-color;
             ~.wbc-overlay {
                 height: 100%;
-                background-color: rgba(0,0,0,0.7);
+                background-color: rgba($primary-color, 0.9);
                 opacity: 1;
+                // border: 1px solid $primary-color;
+                color: $primary-text;
+
 
                 h2 {
                     // position: relative;
@@ -297,7 +324,7 @@ html {
             border-radius: 2px;
 
             h2 {
-                color: $background-color;
+                color: $primary-text;
                 text-align: center;
                 position: relative;
                 @include transition(0.4s linear all);

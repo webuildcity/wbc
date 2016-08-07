@@ -190,24 +190,28 @@ a,
 a:visited,
 .leaflet-container a,
 .leaflet-container a:visited {
-    color: $primary-color;
+    color: $primary-color-dark;
     text-decoration: none;
 }
 a:hover,
 .leaflet-container a:hover {
-    color: $primary-color-dark;
+    color: $primary-color;
     text-decoration: none;
 }
 
 /** BUTTON STYLES **/
 
 .wbc-secondary-button {
-    background-color: $primary-color;
-    border-color: $primary-color-dark;
-    color: $secondary-text;
+    background-color: $background-color-header;
+    border-color: $background-color-header-dark;
+    color: #fff;
     &:hover {
-        background-color: $primary-color-light;
-        border-color: $primary-color;
+        background-color: $background-color-header-light;
+        border-color: $background-color-header;
+    }
+    &.active {
+        background-color: $primary-color;
+        color: $primary-text;
     }
 }
 // .btn.btn-primary {

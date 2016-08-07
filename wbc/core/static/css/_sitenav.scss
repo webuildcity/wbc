@@ -101,11 +101,28 @@
 }
 
 #header {
-    @include box-shadow(0px 0px 5px 0px rgba(0, 0, 0, 0.5));
+    @include box-shadow(0px 0px 5px 0px rgba(242, 152, 85, 0.5));
+    border-bottom: 1px solid  #f29855;
     background-color: $background-color-header;
     position: relative;
     z-index: 1003;
     height: 46px;
+    a {
+        color: $secondary-text;
+    }
+    a:hover {
+        color: white;
+        // font-size: 1.01em;
+    }
+    .input-group a {
+        color: $primary-color;
+        &:hover {
+            color: $primary-color-dark;
+        }
+    }
+    .dropdown-menu a {
+        color: $primary-text;
+    }
 
     #header-left {
         float: left;

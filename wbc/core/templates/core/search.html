@@ -94,12 +94,17 @@ SearchController
                 <a class="pull-left visible-xs" href="" ng-click="showFilter = !showFilter"> {% trans 'Erweiterte Suche' %}</a>
 
                 <!-- Shows the number of displayed results and Buttons to load more -->
-                <p id="result-number" class="text-muted" ng-if="resultLength && !listView">
+                <p id="result-number" ng-if="resultLength">
                     <span ng-if="results.length < resultLength">{[{results.length}]} von {[{resultLength}]} {% trans 'Einträgen' %}</span>
                     <span ng-if="results.length >= resultLength"> {[{resultLength}]} {% trans 'Einträge' %}</span>
-                    <a href="#" ng-if="results.length < resultLength"ng-click="startSearch(offset)">{% trans 'more' %}</a>
-                    <a href="#" ng-if="results.length < resultLength"ng-click="startSearch(-1)">{% trans 'all' %}</a>
-                </p>
+                    <br ng-if="results.length < resultLength && !listView"> <a href="#" ng-if="results.length < resultLength && !listView" ng-click="startSearch(offset)">{% trans 'more' %}</a>
+                    <a href="#" ng-if="results.length < resultLength && !listView"ng-click="startSearch(-1)">{% trans 'all' %}</a>
+                </p> 
+               <div class="pull-right input-searching" ng-show="searching">
+                    <i class="spinner-icon fa fa-spinner fa-spin"></i>
+                    <span class="loading-text"> {% trans 'Suche' %}</span>
+               </div>
+
                 <!-- Spelling suggestions -->
                 <!-- <div ng-if="suggestion" class="suggestion-container">
                     {% trans 'SPELLING SUGGESTION:Meinten Sie:' %} <a href="" ng-click="selectTerm(suggestion)">
@@ -296,19 +301,6 @@ SearchController
         
         <!-- Search Header with filters and sorting, fixed top -->
         <div id='search-list-header' class="fixed-top">
-            <div class="pull-left result-number text-center">
-                <div ng-show="resultLength >=0 && !searching">
-                    <h3 ng-if="results.length < resultLength">{[{results.length}]} von {[{resultLength}]}</h3>
-                    <h3 ng-if="results.length >= resultLength">{[{resultLength}]}</h3>
-                    <p>{% trans '#ERGEBNISSE:Ergebnisse' %}</p>
-                </div>
-
-                <!-- Spinner that shows if searching or loading results -->
-                <div ng-show="searching">
-                    <i class="spinner-icon fa fa-spinner fa-spin"></i>
-                    <div class="loading-text"> {% trans 'Suche' %}</div>
-                </div>
-            </div>
             <div class="sort-control pull-left hidden-xs">
                 <p>{% trans 'Sortieren nach:' %}</p>
                 <ul class="tabs">
@@ -317,6 +309,10 @@ SearchController
                     {% endfor %}
                 </ul>
             </div>
+     <!--        <div ng-show="searching">
+                    <i class="spinner-icon fa fa-spinner fa-spin"></i>
+                    <div class="loading-text"> {% trans 'Suche' %}</div>
+            </div> -->
         </div>
 
         <!-- Result list for listview -->
