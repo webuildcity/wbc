@@ -28,12 +28,6 @@ html {
     overflow: auto;
 }
 
-//do this for all form controls? or just on startpage?
-.form-control:focus {
-    border-color: $primary-color;
-    @include box-shadow(0 0 8px rgba($primary-color, 0.6));
-}
-
 #header {
 
     height: 100px;

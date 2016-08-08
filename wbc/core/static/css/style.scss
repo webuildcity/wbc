@@ -37,6 +37,12 @@ h4 {
     color: $headline-color;
 }
 
+//change focus color of focussed form field
+.form-control:focus {
+    border-color: $primary-color;
+    @include box-shadow(0 0 8px rgba($primary-color, 0.6));
+}
+
 /**LAYOUT **/
 .big-page {
     position: absolute;
