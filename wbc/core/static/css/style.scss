@@ -66,6 +66,7 @@ h4 {
     width: 33%;
     float: left;
     border-right: none;
+    background-color: $background-color-header-lightest;
     @media (min-width:768px) {
         height: 100%;
         border-right: 2px solid #ccc;
@@ -213,7 +214,7 @@ a:hover,
     color: #fff;
     &:hover {
         background-color: $background-color-header-light;
-        border-color: $background-color-header;
+        border-color: $primary-color;
     }
     &.active {
         background-color: $primary-color;
@@ -435,4 +436,9 @@ a:hover,
 header > a:link,
 header > a:active {
     color: $primary-color;
+}
+
+
+#wbc-footer-container {
+    border-top: 1px solid #ccc;
 }

@@ -104,9 +104,9 @@ body {
             width: 100%;
             float: left;
             z-index: 1;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid $primary-text;
             // box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.44);
-            background: $background-color;
+            background: $background-color-header-lightest;
             &.fixed-top {
                 width: 33%;
                 border-right: 2px solid #ccc;   
@@ -167,7 +167,7 @@ body {
             font-size: 15px;
             color: $primary-text;
             // background-color: $primary-color-lightest;
-            background-color: $primary-color;
+            background-color: $primary-color-slight-light;
 
             padding: 8px 15px;
             font: $font-nav;
@@ -204,7 +204,7 @@ body {
         .collapse-heading.collapsed {
             // background-color: white;
             // color: $primary-color;
-            background: $background-color;
+            background: $background-color-header-light;
         }
         .collapse-heading:hover {
             // background-color: #eee;
@@ -300,7 +300,7 @@ body {
             }
             .facet-select:hover {
                 background-color: rgba($highlight-color,0.2);
-                color: $primary-color;
+                // color: $primary-color;
             }
             label input[type="checkbox"] {
                 position: relative;
@@ -315,7 +315,7 @@ body {
         padding-right: 1em;
         margin-bottom: 1px;
         width: 100%;
-        color: $primary-color;
+        color: $primary-color-dark;
         position: relative;
         top: -0.5em;
     }

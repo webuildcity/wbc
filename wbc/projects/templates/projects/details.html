@@ -201,7 +201,11 @@ DetailsController
             <button data-url="{% url 'project_follow' project.pk %}" class="btn btn-default follow-button wbc-button">
                 <span class="fa-stack">
                     <i class="fa fa-circle-thin fa-stack-2x"></i>
+                    {% if not following %}
                     <i class="fa fa-sign-in fa-stack-1x fa-lg"></i>
+                    {% else %}
+                    <i class="fa fa-sign-out fa-stack-1x fa-lg"></i>
+                    {% endif %}
                 </span>
                 <span class="hidden-xs">
                 {% if not following %}
