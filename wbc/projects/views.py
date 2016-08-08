@@ -205,7 +205,8 @@ def project_request(request, p):
             validUntil = now() + datetime.timedelta(hours=3)
             sessionID = c.createSession(groupID=unicode(group['groupID']), authorID=unicode(author['authorID']), validUntil=str(validUntil.strftime('%s')))
             sessionIDText = sessionID['sessionID']
-        etherpadText = c.getHTML(padID=p.padId)['html']
+        etherpadText = c.getText(padID=p.padId)['text']
+        # etherpadText = c.getHTML(padID=p.padId)['html']
 
     response = render(request,'projects/details.html',{
         'project' : p,

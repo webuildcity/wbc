@@ -359,9 +359,39 @@ body {
     }
 
     #notes {
+        #etherpadreadonly-wrapper{
+            padding: 1em;
+
+            #etherpadreadonly {
+                width: 100%;
+                height: 70%;
+                min-height: 400px;
+            }
+            
+        }
         #etherpad-iframe {
             width: 100%;
             height: 100%;
+        }
+        .overlay-container {
+            text-align: center;
+            width: 100%;
+            position: relative;
+            margin-top: 1em;
+
+            .overlay-message {
+                text-align: center;
+                background: $background-color;
+                padding: 0.4em 1em;
+                border: 1px solid $primary-color;
+                border-radius: 5px;
+                a {
+                    color: $primary-text;
+                }
+                a:hover {
+                    color: $primary-color-dark;
+                }
+            }
         }
     }
 

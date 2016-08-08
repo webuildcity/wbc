@@ -168,7 +168,7 @@ DetailsController
 
     <!-- rating widget, uses django-star-rating -->
     <div id="rating-widget">
-        {% ratings project icon_height=20       icon_width=20 %}
+        {% ratings project icon_height=20 icon_width=20 %}
     </div>
 
     <!-- Display a teaser text fro the description -->
@@ -457,10 +457,14 @@ DetailsController
                 {% if following %}
                 <iframe src='{{etherpad_url}}auth_session?sessionID={{session_id}}&padName={{project.get_pad_id}}&groupID={{project.get_group_id}}' id='etherpad-iframe'>
                 {% else %}
-                <div class="overlay-message">
-                    {% trans 'Folge dem Projekt um hier mitzuschreiben.' %}
+                <div class="overlay-container text-center">
+                    <span class="overlay-message">
+                        <a href="#/stakeholder">{% trans 'Folge dem Projekt um hier mitzuschreiben.' %}</a>
+                    </span>
                 </div>
-                {{etherpadText | safe}}
+                <div id="etherpadreadonly-wrapper">
+                    <textarea id="etherpadreadonly" disabled>{{etherpadText | safe}}</textarea>
+                </div>
                 {% endif %}
             {% endif %}
 
