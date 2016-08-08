@@ -85,6 +85,12 @@ body {
             }
         }
         #subscribe-widget {
+            float: left;
+            margin-right: 0.3em;
+        }
+        #follow-widget {
+            float: left;
+            // margin: 0 0.2em;
             // float: right;
             // width: 100%;
             // margin: 2em 1em;
@@ -119,8 +125,8 @@ body {
         width: 100%;
     }
     .teaser-text {
-        padding-top: 0.3em;
-        padding-left: 1em;
+        padding: 0.5em 0em;
+        // padding-left: 1em;
     }
 
     #participate-widget {
