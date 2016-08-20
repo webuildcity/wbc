@@ -53,7 +53,10 @@ body {
 }
 
 #project_sidebar {
-    overflow-y: auto;
+    // SUPER HACKY, SEARCH FOR MORE GENERIC SOLUTION
+    @media(min-width: 768px){
+        overflow-y: auto;
+    }
     height: 100%;
     padding-left: 1em;
 
@@ -67,6 +70,13 @@ body {
         clear: both;
         @media(max-width: 768px){
             float: left;
+        }
+        .star-ratings-rating-stars-container {
+            float: left;
+        }
+        .wbc-star-ratings-count {
+            padding-left: 0.3em;
+            padding-right: 0.8em;
         }
     }
     #participate-widget {
@@ -260,6 +270,11 @@ body {
     .tab-pane {
         height: 100%;
         width: 100%;
+        padding: 0.6em 1em;
+        @media(min-width: 768px){
+            overflow-y: auto;
+        }
+        
 
         #vizicities-viewport {
             // position: absolute;

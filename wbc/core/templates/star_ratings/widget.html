@@ -1,23 +1,74 @@
-{% extends "star_ratings/widget_base.html" %}
 {% load i18n %}
-{% block rating_detail %}
-{% block rating_average %}
-<div class="star-ratings-rating-average">{% trans 'Average: ' %} <span class='star-ratings-rating-value'>{{ rating.average|floatformat:"-2" }}</span></div>
-{% endblock rating_average %}
-{% block rating_count %}
-<div class="star-ratings-rating-count">{% trans 'Rating Count: ' %} <span class='star-ratings-rating-value'>{{ rating.count }}</span></div>
-{% endblock rating_count %}
-{% block rating_user %}
-<div class="star-ratings-rating-user">{% trans 'You Rated: ' %} <span class='star-ratings-rating-value'>{% if user_rating %}{{ user_rating.score }}{% else %}{% trans 'Not rated' %}{% endif %}</span></div>
-{% if not user.is_authenticated %}
-    <p>{% trans 'Einloggen um abzustimmen.' %}</p>
-{% endif %}
-{% endblock rating_user %}
-<div class="star-ratings-errors"></div>
-<script>
-    var percentage =  parseInt({{percentage}});
-    percentage =  percentage+'%';
-    $('.star-ratings-rating-foreground').css('width', percentage);
-</script>
-{% endblock rating_detail %}
+<style>
+    #{{ id }} .star-ratings-rating-full, #{{ id }} .star-ratings-rating-empty {
+        width: {{ icon_width }}px;
+        height: {{ icon_height }}px;
+    }
 
+    #{{ id }} .star-ratings-rating-empty {
+        background-position: -{{ icon_width }}px 0;
+    }
+
+    {% if user.is_authenticated %}
+    #{{ id }} .star-ratings-rating-full:hover, #{{ id }} .star-ratings-rating-empty:hover {
+        background-position: -{{ icon_width|add:icon_width }}px 0;
+    }
+    {% endif %}
+</style>
+<div id="{{ id }}" class="star-ratings" data-max-rating="{{ star_count }}" data-avg-rating="{{ rating.average }}">
+    {% block rating_stars %}
+        <div class="star-ratings-rating-stars-container tooltip-container">
+            <ul class="star-ratings-rating-background">
+                {% for star in stars %}
+                    <li>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'ratings:rate' rating.content_type_id rating.object_id %}?return={{ request.path }}" data-score="{{ star }}" class="star-ratings-rate-action">
+                            <span class="star-ratings-rating-empty"></span>
+                        </a>
+                        {% else %}
+                            <span class="star-ratings-rating-empty" title="{% trans 'Log in to rate' as title_login %}{{ title_login|escape }}"></span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <ul class="star-ratings-rating-foreground" style="width: {{ percentage }}%">
+                {% for star in stars %}
+                    <li>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'ratings:rate' rating.content_type_id rating.object_id %}?return={{ request.path }}" data-score="{{ star }}" class="star-ratings-rate-action">
+                        <span class="star-ratings-rating-full"></span>
+                    </a>
+                    {% else %}
+                        <span class="star-ratings-rating-full" title="Log in to rate"></span>
+                    {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="tooltip">
+                <b>Bewertungen</b>
+                <div class="star-ratings-rating-average">{% trans 'Durchschnitt: ' %} <span class='star-ratings-rating-value'>{{ rating.average|floatformat:"-2" }}</span></div>
+                <div class="star-ratings-rating-count">{% trans 'Anzahl: ' %} <span class='star-ratings-rating-value'>{{ rating.count }}</span></div>
+                <div class="star-ratings-rating-user">{% trans 'Deine: ' %} <span class='star-ratings-rating-value'>{% if user_rating %}{{ user_rating.score }}{% else %}{% trans 'Not rated' %}{% endif %}</span></div>
+                {% if not user.is_authenticated %}
+                    <p>{% trans 'Please log in to rate.' %}</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endblock %}
+    {% block rating_detail %}
+    <div class="star-ratings-rating-count wbc-star-ratings-count pull-left tooltip-container">
+        (<span class="star-ratings-rating-value">{{rating.count}}</span>)
+        <div class="tooltip">{% trans 'Anzahl der abgegebenden Stimmen' %}</div>
+    </div>
+    <div class="star-ratings-rating-average wbc-star-ratings-average pull-left tooltip-container">
+        <span> &#216;</span> <span class="star-ratings-rating-value">{{rating.average | floatformat:"-2"}}</span>
+        <div class="tooltip">{% trans 'Durchschnittliche Bewertung' %}</div>
+    </div>
+    <script>
+        var percentage =  parseInt({{percentage}});
+        percentage =  percentage+'%';
+        $('.star-ratings-rating-foreground').css('width', percentage);
+    </script>
+    {% endblock rating_detail %}
+</div>
