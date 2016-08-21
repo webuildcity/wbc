@@ -59,12 +59,12 @@ function loadModal(modal, button) {
         var url = $(this).data('form');
         var title = $(this).data('title') 
         modal.find('.modal-header h3').html(title); // display the modal on url load
+        modal.modal('show'); // display the modal on url load
         modal.find('.custom-content').load(url, function(response, status) {
             if ( status == "error" ) {
                 $modal.find('.custom-content').html("Fehler!");
             }
             modal.modal();
-            modal.modal('show'); // display the modal on url load
             modal.unbind( "submit" );
             modal.on('submit', 'form', function(e){
                 e.preventDefault();

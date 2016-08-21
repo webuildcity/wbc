@@ -18,6 +18,7 @@
 
     {% block css %}
     <link rel="stylesheet" type="text/x-scss" href="{% static "css/style.scss" %}" />
+
     {% endblock %}
 
     <script type="text/javascript">
@@ -77,11 +78,10 @@
     <script type="text/javascript" src="{% static 'js/utils.js' %}" ></script>
 
     {% block js %}
-    
     {% endblock %}
 </head>
 
-<body ng-controller="{% block controller %}DefaultController{% endblock %}">
+<body ng-controller="{% block controller %}DefaultController{% endblock %}" id="body">
     <nav class="navbar navbar-default visible-xs mobile-menu" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">

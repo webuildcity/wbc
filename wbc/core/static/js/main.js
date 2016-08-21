@@ -26,16 +26,5 @@ $(document).ready(function(){
         });
     }); 
 
-    var tooltipLocked = false;
-    $('.tooltip-container').mouseover(function(e){
-        if (!tooltipLocked) {
-            $(this).children('.tooltip').css('left', e.offsetX);
-            $(this).children('.tooltip').css('top', e.offsetY);
-            tooltipLocked = true;        
-        }
-        // console.log($(this).children('.tooltip'))
-    });
-    $('.tooltip-container').mouseout(function(e){
-        tooltipLocked = false;
-    });
+    $('[data-toggle="tooltip"]').tooltip({animation: true, html: true, placement: 'bottom'});   
 }); 

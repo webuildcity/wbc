@@ -20,13 +20,19 @@
 <!-- left sidebar side_content with static content, main_content with menu on top -->
 
 {% block css %}
+    {% if tab_settings.3d %}
     <link rel="stylesheet" type="text/css" href="{% static "css/vizi.css" %}" />
+    {% endif %}
     <link rel="stylesheet" type="text/css" href="{% static "css/adminmap.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "lib/jquery-ui/jquery-ui.theme.min.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "lib/jquery-ui/jquery-ui.min.css" %}" />
+    
     {% compress css %}
+    l
     {{block.super}}
+    {% if tab_settings.map %}
     <link rel="stylesheet" href="{% static "lib/leaflet/leaflet.css" %}" />
+    {% endif %}
     <link rel="stylesheet" type="text/x-scss" href="{% static "css/details.scss" %}" />
     <link rel="stylesheet" href="{% static "lib/dropzone.css" %}" />
 
@@ -36,17 +42,18 @@
 {% endblock %}
 
 {% block js %}
-
+    {{block.super}}
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
-    <script type="text/javascript" src="{% static 'lib/modernizr.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/vertical-timeline.js' %}"  ></script>
+    {% if tab_settings.3d %}
     <script type="text/javascript" src="{% static 'lib/vizicities/vizi.min.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/vizicities/tween.min.js' %}"  ></script>
-    <script type="text/javascript" src="{% static 'lib/jquery-ui/jquery-ui.min.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintOutputPolygon.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintInputPolygon.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintOutputCustomBuildingTiles.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/3d.js' %}"  ></script>
+    {% endif %}
+    <script type="text/javascript" src="{% static 'lib/jquery-ui/jquery-ui.min.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/adminmap.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/dropzone.js' %}" ></script>
 

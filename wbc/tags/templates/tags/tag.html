@@ -1,9 +1,10 @@
-{% extends 'core/layout.html' %}
-{% load staticfiles compress %}
+{% extends 'core/layout_split.html' %}
+{% load staticfiles compress i18n %}
 
 {% block css %}
     {% compress css %}
     {{block.super}}
+    <link rel="stylesheet" type="text/x-scss" href="{% static 'css/tag.scss' %}">
     {% endcompress %}
 {% endblock %}
 
@@ -14,35 +15,32 @@
     </script>
 {% endblock %}
 
-{% block content %}
+{% block side_content %}
 
-    <div class="container">
-        <h1> <i class="fa fa-tags"> </i>{{tag.name}} </h1>
-        
-        {% if projects %}
-        <div class="project-descriptions col-md-12">
-            <h2> Projekte: </h2>
-            {% include "projects/project_list.html" %}
-        </div>
-        {% endif %}
+    <h1> <i class="fa fa-tags"> </i>{{tag.name}} </h1>
 
-        {% if stakeholders %}
-        <div class="stakeholder-descriptions col-md-9">
-        <h2> Akteure: </h2>
-            {% include "stakeholder/stakeholder_list.html" %}
-
-<!--         <div class="stakeholder-descriptions">
-            <h2> Akteure: </h2>
-            <div class="stakeholder-description" class="col-md-3">
-                {% for stakeholder in stakeholders %}
-                    <h3><a href="{{stakeholder.get_absolute_url}}">{{stakeholder.name}}</a></h3>
-                    <img class="description_img" src="{{stakeholder.picture.get_stakeholder_url}}" />
-                    <p>{{stakeholder.description}}</p>
-                {% endfor %}
-            </div>
-        </div> -->
-        </div>
-        {% endif %}
+    <div id="tag-infos">
+        <p>{{projects_len}} {% trans 'Projects tagged' %}</p>
+        <p>{{stakeholders_len}} {% trans 'Stakeholders tagged' %}</p>
     </div>
+
+{% endblock %}
+
+{% block main_content %}
+    
+    {% if projects %}
+    <div class="project-descriptions">
+        <h2> Projekte ({{projects_len}}) </h2>
+        {% include "projects/project_list.html" %}
+    </div>
+    {% endif %}
+
+    {% if stakeholders %}
+    <div class="stakeholder-descriptions">
+        <h2> Akteure ({{stakeholder_len}}) </h2>
+        {% include "stakeholder/stakeholder_list.html" %}
+
+    </div>
+    {% endif %}
 
 {% endblock %}

@@ -16,8 +16,8 @@ body {
 }
 
 #side_content {
-    background-image: $background-image-light;
-
+    // background-image: $background-image-light;
+    padding: 0;
     #search_sidebar {
         position: relative;
         height: 100%;

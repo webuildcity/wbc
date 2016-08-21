@@ -53,12 +53,12 @@ body {
 }
 
 #project_sidebar {
+    overflow-x: hidden;
     // SUPER HACKY, SEARCH FOR MORE GENERIC SOLUTION
     @media(min-width: 768px){
         overflow-y: auto;
     }
     height: 100%;
-    padding-left: 1em;
 
     .anchor {
         overflow: auto;
