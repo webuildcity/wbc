@@ -8,19 +8,22 @@ from wbc.stakeholder.models import Stakeholder
 from serializers import *
 from django.shortcuts import render,get_object_or_404
 
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def tagview(request, slug):
     t = WbcTag.objects.get(slug__iexact=slug)
     projects = Project.objects.filter(tags__in=[t]).distinct()
     stakeholders = Stakeholder.objects.filter(tags__in=[t]).distinct()
     events = Event.objects.filter(tags__in=[t]).distinct()
-    
     projects_paginator_full = Paginator(projects, 3)
-    
     if request.method == 'GET':
         page = request.GET.get('page')
-        projects_paginator = projects_paginator_full.page(page)
+        try:
+            projects_paginator = projects_paginator_full.page(page)
+        except PageNotAnInteger:
+            projects_paginator = projects_paginator_full.page(1)
+        except EmptyPage:
+            projects_paginator = projects_paginator_full.page(projects_paginator_full.num_pages)
 
     
 
