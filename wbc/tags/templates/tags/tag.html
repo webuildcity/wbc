@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block js %}
-
+    {{block.super}}
     <script type="text/javascript">
         var _static_url = {% static '' %}
     </script>
@@ -24,6 +24,7 @@
         <p>{{stakeholders_len}} {% trans 'Stakeholders tagged' %}</p>
     </div>
 
+    <a href="{% url 'search' %}tags={{tag.name}}"> <i class="fa fa-marker"> </i> {% trans 'Auf der Karte anzeigen.' %} </a>
 {% endblock %}
 
 {% block main_content %}

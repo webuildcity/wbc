@@ -11,16 +11,18 @@
 
     {% endblock %}
 
+
     <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/x-icon" />
+    {% block css %}
 
     <link rel="stylesheet" href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" />
     <link rel="stylesheet" href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" />
-
-    {% block css %}
-    <link rel="stylesheet" type="text/x-scss" href="{% static "css/style.scss" %}" />
+    <link rel="stylesheet" type="text/x-scss" href="{% static 'css/style.scss' %}" />
 
     {% endblock %}
 
+
+    {% block js %}
     <script type="text/javascript">
         var _static_url = "{% static '' %}";
         var _autocomplete_url = "{% url 'autocomplete' %}";
@@ -76,8 +78,6 @@
 
     <script type="text/javascript" src="{% static 'js/angular-searchdirective.js' %}" ></script>
     <script type="text/javascript" src="{% static 'js/utils.js' %}" ></script>
-
-    {% block js %}
     {% endblock %}
 </head>
 

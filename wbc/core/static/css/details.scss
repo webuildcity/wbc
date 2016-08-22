@@ -380,6 +380,9 @@ body {
     }
 
     #notes {
+        padding: 0;
+        overflow-y: hidden; //hide ugly scroll bars
+
         #etherpadreadonly-wrapper{
             padding: 1em;
 
