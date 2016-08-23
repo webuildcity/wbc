@@ -258,10 +258,21 @@ SearchController
 
 {% block main_content %}
     <!-- Switches Views between map and list -->
-    <button class="btn btn-default wbc-secondary-button" id="map-list-switch" ng-click="changeView()">{% trans 'Button:Listen-/Kartenansicht' %}</button>
+    <div id="map-list-switch">
+        <button class="btn btn-default wbc-secondary-button view-switch" data-toggle="tooltip" data-container="body" title="{% trans 'Kachelansicht' %}" ng-click="changeView('box')">
+            <i class="fa fa-th"></i>
+        </button>
+         <button class="btn btn-default wbc-secondary-button view-switch" data-toggle="tooltip" data-container="body" title="{% trans 'Listenansicht' %}" ng-click="changeView('list')">
+            <i class="fa fa-list"></i>
+        </button>
+        <button class="btn btn-default wbc-secondary-button view-switch" data-toggle="tooltip" data-container="body" title="{% trans 'Karte' %}" ng-click="changeView('map')">
+            <i class="fa fa-map-o"></i>
+        </button>
+    </div>
+    <!-- <button class="btn btn-default wbc-secondary-button" id="map-list-switch" ng-click="changeView()">{% trans 'Button:Listen-/Kartenansicht' %}</button> -->
     <button class="new-project-button wbc-alarm-button btn btn-default modal-button" data-form="{% url 'project_create' %}" data-title="{% trans 'Projekt hinzufügen' %}">{% trans 'Neues Project erstellen' %}</button>
     <!-- MAPVIEW -->
-    <div ng-class="{'active-result': !listView}" class="result-content" id="map">
+    <div ng-class="{'active-result': viewStyle == 'map'}" class="result-content" id="map">
 
         <!-- INFO BOX ON MAP, shows selected Result -->
         <div ng-if="selectedResult != null" class="map-overlay" id="map-info-box">
@@ -298,7 +309,7 @@ SearchController
     </div>
 
     <!-- LISTVIEW -->
-    <div ng-class="{'active-result': listView}" class="result-content" id="list">
+    <div ng-class="{'active-result': viewStyle == 'list' || viewStyle == 'box', 'box' : viewStyle =='box'}" class="result-content" id="list">
         
         <!-- Search Header with filters and sorting, fixed top -->
         <div id='search-list-header' class="fixed-top">
@@ -318,7 +329,7 @@ SearchController
 
         <!-- Result list for listview -->
         <div id="result-list">
-            <div ng-repeat="result in results">
+            <div ng-repeat="result in results" class="result-repeat">
                 <a ng-href="{[{result.internal_link}]}">
                     <div id="result-{[{result.pk}]}" class="search-result container-fluid">
                         <div class="left-block pull-left">
@@ -327,17 +338,22 @@ SearchController
                         </div>
                         <div class="right-block">
                             <div class="result-mash">
-                                <div class="pull-left result-block">
+                                <div class="pull-left result-block result-title">
                                     <b>{[{ result.name }]}</b>
                                     <p ng-if="result.address_obj">{[{ result.address_obj }]}</p>
                                 </div>
-                                <div class="pull-left result-block">
+                                <div class="pull-left result-block result-stakeholder">
                                     <p ng-if="result.num_stakeholder">{% trans '#Beteiligte:' %}' {[{result.num_stakeholder}]}</p>
                                 </div>
-                                <div class="pull-right result-block">
+                                <div class="pull-right result-block result-stats">
                                     <p ng-if="result.created">{% trans 'Erstellt am:' %} {[{result.created}]}</p>
                                     <p ng-if="result.created_by">{% trans 'Erstellt von:' %}' {[{result.created_by}]}</p>
                                     <p ng-if="result.ratings_avg">{% trans 'Bewertung: &Oslash;' %}' {[{result.ratings_avg}]} ({[{result.ratings_count}]})</p>
+                                </div>
+                                <div ng-if="viewStyle == 'box'" class="result-create">
+                                     <span ng-if="result.created_by">{[{result.created_by}]} - </span>
+                                     <span ng-if="result.created" class="">{[{result.created}]}</span>
+
                                 </div>
                                 <p class="teaser" ng-if="result.teaser">{[{result.teaser}]}</p>
                             </div>

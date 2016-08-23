@@ -24,6 +24,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.formData.terminated = false;
     $scope.selectedResult = null;       //currently selected result
     $scope.listView = !_mapview;            //switch between views
+    $scope.viewStyle = 'box';      ///style of the list view [box, list, map]       
     $scope.searching = false;           //currently searching?
     $scope.offset = 0;                  //current offset
     $scope.multipoly = [];              //polygon to draw on the map
@@ -478,10 +479,10 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     };
 
     //changes view between list and map view
-    $scope.changeView = function() {
-        $scope.listView = !$scope.listView;
-        if(!$scope.listView){
-
+    $scope.changeView = function(view) {
+        $scope.viewStyle = view;
+        // $scope.listView = !$scope.listView;
+        if(view === 'map'){
             setTimeout(function() {
                 MapService.map.invalidateSize();
             }, 50);
