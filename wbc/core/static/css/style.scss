@@ -216,11 +216,34 @@ a:hover,
         background-color: $background-color-header-light;
         border-color: $primary-color;
     }
-    &.active {
+    &:active {
         background-color: $primary-color;
         color: $primary-text;
     }
 }
+
+.wbc-alarm-button {
+    // font-size: 1em;
+    background-color: $highlight-color;
+    border-color: $primary-color-slight-light;
+    color: black;
+    &:hover {
+        background-color: $highlight-color;
+        border-color: $highlight-color-dark;
+        color: black;
+    }
+    &:active {
+        background-color: $highlight-color;
+        border-color: $highlight-color-dark;
+        color: black;
+    }
+    &:focus {
+        background-color: $highlight-color;
+        border-color: $highlight-color-dark;
+        color: black;
+    }
+}
+
 // .btn.btn-primary {
 //     color: white !important;
 // }

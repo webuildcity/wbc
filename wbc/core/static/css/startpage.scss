@@ -201,6 +201,11 @@ html {
         #map-button:hover {
             border: 2px solid $highlight-color;
         }
+        .new-project-button {
+            position: absolute;
+            bottom: 1em;
+            right: 1em;
+        }
     }
 
     #bottom-container {

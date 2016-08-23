@@ -382,17 +382,7 @@ body {
     #notes {
         padding: 0;
         overflow-y: hidden; //hide ugly scroll bars
-
-        #etherpadreadonly-wrapper{
-            padding: 1em;
-
-            #etherpadreadonly {
-                width: 100%;
-                height: 70%;
-                min-height: 400px;
-            }
             
-        }
         #etherpad-iframe {
             width: 100%;
             height: 100%;
@@ -472,7 +462,15 @@ body {
         line-height: 20px;
     }
 }
+#etherpadreadonly-wrapper{
+    padding: 1em;
 
+    #etherpadreadonly {
+        width: 100%;
+        height: 70%;
+        min-height: 400px;
+    }
+}
 
 //IMAGE ADMIN
 #photo-upload {

@@ -355,6 +355,13 @@ DetailsController
                 </p>
             {% endif %}
 
+            {% if project.padId %}
+            <h3>Notizen</h3>
+            <div id="etherpadreadonly-wrapper">
+                <textarea id="etherpadreadonly" disabled>{{etherpadText | safe}}</textarea>
+            </div>
+            {% endif %}
+
             {% if processTypes %}
             <div class="container-fluid">
                 {% include "process/process_bar.html" %}
@@ -364,6 +371,7 @@ DetailsController
                 </div>
             </div>
             {% endif %}
+            
             {% if project.bufferarea_set.all %}
             <div class="content-container">
                 <h4>Ausgleichsflächen</h4>

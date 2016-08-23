@@ -339,6 +339,13 @@ body {
     }
 }
 
+.new-project-button {
+    position: absolute;
+    top: 4em;
+    right: 1em;
+    z-index: 100;
+}
+
 //leaflet controls moved for mobile view
 .leaflet-top{
     @media(max-width: 768px){
@@ -470,6 +477,9 @@ body {
             font-weight: bold;
         }
 
+        button {
+            letter-spacing: 1.1px;
+        }
         .result-number {
             padding-left: 0.7em;
             width: 120px;
@@ -587,7 +597,7 @@ body {
 .search-result:hover {
     background-color: rgba($highlight-color,0.2);
     a {
-      color: $headline-color;
+        color: $headline-color;
     }
 }
 .search-result.selected {

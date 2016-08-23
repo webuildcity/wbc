@@ -259,7 +259,7 @@ SearchController
 {% block main_content %}
     <!-- Switches Views between map and list -->
     <button class="btn btn-default wbc-secondary-button" id="map-list-switch" ng-click="changeView()">{% trans 'Button:Listen-/Kartenansicht' %}</button>
-
+    <button class="new-project-button wbc-alarm-button btn btn-default modal-button" data-form="{% url 'project_create' %}" data-title="{% trans 'Projekt hinzufügen' %}">{% trans 'Neues Project erstellen' %}</button>
     <!-- MAPVIEW -->
     <div ng-class="{'active-result': !listView}" class="result-content" id="map">
 
