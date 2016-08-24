@@ -333,7 +333,8 @@ SearchController
                 <a ng-href="{[{result.internal_link}]}">
                     <div id="result-{[{result.pk}]}" class="search-result container-fluid">
                         <div class="left-block pull-left">
-                            <img ng-if="result.thumbnail" class="search-thumbnail" src={[{result.thumbnail}]}>
+                            <img ng-if="result.thumbnail" class="search-thumbnail" ng-src="{[{viewStyle == 'box' ? result.thumbnail_lg : result.thumbnail}]}">
+                            <!-- <img ng-if="result.thumbnail" class="search-thumbnail" ng-src="{[{result.thumbnail_lg}]}"> -->
                             <i ng-if="!result.thumbnail" class="search-thumbnail fa-5x fa fa-building-o"></i>    
                         </div>
                         <div class="right-block">
@@ -356,6 +357,7 @@ SearchController
 
                                 </div>
                                 <p class="teaser" ng-if="result.teaser">{[{result.teaser}]}</p>
+                                <p class="teaser" ng-if="!result.teaser">{% trans 'Keine Beschreibung vorhanden.' %}</p>
                             </div>
                         </div>
                     </div>

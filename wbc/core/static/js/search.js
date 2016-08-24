@@ -129,7 +129,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
             url:  '/suche/',
             data: data
         }).success(function(response) {
-            
+            console.log(response)
             $scope.resultLength = response.length
             $scope.tagFacets = response.facets.fields.tags;
             $scope.entitiesFacets = response.facets.fields.entities;

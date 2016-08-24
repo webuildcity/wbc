@@ -167,7 +167,7 @@ class SearchView(TemplateView):
             terminated = None
             if result.finished:
                 terminated = result.finished.strftime("%d.%m.%y")
-            resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link, address_obj=result.address_obj, thumbnail=result.thumbnail, num_stakeholder=result.num_stakeholder, created=result.created.strftime("%d.%m.%y"), created_by=result.created_by, teaser=result.teaser, ratings_count=result.ratings_count, ratings_avg=result.ratings_avg, buffer_areas=result.buffer_areas, finished=terminated, isFinished=result.isFinished)
+            resultdict = dict(name=result.name, pk=result.pk, type=result.type, internal_link=result.internal_link, address_obj=result.address_obj, thumbnail=result.thumbnail,thumbnail_lg=result.thumbnail_lg, num_stakeholder=result.num_stakeholder, created=result.created.strftime("%d.%m.%y"), created_by=result.created_by, teaser=result.teaser, ratings_count=result.ratings_count, ratings_avg=result.ratings_avg, buffer_areas=result.buffer_areas, finished=terminated, isFinished=result.isFinished)
             if result.location:
                 resultdict['location'] = [result.location[0], result.location[1]]
 
