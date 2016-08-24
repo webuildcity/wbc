@@ -474,7 +474,7 @@ DetailsController
         <div id="notes" class="tab-pane">
             {% if project.padId %}
                 {% if following %}
-                <iframe src='{{etherpad_url}}auth_session?sessionID={{session_id}}&padName={{project.get_pad_id}}&groupID={{project.get_group_id}}' id='etherpad-iframe'>
+                <iframe src='{{etherpad_url}}auth_session?sessionID={{session_id}}&padName={{project.get_pad_id}}&groupID={{project.get_group_id}}&name={% if user.first_name %}{{user.first_name}}{% else %}{{user.username}}{% endif %}' id='etherpad-iframe'>
                 {% else %}
                 <div class="overlay-container text-center">
                     <span class="overlay-message">

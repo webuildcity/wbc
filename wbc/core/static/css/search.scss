@@ -565,8 +565,9 @@ body {
     &.box {
         .result-repeat {
             box-sizing: border-box;
-            width: 33.3%;
+            // width: 33.3%;
             float: left;
+
             .search-result {
                 padding: 0 !important;
 
@@ -585,6 +586,8 @@ body {
                     padding: 0.6em;
                     width: 100%;
                     margin: 0 0 !important;
+                    font-size: 1.3em;
+                    overflow: hidden;
                 }
                 .result-stakeholder {
                     display: none;
