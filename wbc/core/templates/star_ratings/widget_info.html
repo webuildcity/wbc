@@ -1,0 +1,89 @@
+{% load i18n %}
+<div id="rating-widget">
+
+    <div class="star-ratings" data-max-rating="5" data-avg-rating="{[{result.ratings_avg}]}" data-toggle="tooltip" data-container="body" title="" data-original-title="<b>Bewertungen</b>
+                    <div class='star-ratings-rating-average'>Durchschnitt:  <span class='star-ratings-rating-value'>5</span></div>
+                    <div class='star-ratings-rating-count'>Anzahl:  <span class='star-ratings-rating-value'>1</span></div>
+                    <div class='star-ratings-rating-user'>Deine:  <span class='star-ratings-rating-value'>Nicht bewertet</span></div>
+                    '">
+        
+        <div class="star-ratings-rating-stars-container">
+
+            <ul class="star-ratings-rating-background">
+            
+                <li>
+                    
+                        <span class="star-ratings-rating-empty"></span>
+                    
+                </li>
+            
+                <li>
+                    
+                        <span class="star-ratings-rating-empty"></span>
+                    
+                </li>
+            
+                <li>
+                    
+                        <span class="star-ratings-rating-empty"></span>
+                    
+                </li>
+            
+                <li>
+                    
+                        <span class="star-ratings-rating-empty"></span>
+                    
+                </li>
+            
+                <li>
+                    
+                        <span class="star-ratings-rating-empty"></span>
+                    
+                </li>
+            
+            </ul>
+
+            <ul class="star-ratings-rating-foreground" style="width: {[{result.ratings_avg / 5 *100}]}%;">
+                
+                <li>
+                
+                    <span class="star-ratings-rating-full"></span>
+                
+                </li>
+            
+                <li>
+                
+                    <span class="star-ratings-rating-full"></span>
+                
+                </li>
+            
+                <li>
+                
+                    <span class="star-ratings-rating-full"></span>
+                
+                </li>
+            
+                <li>
+                
+                    <span class="star-ratings-rating-full"></span>
+                
+                </li>
+            
+                <li>
+                
+                    <span class="star-ratings-rating-full"></span>
+                
+                </li>        
+            </ul>
+        </div>
+        
+        
+        <div class="star-ratings-rating-count wbc-star-ratings-count pull-left" data-toggle="tooltip" title="" data-container="body" data-original-title="Anzahl der abgegebenden Stimmen">
+            (<span class="star-ratings-rating-value">{[{result.ratings_count}]}</span>)
+        </div>
+        <div class="star-ratings-rating-average wbc-star-ratings-average pull-left" data-toggle="tooltip" title="" data-container="body" data-original-title="Durchschnittliche Bewertung">
+            <span> Ø</span> <span class="star-ratings-rating-value">{[{result.ratings_avg}]}</span>
+        </div>
+    </div>
+
+</div>

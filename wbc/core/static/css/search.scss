@@ -561,12 +561,31 @@ body {
             height: 175px;
             text-align: center;
         }
+        #rating-widget {
+            padding: 0.6em;
+            // font-size: 1em;
+            .star-ratings-rating-stars-container {
+                float: left;
+            }
+            .star-ratings-rating-full, .star-ratings-rating-empty {
+                width: 20px;
+                height: 20px;
+            }
+
+            .star-ratings-rating-empty {
+                background-position: -20px 0;
+            }
+            .wbc-star-ratings-count, .wbc-star-ratings-average {
+                padding: 0em 0.3em;
+            }
+        }
     }
     &.box {
         .result-repeat {
             box-sizing: border-box;
             // width: 33.3%;
             float: left;
+            min-height: 540px; //find better way to make things align
 
             .search-result {
                 padding: 0 !important;
@@ -597,7 +616,7 @@ body {
                 }
                 .teaser {
                     padding: 0.6em;
-                    background-color: $background-color-header-lightest;
+                    // background-color: $background-color-header-lightest;
                     width: 100%;
                     margin: 0 !important;
                 }
@@ -606,6 +625,15 @@ body {
                     width: 100%;
                     text-align: right;
                     padding-right: 0.8em;
+                }
+                #rating-widget {
+                    clear: both;
+                }
+                .result-tags {
+                    padding-left: 0.6em;
+                }
+                .result-mash {
+                    padding-bottom: 0.5em;
                 }
             }
         }
@@ -622,7 +650,8 @@ body {
 }
 
 .search-result {
-    font-size: 0.875em;
+    // font-size: 0.875em;
+
     overflow: auto;
     padding-left: 1em;
     padding-top: 0.25em;

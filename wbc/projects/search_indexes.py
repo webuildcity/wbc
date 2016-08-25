@@ -16,6 +16,7 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     polygon = indexes.CharField(model_attr='polygon', null=True)
     active = indexes.BooleanField(model_attr='active')
     tags = indexes.MultiValueField(faceted=True)
+    tags_with_link =indexes.MultiValueField()
     entities = indexes.MultiValueField(faceted=True)
     internal_link = indexes.CharField()
     type = indexes.CharField()
@@ -36,6 +37,8 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     def get_model(self):
         return Project
 
+    def prepare_tags_with_link(self, obj):
+        return [[tag.name, tag.get_absolute_url()] for tag in obj.tags.all()]
     def prepare_tags(self, obj):
         return [tag.name for tag in obj.tags.all()]
 

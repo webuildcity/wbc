@@ -1,5 +1,5 @@
 {% extends 'core/layout_split.html' %}
-{% load staticfiles compress i18n %}
+{% load staticfiles compress i18n ratings %}
 
 
 <!-- The Searchpage. Includes two views: map and list views -->
@@ -24,6 +24,8 @@
     {{block.super}}
     <link rel="stylesheet" type="text/x-scss" href="{% static 'css/search.scss' %}" />
     <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+
     {% endcompress %}
 {% endblock %}
 
@@ -351,13 +353,13 @@ SearchController
                                     <p ng-if="result.created_by">{% trans 'Erstellt von:' %}' {[{result.created_by}]}</p>
                                     <p ng-if="result.ratings_avg">{% trans 'Bewertung: &Oslash;' %}' {[{result.ratings_avg}]} ({[{result.ratings_count}]})</p>
                                 </div>
-                                <div ng-if="viewStyle == 'box'" class="result-create">
-                                     <span ng-if="result.created_by">{[{result.created_by}]} - </span>
-                                     <span ng-if="result.created" class="">{[{result.created}]}</span>
-
-                                </div>
+                                {% include 'star_ratings/widget_info.html' %}
                                 <p class="teaser" ng-if="result.teaser">{[{result.teaser}]}</p>
                                 <p class="teaser" ng-if="!result.teaser">{% trans 'Keine Beschreibung vorhanden.' %}</p>
+                                <div class="result-tags">
+                                    <span ng-repeat="tag in result.tags" class="taglink" href="{[{tag[1]}]}">{[{tag[0]}]}</span>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -366,5 +368,5 @@ SearchController
             <button ng-if='results.length < resultLength' class="load-more-results btn btn-default">{% trans 'Mehr Ergebnisse laden' %}</button>
         </div>
     </div>
-    
+ 
 {% endblock %}

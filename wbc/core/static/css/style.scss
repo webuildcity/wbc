@@ -164,6 +164,22 @@ h4 {
     font-size: 1.15em;
 }
 
+.taglink {
+    padding: .4em .7em .3em;
+    margin: .1em .1em;
+    font-size: .85em;
+    border-radius: .25em;
+    color: white  !important;
+    background-color: $primary-color;
+    font-weight: bold;
+    float: left;
+
+    :hover {
+        color: white;
+        opacity: 0.6;
+    }
+}
+
 // .tooltip-container:hover .tooltip { /* display tooltip on hover */
 //     visibility: visible;
 //     opacity:1;

@@ -483,9 +483,12 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
         $scope.viewStyle = view;
         // $scope.listView = !$scope.listView;
         if(view === 'map'){
+            $scope.listView = false;
             setTimeout(function() {
                 MapService.map.invalidateSize();
             }, 50);
+        } else {
+            $scope.listView = true;
         }
     };
 

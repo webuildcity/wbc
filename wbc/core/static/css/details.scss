@@ -520,22 +520,7 @@ body {
 #tags-widget  {
     clear: both;
     padding-top: 0.1em;
-
-    a.taglink {
-        padding: .4em .7em .3em;
-        margin: .1em .1em;
-        font-size: .85em;
-        border-radius: .25em;
-        color: white;
-        background-color: $primary-color;
-        font-weight: bold;
-        float: left;
-
-        :hover {
-            color: white;
-            opacity: 0.6;
-        }
-    }
+    
 }
 
 /* TAG PAGE */
