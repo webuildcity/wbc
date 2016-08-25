@@ -606,9 +606,12 @@ body {
             // width: 33.3%;
             float: left;
             min-height: 540px; //find better way to make things align
+            padding-left: 0;
+            padding-right: 0;
 
             .search-result {
                 padding: 0 !important;
+                @include box-shadow(0 3px 6px rgba(0,0,0,0.2));
 
                 .result-mash {
                     width: 100%;
