@@ -14,6 +14,7 @@ class StakeholderIndex(indexes.SearchIndex, indexes.Indexable):
     roles = indexes.MultiValueField()
     internal_link = indexes.CharField()
     thumbnail = indexes.CharField()
+    thumbnail_lg = indexes.CharField()
     type = indexes.CharField()
     created = indexes.DateField()
 
@@ -36,6 +37,9 @@ class StakeholderIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_thumbnail(self, obj):
         return obj.get_thumbnail_url()
+
+    def prepare_thumbnail_lg(self, obj):
+        return obj.get_thumbnail_lg_url()
 
     def prepare_created(self, obj):
         return obj.created

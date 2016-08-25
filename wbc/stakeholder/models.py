@@ -42,6 +42,7 @@ class Stakeholder(Model):
     # picture     = models.OneToOneField(Photo, blank=True, null=True, verbose_name='Bild')
     picture     = models.ImageField(upload_to='profile_pictures', blank=True, null=True)
     thumbnail   = ImageSpecField(source='picture', processors=[ResizeToFill(100,100)], format='JPEG', options={'quality':60})
+    thumbnail_lg= ImageSpecField(source='picture', processors=[ResizeToFill(400,300)], format='JPEG', options={'quality':60})
 
     def get_absolute_url(self):
         return reverse('stakeholder', kwargs={'slug': self.slug})
@@ -64,6 +65,13 @@ class Stakeholder(Model):
             return self.thumbnail.url
         else:
             return None
+
+    def get_thumbnail_lg_url(self):
+        if self.picture:
+            return self.thumbnail_lg.url
+        else:
+            return None
+
 
     def save(self, *args, **kwargs):
         unique_slugify(self,self.name)
