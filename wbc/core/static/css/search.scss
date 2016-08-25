@@ -601,7 +601,9 @@ body {
                     }
                 }
                 .result-title {
-                    background: $background-color-header-light;
+                    background: $background-color-header;
+                    color: $third-text;
+                    letter-spacing: 1.2px;
                     padding: 0.6em;
                     width: 100%;
                     margin: 0 0 !important;
