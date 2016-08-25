@@ -337,7 +337,12 @@ SearchController
                         <div class="left-block pull-left">
                             <img ng-if="result.thumbnail" class="search-thumbnail" ng-src="{[{viewStyle == 'box' ? result.thumbnail_lg : result.thumbnail}]}">
                             <!-- <img ng-if="result.thumbnail" class="search-thumbnail" ng-src="{[{result.thumbnail_lg}]}"> -->
-                            <i ng-if="!result.thumbnail" class="search-thumbnail fa-5x fa fa-building-o"></i>    
+                            <div ng-if="!result.thumbnail && viewStyle=='box'" class="stretchy-wrapper">
+                                <div>
+                                    <i class="search-thumbnail fa-5x fa fa-building-o"></i>  
+                                </div>
+                            </div>  
+                            <i ng-if="!result.thumbnail && viewStyle != 'box'" class="search-thumbnail fa-5x fa fa-building-o"></i>  
                         </div>
                         <div class="right-block">
                             <div class="result-mash">

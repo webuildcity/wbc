@@ -579,6 +579,21 @@ body {
                 padding: 0em 0.3em;
             }
         }
+
+    }
+    .stretchy-wrapper {
+        width: 100%;
+        padding-top: 75%; /* 16:9 */
+        position: relative;
+        > div {
+            position: absolute;
+            top: 0; bottom: 0; left: 0; right: 0;
+            text-align: center;
+            i {
+                height: 100%;
+                transform:   translateY(40%);
+            }
+        }
     }
     &.box {
         .result-repeat {
@@ -596,6 +611,8 @@ body {
                 }
                 .left-block {
                     width: 100%;
+                    background-color: $background-color-header-light;
+
                     img {
                         width: 100%;
                     }
