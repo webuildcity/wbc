@@ -57,9 +57,12 @@ setTimeout(function() {
     map.invalidateSize();
 }, 200);
 
-if( _polygon.length > 0 ) {
-    var polygon = L.multiPolygon(_polygon);
-    drawnItems.addLayer(polygon);
+if (_polygon){
+    if( _polygon.length > 0 ) {
+        var polygon = L.multiPolygon(_polygon);
+        drawnItems.addLayer(polygon);
+    }
+    
 }
 
 map.on('draw:created', function (e) {
