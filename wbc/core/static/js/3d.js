@@ -29,7 +29,7 @@ $(document).ready(function(){
         type: "BlueprintInputMapTiles",
         options: {
           // tilePath: _tiles_url,
-          tilePath: "http://tiles.we-build.city/hamburg/{z}/{x}/{y}.png"
+          tilePath: "https://tiles.we-build.city/hamburg/{z}/{x}/{y}.png"
           // tilePath: "http://b.tile.openstreetmap.org/{z}/{x}/{y}.png"
         }
       },
@@ -109,7 +109,7 @@ $(document).ready(function(){
     input: {
       type: "BlueprintInputGeoJSON",
       options: {
-        tilePath: "http://vector.mapzen.com/osm/buildings/{z}/{x}/{y}.json"
+        tilePath: "https://vector.mapzen.com/osm/buildings/{z}/{x}/{y}.json"
       }
     },
     output: {
