@@ -52,6 +52,7 @@ function scrollCheck(element, scroller){
     move();
 }
 
+// function to load the modal and handle form submussions in modals
 function loadModal(modal, button) {
     modal = $(modal)
     $(button).on('click', function(ev) { // for each edit contact url
@@ -62,7 +63,7 @@ function loadModal(modal, button) {
         modal.modal('show'); // display the modal on url load
         modal.find('.custom-content').load(url, function(response, status) {
             if ( status == "error" ) {
-                $modal.find('.custom-content').html("Fehler!");
+                modal.find('.custom-content').html("Fehler!");
             }
             modal.modal();
             modal.unbind( "submit" );
