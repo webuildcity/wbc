@@ -49,7 +49,8 @@ $(document).ready(function(){
             // }
         },
         edit: {
-            featureGroup: drawnItems, //REQUIRED!!
+            featureGroup: drawnItems,
+            edit: false, //REQUIRED!!
             // remove: false
         }
     };
@@ -89,8 +90,8 @@ $(document).ready(function(){
         drawnItems.addLayer(marker); 
     }
 
-    map.on('draw:created', function (e) {
-        var type = e.layerType,
+    function layerCreated(e){
+         var type = e.layerType,
             layer = e.layer;
         globe = e;
         drawnItems.addLayer(layer);
@@ -137,8 +138,69 @@ $(document).ready(function(){
             polygonString += ']';
             $('#id_polygon').val(polygonString);
         }
+    };
 
+    function layerDeleted(e){
+        
+        for (var deletedLayer in e.layers._layers){
+            var deLa = e.layers._layers[deletedLayer];
+            var type = deLa.layerType,
+                layer = deLa.layer;
+
+            if(deLa.editing._marker){
+                $('#id_lat').val('');
+                $('#id_lon').val('');
+            }
+            if(deLa.editing._poly){
+                var polygonString = '[';
+
+                for (var layer in drawnItems._layers){
+                    if (drawnItems._layers[layer].editing._poly){
+
+                        if (!drawnItems._layers[layer]._layers){
+
+                            layer =  drawnItems._layers[layer].toGeoJSON();
+                            var coordinates = layer.geometry.coordinates.length > 1 ? layer.geometry.coordinates : layer.geometry.coordinates[0];
+                            for (coords in coordinates) {
+                                //necessary to get the coordinates in the same format as the data from the cities wfs
+                                coordinates[coords] = [coordinates[coords][1], coordinates[coords][0]]
+                            }
+                            polygonString += JSON.stringify(coordinates, null, 2);
+                            polygonString += ',';   
+                        } else {
+                            for (var layer2 in drawnItems._layers[layer]._layers){
+                                layer2 =  drawnItems._layers[layer]._layers[layer2].toGeoJSON();
+
+                                var coordinates = layer2.geometry.coordinates.length > 1 ? layer2.geometry.coordinates : layer2.geometry.coordinates[0];
+                                for (coords in coordinates) {
+                                    coordinates[coords] = [coordinates[coords][1], coordinates[coords][0]]
+                                }
+                                polygonString += JSON.stringify(coordinates, null, 2);
+                                polygonString += ',';
+                            }
+                        }
+                    }
+                }
+                polygonString += ']';
+                $('#id_polygon').val(polygonString);
+
+
+            }
+        }
+    };
+    
+    map.on('draw:created', function (e) {
+       layerCreated(e);
     });
+
+    // map.on('draw:edited', function (e) {
+    //     layerEdited(e);
+    // });
+
+    map.on('draw:deleted', function (e) {
+        layerDeleted(e);
+    });
+
 });
 // var recursiveGeoJsonParse = function(layerContainer){
 //     for (var layer in layerContainer){
