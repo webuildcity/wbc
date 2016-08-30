@@ -16,9 +16,9 @@ def settings(request):
         'tiles_url': django_settings.TILES_URL,
         'tiles_opt': django_settings.TILES_OPT,
         'default_view': django_settings.DEFAULT_VIEW,
-        'facebook_apikey': facebookapikey
+        'facebook_apikey': facebookapikey,
+        'details_tabs' : django_settings.DETAILS_TABS
     }
-
 
 class ProfilePicture(ImageSpec):
     processors = [ResizeToFill(600, 400)]

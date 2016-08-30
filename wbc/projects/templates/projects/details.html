@@ -20,7 +20,7 @@
 <!-- left sidebar side_content with static content, main_content with menu on top -->
 
 {% block css %}
-    {% if tab_settings.3d %}
+    {% if details_tabs.3d %}
     <link rel="stylesheet" type="text/css" href="{% static "css/vizi.css" %}" />
     {% endif %}
     <link rel="stylesheet" type="text/css" href="{% static "css/adminmap.css" %}" />
@@ -29,7 +29,7 @@
     
     {% compress css %}
     {{block.super}}
-    {% if tab_settings.map %}
+    {% if details_tabs.map %}
     <link rel="stylesheet" href="{% static "lib/leaflet/leaflet.css" %}" />
     {% endif %}
     <link rel="stylesheet" type="text/x-scss" href="{% static "css/details.scss" %}" />
@@ -44,7 +44,7 @@
     {{block.super}}
     <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
     <script type="text/javascript" src="{% static 'lib/vertical-timeline.js' %}"  ></script>
-    {% if tab_settings.3d %}
+    {% if details_tabs.3d %}
     <script type="text/javascript" src="{% static 'lib/vizicities/vizi.min.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/vizicities/tween.min.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/Blueprints/BlueprintOutputPolygon.js' %}"  ></script>
@@ -65,7 +65,7 @@
         var _tiles_url = "{{tiles_url}}";
         var _tiles_opt = {{tiles_opt|safe}};
         var _default_view = {{default_view|safe}};
-        var _maps = {{tab_settings.map|yesno:"true,false"}};
+        var _maps = {{details_tabs.map|yesno:"true,false"}};
 
         var _bufferAreas = [];
         {% for area in bufferAreas %}
@@ -316,28 +316,28 @@ DetailsController
     <!-- Navigation Menu for the main content -->
     <div class="main-content-nav-container">
         <ul class="wbc-nav main-content-nav nav nav-tabs" data-tabs="tabs" ng-click="ifSmallExpand()" ng-class="{'wbc-expanded' : expanded}">
-            {% if tab_settings.info %}
+            {% if details_tabs.info %}
             <li class="active"><a data-toggle="tab" href="#info"><i class="fa fa-info"></i>Info</a></li>
             {% endif %}
-            {% if tab_settings.3d %}
+            {% if details_tabs.3d %}
             <li><a class="3d-link" data-toggle="tab" href="#3d"><i class="fa fa-cube"></i>3D</a></li>
             {% endif %}
-            {% if tab_settings.images %}
+            {% if details_tabs.images %}
             <li  {{album|yesno:' ,class=not-active'}}><a data-toggle="tab" href="#gallery"><i class="fa fa-image"></i>Bilder</a></li>
             {% endif %}
-            {% if tab_settings.events %}
+            {% if details_tabs.events %}
             <li><a data-toggle="tab" href="#timeline"><i class="fa fa-calendar"></i>Ereignisse</a></li>
             {% endif %}
-            {% if tab_settings.stakeholder %}
+            {% if details_tabs.stakeholder %}
             <li><a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Beteiligte</a></li>
             {% endif %}
-            {% if tab_settings.discussion %}
+            {% if details_tabs.discussion %}
             <li><a data-toggle="tab" href="#discussion"><i class="fa fa-comment"></i>Diskussion ({% get_comment_count for project as count %}{{count}})</a></li>
             {% endif %}
-            {% if tab_settings.map %}
+            {% if details_tabs.map %}
             <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Karte</a></li>
             {% endif %}
-            {% if tab_settings.etherpad %}
+            {% if details_tabs.etherpad %}
             <li {{project.padId|yesno:' ,class=not-active'}}><a data-toggle="tab" href="#notes">Notizen</a></li>
             {% endif %}
         </ul>
@@ -345,7 +345,7 @@ DetailsController
     
     <!-- INFO TAB, summarizes most important information about the project -->
     <div id="tab-content" class="tab-content">
-        {% if tab_settings.info %}
+        {% if details_tabs.info %}
         <div id="info" class="tab-pane active">
             {% if project.description %}
             <h3>Beschreibung</h3>
@@ -408,14 +408,14 @@ DetailsController
         {% endif %}
 
         <!-- Map, displaying the location and buffer areas if available  -->
-        <div ng-show={{tab_settings.map|yesno:"true,false"}} id="project_map" class="tab-pane">
+        <div ng-show={{details_tabs.map|yesno:"true,false"}} id="project_map" class="tab-pane">
              <div id="map"></div>
         </div>
-        {% if tab_settings.map %}
+        {% if details_tabs.map %}
         {% endif %}
         <!-- Gallery with all images uploaded to the project -->
         
-        {% if tab_settings.images %}
+        {% if details_tabs.images %}
         <div id="gallery" class="tab-pane">
         {% if album %}
            {% include "projects/project_gallery.html" %}
@@ -424,21 +424,21 @@ DetailsController
         {% endif %}
 
         <!-- Timeline with all the events -->
-        {% if tab_settings.events %}
+        {% if details_tabs.events %}
         <div id="timeline" class="tab-pane">
             {% include "projects/project_events.html" %}
         </div>
         {% endif %}
 
         <!-- Shows all the people/organizations involved in the project -->
-        {% if tab_settings.stakeholder %}
+        {% if details_tabs.stakeholder %}
         <div id="stakeholder" class="tab-pane">
             {% include "projects/project_stakeholder.html" %}
         </div>
         {% endif %}
 
         <!-- 3D display of the area, using vizicities -->
-        {% if tab_settings.3d %}
+        {% if details_tabs.3d %}
         <div id="3d" class="tab-pane">
             <div id="vizicities-viewport">
                 <div class="vizicities-ui-item" id="vizi-menu">
@@ -454,7 +454,7 @@ DetailsController
         {% endif %}
 
         <!-- Discussion tab, read and write comments -->
-        {% if tab_settings.discussion %}
+        {% if details_tabs.discussion %}
         <div id="discussion" class="tab-pane">
 
             {% render_comment_list for project %}
@@ -469,7 +469,7 @@ DetailsController
         {% endif %}
 
         <!-- Discussion tab, read and write comments -->
-        {% if tab_settings.etherpad %}
+        {% if details_tabs.etherpad %}
         <div id="notes" class="tab-pane">
             {% if project.padId %}
                 {% if following %}

@@ -226,7 +226,6 @@ def project_request(request, p):
         'bufferAreas' : p.bufferarea_set.all(),
         'attachments' : p.projectattachment_set.all(),
         'etherpadText': etherpadText,
-        'tab_settings': settings.DETAILS_TABS,
         'etherpad_url': settings.ETHERPAD_SETTINGS['base-url'],
         'session_id'  : sessionIDText,
     })
