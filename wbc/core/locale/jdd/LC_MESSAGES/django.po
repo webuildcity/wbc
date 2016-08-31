@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-24 10:16+0200\n"
+"POT-Creation-Date: 2016-08-31 11:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/core/layout.html:117
+#: templates/core/layout.html:118
 msgid "We-Build-Polis"
 msgstr "Landkreis Lichtenfels"
 
@@ -26,130 +26,187 @@ msgstr "Landkreis Lichtenfels"
 msgid "Passwort vergessen"
 msgstr "Passwort vergessen"
 
-#: templates/core/search.html:46
+#: templates/core/search.html:11 templates/core/search.html.py:19
+msgid "Finde spannende Projekte und Ideen."
+msgstr ""
+
+#: templates/core/search.html:64
 msgid ""
 "PLACEHOLDER:Suche nach Ideen, Ansprechpartnern und Projekten in deinem "
 "Landkreis..."
 msgstr ""
 "Suche nach Ideen, Ansprechpartnern und Projekten in deinem Landkreis..."
 
-#: templates/core/search.html:56
+#: templates/core/search.html:74
 msgid "Suche zurücksetzen"
 msgstr "Suche zurücksetzen"
 
-#: templates/core/search.html:79
+#: templates/core/search.html:97
 msgid "Erweiterte Suche"
 msgstr "Erweiterte Suche"
 
-#: templates/core/search.html:83
+#: templates/core/search.html:101
 msgid "Einträgen"
 msgstr "Einträgen"
 
-#: templates/core/search.html:84
+#: templates/core/search.html:102
 #, fuzzy
 #| msgid "Einträgen"
 msgid "Einträge"
 msgstr "Einträgen"
 
-#: templates/core/search.html:85 templates/core/search.html.py:228
+#: templates/core/search.html:103 templates/core/search.html.py:252
 msgid "more"
 msgstr "Mehr Ergebnisse"
 
-#: templates/core/search.html:86
+#: templates/core/search.html:104
 msgid "all"
 msgstr "Alle Ergebnisse"
 
-#: templates/core/search.html:90
+#: templates/core/search.html:108 templates/core/search.html.py:219
+#: templates/core/search.html:333
+msgid "Suche"
+msgstr "Suche"
+
+#: templates/core/search.html:113
 msgid "SPELLING SUGGESTION:Meinten Sie:"
 msgstr "Meinten Sie:"
 
-#: templates/core/search.html:106
+#: templates/core/search.html:129
 #, fuzzy
 #| msgid "Sortieren nach:"
 msgid "Sortieren"
 msgstr "Sortieren nach:"
 
-#: templates/core/search.html:124
+#: templates/core/search.html:148
 msgid "Filter"
 msgstr ""
 
-#: templates/core/search.html:130
+#: templates/core/search.html:154
 msgid "Historische Bebauungspläne"
 msgstr ""
 
-#: templates/core/search.html:136
+#: templates/core/search.html:160
 msgid "Bebauungspläne mit Ausgleichsflächen"
 msgstr ""
 
-#: templates/core/search.html:145
+#: templates/core/search.html:169
 msgid "ENTITY-FILTER: Stadtteile"
 msgstr "Stadtteile"
 
-#: templates/core/search.html:170
+#: templates/core/search.html:194
 msgid "TAG-FILTER:Stichwörter"
 msgstr "Stichwörter"
 
-#: templates/core/search.html:195 templates/core/search.html.py:293
-msgid "Suche"
-msgstr "Suche"
-
-#: templates/core/search.html:202 templates/core/search.html.py:287
+#: templates/core/search.html:226
 msgid "#ERGEBNISSE:Ergebnisse"
 msgstr "Ergebnisse"
 
-#: templates/core/search.html:239
+#: templates/core/search.html:264
+msgid "Kachelansicht"
+msgstr ""
+
+#: templates/core/search.html:267
+#, fuzzy
+#| msgid "Button:Listen-/Kartenansicht"
+msgid "Listenansicht"
+msgstr "Listen-/Kartenansicht"
+
+#: templates/core/search.html:270
+msgid "Karte"
+msgstr ""
+
+#: templates/core/search.html:274
 msgid "Button:Listen-/Kartenansicht"
 msgstr "Listen-/Kartenansicht"
 
-#: templates/core/search.html:248
+#: templates/core/search.html:276
+msgid "Projekt hinzufügen"
+msgstr ""
+
+#: templates/core/search.html:276 templates/core/search.html.py:278
+msgid "Neues Project erstellen"
+msgstr ""
+
+#: templates/core/search.html:288
 msgid "Details"
 msgstr "Details"
 
-#: templates/core/search.html:297
+#: templates/core/search.html:324
 msgid "Sortieren nach:"
 msgstr "Sortieren nach:"
 
-#: templates/core/search.html:325
+#: templates/core/search.html:363
 #, fuzzy
 #| msgid "BUTTON:# Beteiligte"
 msgid "#Beteiligte:"
 msgstr "Anzahl Projektbeteiligter"
 
-#: templates/core/search.html:328
+#: templates/core/search.html:366
 msgid "Erstellt am:"
 msgstr ""
 
-#: templates/core/search.html:329
+#: templates/core/search.html:367
 msgid "Erstellt von:"
 msgstr ""
 
-#: templates/core/search.html:330
+#: templates/core/search.html:368
 msgid "Bewertung: &Oslash;"
 msgstr ""
 
-#: templates/core/search.html:337
+#: templates/core/search.html:372
+msgid "Keine Beschreibung vorhanden."
+msgstr ""
+
+#: templates/core/search.html:383
 msgid "Mehr Ergebnisse laden"
 msgstr ""
 
-#: templates/star_ratings/widget.html:5
-msgid "Average: "
-msgstr "Durchschnitt der Bewertungen"
+#: templates/star_ratings/widget.html:21
+msgid "Durchschnitt: "
+msgstr ""
 
-#: templates/star_ratings/widget.html:8
-msgid "Rating Count: "
-msgstr "Anzahl der Bewertungen"
+#: templates/star_ratings/widget.html:22
+msgid "Anzahl: "
+msgstr ""
 
-#: templates/star_ratings/widget.html:11
-msgid "You Rated: "
-msgstr "Deine Bewertung: "
+#: templates/star_ratings/widget.html:23
+msgid "Deine: "
+msgstr ""
 
-#: templates/star_ratings/widget.html:11
+#: templates/star_ratings/widget.html:23
 msgid "Not rated"
 msgstr "Nicht bewertet"
 
-#: templates/star_ratings/widget.html:13
-msgid "Einloggen um abzustimmen."
-msgstr "Einloggen um abzustimmen."
+#: templates/star_ratings/widget.html:25
+msgid "Please log in to rate."
+msgstr ""
+
+#: templates/star_ratings/widget.html:36
+#, fuzzy
+#| msgid "Not rated"
+msgid "Log in to rate"
+msgstr "Nicht bewertet"
+
+#: templates/star_ratings/widget.html:58
+msgid "Anzahl der abgegebenden Stimmen"
+msgstr ""
+
+#: templates/star_ratings/widget.html:61
+msgid "Durchschnittliche Bewertung"
+msgstr ""
+
+#~ msgid "Average: "
+#~ msgstr "Durchschnitt der Bewertungen"
+
+#~ msgid "Rating Count: "
+#~ msgstr "Anzahl der Bewertungen"
+
+#~ msgid "You Rated: "
+#~ msgstr "Deine Bewertung: "
+
+#~ msgid "Einloggen um abzustimmen."
+#~ msgstr "Einloggen um abzustimmen."
 
 #~ msgid "Benutzerkonto registrieren"
 #~ msgstr "Benutzerkonto registrieren"
