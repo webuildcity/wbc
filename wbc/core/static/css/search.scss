@@ -579,7 +579,16 @@ body {
                 padding: 0em 0.3em;
             }
         }
-
+        .feature-icon {
+            height: 50px;
+            float: left;
+            img {
+                height: 100%;
+            }
+        }
+        .thumb-icon {
+            float: left;
+        }
     }
     .stretchy-wrapper {
         width: 100%;

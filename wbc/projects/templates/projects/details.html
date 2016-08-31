@@ -1,5 +1,5 @@
 {% extends 'core/layout_split.html' %}
-{% load staticfiles compress guardian_tags threadedcomments_tags imagekit ratings i18n %}
+{% load staticfiles compress guardian_tags threadedcomments_tags imagekit ratings i18n wbc_extras %}
 
 {% block meta_content %}
     <meta property="og:title" content="{{project.name}}" />
@@ -109,6 +109,7 @@ DetailsController
             </a>
             {% endif %}
         </div>
+
         {% if user.is_authenticated %}
         <ul class="admin-panel">
             <li><a class="admin-link project-admin" data-toggle="modal" data-target="#edit-modal" data-form="{% url 'project_create' %}" data-title="{% trans 'Projekt hinzufügen' %}" href="#"><i class="fa fa-plus"></i></a></li>
@@ -177,6 +178,23 @@ DetailsController
         {% ratings project icon_height=20 icon_width=20 %}
     </div>
 
+    {% if request.user|has_group:"organizer" %} 
+    <div id="organize-widget">
+        <button class="btn btn-default feature-button {% if project.featured %} active {% endif %}" data-url="{% url 'project_feature' project.pk %}" ><img src="{% static 'img/logos/jdd-siegel_100_transparent.png' %}"/></button>
+        
+        <div id="updownvote-container">
+            <button class="btn btn-default updownvote-button {% if project.updownvote == True %} active {% endif %}" data-url="{% url 'project_updownvote' pk=project.pk vote=2 %}">
+                <i class="fa fa-thumbs-o-up fa-2x"></i>
+            </button>
+            <button class="btn btn-default updownvote-button {% if project.updownvote == False %} active {% endif %}" data-url="{% url 'project_updownvote' pk=project.pk vote=1 %}">
+                <i class="fa fa-circle"></i>
+            </button>
+            <button class="btn btn-default updownvote-button {% if project.updownvote == None %} active {% endif %}" data-url="{% url 'project_updownvote' pk=project.pk vote=0 %}">
+                <i class="fa fa-thumbs-o-down fa-2x"></i>
+            </button>
+        </div>
+    </div>
+    {% endif %}
     <!-- Display a teaser text fro the description -->
     {% if project.description %}
     <div class="teaser-text">

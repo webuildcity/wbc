@@ -69,6 +69,11 @@ class Project(Model):
     finished             = models.DateField(null=True, blank=True, verbose_name="Festgestellt am")
     isFinished           = models.NullBooleanField(default=True, null=True, blank=True)
     padId                = models.CharField(blank=True, null=True, max_length=64)
+    
+    # Fields for rating and featuring
+    featured             = models.NullBooleanField(default=False, null=True, blank=True)
+    updownvote           = models.NullBooleanField(default=False, null=True, blank=True)
+
 
     def get_changed_by(self):
         if(self.history.last()):

@@ -761,4 +761,21 @@ body {
     background-image: -ms-linear-gradient(top, $primary-color-dark, $primary-color);
     background-image: -o-linear-gradient(top, $primary-color-dark, $primary-color);
     background-image: linear-gradient(to bottom, $primary-color-dark, $primary-color);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=$primary-color-dark, endColorstr=$primary-color);
+}
+
+.feature-button {
+    padding: 0.3em;
+    background-color: $background-color;
+    &:hover {
+        background-color: $primary-color;
     }
+    &.active {
+        background-color: $primary-color;
+    }
+}
+
+.updownvote-button {
+    &.active {
+        background-color: $primary-color;
+    }
+}

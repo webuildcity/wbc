@@ -4,7 +4,7 @@ from datetime import timedelta
 from django.conf import settings
 from django.shortcuts import render,get_object_or_404
 from django.core.urlresolvers import reverse,reverse_lazy
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.contrib.auth.models import User, Permission
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
@@ -259,6 +259,37 @@ def subscribe(request, pk):
         request.user.profile.subscriber.projects.add(p)
     return JsonResponse({'redirect' : p.get_absolute_url()})
 
+# check if user is an organizer
+def is_organizer(user):
+    return user.groups.filter(name='organizer').exists()
+
+# feature a project so it gets priorities
+@login_required
+@user_passes_test(is_organizer)
+def feature(request, pk):
+    p = get_object_or_404(Project, id = int(pk))
+    if p.featured:
+        p.featured = False
+    else:
+        p.featured = True
+    p.save()
+
+    return JsonResponse({'redirect' : p.get_absolute_url()})
+
+# updown vote a project (once per project not per user)
+@login_required
+@user_passes_test(is_organizer)
+def updownvote(request, pk, vote):
+    p = get_object_or_404(Project, id = int(pk))
+    if vote == "2":
+        p.updownvote = True
+    elif vote == "1":
+        p.updownvote = False
+    elif vote == "0":
+        p.updownvote = None
+    p.save()
+
+    return JsonResponse({'redirect' : p.get_absolute_url()})
 
 
 #uploads a photo to a project, handles the creation of albums

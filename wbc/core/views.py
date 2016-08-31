@@ -148,10 +148,13 @@ class SearchView(TemplateView):
             if len(data['entities']) >0:
                 sqs = sqs.filter(entities__name__in=data['entities'])
         
+
         if 'order' in data:
             if data['order'] != '' and data['order'] != '-':
                 order = data['order']
                 sqs = sqs.order_by(order)
+
+        sqs = sqs.order_by('-featured').order_by('-updownvote')
 
         if 'offset' in data:
             offset = data['offset']
@@ -167,11 +170,12 @@ class SearchView(TemplateView):
             terminated = None
             if result.finished:
                 terminated = result.finished.strftime("%d.%m.%y")
-            resultdict = dict(name=result.name, pk=result.pk, type=result.type, tags = result.tags_with_link, internal_link=result.internal_link, address_obj=result.address_obj, thumbnail=result.thumbnail,thumbnail_lg=result.thumbnail_lg, num_stakeholder=result.num_stakeholder, created=result.created.strftime("%d.%m.%y"), created_by=result.created_by, teaser=result.teaser, ratings_count=result.ratings_count, ratings_avg=result.ratings_avg, buffer_areas=result.buffer_areas, finished=terminated, isFinished=result.isFinished)
+            resultdict = dict(name=result.name, pk=result.pk, type=result.type, tags = result.tags_with_link, featured = result.featured, updownvote=result.updownvote ,internal_link=result.internal_link, address_obj=result.address_obj, thumbnail=result.thumbnail,thumbnail_lg=result.thumbnail_lg, num_stakeholder=result.num_stakeholder, created=result.created.strftime("%d.%m.%y"), created_by=result.created_by, teaser=result.teaser, ratings_count=result.ratings_count, ratings_avg=result.ratings_avg, buffer_areas=result.buffer_areas, finished=terminated, isFinished=result.isFinished)
             if result.location:
                 resultdict['location'] = [result.location[0], result.location[1]]
 
             if result.polygon:
+
                 resultdict['polygon'] = json.loads(result.polygon)
 
             results.append(resultdict)
