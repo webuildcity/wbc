@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     url(r'^', include(router.urls)),
     url(r'^(?P<pk>[0-9]+)/photo_upload/', 'wbc.projects.views.photo_upload', name="project_photo_upload"),
     url(r'^(?P<pk>[0-9]+)/subscribe/', 'wbc.projects.views.subscribe', name="project_subscribe"),
+    url(r'^(?P<pk>[0-9]+)/updownvote/(?P<vote>[0-9]+)', 'wbc.projects.views.updownvote', name="project_updownvote"),
+    url(r'^(?P<pk>[0-9]+)/feature/', 'wbc.projects.views.feature', name="project_feature"),
     url(r'^(?P<pk>[0-9]+)/photo_delete/(?P<photo>[0-9]+)', 'wbc.projects.views.photo_delete', name="project_photo_delete"),
 
 )

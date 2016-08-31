@@ -33,6 +33,8 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     buffer_areas = indexes.MultiValueField()
     finished = indexes.DateField()
     isFinished = indexes.BooleanField(model_attr='isFinished', default=False)
+    featured = indexes.BooleanField(model_attr='featured', default=None)
+    updownvote = indexes.BooleanField(model_attr='updownvote', default=None)
 
     def get_model(self):
         return Project

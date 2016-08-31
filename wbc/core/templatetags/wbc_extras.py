@@ -17,6 +17,14 @@ def markdown(value):
     return mdn(value)
 
 
+# simple check for group
+@register.filter(name='has_group') 
+def has_group(user, group_name):
+    group =  Group.objects.get(name=group_name) 
+    return group in user.groups.all() 
+
+
+# is this used anywhere?
 #https://djangosnippets.org/snippets/2736/raw/
 @register.tag()
 def ifusergroup(parser, token):

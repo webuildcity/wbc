@@ -188,6 +188,8 @@ $(document).ready(function(){
         return false; // prevent the click propagation
     });
 
+
+    //handler for the follow button (follows or unfollows a project)
     $('.follow-button').on('click', function(){
         $.get($(this).data('url'), function(data) {
             if (data.redirect){
@@ -195,7 +197,27 @@ $(document).ready(function(){
                 window.location.reload();
             }
         });
-    })
+    });
+
+    //handler for the feature button (features or defeatures the project)
+    $('.feature-button').on('click', function(){
+        $.get($(this).data('url'), function(data) {
+            if (data.redirect){
+                window.location.href = data.redirect;
+                window.location.reload();
+            }
+        });
+    });
+
+    //handler for the updownvote button
+    $('.updownvote-button').on('click', function(){
+        $.get($(this).data('url'), function(data) {
+            if (data.redirect){
+                window.location.href = data.redirect;
+                window.location.reload();
+            }
+        });
+    });
 
 
     //comments
