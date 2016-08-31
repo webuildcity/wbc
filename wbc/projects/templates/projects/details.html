@@ -194,6 +194,17 @@ DetailsController
             </button>
         </div>
     </div>
+    {% else %}
+        {% if project.featured %}
+        <div id="feature-widget" class="pull-left">
+            <img src="{% static 'img/logos/jdd-siegel_100_transparent.png' %}"/>
+        {% endif %}
+        {% if project.updownvote == True %}
+            <i class="fa fa-thumbs-o-up fa-3x"></i>
+        {% elif project.updownvote == None %}
+            <i class="fa fa-thumbs-o-down fa-3x"></i>
+        {% endif %}
+        </div>
     {% endif %}
     <!-- Display a teaser text fro the description -->
     {% if project.description %}

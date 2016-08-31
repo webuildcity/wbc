@@ -580,7 +580,7 @@ body {
             }
         }
         .feature-icon {
-            height: 50px;
+            height: 30px;
             float: left;
             img {
                 height: 100%;
@@ -588,6 +588,7 @@ body {
         }
         .thumb-icon {
             float: left;
+            padding-left: 0.5em;
         }
     }
     .stretchy-wrapper {
@@ -608,6 +609,11 @@ body {
                 transform:   translateY(-50%);
             }
         }
+    }
+    .featured {
+       .search-result {
+            border: 2px solid $primary-color !important;            
+           }
     }
     &.box {
         .result-repeat {

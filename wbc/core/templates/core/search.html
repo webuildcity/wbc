@@ -337,7 +337,7 @@ SearchController
         <!-- Result list for listview -->
         <div id="result-list">
             <div ng-repeat="result in results">
-            <div class="result-repeat" ng-class="(viewStyle == 'box') ? 'col-xs-12 col-md-6 col-lg-4' : ''">
+            <div class="result-repeat"  ng-class="{'col-xs-12 col-md-6 col-lg-4' : viewStyle == 'box', 'featured' : result.featured }">
                 <a ng-href="{[{result.internal_link}]}">
                     
                     <div id="result-{[{result.pk}]}" class="search-result container-fluid">
