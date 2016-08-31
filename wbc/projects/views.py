@@ -267,10 +267,12 @@ def photo_upload(request, pk):
     project = get_object_or_404(Project, id= int(pk))
     # permission check, object and global permission needs to be checked seperated
     if request.user.has_perm('projects.change_project', project) or request.user.has_perm('projects.change_project'):
+        created = False
         if project.album:
             album = project.album
         else:
             album = Album.objects.create()
+            created = True
             album.save()
             project.album = album
             project.save()
@@ -280,7 +282,8 @@ def photo_upload(request, pk):
         project.save()
         response_dict = {
             'message': 'File uploaded successfully!',
-            'thumbnail'     : photo.thumbnail.url
+            'thumbnail'     : photo.thumbnail.url ,
+            'reload' : created
         }
 
         return JsonResponse(response_dict)

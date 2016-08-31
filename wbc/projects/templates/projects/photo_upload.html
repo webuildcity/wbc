@@ -18,6 +18,7 @@
 
 <script>
 // handles the form to upload the image, adds thumbnail to the view if image uploaded
+var reload = false;
 Dropzone.options.photoUploadForm = {
     maxFilesize: 5,
     acceptedFiles: 'image/*',
@@ -26,6 +27,7 @@ Dropzone.options.photoUploadForm = {
         done();
     },
     success: function(a, b) {
+        reload = true;
         $('#current-photos').append('<div class="thumbnail pull-left"><img src="'+b.thumbnail+'"> <a class="delete-photo" data-id='+b.id+' href="#">Löschen</a</div>');
     },
     error: function(a) {

@@ -243,8 +243,15 @@ $(document).ready(function(){
             success: function(){
                 parent.remove();
             }
-        })
-    })
+        });
+    });
+    // reloads the page after uploading pictures if required
+    $('#photo-modal').on('hidden.bs.modal', function(){
+        if(reload){
+            location.reload(); 
+            reload = false;
+        }
+    });
 });
 
 function show_reply_form(event) {
