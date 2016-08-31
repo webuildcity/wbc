@@ -72,7 +72,7 @@ class Project(Model):
     
     # Fields for rating and featuring
     featured             = models.NullBooleanField(default=False, null=True, blank=True)
-    updownvote           = models.NullBooleanField(default=None, null=True, blank=True)
+    updownvote           = models.NullBooleanField(default=False, null=True, blank=True)
 
 
     def get_changed_by(self):

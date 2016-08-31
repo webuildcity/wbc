@@ -284,9 +284,9 @@ def updownvote(request, pk, vote):
     if vote == "2":
         p.updownvote = True
     elif vote == "1":
-        p.updownvote = None
-    elif vote == "0":
         p.updownvote = False
+    elif vote == "0":
+        p.updownvote = None
     p.save()
 
     return JsonResponse({'redirect' : p.get_absolute_url()})

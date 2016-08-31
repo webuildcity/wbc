@@ -380,8 +380,9 @@ SearchController
                                 <div class="thumb-icon" ng-if="result.updownvote">
                                     <i class="fa fa-thumbs-o-up fa-2x"></i>
                                 </div>
-                                <div class="thumb-icon" ng-if="result.updownvote == false">
+                                <div class="thumb-icon" ng-if="result.updownvote != false && result.updownvote != true">
                                     <i class="fa fa-thumbs-o-down fa-2x"></i>
+                                    
                                 </div>
 
                             </div>

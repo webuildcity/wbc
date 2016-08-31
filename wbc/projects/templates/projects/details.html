@@ -186,10 +186,10 @@ DetailsController
             <button class="btn btn-default updownvote-button {% if project.updownvote == True %} active {% endif %}" data-url="{% url 'project_updownvote' pk=project.pk vote=2 %}">
                 <i class="fa fa-thumbs-o-up fa-2x"></i>
             </button>
-            <button class="btn btn-default updownvote-button {% if project.updownvote == None %} active {% endif %}" data-url="{% url 'project_updownvote' pk=project.pk vote=1 %}">
+            <button class="btn btn-default updownvote-button {% if project.updownvote == False %} active {% endif %}" data-url="{% url 'project_updownvote' pk=project.pk vote=1 %}">
                 <i class="fa fa-circle"></i>
             </button>
-            <button class="btn btn-default updownvote-button {% if project.updownvote == False %} active {% endif %}" data-url="{% url 'project_updownvote' pk=project.pk vote=0 %}">
+            <button class="btn btn-default updownvote-button {% if project.updownvote == None %} active {% endif %}" data-url="{% url 'project_updownvote' pk=project.pk vote=0 %}">
                 <i class="fa fa-thumbs-o-down fa-2x"></i>
             </button>
         </div>
