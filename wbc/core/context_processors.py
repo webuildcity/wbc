@@ -17,7 +17,8 @@ def settings(request):
         'tiles_opt': django_settings.TILES_OPT,
         'default_view': django_settings.DEFAULT_VIEW,
         'facebook_apikey': facebookapikey,
-        'details_tabs' : django_settings.DETAILS_TABS
+        'details_tabs' : django_settings.DETAILS_TABS,
+        'general_content' : django_settings.GENERAL_CONTENT,
     }
 
 class ProfilePicture(ImageSpec):
