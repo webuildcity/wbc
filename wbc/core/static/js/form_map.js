@@ -4,7 +4,6 @@ var marker;
 
 $(document).ready(function(){
 
-
     // add the map layer
     map = new L.Map("form-map");
     map.addLayer(new L.TileLayer(_tiles_url, _tiles_opt));

@@ -18,6 +18,7 @@
     </div>
 </form>
 
+{% if details_tabs.map %}
 <!-- All the things needed if not coming from a page with maps -->
 <script type="text/javascript" src="{% static 'lib/leaflet/leaflet.js' %}" ></script>
 <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
@@ -40,3 +41,4 @@
 <script src="{% static 'js/form_map.js' %}" type="text/javascript"></script>
 <link rel="stylesheet" href="{% static 'lib/leaflet-draw/dist/leaflet.draw.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/project_form.css' %}" />
+{% endif %}
