@@ -505,9 +505,9 @@ DetailsController
                 <iframe src='{{etherpad_url}}auth_session?sessionID={{session_id}}&padName={{project.get_pad_id}}&groupID={{project.get_group_id}}&name={% if user.first_name %}{{user.first_name}}{% else %}{{user.username}}{% endif %}' id='etherpad-iframe'>
                 {% else %}
                 <div class="overlay-container text-center">
-                    <span class="overlay-message">
-                        <a href="#/stakeholder">{% trans 'Folge dem Projekt um hier mitzuschreiben.' %}</a>
-                    </span>
+                    <button class="overlay-message follow-button" data-url="{% url 'project_follow' project.pk %}">
+                        {% trans 'Folge dem Projekt um hier mitzuschreiben.' %}
+                    </button>
                 </div>
                 <div id="etherpadreadonly-wrapper">
                     <textarea id="etherpadreadonly" disabled>{{etherpadText | safe}}</textarea>
