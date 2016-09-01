@@ -200,7 +200,7 @@ def project_request(request, p):
     if p.padId and settings.DETAILS_TABS['etherpad']:
         c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key'], 'baseUrl' : settings.ETHERPAD_SETTINGS['base-url'] + 'api'})
         if following:
-            group = c.createGroupIfNotExistsFor(groupMapper=settings.PREFIX + p.slug)
+            group = c.createGroupIfNotExistsFor(groupMapper=settings.PREFIX + str(p.pk))
             author = c.createAuthorIfNotExistsFor(authorMapper=settings.PREFIX + str(request.user))
             validUntil = now() + datetime.timedelta(hours=3)
             sessionID = c.createSession(groupID=unicode(group['groupID']), authorID=unicode(author['authorID']), validUntil=str(validUntil.strftime('%s')))

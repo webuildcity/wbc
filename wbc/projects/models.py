@@ -166,14 +166,19 @@ class Project(Model):
 
     def save(self, *args, **kwargs):
         unique_slugify(self,self.name)
+        create_pad = False
         if self.pk is None:
-            unique_name = settings.PREFIX + self.slug
+            create_pad = True
+
+        super(Project, self).save(*args, **kwargs)
+
+        if create_pad:
+            unique_name = settings.PREFIX + str(self.pk)
             c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key']})
             group = c.createGroupIfNotExistsFor(groupMapper=unique_name)
             pad = c.createGroupPad(groupID=group['groupID'], padName=unique_name, text="Hallo")
             self.padId = pad['padID']
-
-        super(Project, self).save(*args, **kwargs)
+            self.save()
 
 class BufferArea(Model):
     name                 = models.CharField(blank=False, max_length=64, verbose_name="Name", help_text="Name")
