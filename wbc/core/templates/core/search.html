@@ -261,6 +261,12 @@ SearchController
 {% block main_content %}
     <!-- Switches Views between map and list -->
     <div id="map-list-switch">
+        {% if user.is_authenticated %}
+        <button class="new-project-button wbc-alarm-button btn btn-default modal-button" data-form="{% url 'project_create' %}" data-title="{% trans 'Projekt hinzufügen' %}">{% trans 'Neues Project' %}</button>
+        {% else %}
+        <button class="new-project-button wbc-alarm-button btn btn-default login-button" data-toggle="modal" data-target="#login-modal" data-form="{% url 'register_method' %}" data-title="Anmelden">{% trans 'Neues Project' %}</button>
+
+        {% endif %}
         <button class="btn btn-default wbc-secondary-button view-switch" data-toggle="tooltip" data-container="body" title="{% trans 'Kachelansicht' %}" ng-click="changeView('box')">
             <i class="fa fa-th"></i>
         </button>
@@ -272,12 +278,6 @@ SearchController
         </button>
     </div>
     <!-- <button class="btn btn-default wbc-secondary-button" id="map-list-switch" ng-click="changeView()">{% trans 'Button:Listen-/Kartenansicht' %}</button> -->
-    {% if user.is_authenticated %}
-    <button class="new-project-button wbc-alarm-button btn btn-default modal-button" data-form="{% url 'project_create' %}" data-title="{% trans 'Projekt hinzufügen' %}">{% trans 'Neues Project erstellen' %}</button>
-    {% else %}
-    <button class="new-project-button wbc-alarm-button btn btn-default login-button" data-toggle="modal" data-target="#login-modal" data-form="{% url 'register_method' %}" data-title="Anmelden">{% trans 'Neues Project erstellen' %}</button>
-
-    {% endif %}
     <!-- MAPVIEW -->
     <div ng-class="{'active-result': viewStyle == 'map'}" class="result-content" id="map">
 
