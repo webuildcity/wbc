@@ -111,7 +111,6 @@ class SearchView(TemplateView):
 #            'stakeholder': Stakeholder 
         }
         offset = 0
-        print data
         suggestions = sqs.spelling_suggestion()
         # Disable finished projects by default
         if settings.TERMINATED_PROJECTS:
