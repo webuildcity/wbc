@@ -22,6 +22,7 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     $scope.formData.tags = [];          //list of tags
     $scope.formData.entities = [];          //list of entities
     $scope.formData.terminated = false;
+    $scope.formData.featured = false;
     $scope.selectedResult = null;       //currently selected result
     $scope.listView = !_mapview;            //switch between views
     $scope.viewStyle = 'box';      ///style of the list view [box, list, map]       
@@ -476,6 +477,11 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
 
         if(param_json['terminated'] === 'true')
             $scope.formData.terminated = true;
+        if(param_json['featured'] === 'true'){
+            
+            console.log('feature')
+            $scope.formData.featured = true;
+        }
     };
 
     //changes view between list and map view

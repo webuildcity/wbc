@@ -111,7 +111,7 @@ class SearchView(TemplateView):
 #            'stakeholder': Stakeholder 
         }
         offset = 0
-
+        print data
         suggestions = sqs.spelling_suggestion()
         # Disable finished projects by default
         if settings.TERMINATED_PROJECTS:
@@ -120,6 +120,10 @@ class SearchView(TemplateView):
             else:
                 sqs = sqs.exclude(isFinished=True)
         
+        if 'featured' in data:
+            if data['featured'] == True:
+                sqs = sqs.filter(featured=True)
+
         if 'buffer_areas' in data and data['buffer_areas']:
             sqs = sqs.filter(_exists_="buffer_areas")
         
