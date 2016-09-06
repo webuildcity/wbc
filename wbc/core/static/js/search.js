@@ -28,7 +28,11 @@ app.controller('SearchController', ['$scope', '$document', '$http', '$window', '
     if (!$scope.listView) {
         $scope.viewStyle = 'map';      ///style of the list view [box, list, map]       
     } else {
-        $scope.viewStyle = 'box';      ///style of the list view [box, list, map]       
+        if(_mapview == null){
+            $scope.viewStyle = 'list';      ///style of the list view [box, list, map]       
+        } else {
+            $scope.viewStyle = 'box';      ///style of the list view [box, list, map]               
+        }
     }
     $scope.searching = false;           //currently searching?
     $scope.offset = 0;                  //current offset
