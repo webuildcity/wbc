@@ -24,7 +24,10 @@
     {{block.super}}
     <link rel="stylesheet" type="text/x-scss" href="{% static 'css/search.scss' %}" />
     <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
+
+    {% if general_content.starrating %}
     <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+    {% endif %}
 
     {% endcompress %}
 {% endblock %}
@@ -366,24 +369,32 @@ SearchController
                                 <div class="pull-right result-block result-stats">
                                     <p ng-if="result.created">{% trans 'Erstellt am:' %} {[{result.created}]}</p>
                                     <p ng-if="result.created_by">{% trans 'Erstellt von:' %}' {[{result.created_by}]}</p>
+                                    {% if general_content.starrating %}
                                     <p ng-if="result.ratings_avg">{% trans 'Bewertung: &Oslash;' %}' {[{result.ratings_avg}]} ({[{result.ratings_count}]})</p>
+                                    {% endif %}
                                 </div>
-                                {% include 'star_ratings/widget_info.html' %}
+                                {% if general_content.starrating %}
+                                    {% include 'star_ratings/widget_info.html' %}
+                                {% endif %}
                                 <p class="teaser" ng-if="result.teaser">{[{result.teaser}]}</p>
                                 <p class="teaser" ng-if="!result.teaser">{% trans 'Keine Beschreibung vorhanden.' %}</p>
                                 <div class="result-tags">
                                     <span ng-repeat="tag in result.tags" class="taglink" href="{[{tag[1]}]}">{[{tag[0]}]}</span>
                                 </div>
+                                {% if general_content.featured %}
                                 <div class="feature-icon" ng-if="result.featured">
                                     <img src="{% static 'img/logos/jdd-siegel_100_transparent.png' %}"/>
                                 </div>
+                                {% endif %}
+                                {% if general_content.updownvote %}
                                 <div class="thumb-icon" ng-if="result.updownvote">
                                     <i class="fa fa-thumbs-o-up fa-2x"></i>
                                 </div>
+                                
                                 <div class="thumb-icon" ng-if="result.updownvote != false && result.updownvote != true">
-                                    <i class="fa fa-thumbs-o-down fa-2x"></i>
-                                    
+                                    <i class="fa fa-thumbs-o-down fa-2x"></i>    
                                 </div>
+                                {% endif %}
 
                             </div>
                         </div>

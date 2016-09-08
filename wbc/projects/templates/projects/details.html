@@ -35,7 +35,9 @@
     <link rel="stylesheet" type="text/x-scss" href="{% static "css/details.scss" %}" />
     <link rel="stylesheet" href="{% static "lib/dropzone.css" %}" />
 
+    {% if general_content.starrating %}
     <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+    {% endif %}
 
     {% endcompress %}
 {% endblock %}
@@ -55,9 +57,10 @@
     <script type="text/javascript" src="{% static 'lib/jquery-ui/jquery-ui.min.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'js/adminmap.js' %}"  ></script>
     <script type="text/javascript" src="{% static 'lib/dropzone.js' %}" ></script>
-
+    
+    {% if general_content.starrating %}
     <script type="text/javascript" src="{%static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
-
+    {% endif %}
     <script type="text/javascript">
 
         // pass some data from django to javascript
@@ -174,14 +177,29 @@ DetailsController
     {% endif %}
 
     <!-- rating widget, uses django-star-rating -->
+    {% if general_content.starrating %}
     <div id="rating-widget">
         {% ratings project icon_height=20 icon_width=20 %}
     </div>
+    {% endif %}
+    
+    {% if general_content.wbcrating %}
+        {% if user.is_authenticated %}
+            {% if important_tag != None %}
 
+            <button class="btn btn-default wbc-rating-button {% if wbc_rated %}active {% endif %}" data-url="{% url 'project_wbc_rate' pk=project.pk user=user.pk tag=important_tag.slug %}">
+                <i class="fa fa-thumbs-o-up fa-2x"></i>
+            </button>
+            {% endif %}
+        {% endif %}
+    {% endif %}
     {% if request.user|has_group:"organizer" %} 
     <div id="organize-widget">
+        {% if general_content.featured %}
         <button class="btn btn-default feature-button {% if project.featured %} active {% endif %}" data-url="{% url 'project_feature' project.pk %}" ><img src="{% static 'img/logos/jdd-siegel_100_transparent.png' %}"/></button>
-        
+        {% endif %}
+
+        {% if general_content.updownvote %}
         <div id="updownvote-container">
             <button class="btn btn-default updownvote-button {% if project.updownvote == True %} active {% endif %}" data-url="{% url 'project_updownvote' pk=project.pk vote=2 %}">
                 <i class="fa fa-thumbs-o-up fa-2x"></i>
@@ -193,6 +211,7 @@ DetailsController
                 <i class="fa fa-thumbs-o-down fa-2x"></i>
             </button>
         </div>
+        {% endif %}
     </div>
     {% else %}
         <div id="feature-widget" class="pull-left">

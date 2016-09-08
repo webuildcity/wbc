@@ -4,6 +4,8 @@ from datetime import timedelta
 from django.conf import settings
 from django.shortcuts import render,get_object_or_404
 from django.core.urlresolvers import reverse,reverse_lazy
+from django.core.exceptions import ValidationError
+
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.contrib.auth.models import User, Permission
 from django.contrib.syndication.views import Feed
@@ -27,6 +29,9 @@ from wbc.process.models import ProcessType, ProcessStep
 from wbc.notifications.models import Subscriber
 from wbc.images.models import Photo, Album
 from models import *
+
+from wbc.rating.models import WbcRating
+from wbc.tags.models import WbcTag
 
 from serializers import *
 
@@ -178,7 +183,10 @@ def project_request(request, p):
     publications = p.publication_set.all()
 
     following = None
+    wbc_rated = None
     if request.user.is_authenticated():
+        print WbcRating.objects.filter(project=p.pk, user=request.user.pk).exists()
+        wbc_rated = WbcRating.objects.filter(project=p.pk, user=request.user.pk).exists()
         following = p.stakeholders.filter(pk=request.user.profile.stakeholder.pk).exists()
     
     subscribed = None
@@ -207,6 +215,15 @@ def project_request(request, p):
             sessionIDText = sessionID['sessionID']
         etherpadText = c.getText(padID=p.padId)['text']
         # etherpadText = c.getHTML(padID=p.padId)['html']
+    
+    important_tag = None
+    if settings.GENERAL_CONTENT['wbcrating']:
+        print len(p.tags.all().filter(important=True)) >0
+        if len(p.tags.all().filter(important=True)) >0:
+            print "yoo"
+            important_tag = p.tags.all().filter(important=True)[0]
+            print important_tag
+
 
     response = render(request,'projects/details.html',{
         'project' : p,
@@ -228,6 +245,8 @@ def project_request(request, p):
         'etherpadText': etherpadText,
         'etherpad_url': settings.ETHERPAD_SETTINGS['base-url'],
         'session_id'  : sessionIDText,
+        'important_tag': important_tag,
+        'wbc_rated'    : wbc_rated,
     })
 
     #create session id cookie for etherpad authentication
@@ -290,6 +309,24 @@ def updownvote(request, pk, vote):
     p.save()
 
     return JsonResponse({'redirect' : p.get_absolute_url()})
+
+
+# wbc rating
+@login_required
+def wbc_rate(request, pk, user, tag):
+    tagObj = WbcTag.objects.get(slug=tag)
+    userObj = User.objects.get(pk=user)
+    proObj = Project.objects.get(pk=pk)
+    if not WbcRating.objects.filter(project=proObj, user=userObj, tag=tagObj).exists():
+        rating = WbcRating(project=proObj, user=userObj, tag=tagObj)
+        try:
+            rating.clean()
+            rating.save()
+        except ValidationError as e:
+            return JsonResponse({'error' : str(e)})
+    else:
+        WbcRating.objects.filter(project=proObj, user=userObj, tag=tagObj).delete()  
+    return JsonResponse({'redirect' : proObj.get_absolute_url()})
 
 
 #uploads a photo to a project, handles the creation of albums

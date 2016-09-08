@@ -14,6 +14,7 @@ from wbc.events.models import Event
 from wbc.stakeholder.models import Stakeholder
 from wbc.tags.models import TaggedItems
 from wbc.images.models import Photo, Album
+from wbc.rating.models import WbcRating
 from taggit.managers import TaggableManager
 from simple_history.models import HistoricalRecords
 from django.contrib.contenttypes.fields import GenericRelation
@@ -172,7 +173,16 @@ class Project(Model):
             group = c.createGroupIfNotExistsFor(groupMapper=unique_name)
             pad = c.createGroupPad(groupID=group['groupID'], padName=unique_name, text="Hallo")
             self.padId = pad['padID']
-
+        else:
+            #check if tags changed to delete ratings possibly
+            orig = Project.objects.get(pk=self.pk)
+            oriTags = orig.tags.all().filter(important=True)
+            newTags = self.tags.all().filter(important=True)
+            if len(oriTags) == len(newTags) and len(oriTags) > 0 and len(newTags) >0 and newTags[0] == oriTags[0]:
+                print "ori tags"
+            else:
+                print "yo"
+                WbcRating.objects.filter(project=self.pk).delete()
         super(Project, self).save(*args, **kwargs)
 
 class BufferArea(Model):
