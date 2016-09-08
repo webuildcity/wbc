@@ -1,5 +1,5 @@
 {% extends 'core/layout_split.html' %}
-{% load staticfiles compress guardian_tags threadedcomments_tags imagekit ratings i18n wbc_extras %}
+{% load staticfiles compress guardian_tags threadedcomments_tags imagekit ratings i18n wbc_extras social_share %}
 
 {% block meta_content %}
     <meta property="og:title" content="{{project.name}}" />
@@ -182,7 +182,7 @@ DetailsController
         {% ratings project icon_height=20 icon_width=20 %}
     </div>
     {% endif %}
-    
+
     {% if general_content.wbcrating %}
         {% if user.is_authenticated %}
             {% if important_tag != None %}
@@ -553,4 +553,11 @@ DetailsController
         </div>
     </div>
 </div>
+
+{% if general_content.social_media_share %}
+<div id="social-share-buttons">
+    {% post_to_facebook project 'Share' %}
+    {% post_to_twitter "New Project: {{project.name}}. Check it out!" project "Twittern" %}
+</div>
+{% endif %}
 {% endblock %}
