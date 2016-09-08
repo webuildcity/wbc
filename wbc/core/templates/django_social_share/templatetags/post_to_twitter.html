@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load staticfiles i18n %}
 <div class="tweet-this">
-    <a href="{{ tweet_url }}" class="meta-act-link meta-tweet"><img src='{% static "img/logos/twitter_small.png" %}'></a>
+    <a href="{{ tweet_url }}" class="meta-act-link meta-tweet" title="{% trans 'Share on Twitter' %}"><img src='{% static "img/logos/twitter_small.png" %}'></a>
 </div>

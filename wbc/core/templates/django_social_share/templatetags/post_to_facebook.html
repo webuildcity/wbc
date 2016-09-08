@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load staticfiles i18n %}
 <div class="facebook-this">
-    <a href="{{ facebook_url }}" target="_blank"><img src='{% static "img/logos/fb.png" %}'></a>
+    <a href="{{ facebook_url }}" target="_blank" title="{% trans 'Share on Facebook' %}"><img src='{% static "img/logos/fb.png" %}'></a>
 </div>
