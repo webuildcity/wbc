@@ -185,7 +185,6 @@ def project_request(request, p):
     following = None
     wbc_rated = None
     if request.user.is_authenticated():
-        print WbcRating.objects.filter(project=p.pk, user=request.user.pk).exists()
         wbc_rated = WbcRating.objects.filter(project=p.pk, user=request.user.pk).exists()
         following = p.stakeholders.filter(pk=request.user.profile.stakeholder.pk).exists()
     
@@ -218,11 +217,8 @@ def project_request(request, p):
     
     important_tag = None
     if settings.GENERAL_CONTENT['wbcrating']:
-        print len(p.tags.all().filter(important=True)) >0
         if len(p.tags.all().filter(important=True)) >0:
-            print "yoo"
             important_tag = p.tags.all().filter(important=True)[0]
-            print important_tag
 
 
     response = render(request,'projects/details.html',{
