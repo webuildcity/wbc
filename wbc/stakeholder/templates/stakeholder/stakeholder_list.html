@@ -1,4 +1,4 @@
-{% load staticfiles i18n %}
+{% load staticfiles i18n wbc_extras %}
 
 <!-- Lists stakeholders, used 'in several subpages (needs to bin stakeholder list to the 'stakeholders' variable)  -->
 
@@ -25,6 +25,11 @@
             {% endif %} -->
         </div>
     </a>
+    {% if request.user|has_group:"organizer" %} 
+        <button class="btn btn-default wbc-blacklist-button" data-url="{% url 'project_blacklist' pk=project.pk user=stakeholder.profile.user.pk %}">
+            <i class="fa fa-microphone-slash"></i>
+        </button>
+    {% endif %}
 
     {% endfor %}
 

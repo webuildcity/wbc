@@ -229,6 +229,17 @@ $(document).ready(function(){
             }
         });
     });
+    //handler for the wbc-rating button
+    $('.wbc-blacklist-button').on('click', function(){
+        $.get($(this).data('url'), function(data) {
+            if (data.redirect){
+                window.location.href = data.redirect;
+                window.location.reload();
+            } else if (data.error) {
+                alert(data.error)
+            }
+        });
+    });
 
 
     //comments

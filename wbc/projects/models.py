@@ -74,6 +74,8 @@ class Project(Model):
     # Fields for rating and featuring
     featured             = models.NullBooleanField(default=False, null=True, blank=True)
     updownvote           = models.NullBooleanField(default=False, null=True, blank=True)
+    
+    blacklist            = models.ManyToManyField(User, blank=True, verbose_name="Blacklist", related_name="projects_blacklist")
 
 
     def get_changed_by(self):

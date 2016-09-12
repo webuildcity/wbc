@@ -325,6 +325,20 @@ def wbc_rate(request, pk, user, tag):
     return JsonResponse({'redirect' : proObj.get_absolute_url()})
 
 
+#add or remove someone from blacklist
+@login_required
+@user_passes_test(is_organizer)
+def blacklist(request, pk, user):
+    p = get_object_or_404(Project, id = int(pk))
+    userObj = get_object_or_404(User, id = int(user))
+    if p.blacklist.filter(pk=user).exists():
+        p.blacklist.remove(userObj)
+    else:
+        p.blacklist.add(userObj)
+    return JsonResponse({'redirect' : p.get_absolute_url()})
+
+
+
 #uploads a photo to a project, handles the creation of albums
 def photo_upload(request, pk):
 
