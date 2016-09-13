@@ -187,7 +187,6 @@ class Project(Model):
             if len(oriTags) == len(newTags) and len(oriTags) > 0 and len(newTags) >0 and newTags[0] == oriTags[0]:
                 print "ori tags"
             else:
-                print "yo"
                 WbcRating.objects.filter(project=self.pk).delete()
         super(Project, self).save(*args, **kwargs)
 

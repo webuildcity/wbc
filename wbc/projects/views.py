@@ -206,7 +206,7 @@ def project_request(request, p):
     sessionIDText = ''
     if p.padId and settings.DETAILS_TABS['etherpad']:
         c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key'], 'baseUrl' : settings.ETHERPAD_SETTINGS['base-url'] + 'api'})
-        if following:
+        if following and request.user not in p.blacklist.all() :
             group = c.createGroupIfNotExistsFor(groupMapper=settings.PREFIX + p.slug)
             author = c.createAuthorIfNotExistsFor(authorMapper=settings.PREFIX + str(request.user))
             validUntil = now() + datetime.timedelta(hours=3)
@@ -335,6 +335,7 @@ def blacklist(request, pk, user):
         p.blacklist.remove(userObj)
     else:
         p.blacklist.add(userObj)
+    p.save()
     return JsonResponse({'redirect' : p.get_absolute_url()})
 
 

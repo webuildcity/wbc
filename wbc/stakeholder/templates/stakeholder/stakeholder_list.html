@@ -4,8 +4,8 @@
 
 <div class="stakeholder-container">
     {% for stakeholder in stakeholders %}
-    <a href="{{stakeholder.get_absolute_url }}">
-        <div class="stakeholder-widget col-md-3">
+    <div class="stakeholder-widget col-md-3">
+        <a href="{{stakeholder.get_absolute_url }}">
             {% if stakeholder.picture %}
             <img class="stakeholder_img" src="{{ stakeholder.thumbnail.url }}" />
             {% else %}
@@ -14,22 +14,23 @@
             <h2> {{stakeholder.name}}</h2>
             <p>
             {% for role in stakeholder.roles.all %}
-                {{role}}
+            {{role}}
             {% endfor %}
             </p>
-          <!--   {% if user.is_authenticated %}
-            <ul class="admin-panel">
-                <li><a data-toggle="modal" data-target="#edit-modal" class="admin-link project-admin" data-form="{% url 'stakeholder_update' stakeholder.pk %}" href="#"><i class="fa fa-pencil"></i></a></li>
-                <li><a data-toggle="modal" data-target="#edit-modal" class="admin-link project-admin" data-form="{% url 'stakeholder_delete' stakeholder.pk %}" href="#"><i class="fa fa-trash"></i></a></li>
-            </ul>
-            {% endif %} -->
-        </div>
-    </a>
-    {% if request.user|has_group:"organizer" %} 
+        </a>
+    {% if project %}
+        {% if request.user|has_group:"organizer" %} 
         <button class="btn btn-default wbc-blacklist-button" data-url="{% url 'project_blacklist' pk=project.pk user=stakeholder.profile.user.pk %}">
+            {% if stakeholder.profile.user in project.blacklist.all %}
             <i class="fa fa-microphone-slash"></i>
+            {% else %}
+            <i class="fa fa-microphone"></i>
+            {% endif %}
         </button>
+
+        {% endif %}
     {% endif %}
+    </div>
 
     {% endfor %}
 
