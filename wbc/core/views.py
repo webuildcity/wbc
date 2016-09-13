@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 from django.template import RequestContext
 from django.views.generic import TemplateView
@@ -241,3 +241,41 @@ def comment_post_wrapper(request):
             return HttpResponse("Nice try!")
         return post_comment(request)
     return HttpResponse("Nice try!")
+
+
+
+# UPLOAD DATA FOR JDD (PARSES JSON)
+
+from rest_framework.parsers import JSONParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+def is_organizer(user):
+    return user.groups.filter(name='organizer').exists()
+
+
+class SuperuserRequiredMixin(object):
+    @method_decorator(user_passes_test(lambda u: is_organizer(u)))
+    def dispatch(self, *args, **kwargs):
+        return super(SuperuserRequiredMixin, self).dispatch(*args, **kwargs)
+
+class UploadProjectData(SuperuserRequiredMixin, APIView):
+
+
+    # parser_classes = (JSONParser,)
+    def post(self, request, format=None):
+        
+        # print request.body
+        for a in request.data:
+            for cluster in a['cluster']:
+                for idea in cluster['ideas']:
+                    project = Project(name=idea['name'], active=True)
+                    project.save()
+                    project.tags.add(a['name'])
+                    project.tags.add(cluster['name'])
+
+                    for tag in idea['attributes']:
+                        project.tags.add(tag['name'])
+
+                    project.save()
+        return Response(request.data)

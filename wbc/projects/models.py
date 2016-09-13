@@ -176,7 +176,7 @@ class Project(Model):
             pad = c.createGroupPad(groupID=group['groupID'], padName=unique_name, text="Hallo")
             self.padId = pad['padID']
         else:
-            #check if tags changed to delete ratings possibly
+            #check if tags changed to delete ratings possibly, super dirty
             orig = Project.objects.get(pk=self.pk)
             oriTags = orig.tags.all().filter(important=True)
             newTags = self.tags.all().filter(important=True)
