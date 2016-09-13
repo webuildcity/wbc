@@ -397,9 +397,9 @@ DetailsController
         <div id="info" class="tab-pane active">
             {% if project.description %}
             <h3>Beschreibung</h3>
-                <p>
-                    {{ project.description | linebreaks }}
-                </p>
+                
+                    {{ project.description | safe }}
+                
             {% endif %}
 
             {% if project.padId %}

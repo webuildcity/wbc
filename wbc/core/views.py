@@ -268,14 +268,18 @@ class UploadProjectData(SuperuserRequiredMixin, APIView):
         # print request.body
         for a in request.data:
             for cluster in a['cluster']:
+                project = Project(name=cluster['name'], active=True)
+                project.save()
+                project.tags.add(a['name'])
+                description = "<ul>"
                 for idea in cluster['ideas']:
-                    project = Project(name=idea['name'], active=True)
-                    project.save()
-                    project.tags.add(a['name'])
-                    project.tags.add(cluster['name'])
+                    description += '<li>'+idea['name']+'</li><ul>'
+
 
                     for tag in idea['attributes']:
-                        project.tags.add(tag['name'])
-
-                    project.save()
+                        description += '<li>'+tag['name']+'</li>'
+                    description += '</ul>'
+                description += '</ul>'
+                project.description = description
+                project.save()
         return Response(request.data)

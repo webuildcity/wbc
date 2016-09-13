@@ -21,9 +21,12 @@ from django.contrib.contenttypes.fields import GenericRelation
 from star_ratings.models import Rating
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
+import re
 
 from etherpad_lite import EtherpadLiteClient
 
+def remove_tags(text):
+    return ''.join(xml.etree.ElementTree.fromstring(text).itertext())
 
 class Address(Model):
     slug         = models.SlugField(unique=True,editable=False)
@@ -109,9 +112,10 @@ class Project(Model):
 
     def get_teaser(self):
         if len(self.description) <= 150:
-            return self.description
+            return re.sub("<[^>]*>", "", self.description[:150+1])
         else:
-            return ' '.join(self.description[:150+1].split(' ')[0:-1]) + '...'
+            desc = re.sub("<[^>]*>", "", self.description[:150+1])
+            return desc
 
     def get_thumbnail_url(self):
         if self.album:
