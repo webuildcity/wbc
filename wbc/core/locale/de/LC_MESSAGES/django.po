@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-31 11:42+0200\n"
+"POT-Creation-Date: 2016-09-14 12:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,136 +30,144 @@ msgstr ""
 msgid "Finde spannende Projekte und Ideen."
 msgstr ""
 
-#: templates/core/search.html:64
+#: templates/core/search.html:67
 msgid ""
 "PLACEHOLDER:Suche nach Ideen, Ansprechpartnern und Projekten in deinem "
 "Landkreis..."
 msgstr ""
 "Suche nach Ideen, Ansprechpartnern und Projekten in deinem Landkreis..."
 
-#: templates/core/search.html:74
+#: templates/core/search.html:77
 msgid "Suche zurücksetzen"
 msgstr "Suche zurücksetzen"
 
-#: templates/core/search.html:97
+#: templates/core/search.html:100
 msgid "Erweiterte Suche"
 msgstr "Erweiterte Suche"
 
-#: templates/core/search.html:101
+#: templates/core/search.html:104
 msgid "Einträgen"
 msgstr "Einträgen"
 
-#: templates/core/search.html:102
+#: templates/core/search.html:105
 #, fuzzy
 #| msgid "Einträgen"
 msgid "Einträge"
 msgstr "Einträgen"
 
-#: templates/core/search.html:103 templates/core/search.html.py:252
+#: templates/core/search.html:106 templates/core/search.html.py:255
 msgid "more"
 msgstr "Mehr Ergebnisse"
 
-#: templates/core/search.html:104
+#: templates/core/search.html:107
 msgid "all"
 msgstr "Alle Ergebnisse"
 
-#: templates/core/search.html:108 templates/core/search.html.py:219
-#: templates/core/search.html:333
+#: templates/core/search.html:111 templates/core/search.html.py:222
+#: templates/core/search.html:336
 msgid "Suche"
 msgstr "Suche"
 
-#: templates/core/search.html:113
+#: templates/core/search.html:116
 msgid "SPELLING SUGGESTION:Meinten Sie:"
 msgstr "Meinten Sie:"
 
-#: templates/core/search.html:129
+#: templates/core/search.html:132
 #, fuzzy
 #| msgid "Sortieren nach:"
 msgid "Sortieren"
 msgstr "Sortieren nach:"
 
-#: templates/core/search.html:148
+#: templates/core/search.html:151
 msgid "Filter"
 msgstr ""
 
-#: templates/core/search.html:154
+#: templates/core/search.html:157
 msgid "Historische Bebauungspläne"
 msgstr ""
 
-#: templates/core/search.html:160
+#: templates/core/search.html:163
 msgid "Bebauungspläne mit Ausgleichsflächen"
 msgstr ""
 
-#: templates/core/search.html:169
+#: templates/core/search.html:172
 msgid "ENTITY-FILTER: Stadtteile"
 msgstr "Stadtteile"
 
-#: templates/core/search.html:194
+#: templates/core/search.html:197
 msgid "TAG-FILTER:Stichwörter"
 msgstr "Stichwörter"
 
-#: templates/core/search.html:226
+#: templates/core/search.html:229
 msgid "#ERGEBNISSE:Ergebnisse"
 msgstr "Ergebnisse"
 
-#: templates/core/search.html:264
+#: templates/core/search.html:268
+msgid "Projekt hinzufügen"
+msgstr ""
+
+#: templates/core/search.html:268 templates/core/search.html.py:270
+msgid "Neues Project"
+msgstr ""
+
+#: templates/core/search.html:273
 msgid "Kachelansicht"
 msgstr ""
 
-#: templates/core/search.html:267
+#: templates/core/search.html:276
 #, fuzzy
 #| msgid "Button:Listen-/Kartenansicht"
 msgid "Listenansicht"
 msgstr "Listen-/Kartenansicht"
 
-#: templates/core/search.html:270
+#: templates/core/search.html:279
 msgid "Karte"
 msgstr ""
 
-#: templates/core/search.html:274
+#: templates/core/search.html:283
 msgid "Button:Listen-/Kartenansicht"
 msgstr "Listen-/Kartenansicht"
 
-#: templates/core/search.html:276
-msgid "Projekt hinzufügen"
-msgstr ""
-
-#: templates/core/search.html:276 templates/core/search.html.py:278
-msgid "Neues Project erstellen"
-msgstr ""
-
-#: templates/core/search.html:288
+#: templates/core/search.html:291
 msgid "Details"
 msgstr "Details"
 
-#: templates/core/search.html:324
+#: templates/core/search.html:327
 msgid "Sortieren nach:"
 msgstr "Sortieren nach:"
 
-#: templates/core/search.html:363
+#: templates/core/search.html:367
 #, fuzzy
 #| msgid "BUTTON:# Beteiligte"
 msgid "#Beteiligte:"
 msgstr "Anzahl Projektbeteiligter"
 
-#: templates/core/search.html:366
+#: templates/core/search.html:370
 msgid "Erstellt am:"
 msgstr ""
 
-#: templates/core/search.html:367
+#: templates/core/search.html:371
 msgid "Erstellt von:"
 msgstr ""
 
-#: templates/core/search.html:368
+#: templates/core/search.html:373
 msgid "Bewertung: &Oslash;"
 msgstr ""
 
-#: templates/core/search.html:372
+#: templates/core/search.html:380
 msgid "Keine Beschreibung vorhanden."
 msgstr ""
 
-#: templates/core/search.html:383
+#: templates/core/search.html:405
 msgid "Mehr Ergebnisse laden"
+msgstr ""
+
+#: templates/django_social_share/templatetags/post_to_facebook.html:3
+msgid "Share on Facebook"
+msgstr ""
+
+#: templates/django_social_share/templatetags/post_to_twitter.html:3
+msgid "Share on Twitter"
 msgstr ""
 
 #: templates/star_ratings/widget.html:21
