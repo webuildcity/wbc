@@ -20,7 +20,7 @@ msgstr ""
 
 #: templates/core/layout.html:118
 msgid "We-Build-Polis"
-msgstr "Bardowick"
+msgstr "Vorpommern-Rügen"
 
 #: templates/core/login.html:25
 msgid "Passwort vergessen"
@@ -107,7 +107,7 @@ msgstr ""
 
 #: templates/core/search.html:268 templates/core/search.html.py:270
 msgid "Neues Project"
-msgstr "Neues Projekt"
+msgstr "Neue Idee"
 
 #: templates/core/search.html:273
 msgid "Kachelansicht"
