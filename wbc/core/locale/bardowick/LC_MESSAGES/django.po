@@ -20,7 +20,7 @@ msgstr ""
 
 #: templates/core/layout.html:118
 msgid "We-Build-Polis"
-msgstr "Landkreis Lichtenfels"
+msgstr "Bardowick"
 
 #: templates/core/login.html:25
 msgid "Passwort vergessen"
@@ -34,8 +34,7 @@ msgstr ""
 msgid ""
 "PLACEHOLDER:Suche nach Ideen, Ansprechpartnern und Projekten in deinem "
 "Landkreis..."
-msgstr ""
-"Suche nach Ideen, Ansprechpartnern und Projekten in deinem Landkreis..."
+msgstr "Suche nach Ideen und Projekten in Bardowick"
 
 #: templates/core/search.html:77
 msgid "Suche zurücksetzen"
@@ -80,7 +79,7 @@ msgstr "Sortieren nach:"
 
 #: templates/core/search.html:151
 msgid "Filter"
-msgstr "Filter"
+msgstr ""
 
 #: templates/core/search.html:157
 msgid "Historische Bebauungspläne"
@@ -108,7 +107,7 @@ msgstr ""
 
 #: templates/core/search.html:268 templates/core/search.html.py:270
 msgid "Neues Project"
-msgstr ""
+msgstr "Neues Projekt"
 
 #: templates/core/search.html:273
 msgid "Kachelansicht"
