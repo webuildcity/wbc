@@ -3,7 +3,29 @@
 <div class="stakeholders">
 
     <!-- Shows the responsible person of the project, ususally the creator -->
-    {% if project.get_created_by %}
+    {% if project.owner %}
+    <div id='project-creator' class="clearfix">
+        <h1> {% trans 'Projekt Verantwortlicher' %} </h1>
+        <a href="{{project.get_created_by.profile.stakeholder.get_absolute_url }}">
+            <div class="col-md-5">
+                {% if project.owner.profile.stakeholder.picture %}
+                    {% generateimage 'wbc:details' source=project.owner.profile.stakeholder.picture %}
+                {% else %}
+                <img class="creator_image" src="{% static 'img/person_placeholder.png' %}" />
+                {% endif %}
+            </div>
+            <div class="col-md-7">
+                <h2> {{project.owner.profile.full_name}}</h2>
+                <hr>
+                {% if project.owner.profile.stakeholder.description %}
+                <p> {{project.owner.profile.stakeholder.description}} </p>
+                {% else %}
+                <p> {% trans 'Keine Beschreibung vorhanden.' %}</p>
+                {% endif %}
+            </div>
+        </a>
+    </div>
+    {% elif project.get_created_by %}
     <div id='project-creator' class="clearfix">
         <h1> {% trans 'Projekt Verantwortlicher' %} </h1>
         <a href="{{project.get_created_by.profile.stakeholder.get_absolute_url }}">
