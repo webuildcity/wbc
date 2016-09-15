@@ -90,21 +90,21 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            <div id="brand">
+                <a href="/">
+                    <img src="{% static 'img/title.png' %}" alt="Bürger baut Stadt">
+                </a>
+            </div>
             <div id="left-navigation-mobile">
                 {% if request.META.HTTP_REFERER %}
                     {% if request.get_host in request.META.HTTP_REFERER %}
                         <!-- dirty check for search page. need definition of when we need this button than well do it nice -->
                         {% if 'suche' in request.META.HTTP_REFERER %}
-                        <a data-toggle="tooltip" title="{% trans 'Zurück zur Suche' %}" href="{{request.META.HTTP_REFERER}}">{% trans 'Zurück' %}</a>
+                        <a class="left-navigation-button" data-toggle="tooltip" title="{% trans 'Zurück zur Suche' %}" href="{{request.META.HTTP_REFERER}}">{% trans 'Zurück' %}</a>
                         {% endif %}
                     {% endif %}
                 {% endif %}
-                <a class="overview-button" data-toggle="tooltip" title="{% trans 'Zur Übersicht' %}"href="{% url 'search' %}">{% trans 'Übersicht' %}</a>
-            </div>
-            <div id="brand">
-                <a href="/">
-                    <img src="{% static 'img/title.png' %}" alt="Bürger baut Stadt">
-                </a>
+                <a class="left-navigation-button overview-button" data-toggle="tooltip" title="{% trans 'Zur Übersicht' %}"href="{% url 'search' %}">{% trans 'Übersicht' %}</a>
             </div>
             <button class="btn-default btn search-field-button" ng-init="searchField=false" ng-click="searchField = !searchField">
                 <span class="glyphicon glyphicon-search"></span>
@@ -123,23 +123,23 @@
     <div id="header" class="hidden-xs">
         <div class="container-fluid">
             <div id="header-left">
+                <div id="brand">
+                    <a href="/">
+                        <img src="{% static 'img/title.png' %}" alt="Bürger baut Stadt">
+                        <span class="headline-span">{% trans 'We-Build-Polis' %}</span>
+                    </a>
+                </div>
                 <div id="left-navigation">
                 {% if request.META.HTTP_REFERER %}
 
                     {% if request.get_host in request.META.HTTP_REFERER %}
                         <!-- dirty check for search page. need definition of when we need this button than well do it nice -->
                         {% if 'suche' in request.META.HTTP_REFERER %}
-                        <a href="{{request.META.HTTP_REFERER}}">{% trans 'Zurück' %}</a>
+                        <a class="left-navigation-button" href="{{request.META.HTTP_REFERER}}">{% trans 'Zurück' %}</a>
                         {% endif %}
                     {% endif %}
                 {% endif %}
-                    <a class="overview-button" href="{% url 'search' %}">{% trans 'Übersicht' %}</a>
-                </div>
-                <div id="brand">
-                    <a href="/">
-                        <img src="{% static 'img/title.png' %}" alt="Bürger baut Stadt">
-                        <span class="headline-span">{% trans 'We-Build-Polis' %}</span>
-                    </a>
+                    <a class="overview-button left-navigation-button" href="{% url 'search' %}">{% trans 'Übersicht' %}</a>
                 </div>
             </div>
 
