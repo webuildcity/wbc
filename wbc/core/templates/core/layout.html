@@ -95,11 +95,11 @@
                     {% if request.get_host in request.META.HTTP_REFERER %}
                         <!-- dirty check for search page. need definition of when we need this button than well do it nice -->
                         {% if 'suche' in request.META.HTTP_REFERER %}
-                        <a href="{{request.META.HTTP_REFERER}}">{% trans 'Zurück' %}</a>
+                        <a data-toggle="tooltip" title="{% trans 'Zurück zur Suche' %}" href="{{request.META.HTTP_REFERER}}">{% trans 'Zurück' %}</a>
                         {% endif %}
                     {% endif %}
                 {% endif %}
-                <a href="{% url 'search' %}">{% trans 'Übersicht' %}</a>
+                <a data-toggle="tooltip" title="{% trans 'Zur Übersicht' %}"href="{% url 'search' %}">{% trans 'Übersicht' %}</a>
             </div>
             <div id="brand">
                 <a href="/">
