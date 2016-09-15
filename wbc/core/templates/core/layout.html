@@ -99,7 +99,7 @@
                         {% endif %}
                     {% endif %}
                 {% endif %}
-                <a data-toggle="tooltip" title="{% trans 'Zur Übersicht' %}"href="{% url 'search' %}">{% trans 'Übersicht' %}</a>
+                <a class="overview-button" data-toggle="tooltip" title="{% trans 'Zur Übersicht' %}"href="{% url 'search' %}">{% trans 'Übersicht' %}</a>
             </div>
             <div id="brand">
                 <a href="/">
@@ -133,7 +133,7 @@
                         {% endif %}
                     {% endif %}
                 {% endif %}
-                    <a href="{% url 'search' %}">{% trans 'Übersicht' %}</a>
+                    <a class="overview-button" href="{% url 'search' %}">{% trans 'Übersicht' %}</a>
                 </div>
                 <div id="brand">
                     <a href="/">
