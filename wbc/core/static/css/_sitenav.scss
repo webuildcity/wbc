@@ -148,6 +148,10 @@
             font-weight: bold;
             margin-left: 1em;
         }
+        #left-navigation {
+            float: left;
+            padding-top: 0.7em;
+        }
     }
 
     #header-right {
@@ -267,4 +271,12 @@
 // make loading spinner disappear instantly
 .spinner-icon.ng-hide-add {
     display: none !important; /* yes, important */
+}
+
+#left-navigation-mobile {
+    float: left;
+    padding-top: 0.6em;
+    a {
+        color: $third-text;
+    }
 }

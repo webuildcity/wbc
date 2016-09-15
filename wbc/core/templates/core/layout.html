@@ -90,6 +90,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            <div id="left-navigation-mobile">
+                {% if request.META.HTTP_REFERER %}
+                    {% if request.get_host in request.META.HTTP_REFERER %}
+                        <!-- dirty check for search page. need definition of when we need this button than well do it nice -->
+                        {% if 'suche' in request.META.HTTP_REFERER %}
+                        <a href="{{request.META.HTTP_REFERER}}">{% trans 'Zurück' %}</a>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                <a href="{% url 'search' %}">{% trans 'Übersicht' %}</a>
+            </div>
             <div id="brand">
                 <a href="/">
                     <img src="{% static 'img/title.png' %}" alt="Bürger baut Stadt">
@@ -112,6 +123,18 @@
     <div id="header" class="hidden-xs">
         <div class="container-fluid">
             <div id="header-left">
+                <div id="left-navigation">
+                {% if request.META.HTTP_REFERER %}
+
+                    {% if request.get_host in request.META.HTTP_REFERER %}
+                        <!-- dirty check for search page. need definition of when we need this button than well do it nice -->
+                        {% if 'suche' in request.META.HTTP_REFERER %}
+                        <a href="{{request.META.HTTP_REFERER}}">{% trans 'Zurück' %}</a>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                    <a href="{% url 'search' %}">{% trans 'Übersicht' %}</a>
+                </div>
                 <div id="brand">
                     <a href="/">
                         <img src="{% static 'img/title.png' %}" alt="Bürger baut Stadt">
