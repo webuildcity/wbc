@@ -81,13 +81,13 @@ class Project(Model):
     blacklist            = models.ManyToManyField(User, blank=True, verbose_name="Blacklist", related_name="projects_blacklist")
 
 
-    def get_changed_by(self):
+    def get_created_by(self):
         if(self.history.last()):
             user = User.objects.get(pk=self.history.last().history_user_id)
             return user
         return None
 
-    def get_created_by(self):
+    def get_changed_by(self):
         if self.history.first():
             if self.history.first().history_user_id != None:
                 user = User.objects.get(pk=self.history.first().history_user_id)
