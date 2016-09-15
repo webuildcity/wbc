@@ -100,7 +100,7 @@
                     {% if request.get_host in request.META.HTTP_REFERER %}
                         <!-- dirty check for search page. need definition of when we need this button than well do it nice -->
                         {% if 'suche' in request.META.HTTP_REFERER %}
-                        <a class="left-navigation-button" data-toggle="tooltip" title="{% trans 'Zurück zur Suche' %}" href="{{request.META.HTTP_REFERER}}">{% trans 'Zurück' %}</a>
+                        <a class="left-navigation-button" data-toggle="tooltip" title="{% trans 'Zurück zur Suche' %}" href="{{request.META.HTTP_REFERER}}"><i class="fa fa-arrow-left"></i>{% trans 'Zurück' %}</a>
                         {% endif %}
                     {% endif %}
                 {% endif %}
@@ -135,7 +135,7 @@
                     {% if request.get_host in request.META.HTTP_REFERER %}
                         <!-- dirty check for search page. need definition of when we need this button than well do it nice -->
                         {% if 'suche' in request.META.HTTP_REFERER %}
-                        <a class="left-navigation-button" href="{{request.META.HTTP_REFERER}}">{% trans 'Zurück' %}</a>
+                        <a class="left-navigation-button" href="{{request.META.HTTP_REFERER}}"><i class="fa fa-arrow-left"></i>{% trans 'Zurück' %}</a>
                         {% endif %}
                     {% endif %}
                 {% endif %}
