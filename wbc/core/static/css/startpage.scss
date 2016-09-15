@@ -28,6 +28,11 @@ html {
     overflow: auto;
 }
 
+#left-navigation-mobile, #left-navigation {
+    display: none;
+}
+
+
 #header {
 
     height: 100px;
