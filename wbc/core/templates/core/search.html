@@ -395,7 +395,11 @@ SearchController
                                     <i class="fa fa-thumbs-o-down fa-2x"></i>    
                                 </div>
                                 {% endif %}
-
+                                {% if general_content.wbcrating %}
+                                <div class="wbcrating-icon">
+                                    <div class="circle-number">{[{result.wbcrating}]}</div>
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
