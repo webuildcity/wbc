@@ -13,6 +13,7 @@ from django.template import RequestContext
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 from wbc.core.forms import LoginForm
 from wbc.stakeholder.models import Stakeholder
@@ -35,7 +36,7 @@ def feeds(request):
         'publication_feed_url': reverse('publication_feed_url')
     })
 
-
+@csrf_exempt
 def login_user(request):
 
     email = ''
@@ -173,7 +174,7 @@ class SearchView(TemplateView):
             terminated = None
             if result.finished:
                 terminated = result.finished.strftime("%d.%m.%y")
-            resultdict = dict(name=result.name, pk=result.pk, type=result.type, tags = result.tags_with_link, featured = result.featured, updownvote=result.updownvote ,internal_link=result.internal_link, address_obj=result.address_obj, thumbnail=result.thumbnail,thumbnail_lg=result.thumbnail_lg, num_stakeholder=result.num_stakeholder, created=result.created.strftime("%d.%m.%y"), created_by=result.created_by, teaser=result.teaser, ratings_count=result.ratings_count, ratings_avg=result.ratings_avg, buffer_areas=result.buffer_areas, finished=terminated, isFinished=result.isFinished)
+            resultdict = dict(name=result.name, pk=result.pk, type=result.type, tags = result.tags_with_link, featured = result.featured, wbcrating =result.wbcrating, updownvote=result.updownvote ,internal_link=result.internal_link, address_obj=result.address_obj, thumbnail=result.thumbnail,thumbnail_lg=result.thumbnail_lg, num_stakeholder=result.num_stakeholder, created=result.created.strftime("%d.%m.%y"), created_by=result.created_by, teaser=result.teaser, ratings_count=result.ratings_count, ratings_avg=result.ratings_avg, buffer_areas=result.buffer_areas, finished=terminated, isFinished=result.isFinished)
             if result.location:
                 resultdict['location'] = [result.location[0], result.location[1]]
 
@@ -253,16 +254,22 @@ from rest_framework.views import APIView
 def is_organizer(user):
     return user.groups.filter(name='organizer').exists()
 
+class CSRFExemptMixin(object):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args, **kwargs):
+        return super(CSRFExemptMixin, self).dispatch(*args, **kwargs)
 
 class SuperuserRequiredMixin(object):
+
     @method_decorator(user_passes_test(lambda u: is_organizer(u)))
     def dispatch(self, *args, **kwargs):
         return super(SuperuserRequiredMixin, self).dispatch(*args, **kwargs)
 
+
 class UploadProjectData(SuperuserRequiredMixin, APIView):
 
-
     # parser_classes = (JSONParser,)
+
     def post(self, request, format=None):
         
         # print request.body

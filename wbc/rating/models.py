@@ -7,6 +7,7 @@ from django.db.models.signals import post_save
 from wbc.tags.models import WbcTag
 from wbc.core.models import Model
 
+
 def validate_rating(obj):
     model = obj.__class__
 
@@ -34,7 +35,4 @@ class WbcRating(Model):
 
 # def delete_obsolete_ratings(sender, instance, **kwargs):
 #     print kwargs
-
-
-# post_save.connect(delete_obsolete_ratings, sender=Project)        
 

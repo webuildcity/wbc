@@ -82,6 +82,14 @@ body {
     #participate-widget {
         // clear: both;
     }
+    #organize-widget {
+        clear: both;
+        overflow: auto;
+    }
+    #wbcrating-widget {
+        float: left;
+        padding: 0.8em;
+    }
     .logged-in-user-buttons {
         float: left;
         @media(max-width: 768px){

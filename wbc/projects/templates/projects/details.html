@@ -185,16 +185,17 @@ DetailsController
 
     {% if general_content.wbcrating %}
         {% if user.is_authenticated %}
-            {% if important_tag != None %}
-
-            <button class="btn btn-default wbc-rating-button {% if wbc_rated %}active {% endif %}" data-url="{% url 'project_wbc_rate' pk=project.pk user=user.pk tag=important_tag.slug %}">
-                <i class="fa fa-thumbs-o-up fa-2x"></i>
-            </button>
+        <div class="wbc-clear-both">
+            {% if important_tag == None %}
+            <input type="radio" class="wbc-rating-button {% if wbc_rated %}active {% endif %}" disabled>
+            {% else %}
+            <input type="radio" class="wbc-rating-button" {% if wbc_rated %}  checked {% endif %} data-toggle="tooltip" title="{% if wbc_rated %}{% trans 'Punkt zurücksetzen' %}{% else %}{% trans 'Punkt vergeben' %}{% endif %}" data-url="{% url 'project_wbc_rate' pk=project.pk user=user.pk tag=important_tag.slug %}">
             {% endif %}
+        </div>
         {% endif %}
     {% endif %}
-    {% if request.user|has_group:"organizer" %} 
     <div id="organize-widget">
+    {% if request.user|has_group:"organizer" %} 
         {% if general_content.featured %}
         <button class="btn btn-default feature-button {% if project.featured %} active {% endif %}" data-url="{% url 'project_feature' project.pk %}" ><img src="{% static 'img/logos/jdd-siegel_100_transparent.png' %}"/></button>
         {% endif %}
@@ -212,7 +213,6 @@ DetailsController
             </button>
         </div>
         {% endif %}
-    </div>
     {% else %}
         <div id="feature-widget" class="pull-left">
         {% if project.featured %}
@@ -225,6 +225,12 @@ DetailsController
         {% endif %}
         </div>
     {% endif %}
+    {% if general_content.wbcrating %}
+    <div id="wbcrating-widget">
+        <div class="circle-number">{{project.get_wbcrating}}</div>
+    </div>
+    {% endif %}
+    </div>
     <!-- Display a teaser text fro the description -->
     {% if project.description %}
     <div class="teaser-text">
@@ -520,7 +526,7 @@ DetailsController
         {% if details_tabs.etherpad %}
         <div id="notes" class="tab-pane">
             {% if project.padId %}
-                {% if following and request.user not in p.blacklist %}
+                {% if following and request.user not in project.blacklist.all %}
                 <iframe src='{{etherpad_url}}auth_session?sessionID={{session_id}}&padName={{project.get_pad_id}}&groupID={{project.get_group_id}}&name={% if user.first_name %}{{user.first_name}}{% else %}{{user.username}}{% endif %}' id='etherpad-iframe'>
                 {% else %}
                 <div class="overlay-container text-center">

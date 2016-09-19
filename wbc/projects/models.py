@@ -2,7 +2,7 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.conf import settings
 import datetime
 
@@ -81,13 +81,13 @@ class Project(Model):
     blacklist            = models.ManyToManyField(User, blank=True, verbose_name="Blacklist", related_name="projects_blacklist")
 
 
-    def get_changed_by(self):
+    def get_created_by(self):
         if(self.history.last()):
             user = User.objects.get(pk=self.history.last().history_user_id)
             return user
         return None
 
-    def get_created_by(self):
+    def get_changed_by(self):
         if self.history.first():
             if self.history.first().history_user_id != None:
                 user = User.objects.get(pk=self.history.first().history_user_id)
@@ -156,6 +156,9 @@ class Project(Model):
 
     def get_group_id(self):
         return self.padId.split('$')[0]
+
+    def get_wbcrating(self):
+        return WbcRating.objects.filter(project=self).count()
 
     def __unicode__(self):
         strings = []
@@ -233,5 +236,11 @@ def trigger_rebuild_index(sender, instance, **kwargs):
     project = Project.objects.get(pk=instance.object_id)
     project.save()
     
+def trigger_rebuild_index_wbcrating(sender, instance, **kwargs):
+    project = Project.objects.get(pk=instance.project.pk)
+    project.save()
+    
 post_save.connect(set_owner, sender=Project)
 post_save.connect(trigger_rebuild_index, sender=Rating)
+post_save.connect(trigger_rebuild_index_wbcrating, sender=WbcRating)
+post_delete.connect(trigger_rebuild_index_wbcrating, sender=WbcRating)

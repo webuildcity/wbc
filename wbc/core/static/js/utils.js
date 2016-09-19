@@ -68,6 +68,10 @@ function loadModal(modal, button) {
             modal.modal();
             modal.unbind( "submit" );
             modal.on('submit', 'form', function(e){
+
+                // disable button to prevent double submits
+                $(this).find('input[type=submit]').prop('disabled', true);
+
                 e.preventDefault();
                 $.ajax({ 
                     type: $(this).attr('method'), 
@@ -108,6 +112,10 @@ function loadLoginModal(modal, button){
 //             modal.find('form').unbind( "submit" );
 
             modal.on('submit', 'form', function(e){
+
+                // disable button to prevent double submits
+                $(this).find('input[type=submit]').prop('disabled', true);
+                
                 e.preventDefault();
                 $.ajax({ 
                     type: $(this).attr('method'), 

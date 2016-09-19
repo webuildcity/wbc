@@ -35,6 +35,7 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     isFinished = indexes.BooleanField(model_attr='isFinished', default=False)
     featured = indexes.BooleanField(model_attr='featured', default=None)
     updownvote = indexes.BooleanField(model_attr='updownvote', default=None)
+    wbcrating = indexes.IntegerField()
 
     def get_model(self):
         return Project
@@ -106,3 +107,6 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""
         return self.get_model().objects.all()
+
+    def prepare_wbcrating(self, obj):
+        return obj.get_wbcrating()

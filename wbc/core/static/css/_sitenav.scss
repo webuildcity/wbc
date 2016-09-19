@@ -148,6 +148,12 @@
             font-weight: bold;
             margin-left: 1em;
         }
+        #left-navigation {
+            float: left;
+            padding-top: 0.8em;
+            padding-left: 0.5em;
+
+        }
     }
 
     #header-right {
@@ -267,4 +273,25 @@
 // make loading spinner disappear instantly
 .spinner-icon.ng-hide-add {
     display: none !important; /* yes, important */
+}
+
+#left-navigation-mobile {
+    float: left;
+    padding-top: 0.6em;
+    a {
+        color: $third-text;
+    }
+}
+.left-navigation-button {
+    border: 1px solid $third-text;
+    padding: 0.3em 1em;
+    margin: 0em 0.2em;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 0.9em;
+
+    .fa {
+        padding-right: 0.3em;
+    }
+
 }

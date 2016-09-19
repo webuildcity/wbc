@@ -37,6 +37,22 @@ h4 {
     color: $headline-color;
 }
 
+//clear both
+.wbc-clear-both {
+    clear: both;
+}
+
+.circle-number {
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    padding: 1px;
+    
+    border: 2px solid $primary-text;
+    color: $primary-text;
+    text-align: center;
+    font-size : 22px;
+}
 //change focus color of focussed form field
 .form-control:focus {
     border-color: $primary-color;
