@@ -391,12 +391,12 @@ SearchController
                                     <i class="fa fa-thumbs-o-up fa-2x"></i>
                                 </div>
                                 
-                                <div class="thumb-icon" ng-if="result.updownvote != false && result.updownvote != true">
+                                <div class="thumb-icon" ng-if="result.updownvote != false && result.updownvote != true && result.type == 'project'">
                                     <i class="fa fa-thumbs-o-down fa-2x"></i>    
                                 </div>
                                 {% endif %}
                                 {% if general_content.wbcrating %}
-                                <div class="wbcrating-icon">
+                                <div ng-if="result.type == 'project'" class="wbcrating-icon">
                                     <div class="circle-number">{[{result.wbcrating}]}</div>
                                 </div>
                                 {% endif %}
