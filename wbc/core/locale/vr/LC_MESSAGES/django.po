@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-14 16:37+0200\n"
+"POT-Creation-Date: 2016-09-20 22:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/core/layout.html:118
+#: templates/core/layout.html:103
+msgid "Zurück zur Suche"
+msgstr ""
+
+#: templates/core/layout.html:103 templates/core/layout.html.py:138
+msgid "Zurück"
+msgstr ""
+
+#: templates/core/layout.html:107
+msgid "Zur Übersicht"
+msgstr ""
+
+#: templates/core/layout.html:107 templates/core/layout.html.py:142
+msgid "Übersicht"
+msgstr ""
+
+#: templates/core/layout.html:129
 msgid "We-Build-Polis"
 msgstr "Vorpommern-Rügen"
 
@@ -34,7 +50,7 @@ msgstr ""
 msgid ""
 "PLACEHOLDER:Suche nach Ideen, Ansprechpartnern und Projekten in deinem "
 "Landkreis..."
-msgstr "Suche nach Ideen und Projekten in Bardowick"
+msgstr "Suche nach Ideen und Projekten in VR"
 
 #: templates/core/search.html:77
 msgid "Suche zurücksetzen"
@@ -157,7 +173,7 @@ msgstr ""
 msgid "Keine Beschreibung vorhanden."
 msgstr ""
 
-#: templates/core/search.html:405
+#: templates/core/search.html:409
 msgid "Mehr Ergebnisse laden"
 msgstr ""
 
