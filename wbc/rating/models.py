@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db.models.signals import post_save
-
+from django.conf import settings
 from wbc.tags.models import WbcTag
 from wbc.core.models import Model
 
@@ -20,8 +20,8 @@ def validate_rating(obj):
         raise ValidationError('project not part of this topic')
 
     # only 3 votes per tag per user
-    if model.objects.filter(user = obj.user, tag = obj.tag).count() >=3:
-        raise ValidationError('not more then 3 vote per topic')
+    if model.objects.filter(user = obj.user, tag = obj.tag).count() >=settings.GENERAL_CONTENT['number_votes']:
+        raise ValidationError('not more then '+str(settings.GENERAL_CONTENT['number_votes'])+' vote per topic')
 
 class WbcRating(Model):
     user = models.ForeignKey(User)

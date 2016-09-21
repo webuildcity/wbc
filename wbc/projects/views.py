@@ -314,7 +314,6 @@ def wbc_rate(request, pk, user, tag):
     tagObj = WbcTag.objects.get(slug=tag)
     userObj = User.objects.get(pk=user)
     proObj = Project.objects.get(pk=pk)
-    print userObj
     if not WbcRating.objects.filter(project=proObj, user=userObj, tag=tagObj).exists():
         rating = WbcRating(project=proObj, user=userObj, tag=tagObj)
         try:
