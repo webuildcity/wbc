@@ -179,8 +179,7 @@ class Project(Model):
         create_pad = False
         if self.pk is None:
             create_pad = True
-
-        if self.pk is not None:
+        else:
             #check if tags changed to delete ratings possibly, super dirty
             orig = Project.objects.get(pk=self.pk)
             oriTags = orig.tags.all().filter(important=True)
