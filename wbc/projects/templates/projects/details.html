@@ -562,8 +562,9 @@ DetailsController
 
 {% if general_content.social_media_share %}
 <div id="social-share-buttons">
+    {% trans "New Project: {{project.name}}. Check it out!" as text %}
     {% post_to_facebook project 'Share' %}
-    {% post_to_twitter "New Project: {{project.name}}. Check it out!" project "Twittern" %}
+    {% post_to_twitter text %}
 </div>
 {% endif %}
 {% endblock %}
