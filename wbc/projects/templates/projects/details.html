@@ -187,9 +187,9 @@ DetailsController
         {% if user.is_authenticated %}
         <div class="wbc-clear-both">
             {% if important_tag == None %}
-            <input type="radio" class="wbc-rating-button {% if wbc_rated %}active {% endif %}" disabled>
+            <input type="checkbox" class="wbc-rating-button {% if wbc_rated %}active {% endif %}" disabled>
             {% else %}
-            <input type="radio" class="wbc-rating-button" {% if wbc_rated %}  checked {% endif %} data-toggle="tooltip" title="{% if wbc_rated %}{% trans 'Punkt zurücksetzen' %}{% else %}{% trans 'Punkt vergeben' %}{% endif %}" data-url="{% url 'project_wbc_rate' pk=project.pk user=user.pk tag=important_tag.slug %}">
+            <input type="checkbox" class="wbc-rating-button" {% if wbc_rated %}  checked {% endif %} data-toggle="tooltip" title="{% if wbc_rated %}{% trans 'Punkt zurücksetzen' %}{% else %}{% trans 'Punkt vergeben' %}{% endif %}" data-url="{% url 'project_wbc_rate' pk=project.pk user=user.pk tag=important_tag.slug %}">
             {% endif %}
         </div>
         {% endif %}
