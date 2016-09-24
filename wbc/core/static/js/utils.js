@@ -114,8 +114,7 @@ function loadLoginModal(modal, button){
             modal.on('submit', 'form', function(e){
 
                 // disable button to prevent double submits
-                $(this).find('input[type=submit]').prop('disabled', true);
-                
+                modal.find('button[type=submit]').prop('disabled', true);
                 e.preventDefault();
                 $.ajax({ 
                     type: $(this).attr('method'), 
