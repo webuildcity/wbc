@@ -23,10 +23,8 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 import re
 
-from etherpad_lite import EtherpadLiteClient
+from etherpad_lite import EtherpadLiteClient, EtherpadException
 
-def remove_tags(text):
-    return ''.join(xml.etree.ElementTree.fromstring(text).itertext())
 
 class Address(Model):
     slug         = models.SlugField(unique=True,editable=False)
@@ -83,8 +81,9 @@ class Project(Model):
 
     def get_created_by(self):
         if(self.history.last()):
-            user = User.objects.get(pk=self.history.last().history_user_id)
-            return user
+            if self.history.last().history_user_id != None:
+                user = User.objects.get(pk=self.history.last().history_user_id)
+                return user
         return None
 
     def get_changed_by(self):
@@ -149,7 +148,7 @@ class Project(Model):
             return None
 
     def has_buffer_area(self):
-        return self.buffer_area.set.all() > 0
+        return self.bufferarea_set.all() > 0
         
     def get_pad_id(self):
         return self.padId.split('$')[1]
@@ -164,8 +163,9 @@ class Project(Model):
         strings = []
         if self.name:
             strings.append(self.name)
-        if self.address:
-            strings.append(self.address)
+        # address not used for now
+        # if self.address:
+        #     strings.append(self.address)
 
         return ', '.join(strings)
 
@@ -194,9 +194,13 @@ class Project(Model):
             unique_name = settings.PREFIX + str(self.pk)
             c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key']})
             group = c.createGroupIfNotExistsFor(groupMapper=unique_name)
-            pad = c.createGroupPad(groupID=group['groupID'], padName=unique_name, text="Hallo")
-            self.padId = pad['padID']
-            self.save()
+            try:
+                pad = c.createGroupPad(groupID=group['groupID'], padName=unique_name, text="Hallo")
+                self.padId = pad['padID']
+                self.save()
+            except EtherpadException as e:
+                print e
+                # pad = c.get_pad_id(padName=unique_name)
 
 class BufferArea(Model):
     name                 = models.CharField(blank=False, max_length=64, verbose_name="Name", help_text="Name")
