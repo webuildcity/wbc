@@ -1,0 +1,256 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-20 22:23+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: templates/core/layout.html:103
+msgid "Zurück zur Suche"
+msgstr ""
+
+#: templates/core/layout.html:103 templates/core/layout.html.py:138
+msgid "Zurück"
+msgstr ""
+
+#: templates/core/layout.html:107
+msgid "Zur Übersicht"
+msgstr ""
+
+#: templates/core/layout.html:107 templates/core/layout.html.py:142
+msgid "Übersicht"
+msgstr ""
+
+#: templates/core/layout.html:129
+msgid "We-Build-Polis"
+msgstr "Kyffhäuserkreis"
+
+#: templates/core/login.html:25
+msgid "Passwort vergessen"
+msgstr ""
+
+#: templates/core/search.html:11 templates/core/search.html.py:19
+msgid "Finde spannende Projekte und Ideen."
+msgstr ""
+
+#: templates/core/search.html:67
+msgid ""
+"PLACEHOLDER:Suche nach Ideen, Ansprechpartnern und Projekten in deinem "
+"Landkreis..."
+msgstr "Suche nach Ideen und Projekten in KYF"
+
+#: templates/core/search.html:77
+msgid "Suche zurücksetzen"
+msgstr "Suche zurücksetzen"
+
+#: templates/core/search.html:100
+msgid "Erweiterte Suche"
+msgstr "Erweiterte Suche"
+
+#: templates/core/search.html:104
+msgid "Einträgen"
+msgstr "Einträgen"
+
+#: templates/core/search.html:105
+#, fuzzy
+#| msgid "Einträgen"
+msgid "Einträge"
+msgstr "Einträgen"
+
+#: templates/core/search.html:106 templates/core/search.html.py:255
+msgid "more"
+msgstr "Mehr Ergebnisse"
+
+#: templates/core/search.html:107
+msgid "all"
+msgstr "Alle Ergebnisse"
+
+#: templates/core/search.html:111 templates/core/search.html.py:222
+#: templates/core/search.html:336
+msgid "Suche"
+msgstr "Suche"
+
+#: templates/core/search.html:116
+msgid "SPELLING SUGGESTION:Meinten Sie:"
+msgstr "Meinten Sie:"
+
+#: templates/core/search.html:132
+#, fuzzy
+#| msgid "Sortieren nach:"
+msgid "Sortieren"
+msgstr "Sortieren nach:"
+
+#: templates/core/search.html:151
+msgid "Filter"
+msgstr ""
+
+#: templates/core/search.html:157
+msgid "Historische Bebauungspläne"
+msgstr ""
+
+#: templates/core/search.html:163
+msgid "Bebauungspläne mit Ausgleichsflächen"
+msgstr ""
+
+#: templates/core/search.html:172
+msgid "ENTITY-FILTER: Stadtteile"
+msgstr "Stadtteile"
+
+#: templates/core/search.html:197
+msgid "TAG-FILTER:Stichwörter"
+msgstr "Stichwörter"
+
+#: templates/core/search.html:229
+msgid "#ERGEBNISSE:Ergebnisse"
+msgstr "Ergebnisse"
+
+#: templates/core/search.html:268
+msgid "Projekt hinzufügen"
+msgstr ""
+
+#: templates/core/search.html:268 templates/core/search.html.py:270
+msgid "Neues Project"
+msgstr "Neue Idee"
+
+#: templates/core/search.html:273
+msgid "Kachelansicht"
+msgstr ""
+
+#: templates/core/search.html:276
+#, fuzzy
+#| msgid "Button:Listen-/Kartenansicht"
+msgid "Listenansicht"
+msgstr "Listen-/Kartenansicht"
+
+#: templates/core/search.html:279
+msgid "Karte"
+msgstr ""
+
+#: templates/core/search.html:283
+msgid "Button:Listen-/Kartenansicht"
+msgstr "Listen-/Kartenansicht"
+
+#: templates/core/search.html:291
+msgid "Details"
+msgstr "Details"
+
+#: templates/core/search.html:327
+msgid "Sortieren nach:"
+msgstr "Sortieren nach:"
+
+#: templates/core/search.html:367
+#, fuzzy
+#| msgid "BUTTON:# Beteiligte"
+msgid "#Beteiligte:"
+msgstr "Anzahl Projektbeteiligter"
+
+#: templates/core/search.html:370
+msgid "Erstellt am:"
+msgstr ""
+
+#: templates/core/search.html:371
+msgid "Erstellt von:"
+msgstr ""
+
+#: templates/core/search.html:373
+msgid "Bewertung: &Oslash;"
+msgstr ""
+
+#: templates/core/search.html:380
+msgid "Keine Beschreibung vorhanden."
+msgstr ""
+
+#: templates/core/search.html:409
+msgid "Mehr Ergebnisse laden"
+msgstr ""
+
+#: templates/django_social_share/templatetags/post_to_facebook.html:3
+msgid "Share on Facebook"
+msgstr ""
+
+#: templates/django_social_share/templatetags/post_to_twitter.html:3
+msgid "Share on Twitter"
+msgstr ""
+
+#: templates/star_ratings/widget.html:21
+msgid "Durchschnitt: "
+msgstr ""
+
+#: templates/star_ratings/widget.html:22
+msgid "Anzahl: "
+msgstr ""
+
+#: templates/star_ratings/widget.html:23
+msgid "Deine: "
+msgstr ""
+
+#: templates/star_ratings/widget.html:23
+msgid "Not rated"
+msgstr "Nicht bewertet"
+
+#: templates/star_ratings/widget.html:25
+msgid "Please log in to rate."
+msgstr ""
+
+#: templates/star_ratings/widget.html:36
+#, fuzzy
+#| msgid "Not rated"
+msgid "Log in to rate"
+msgstr "Nicht bewertet"
+
+#: templates/star_ratings/widget.html:58
+msgid "Anzahl der abgegebenden Stimmen"
+msgstr ""
+
+#: templates/star_ratings/widget.html:61
+msgid "Durchschnittliche Bewertung"
+msgstr ""
+
+#~ msgid "Average: "
+#~ msgstr "Durchschnitt der Bewertungen"
+
+#~ msgid "Rating Count: "
+#~ msgstr "Anzahl der Bewertungen"
+
+#~ msgid "You Rated: "
+#~ msgstr "Deine Bewertung: "
+
+#~ msgid "Einloggen um abzustimmen."
+#~ msgstr "Einloggen um abzustimmen."
+
+#~ msgid "Benutzerkonto registrieren"
+#~ msgstr "Benutzerkonto registrieren"
+
+#~ msgid "PLACEHOLDER:Suche: Bauvorhaben, 3D Modelle, Bebauungspläne, etc."
+#~ msgstr "Suche nach Ideen, Ansprechpartnern und Projekten"
+
+#~ msgid "Legende"
+#~ msgstr "Legende"
+
+#~ msgid "BUTTON:Relevanz"
+#~ msgstr "Relevanz"
+
+#~ msgid "BUTTON:Name"
+#~ msgstr "Name"
+
+#~ msgid "BUTTON:Datum"
+#~ msgstr "Datum"
+
+#~ msgid "BUTTON:Bewertung"
+#~ msgstr "Bewertung"
+
+#~ msgid "BUTTON:# Bewertungen"
+#~ msgstr "Bewertungen"
