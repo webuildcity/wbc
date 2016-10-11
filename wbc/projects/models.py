@@ -82,9 +82,10 @@ class Project(Model):
 
 
     def get_created_by(self):
-        if(self.history.last()):
-            user = User.objects.get(pk=self.history.last().history_user_id)
-            return user
+        if self.history.last():
+            if self.history.last().history_user_id != None:
+                user = User.objects.get(pk=self.history.last().history_user_id)
+                return user
         return None
 
     def get_changed_by(self):
