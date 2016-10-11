@@ -186,7 +186,6 @@ def project_request(request, p):
     wbc_rated = None
     if request.user.is_authenticated():
         wbc_rated = WbcRating.objects.filter(project=p.pk, user=request.user.pk).exists()
-        print WbcRating.objects.filter(project=p.pk, user=request.user.pk)
         following = p.stakeholders.filter(pk=request.user.profile.stakeholder.pk).exists()
     
     subscribed = None
