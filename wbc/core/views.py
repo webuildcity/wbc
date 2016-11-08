@@ -101,7 +101,7 @@ class StartView(TemplateView):
         context['topIcons'] = settings.STARTPAGE_OVERVIEW_ICONS;
         context['botIcons'] = settings.STARTPAGE_TOPIC_ICONS;
         return context
-        
+
 class SearchView(TemplateView):
 
     template_name = "core/search.html"
@@ -194,6 +194,10 @@ class SearchView(TemplateView):
             'suggestion': suggestions
         })
         return data
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args, **kwargs):
+        return super(SearchView, self).dispatch(*args, **kwargs)
 
     def get(self, request):
         query =  request.GET.urlencode()
