@@ -386,7 +386,7 @@ DetailsController
             <li><a data-toggle="tab" href="#stakeholder"><i class="fa fa-user"></i>Beteiligte</a></li>
             {% endif %}
             {% if details_tabs.discussion %}
-            <li><a data-toggle="tab" href="#discussion"><i class="fa fa-comment"></i>Diskussion ({% get_comment_count for project as count %}{{count}})</a></li>
+            <li><a data-toggle="tab" href="#discussion"><i class="fa fa-comment"></i>{% trans 'Diskussion' %} ({% get_comment_count for project as count %}{{count}})</a></li>
             {% endif %}
             {% if details_tabs.map %}
             <li><a class="map-link" data-toggle="tab" href="#project_map"><i class="fa fa-map-marker"></i>Karte</a></li>
