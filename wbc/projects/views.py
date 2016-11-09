@@ -39,7 +39,7 @@ from guardian.shortcuts import assign_perm, get_perms
 from guardian.decorators import permission_required_or_403
 
 from etherpad_lite import EtherpadLiteClient
-
+from urllib2 import URLError
 # from forms import *
 
 class ProjectViewSet(viewsets.ViewSet):
@@ -205,17 +205,19 @@ def project_request(request, p):
 
     etherpadText = ''
     sessionIDText = ''
-    if p.padId and settings.DETAILS_TABS['etherpad']:
-        c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key'], 'baseUrl' : settings.ETHERPAD_SETTINGS['base-url'] + 'api'})
-        if following:
-            group = c.createGroupIfNotExistsFor(groupMapper=settings.PREFIX + str(p.pk))
-            author = c.createAuthorIfNotExistsFor(authorMapper=settings.PREFIX + str(request.user))
-            validUntil = now() + datetime.timedelta(hours=3)
-            sessionID = c.createSession(groupID=unicode(group['groupID']), authorID=unicode(author['authorID']), validUntil=str(validUntil.strftime('%s')))
-            sessionIDText = sessionID['sessionID']
-        etherpadText = c.getText(padID=p.padId)['text']
-        # etherpadText = c.getHTML(padID=p.padId)['html']
-    
+    try:
+        if p.padId and settings.DETAILS_TABS['etherpad']:
+            c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key'], 'baseUrl' : settings.ETHERPAD_SETTINGS['base-url'] + 'api'})
+            if following:
+                group = c.createGroupIfNotExistsFor(groupMapper=settings.PREFIX + str(p.pk))
+                author = c.createAuthorIfNotExistsFor(authorMapper=settings.PREFIX + str(request.user))
+                validUntil = now() + datetime.timedelta(hours=3)
+                sessionID = c.createSession(groupID=unicode(group['groupID']), authorID=unicode(author['authorID']), validUntil=str(validUntil.strftime('%s')))
+                sessionIDText = sessionID['sessionID']
+            etherpadText = c.getText(padID=p.padId)['text']
+            # etherpadText = c.getHTML(padID=p.padId)['html']
+    except URLError:
+        print "pad down"
     important_tag = None
     if settings.GENERAL_CONTENT['wbcrating']:
         if len(p.tags.all().filter(important=True)) >0:
