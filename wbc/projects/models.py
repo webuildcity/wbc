@@ -191,15 +191,15 @@ class Project(Model):
         super(Project, self).save(*args, **kwargs)
 
         if create_pad:
-            unique_name = settings.PREFIX + str(self.pk)
-            c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key']})
-            group = c.createGroupIfNotExistsFor(groupMapper=unique_name)
             try:
+                unique_name = settings.PREFIX + str(self.pk)
+                c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key']})
+                group = c.createGroupIfNotExistsFor(groupMapper=unique_name)
                 pad = c.createGroupPad(groupID=group['groupID'], padName=unique_name, text="Hallo")
                 self.padId = pad['padID']
                 self.save()
-            except EtherpadException as e:
-                print e
+            except:
+                print 'no pad'
                 # pad = c.get_pad_id(padName=unique_name)
 
 class BufferArea(Model):

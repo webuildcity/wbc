@@ -49,7 +49,8 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
         return [ent.name for ent in obj.entities.all()]
 
     def prepare_buffer_areas(self, obj):
-        return [json.loads(area.polygon) for area in obj.bufferarea_set.all()]
+        if obj.bufferarea_set.all() > 0:
+            return [(json.loads(area.polygon) if area.polygon else "") for area in obj.bufferarea_set.all()]
     
     def prepare_address_obj(self, obj):
         if obj.address_obj:

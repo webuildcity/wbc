@@ -36,7 +36,7 @@ class DetailsPicture(ImageSpec):
 register.generator('wbc:details', DetailsPicture)
 
 class GalleryPicture(ImageSpec):
-    processors = [ResizeToFit(800, 400)]
+    processors = [ResizeToFill(800, 400)]
     format = 'JPEG'
     options = {'quality': 60}
 

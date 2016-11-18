@@ -7,6 +7,7 @@ from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from wbc.stakeholder.serializers import DepartmentSerializer
 from models import *
 from wbc.events.serializers import EventSerializer
+from wbc.images.serializers import AlbumSerializer
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -17,7 +18,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     last_news = serializers.SerializerMethodField('last_news_serializer')
     next_date = serializers.SerializerMethodField('next_date_serializer')
-    
+    album = serializers.SerializerMethodField('album_serializer')
     def point_serializer_method(self, obj):
         return [obj.lon,obj.lat]
 
@@ -34,6 +35,13 @@ class ProjectSerializer(serializers.ModelSerializer):
         date = obj.get_next_date()
         if date:
             return EventSerializer(date).data
+        return None
+
+    def album_serializer(self, obj):
+        album = obj.album
+        print album
+        if album:
+            return AlbumSerializer(album).data
         return None
     
     class Meta:
