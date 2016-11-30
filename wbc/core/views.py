@@ -29,6 +29,14 @@ from guardian.mixins import PermissionRequiredMixin
 
 from django_comments.views.comments import post_comment
 
+
+def index(request, path=''):
+    """
+    Renders the Angular2 SPA
+    """
+    return render(request, 'index.html')
+    
+
 def feeds(request):
     entities = District.objects.all()
     return render(request, 'core/feeds.html', {
