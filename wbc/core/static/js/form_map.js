@@ -78,14 +78,15 @@ $(document).ready(function(){
     if (typeof(_polygon)!== 'undefined'){
         if( _polygon.length > 0 ) {
             var polygon = L.multiPolygon(_polygon);
+            console.log(polygon)
             // drawnItems.addLayer(polygon);
             addNonGroupLayers(polygon, drawnItems)
         }
     }
 
-    // check if we got a polygon (TODO: only for edit in future pls)
+    // check if we got a marker (TODO: only for edit in future pls)
     if (typeof(_lat) !== 'undefined'){
-        marker = L.marker([_lat, _lon]);
+        marker = L.marker([_lon, _lat]);
         drawnItems.addLayer(marker); 
     }
 
@@ -114,10 +115,12 @@ $(document).ready(function(){
 
                         layer =  drawnItems._layers[layer].toGeoJSON();
                         var coordinates = layer.geometry.coordinates.length > 1 ? layer.geometry.coordinates : layer.geometry.coordinates[0];
-                        for (coords in coordinates) {
-                            //necessary to get the coordinates in the same format as the data from the cities wfs
-                            coordinates[coords] = [coordinates[coords][1], coordinates[coords][0]]
-                        }
+                        
+                        // TURN AROUND COORDINATES BECAUSE OF LEAFLET
+                        // for (coords in coordinates) {
+                        //     //necessary to get the coordinates in the same format as the data from the cities wfs
+                        //     coordinates[coords] = [coordinates[coords][1], coordinates[coords][0]]
+                        // }
                         polygonString += JSON.stringify(coordinates, null, 2);
                         polygonString += ',';   
                     } else {
@@ -125,9 +128,10 @@ $(document).ready(function(){
                             layer2 =  drawnItems._layers[layer]._layers[layer2].toGeoJSON();
 
                             var coordinates = layer2.geometry.coordinates.length > 1 ? layer2.geometry.coordinates : layer2.geometry.coordinates[0];
-                            for (coords in coordinates) {
-                                coordinates[coords] = [coordinates[coords][1], coordinates[coords][0]]
-                            }
+                            // TURN AROUND COORDINATES BECAUSE OF LEAFLET
+                            // for (coords in coordinates) {
+                            //     coordinates[coords] = [coordinates[coords][1], coordinates[coords][0]]
+                            // }
                             polygonString += JSON.stringify(coordinates, null, 2);
                             polygonString += ',';
                         }
@@ -160,10 +164,10 @@ $(document).ready(function(){
 
                             layer =  drawnItems._layers[layer].toGeoJSON();
                             var coordinates = layer.geometry.coordinates.length > 1 ? layer.geometry.coordinates : layer.geometry.coordinates[0];
-                            for (coords in coordinates) {
-                                //necessary to get the coordinates in the same format as the data from the cities wfs
-                                coordinates[coords] = [coordinates[coords][1], coordinates[coords][0]]
-                            }
+                            // for (coords in coordinates) {
+                            //     //necessary to get the coordinates in the same format as the data from the cities wfs
+                            //     // coordinates[coords] = [coordinates[coords][1], coordinates[coords][0]]
+                            // }
                             polygonString += JSON.stringify(coordinates, null, 2);
                             polygonString += ',';   
                         } else {
@@ -171,9 +175,9 @@ $(document).ready(function(){
                                 layer2 =  drawnItems._layers[layer]._layers[layer2].toGeoJSON();
 
                                 var coordinates = layer2.geometry.coordinates.length > 1 ? layer2.geometry.coordinates : layer2.geometry.coordinates[0];
-                                for (coords in coordinates) {
-                                    coordinates[coords] = [coordinates[coords][1], coordinates[coords][0]]
-                                }
+                                // for (coords in coordinates) {
+                                //     // coordinates[coords] = [coordinates[coords][1], coordinates[coords][0]]
+                                // }
                                 polygonString += JSON.stringify(coordinates, null, 2);
                                 polygonString += ',';
                             }

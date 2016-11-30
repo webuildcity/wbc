@@ -136,6 +136,16 @@ class Project(Model):
                     return self.projectattachment_set.all()[0].thumbnail_lg.url
         return None
 
+    def get_thumbnail_map_url(self):
+        if self.album:
+            if self.album.get_cover_photo():
+                return self.album.get_cover_photo().thumbnail_map.url
+        else:
+            if self.projectattachment_set.all():
+                if self.projectattachment_set.all()[0].image:
+                    return self.projectattachment_set.all()[0].thumbnail_map.url
+        return None
+
     def get_number_stakeholder(self):
         return len(self.stakeholders.all())
 
@@ -234,6 +244,7 @@ class ProjectAttachment(Model):
     image              = models.ImageField(blank=True, upload_to='project_attachments/images')
     thumbnail          = ImageSpecField(source="image", processors=[ResizeToFill(100,100)], format='JPEG', options={'quality':60})
     thumbnail_lg       = ImageSpecField(source="image", processors=[ResizeToFill(400,300)], format='JPEG', options={'quality':60})
+    thumbnail_map      = ImageSpecField(source="image", processors=[ResizeToFill(320,180)], format='JPEG', options={'quality':60})
     source             = models.URLField(blank=True)
 
 def set_owner(sender, instance, **kwargs):

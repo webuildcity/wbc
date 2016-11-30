@@ -22,7 +22,9 @@ class Album(Model):
 
 
 class Photo(Model):
-    album       = models.ForeignKey(Album)
-    file        = models.ImageField(upload_to='project_images')
-    thumbnail   = ImageSpecField(source="file", processors=[ResizeToFill(100,100)], format='JPEG', options={'quality':60})
-    thumbnail_lg= ImageSpecField(source="file", processors=[ResizeToFill(400,300)], format='JPEG', options={'quality':60})
+    album         = models.ForeignKey(Album)
+    file          = models.ImageField(upload_to='project_images')
+    thumbnail     = ImageSpecField(source="file", processors=[ResizeToFill(100,100)], format='JPEG', options={'quality':60})
+    thumbnail_lg  = ImageSpecField(source="file", processors=[ResizeToFill(400,300)], format='JPEG', options={'quality':60})
+    thumbnail_map = ImageSpecField(source="file", processors=[ResizeToFill(320,180)], format='JPEG', options={'quality':60})
+    image_sidebar = ImageSpecField(source="file", processors=[ResizeToFill(1280,720)], format='JPEG', options={'quality':60})

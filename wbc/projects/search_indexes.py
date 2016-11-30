@@ -23,6 +23,7 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     address_obj = indexes.CharField()
     thumbnail = indexes.CharField()
     thumbnail_lg = indexes.CharField()
+    thumbnail_map = indexes.CharField()
     content_auto = indexes.NgramField(use_template=True)
     num_stakeholder = indexes.IntegerField()
     created = indexes.DateField()
@@ -73,6 +74,9 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_thumbnail_lg(self, obj):
         return obj.get_thumbnail_lg_url()
+
+    def prepare_thumbnail_map(self, obj):
+        return obj.get_thumbnail_map_url()
 
     def prepare_num_stakeholder(self, obj):
         return obj.get_number_stakeholder()
