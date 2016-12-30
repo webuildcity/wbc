@@ -71,6 +71,7 @@ class Project(Model):
     finished             = models.DateField(null=True, blank=True, verbose_name="Festgestellt am")
     isFinished           = models.NullBooleanField(default=True, null=True, blank=True)
     padId                = models.CharField(blank=True, null=True, max_length=64)
+    video                = models.URLField(blank=True, null=True)
     
     # Fields for rating and featuring
     featured             = models.NullBooleanField(default=False, null=True, blank=True)

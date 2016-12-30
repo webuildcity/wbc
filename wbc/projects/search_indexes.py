@@ -37,12 +37,14 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     featured = indexes.BooleanField(model_attr='featured', default=None)
     updownvote = indexes.BooleanField(model_attr='updownvote', default=None)
     wbcrating = indexes.IntegerField()
+    video = indexes.CharField(model_attr='video', null=True)
 
     def get_model(self):
         return Project
 
     def prepare_tags_with_link(self, obj):
         return [[tag.name, tag.get_absolute_url()] for tag in obj.tags.all()]
+
     def prepare_tags(self, obj):
         return [tag.name for tag in obj.tags.all()]
 
