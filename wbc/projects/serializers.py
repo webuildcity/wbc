@@ -39,7 +39,6 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     def album_serializer(self, obj):
         album = obj.album
-        print album
         if album:
             return AlbumSerializer(album).data
         return None

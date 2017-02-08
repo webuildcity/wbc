@@ -116,7 +116,6 @@ class SearchView(TemplateView):
     
     # terminated_process = ProcessStep.
     def search(self, data):
-        print data
         sqs = SearchQuerySet().facet('tags').facet('entities')
         model_dict = {
             'project' : Project,
@@ -125,15 +124,18 @@ class SearchView(TemplateView):
         offset = 0
         suggestions = sqs.spelling_suggestion()
         # Disable finished projects by default
-        if settings.TERMINATED_PROJECTS:
-            if 'terminated' in data and data['terminated'] == True:
-                pass
-            else:
-                sqs = sqs.exclude(isFinished=True)
+        # if settings.TERMINATED_PROJECTS:
+        #     if 'terminated' in data and data['terminated'] == True:
+        #         pass
+        #     else:
+        #         sqs = sqs.exclude(isFinished=True)
         
         if 'featured' in data:
             if data['featured'] == True:
                 sqs = sqs.filter(featured=True)
+
+        if 'typename' in data:
+            sqs = sqs.filter(typename=data['typename'])
 
         if 'buffer_areas' in data and data['buffer_areas']:
             sqs = sqs.filter(_exists_="buffer_areas")
@@ -207,9 +209,10 @@ class SearchView(TemplateView):
                 buffer_areas=result.buffer_areas, 
                 finished=terminated, 
                 isFinished=result.isFinished,
-                video=result.video)
+                video=result.video,
+                typename=result.typename)
             if result.location:
-                resultdict['location'] = [result.location[0], result.location[1]]
+                resultdict['location'] = [result.location[1], result.location[0]]
 
             if result.polygon:
 

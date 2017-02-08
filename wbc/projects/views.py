@@ -17,7 +17,7 @@ from django.db.models import Q
 from django.utils.timezone import now
 
 
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 from rest_framework.response import Response
 
 from wbc.core.views import ProtectedCreateView, ProtectedUpdateView, ProtectedDeleteView
@@ -40,10 +40,9 @@ from guardian.decorators import permission_required_or_403
 
 from etherpad_lite import EtherpadLiteClient
 
-# from forms import *
 
-class ProjectViewSet(viewsets.ViewSet):
-
+class ProjectViewSet(viewsets.GenericViewSet):
+    
     def list(self, request):
         queryset = self.get_queryset()
         serializer = self.get_serializer(request, queryset, many=True)
@@ -76,13 +75,14 @@ class ProjectViewSet(viewsets.ViewSet):
 
 class ListViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ListSerializer
+    filter_backend = (filters.DjangoFilterBackend)
+    filter_fields  = ('identifier', 'name')
 
     paginate_by = 25
     paginate_by_param = 'page_size'
 
     def get_queryset(self):
         queryset = Project.objects.all()
-
         search = self.request.query_params.get('search', None)
         if search is not None:
             queryset = queryset.filter(Q(identifier__icontains=search) | Q(address__icontains=search) | Q(entities__name__icontains=search))

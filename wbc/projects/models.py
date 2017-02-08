@@ -49,7 +49,7 @@ class Project(Model):
     name                 = models.CharField(blank=False, max_length=128, verbose_name="Name", help_text="Name des Projekts")
     active               = models.BooleanField(verbose_name="Veröffentlichen (aktivieren)", help_text="Wenn der Haken gesetzt ist, dann ist das Projekt aktiv und veröffentlicht. Zur Deaktivierung und Ausblendung des Projekts muss der Haken entfernt werden.")
     tags                 = TaggableManager(through=TaggedItems, blank=True, verbose_name="Stichworte")
-    identifier           = models.CharField(blank=True, max_length=128, verbose_name="Bezeichner", help_text="ggf. Bezeichner des Projekts")
+    identifier           = models.CharField(blank=True, null=True, max_length=128, verbose_name="Bezeichner", help_text="ggf. Bezeichner des Projekts")
     description          = models.TextField(blank=True, verbose_name="Beschreibung", help_text="Beschreibung des Projektes")
     description_official = models.TextField(blank=True, verbose_name="Beschreibung (Amtsblatt)", help_text="Örtliche Beschreibung aus dem Amtsblatt")
     entities             = models.ManyToManyField(Entity, blank=True, verbose_name="Verwaltungseinheit", related_name='project_places')
@@ -73,6 +73,10 @@ class Project(Model):
     padId                = models.CharField(blank=True, null=True, max_length=64)
     video                = models.URLField(blank=True, null=True)
     
+    typename             = models.CharField(blank=True, max_length=128)
+    area                 = models.FloatField(null=True, blank=True)
+    length               = models.FloatField(null=True, blank=True)
+    date_string          = models.CharField(blank=True, null=True, max_length=128)
     # Fields for rating and featuring
     featured             = models.NullBooleanField(default=False, null=True, blank=True)
     updownvote           = models.NullBooleanField(default=False, null=True, blank=True)

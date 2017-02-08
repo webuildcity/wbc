@@ -38,6 +38,7 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     updownvote = indexes.BooleanField(model_attr='updownvote', default=None)
     wbcrating = indexes.IntegerField()
     video = indexes.CharField(model_attr='video', null=True)
+    typename = indexes.CharField(model_attr='typename')
 
     def get_model(self):
         return Project
