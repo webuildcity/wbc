@@ -240,7 +240,7 @@ class SearchView(TemplateView):
 
     def post(self, request):
         data = json.loads(request.body)
-        data = self.search(data);
+        data = self.search(data)
         return HttpResponse(data, content_type='application/json')
     
 def map(request):
