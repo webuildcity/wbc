@@ -9,7 +9,6 @@ from models import *
 from wbc.events.serializers import EventSerializer
 from wbc.images.serializers import AlbumSerializer
 
-
 class ProjectSerializer(serializers.ModelSerializer):
     point = serializers.SerializerMethodField('point_serializer_method')
     internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
@@ -19,6 +18,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     last_news = serializers.SerializerMethodField('last_news_serializer')
     next_date = serializers.SerializerMethodField('next_date_serializer')
     album = serializers.SerializerMethodField('album_serializer')
+    
     def point_serializer_method(self, obj):
         return [obj.lon,obj.lat]
 
@@ -45,37 +45,33 @@ class ProjectSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Project
-        fields = ('id','point', 'events','identifier','address','description','entities','link','internal_link', 'album', 'last_news', 'next_date')
+        fields = ('id','name','point', 'events','identifier','address','description','entities','link','internal_link', 'album', 'last_news', 'next_date', 'date_string')
         depth = 1
 
-class ProjectPointSerializer(GeoFeatureModelSerializer):
+class ProjectPointSerializer(serializers.ModelSerializer):
     point = serializers.SerializerMethodField('point_serializer_method')
     internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
     # publications = publication_serializer_method(many=True)
 
     def point_serializer_method(self, obj):
-        return {'type': 'Point', 'coordinates': [obj.lon,obj.lat]}
+        return obj.point_gis.geojson
 
     def internal_link_serializer_method(self, obj):
         return reverse('wbc.projects.views.projectslug',args=[obj.slug])
 
     class Meta:
         model = Project
-        geo_field = 'point'
+        # geo_field = 'point'
         fields = ('id','point','identifier','address','description','entities','link','internal_link')
 
-class ProjectPolygonSerializer(GeoFeatureModelSerializer):
+class ProjectPolygonSerializer(serializers.ModelSerializer):
 
-    polygon = serializers.SerializerMethodField('polygon_serializer_method')
     point = serializers.SerializerMethodField('point_serializer_method')
     internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
     # publications = PublicationSerializer(many=True)
 
-    def polygon_serializer_method(self, obj):
-        if obj.polygon:
-            return {'type': 'MultiPolygon', 'coordinates': json.loads(obj.polygon)}
-        else:
-            return {}
+    # def polygon_serializer_method(self, obj):
+    #     return obj.polygon_gis
 
     def point_serializer_method(self, obj):
         return [obj.lon,obj.lat]
@@ -85,8 +81,8 @@ class ProjectPolygonSerializer(GeoFeatureModelSerializer):
 
     class Meta:
         model = Project
-        geo_field = 'polygon'
-        fields = ('id','polygon','identifier','address','description','entities','point','link','internal_link')
+        geo_field = 'polygon_gis'
+        fields = ('id','polygon_gis','identifier','address','description','entities','point','link','internal_link')
 
 class ListSerializer(serializers.ModelSerializer):
     entities = serializers.SerializerMethodField('entities_serializer_method')

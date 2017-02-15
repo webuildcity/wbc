@@ -6,6 +6,8 @@ from django.shortcuts import render,get_object_or_404
 from django.core.urlresolvers import reverse,reverse_lazy
 from django.core.exceptions import ValidationError
 
+from django.db.models import Count, Sum
+
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.contrib.auth.models import User, Permission
 from django.contrib.syndication.views import Feed
@@ -19,6 +21,7 @@ from django.utils.timezone import now
 
 from rest_framework import viewsets, filters
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 from wbc.core.views import ProtectedCreateView, ProtectedUpdateView, ProtectedDeleteView
 from wbc.region.models import District
@@ -41,37 +44,96 @@ from guardian.decorators import permission_required_or_403
 from etherpad_lite import EtherpadLiteClient
 
 
-class ProjectViewSet(viewsets.GenericViewSet):
-    
-    def list(self, request):
-        queryset = self.get_queryset()
-        serializer = self.get_serializer(request, queryset, many=True)
-        return Response(serializer.data)
 
-    def retrieve(self, request, pk=None):
-        queryset = self.get_queryset()
-        instance = get_object_or_404(queryset, pk=pk)
-        serializer = self.get_serializer(request, instance)
-        return Response(serializer.data)
+class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    filter_fields = ('name','date_string', 'id', 'typename')
 
-    def get_queryset(self):
-        queryset = Project.objects.all()
-        active = self.request.query_params.get('active', None)
 
-        if active is not None:
-            queryset = queryset.filter(active=active)
-        return queryset
+    def get_serializer_class(self):
 
-    def get_serializer(self, request, queryset, **kwargs):
         geometry = self.request.query_params.get('geometry', None)
 
         if geometry == 'point':
-            return ProjectPointSerializer(queryset, **kwargs)
+            return ProjectPointSerializer
         elif geometry == 'polygon':
-            return ProjectPolygonSerializer(queryset, **kwargs)
+            return ProjectPolygonSerializer
         else:
-            return ProjectSerializer(queryset, **kwargs)
+            return ProjectSerializer
 
+
+# class ProjectGraphViewset():
+
+# class ProjectViewSet(viewsets.GenericViewSet):
+#     filter_fields = ('name', 'pk')
+
+
+#     def list(self, request):
+#         queryset = self.get_queryset()
+#         serializer = self.get_serializer(request, queryset, many=True)
+#         return Response(serializer.data)
+
+#     def retrieve(self, request, pk=None):
+#         queryset = self.get_queryset()
+#         instance = get_object_or_404(queryset, pk=pk)
+#         serializer = self.get_serializer(request, instance)
+#         return Response(serializer.data)
+
+#     def get_queryset(self):
+#         queryset = Project.objects.filter(pk__lte=100)
+#         active = self.request.query_params.get('active', None)
+
+#         if active is not None:
+#             queryset = queryset.filter(active=active)
+#         return queryset
+
+    # def get_serializer(self, request, queryset, **kwargs):
+    #     geometry = self.request.query_params.get('geometry', None)
+
+    #     if geometry == 'point':
+    #         return ProjectPointSerializer(queryset, **kwargs)
+    #     elif geometry == 'polygon':
+    #         print "yooo"
+    #         return ProjectPolygonSerializer(queryset, **kwargs)
+    #     else:
+    #         return ProjectSerializer(queryset, **kwargs)
+
+
+@api_view(['GET', 'POST'])
+def projects_data(request):
+
+    # print request.query_params
+    # baup = Project.objects.filter(tags__name__in=["Gartendenkmal"]).aggregate(Sum('area')
+
+    feature = request.query_params.get('feature', None)
+    entity = request.query_params.get('entity', None)
+    aggregate = request.query_params.get('aggregate', None)
+    sumFeature = request.query_params.get('sum', None)
+
+    if entity:
+        try:
+            ent = Entity.objects.get(name=entity)
+        except Entity.DoesNotExist:
+            ent = None
+        if ent:
+            pros = Project.objects.filter(polygon_gis__intersects=ent.polygon_gis)
+        else:
+            return Response({"data" : "Entity not found"})
+
+    if feature and aggregate:
+        resp = pros.values(feature).annotate(c=Count(feature)).order_by(feature)
+        return Response({"data": resp})
+
+    if feature and sumFeature:
+        resp = pros.filter(tags__name__in=[feature]).aggregate(Sum(sumFeature))
+        return Response({"data": resp})
+
+
+
+    # if request.method == 'POST':
+        # return Response({"message": "Got some data!", "data": request.data})
+    # return Response({"message": "Hello, world!"})
 
 class ListViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ListSerializer

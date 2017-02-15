@@ -1,15 +1,19 @@
 # -*- coding: utf-8 -*-
-from django.db import models
+# from django.db import models
+from django.contrib.gis.db import models
 
 from wbc.core.models import Model
 
 
 class Entity(Model):
-    name = models.CharField(max_length=256)
-    description = models.TextField(blank=True)
-    lat = models.FloatField(null=True, blank=True)
-    lon = models.FloatField(null=True, blank=True)
-    polygon = models.TextField(blank=True)
+    name            = models.CharField(max_length=256)
+    description     = models.TextField(blank=True)
+    lat             = models.FloatField(null=True, blank=True)
+    lon             = models.FloatField(null=True, blank=True)
+    polygon         = models.TextField(blank=True)
+    polygon_gis     = models.MultiPolygonField(blank=True, null=True)
+    point_gis       = models.PointField(blank=True, null=True)
+
 
     def __unicode__(self):
         return self.name

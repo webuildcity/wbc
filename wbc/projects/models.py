@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from django.db import models
+# from django.db import models
+from django.contrib.gis.db import models
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, post_delete
@@ -76,12 +77,14 @@ class Project(Model):
     typename             = models.CharField(blank=True, max_length=128)
     area                 = models.FloatField(null=True, blank=True)
     length               = models.FloatField(null=True, blank=True)
-    date_string          = models.CharField(blank=True, null=True, max_length=128)
+    date_string          = models.CharField(blank=True, null=True, max_length=256)
     # Fields for rating and featuring
     featured             = models.NullBooleanField(default=False, null=True, blank=True)
     updownvote           = models.NullBooleanField(default=False, null=True, blank=True)
     
     blacklist            = models.ManyToManyField(User, blank=True, verbose_name="Blacklist", related_name="projects_blacklist")
+    polygon_gis          = models.MultiPolygonField(blank=True, null=True)
+    point_gis            = models.PointField(blank=True, null=True)
 
 
     def get_created_by(self):

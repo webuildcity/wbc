@@ -6,6 +6,7 @@ from .models import *
 class QuarterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Quarter
+        fields = '__all__'
 
 class DistrictSerializer(serializers.ModelSerializer):
     quarters = QuarterSerializer(many=True)

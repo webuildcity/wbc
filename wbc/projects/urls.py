@@ -2,7 +2,7 @@
 from django.conf.urls import patterns, include, url
 from rest_framework import routers
 
-from views import MapViewSet, ListViewSet, ProjectViewSet
+from views import MapViewSet, ListViewSet, ProjectViewSet, projects_data
 
 router = routers.DefaultRouter()
 router.register(r'list', ListViewSet, base_name='listitem')
@@ -19,5 +19,6 @@ urlpatterns = patterns('',
     url(r'^(?P<pk>[0-9]+)/wbc_rate/(?P<user>[0-9]+)/(?P<tag>[a-zA-Z0-9_.-]+)', 'wbc.projects.views.wbc_rate', name="project_wbc_rate"),
     url(r'^(?P<pk>[0-9]+)/feature/', 'wbc.projects.views.feature', name="project_feature"),
     url(r'^(?P<pk>[0-9]+)/photo_delete/(?P<photo>[0-9]+)', 'wbc.projects.views.photo_delete', name="project_photo_delete"),
+    url(r'^projectsData/', 'wbc.projects.views.projects_data', name="projects_data"),
 
 )
