@@ -8,7 +8,7 @@ from django.conf import settings
 import datetime
 
 from wbc.core.models import Model
-from wbc.region.models import Entity
+from wbc.region.models import Entity, Quarter
 from wbc.projects.slug import unique_slugify
 from wbc.region.models import Muncipality
 from wbc.events.models import Event
@@ -85,6 +85,7 @@ class Project(Model):
     blacklist            = models.ManyToManyField(User, blank=True, verbose_name="Blacklist", related_name="projects_blacklist")
     polygon_gis          = models.MultiPolygonField(blank=True, null=True)
     point_gis            = models.PointField(blank=True, null=True)
+    quarter              = models.CharField(max_length=256, blank=True, null=True)
 
 
     def get_created_by(self):
@@ -176,6 +177,17 @@ class Project(Model):
 
     def get_wbcrating(self):
         return WbcRating.objects.filter(project=self).count()
+
+    def get_entity(self):
+        if self.point_gis:
+            quarters = Quarter.objects.filter(polygon_gis__contains=self.point_gis)
+            if quarters:
+                return quarters[0].name
+            else:
+                return None
+        else:
+            return None
+
 
     def __unicode__(self):
         strings = []

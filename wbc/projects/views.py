@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
+from django.db import models
+
 from datetime import timedelta
 from django.conf import settings
 from django.shortcuts import render,get_object_or_404
@@ -49,7 +51,7 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     filter_fields = ('name','date_string', 'id', 'typename')
-
+    ordering_fields = ('name', 'date_string', 'id')
 
     def get_serializer_class(self):
 
@@ -111,29 +113,78 @@ def projects_data(request):
     aggregate = request.query_params.get('aggregate', None)
     sumFeature = request.query_params.get('sum', None)
 
-    if entity:
-        try:
-            ent = Entity.objects.get(name=entity)
-        except Entity.DoesNotExist:
-            ent = None
-        if ent:
-            pros = Project.objects.filter(polygon_gis__intersects=ent.polygon_gis)
-        else:
-            return Response({"data" : "Entity not found"})
+    pros = Project.objects.filter(typename="Denkmal")
 
-    if feature and aggregate:
-        resp = pros.values(feature).annotate(c=Count(feature)).order_by(feature)
-        return Response({"data": resp})
+    resp = pros.values('date_string').annotate(c=Count('date_string')).order_by('-c')
+    quarts = Quarter.objects.all()
 
-    if feature and sumFeature:
-        resp = pros.filter(tags__name__in=[feature]).aggregate(Sum(sumFeature))
-        return Response({"data": resp})
+    # pros = Project.objects.filter(typename="Denkmal").extra(select={
+    #     'date_string_c': 'select count(*) from date_string',
+    #     # 'news_like': 'select count(*) from tbl_news_likes where user_id=tbl_users.id'
+    # }).\
+    # values_list('first_name', 'last_name', 'guide_like','news_like')
+
+
+    # for quart in quarts:
+    #     if quart.polygon_gis:
+    #         prosQuart = Project.objects.filter(typename="Denkmal", polygon_gis__intersects=quart.polygon_gis)
+    #         respQuart = prosQuart.values('date_string').annotate(dist=Count('date_string')).order_by('-dist')
+    #         print respQuart
+    # events = Event.objects.all().annotate(paid_participants=models.Sum(
+    #     models.Case(
+    #         models.When(participant__is_paid=True, then=1),
+    #         default=0, output_field=models.IntegerField()
+    #     )))
+
+    # for quart in quarts:
+    #     print quart
+    # #     # name = quart.name
+    #     if quart.polygon_gis:
+    #         prosQuart = Project.objects.filter(typename="Denkmal", polygon_gis__intersects=quart.polygon_gis)
+    #         respQuart = prosQuart.values('date_string').annotate(quart=Count('date_string')).order_by('-quart')
+
+    #         resp = quarts | prosQuart
+    #     resp = resp.annotate(name = models.Sum(
+    #             models.Case(
+    #                 models.When(entities__name__in=quart.name, then=1),
+    #                 default=0, output_field=models.IntegerField()
+    #             )))
+
+    return Response({"data": resp})
+
+    # if entity:
+    #     try:
+    #         ent = Entity.objects.get(name=entity)
+    #     except Entity.DoesNotExist:
+    #         ent = None
+    #     if ent:
+    #         pros = Project.objects.filter(polygon_gis__intersects=ent.polygon_gis)
+    #     else:
+    #         return Response({"data" : "Entity not found"})
+
+    # if feature and aggregate:
+    #     resp = pros.values(feature).annotate(c=Count(feature)).order_by(feature)
+    #     return Response({"data": resp})
+
+    # if feature and sumFeature:
+    #     resp = pros.filter(tags__name__in=[feature]).aggregate(Sum(sumFeature))
+    #     return Response({"data": resp})
 
 
 
     # if request.method == 'POST':
         # return Response({"message": "Got some data!", "data": request.data})
     # return Response({"message": "Hello, world!"})
+
+# class DataViewSet(viewssets.ReadOnlyModelViewSet):
+#     filter_fields = ('name','date_string', 'id')
+
+#     typename = self.request.query_params.get('typename', None)
+
+#     def get_queryset(self):
+#         if (typename)
+#         queryset = Project.objects.filter()
+
 
 class ListViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ListSerializer
