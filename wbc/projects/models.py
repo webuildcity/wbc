@@ -78,6 +78,8 @@ class Project(Model):
     area                 = models.FloatField(null=True, blank=True)
     length               = models.FloatField(null=True, blank=True)
     date_string          = models.CharField(blank=True, null=True, max_length=256)
+    year                 = models.IntegerField(blank=True, null=True, verbose_name="Cleaned date field", db_index=True)
+
     # Fields for rating and featuring
     featured             = models.NullBooleanField(default=False, null=True, blank=True)
     updownvote           = models.NullBooleanField(default=False, null=True, blank=True)
@@ -206,30 +208,32 @@ class Project(Model):
 
     def save(self, *args, **kwargs):
         unique_slugify(self,self.name)
-        create_pad = False
-        if self.pk is None:
-            create_pad = True
-        else:
-            #check if tags changed to delete ratings possibly, super dirty
-            orig = Project.objects.get(pk=self.pk)
-            oriTags = orig.tags.all().filter(important=True)
-            newTags = self.tags.all().filter(important=True)
-            if len(oriTags) == len(newTags) and len(oriTags) > 0 and len(newTags) >0 and newTags[0] == oriTags[0]:
-                print "ori tags"
-            else:
-                WbcRating.objects.filter(project=self.pk).delete()
+        # PAD NOT NEEDED RIGHT NOW
+        # create_pad = False
+        # if self.pk is None:
+        #     create_pad = True
+        # else:
+        #     #check if tags changed to delete ratings possibly, super dirty
+        #     orig = Project.objects.get(pk=self.pk)
+        #     oriTags = orig.tags.all().filter(important=True)
+        #     newTags = self.tags.all().filter(important=True)
+        #     if len(oriTags) == len(newTags) and len(oriTags) > 0 and len(newTags) >0 and newTags[0] == oriTags[0]:
+        #         print "ori tags"
+        #     else:
+        #         WbcRating.objects.filter(project=self.pk).delete()
         super(Project, self).save(*args, **kwargs)
 
-        if create_pad:
-            try:
-                unique_name = settings.PREFIX + str(self.pk)
-                c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key']})
-                group = c.createGroupIfNotExistsFor(groupMapper=unique_name)
-                pad = c.createGroupPad(groupID=group['groupID'], padName=unique_name, text="Hallo")
-                self.padId = pad['padID']
-                self.save()
-            except:
-                print 'no pad'
+        # PAD NOT NEEDED RIGHT NOW
+        # if create_pad:
+        #     try:
+        #         unique_name = settings.PREFIX + str(self.pk)
+        #         c = EtherpadLiteClient(base_params={'apikey' : settings.ETHERPAD_SETTINGS['api_key']})
+        #         group = c.createGroupIfNotExistsFor(groupMapper=unique_name)
+        #         pad = c.createGroupPad(groupID=group['groupID'], padName=unique_name, text="Hallo")
+        #         self.padId = pad['padID']
+        #         self.save()
+        #     except:
+        #         print 'no pad'
                 # pad = c.get_pad_id(padName=unique_name)
 
 class BufferArea(Model):

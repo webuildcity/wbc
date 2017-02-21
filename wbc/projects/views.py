@@ -21,7 +21,9 @@ from django.db.models import Q
 from django.utils.timezone import now
 
 
-from rest_framework import viewsets, filters
+from rest_framework import viewsets
+from rest_framework.filters import OrderingFilter
+import rest_framework_filters as filters
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
@@ -45,13 +47,20 @@ from guardian.decorators import permission_required_or_403
 
 from etherpad_lite import EtherpadLiteClient
 
+class ProjectFilter(filters.FilterSet):
+
+    class Meta:
+        model = Project
+        fields = {'year': ['lt', 'lte', 'gt', 'gte', 'range']}
 
 
 class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
-    filter_fields = ('name','date_string', 'id', 'typename')
-    ordering_fields = ('name', 'date_string', 'id')
+    filter_fields = ('name','year', 'id', 'typename')
+    ordering_fields = ('name', 'year', 'id')
+    ordering_filter = OrderingFilter()
+    filter_class = ProjectFilter
 
     def get_serializer_class(self):
 
@@ -63,6 +72,10 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
             return ProjectPolygonSerializer
         else:
             return ProjectSerializer
+
+    def filter_queryset(self, queryset):
+        queryset = super(ProjectViewSet, self).filter_queryset(queryset)
+        return self.ordering_filter.filter_queryset(self.request, queryset, self)
 
 
 # class ProjectGraphViewset():
@@ -115,7 +128,27 @@ def projects_data(request):
 
     pros = Project.objects.filter(typename="Denkmal")
 
-    resp = pros.values('date_string').annotate(c=Count('date_string')).order_by('-c')
+    if entity:
+        pros = pros.filter(quarter=entity)
+
+    resp = pros.values('year').annotate(c=Count('year')).order_by('year')
+
+    currentYear = 1100
+    steps = [1300,1500,1700,1750,1800]
+    returnData = []
+
+    # while currentYear < 2010:
+    for step in steps:
+        returnData.append({"year" : currentYear , "total" : len(pros.filter(year__gte=currentYear, year__lt=step).values('year').annotate(c=Count('year'))) })
+        currentYear = step
+
+    while currentYear < 2010:
+        returnData.append({"year" : currentYear , "total" : len(pros.filter(year__gte=currentYear, year__lt=currentYear+10).values('year').annotate(c=Count('year'))) })
+        currentYear+=10
+    print returnData
+    
+
+
     quarts = Quarter.objects.all()
 
     # pros = Project.objects.filter(typename="Denkmal").extra(select={
@@ -150,7 +183,7 @@ def projects_data(request):
     #                 default=0, output_field=models.IntegerField()
     #             )))
 
-    return Response({"data": resp})
+    return Response({"data": returnData})
 
     # if entity:
     #     try:
@@ -188,7 +221,7 @@ def projects_data(request):
 
 class ListViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ListSerializer
-    filter_backend = (filters.DjangoFilterBackend)
+    # filter_backend = (filters.DjangoFilterBackend)
     filter_fields  = ('identifier', 'name')
 
     paginate_by = 25

@@ -107,7 +107,7 @@ class ProjectPolygonSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Project
         geo_field = 'polygon_gis'
-        fields = ('id','date_string', 'polygon_gis','identifier','address','description','entities','point','link','internal_link', 'tags')
+        fields = ('id','date_string', 'year', 'polygon_gis','identifier','address','description','entities','point','link','internal_link', 'tags')
 
 class ListSerializer(serializers.ModelSerializer):
     entities = serializers.SerializerMethodField('entities_serializer_method')
