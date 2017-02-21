@@ -15,7 +15,7 @@ class ProjectInline(admin.StackedInline):
 class ProjectAdmin(GuardedModelAdmin, SimpleHistoryAdmin):
     # inlines = [GalleryInline]
 
-    list_display = ('id','name','address','active')
+    list_display = ('id','slug','name','address','active')
     list_display_links = ('id','name','address','active')
     # fields = ['active','address','entities','lat','lon','description','identifier','link','polygon']
     ordering = ['id']

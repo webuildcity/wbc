@@ -207,7 +207,7 @@ class Project(Model):
         verbose_name_plural = "Projekte"
 
     def save(self, *args, **kwargs):
-        unique_slugify(self,self.name)
+        # unique_slugify(self,self.name)
         # PAD NOT NEEDED RIGHT NOW
         # create_pad = False
         # if self.pk is None:
