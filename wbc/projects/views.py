@@ -139,17 +139,20 @@ def projects_data(request):
 
     # while currentYear < 2010:
     for step in steps:
-        returnData.append({"year" : currentYear , "total" : len(pros.filter(year__gte=currentYear, year__lt=step).values('year').annotate(c=Count('year'))) })
+        if entity:
+            returnData.append({"year" : currentYear , entity : len(pros.filter(year__gte=currentYear, year__lt=step).values('year').annotate(c=Count('year'))) })
+        else:
+            returnData.append({"year" : currentYear , "total" : len(pros.filter(year__gte=currentYear, year__lt=step).values('year').annotate(c=Count('year'))) })
         currentYear = step
 
     while currentYear < 2010:
-        returnData.append({"year" : currentYear , "total" : len(pros.filter(year__gte=currentYear, year__lt=currentYear+10).values('year').annotate(c=Count('year'))) })
+        if entity:
+            returnData.append({"year" : currentYear , entity : len(pros.filter(year__gte=currentYear, year__lt=currentYear+10).values('year').annotate(c=Count('year'))) })
+        else:
+            returnData.append({"year" : currentYear , "total" : len(pros.filter(year__gte=currentYear, year__lt=currentYear+10).values('year').annotate(c=Count('year'))) })
         currentYear+=10
     print returnData
     
-
-
-    quarts = Quarter.objects.all()
 
     # pros = Project.objects.filter(typename="Denkmal").extra(select={
     #     'date_string_c': 'select count(*) from date_string',
