@@ -133,8 +133,8 @@ def projects_data(request):
 
     resp = pros.values('year').annotate(c=Count('year')).order_by('year')
 
-    currentYear = 1100
-    steps = [1300,1500,1700,1750,1800]
+    currentYear = 1000
+    steps = [1200,1400,1600,1800]
     returnData = []
 
     # while currentYear < 2010:
