@@ -68,23 +68,23 @@ class ProjectPointSerializer(serializers.ModelSerializer):
 class ProjectPolygonSerializer(GeoFeatureModelSerializer):
 
     point = serializers.SerializerMethodField('point_serializer_method')
-    internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
-    entities = serializers.SerializerMethodField('entities_serializer_method')  
+    # internal_link = serializers.SerializerMethodField('internal_link_serializer_method')
+    # entities = serializers.SerializerMethodField('entities_serializer_method')  
     tags = serializers.SerializerMethodField('tags_serializer_method')  
     # publications = PublicationSerializer(many=True)
 
-    def entities_serializer_method(self, obj):
-        quarters = None
-        # if obj.polygon_gis:
-            # quarters =  Quarter.objects.filter(polygon_gis__intersects=obj.polygon_gis)
-        if obj.point_gis:
-            quarters = Quarter.objects.filter(polygon_gis__contains=obj.point_gis)
+    # def entities_serializer_method(self, obj):
+    #     quarters = None
+    #     # if obj.polygon_gis:
+    #         # quarters =  Quarter.objects.filter(polygon_gis__intersects=obj.polygon_gis)
+    #     if obj.point_gis:
+    #         quarters = Quarter.objects.filter(polygon_gis__contains=obj.point_gis)
         
-        if quarters:
-            quarters = [quarter.name for quarter in quarters]
-            return quarters
-        else:
-            return ''
+    #     if quarters:
+    #         quarters = [quarter.name for quarter in quarters]
+    #         return quarters
+    #     else:
+    #         return ''
 
     def tags_serializer_method(self,obj):
         if obj.tags:
@@ -101,13 +101,14 @@ class ProjectPolygonSerializer(GeoFeatureModelSerializer):
     def point_serializer_method(self, obj):
         return [obj.lon,obj.lat]
 
-    def internal_link_serializer_method(self, obj):
-        return reverse('wbc.projects.views.projectslug',args=[obj.slug])
+    # def internal_link_serializer_method(self, obj):
+    #     return reverse('wbc.projects.views.projectslug',args=[obj.slug])
 
     class Meta:
         model = Project
         geo_field = 'polygon_gis'
-        fields = ('id','date_string', 'year', 'polygon_gis','identifier','address','description','entities','point','link','internal_link', 'tags')
+        # fields = ('id','name','date_string', 'year', 'polygon_gis','identifier','address','description','point','link', 'tags', 'quarter')
+        fields = ('id','name', 'year', 'polygon_gis','identifier','description','point','tags', 'quarter')
 
 class ListSerializer(serializers.ModelSerializer):
     entities = serializers.SerializerMethodField('entities_serializer_method')
