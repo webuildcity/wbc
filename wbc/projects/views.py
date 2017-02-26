@@ -152,7 +152,6 @@ def projects_data(request):
         else:
             returnData.append({"year" : currentYear , "total" : len(pros.filter(year__gte=currentYear, year__lt=currentYear+10).values('year').annotate(c=Count('year'))) })
         currentYear+=10
-    print returnData
     
 
     # pros = Project.objects.filter(typename="Denkmal").extra(select={

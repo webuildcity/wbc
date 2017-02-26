@@ -4,11 +4,11 @@ from setuptools import setup, find_packages
 version = '0.1.2'
 
 install_requires = [
-    'Django==1.8',
-    'django-widget-tweaks==1.3',
-    'markdown==2.3.1',
-    'djangorestframework==3.1',
-    'djangorestframework-gis',
+    # 'Django==1.8',
+    # 'django-widget-tweaks==1.3',
+    # 'markdown==2.3.1',
+    # 'djangorestframework==3.1',
+    # 'djangorestframework-gis',
 ]
 
 setup(
