@@ -60,7 +60,7 @@ class Project(Model):
     polygon              = models.TextField(null=True, blank=True, help_text="Zur Angabe und Darstellung einer Fläche z.B. auf einer Karte")
     active               = models.BooleanField()
     link                 = models.URLField(blank=True)
-    slug                 = models.SlugField(unique=True, editable=False)
+    slug                 = models.SlugField(blank=True, null=True, unique=True, editable=False)
     address_obj          = models.ForeignKey(Address, blank=True, null=True, verbose_name="Adresse")
     album                = models.OneToOneField(Album, blank=True, null=True)
     # tags                 = TaggableManager(through=TaggedItems, blank=True, verbose_name="Schlagworte")
@@ -207,7 +207,7 @@ class Project(Model):
         verbose_name_plural = "Projekte"
 
     def save(self, *args, **kwargs):
-        unique_slugify(self,self.name)
+        # unique_slugify(self,self.name)
         # PAD NOT NEEDED RIGHT NOW
         # create_pad = False
         # if self.pk is None:

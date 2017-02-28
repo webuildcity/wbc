@@ -52,7 +52,7 @@ class ProjectFilter(filters.FilterSet):
     class Meta:
         model = Project
         # fields = {'quarter' : "__all__"}
-        fields = {'year': ['lt', 'lte', 'gt', 'gte', 'range']}
+        fields = {'year': ['lt', 'lte', 'gt', 'gte', 'range', 'exact']}
 
 
 class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
