@@ -27,7 +27,7 @@ class Muncipality(Entity):
 
 
 class District(Entity):
-    muncipality = models.ForeignKey(Muncipality, related_name='districts')
+    belongs_to = models.ForeignKey(Muncipality, related_name='districts')
 
     class Meta:
         verbose_name = 'Bezirk'
@@ -35,7 +35,7 @@ class District(Entity):
 
 
 class Quarter(Entity):
-    district = models.ForeignKey(District, related_name='quarters')
+    belongs_to = models.ForeignKey(District, related_name='quarters')
 
     class Meta:
         verbose_name = 'Ortsteil'
