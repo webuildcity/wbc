@@ -16,8 +16,8 @@ def subscribe(request):
     entities = District.objects.all().values()
 
     unsubscribe_path = reverse(
-        'wbc.news.views.unsubscribe', args=['.']).strip('.')
-    validate_path = reverse('wbc.news.views.validate', args=['.']).strip('.')
+        unsubscribe, args=['.']).strip('.')
+    validate_path = reverse(validate, args=['.']).strip('.')
 
     if request.method == 'POST':
         form = SubscribeForm(request.POST, entities=entities)
